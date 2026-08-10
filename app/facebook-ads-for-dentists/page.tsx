@@ -37,12 +37,12 @@ const whatConverts = [
   {
     title: "proof-first creative",
     description:
-      "patients don’t want stock ads. they want to see the team, the office, the process, and the calm reassurance that you’re the right fit.",
+      "patients don’t want stock ads. They want to see the team, the office, the process, and the calm reassurance that you’re the right fit.",
   },
   {
     title: "a fast path to booking",
     description:
-      "every click leads to one next step: call, short form, or online booking — no confusion, no dead ends, no five-page detours.",
+      "every click leads to one next step: call, short form, or online booking. No confusion, no dead ends, no five-page detours.",
   },
 ]
 
@@ -56,7 +56,7 @@ const whatYouGet = [
   {
     title: "patient-ready creative",
     description:
-      "ads that feel like calm education and real clinic proof — designed to reduce fear and make the next step obvious.",
+      "ads that feel like calm education and real clinic proof, designed to reduce fear and make the next step obvious.",
     icon: Video,
   },
   {
@@ -74,13 +74,13 @@ const whatYouGet = [
   {
     title: "privacy-aware implementation",
     description:
-      "clean measurement and intake that avoids collecting sensitive info you don’t need — with clear ownership of your ad accounts.",
+      "clean measurement and intake that avoids collecting sensitive info you don’t need, with clear ownership of your ad accounts.",
     icon: ShieldCheck,
   },
   {
     title: "weekly optimization + reporting",
     description:
-      "creative testing, budget shifts, and plain-english reports focused on outcomes — not vanity metrics.",
+      "creative testing, budget shifts, and plain-english reports focused on outcomes, not vanity metrics.",
     icon: ClipboardList,
   },
 ]
@@ -107,7 +107,7 @@ const setupSteps = [
   },
   {
     step: "offer + creative plan",
-    description: "pick the offer, write angles, and map proof assets so creative tests are purposeful — not random.",
+    description: "pick the offer, write angles, and map proof assets so creative tests are purposeful, not random.",
   },
   {
     step: "build + tracking",
@@ -127,7 +127,7 @@ const faqItems = [
   {
     question: "Do Facebook ads work for dentists?",
     answer:
-      "Yes — when the offer is clear, the creative builds trust, and the lead path is simple. The biggest failure mode is vague “general dentistry” ads that don’t give patients a reason to act.",
+      "Yes, when the offer is clear, the creative builds trust, and the lead path is simple. The biggest failure mode is vague “general dentistry” ads that don’t give patients a reason to act.",
   },
   {
     question: "How much should a dental practice spend on Facebook ads?",
@@ -147,17 +147,17 @@ const faqItems = [
   {
     question: "Can you run Facebook and Instagram ads together?",
     answer:
-      "Yes. We run Meta campaigns across Facebook and Instagram, then optimize placements based on conversion performance — not just cheap clicks.",
+      "Yes. We run Meta campaigns across Facebook and Instagram, then optimize placements based on conversion performance, not just cheap clicks.",
   },
   {
     question: "Do you handle creative and landing pages too?",
     answer:
-      "Yes. Creative, landing page alignment, and tracking are part of the system — because ads don’t work when the click experience is weak.",
+      "Yes. Creative, landing page alignment, and tracking are part of the system, because ads don’t work when the click experience is weak.",
   },
   {
     question: "How do you track calls and booked consults from Meta ads?",
     answer:
-      "We track calls and forms, then tie those conversions back to campaigns so you can see what produced real inquiries — not just impressions or traffic.",
+      "We track calls and forms, then tie those conversions back to campaigns so you can see what produced real inquiries, not just impressions or traffic.",
   },
   {
     question: "Do you guarantee a specific number of leads?",
@@ -197,7 +197,7 @@ export default function FacebookAdsForDentistsPage() {
             </h1>
             <p className="mt-6 text-base text-neutral-600 sm:text-lg">
               prism helps dental practices turn Facebook &amp; Instagram (Meta) ads into booked demand with offer-first
-              strategy, patient-ready creative, conversion-focused lead capture, and reporting tied to calls and consults —
+              strategy, patient-ready creative, conversion-focused lead capture, and reporting tied to calls and consults,
               not vanity metrics.
             </p>
             <p className="mt-6 text-sm text-neutral-500">
@@ -226,7 +226,7 @@ export default function FacebookAdsForDentistsPage() {
                 <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
               </Button>
             </div>
-            <p className="mt-6 text-sm text-neutral-500">meta strategy + creative + tracking — shipped by prism.</p>
+            <p className="mt-6 text-sm text-neutral-500">meta strategy + creative + tracking, shipped by prism.</p>
           </div>
         </section>
 
@@ -237,7 +237,7 @@ export default function FacebookAdsForDentistsPage() {
                 what converts on facebook for dental practices
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dentistry is high-trust. the winners don’t look like ads — they look like calm, credible education with a
+                dentistry is high-trust. the winners don’t look like ads. They look like calm, credible education with a
                 clear next step.
               </p>
             </div>

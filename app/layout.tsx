@@ -116,7 +116,7 @@ export default function RootLayout({
                     // Plain string checks, deliberately no regex: this source
                     // passes through a template literal and then HTML/RSC
                     // escaping, and a backslash that survives one layer but not
-                    // the other fails open — which is the direction that
+                    // the other fails open, which is the direction that
                     // silently pollutes the live property.
                     var h = (location.hostname || '').toLowerCase();
                     var lan = h.indexOf('192.168.') === 0
@@ -136,9 +136,9 @@ export default function RootLayout({
                   // both rely on.
                   function gtag(){window.dataLayer.push(arguments);}
                   window.gtag = gtag;
-                  // Consent Mode v2 — set defaults before any config call.
+                  // Consent Mode v2: set defaults before any config call.
                   // US-focused traffic: granted by default, so full collection.
-                  // NOTE this does NOT enable EEA conversion modeling — that needs a
+                  // NOTE this does NOT enable EEA conversion modeling. That needs a
                   // real CMP emitting a denied-to-granted consent update, which the
                   // site does not have. It also has no region scoping, so EEA/UK
                   // visitors are not handled compliantly. See docs/analytics.md step 7.
@@ -158,7 +158,7 @@ export default function RootLayout({
           </>
         )}
         {IS_PRODUCTION_ENV && (
-          // Hotjar instruments DOM mutation/scroll/input observers — one of
+          // Hotjar instruments DOM mutation/scroll/input observers, one of
           // the heaviest third parties for input latency on low-end phones.
           // Load it only after the visitor first interacts (or after 12s as
           // a fallback) instead of on every page load.

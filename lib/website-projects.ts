@@ -82,7 +82,7 @@ export const websiteProjects: WebsiteProject[] = [
     title: "rebellious aging",
     url: "https://rebelwithsuz.com/",
     category: "wellness",
-    description: "age boldly—confidence, style, and plant-based longevity",
+    description: "age boldly: confidence, style, and plant-based longevity",
   },
   {
     id: "17",
@@ -96,6 +96,6 @@ export const websiteProjects: WebsiteProject[] = [
     title: "wine country root canal",
     url: "https://www.winecountryrootcanal.com/",
     category: "healthcare",
-    description: "santa rosa endodontics—gentle root canal therapy",
+    description: "santa rosa endodontics: gentle root canal therapy",
   },
 ]

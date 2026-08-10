@@ -20,7 +20,7 @@ type CoreService = {
 const coreServices: CoreService[] = [
   {
     name: "Websites & Experience Design",
-    summary: "Design systems, copy, and development that give you a conversion-ready site — managed end to end by Prism.",
+    summary: "Design systems, copy, and development that give you a conversion-ready site, managed end to end by Prism.",
     learnMoreLinks: [
       { label: "website design services", href: "/websites" },
       { label: "start a website project", href: "/get-started?service=website-design" },
@@ -132,7 +132,7 @@ const bundleExamples = [
 const workflow = [
   {
     title: "map the system",
-    description: "we audit every touchpoint — site, listings, paid media, email, and practice operations — so we know where to focus first.",
+    description: "we audit every touchpoint (site, listings, paid media, email, and practice operations) so we know where to focus first.",
   },
   {
     title: "build the core",
@@ -182,7 +182,7 @@ const faqItems = [
   {
     question: "Do I need every service to work with Prism?",
     answer:
-      "No. Most clients start with one foundation—usually a website or local presence—and add paid media, content, or automation once the core is stable.",
+      "No. Most clients start with one foundation, usually a website or local presence, and add paid media, content, or automation once the core is stable.",
   },
   {
     question: "How do you decide what to prioritize first?",
@@ -192,7 +192,7 @@ const faqItems = [
   {
     question: "What industries do you work with?",
     answer:
-      "We focus on local and service‑based businesses—dental and medical practices, local retail, professional services, nonprofits, and community brands.",
+      "We focus on local and service‑based businesses: dental and medical practices, local retail, professional services, nonprofits, and community brands.",
   },
   {
     question: "How do you measure success?",
@@ -284,7 +284,7 @@ export default function ServicesPage() {
             <div className="mx-auto mt-12 max-w-4xl text-center">
               <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">what you get</h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                A single sprint team that covers strategy, design, engineering, and growth—so every lever stays connected.
+                A single sprint team that covers strategy, design, engineering, and growth, so every lever stays connected.
               </p>
             </div>
             <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-sm text-neutral-600 sm:grid-cols-2 sm:text-base">
@@ -305,7 +305,7 @@ export default function ServicesPage() {
                 what we run for you
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Every engagement starts with the essentials, then layers in new channels as we unlock wins. Here's how each service helps.
+                Every engagement starts with the essentials, then layers in new channels as we bank wins. Here's how each service helps.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -490,7 +490,7 @@ export default function ServicesPage() {
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold lowercase sm:text-4xl">build your mix with prism</h2>
               <p className="mt-3 text-sm text-neutral-300 sm:text-base">
-                Tell us where you need momentum—local visibility, conversions, or full-funnel growth—and we'll recommend the right combination of services.
+                Tell us where you need momentum (local visibility, conversions, or full-funnel growth) and we'll recommend the right combination of services.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link

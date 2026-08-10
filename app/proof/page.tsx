@@ -55,7 +55,7 @@ export default function ProofPage() {
             </p>
             <p className="mt-6 text-neutral-700 lowercase md:text-lg">
               real patient stories are the strongest growth lever you’re not pulling. prism proof turns quick, authentic
-              testimonials into a compounding engine of social proof across your site, search, and social—without adding
+              testimonials into a compounding engine of social proof across your site, search, and social, without adding
               work to your day.
             </p>
 
@@ -76,7 +76,7 @@ export default function ProofPage() {
               <ul>
                 <li><strong>Video beats everything.</strong> A 30–60s face‑to‑camera story has emotion, detail, and credibility. It converts.</li>
                 <li><strong>One input → many assets.</strong> Each story becomes a website case study, quotable snippets, vertical clips, GBP post drafts, and structured data for richer search results.</li>
-                <li><strong>Compounding proof.</strong> Every month you stack new stories. Your site gets stickier. Your brand gets safer to choose. Your conversion rate creeps up—and stays up.</li>
+                <li><strong>Compounding proof.</strong> Every month you stack new stories. Your site gets stickier. Your brand gets safer to choose. Your conversion rate creeps up, and stays up.</li>
               </ul>
 
               <hr />
@@ -85,7 +85,7 @@ export default function ProofPage() {
               <ul>
                 <li>
                   <strong>Done‑for‑you Patient Story Flow</strong><br />
-                  Post‑visit text/email with a link to your private testimonial page—no apps to download, no logins.
+                  Post‑visit text/email with a link to your private testimonial page. No apps to download, no logins.
                 </li>
                 <li>
                   <strong>Two capture paths (your page, not Google/Yelp)</strong>
@@ -122,7 +122,7 @@ export default function ProofPage() {
                 <li><strong>Capture</strong> – Patients record a short video or answer a few prompts. We include a clear consent step, so you’re covered.</li>
                 <li><strong>Transform</strong> – We edit, transcribe, and structure the story into assets that actually sell.</li>
                 <li><strong>Distribute</strong> – We publish to your site, prep social/search drafts, add schema, and slot the story into high‑intent pages.</li>
-                <li><strong>Measure</strong> – We track engagement and conversion lift where Proof is present—and double down where it works best.</li>
+                <li><strong>Measure</strong> – We track engagement and conversion lift where Proof is present, and double down where it works best.</li>
               </ol>
 
               <hr />
@@ -139,7 +139,7 @@ export default function ProofPage() {
 
               <h2>Results you can expect</h2>
               <ul>
-                <li><strong>Higher conversion rate</strong> on pages with Proof vs. without (typically +10–30% relative lift over time).</li>
+                <li><strong>Higher conversion rate</strong> on pages with Proof vs. Without (typically +10–30% relative lift over time).</li>
                 <li><strong>Richer search appearance</strong> via Review/Video schema on key pages.</li>
                 <li><strong>Steady stream of on‑brand content</strong> that compounds monthly.</li>
               </ul>
@@ -167,13 +167,13 @@ export default function ProofPage() {
                 <li>What’s better now?</li>
                 <li>Would you recommend us? Why?</li>
               </ul>
-              <p>(Short, natural, zero scripts—so it sounds like a human, not a commercial.)</p>
+              <p>(Short, natural, zero scripts, so it sounds like a human, not a commercial.)</p>
 
               <hr />
 
               <h2>Compliance notes (the boring, important part)</h2>
               <ul>
-                <li><strong>We do not incentivize Google/Yelp reviews.</strong> Rewards—if used—apply only to your private submission page.</li>
+                <li><strong>We do not incentivize Google/Yelp reviews.</strong> Rewards, if used, apply only to your private submission page.</li>
                 <li><strong>Clear consent.</strong> Every testimonial includes written authorization before publishing.</li>
                 <li><strong>Transparent disclosure.</strong> If a thank‑you is provided, we disclose it wherever the story appears.</li>
               </ul>
@@ -208,7 +208,7 @@ export default function ProofPage() {
               <p><strong>How much time does my team spend?</strong><br />
               Close to zero. We install the flow, you approve assets, we publish.</p>
               <p><strong>Do patients actually submit?</strong><br />
-              Yes—when the ask is easy and timely. Our flows are mobile‑first and take ~60–120 seconds.</p>
+              Yes, when the ask is easy and timely. Our flows are mobile‑first and take ~60–120 seconds.</p>
               <p><strong>What if a patient shares PHI?</strong><br />
               We review every submission and only publish what’s authorized.</p>
               <p><strong>Can we run this in multiple locations?</strong><br />

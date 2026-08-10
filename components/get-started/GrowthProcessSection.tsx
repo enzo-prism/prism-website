@@ -61,7 +61,7 @@ export default function GrowthProcessSection() {
 
         <p className="mt-5 max-w-[34rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#A0A09A] sm:text-[1.1rem] sm:leading-8">
           Tell us about your business in about a minute. A real person reviews
-          it and sends back your clearest next move — free.
+          it and sends back your clearest next move, free.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">

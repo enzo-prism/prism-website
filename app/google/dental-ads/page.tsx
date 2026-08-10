@@ -34,7 +34,7 @@ const servicesHighlights = [
   {
     title: "search campaigns that convert",
     description:
-      "we build and manage campaigns for every dental service you offer — cleanings, invisalign, implants, whitening, and more. your ads show when patients are searching, not scrolling.",
+      "we build and manage campaigns for every dental service you offer: cleanings, invisalign, implants, whitening, and more. your ads show when patients are searching, not scrolling.",
     ctaLabel: FREE_AUDIT_CTA_TEXT,
     href: GET_FREE_AUDIT_HREF,
     icon: Target,
@@ -52,7 +52,7 @@ const servicesHighlights = [
   {
     title: "smart tracking & reporting",
     description:
-      "we set up conversion tracking for calls, forms, and appointments — without violating privacy rules. you’ll know exactly where every lead comes from.",
+      "we set up conversion tracking for calls, forms, and appointments, without violating privacy rules. you’ll know exactly where every lead comes from.",
     ctaLabel: "See Sample Reports",
     href: `#${REPORTS_SECTION_ID}`,
     icon: BarChart3,
@@ -65,7 +65,7 @@ const structurePillars = [
     emoji: "🦷",
     title: "split by service type",
     description:
-      "general / cosmetic — cleanings, whitening, invisalign → full targeting enabled. implants / surgical — implants, extractions, tmj → keyword + location targeting only."
+      "general / cosmetic (cleanings, whitening, invisalign) → full targeting enabled. Implants / surgical (implants, extractions, tmj) → keyword + location targeting only."
   },
   {
     emoji: "🔍",
@@ -83,7 +83,7 @@ const structurePillars = [
     emoji: "📞",
     title: "conversion optimization",
     description:
-      "landing pages built for action with clear calls to call, text, or book online — matched tracking for every lead source."
+      "landing pages built for action with clear calls to call, text, or book online, plus matched tracking for every lead source."
   },
   {
     emoji: "📊",
@@ -194,7 +194,7 @@ export default function GoogleDentalAdsPage() {
               </h1>
               <p className="max-w-3xl text-base text-white/80 sm:text-lg">
                 we help dental practices attract more high-value patients with google ads that follow every policy, convert
-                faster, and scale smarter — built for 2025 and beyond.
+                faster, and scale smarter, built for 2025 and beyond.
               </p>
               <p className="max-w-3xl text-sm text-white/70">
                 want to add paid social too? see{" "}
@@ -252,11 +252,11 @@ export default function GoogleDentalAdsPage() {
                 first. That top spot is where the new patient calls happen.
               </p>
               <p>
-                Google Ads puts your practice in front of those patients at the exact moment they’re ready to book — driving
+                Google Ads puts your practice in front of those patients at the exact moment they’re ready to book, driving
                 measurable results, not empty clicks.
               </p>
               <p>
-                At Prism, we specialize in helping dental teams use Google Ads the right way — fully compliant, data-driven,
+                At Prism, we specialize in helping dental teams use Google Ads the right way: fully compliant, data-driven,
                 and built to grow your practice month after month.
               </p>
             </div>
@@ -299,18 +299,18 @@ export default function GoogleDentalAdsPage() {
           <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
             <div className="flex flex-col gap-3">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">The 2025–2026 landscape</p>
-              <h2 className="text-3xl font-semibold md:text-4xl">What’s changed — and how to stay ahead.</h2>
+              <h2 className="text-3xl font-semibold md:text-4xl">What’s changed, and how to stay ahead.</h2>
             </div>
             <div className="space-y-6 text-base text-white/80 sm:text-lg">
               <p>
-                Google has tightened its Health in Personalized Advertising policies, affecting how dental practices — especially
-                those advertising implants, oral surgery, and gum disease treatment — can target patients.
+                Google has tightened its Health in Personalized Advertising policies, affecting how dental practices, especially
+                those advertising implants, oral surgery, and gum disease treatment, can target patients.
               </p>
               <p className="font-semibold text-white">Here’s the short version:</p>
               <ul className="space-y-3 text-sm text-white/80 sm:text-base">
                 <li className="flex items-start gap-3">
                   <PixelishIcon src="/pixelish/circle-checkmark.svg" alt="" size={16} aria-hidden="true" />
-                  <span>You can advertise dental services — including implants, Invisalign, and whitening.</span>
+                  <span>You can advertise dental services, including implants, Invisalign, and whitening.</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <PixelishIcon src="/pixelish/circle-exclamation.svg" alt="" size={16} aria-hidden="true" />
@@ -318,7 +318,7 @@ export default function GoogleDentalAdsPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <PixelishIcon src="/pixelish/close.svg" alt="" size={16} aria-hidden="true" />
-                  <span>Some targeting features — like remarketing or custom audiences — are restricted for health-related campaigns.</span>
+                  <span>Some targeting features, like remarketing or custom audiences, are restricted for health-related campaigns.</span>
                 </li>
               </ul>
               <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur">
@@ -468,7 +468,7 @@ export default function GoogleDentalAdsPage() {
             <div className="space-y-6 text-base text-white/80 sm:text-lg md:w-1/2">
               <p>
                 In 2025, Google is rolling out its Google Verified badge (replacing Google Screened/Guaranteed) for Local Services
-                Ads. These ads appear above search results and charge only per qualified lead — perfect for dentists wanting more
+                Ads. These ads appear above search results and charge only per qualified lead, which suits dentists wanting more
                 calls and booked appointments.
               </p>
               <p>We’ll handle your LSA setup, verification, and lead tracking.</p>
@@ -584,7 +584,7 @@ export default function GoogleDentalAdsPage() {
             </div>
             <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
               <p>
-                We don’t outsource, guess, or overcomplicate. Our team works inside the Google ecosystem every day — building
+                We don’t outsource, guess, or overcomplicate. Our team works inside the Google ecosystem every day, building
                 real campaigns that fill real chairs.
               </p>
               <p>When you partner with Prism, you’re getting:</p>
@@ -613,7 +613,7 @@ export default function GoogleDentalAdsPage() {
           <div className="container mx-auto flex flex-col items-center gap-6 px-4 py-16 text-center text-white md:px-6 md:py-24">
             <h2 className="text-3xl font-semibold md:text-4xl">Let’s grow your dental practice with Google Ads.</h2>
             <p className="max-w-2xl text-base text-white/80 sm:text-lg">
-              If you want more calls, more appointments, and more new patients — without violating Google’s health ad policies —
+              If you want more calls, more appointments, and more new patients without violating Google’s health ad policies,
               Prism can help. We’ll audit your existing setup, show you where money is being wasted, and rebuild your campaigns for
               sustainable growth.
             </p>

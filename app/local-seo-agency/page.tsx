@@ -83,7 +83,7 @@ const faqItems = [
   {
     question: "What makes Prism different from other local SEO agencies?",
     answer:
-      "We combine strategy and execution in one sprint team. That means we actually ship the pages, schema, listing updates, review systems, and tracking — not just audits or recommendations. You also keep full ownership of accounts and data.",
+      "We combine strategy and execution in one sprint team. That means we actually ship the pages, schema, listing updates, review systems, and tracking, not just audits or recommendations. You also keep full ownership of accounts and data.",
   },
   {
     question: "Do you focus on Google Maps or organic search?",
@@ -93,7 +93,7 @@ const faqItems = [
   {
     question: "How long until we see results?",
     answer:
-      "Fixes that improve relevance and engagement can show movement quickly. Prominence signals (reviews, citations, mentions) compound over weeks and months — especially in competitive markets.",
+      "Fixes that improve relevance and engagement can show movement quickly. Prominence signals (reviews, citations, mentions) compound over weeks and months, especially in competitive markets.",
   },
   {
     question: "Can you help if our listing has duplicates or is suspended?",
@@ -252,7 +252,7 @@ export default function LocalSeoAgencyPage() {
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">our process</h2>
             <p className="mt-3 text-neutral-600">
-              a simple, repeatable system — so improvements keep compounding without chaos.
+              a simple, repeatable system, so improvements keep compounding without chaos.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
@@ -419,7 +419,7 @@ export default function LocalSeoAgencyPage() {
 
         <SeoTextSection title="what “local seo agency” should mean in practice">
           <p>
-            when someone searches “local seo agency”, they’re usually not looking for theory — they’re looking for a partner who can
+            when someone searches “local seo agency”, they’re usually not looking for theory. they’re looking for a partner who can
             increase visibility and turn it into calls, bookings, and customers. that requires both on-page clarity and off-page proof:
             accurate listings, steady reviews, useful local pages, and clean technical signals that make crawling and indexing easy.
           </p>

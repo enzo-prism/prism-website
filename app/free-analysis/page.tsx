@@ -34,7 +34,7 @@ export default function FreeAnalysisPage() {
               Get a free analysis of your current website and visibility.
             </h1>
             <p className="text-lg text-muted-foreground">
-              We will review your site, Google listing, and performance — then show you how AI-powered design could double
+              We will review your site, Google listing, and performance, then show you how AI-powered design could double
               your traffic. No cost, no commitment.
             </p>
             <p className="text-sm text-muted-foreground">
@@ -113,7 +113,7 @@ export default function FreeAnalysisPage() {
               </ul>
               <div className="rounded-2xl border border-dashed border-border/60 bg-muted/40 p-5 text-sm text-muted-foreground">
                 <p>
-                  <strong className="text-foreground">Need it sooner?</strong> Mention your timeline in the notes — we
+                  <strong className="text-foreground">Need it sooner?</strong> Mention your timeline in the notes and we
                   prioritize urgent requests and can often deliver within 24 hours.
                 </p>
               </div>

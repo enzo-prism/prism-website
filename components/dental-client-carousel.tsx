@@ -15,7 +15,7 @@ const DENTAL_CLIENTS: DentalClient[] = [
     name: "Dr. Christopher B. Wong",
     location: "Palo Alto, CA",
     url: "https://www.chriswongdds.com",
-    focus: "seamless ownership transition",
+    focus: "smooth ownership transition",
   },
   {
     name: "Town Centre Dental",

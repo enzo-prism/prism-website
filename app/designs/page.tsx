@@ -6,7 +6,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = 'Graphic design & creative services'
 const PAGE_DESCRIPTION =
-  'Browse logos, branding, marketing assets, and social graphics from Prism that show how intentional design elevates a brand and earns attention.'
+  'Browse logos, branding, marketing assets, and social graphics from Prism that show how intentional design lifts a brand and earns attention.'
 const CANONICAL_URL = "https://www.design-prism.com/designs"
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -27,7 +27,7 @@ export default function DesignsPage() {
             <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">design with purpose</h2>
             <p>design is the connective tissue for every engagement we take on.</p>
             <p>
-              we pair beauty with performance, aligning every asset to the outcomes you care about&mdash;so your website,
+              we pair beauty with performance, aligning every asset to the outcomes you care about, so your website,
               campaigns, and internal tools all speak in the same voice.
             </p>
           </div>

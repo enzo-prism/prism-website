@@ -19,9 +19,9 @@ const ALL_OFFER_IDS = [
 
 describe("pricing model", () => {
   it("exports canonical display labels with no public dollar amounts", () => {
-    expect(WEBSITE_PRICE_LABEL).toBe("Custom — scoped on a call")
-    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom — scoped on a call")
-    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom — scoped on a call")
+    expect(WEBSITE_PRICE_LABEL).toBe("Custom, scoped on a call")
+    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom, scoped on a call")
+    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom, scoped on a call")
     expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
   })
 

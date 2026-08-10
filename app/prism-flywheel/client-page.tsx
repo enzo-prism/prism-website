@@ -99,7 +99,7 @@ export default function PrismFlywheelClient() {
               className="text-base md:text-lg text-center text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed"
             >
               Transform code and content into revenue through our AI-powered growth system. 
-              Research, create, optimize, and scale—each cycle compounds your success.
+              Research, create, optimize, and scale. Each cycle compounds your success.
             </p>
 
             {/* Single elegant CTA */}
@@ -174,7 +174,7 @@ export default function PrismFlywheelClient() {
               {/* Text content */}
               <div className="space-y-6">
                 <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                  Growth isn't about endless hustle—it's about building intelligent systems. 
+                  Growth isn't about endless hustle. It's about building intelligent systems.
                   Our flywheel methodology creates a virtuous cycle where every input compounds, 
                   transforming your business into a sustainable revenue engine.
                 </p>
@@ -192,7 +192,7 @@ export default function PrismFlywheelClient() {
                     "You do not rise to the level of your goals. You fall to the level of your systems."
                   </p>
                   <cite className="block mt-3 text-sm font-normal not-italic text-neutral-500 dark:text-neutral-500">
-                    — James Clear, Atomic Habits
+                    – James Clear, Atomic Habits
                   </cite>
                 </blockquote>
 
@@ -226,7 +226,7 @@ export default function PrismFlywheelClient() {
                               "{item.quote}"
                             </p>
                             <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-1">
-                              — {item.author}
+                              – {item.author}
                             </p>
                           </div>
                         )}
@@ -378,7 +378,7 @@ export default function PrismFlywheelClient() {
                   "Design is not just what it looks like and feels like. Design is how it works."
                 </p>
                 <cite className="block text-xs font-normal not-italic text-neutral-500 dark:text-neutral-500 mt-2">
-                  — Steve Jobs
+                  – Steve Jobs
                 </cite>
               </blockquote>
             </div>
@@ -542,7 +542,7 @@ export default function PrismFlywheelClient() {
               </h2>
               <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 From endless grind to sustainable growth. Automate workflows, optimize presence, 
-                and create content that converts—all through one intelligent system.
+                and create content that converts, all through one intelligent system.
               </p>
             </div>
 
@@ -606,7 +606,7 @@ export default function PrismFlywheelClient() {
                   "The first rule of compounding: Never interrupt it unnecessarily."
                 </p>
                 <cite className="block text-sm font-normal not-italic text-neutral-500 dark:text-neutral-500">
-                  — Charlie Munger
+                  – Charlie Munger
                 </cite>
               </blockquote>
             </div>
@@ -743,7 +743,7 @@ export default function PrismFlywheelClient() {
                 "Innovation distinguishes between a leader and a follower."
               </p>
               <p className="text-xs text-neutral-600 dark:text-neutral-600 mt-2">
-                — Steve Jobs
+                – Steve Jobs
               </p>
             </div>
 

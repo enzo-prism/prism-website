@@ -151,7 +151,7 @@ export default function CustomEmailDentalPage() {
                 Custom Email for Dental Practices
               </h1>
               <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                name@yourpractice.com beats @gmail.com every time. Earn trust, unlock hiring portals like Handshake, and control every inbox without losing the tools you already love.
+                name@yourpractice.com beats @gmail.com every time. Earn trust, open hiring portals like Handshake, and control every inbox without losing the tools you already love.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">

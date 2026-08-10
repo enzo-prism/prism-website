@@ -34,11 +34,11 @@ const coreOutcomes = [
 const deliveryPillars = [
   {
     title: "professional design that earns trust",
-    description: "every page, form, and deck feels refined and consistent — crafted for consultants who compete on expertise."
+    description: "every page, form, and deck feels refined and consistent, crafted for consultants who compete on expertise."
   },
   {
     title: "advanced automation & integrations",
-    description: "crm, scheduling, email automation, analytics — fully connected and quietly working behind the scenes."
+    description: "crm, scheduling, email automation, and analytics, all fully connected and quietly working behind the scenes."
   },
   {
     title: "seo + aeo for authority building",
@@ -128,7 +128,7 @@ const segmentFaqItems = [
 ]
 
 const retentionBenefits = [
-  { icon: "🔓", text: "Pause or cancel anytime — no long-term contracts" },
+  { icon: "🔓", text: "Pause or cancel anytime, no long-term contracts" },
   { icon: "💼", text: "You own all your assets and data" },
   { icon: "🧠", text: "Continuous optimization powered by analytics and AI" },
   { icon: "🧾", text: "Transparent reports showing what’s working" },
@@ -158,10 +158,10 @@ export default function ConsultingCompaniesPage() {
                 consulting growth playbook
               </span>
               <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                Build trust, attract clients, and scale your impact — without worrying about your website.
+                Build trust, attract clients, and scale your impact, without worrying about your website.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
-                Prism helps consulting firms stand out online, capture more qualified leads, and turn insights into measurable growth — while you focus on serving clients.
+                Prism helps consulting firms stand out online, capture more qualified leads, and turn insights into measurable growth, while you focus on serving clients.
               </p>
               <div className="mt-10 flex justify-center">
                 <Link href="/get-started">
@@ -183,7 +183,7 @@ export default function ConsultingCompaniesPage() {
                 We help consulting companies grow through clarity, credibility, and connection.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Prism combines design, automation, and data so your consulting business attracts better-fit clients — and runs smoother than ever.
+                Prism combines design, automation, and data so your consulting business attracts better-fit clients and runs smoother than ever.
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -267,13 +267,13 @@ export default function ConsultingCompaniesPage() {
           <div className="container mx-auto grid gap-10 px-4 py-24 md:grid-cols-[1.1fr_1fr] md:items-start">
             <div>
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                We act like your growth partner — not just your web team.
+                We act like your growth partner, not just your web team.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
                 Boutique consulting firms move fast. You need a partner who can keep up.
               </p>
               <p className="mt-4 text-sm text-neutral-600">
-                Your team’s focus should stay on clients, strategy, and delivery — not debugging integrations or redesigning slides. Prism gives you a single, unified system that works across:
+                Your team’s focus should stay on clients, strategy, and delivery, not debugging integrations or redesigning slides. Prism gives you a single, unified system that works across:
               </p>
               <ul className="mt-6 space-y-3 text-sm text-neutral-600">
                 {prismCoverage.map((item) => (
@@ -284,7 +284,7 @@ export default function ConsultingCompaniesPage() {
                 ))}
               </ul>
               <p className="mt-6 text-sm text-neutral-600">
-                You get speed, reliability, and insight — all without needing to manage another vendor.
+                You get speed, reliability, and insight, all without needing to manage another vendor.
               </p>
             </div>
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
@@ -444,7 +444,7 @@ export default function ConsultingCompaniesPage() {
                 Ready to modernize your consulting business with Prism?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Let’s elevate your digital presence so you can focus on delivering results, not managing tech.
+                Let’s sharpen your digital presence so you can focus on delivering results, not managing tech.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href="/contact">

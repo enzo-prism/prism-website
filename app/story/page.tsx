@@ -32,7 +32,7 @@ const howItWorks = [
     details: [
       "Outline who the customer was before they found you.",
       "Surface the problem they faced and what almost kept them stuck.",
-      "Show exactly what changed because of your work — supported by visuals, quotes, data, and emotion.",
+      "Show exactly what changed because of your work, supported by visuals, quotes, data, and emotion.",
     ],
     icon: BookOpen,
   },
@@ -74,7 +74,7 @@ const engineDeliverables = [
   "A Signal Capture System (custom forms, review automation, or post-visit prompts).",
   "A Story Production Workflow (we extract and craft narratives weekly or monthly).",
   "A Distribution Calendar (consistent storytelling across all platforms).",
-  "A Story Vault (your growing library of customer stories — your most valuable content asset).",
+  "A Story Vault (your growing library of customer stories, your most valuable content asset).",
 ]
 
 const PAGE_TITLE = 'Story-driven marketing for local brands'
@@ -132,7 +132,7 @@ export default function StoryPage() {
                 proof beats promises every single time
               </h2>
               <p className="text-base text-neutral-600 sm:text-lg">
-                Most marketing shouts claims — “we&apos;re the best,” “we care,” “we deliver.” But trust is built when people see the
+                Most marketing shouts claims: “we&apos;re the best,” “we care,” “we deliver.” But trust is built when people see the
                 transformation you created, not just the boast you made.
               </p>
               <p className="text-base text-neutral-600 sm:text-lg">
@@ -162,13 +162,13 @@ export default function StoryPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">our philosophy</p>
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">the customer signal engine</h2>
               <p className="text-base text-neutral-600 sm:text-lg">
-                At Prism, we call story-driven marketing the Customer Signal Engine — a system for capturing, expanding, and sharing
+                At Prism, we call story-driven marketing the Customer Signal Engine, a system for capturing, expanding, and sharing
                 the real stories behind your business so every channel speaks with proof.
               </p>
               <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <p className="text-lg font-semibold lowercase text-neutral-900">marketing isn&apos;t about noise. it&apos;s about signal.</p>
+                <p className="text-lg font-semibold lowercase text-neutral-900">marketing isn&apos;t about noise. It&apos;s about signal.</p>
                 <p className="mt-3 text-base text-neutral-600">
-                  The best signal comes from your customers. Their words, their emotions, their outcomes — those are the assets
+                  The best signal comes from your customers. Their words, their emotions, their outcomes: those are the assets
                   that make your marketing resonate and compound.
                 </p>
               </div>
@@ -177,7 +177,7 @@ export default function StoryPage() {
               <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">why it matters</p>
                 <p className="mt-3 text-base text-neutral-600">
-                  Story-driven content isn&apos;t fluff — it&apos;s the connective tissue between awareness, conversion, and loyalty. The more
+                  Story-driven content isn&apos;t fluff. It&apos;s the connective tissue between awareness, conversion, and loyalty. The more
                   signal you publish, the easier it becomes for prospects to see themselves in the outcomes you deliver.
                 </p>
               </div>
@@ -231,7 +231,7 @@ export default function StoryPage() {
                 signal beats spend every day of the week
               </h2>
               <p className="mt-4 text-base text-white/70 sm:text-lg">
-                These stories touch every KPI — from rankings to conversion to community. That&apos;s why we build engines, not one-off
+                These stories touch every KPI, from rankings to conversion to community. That&apos;s why we build engines, not one-off
                 campaigns.
               </p>
             </div>

@@ -29,7 +29,7 @@ const lovePoints = [
   {
     title: "booking feels effortless on mobile",
     description:
-      "tap-to-call, request forms, and scheduling paths are obvious and fast—so more visits become booked appointments."
+      "tap-to-call, request forms, and scheduling paths are obvious and fast, so more visits become booked appointments."
   }
 ]
 
@@ -62,7 +62,7 @@ const designEssentials = [
   {
     title: "migration + ownership",
     description:
-      "a clean cutover with redirects, analytics, and ownership of your domain and accounts — so you’re not stuck again later.",
+      "a clean cutover with redirects, analytics, and ownership of your domain and accounts, so you’re not stuck again later.",
   },
 ]
 
@@ -139,22 +139,22 @@ const faqs = [
   {
     question: "will search rankings drop when we migrate?",
     answer:
-      "no. we map every legacy URL, keep metadata intact, and submit the new structure to search engines so visibility only improves."
+      "no. We map every legacy URL, keep metadata intact, and submit the new structure to search engines so visibility only improves."
   },
   {
     question: "what should a dental practice website include?",
     answer:
-      "clear treatment pages, provider bios, reviews, and a simple booking path — plus fast performance, accessibility, and seo-ready structure so patients (and google) understand you quickly.",
+      "clear treatment pages, provider bios, reviews, and a simple booking path, plus fast performance, accessibility, and seo-ready structure so patients (and google) understand you quickly.",
   },
   {
     question: "how much does a dental practice website cost?",
     answer:
-      "it depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. we scope around what will actually move calls and bookings, not a one-size template.",
+      "it depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. We scope around what will actually move calls and bookings, not a one-size template.",
   },
   {
     question: "can you integrate specialty services like ortho or implants?",
     answer:
-      "yes. we build dedicated funnels with financing options, smile simulations, and testimonial blocks tailored to each specialty."
+      "yes. We build dedicated funnels with financing options, smile simulations, and testimonial blocks tailored to each specialty."
   },
   {
     question: "how quickly can we switch?",
@@ -242,7 +242,7 @@ export default function DentalWebsitePage() {
                   ))}
                 </div>
                 <p className="text-sm text-neutral-600">
-                  who wrote this: the prism design + engineering team. how we build: patient-first structure, fast performance, and measurement tied to calls/forms. why: so your website compounds trust and bookings over time.
+                  who wrote this: the prism design + engineering team. How we build: patient-first structure, fast performance, and measurement tied to calls/forms. why: so your website compounds trust and bookings over time.
                 </p>
                 <p className="text-sm text-neutral-600">
                   want the dentist-specific ai overviews checklist? read{" "}
@@ -293,7 +293,7 @@ export default function DentalWebsitePage() {
                 what we build (and why it works)
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                the goal isn’t “a prettier site.” it’s a calmer, clearer experience patients trust — and a structure google can understand.
+                the goal isn’t “a prettier site.” it’s a calmer, clearer experience patients trust, and a structure google can understand.
               </p>
             </div>
 
@@ -316,7 +316,7 @@ export default function DentalWebsitePage() {
                 dental website examples and case studies
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                explore real dental launches—how we structure pages, clarify services, and improve booking paths.
+                explore real dental launches: how we structure pages, clarify services, and improve booking paths.
               </p>
             </div>
 
@@ -354,7 +354,7 @@ export default function DentalWebsitePage() {
               <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">our process</p>
               <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">our build process</h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                a clear plan, a fast build, and a launch that protects what already works—so your new website performs on day one.
+                a clear plan, a fast build, and a launch that protects what already works, so your new website performs on day one.
               </p>
             </div>
 
@@ -502,7 +502,7 @@ export default function DentalWebsitePage() {
             </div>
             <VideoCarousel
               items={[
-                { videoId: "wCQrUajsnk8", title: "Dr. Teagan Willes Interview" },
+                { videoId: "wCQrUajsnk8", title: "Dr. teagan Willes Interview" },
                 { videoId: "HrksJeYb02Q", title: "Dr. Christopher Wong Interview" },
                 { videoId: "WIWxwdZflzo", title: "Dr. Ahmed Mataria Interview" },
                 { videoId: "IQJoQt4b2ls", title: "Dental Practice Success Story" },
@@ -523,7 +523,7 @@ export default function DentalWebsitePage() {
                 grow every channel your practice depends on
               </h2>
               <p className="text-sm leading-relaxed text-white/70">
-                prism handles more than beautiful dental sites—we run the ads, local listings, and review workflows that
+                prism handles more than beautiful dental sites. We run the ads, local listings, and review workflows that
                 keep chairs filled. curious how the full system works together?
               </p>
               <ul className="space-y-2 text-sm text-white/70">

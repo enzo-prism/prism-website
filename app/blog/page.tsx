@@ -135,7 +135,7 @@ export default async function Blog({
 
         <SeoTextSection title="Prism blog: design, development, and growth">
           <p>
-            We publish practical notes on product design, engineering, and modern SEO—how to ship faster,
+            We publish practical notes on product design, engineering, and modern SEO: how to ship faster,
             write clearer interfaces, and measure what matters. Each post is written from real client work
             and experiments, not theory.
           </p>

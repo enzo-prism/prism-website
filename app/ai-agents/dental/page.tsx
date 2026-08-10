@@ -12,17 +12,17 @@ const agentFeatures = [
   {
     title: "appointment scheduling",
     description:
-      "patients call, your agent checks real-time availability in dentrix, open dental, or eaglesoft, confirms the slot, and sends confirmation — all in one natural conversation.",
+      "patients call, your agent checks real-time availability in dentrix, open dental, or eaglesoft, confirms the slot, and sends confirmation, all in one natural conversation.",
   },
   {
     title: "after-hours coverage",
     description:
-      "emergency calls at 2am get triaged intelligently. your agent captures details, provides guidance, and routes urgent cases to the on-call provider.",
+      "emergency calls at 2am get triaged intelligently. Your agent captures details, provides guidance, and routes urgent cases to the on-call provider.",
   },
   {
     title: "insurance & billing questions",
     description:
-      "your agent verifies coverage, explains common procedures and costs, and helps patients understand their benefits — reducing front desk workload significantly.",
+      "your agent verifies coverage, explains common procedures and costs, and helps patients understand their benefits, reducing front desk workload significantly.",
   },
   {
     title: "appointment reminders",
@@ -37,7 +37,7 @@ const agentFeatures = [
   {
     title: "call routing & overflow",
     description:
-      "during busy periods, your agent handles routine calls while your team focuses on patients in the chair. complex cases transfer seamlessly to staff.",
+      "during busy periods, your agent handles routine calls while your team focuses on patients in the chair. complex cases transfer cleanly to staff.",
   },
 ]
 
@@ -45,7 +45,7 @@ const impactStats = [
   {
     stat: "35%",
     label: "of dental calls go unanswered during business hours",
-    context: "industry research shows over a third of patient calls never reach a human",
+    context: "calls that ring out during business hours never reach a human",
   },
   {
     stat: "$200+",
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: "will patients know they're talking to an ai?",
     answer:
-      "the agent uses elevenlabs' most natural voice technology. most patients won't notice — but we always recommend transparent disclosure. your agent can introduce itself however you prefer.",
+      "the agent uses elevenlabs' most natural voice technology. most patients won't notice, but we always recommend transparent disclosure. Your agent can introduce itself however you prefer.",
   },
   {
     question: "what happens if the ai can't handle a question?",
@@ -134,7 +134,7 @@ export default function DentalAIAgentsPage() {
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
                 prism builds custom elevenlabs ai agents specifically for dental practices. answer every patient call
-                instantly, schedule appointments 24/7, handle insurance questions, and send reminders — without adding
+                instantly, schedule appointments 24/7, handle insurance questions, and send reminders, without adding
                 staff.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -166,7 +166,7 @@ export default function DentalAIAgentsPage() {
                 what your dental ai agent handles
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                every feature is designed around the calls your front desk fields daily — scheduling, insurance, intake,
+                every feature is designed around the calls your front desk fields daily: scheduling, insurance, intake,
                 and after-hours triage.
               </p>
             </div>
@@ -218,7 +218,7 @@ export default function DentalAIAgentsPage() {
             <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center">
               <div className="space-y-6">
                 <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                  seamless connections
+                  connected tools
                 </p>
                 <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
                   connects to the tools your practice already uses
@@ -283,7 +283,7 @@ export default function DentalAIAgentsPage() {
                 pair your ai agent with prism&apos;s dental services
               </h2>
               <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                ai phone agents work best when every touchpoint — your website, ads, seo, and follow-up — is working
+                ai phone agents work best when every touchpoint (your website, ads, seo, and follow-up) is working
                 together.
               </p>
             </div>

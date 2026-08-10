@@ -142,9 +142,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Dr. Wong took over an established Palo Alto practice through an M&A transition — the moment patients are most likely to quietly leave. The legacy website and operational stack were outdated, and the online presence still told the previous owner’s story.',
+          'Dr. Wong took over an established Palo Alto practice through an M&A transition, the moment patients are most likely to quietly leave. The legacy website and operational stack were outdated, and the online presence still told the previous owner’s story.',
         approach:
-          'Prism rebuilt the patient-facing brand and digital operations: a modern website with clear ownership messaging, strong SEO foundations, aligned local listings and review profiles, and AI-optimized Google campaigns — all reporting into one rhythm.',
+          'Prism rebuilt the patient-facing brand and digital operations: a modern website with clear ownership messaging, strong SEO foundations, aligned local listings and review profiles, and AI-optimized Google campaigns, all reporting into one rhythm.',
         result:
           'The transition held. Patients understood the handoff instead of guessing, acquisition shifted from passive word-of-mouth to measured active channels, and search visibility roughly tripled, with impressions up 142% year over year per Google Search Console.',
       },
@@ -171,11 +171,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Exquisite Dentistry had everything most practices want — years of reputation, elite cosmetic work, deep community trust, and a high-end patient base. But the website undersold all of it, and because search and maps still produced leads, touching the site felt risky.',
+          'Exquisite Dentistry had everything most practices want: years of reputation, elite cosmetic work, deep community trust, and a high-end patient base. But the website undersold all of it, and because search and maps still produced leads, touching the site felt risky.',
         approach:
           'Prism rebuilt the website and booking flow through an evidence-first, staged process: modern design that matches the in-person experience, SEO treated as something to protect and upgrade rather than collateral damage, and rebuilt forms, funnel, and attribution.',
         result:
-          'The digital experience now matches the caliber of the practice — premium positioning patients can feel online, cleaner conversion paths, and the trust signals and measurement to support long-term growth.',
+          'The digital experience now matches the caliber of the practice: premium positioning patients can feel online, cleaner conversion paths, and the trust signals and measurement to support long-term growth.',
       },
     },
     explainerVideo: {
@@ -238,7 +238,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Olympic Bootworks had the hard part — a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online they had a basic Squarespace page, weak local discovery, and no way to sell high-ticket Fantic e-bikes without relying on walk-ins.',
+          'Olympic Bootworks had the hard part: a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online they had a basic Squarespace page, weak local discovery, and no way to sell high-ticket Fantic e-bikes without relying on walk-ins.',
         approach:
           'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, launched a dedicated Fantic Warehouse microsite built for confident online buying, linked inventory to the POS, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
@@ -268,11 +268,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'After a change in ownership, Laguna Beach Dental Arts needed a fast, confident relaunch. There was no structured SEO, no reliable ad pipeline, and inconsistent intake — and patient trust had to be preserved through the transition.',
+          'After a change in ownership, Laguna Beach Dental Arts needed a fast, confident relaunch. There was no structured SEO, no reliable ad pipeline, and inconsistent intake. Patient trust had to be preserved through the transition.',
         approach:
           'Prism partnered directly with the new owner-dentist to ship a complete relaunch: a clean visual identity and tone of voice, a fast mobile-first website with conversion-oriented UX, geo-targeted search campaigns with high-intent landing flows, and end-to-end tracking.',
         result:
-          'The practice relaunched with brand, site, channels, and analytics working in tandem from day one — built to sustain momentum through the handoff and measure every step after it.',
+          'The practice relaunched with brand, site, channels, and analytics working in tandem from day one, built to sustain momentum through the handoff and measure every step after it.',
       },
     },
   },
@@ -294,9 +294,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Family First Smile Care provides comprehensive dental care for all ages with a family-oriented approach — but its services, office comforts, and booking paths weren’t coming through clearly online.',
+          'Family First Smile Care provides comprehensive dental care for all ages with a family-oriented approach, but its services, office comforts, and booking paths weren’t coming through clearly online.',
         approach:
-          'Prism designed a modern website that makes it easy to understand services, appreciate the office amenities families care about, and book care quickly — with conversion tracking behind every flow.',
+          'Prism designed a modern website that makes it easy to understand services, appreciate the office amenities families care about, and book care quickly, with conversion tracking behind every flow.',
         result:
           'Services are clear, comforts are visible, and booking is effortless, with measurement in place to keep improving the patient journey.',
       },
@@ -317,11 +317,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Town Centre Dental, led by Dr. Gerard “Dr. G” Banaga, provides comprehensive family dentistry in Brentwood — but the web presence didn’t make services easy to discover or appointments easy to book.',
+          'Town Centre Dental, led by Dr. Gerard “Dr. G” Banaga, provides comprehensive family dentistry in Brentwood, but the web presence didn’t make services easy to discover or appointments easy to book.',
         approach:
           'Prism modernized the practice’s web presence: clarified services and team pages, structured content and Google Business Profile work for local discovery, streamlined appointment paths, and end-to-end analytics from click to booked visit.',
         result:
-          'Patients can find, understand, and book care without friction — and the practice can see the whole funnel instead of guessing.',
+          'Patients can find, understand, and book care without friction, and the practice can see the whole funnel instead of guessing.',
       },
     },
   },
@@ -340,11 +340,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'After an M&A transition, Grace Dental in Santa Rosa — led by Dr. Tingjen Ji — needed a relaunch that preserved patient trust while building a modern acquisition engine.',
+          'After an M&A transition, Grace Dental in Santa Rosa, led by Dr. Tingjen Ji, needed a relaunch that preserved patient trust while building a modern acquisition engine.',
         approach:
           'Prism relaunched the brand and website post-M&A, built service hubs for exams, cleanings, implants, veneers, and whitening, stood up acquisition channels, and implemented end-to-end tracking.',
         result:
-          'A brand, site, and acquisition stack built to perform from day one — and to scale as the practice grows.',
+          'A brand, site, and acquisition stack built to perform from day one, and to scale as the practice grows.',
       },
     },
   },
@@ -447,11 +447,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Endodontics has a central tension: how do you communicate specialist expertise without amplifying patient fear? Wine Country Root Canal’s patients arrive anxious, often on referral — and most endodontic websites make that anxiety worse.',
+          'Endodontics has a central tension: how do you communicate specialist expertise without amplifying patient fear? Wine Country Root Canal’s patients arrive anxious, often on referral, and most endodontic websites make that anxiety worse.',
         approach:
           'Prism built a calm, place-rooted brand drawing on the local landscape, service pages that explain root canals, retreatments, and apicoectomies in plain language, prominent doctor and testimonial content, frictionless booking, and SEO covering both patient and referring-dentist searches.',
         result:
-          'A digital presence that signals expertise through calm rather than clinical distance — built to convert anxious patients and earn referring dentists’ confidence, with analytics readiness from day one.',
+          'A digital presence that signals expertise through calm rather than clinical distance, built to convert anxious patients and earn referring dentists’ confidence, with analytics readiness from day one.',
       },
     },
   },
@@ -471,9 +471,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'sr4 Partners had decades of organizational-development work and a distinctive methodology — strategy, results, relationships, resilience — but a digital presence that communicated generic consulting instead of a specific point of view.',
+          'sr4 Partners had decades of organizational-development work and a distinctive methodology (strategy, results, relationships, resilience), but a digital presence that communicated generic consulting instead of a specific point of view.',
         approach:
-          'Prism refreshed the brand rather than replacing it, structured the site around sr4’s service areas — executive coaching, team effectiveness, culture transformation, and organizational design — and built the content architecture around the searches senior leaders actually use, with analytics across service areas.',
+          'Prism refreshed the brand rather than replacing it, structured the site around sr4’s service areas (executive coaching, team effectiveness, culture transformation, and organizational design), and built the content architecture around the searches senior leaders actually use, with analytics across service areas.',
         result:
           'A presence that matches the caliber of the work: clear methodology, modern brand expression with continuity for existing clients, and visibility into how high-value prospects engage.',
       },
@@ -508,11 +508,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Hiring a managed IT firm is a trust decision — a business owner is choosing the partner they’ll call at 2am. Infobell IT had strong technical capability and a reliable track record, but a website that looked like every other MSP’s.',
+          'Hiring a managed IT firm is a trust decision. A business owner is choosing the partner they’ll call at 2am. Infobell IT had strong technical capability and a reliable track record, but a website that looked like every other MSP’s.',
         approach:
           'Prism built a trust architecture: a visual identity that signals calm competence, service pages for managed IT, cybersecurity, cloud, and compliance organized around the buyer’s decision journey, testimonials and a clear service model, and search plus analytics so growth could be measured instead of guessed.',
         result:
-          'Infobell now reads as credible before the first conversation — differentiated positioning, decision-maker clarity, and visibility into which services high-value prospects research.',
+          'Infobell now reads as credible before the first conversation: differentiated positioning, decision-maker clarity, and visibility into which services high-value prospects research.',
       },
     },
     explainerVideo: {
@@ -545,11 +545,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Canary Foundation funds research advancing early cancer detection — work whose importance wasn’t translating into a compelling digital experience for donors, or for the scientists who might collaborate.',
+          'Canary Foundation funds research advancing early cancer detection, work whose importance wasn’t translating into a compelling digital experience for donors, or for the scientists who might collaborate.',
         approach:
           'Prism developed an identity balancing hope and urgency, structured the site for both donor and research audiences, built donation pages around transparent impact and frictionless giving, and configured analytics across the giving funnel.',
         result:
-          'A digital presence that matches the importance of the mission — clearer storytelling, stronger donor trust, and measurable engagement across both audiences.',
+          'A digital presence that matches the importance of the mission: clearer storytelling, stronger donor trust, and measurable engagement across both audiences.',
       },
     },
   },
@@ -580,11 +580,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Belize Kids Foundation is rooted in real relationships with the communities it serves — but most donors are thousands of miles away. The site had to close that distance and earn trust from supporters with no prior connection to the founders or to Belize.',
+          'Belize Kids Foundation is rooted in real relationships with the communities it serves, but most donors are thousands of miles away. The site had to close that distance and earn trust from supporters with no prior connection to the founders or to Belize.',
         approach:
           'Prism built a warm, vivid identity inspired by the Belize landscape, program storytelling that makes impact tangible, multiple giving pathways with clear impact statements, search architecture for donors actively looking for meaningful causes, and analytics across the donation funnel.',
         result:
-          'Giving now feels immediate and concrete instead of abstract — and search visibility roughly doubled year over year (+90% impressions per Google Search Console), reaching donors beyond the founders’ personal networks.',
+          'Giving now feels immediate and concrete instead of abstract, and search visibility roughly doubled year over year (+90% impressions per Google Search Console), reaching donors beyond the founders’ personal networks.',
       },
     },
   },
@@ -603,11 +603,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Canary Cove is a private island retreat in Belize. For a destination like this the website is the first visit — it has to create desire and trust long before a guest ever arrives.',
+          'Canary Cove is a private island retreat in Belize. For a destination like this the website is the first visit. It has to create desire and trust long before a guest ever arrives.',
         approach:
           'Prism built an immersive, visuals-first experience with concierge-ready booking flows and analytics that show how guests discover and explore the retreat.',
         result:
-          'The island’s digital presence now matches the experience itself — immersive storytelling backed by clean inquiry paths and measurement.',
+          'The island’s digital presence now matches the experience itself: immersive storytelling backed by clean inquiry paths and measurement.',
       },
     },
   },
@@ -627,9 +627,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'We Are Saplings takes early childhood education outside — not as a field trip but as the primary classroom. For many parents that’s an unfamiliar concept, and choosing a program for young children is one of the highest-trust decisions they make.',
+          'We Are Saplings takes early childhood education outside, not as a field trip but as the primary classroom. For many parents that’s an unfamiliar concept, and choosing a program for young children is one of the highest-trust decisions they make.',
         approach:
-          'Prism built a joyful, grounded brand and a site structured around the parent’s journey: what nature-based learning is, what a day looks like, how safety is handled, and how to enroll — with family testimonials, streamlined inquiry flows, search architecture for parents exploring alternatives, and analytics on the enrollment funnel.',
+          'Prism built a joyful, grounded brand and a site structured around the parent’s journey: what nature-based learning is, what a day looks like, how safety is handled, and how to enroll, with family testimonials, streamlined inquiry flows, search architecture for parents exploring alternatives, and analytics on the enrollment funnel.',
         result:
           'Curious parents get educated and reassured in one visit, and the program can see what drives enrollment instead of guessing.',
       },
@@ -655,7 +655,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism built a calm-authority brand and a site that serves both: plain-language service pages that reassure rather than intimidate, credential depth for referring dentists, prominent testimonials, immediate booking, and local SEO covering both patient and professional referral searches.',
         result:
-          'One digital presence that converts anxious patients and earns professional referrals — without compromising for either audience.',
+          'One digital presence that converts anxious patients and earns professional referrals, without compromising for either audience.',
       },
     },
   },
@@ -675,9 +675,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'PTI had earned a 4.97/5 rating across 35 reviews and supported clients across 100+ dental offices in California — but its digital footprint didn’t look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
+          'PTI had earned a 4.97/5 rating across 35 reviews and supported clients across 100+ dental offices in California, but its digital footprint didn’t look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
         approach:
-          'Prism built the site around PTI’s six-stage process — discovery, valuation, deal navigation, transition support, protection, and next moves — with real client testimonials as trust infrastructure, a search-driven content hierarchy, local SEO, and analytics across the inquiry funnel.',
+          'Prism built the site around PTI’s six-stage process (discovery, valuation, deal navigation, transition support, protection, and next moves), with real client testimonials as trust infrastructure, a search-driven content hierarchy, local SEO, and analytics across the inquiry funnel.',
         result:
           'PTI’s authority is now visible before a conversation starts: a warm, credible platform built for long-consideration decisions, with measurable paths from quiet research to consultation.',
       },
@@ -712,11 +712,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'The retreat is a small, intentionally curated gathering for dental professionals — boutique by design. Each year it moves cities, so each year the site must re-establish legitimacy and convert intrigued-but-skeptical dentists into booked rooms, with every registration mattering.',
+          'The retreat is a small, intentionally curated gathering for dental professionals, boutique by design. Each year it moves cities, so each year the site must re-establish legitimacy and convert intrigued-but-skeptical dentists into booked rooms, with every registration mattering.',
         approach:
           'Prism built a luxury-travel-grade experience: cinematic photography and a warm visual language for each edition, an interactive day-by-day itinerary, integrated hotel booking with group rates, past-attendee proof treated as primary content, and analytics on the path to registration.',
         result:
-          'The retreat looks like what it is — closer to a luxury travel brand than a CE course listing — and moving from “I want to come” to “I’ve booked my room” takes minimal effort.',
+          'The retreat looks like what it is (closer to a luxury travel brand than a CE course listing), and moving from “I want to come” to “I’ve booked my room” takes minimal effort.',
       },
     },
   },
@@ -736,11 +736,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'Dr. Michael Njo built two decades of practice on relationships and referrals — but new patients judge a website. A dated presence meant losing searchers to competitors with better marketing, while intent-driven search traffic went completely uncaptured.',
+          'Dr. Michael Njo built two decades of practice on relationships and referrals, but new patients judge a website. A dated presence meant losing searchers to competitors with better marketing, while intent-driven search traffic went completely uncaptured.',
         approach:
           'Prism built the full digital infrastructure: a warm, credible brand and website organized around what a new patient needs to book, Google Ads targeting high-intent local searches and optimized for appointments rather than clicks, SEO and local listings, and analytics.',
         result:
-          'The digital presence finally matches the dentistry — findable for the searches that matter, credible at first glance, and measurable end to end.',
+          'The digital presence finally matches the dentistry: findable for the searches that matter, credible at first glance, and measurable end to end.',
       },
     },
   },
@@ -777,11 +777,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Saorsa Growth Partners is a focused advisory firm whose pipeline depends on credibility and the right inquiries, not volume. The firm needed clarity, trust, and lead capture — fast.',
+          'Saorsa Growth Partners is a focused advisory firm whose pipeline depends on credibility and the right inquiries, not volume. The firm needed clarity, trust, and lead capture, and it needed them fast.',
         approach:
           'Prism shipped fast-loading pages, concise offers, and inquiry paths designed to surface the right work, with search and analytics instrumentation in place from launch.',
         result:
-          'Within five months, monthly Google clicks grew 5.3× and impressions grew 273% (Google Search Console, Jan–May 2026) — a measured visibility ramp for a brand-new presence.',
+          'Within five months, monthly Google clicks grew 5.3× and impressions grew 273% (Google Search Console, Jan–May 2026). That is a measured visibility ramp for a brand-new presence.',
       },
     },
   },
@@ -810,11 +810,11 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       story: {
         situation:
-          'Mataria Dental Group was a recently acquired Torrance practice — and Prism’s first client. Like any healthcare M&A, the risk was patients quietly leaving when the practice changed hands, and without a measurement foundation any growth effort would be guesswork.',
+          'Mataria Dental Group was a recently acquired Torrance practice, and Prism’s first client. Like any healthcare M&A, the risk was patients quietly leaving when the practice changed hands, and without a measurement foundation any growth effort would be guesswork.',
         approach:
           'Prism built the digital and content engine: a modern website and aligned local listings, story-first content with real people and faces so patients had a clear reason to stay, awareness campaigns across Instagram and TikTok, and structured analytics underneath it all.',
         result:
-          'Patients saw a human story instead of a corporate handoff — and the manual reps from this first build became the scar tissue that shaped Prism’s later AI-native growth model.',
+          'Patients saw a human story instead of a corporate handoff, and the manual reps from this first build became the scar tissue that shaped Prism’s later AI-native growth model.',
       },
       focus: 'Dental M&A launch',
       scope: 'Website, listings, content, social ads, analytics',

@@ -168,7 +168,7 @@ const DENTAL_CLIENTS = [
 const PROCESS = [
   {
     label: 'Scope',
-    body: 'We map the practice, market, and goals on a call, then scope the system around what will actually move calls and bookings — no fixed package.',
+    body: 'We map the practice, market, and goals on a call, then scope the system around what will actually move calls and bookings. No fixed package.',
   },
   {
     label: 'Build',
@@ -184,12 +184,12 @@ const FAQ_ITEMS = [
   {
     question: 'What’s included in Dental OS?',
     answer:
-      'Website, SEO and AI search, Google Maps and local listings, reviews, and ads — built and run as one connected system tuned to how patients find, trust, and choose a dentist.',
+      'Website, SEO and AI search, Google Maps and local listings, reviews, and ads, built and run as one connected system tuned to how patients find, trust, and choose a dentist.',
   },
   {
     question: 'How does pricing work?',
     answer:
-      'Dental OS is scoped to each practice — your locations, services, and goals — so there is no fixed package price. We scope it on a call and price around what will move calls and bookings. Book a call to get a number for your practice.',
+      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. We scope it on a call and price around what will move calls and bookings. Book a call to get a number for your practice.',
   },
   {
     question: 'How long until it is live?',
@@ -229,7 +229,7 @@ export default function DentalOsPage() {
                   eyebrow="Dental OS"
                   title="The growth system, built for dental."
                   titleClassName="max-w-[18ch]"
-                  description="Patients find, trust, and choose a practice across Google, the map pack, reviews, and now AI. Dental OS runs every one of those surfaces as a single system — so your practice becomes the obvious choice."
+                  description="Patients find, trust, and choose a practice across Google, the map pack, reviews, and now AI. Dental OS runs every one of those surfaces as a single system, so your practice becomes the obvious choice."
                 />
                 <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center">
                   <CoreActionLink
@@ -422,7 +422,7 @@ export default function DentalOsPage() {
             <CoreSectionHeading
               eyebrow="How it works"
               title="Scope, build, grow."
-              description="Because Dental OS is scoped to your practice, it starts with a conversation — not a checkout."
+              description="Because Dental OS is scoped to your practice, it starts with a conversation, not a checkout."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-3">
               {PROCESS.map((step, index) => (
@@ -479,7 +479,7 @@ export default function DentalOsPage() {
               <CoreSectionHeading
                 eyebrow="Get started"
                 title="Book a dental growth call."
-                description="Tell us about your practice and goals. We’ll scope Dental OS around what will move calls and bookings — and give you a real number to decide on."
+                description="Tell us about your practice and goals. We’ll scope Dental OS around what will move calls and bookings, and give you a real number to decide on."
               />
               <div className="flex shrink-0 flex-col gap-5 sm:flex-row sm:items-center">
                 <CoreActionLink

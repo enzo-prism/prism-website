@@ -86,7 +86,7 @@ const HOW_IT_WORKS: readonly {
   },
   {
     label: 'Request',
-    body: 'Add as many requests as you like — design, web, video, content, ads, and more. Your queue is yours.',
+    body: 'Add as many requests as you like: design, web, video, content, ads, and more. Your queue is yours.',
     icon: ListPlus,
   },
   {
@@ -220,7 +220,7 @@ const FAQ_ITEMS = [
   {
     question: 'What counts as a request?',
     answer:
-      'A request is one focused deliverable — a logo, a landing page, a video edit, a slide deck, an ad set, a photoshoot. If it is something Prism does, it can be a request.',
+      'A request is one focused deliverable: a logo, a landing page, a video edit, a slide deck, an ad set, a photoshoot. If it is something Prism does, it can be a request.',
   },
   {
     question: 'How fast is turnaround?',
@@ -240,19 +240,19 @@ const FAQ_ITEMS = [
   {
     question: 'What is out of scope?',
     answer:
-      'Prism Infinity covers design, web, video, content, and ads production. It does not include paid ad spend, third-party software or licensing fees, or large custom software builds — we flag those up front and scope them separately.',
+      'Prism Infinity covers design, web, video, content, and ads production. It does not include paid ad spend, third-party software or licensing fees, or large custom software builds. We flag those up front and scope them separately.',
   },
   {
     question: 'How much does Prism Infinity cost?',
     answer:
-      'One flat monthly subscription, scoped to your business. Book a 30-minute Zoom call and we will size the plan together — you leave the call knowing exactly what it costs and what you get.',
+      'One flat monthly subscription, scoped to your business. Book a 30-minute Zoom call and we will size the plan together. You leave the call knowing exactly what it costs and what you get.',
   },
 ] as const
 
 const QUEUE_BOARD = {
   delivered: 'Logo refresh',
   active: 'Homepage redesign',
-  queued: ['Ad creative — 3 variations', 'Pitch deck refresh'],
+  queued: ['Ad creative (3 variations)', 'Pitch deck refresh'],
 } as const
 
 function SectionKicker({ children }: { children: ReactNode }) {
@@ -437,7 +437,7 @@ export default function PrismInfinityPage() {
                   </h1>
                   <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
                     One monthly subscription for unlimited design, web, video,
-                    content, ads, and more — delivered one request at a time.
+                    content, ads, and more, delivered one request at a time.
                   </p>
                 </div>
 
@@ -552,7 +552,7 @@ export default function PrismInfinityPage() {
               <CoreSectionHeading
                 eyebrow="What's included"
                 title="One plan. Every deliverable."
-                description="Your subscription covers the full range of work Prism makes — request whatever the moment calls for."
+                description="Your subscription covers the full range of work Prism makes. Request whatever the moment calls for."
               />
             </HomeReveal>
             <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

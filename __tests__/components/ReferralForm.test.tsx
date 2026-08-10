@@ -55,7 +55,7 @@ describe('ReferralForm', () => {
     expect(form).toHaveAttribute('name', 'referral')
 
     expect(
-      screen.getByDisplayValue('New referral — $100 program'),
+      screen.getByDisplayValue('New referral: $100 program'),
     ).toHaveAttribute('name', '_subject')
     expect(container.querySelector('input[name="form_key"]')).toHaveValue(
       'referral',

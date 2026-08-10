@@ -21,13 +21,13 @@ export interface Takeaway {
 export const quotesData: Quote[] = [
   {
     id: 1,
-    text: "Everyone loves the website — you did a great job on it.",
+    text: "Everyone loves the website. You did a great job on it.",
     client: "Renata Chun",
     company: "website client",
   },
   {
     id: 2,
-    text: "The design was so amazing — it was incredible.",
+    text: "The design was so amazing. It was incredible.",
     client: "Michael",
     company: "website client",
   },
@@ -45,7 +45,7 @@ export const quotesData: Quote[] = [
   },
   {
     id: 5,
-    text: "I'd love to keep working with you — you're so talented.",
+    text: "I'd love to keep working with you. You're so talented.",
     client: "Renata Chun",
     company: "website client",
   },
@@ -57,13 +57,13 @@ export const quotesData: Quote[] = [
   },
   {
     id: 8,
-    text: "The implant page is great — it's perfect.",
+    text: "The implant page is great. It's perfect.",
     client: "Dr. Tingjen Ji",
     company: "website client",
   },
   {
     id: 10,
-    text: "That little snippet is brilliant — it'll be fun!",
+    text: "That little snippet is brilliant. It'll be fun!",
     client: "Mary Lynn Wheaton",
     company: "website client",
   },
@@ -586,7 +586,7 @@ export const quotesData: Quote[] = [
   { id: 198, text: "This kept me going, thanks, btw what’s the song name?", client: "professorguac", company: "Instagram Community of Entrepreneurs" },
   { id: 199, text: "Damn…", client: "tomshawuk", company: "Instagram Community of Entrepreneurs" },
   { id: 200, text: "Facts", client: "itslukasts", company: "Instagram Community of Entrepreneurs" },
-  { id: 201, text: "مكتوب — it is written", client: "mathewsalameh", company: "Instagram Community of Entrepreneurs" },
+  { id: 201, text: "مكتوب. It is written", client: "mathewsalameh", company: "Instagram Community of Entrepreneurs" },
   { id: 203, text: "Straight roads don’t make for good drivers and if it ain’t tough, it ain’t worth it", client: "victor.siqueira.barbosa", company: "Instagram Community of Entrepreneurs" },
   { id: 204, text: "Glorious 🤌🏻✨", client: "aviibhardwaj", company: "Instagram Community of Entrepreneurs" },
   { id: 205, text: "This kinda content > EVERYTHING", client: "csuarezftw", company: "Instagram Community of Entrepreneurs" },

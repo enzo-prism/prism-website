@@ -380,7 +380,7 @@ export default function ModelsPageClient() {
                 </h2>
                 <p className="text-sm text-neutral-600 sm:text-base">
                   join hundreds of real people who’ve worked with prism to
-                  create authentic, confident, and professional content — no
+                  create authentic, confident, and professional content. No
                   modeling agency required.
                 </p>
               </div>
@@ -548,7 +548,7 @@ export default function ModelsPageClient() {
                             text message
                           </span>
                           <span className="text-xs font-normal text-neutral-500">
-                            get updates by text — no phone calls.
+                            get updates by text, no phone calls.
                           </span>
                           <input
                             type="radio"

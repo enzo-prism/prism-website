@@ -599,7 +599,7 @@ export function CaseStudyWorkHighlights({
                 </DialogDescription>
                 <div className="mt-4 rounded-md border border-border/60 bg-muted/30 px-3 py-2">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Why Prism is world-class with this
+                    Why Prism is good at this
                   </p>
                   <p className="mt-2 text-sm text-foreground/90">
                     {selectedCopy?.whyPrism}

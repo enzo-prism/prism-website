@@ -74,8 +74,8 @@ export default function PodcastPage() {
                   <li key={`noscript-${episode.number}`}>
                     <a href={episode.youtubeUrl} className="underline">
                       episode {episode.number}: {episode.guest}
-                    </a>{" "}
-                    — {episode.takeaways.join(" · ")}
+                    </a>.{" "}
+                    {episode.takeaways.join(" · ")}
                   </li>
                 ))}
               </ul>
@@ -85,7 +85,7 @@ export default function PodcastPage() {
         <PodcastClientPage />
         <SeoTextSection title="about the prism podcast">
           <p>
-            candid conversations with founders and operators about what actually works—pricing, hiring,
+            candid conversations with founders and operators about what actually works: pricing, hiring,
             positioning, and growth. zero fluff, actionable lessons you can apply to your team this week.
           </p>
         </SeoTextSection>

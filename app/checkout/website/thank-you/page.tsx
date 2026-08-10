@@ -65,7 +65,7 @@ export default async function WebsiteOrderThankYouPage({
           <ol className="mt-9 space-y-4 border-t border-white/10 pt-7">
             {[
               'A confirmation email is on its way with your receipt.',
-              'We review your brief and start the build — no kickoff call required.',
+              'We review your brief and start the build. No kickoff call required.',
               'You get your first version in about 7 days, then unlimited revisions.',
             ].map((step, index) => (
               <li key={step} className="flex gap-4">

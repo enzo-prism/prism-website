@@ -130,19 +130,19 @@ const tiers: Record<TierId, TierContent> = {
       }
     ],
     setupSteps: [
-      { title: "Step 1 — Choose the location", description: "Pick a neutral wall with no backlighting and enough room for 5-6 feet of distance." },
-      { title: "Step 2 — Install the backdrop", description: "Hang a wrinkle-free white or gray fabric/vinyl backdrop about 5-6 feet wide." },
+      { title: "Step 1: Choose the location", description: "Pick a neutral wall with no backlighting and enough room for 5-6 feet of distance." },
+      { title: "Step 2: Install the backdrop", description: "Hang a wrinkle-free white or gray fabric/vinyl backdrop about 5-6 feet wide." },
       {
-        title: "Step 3 — Set up lighting",
+        title: "Step 3: Set up lighting",
         description:
           "Place LED fill light at a 45° angle from the patient, head height, 2-3 feet away on medium brightness. Add a second light if you want zero shadows."
       },
       {
-        title: "Step 4 — Mark the floor",
+        title: "Step 4: Mark the floor",
         description: "Use tape for patient foot placement and a second marker for the team. Consistency is what makes the comparisons pop."
       },
       {
-        title: "Step 5 — Prepare smartphone + lens",
+        title: "Step 5: Prepare smartphone + lens",
         description:
           "Attach the macro lens for intraoral shots, remove it for extraoral. Turn on grid lines, auto exposure, and capture at the highest resolution."
       }

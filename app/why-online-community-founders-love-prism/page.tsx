@@ -33,11 +33,11 @@ const coreOutcomes = [
 
 const deliveryPillars = [
   {
-    title: "world-class design",
+    title: "cohesive design",
     description: "every page and touchpoint feels cohesive, human, and true to your mission. we learn your voice, your visuals, and your values."
   },
   {
-    title: "world-class tech",
+    title: "connected tech",
     description: "seo, aeo, ux analytics, and ai-driven ad targeting operate together behind the scenes so every visit brings sharper insights."
   },
   {
@@ -46,13 +46,13 @@ const deliveryPillars = [
   },
   {
     title: "data-driven iteration",
-    description: "analytics guide every decision, so your platform keeps improving while you sleep — no guesswork, just momentum."
+    description: "analytics guide every decision, so your platform keeps improving while you sleep. no guesswork, just momentum."
   }
 ]
 
 const differentiators = [
-  "Running a community means juggling content, members, operations, and product — often all at once.",
-  "Your highest leverage isn’t in tweaking code or fixing forms — it’s in understanding your members and improving your offer.",
+  "Running a community means juggling content, members, operations, and product, often all at once.",
+  "Your highest leverage isn’t in tweaking code or fixing forms. It’s in understanding your members and improving your offer.",
   "Prism handles the systems, automations, and data so you can stay close to your people."
 ]
 
@@ -61,7 +61,7 @@ const prismTakesCareOf = [
   "Design that perfectly matches your brand",
   "Every join flow and funnel optimized for clarity and conversion",
   "Key insights and data shared in simple dashboards",
-  "Proactive suggestions and auto-applied improvements — without endless approval loops"
+  "Proactive suggestions and auto-applied improvements, without endless approval loops"
 ]
 
 const segmentWhoItsFor = [
@@ -113,7 +113,7 @@ const segmentFaqItems = [
   {
     question: "What metrics do you track?",
     answer:
-      "Activation, engagement, retention, referrals, and acquisition channels—tied back to revenue where relevant.",
+      "Activation, engagement, retention, referrals, and acquisition channels, tied back to revenue where relevant.",
   },
   {
     question: "How long does a rebuild take?",
@@ -128,10 +128,10 @@ const segmentFaqItems = [
 ]
 
 const retentionBenefits = [
-  { icon: "🔓", text: "Pause or cancel anytime — no long contracts" },
+  { icon: "🔓", text: "Pause or cancel anytime, no long contracts" },
   { icon: "🧾", text: "You fully own every asset we build" },
-  { icon: "🛡️", text: "Zero downtime, seamless updates, and continuous improvements" },
-  { icon: "📊", text: "Transparent analytics — see what’s working at a glance" }
+  { icon: "🛡️", text: "Zero downtime, quiet updates, and continuous improvements" },
+  { icon: "📊", text: "Transparent analytics: see what’s working at a glance" }
 ]
 
 const communityCaseStudies = CASE_STUDIES.filter((study) => study.segments.includes("community"))
@@ -157,7 +157,7 @@ export default function CommunityFoundersPage() {
                 community growth playbook
               </span>
               <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                Build a thriving community — without drowning in tech or design work.
+                Build a thriving community without drowning in tech or design work.
               </h1>
               <p className="mt-6 text-base text-neutral-600 md:text-lg">
                 Prism helps community founders grow faster by handling the systems, design, and data so you can stay focused on your people.
@@ -179,10 +179,10 @@ export default function CommunityFoundersPage() {
           <div className="container mx-auto px-4 py-20">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                We help online communities grow — faster and smarter.
+                We help online communities grow, faster and smarter.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                Every improvement Prism makes — from your site and funnels to analytics and automation — ladders up to these three outcomes.
+                Every improvement Prism makes, from your site and funnels to analytics and automation, ladders up to these three outcomes.
               </p>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -205,7 +205,7 @@ export default function CommunityFoundersPage() {
           <div className="container mx-auto grid gap-12 px-4 py-24 md:grid-cols-[1.25fr_1fr] md:items-center">
             <div>
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                We help free members become paying members — and happy customers become your best marketers.
+                We help free members become paying members, and happy customers become your best marketers.
               </h2>
               <ul className="mt-8 space-y-4 text-base leading-relaxed text-neutral-200">
                 <li>Upgrade free members to your paid course, product, or membership</li>
@@ -245,7 +245,7 @@ export default function CommunityFoundersPage() {
           <div className="container mx-auto px-4 py-20">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Design, technology, and data — working seamlessly together.
+                Design, technology, and data, working together.
               </h2>
             </div>
             <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -267,7 +267,7 @@ export default function CommunityFoundersPage() {
           <div className="container mx-auto grid gap-10 px-4 py-24 md:grid-cols-[1.1fr_1fr] md:items-start">
             <div>
               <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                We think like founders — and act like your in-house growth team.
+                We think like founders and act like your in-house growth team.
               </h2>
               <p className="mt-4 text-base text-neutral-600">
                 Online community founders have a lot on their plate. Prism keeps you focused on what matters most.

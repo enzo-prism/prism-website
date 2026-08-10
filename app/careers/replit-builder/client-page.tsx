@@ -80,7 +80,7 @@ export default function ReplitBuilderPage() {
                   contract replit builder
                 </h1>
                 <p className="mx-auto mt-4 max-w-[700px] text-neutral-600 lowercase md:text-xl">
-                  join our lean, fast-moving design and growth studio helping dentists and local businesses modernize their online presence. we design, build, and launch beautiful, fast websites — all inside replit.
+                  join our lean, fast-moving design and growth studio helping dentists and local businesses modernize their online presence. we design, build, and launch beautiful, fast websites, all inside replit.
                 </p>
               </div>
             </div>

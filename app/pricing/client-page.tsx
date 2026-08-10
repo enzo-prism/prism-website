@@ -26,7 +26,7 @@ const growthPathSteps = [
     title: 'Book a 30-min call',
     price: '30 minutes',
     description:
-      'A 30-minute Zoom call. We map your business, market, and goals — no long discovery process, no email estimates.',
+      'A 30-minute Zoom call. We map your business, market, and goals. No long discovery process, no email estimates.',
   },
   {
     stage: '02',
@@ -40,7 +40,7 @@ const growthPathSteps = [
     title: 'We build',
     price: 'Prism standard',
     description:
-      'Design, engineering, and analytics to the Prism standard — with iterations until you love it.',
+      'Design, engineering, and analytics to the Prism standard, with iterations until you love it.',
   },
 ] as const
 
@@ -80,7 +80,7 @@ const partnerLevels = [
     title: 'Prism Infinity',
     price: 'Scoped on a call',
     description:
-      'Unlimited Prism services across engineering, design, and marketing — one request at a time. Pause or cancel anytime.',
+      'Unlimited Prism services across engineering, design, and marketing, one request at a time. Pause or cancel anytime.',
   },
 ] as const
 
@@ -90,17 +90,17 @@ const partnerLevels = [
 const CTA_PROOF_POINTS = [
   {
     value: '5.3×',
-    label: 'monthly Google clicks in five months — Saorsa Growth Partners',
+    label: 'monthly Google clicks in five months (Saorsa Growth Partners)',
     href: '/case-studies/saorsa-growth-partners',
   },
   {
     value: '593',
-    label: 'Google clicks in the first month after launch — Roseville Dental Academy',
+    label: 'Google clicks in the first month after launch (Roseville Dental Academy)',
     href: '/case-studies/roseville-dental-academy',
   },
   {
     value: '+142%',
-    label: 'Google Search impressions year over year — Dr. Christopher Wong',
+    label: 'Google Search impressions year over year (Dr. Christopher Wong)',
     href: '/case-studies/dr-christopher-wong',
   },
 ] as const
@@ -109,12 +109,12 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Every offer is scoped to your business on a 30-minute Zoom call — the website, Content OS, Dental OS, and Prism Infinity. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
+      'Every offer (the website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
   },
   {
     question: 'What does the PRO website include?',
     answer:
-      'A bespoke design system, software-grade engineering, and analytics wired from day one — structured to rank on Google and get cited by AI assistants like ChatGPT, Gemini, and Claude. Iterations continue until you love it, and the finished site is 100% yours.',
+      'A bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI assistants like ChatGPT, Gemini, and Claude. Iterations continue until you love it, and the finished site is 100% yours.',
   },
   {
     question: 'What is Website Care?',
@@ -124,12 +124,12 @@ const faqs = [
   {
     question: 'How does Content OS pricing work?',
     answer:
-      'Content OS is implemented over 3 months, then optimized every month. Pricing is scoped to your business — book a 30-minute Zoom call and we will map the system and the investment together.',
+      'Content OS is implemented over 3 months, then optimized every month. Pricing is scoped to your business. Book a 30-minute Zoom call and we will map the system and the investment together.',
   },
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A monthly subscription for unlimited Prism services — logo and print design, web development, video editing, content, ads, slide decks, photoshoots, and more — delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
+      'A monthly subscription for unlimited Prism services (logo and print design, web development, video editing, content, ads, slide decks, photoshoots, and more), delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
   },
   {
     question: 'How is Dental OS priced?',
@@ -184,7 +184,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="The offers"
               title="Pick how you want to grow."
-              description="Book a 30-minute Zoom call and we'll scope the right Prism system together — you leave with a clear plan and a clear price."
+              description="Book a 30-minute Zoom call and we'll scope the right Prism system together. You leave with a clear plan and a clear price."
             />
           </div>
 
