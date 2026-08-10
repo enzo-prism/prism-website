@@ -1,0 +1,58 @@
+name: CI
+
+# Pre-merge gate.
+#
+# `deploy.yml` already runs typecheck, lint, and the test suite, but only on
+# push to main. That means a broken change is caught *after* it has landed:
+# main goes red and the deploy aborts, rather than the pull request failing.
+#
+# This workflow runs the same checks on every pull request, so the copy guard
+# in __tests__/prism-copy-style.test.ts (and every other test) actually blocks
+# a regression before it reaches main instead of only protecting people who
+# remember to run the suite locally.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+# A new push to the same PR cancels the previous run.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, lint, and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.0.0 --activate
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      # Matches deploy.yml: plain `pnpm lint` so pre-existing warnings do not
+      # block a PR, while errors still fail the job.
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Verify pricing consistency
+        run: pnpm verify:pricing-consistency
