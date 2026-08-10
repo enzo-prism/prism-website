@@ -98,6 +98,7 @@ export const INDEXABLE_BLOG_SLUGS = [
   'ai-search-for-dental-practice',
   'business-visibility-chatgpt',
   'claude-opus-4-8-what-it-means-for-small-business-owners',
+  'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',
   'dental-practice-1-3m-swamp',
   'dental-practice-rank-higher-google-search',
