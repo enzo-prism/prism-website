@@ -275,6 +275,267 @@ describe('Vercel analytics URL normalization', () => {
     ).toBeNull()
   })
 
+  describe('the website intake funnel', () => {
+    it.each([
+      [
+        'website_intake_form_view',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+        },
+        {
+          name: 'Website Intake Form Viewed',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+          },
+        },
+      ],
+      [
+        'website_intake_form_start',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          step: 1,
+          step_id: 'why',
+          question_count: 4,
+        },
+        {
+          name: 'Website Intake Form Started',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            step: 1,
+            step_id: 'why',
+            question_count: 4,
+          },
+        },
+      ],
+      [
+        'website_intake_step_view',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          step: 2,
+          step_id: 'timeline',
+          question_count: 4,
+        },
+        {
+          name: 'Website Intake Step Viewed',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            step: 2,
+            step_id: 'timeline',
+            question_count: 4,
+          },
+        },
+      ],
+      [
+        'website_intake_step_complete',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          step: 3,
+          step_id: 'current-site',
+          question_count: 4,
+        },
+        {
+          name: 'Website Intake Step Completed',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            step: 3,
+            step_id: 'current-site',
+            question_count: 4,
+          },
+        },
+      ],
+      [
+        'website_intake_option_select',
+        {
+          form_name: 'website_intake',
+          step_id: 'why',
+          option: 'better_analytics',
+        },
+        {
+          name: 'Website Intake Option Selected',
+          properties: {
+            form_name: 'website_intake',
+            step_id: 'why',
+            option: 'better_analytics',
+          },
+        },
+      ],
+      [
+        'website_intake_validation_error',
+        {
+          form_name: 'website_intake',
+          step: 4,
+          step_id: 'contact',
+          field_name: 'email',
+        },
+        {
+          name: 'Website Intake Validation Error',
+          properties: {
+            form_name: 'website_intake',
+            step: 4,
+            step_id: 'contact',
+            field_name: 'email',
+          },
+        },
+      ],
+      [
+        'website_intake_submit_attempt',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          elapsed_seconds: 37,
+        },
+        {
+          name: 'Website Intake Submit Attempted',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            elapsed_seconds: 37,
+          },
+        },
+      ],
+      [
+        'website_intake_submit_success',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          elapsed_seconds: 38,
+        },
+        {
+          name: 'Website Intake Submit Succeeded',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            elapsed_seconds: 38,
+          },
+        },
+      ],
+      [
+        'website_intake_submit_error',
+        {
+          form_name: 'website_intake',
+          reason: 'non_ok_response',
+          status: 429,
+        },
+        {
+          name: 'Website Intake Submit Error',
+          properties: {
+            form_name: 'website_intake',
+            reason: 'non_ok_response',
+            status: 429,
+          },
+        },
+      ],
+      [
+        'website_intake_source_select',
+        { form_name: 'website_intake', source: 'Google Search' },
+        {
+          name: 'Website Intake Source Selected',
+          properties: {
+            form_name: 'website_intake',
+            source: 'Google Search',
+          },
+        },
+      ],
+      [
+        'website_intake_booking_click',
+        {
+          form_name: 'website_intake',
+          form_location: 'success_screen',
+        },
+        {
+          name: 'Website Intake Booking Clicked',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'success_screen',
+          },
+        },
+      ],
+      [
+        'website_intake_abandon',
+        {
+          form_name: 'website_intake',
+          form_location: 'website_intake_page',
+          funnel_step: 3,
+          funnel_step_id: 'current-site',
+        },
+        {
+          name: 'Website Intake Abandoned',
+          properties: {
+            form_name: 'website_intake',
+            form_location: 'website_intake_page',
+            funnel_step: 3,
+            funnel_step_id: 'current-site',
+          },
+        },
+      ],
+    ])('maps %s into a compact Vercel event', (eventName, params, expected) => {
+      expect(buildVercelCustomEvent(eventName, params)).toEqual(expected)
+    })
+
+    it('drops PII, arbitrary values, and invalid identifiers from mapped events', () => {
+      expect(
+        buildVercelCustomEvent('website_intake_option_select', {
+          form_name: 'website_intake',
+          step_id: 'contact',
+          option: 'person@example.com',
+          email: 'person@example.com',
+          phone: '+1 310 555 0123',
+          site_link: 'https://example.com/private-path',
+          message: 'private project details',
+        }),
+      ).toEqual({
+        name: 'Website Intake Option Selected',
+        properties: {
+          form_name: 'website_intake',
+          step_id: 'contact',
+        },
+      })
+
+      expect(
+        buildVercelCustomEvent('website_intake_submit_error', {
+          form_name: 'person@example.com',
+          reason: 'person@example.com',
+          status: 999,
+        }),
+      ).toEqual({
+        name: 'Website Intake Submit Error',
+        properties: undefined,
+      })
+    })
+
+    it('maps the allowlisted timeout submission error category', () => {
+      expect(
+        buildVercelCustomEvent('website_intake_submit_error', {
+          form_name: 'website_intake',
+          reason: 'timeout',
+        }),
+      ).toEqual({
+        name: 'Website Intake Submit Error',
+        properties: {
+          form_name: 'website_intake',
+          reason: 'timeout',
+        },
+      })
+    })
+
+    it('intentionally leaves unapproved website intake events unmapped', () => {
+      expect(
+        buildVercelCustomEvent('website_intake_draft_saved', {
+          email: 'person@example.com',
+          site_link: 'https://example.com/private-path',
+        }),
+      ).toBeNull()
+    })
+  })
+
   describe('the flat-$300 website order funnel', () => {
     it('maps the order start', () => {
       expect(

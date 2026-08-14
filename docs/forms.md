@@ -25,6 +25,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
+- `components/forms/WebsiteIntakeForm.tsx` (`/website-intake`)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
 - `components/forms/ScalingRoadmapForm.tsx`
@@ -129,15 +130,97 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## `/websites`: booking-only (order form retired 2026-07-27)
+## `/website-intake`: focused PRO website lead funnel
 
-The `/websites` PRO website page has **no form**. The old fullscreen order
-dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
-Payment Link flow (`lib/payment-links.ts`) were deleted when the offer went
-call-first. Every CTA on the page opens the 30-minute Notion Calendar booking
-link (`BOOK_A_CALL_CTA` in `lib/pricing-model.ts`) in a new tab. The noindex
-`/checkout/website/thank-you` route remains only as the landing target for the
-legacy live Stripe link.
+`components/forms/WebsiteIntakeForm.tsx` is the one-question-per-screen intake
+for the Website offer. `/websites` remains the indexable marketing page; its
+primary CTAs now route here. The route is noindex, uses focused `/apply`-style
+chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
+
+- Required payload fields:
+  - `why_new_website`
+  - `timeline`
+  - `has_current_website`
+  - `site_link`
+  - `contact_method`
+  - `email` or `phone` (whichever method they chose)
+- Optional payload fields:
+  - `heard_about_us`
+- Hidden metadata contract:
+  - `_subject` = `New Website Intake Lead`
+  - `form_name` = `website_intake`
+  - `_gotcha` (honeypot)
+  - `appendFormspreeOpsMetadata(formData, "website_intake")`
+- Endpoint strategy:
+  - Dedicated Formspree form: **Website Intake** (`xrpzlkrd`) in the Prism
+    project, notifying `enzo@design-prism.com`
+  - Canonical endpoint: `https://formspree.io/f/xrpzlkrd`, set through
+    `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` in Vercel Production + Preview
+    and retained as the local fallback
+  - Do not point this funnel at `xpqebnbz` (the historical June 2026 website
+    request form) or `mreroojo` (Growth Dashboard / `/apply`).
+- Success flow:
+  - In-page success screen with
+    `trackFormSubmission("website_intake", "website_intake_page", { conversionMode: "immediate", sendGoogleAdsConversion: true, lead_type: "website_intake" })`
+  - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`
+- UX contract:
+  - Four questions: why, timeline, current site/link, contact
+  - Single-select why/timeline steps auto-advance after a short confirm delay
+  - Visible inline validation, desktop autofocus, Enter/arrow keyboard progression
+  - Same-tab draft restore via versioned `sessionStorage`; drafts expire after
+    24 hours and only the selected contact channel is retained
+- Analytics:
+  - `website_intake_form_view`, `_form_start`, `_step_view`, `_step_complete`,
+    `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_success`,
+    `_submit_error`, `_source_select`, `_booking_click`, `_abandon`
+  - Do not include user-entered emails, phones, URLs, or free-text in GA params
+
+### Formspree dashboard configuration
+
+The dedicated Formspree form was created in the Prism project on 2026-08-13:
+
+- Form: **Website Intake** (`xrpzlkrd`)
+- Endpoint: `https://formspree.io/f/xrpzlkrd`
+- Email workflow: enabled for `enzo@design-prism.com`
+- Submission archive: enabled
+- Formshield: enabled
+- CAPTCHA: disabled; the client sends `_gotcha` and Formshield filters the form
+- Project-wide domain restriction: intentionally unset because it applies to
+  every Prism form and would reject Vercel Preview origins
+
+Operational checklist:
+
+1. Keep `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` set to the canonical endpoint
+   for Vercel **Production** and **Preview**. `NEXT_PUBLIC_*` is baked at build
+   time, so redeploy after changing it.
+2. Leave `xpqebnbz` in place for historical "Website Customer Request, 2026
+   June" / `$300` website-order submissions. Do not delete it until nothing
+   else posts there.
+3. After form or workflow changes, send one clearly marked test from
+   `/website-intake` and confirm the inbox subject is `New Website Intake Lead`
+   and these fields arrive:
+   `why_new_website`, `timeline`, `has_current_website`, `site_link`,
+   `contact_method`, `email` or `phone`, optional `heard_about_us`,
+   `form_name=website_intake`, `form_key=website_intake`.
+4. If you create a Formspree CLI project later, store `FORMSPREE_DEPLOY_KEY`
+   only in Vercel/GitHub secrets. Do not commit it.
+
+Focused checks after the hash is wired:
+
+```bash
+pnpm exec jest __tests__/components/WebsiteIntakeForm.test.tsx --runInBand
+pnpm verify:pricing-consistency
+```
+
+## `/websites`: marketing page + intake handoff
+
+The `/websites` PRO website page has **no on-page form**. The old fullscreen
+order dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
+Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero and final
+CTAs now say "Start my website" and route to `/website-intake`. A secondary
+`BOOK_A_CALL_CTA` remains on the final section for visitors who want to skip
+the form. The noindex `/checkout/website/thank-you` route remains only as the
+landing target for the legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 
@@ -249,7 +332,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. (The `/websites` order flow no longer redirects here — it shows an in-page success screen, then opens the Stripe `$300` Payment Link.)
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
 - `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — the **post-payment** confirmation for the `$300` website order, reached by Stripe's redirect with `?session_id={CHECKOUT_SESSION_ID}`. Mounts `PurchaseSuccessTracker`, which shape-checks the session id and fires GA4 `purchase` once per transaction. It deliberately does nothing without a well-formed id, so it is safe to link to but pointless to visit directly.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.

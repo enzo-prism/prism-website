@@ -73,6 +73,7 @@ export const NOINDEX_ROUTES = [
   '/thanks',
   '/thanks-call',
   '/tiktok',
+  '/website-intake',
   '/why-consulting-companies-love-prism',
   '/why-local-shop-owners-love-prism',
   '/why-nonprofits-love-prism',

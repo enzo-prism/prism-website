@@ -84,7 +84,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 
 ## Formspree Integration
 
-All marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started, AEO, Website Order, Referral) and share the `useFormValidation` hook. The noindex `/ai` utility form in `app/ai/prism-ai-client.tsx` also submits directly to Formspree using the same client-side `fetch` pattern. Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival/reference; active pricing-intent traffic is now routed to `/pricing`.
+Marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started / `/apply`, Website Intake, AEO, Referral). Most share the `useFormValidation` hook; the multi-step Website Intake owns equivalent step validation and an immediate ref-based submission lock because its progression model is bespoke. The noindex `/ai` utility form in `app/ai/prism-ai-client.tsx` also submits directly to Formspree using the same client-side `fetch` pattern. Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival/reference; active pricing-intent traffic is now routed to `/pricing`. The retired `/websites` order dialog is gone; website leads now use `/website-intake`.
 
 Key details:
 
@@ -93,6 +93,7 @@ Key details:
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
 - `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a review follows a real business submission, while the later Deep Growth Audit or sprint path is optional and selective.
+- `/website-intake` is the focused PRO website lead funnel. It posts to the dedicated Prism **Website Intake** Formspree form (`xrpzlkrd`) and stays on-page after success; see [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
 
 ### AEO assessment landing regression tests
 

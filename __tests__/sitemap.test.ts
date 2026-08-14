@@ -61,6 +61,7 @@ describe("sitemap", () => {
       "https://www.design-prism.com/library",
       "https://www.design-prism.com/podcast",
       "https://www.design-prism.com/refer",
+      "https://www.design-prism.com/website-intake",
     ]
 
     for (const excludedUrl of excludedUrls) {

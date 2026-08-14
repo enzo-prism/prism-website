@@ -17,6 +17,7 @@ describe('lead values', () => {
     // the fallback. Keys must match the `lead_type` values in components/.
     const emittedLeadTypes = new Set([
       'website_order',
+      'website_intake',
       'growth_application',
       'founder_os_application',
       'checkout_inquiry',
