@@ -11,12 +11,13 @@ jest.mock('@/components/lord-icon', () => ({
 }))
 
 const trackEvent = jest.fn()
-const trackLeadConversion = jest.fn()
+const trackFormSubmission = jest.fn()
 const trackBookCallClick = jest.fn()
 
 jest.mock('@/utils/analytics', () => ({
   trackEvent: (...args: Array<unknown>) => trackEvent(...args),
-  trackLeadConversion: (...args: Array<unknown>) => trackLeadConversion(...args),
+  trackFormSubmission: (...args: Array<unknown>) =>
+    trackFormSubmission(...args),
   trackBookCallClick: (...args: Array<unknown>) => trackBookCallClick(...args),
   trackCTAClick: jest.fn(),
 }))
@@ -168,14 +169,13 @@ describe('WebsiteIntakeForm', () => {
       'href',
       'https://calendar.notion.so/meet/enzosison/test',
     )
-    expect(trackLeadConversion).toHaveBeenCalledWith(
-      expect.objectContaining({
-        form_name: 'website_intake',
-        lead_type: 'website_intake',
-      }),
+    expect(trackFormSubmission).toHaveBeenCalledWith(
+      'website_intake',
+      'website_intake_page',
       expect.objectContaining({
         conversionMode: 'immediate',
         sendGoogleAdsConversion: true,
+        lead_type: 'website_intake',
       }),
     )
   })

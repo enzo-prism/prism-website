@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 import {
   trackBookCallClick,
   trackEvent,
-  trackLeadConversion,
+  trackFormSubmission,
 } from '@/utils/analytics'
 import { appendFormspreeOpsMetadata } from './FormspreeOpsFields'
 
@@ -546,16 +546,13 @@ export default function WebsiteIntakeForm() {
       form_location: FORM_LOCATION,
       elapsed_seconds: elapsedSeconds,
     })
-    trackLeadConversion(
-      {
-        form_name: FORM_NAME,
-        form_location: FORM_LOCATION,
-        lead_type: FORM_NAME,
-        timeline,
-        elapsed_seconds: elapsedSeconds,
-      },
-      { sendGoogleAdsConversion: true, conversionMode: 'immediate' },
-    )
+    trackFormSubmission(FORM_NAME, FORM_LOCATION, {
+      conversionMode: 'immediate',
+      sendGoogleAdsConversion: true,
+      lead_type: FORM_NAME,
+      timeline,
+      elapsed_seconds: elapsedSeconds,
+    })
     setIsSuccess(true)
   }, [contactMethod, email, hasWebsite, phone, siteLink, source, timeline, why])
 
