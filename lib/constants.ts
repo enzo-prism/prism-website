@@ -117,3 +117,12 @@ export const PROOF_NAV_ITEMS: NavItem[] = NAV_ITEMS.filter((item) =>
 )
 
 export const CONTACT_NAV_ITEM: NavItem = { label: "contact", href: "/contact" }
+
+// Primary lead-capture entry for the Website offer (2026-08-05). The focused
+// intake funnel is the site's main conversion push, so it gets a distinct CTA
+// button in the navbar rather than a quiet rail link.
+export const WEBSITE_INTAKE_PATH = "/website-intake"
+export const WEBSITE_INTAKE_NAV_ITEM: NavItem = {
+  label: "get a website",
+  href: WEBSITE_INTAKE_PATH,
+}

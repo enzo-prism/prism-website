@@ -95,6 +95,11 @@ const lockedRoutes = [
     path: '/',
     readyHeading: /^prism$/i,
     mustContain: [/the #1 growth partner for small businesses/i],
+    // The navbar carries the site-wide "get a website" intake CTA, which is a
+    // deliberate, separately unit-tested (Navbar.test.tsx) change to the shared
+    // chrome. Mask the header so the locked hero snapshot stays focused on the
+    // hero content rather than re-baselining every time the nav rail changes.
+    mask: ['header'],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -447,7 +452,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/websites"]',
+        'a[href="/website-intake"]',
       )
       const secondaryCta = hero.querySelector<HTMLAnchorElement>(
         'a[href="/wall-of-love"]',

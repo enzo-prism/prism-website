@@ -155,7 +155,7 @@ export const HOMEPAGE_HERO = {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
   },
-  primaryCta: { label: 'Get a PRO website', href: '/websites' },
+  primaryCta: { label: 'Get a PRO website', href: '/website-intake' },
   secondaryCta: { label: 'Wall of Love', href: '/wall-of-love' },
 } as const
 

@@ -140,7 +140,7 @@ describe('SocialLinkHub', () => {
     const orderLink = screen.getByRole('link', {
       name: /premium website design/i,
     })
-    expect(orderLink).toHaveAttribute('href', '/websites')
+    expect(orderLink).toHaveAttribute('href', '/website-intake')
     expect(orderLink).not.toHaveAttribute('target')
     expect(orderLink).toHaveAttribute('data-cta-text', 'premium website design')
     expect(orderLink).toHaveAttribute(
@@ -253,7 +253,7 @@ describe('SocialLinkHub', () => {
     expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
     expect(
       within(youtubeNav).getByRole('link', { name: /premium website design/i }),
-    ).toHaveAttribute('href', '/websites')
+    ).toHaveAttribute('href', '/website-intake')
     expect(
       within(youtubeNav).getByRole('link', { name: /prism infinity/i }),
     ).toHaveAttribute('href', '/prism-infinity')
@@ -273,7 +273,7 @@ describe('SocialLinkHub', () => {
       screen.getByRole('link', {
         name: /premium website design, for businesses under \$1m a year/i,
       }),
-    ).toHaveAttribute('href', '/websites')
+    ).toHaveAttribute('href', '/website-intake')
     expect(
       screen.getByRole('link', {
         name: /prism infinity, for businesses doing \$1m–\$10m a year/i,

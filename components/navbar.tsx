@@ -12,6 +12,8 @@ import {
   NAV_ITEMS,
   OFFER_NAV_ITEMS,
   PROOF_NAV_ITEMS,
+  WEBSITE_INTAKE_NAV_ITEM,
+  WEBSITE_INTAKE_PATH,
 } from '@/lib/constants'
 import type { NavItem } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -304,6 +306,27 @@ export default function Navbar() {
               variant="desktop"
               onNavigate={handleNavigate}
             />
+            <span
+              aria-hidden="true"
+              className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
+            />
+            <Link
+              href={WEBSITE_INTAKE_PATH}
+              onClick={() =>
+                handleNavigate(
+                  WEBSITE_INTAKE_NAV_ITEM.label,
+                  WEBSITE_INTAKE_NAV_ITEM.href,
+                )
+              }
+              className={cn(
+                'whitespace-nowrap rounded-full border px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-[background-color,border-color,color,box-shadow] duration-300',
+                isNavItemActive(pathname, WEBSITE_INTAKE_PATH)
+                  ? 'border-[#f5f0e8] bg-[#f5f0e8] text-black'
+                  : 'border-[#f5f0e8]/70 bg-[#f5f0e8] text-black hover:bg-white hover:shadow-[0_10px_28px_-14px_rgba(245,240,232,0.7)]',
+              )}
+            >
+              {WEBSITE_INTAKE_NAV_ITEM.label}
+            </Link>
           </nav>
 
           <button
@@ -357,6 +380,20 @@ export default function Navbar() {
                 variant="mobile"
                 onNavigate={handleNavigate}
               />
+            </div>
+            <div className="mt-6 px-1">
+              <Link
+                href={WEBSITE_INTAKE_PATH}
+                onClick={() =>
+                  handleNavigate(
+                    WEBSITE_INTAKE_NAV_ITEM.label,
+                    WEBSITE_INTAKE_NAV_ITEM.href,
+                  )
+                }
+                className="flex min-h-12 items-center justify-center rounded-full border border-[#f5f0e8]/70 bg-[#f5f0e8] px-6 text-sm font-semibold uppercase tracking-[0.22em] text-black transition-colors hover:bg-white"
+              >
+                {WEBSITE_INTAKE_NAV_ITEM.label}
+              </Link>
             </div>
           </nav>
         </div>

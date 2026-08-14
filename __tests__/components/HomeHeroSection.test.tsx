@@ -120,7 +120,7 @@ describe('HomeHeroSection', () => {
 
     expect(
       screen.getByRole('link', { name: /get a pro website/i }),
-    ).toHaveAttribute('href', '/websites')
+    ).toHaveAttribute('href', '/website-intake')
     expect(
       screen.getByRole('link', { name: /wall of love/i }),
     ).toHaveAttribute('href', '/wall-of-love')

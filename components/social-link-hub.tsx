@@ -242,7 +242,7 @@ export default function SocialLinkHub({
                 title="Premium Website Design"
                 detail="rank on ChatGPT and Google"
                 ariaLabel="Premium Website Design, for businesses under $1M a year. Rank on ChatGPT and Google."
-                href="/websites"
+                href="/website-intake"
                 tone="primary"
                 location={actionsLocation}
                 icon={

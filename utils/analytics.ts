@@ -422,6 +422,19 @@ export type EventType =
   | 'generate_lead'
   // GA4 recommended ecommerce event. Marked as a Key Event on the property.
   | 'purchase'
+  // Focused PRO-website lead intake funnel (components/forms/WebsiteIntakeForm).
+  | 'website_intake_form_view'
+  | 'website_intake_form_start'
+  | 'website_intake_step_view'
+  | 'website_intake_step_complete'
+  | 'website_intake_option_select'
+  | 'website_intake_validation_error'
+  | 'website_intake_submit_attempt'
+  | 'website_intake_submit_success'
+  | 'website_intake_submit_error'
+  | 'website_intake_source_select'
+  | 'website_intake_booking_click'
+  | 'website_intake_abandon'
 
 function canUseSessionStorage() {
   return typeof window !== 'undefined' && 'sessionStorage' in window
