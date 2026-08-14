@@ -88,7 +88,7 @@ describe('Prism Infinity framing', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /unlimited\s+landing pages\.\s+one subscription\./i,
+        name: /unlimited\s+landing pages\s*\.\s+one subscription\./i,
       }),
     ).toBeInTheDocument()
     expect(
