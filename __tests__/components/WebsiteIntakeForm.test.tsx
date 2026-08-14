@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT =
   'https://formspree.io/f/websiteintake'
@@ -61,6 +61,7 @@ describe('WebsiteIntakeForm', () => {
   const fetchSpy = jest.spyOn(global, 'fetch')
 
   beforeEach(() => {
+    jest.useRealTimers()
     jest.clearAllMocks()
     fetchSpy.mockReset()
     window.sessionStorage.clear()
@@ -79,6 +80,17 @@ describe('WebsiteIntakeForm', () => {
     expect(screen.getByText(/all of the above/i)).toBeInTheDocument()
     expect(screen.getAllByTestId('lord-icon')).toHaveLength(4)
     expect(screen.getByText(/1 of 4/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('group', { name: /why do you want a new website/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('progressbar', { name: /website intake progress/i }),
+    ).toHaveAttribute('aria-valuenow', '1')
+
+    const option = screen.getByRole('button', { name: /more customers/i })
+    expect(option).toHaveAttribute('aria-pressed', 'false')
+    fireEvent.click(option)
+    expect(option).toHaveAttribute('aria-pressed', 'true')
   })
 
   it('shows a visible error instead of silently blocking continue', () => {
@@ -211,6 +223,33 @@ describe('WebsiteIntakeForm', () => {
     expect(body.get('site_link')).toBe('https://instagram.com/mybiz')
     expect(body.get('contact_method')).toBe('text')
     expect(body.get('phone')).toBe('(555) 123-4567')
+    expect(body.get('sms_consent')).toBe('yes')
+  })
+
+  it('sets bounded contact fields and shows privacy and SMS disclosures', async () => {
+    render(<WebsiteIntakeForm />)
+
+    await advanceFromWhy()
+    await advanceFromTimeline()
+    fireEvent.click(screen.getByText(/yes, i have a website/i))
+
+    const siteInput = screen.getByRole('textbox')
+    expect(siteInput).toHaveAttribute('maxlength', '500')
+    fireEvent.change(siteInput, { target: { value: 'example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+    fireEvent.click(screen.getByText(/email me/i))
+    expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '254')
+    expect(
+      screen.getByRole('link', { name: /privacy policy/i }),
+    ).toHaveAttribute('href', '/privacy-policy')
+
+    fireEvent.click(screen.getByText(/text me/i))
+    expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '30')
+    expect(
+      screen.getByText(/message and data rates may apply/i),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/reply stop to opt out/i)).toBeInTheDocument()
   })
 
   it.each([
@@ -280,6 +319,154 @@ describe('WebsiteIntakeForm', () => {
     await waitFor(() => {
       expect(screen.getByTestId('intake-success')).toBeInTheDocument()
     })
+  })
+
+  it('times out a stalled request, categorizes it, and allows a retry', async () => {
+    render(<WebsiteIntakeForm />)
+
+    await advanceFromWhy()
+    await advanceFromTimeline()
+    fireEvent.click(screen.getByText(/yes, i have a website/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'example.com' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByText(/email me/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'owner@example.com' },
+    })
+
+    fetchSpy.mockImplementationOnce(
+      (_url, init) =>
+        new Promise<Response>((_resolve, reject) => {
+          const signal = init?.signal
+          signal?.addEventListener(
+            'abort',
+            () => reject(new DOMException('Aborted', 'AbortError')),
+            { once: true },
+          )
+        }),
+    )
+
+    jest.useFakeTimers()
+    const form = screen.getByTestId('website-intake-form')
+    fireEvent.submit(form)
+
+    await act(async () => {
+      jest.advanceTimersByTime(12_000)
+      await Promise.resolve()
+    })
+
+    expect(
+      screen.getByText(/request took too long.*try again/i),
+    ).toBeInTheDocument()
+    expect(trackEvent).toHaveBeenCalledWith(
+      'website_intake_submit_error',
+      expect.objectContaining({ reason: 'timeout' }),
+    )
+
+    jest.useRealTimers()
+    fetchSpy.mockResolvedValueOnce(createMockResponse(true))
+    fireEvent.submit(form)
+
+    await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(2))
+    await waitFor(() => {
+      expect(screen.getByTestId('intake-success')).toBeInTheDocument()
+    })
+  })
+
+  it('distinguishes non-2xx responses from network failures', async () => {
+    render(<WebsiteIntakeForm />)
+
+    await advanceFromWhy()
+    await advanceFromTimeline()
+    fireEvent.click(screen.getByText(/yes, i have a website/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'example.com' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByText(/email me/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'owner@example.com' },
+    })
+
+    const form = screen.getByTestId('website-intake-form')
+    fetchSpy.mockResolvedValueOnce(createMockResponse(false))
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(trackEvent).toHaveBeenCalledWith(
+        'website_intake_submit_error',
+        expect.objectContaining({ reason: 'non_ok_response', status: 500 }),
+      )
+    })
+
+    fetchSpy.mockRejectedValueOnce(new Error('offline'))
+    fireEvent.submit(form)
+
+    await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(2))
+    expect(trackEvent).toHaveBeenCalledWith(
+      'website_intake_submit_error',
+      expect.objectContaining({ reason: 'network_failure' }),
+    )
+  })
+
+  it('sanitizes malformed drafts so required steps cannot be bypassed', () => {
+    window.sessionStorage.setItem(
+      'prism_website_intake_draft_v1',
+      JSON.stringify({
+        version: 2,
+        updatedAt: Date.now(),
+        why: true,
+        timeline: 'next_week',
+        hasWebsite: 'yes',
+        siteLink: 'example.com',
+        contactMethod: 'email',
+        email: 'owner@example.com',
+        source: 'made-up-source',
+        stepId: 'contact',
+      }),
+    )
+
+    render(<WebsiteIntakeForm />)
+
+    expect(
+      screen.getByRole('heading', { name: /why do you want a new website/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', {
+        name: /how would you like us to reach you/i,
+      }),
+    ).not.toBeInTheDocument()
+    expect(
+      window.sessionStorage.getItem('prism_website_intake_draft_v1'),
+    ).toBeNull()
+  })
+
+  it('discards expired drafts containing stale contact details', () => {
+    window.sessionStorage.setItem(
+      'prism_website_intake_draft_v1',
+      JSON.stringify({
+        version: 2,
+        updatedAt: Date.now() - 24 * 60 * 60 * 1000 - 1,
+        why: 'more_customers',
+        timeline: 'next_week',
+        hasWebsite: 'yes',
+        siteLink: 'example.com',
+        contactMethod: 'email',
+        email: 'stale@example.com',
+        stepId: 'contact',
+      }),
+    )
+
+    render(<WebsiteIntakeForm />)
+
+    expect(
+      screen.getByRole('heading', { name: /why do you want a new website/i }),
+    ).toBeInTheDocument()
+    expect(
+      window.sessionStorage.getItem('prism_website_intake_draft_v1'),
+    ).toBeNull()
   })
 
   it('rejects an invalid email on the contact step', async () => {

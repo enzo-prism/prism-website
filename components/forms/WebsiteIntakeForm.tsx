@@ -25,7 +25,13 @@ const FORM_ACTION =
 const FORM_NAME = 'website_intake'
 const FORM_LOCATION = 'website_intake_page'
 const DRAFT_STORAGE_KEY = 'prism_website_intake_draft_v1'
+const DRAFT_VERSION = 2
+const DRAFT_TTL_MS = 24 * 60 * 60 * 1000
 const AUTO_ADVANCE_MS = 280
+const SUBMIT_TIMEOUT_MS = 12_000
+const SITE_LINK_MAX_LENGTH = 500
+const EMAIL_MAX_LENGTH = 254
+const PHONE_MAX_LENGTH = 30
 
 const FORM_STEPS = ['why', 'timeline', 'current-site', 'contact'] as const
 type FormStepId = (typeof FORM_STEPS)[number]
@@ -119,6 +125,104 @@ type IntakeDraft = {
   stepId?: string
 }
 
+const WHY_VALUES = new Set(WHY_OPTIONS.map((option) => option.value))
+const TIMELINE_VALUES = new Set(
+  TIMELINE_OPTIONS.map((option) => option.value),
+)
+const SOURCE_VALUES = new Set<string>(SOURCE_OPTIONS)
+
+function sanitizeDraftString(value: unknown, maxLength: number) {
+  return typeof value === 'string' ? value.slice(0, maxLength) : ''
+}
+
+function sanitizeIntakeDraft(value: unknown): IntakeDraft | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null
+
+  const stored = value as Record<string, unknown>
+  const updatedAt = stored.updatedAt
+  if (
+    stored.version !== DRAFT_VERSION ||
+    typeof updatedAt !== 'number' ||
+    !Number.isFinite(updatedAt) ||
+    updatedAt > Date.now() ||
+    Date.now() - updatedAt > DRAFT_TTL_MS
+  ) {
+    return null
+  }
+
+  const draft: IntakeDraft = {
+    why:
+      typeof stored.why === 'string' && WHY_VALUES.has(stored.why)
+        ? stored.why
+        : '',
+    timeline:
+      typeof stored.timeline === 'string' &&
+      TIMELINE_VALUES.has(stored.timeline)
+        ? stored.timeline
+        : '',
+    hasWebsite:
+      stored.hasWebsite === 'yes' || stored.hasWebsite === 'no'
+        ? stored.hasWebsite
+        : '',
+    siteLink: sanitizeDraftString(stored.siteLink, SITE_LINK_MAX_LENGTH),
+    contactMethod:
+      stored.contactMethod === 'email' || stored.contactMethod === 'text'
+        ? stored.contactMethod
+        : '',
+    email: sanitizeDraftString(stored.email, EMAIL_MAX_LENGTH),
+    phone: sanitizeDraftString(stored.phone, PHONE_MAX_LENGTH),
+    source:
+      typeof stored.source === 'string' && SOURCE_VALUES.has(stored.source)
+        ? stored.source
+        : '',
+  }
+
+  let furthestSafeStepIndex = 0
+  if (draft.why) {
+    furthestSafeStepIndex = 1
+    if (draft.timeline) {
+      furthestSafeStepIndex = 2
+      if (
+        draft.hasWebsite &&
+        draft.siteLink &&
+        isValidLink(normalizeLink(draft.siteLink))
+      ) {
+        furthestSafeStepIndex = 3
+      }
+    }
+  }
+
+  if (furthestSafeStepIndex < 3) {
+    draft.contactMethod = ''
+    draft.email = ''
+    draft.phone = ''
+    draft.source = ''
+  } else if (draft.contactMethod === 'email') {
+    draft.phone = ''
+  } else if (draft.contactMethod === 'text') {
+    draft.email = ''
+  } else {
+    draft.email = ''
+    draft.phone = ''
+  }
+
+  if (furthestSafeStepIndex < 2) {
+    draft.hasWebsite = ''
+    draft.siteLink = ''
+  }
+
+  if (furthestSafeStepIndex < 1) draft.timeline = ''
+
+  const requestedStepIndex = FORM_STEPS.includes(stored.stepId as FormStepId)
+    ? FORM_STEPS.indexOf(stored.stepId as FormStepId)
+    : 0
+  draft.stepId = FORM_STEPS[
+    Math.min(requestedStepIndex, furthestSafeStepIndex)
+  ]
+
+  return draft
+}
+
 function normalizeLink(value: string) {
   const trimmed = value.trim()
   if (!trimmed) return ''
@@ -161,9 +265,11 @@ function readIntakeDraft(): IntakeDraft | null {
   try {
     const raw = window.sessionStorage.getItem(DRAFT_STORAGE_KEY)
     if (!raw) return null
-    const parsed = JSON.parse(raw)
-    return parsed && typeof parsed === 'object' ? parsed : null
+    const draft = sanitizeIntakeDraft(JSON.parse(raw))
+    if (!draft) clearIntakeDraft()
+    return draft
   } catch {
+    clearIntakeDraft()
     return null
   }
 }
@@ -172,7 +278,14 @@ function writeIntakeDraft(draft: IntakeDraft) {
   if (!canUseSessionStorage()) return
 
   try {
-    window.sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft))
+    window.sessionStorage.setItem(
+      DRAFT_STORAGE_KEY,
+      JSON.stringify({
+        ...draft,
+        version: DRAFT_VERSION,
+        updatedAt: Date.now(),
+      }),
+    )
   } catch {
     // no-op
   }
@@ -297,7 +410,10 @@ export default function WebsiteIntakeForm() {
     setStepError(null)
     setSubmitError(null)
     setStepIndex(nextIndex)
-    formRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' })
+    formRef.current?.scrollIntoView?.({
+      block: 'start',
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+    })
   }, [])
 
   const getStepError = useCallback((): {
@@ -324,6 +440,12 @@ export default function WebsiteIntakeForm() {
               : 'Add a social profile or Google Maps link',
         }
       }
+      if (siteLink.length > SITE_LINK_MAX_LENGTH) {
+        return {
+          field: 'site_link',
+          message: `Keep the link under ${SITE_LINK_MAX_LENGTH} characters`,
+        }
+      }
       if (!isValidLink(normalized)) {
         return { field: 'site_link', message: 'Add a valid link' }
       }
@@ -337,6 +459,12 @@ export default function WebsiteIntakeForm() {
       }
       if (contactMethod === 'email') {
         if (!email.trim()) return { field: 'email', message: 'Enter your email' }
+        if (email.length > EMAIL_MAX_LENGTH) {
+          return {
+            field: 'email',
+            message: `Keep your email under ${EMAIL_MAX_LENGTH} characters`,
+          }
+        }
         if (!isValidEmail(email)) {
           return { field: 'email', message: 'Enter a valid email' }
         }
@@ -344,6 +472,12 @@ export default function WebsiteIntakeForm() {
       if (contactMethod === 'text') {
         if (!phone.trim()) {
           return { field: 'phone', message: 'Enter your phone number' }
+        }
+        if (phone.length > PHONE_MAX_LENGTH) {
+          return {
+            field: 'phone',
+            message: `Keep your phone number under ${PHONE_MAX_LENGTH} characters`,
+          }
         }
         if (!isValidPhone(phone)) {
           return { field: 'phone', message: 'Enter a valid phone number' }
@@ -408,8 +542,8 @@ export default function WebsiteIntakeForm() {
       hasWebsite,
       siteLink,
       contactMethod,
-      email,
-      phone,
+      email: contactMethod === 'email' ? email : '',
+      phone: contactMethod === 'text' ? phone : '',
       source,
       stepId: currentStep,
     }
@@ -516,18 +650,28 @@ export default function WebsiteIntakeForm() {
     formData.set('site_link', normalizeLink(siteLink))
     formData.set('contact_method', contactMethod)
     if (contactMethod === 'email') formData.set('email', email)
-    if (contactMethod === 'text') formData.set('phone', phone)
+    if (contactMethod === 'text') {
+      formData.set('phone', phone)
+      formData.set('sms_consent', 'yes')
+    }
     if (source) formData.set('heard_about_us', source)
     formData.set('elapsed_seconds', String(elapsedSeconds))
     appendFormspreeOpsMetadata(formData, 'website_intake')
 
+    const controller = new AbortController()
     let didSubmit = false
+    let didTimeOut = false
+    const timeout = window.setTimeout(() => {
+      didTimeOut = true
+      controller.abort()
+    }, SUBMIT_TIMEOUT_MS)
     setIsSubmitting(true)
     try {
       const response = await fetch(FORM_ACTION, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData,
+        signal: controller.signal,
       })
 
       if (!response.ok) {
@@ -543,11 +687,16 @@ export default function WebsiteIntakeForm() {
     } catch {
       trackEvent('website_intake_submit_error', {
         form_name: FORM_NAME,
-        reason: 'network_failure',
+        reason: didTimeOut ? 'timeout' : 'network_failure',
       })
-      setSubmitError("We couldn't submit right now. Try again?")
+      setSubmitError(
+        didTimeOut
+          ? 'The request took too long. Please try again.'
+          : "We couldn't submit right now. Try again?",
+      )
       return
     } finally {
+      window.clearTimeout(timeout)
       setIsSubmitting(false)
       if (!didSubmit) isSubmittingRef.current = false
     }
@@ -585,7 +734,10 @@ export default function WebsiteIntakeForm() {
       const errorNode = formRef.current?.querySelector<HTMLElement>(
         `#${error.field}-error`,
       )
-      errorNode?.scrollIntoView?.({ block: 'center', behavior: 'smooth' })
+      errorNode?.scrollIntoView?.({
+        block: 'center',
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      })
       return
     }
 
@@ -752,6 +904,7 @@ export default function WebsiteIntakeForm() {
       <button
         key={value}
         type="button"
+        aria-pressed={selected}
         data-selected={selected}
         data-testid={`intake-option-${stepId}-${value}`}
         data-step-autofocus={autofocus ? 'true' : undefined}
@@ -798,7 +951,11 @@ export default function WebsiteIntakeForm() {
     switch (currentStep) {
       case 'why':
         return (
-          <div className="grid gap-3">
+          <div
+            className="grid gap-3"
+            role="group"
+            aria-labelledby="website-intake-question"
+          >
             {WHY_OPTIONS.map((option, index) =>
               renderOptionCard({
                 value: option.value,
@@ -817,7 +974,11 @@ export default function WebsiteIntakeForm() {
 
       case 'timeline':
         return (
-          <div className="grid gap-3">
+          <div
+            className="grid gap-3"
+            role="group"
+            aria-labelledby="website-intake-question"
+          >
             {TIMELINE_OPTIONS.map((option, index) =>
               renderOptionCard({
                 value: option.value,
@@ -841,7 +1002,11 @@ export default function WebsiteIntakeForm() {
       case 'current-site':
         return (
           <div className="space-y-5">
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div
+              className="grid gap-3 sm:grid-cols-2"
+              role="group"
+              aria-labelledby="website-intake-question"
+            >
               {renderOptionCard({
                 value: 'yes',
                 label: 'Yes, I have a website',
@@ -880,6 +1045,7 @@ export default function WebsiteIntakeForm() {
                   type="url"
                   inputMode="url"
                   autoComplete="url"
+                  maxLength={SITE_LINK_MAX_LENGTH}
                   value={siteLink}
                   placeholder={
                     hasWebsite === 'yes'
@@ -917,7 +1083,11 @@ export default function WebsiteIntakeForm() {
       case 'contact':
         return (
           <div className="space-y-5">
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div
+              className="grid gap-3 sm:grid-cols-2"
+              role="group"
+              aria-labelledby="website-intake-question"
+            >
               {renderOptionCard({
                 value: 'email',
                 label: 'Email me',
@@ -954,6 +1124,7 @@ export default function WebsiteIntakeForm() {
                   type="email"
                   autoComplete="email"
                   spellCheck={false}
+                  maxLength={EMAIL_MAX_LENGTH}
                   value={email}
                   placeholder="you@business.com"
                   className={fieldClassName}
@@ -986,6 +1157,7 @@ export default function WebsiteIntakeForm() {
                   type="tel"
                   autoComplete="tel"
                   inputMode="tel"
+                  maxLength={PHONE_MAX_LENGTH}
                   value={phone}
                   placeholder="(555) 123-4567"
                   className={fieldClassName}
@@ -1004,6 +1176,11 @@ export default function WebsiteIntakeForm() {
                   error={stepError?.field === 'phone' ? stepError.message : ''}
                   id="phone-error"
                 />
+                <p className="font-mono text-[0.7rem] leading-5 text-[#8F877B]">
+                  By submitting, you agree to receive text messages from Prism
+                  about this request. Message and data rates may apply. Reply
+                  STOP to opt out.
+                </p>
               </div>
             ) : null}
 
@@ -1016,6 +1193,7 @@ export default function WebsiteIntakeForm() {
                   <button
                     key={option}
                     type="button"
+                    aria-pressed={source === option}
                     onClick={() => handleSourceSelect(option)}
                     data-selected={source === option}
                     className={cn(
@@ -1030,6 +1208,17 @@ export default function WebsiteIntakeForm() {
                 ))}
               </div>
             </div>
+
+            <p className="font-mono text-[0.7rem] leading-5 text-[#8F877B]">
+              We use your details only to respond to this request. See our{' '}
+              <a
+                href="/privacy-policy"
+                className="text-[#B8AFA2] underline decoration-white/30 underline-offset-4 transition-colors hover:text-[#F5F0E8]"
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
           </div>
         )
     }
@@ -1153,14 +1342,27 @@ export default function WebsiteIntakeForm() {
       <div className="relative z-10 flex min-h-[inherit] flex-col">
         <div className="space-y-4 border-b border-white/10 pb-5">
           <div className="flex items-center justify-between gap-4">
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#D8BC79]">
+            <p
+              className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#D8BC79]"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              aria-label={`Step ${stepIndex + 1} of ${QUESTION_STEP_COUNT}: ${heading}`}
+            >
               {stepIndex + 1} of {QUESTION_STEP_COUNT}
             </p>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#8F877B]">
               PRO website intake
             </p>
           </div>
-          <div className="h-px w-full overflow-hidden bg-white/10">
+          <div
+            className="h-px w-full overflow-hidden bg-white/10"
+            role="progressbar"
+            aria-label="Website intake progress"
+            aria-valuemin={1}
+            aria-valuemax={QUESTION_STEP_COUNT}
+            aria-valuenow={stepIndex + 1}
+          >
             <div
               className="h-full bg-[#D8BC79] transition-[width] duration-300"
               style={{ width: `${progressWidth}%` }}
@@ -1171,7 +1373,10 @@ export default function WebsiteIntakeForm() {
         <div className="flex flex-1 flex-col justify-center py-10 pb-24 sm:py-14 sm:pb-14">
           <div className={cn(styles.stepBody, 'space-y-7')} key={currentStep}>
             <div className="space-y-3">
-              <h1 className="max-w-[16ch] text-balance text-[clamp(1.9rem,6vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-[#F5F0E8]">
+              <h1
+                id="website-intake-question"
+                className="max-w-[16ch] text-balance text-[clamp(1.9rem,6vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-[#F5F0E8]"
+              >
                 {heading}
               </h1>
               <p className="max-w-[36ch] text-pretty font-mono text-[0.82rem] leading-6 text-[#8F877B]">
