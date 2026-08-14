@@ -267,8 +267,8 @@ export default function SocialLinkHub({
             <div className="mt-2">
               <ActionCard
                 title="Prism Infinity"
-                detail="unlimited design, web, content, and ads"
-                ariaLabel="Prism Infinity, for businesses doing $1M–$10M a year. Unlimited design, web, content, and ads."
+                detail="unlimited landing pages, ads, and websites"
+                ariaLabel="Prism Infinity, for businesses doing $1M–$10M a year. Unlimited landing pages, ads, and websites."
                 href="/prism-infinity"
                 location={actionsLocation}
                 icon={

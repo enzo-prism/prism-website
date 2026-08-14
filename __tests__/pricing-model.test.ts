@@ -82,4 +82,19 @@ describe("pricing model", () => {
       "/prism-infinity",
     )
   })
+
+  it("frames Prism Infinity around owner-valued growth deliverables", () => {
+    expect(CANONICAL_PRICING_OFFERS.prism_infinity.description).toMatch(
+      /landing pages/,
+    )
+    expect(CANONICAL_PRICING_OFFERS.prism_infinity.description).toMatch(
+      /ad creative/,
+    )
+    expect(CANONICAL_PRICING_OFFERS.prism_infinity.description).not.toMatch(
+      /business cards/i,
+    )
+    expect(CANONICAL_PRICING_OFFERS.prism_infinity.description).not.toMatch(
+      /slide decks/i,
+    )
+  })
 })

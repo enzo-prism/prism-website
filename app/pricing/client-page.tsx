@@ -80,7 +80,7 @@ const partnerLevels = [
     title: 'Prism Infinity',
     price: 'Scoped on a call',
     description:
-      'Unlimited Prism services across engineering, design, and marketing, one request at a time. Pause or cancel anytime.',
+      'Unlimited landing pages, ad creative, websites, video, and photoshoots, one request at a time. Pause or cancel anytime.',
   },
 ] as const
 
@@ -129,7 +129,7 @@ const faqs = [
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A monthly subscription for unlimited Prism services (logo and print design, web development, video editing, content, ads, slide decks, photoshoots, and more), delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
+      'A monthly subscription for the growth work owners actually request: landing pages, ad creative, websites, video, photoshoots, and more, delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
   },
   {
     question: 'How is Dental OS priced?',
