@@ -187,6 +187,10 @@ The dedicated Formspree form was created in the Prism project on 2026-08-13:
 - CAPTCHA: disabled; the client sends `_gotcha` and Formshield filters the form
 - Project-wide domain restriction: intentionally unset because it applies to
   every Prism form and would reject Vercel Preview origins
+- Delivery verification (2026-08-14): marked `_codex_test=true` submission was
+  accepted into the Website Intake inbox with spam count 0, and Formspree's
+  `New Website Intake Lead [Codex QA]` notification reached
+  `enzo@design-prism.com`
 
 Operational checklist:
 
