@@ -8,6 +8,8 @@ cp .env.example .env.local
 
 > `.env.local` is git-ignored, so you can keep per-developer overrides without affecting the repo.
 
+Cloud Agents seed `.env.local` from `.env.example` during install/start when the file is missing. Optional Instagram/TikTok tokens and dashboard intake URLs should be added as Cursor environment secrets rather than committed files. See **Cursor Cloud specific instructions** in `AGENTS.md`.
+
 ## Variable reference
 
 | Variable                                             | Required            | Purpose                                                                                  | Default / Fallback                                                                           | Used in                                                                                                                 |

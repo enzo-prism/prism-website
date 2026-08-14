@@ -65,3 +65,17 @@ Follow the existing history: concise, imperative, sentence-case subject lines wi
 ## Configuration & Security Notes
 
 Environment variables load from `.env.local`; copy `.env.example` as the starting point and never commit secrets. MCP integrations (GitHub, Sentry, Figma) require valid tokens before running scripts in `scripts/`. Review `sentry.*.config.ts` whenever adjusting deployment targets to keep observability intact.
+
+## Cursor Cloud specific instructions
+
+Cloud Agents resolve this repo from `.cursor/environment.json`. That file is the source of truth for install, per-boot start, and the shared Next.js terminal. Do not put secrets in it.
+
+- **Install** (`.cursor/install.sh`) pins pnpm 10 via Corepack, runs `pnpm install --frozen-lockfile`, seeds `.env.local` from `.env.example` when missing, and installs Playwright Chromium, Firefox, and WebKit with OS deps. It must stay idempotent and must not start servers.
+- **Start** (`.cursor/start.sh`) only reseeds `.env.local` if a fresh pod is missing it. Do not install packages or launch `pnpm dev` here.
+- **Terminals** already start `pnpm dev` on `http://localhost:3000`. Reuse that process. Do not start a second Next.js server on port 3000.
+- **Env** — `.env.example` defaults are enough for local marketing-site work (Formspree fallbacks, seed social data, widget off unless a secret overrides it). Never commit `.env.local`. Optional Instagram/TikTok tokens and dashboard intake URLs belong in Cursor environment secrets, not the repo.
+- **Quality gates** — `pnpm lint && pnpm typecheck && pnpm test`. For pricing-sensitive edits also run `pnpm verify:pricing-consistency`.
+- **Visual / Playwright** — browsers are preinstalled by install. Locked, widget, home-scroll, and animation suites build a production bundle and start an isolated `next start` on ports `3300`, `3315`, `3310`, and `3320`. Leave the terminals `pnpm dev` on `3000` running; do not kill it to free those ports.
+- **Manual UI checks** — use the already-running `pnpm dev` on port 3000. For production-parity widget or layout checks, `pnpm build && pnpm start -p <free-port>` on a port other than 3000.
+- **Wait for setup** — if `/tmp/cursor/async-install/install-user.status` exists, install has finished. If only the log exists, wait for that status file before assuming `node_modules` or Playwright browsers are ready.
+- **Do not** deploy to Vercel, mutate production, or run `vercel deploy --prod` unless the user explicitly asks.
