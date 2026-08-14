@@ -10,7 +10,7 @@ import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Pricing reviewed: next steps',
   description:
-    'Thanks for reviewing Prism pricing. We will follow up with clear next steps for the Growth Dashboard, audits, or a focused growth sprint.',
+    'Thanks for reviewing Prism pricing. We will follow up with clear next steps for the right offer, scoped on a call.',
   path: "/pricing/thank-you",
   index: false,
   ogImage: "/prism-opengraph.png",
@@ -32,7 +32,7 @@ export default function PricingThankYouPage() {
               thanks for reviewing pricing
             </h1>
             <p className="text-base text-neutral-600 sm:text-lg">
-              We&apos;ll follow up with clear next steps for your preferred path and help you move forward quickly.
+              We will follow up with the right next step: a website intake, a free Growth Audit, or a 30-minute scoping call.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
