@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import TrackedLink from '@/components/tracked-link'
+import { WEBSITE_START_CTA } from '@/lib/pricing-model'
 
 type FooterItem = {
   href: string
@@ -123,12 +124,12 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
               <TrackedLink
-                href="/websites"
-                label="Order a website"
+                href={WEBSITE_START_CTA.href}
+                label={WEBSITE_START_CTA.label}
                 location="footer"
                 className={`group inline-flex min-h-11 w-full items-center justify-between gap-3 border-b border-[#f5f0e8] pb-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white focus-visible:ring-offset-4 sm:w-auto sm:justify-start ${focusRing}`}
               >
-                Order a website
+                {WEBSITE_START_CTA.label}
                 <span
                   aria-hidden="true"
                   className="text-[#8f877b] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#f5f0e8]"

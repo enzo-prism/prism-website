@@ -14,7 +14,7 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
+import { BOOK_A_CALL_CTA, WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { websiteProjects } from '@/lib/website-projects'
 import { cn } from '@/lib/utils'
@@ -196,12 +196,12 @@ export default function WebsitesPage() {
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
-                  href="/website-intake"
+                  href={WEBSITE_START_CTA.href}
                   variant="heroPrimary"
-                  label="start my website"
+                  label={WEBSITE_START_CTA.label.toLowerCase()}
                   location="websites hero"
                 >
-                  Start my website
+                  {WEBSITE_START_CTA.label}
                 </CoreActionLink>
                 <CoreActionLink
                   href="#work"
@@ -478,12 +478,12 @@ export default function WebsitesPage() {
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href="/website-intake"
+                href={WEBSITE_START_CTA.href}
                 variant="heroPrimary"
-                label="start my website"
+                label={WEBSITE_START_CTA.label.toLowerCase()}
                 location="websites final"
               >
-                Start my website
+                {WEBSITE_START_CTA.label}
               </CoreActionLink>
               <CoreActionLink
                 href={BOOK_A_CALL_CTA.href}

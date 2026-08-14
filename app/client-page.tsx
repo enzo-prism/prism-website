@@ -30,8 +30,8 @@ export default function ClientPage() {
         <HomeElevenLabsAgentSection />
         <HomeHowItWorksSection />
         <HomeProofSection />
-        <HomeFinalCtaSection />
         <HomeOffersSection />
+        <HomeFinalCtaSection />
       </main>
       <Footer />
     </div>

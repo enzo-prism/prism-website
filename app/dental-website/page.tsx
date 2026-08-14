@@ -7,12 +7,12 @@ import Navbar from "@/components/navbar"
 import ScrollToTop from "@/components/scroll-to-top"
 import ServiceIllustration from "@/components/animated/ServiceIllustration"
 import { Button } from "@/components/ui/button"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 import DentalTrendsChart from "@/components/dental-trends-chart"
 import DentalClientsSection from "@/components/dental-clients-section"
 import VideoCarousel from "@/components/video-carousel"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
+import { BOOK_A_CALL_CTA, WEBSITE_START_CTA } from "@/lib/pricing-model"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const lovePoints = [
@@ -192,8 +192,8 @@ export default function DentalWebsitePage() {
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
                   <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                    <Link href="/get-started">
-                      {FREE_AUDIT_CTA_TEXT}
+                    <Link href={WEBSITE_START_CTA.href}>
+                      {WEBSITE_START_CTA.label}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -466,8 +466,8 @@ export default function DentalWebsitePage() {
               </ul>
               <div className="pt-2">
                 <Button asChild className="rounded-full px-6">
-                  <Link href="/get-started">
-                    explore scheduling options
+                  <Link href={WEBSITE_START_CTA.href}>
+                    {WEBSITE_START_CTA.label}
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                   </Link>
                 </Button>
@@ -674,18 +674,22 @@ export default function DentalWebsitePage() {
             <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              start with a free growth audit, see real patient journeys, and get a tailored roadmap for your online presence.
+              Tell Prism what the practice needs. The focused intake takes about a minute, or book a 30-minute scoping call.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link href="/get-started">
-                  {FREE_AUDIT_CTA_TEXT}
+                <Link href={WEBSITE_START_CTA.href}>
+                  {WEBSITE_START_CTA.label}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link href="/get-started">
-                  get started
+                <Link
+                  href={BOOK_A_CALL_CTA.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {BOOK_A_CALL_CTA.label}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -709,12 +713,10 @@ export default function DentalWebsitePage() {
         serviceType="Website design"
         areaServed="United States"
         offerDetails={{
-          name: "60-Day Growth Sprint",
+          name: "Dental practice website design",
           description:
-            "Focused dental website build, conversion path, and tracking sprint scoped from the Prism Growth Dashboard and audit path.",
+            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Scoped on a 30-minute call.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "3500",
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}

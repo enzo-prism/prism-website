@@ -9,11 +9,12 @@ import HomeReveal from '@/components/home/HomeReveal'
 import {
   CANONICAL_PRICING_OFFERS,
   PRICING_OFFER_ORDER,
+  WEBSITE_START_CTA,
 } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
 
 const OFFER_INDEX_LABELS: Record<string, string> = {
-  website: '01 · Order',
+  website: '01 · Website',
   content_os: '02 · Content',
   dental_os: '03 · Dental',
   prism_infinity: '04 · Infinity',
@@ -35,6 +36,8 @@ export default function HomeOffersSection() {
           {PRICING_OFFER_ORDER.map((offerId, index) => {
             const offer = CANONICAL_PRICING_OFFERS[offerId]
             const isLead = offerId === 'website'
+            const primaryCta =
+              offerId === 'website' ? WEBSITE_START_CTA : offer.primaryCta
 
             return (
               <HomeReveal
@@ -74,22 +77,22 @@ export default function HomeOffersSection() {
 
                   <div className="mt-auto pt-2">
                     <CoreActionLink
-                      href={offer.primaryCta.href}
+                      href={primaryCta.href}
                       target={
-                        offer.primaryCta.href.startsWith('/')
+                        primaryCta.href.startsWith('/')
                           ? undefined
                           : '_blank'
                       }
                       rel={
-                        offer.primaryCta.href.startsWith('/')
+                        primaryCta.href.startsWith('/')
                           ? undefined
                           : 'noopener noreferrer'
                       }
-                      label={offer.primaryCta.label.toLowerCase()}
+                      label={primaryCta.label.toLowerCase()}
                       location={`homepage offers · ${offer.name}`}
                       variant="primary"
                     >
-                      {offer.primaryCta.label}
+                      {primaryCta.label}
                     </CoreActionLink>
                   </div>
                 </div>

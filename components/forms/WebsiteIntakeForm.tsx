@@ -1254,7 +1254,7 @@ export default function WebsiteIntakeForm() {
     currentStep === 'why'
       ? 'Tap one. We will move you to the next question.'
       : currentStep === 'timeline'
-        ? 'This helps us scope the first build sprint.'
+        ? 'This helps us scope the first version.'
         : currentStep === 'current-site'
           ? 'A link is enough. We will review it before we reply.'
           : 'We reply within 24 hours on the channel you pick.'
@@ -1279,7 +1279,7 @@ export default function WebsiteIntakeForm() {
           <div className={cn(styles.stepBody, 'space-y-8 text-center')}>
             <div className="space-y-3">
               <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#D8BC79]">
-                Success! Thank you!
+                Request received
               </p>
               <h2 className="text-balance text-[clamp(1.8rem,5vw,2.8rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#F5F0E8]">
                 Prism will reach out to you within 24 hours.
@@ -1425,7 +1425,7 @@ export default function WebsiteIntakeForm() {
               {stepIndex === QUESTION_STEP_COUNT - 1
                 ? isSubmitting
                   ? 'Submitting…'
-                  : 'Get my new website'
+                  : 'Start my website'
                 : 'Continue'}
             </Button>
           </div>

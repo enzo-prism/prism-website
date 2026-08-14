@@ -111,6 +111,9 @@ describe('ClientPage homepage flow', () => {
         name: /find the growth leak\./i,
       }),
     ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /start my website/i }),
+    ).toHaveAttribute('href', '/website-intake')
   })
 
   it('renders icon-backed problem blocks and buyer check pills', () => {
