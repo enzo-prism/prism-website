@@ -20,7 +20,7 @@ If you are working on the normal site experience, use these docs instead:
 ## What changed
 
 - `/get-started` is now the free Growth Dashboard entry page, and `/apply` is the dedicated Formspree-backed dashboard intake route.
-- `/website-intake` is the focused PRO website lead funnel. Creating its dedicated Formspree form still requires dashboard access; see [`docs/forms.md`](./forms.md#formspree-dashboard-handoff-needs-account-access).
+- `/website-intake` is the focused PRO website lead funnel and uses the dedicated Prism **Website Intake** Formspree form (`xrpzlkrd`); see [`docs/forms.md`](./forms.md#formspree-dashboard-configuration).
 - Supabase is no longer part of the supported website setup.
 - The legacy `/api/prism-leads` route has been removed. Current marketing capture is client-side Formspree only.
 

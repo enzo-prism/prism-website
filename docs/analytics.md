@@ -5,13 +5,13 @@ outside this repo.
 
 ## Stack
 
-| Surface | What it is | Where it is wired |
-|---|---|---|
-| GA4 | Property `G-P9VY77PRC0` (override: `NEXT_PUBLIC_GA_MEASUREMENT_ID`) | `app/layout.tsx` head scripts |
-| Google Ads | Account `AW-11373090310`, lead + purchase conversion actions | `lib/constants.ts`, `utils/analytics.ts` |
-| Vercel Web Analytics | Pageviews + custom events | `components/vercel-analytics.tsx` |
-| Vercel Speed Insights | Core Web Vitals | `app/layout.tsx` |
-| Hotjar | Session replay, loaded on first interaction | `app/layout.tsx` |
+| Surface               | What it is                                                          | Where it is wired                        |
+| --------------------- | ------------------------------------------------------------------- | ---------------------------------------- |
+| GA4                   | Property `G-P9VY77PRC0` (override: `NEXT_PUBLIC_GA_MEASUREMENT_ID`) | `app/layout.tsx` head scripts            |
+| Google Ads            | Account `AW-11373090310`, lead + purchase conversion actions        | `lib/constants.ts`, `utils/analytics.ts` |
+| Vercel Web Analytics  | Pageviews + custom events                                           | `components/vercel-analytics.tsx`        |
+| Vercel Speed Insights | Core Web Vitals                                                     | `app/layout.tsx`                         |
+| Hotjar                | Session replay, loaded on first interaction                         | `app/layout.tsx`                         |
 
 `IS_ANALYTICS_ENABLED` (in `lib/constants.ts`) gates all GA/Ads sending to the
 real production environment. Preview deployments build with
@@ -43,7 +43,7 @@ The sanitizer drops emails, phone numbers, raw URLs, and anything in
 - `OPAQUE_ID_PARAM_KEYS` (`transaction_id`, `item_id`) skip the phone-number
   heuristic, because a digit-heavy Stripe session id would otherwise be dropped
   and break conversion de-duplication.
-- `TrackEventOptions.structuredParams` merges *after* sanitization, for
+- `TrackEventOptions.structuredParams` merges _after_ sanitization, for
   non-scalar GA4 params like ecommerce `items`. Only pass caller-constructed
   literals through it — never user input.
 
@@ -56,9 +56,9 @@ plus a Google Ads conversion. Two modes:
   mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
   navigates on success.
 - `immediate` fires inline. Use when the form shows an in-page success screen
-  and never navigates — `/website-intake` is the live case. Formspree still
-  needs a dedicated Website Intake form from someone with dashboard access;
-  see [`docs/forms.md`](forms.md#formspree-dashboard-handoff-needs-account-access).
+  and never navigates — `/website-intake` is the live case and posts to the
+  dedicated Prism Website Intake form (`xrpzlkrd`); see
+  [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
 so Smart Bidding can weigh a $300 order against a free-audit request. Before it
@@ -77,7 +77,7 @@ SHA-256-hashes the buyer's email (and phone, when confidently normalizable to
 E.164) and hands the digests to gtag as `user_data`. Raw values never leave the
 browser, are never logged, and never pass through `trackEvent`. Requires
 **enhanced conversions for web** to be enabled on the conversion action (with
-the customer data terms accepted) in Google Ads — *not* "enhanced conversions
+the customer data terms accepted) in Google Ads — _not_ "enhanced conversions
 for leads", which is the offline/CRM-upload product and would leave this data
 unused.
 
@@ -85,7 +85,7 @@ unused.
 purchase confirmation as a fresh document after a cross-origin Stripe redirect.
 So the digests (never the raw values) are persisted to localStorage for 6 hours
 and re-applied by `applyStoredEnhancedConversionUserData()` before the purchase
-conversion fires. `set` only affects *subsequent* events, so that ordering is
+conversion fires. `set` only affects _subsequent_ events, so that ordering is
 load-bearing in both places.
 
 **ID length.** Google Ads caps `transaction_id` at 64 characters; a Stripe
@@ -110,12 +110,12 @@ revenue.
 
 **Known limitations.** Two, both worth understanding before trusting the number:
 
-1. *The session id is not proof of payment.* It arrives in the URL, so the
+1. _The session id is not proof of payment._ It arrives in the URL, so the
    tracker only shape-checks it (`cs_live_…`/`cs_test_…`). That stops casual
    forgery — without it, loading `?session_id=1`, `=2`, `=3` would mint
    unlimited $300 conversions, since each distinct string defeats
    de-duplication — but it is not verification.
-2. *Redirect-triggered means under-counting too.* A buyer who closes the tab
+2. _Redirect-triggered means under-counting too._ A buyer who closes the tab
    before the redirect is missed, and ad blockers suppress the hit entirely.
 
 Both are fixed by the same upgrade: a **Stripe webhook feeding the GA4
@@ -153,13 +153,13 @@ of those 12 ids therefore wrote into a client's GA4 property.
 Measured before the fix, last 7 days on `G-54ESSN4BF8` (Family First Smile
 Care's retired property) by hostname:
 
-| hostname | pageviews | share |
-|---|---:|---:|
-| www.design-prism.com | 539 | 46.6% |
-| localhost | 291 | 25.2% |
-| exquisitedentistryla.com | 111 | 9.6% |
-| 127.0.0.1 | 109 | 9.4% |
-| www.famfirstsmile.com | 102 | **8.8%** |
+| hostname                 | pageviews |    share |
+| ------------------------ | --------: | -------: |
+| www.design-prism.com     |       539 |    46.6% |
+| localhost                |       291 |    25.2% |
+| exquisitedentistryla.com |       111 |     9.6% |
+| 127.0.0.1                |       109 |     9.4% |
+| www.famfirstsmile.com    |       102 | **8.8%** |
 
 Under 9% of the client's own property was the client's own site.
 
@@ -243,6 +243,7 @@ at submit ($300) and the purchase at payment ($300). If both are marked
 **Primary**, Ads sees $600 of value per buyer and bids on inflated returns.
 
 Pick one:
+
 - Mark the **lead** action Secondary (observation-only) and let the purchase
   action drive bidding. Cleanest once purchase volume is meaningful.
 - Or keep the lead Primary and lower `website_order` in `lib/lead-values.ts` to
@@ -264,7 +265,10 @@ visitor makes the current configuration non-compliant. The fix is a
 region-scoped denied default ahead of the global granted one:
 
 ```js
-gtag('consent', 'default', { region: ['EEA_COUNTRY_CODES', 'GB'], ad_storage: 'denied', /* … */ })
+gtag('consent', 'default', {
+  region: ['EEA_COUNTRY_CODES', 'GB'],
+  ad_storage: 'denied' /* … */,
+})
 ```
 
 This is left as a decision rather than applied, because denying by default

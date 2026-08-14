@@ -21,7 +21,7 @@ import styles from './website-intake.module.css'
 
 const FORM_ACTION =
   process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT ||
-  'https://formspree.io/f/xpqebnbz'
+  'https://formspree.io/f/xrpzlkrd'
 const FORM_NAME = 'website_intake'
 const FORM_LOCATION = 'website_intake_page'
 const DRAFT_STORAGE_KEY = 'prism_website_intake_draft_v1'
@@ -126,9 +126,7 @@ type IntakeDraft = {
 }
 
 const WHY_VALUES = new Set(WHY_OPTIONS.map((option) => option.value))
-const TIMELINE_VALUES = new Set(
-  TIMELINE_OPTIONS.map((option) => option.value),
-)
+const TIMELINE_VALUES = new Set(TIMELINE_OPTIONS.map((option) => option.value))
 const SOURCE_VALUES = new Set<string>(SOURCE_OPTIONS)
 
 function sanitizeDraftString(value: unknown, maxLength: number) {
@@ -216,9 +214,7 @@ function sanitizeIntakeDraft(value: unknown): IntakeDraft | null {
   const requestedStepIndex = FORM_STEPS.includes(stored.stepId as FormStepId)
     ? FORM_STEPS.indexOf(stored.stepId as FormStepId)
     : 0
-  draft.stepId = FORM_STEPS[
-    Math.min(requestedStepIndex, furthestSafeStepIndex)
-  ]
+  draft.stepId = FORM_STEPS[Math.min(requestedStepIndex, furthestSafeStepIndex)]
 
   return draft
 }
@@ -304,27 +300,27 @@ function clearIntakeDraft() {
 function hasDraftContent(draft: IntakeDraft) {
   return Boolean(
     draft.why ||
-      draft.timeline ||
-      draft.hasWebsite ||
-      draft.siteLink ||
-      draft.contactMethod ||
-      draft.email ||
-      draft.phone ||
-      draft.source,
+    draft.timeline ||
+    draft.hasWebsite ||
+    draft.siteLink ||
+    draft.contactMethod ||
+    draft.email ||
+    draft.phone ||
+    draft.source,
   )
 }
 
 function shouldSkipAutoFocus() {
   return Boolean(
     typeof window !== 'undefined' &&
-      window.matchMedia?.('(max-width: 767px)').matches,
+    window.matchMedia?.('(max-width: 767px)').matches,
   )
 }
 
 function prefersReducedMotion() {
   return Boolean(
     typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
   )
 }
 
@@ -428,7 +424,10 @@ export default function WebsiteIntakeForm() {
     }
     if (currentStep === 'current-site') {
       if (!hasWebsite) {
-        return { field: 'has_website', message: 'Tell us if you have a website' }
+        return {
+          field: 'has_website',
+          message: 'Tell us if you have a website',
+        }
       }
       const normalized = normalizeLink(siteLink)
       if (!siteLink.trim()) {
@@ -458,7 +457,8 @@ export default function WebsiteIntakeForm() {
         }
       }
       if (contactMethod === 'email') {
-        if (!email.trim()) return { field: 'email', message: 'Enter your email' }
+        if (!email.trim())
+          return { field: 'email', message: 'Enter your email' }
         if (email.length > EMAIL_MAX_LENGTH) {
           return {
             field: 'email',
@@ -485,7 +485,16 @@ export default function WebsiteIntakeForm() {
       }
     }
     return null
-  }, [contactMethod, currentStep, email, hasWebsite, phone, siteLink, timeline, why])
+  }, [
+    contactMethod,
+    currentStep,
+    email,
+    hasWebsite,
+    phone,
+    siteLink,
+    timeline,
+    why,
+  ])
 
   useEffect(() => {
     startedAtRef.current = Date.now()
@@ -872,7 +881,10 @@ export default function WebsiteIntakeForm() {
       form_name: FORM_NAME,
       form_location: 'success_screen',
     })
-    trackBookCallClick('book a 30 min zoom with prism', 'website intake success')
+    trackBookCallClick(
+      'book a 30 min zoom with prism',
+      'website intake success',
+    )
   }
 
   const fieldClassName =
@@ -968,7 +980,10 @@ export default function WebsiteIntakeForm() {
                 autofocus: option.value === (why || WHY_OPTIONS[0].value),
               }),
             )}
-            <FieldError error={stepError?.field === 'why' ? stepError.message : ''} id="why-error" />
+            <FieldError
+              error={stepError?.field === 'why' ? stepError.message : ''}
+              id="why-error"
+            />
           </div>
         )
 
@@ -1055,7 +1070,9 @@ export default function WebsiteIntakeForm() {
                   className={fieldClassName}
                   aria-invalid={stepError?.field === 'site_link'}
                   aria-describedby={
-                    stepError?.field === 'site_link' ? 'site_link-error' : undefined
+                    stepError?.field === 'site_link'
+                      ? 'site_link-error'
+                      : undefined
                   }
                   data-step-autofocus="true"
                   onChange={(event) => {

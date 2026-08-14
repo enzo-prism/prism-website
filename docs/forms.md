@@ -152,58 +152,57 @@ chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
   - `_gotcha` (honeypot)
   - `appendFormspreeOpsMetadata(formData, "website_intake")`
 - Endpoint strategy:
-  - Preferred: a dedicated Formspree form named **Website Intake**, then set
+  - Dedicated Formspree form: **Website Intake** (`xrpzlkrd`) in the Prism
+    project, notifying `enzo@design-prism.com`
+  - Canonical endpoint: `https://formspree.io/f/xrpzlkrd`, set through
     `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` in Vercel Production + Preview
-    and update the code fallback below
-  - Current fallback: `https://formspree.io/f/xpqebnbz` (the existing Prism
-    "Website Customer Request, 2026 June" form that already emails
-    `enzo@design-prism.com`). This is a temporary reuse so the funnel can
-    submit before a dedicated form exists. Do not point this funnel at
-    `mreroojo` (Growth Dashboard / `/apply`).
+    and retained as the local fallback
+  - Do not point this funnel at `xpqebnbz` (the historical June 2026 website
+    request form) or `mreroojo` (Growth Dashboard / `/apply`).
 - Success flow:
   - In-page success screen with
-    `trackFormSubmission("website_intake", "website_intake_page", { conversionMode: "immediate", sendGoogleAdsConversion: true, extraParams: { lead_type: "website_intake" } })`
+    `trackFormSubmission("website_intake", "website_intake_page", { conversionMode: "immediate", sendGoogleAdsConversion: true, lead_type: "website_intake" })`
   - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`
 - UX contract:
   - Four questions: why, timeline, current site/link, contact
   - Single-select why/timeline steps auto-advance after a short confirm delay
   - Visible inline validation, desktop autofocus, Enter/arrow keyboard progression
-  - Same-tab draft restore via `sessionStorage` (`prism_website_intake_draft_v1`)
+  - Same-tab draft restore via versioned `sessionStorage`; drafts expire after
+    24 hours and only the selected contact channel is retained
 - Analytics:
   - `website_intake_form_view`, `_form_start`, `_step_view`, `_step_complete`,
     `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_success`,
     `_submit_error`, `_source_select`, `_booking_click`, `_abandon`
   - Do not include user-entered emails, phones, URLs, or free-text in GA params
 
-### Formspree dashboard handoff (needs account access)
+### Formspree dashboard configuration
 
-This repo cannot create or rename Formspree forms. A developer signed into
-[formspree.io/forms](https://formspree.io/forms) as `enzo@design-prism.com`
-should finish setup:
+The dedicated Formspree form was created in the Prism project on 2026-08-13:
 
-1. Create a new form in the Prism Formspree project named **Website Intake**.
-2. Set the notify email to `enzo@design-prism.com`.
-3. Optional: set the form's default subject to `New Website Intake Lead`. The
-   site already sends that via `_subject`.
-4. Copy the endpoint (`https://formspree.io/f/xxxxxxxx`).
-5. In Vercel → prism-website → Settings → Environment Variables, set
-   `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` for **Production** and
-   **Preview**. `NEXT_PUBLIC_*` is baked at build time, so redeploy after
-   saving.
-6. Update the hardcoded fallback in `components/forms/WebsiteIntakeForm.tsx`
-   and the example value in `.env.example` to the new hash so local/dev
-   matches production without an env file.
-7. Leave `xpqebnbz` in place for historical "Website Customer Request, 2026
-   June" / `$300` website-order submissions. Rename that old form only if you
-   want the inbox labels to stay obvious; do not delete it until you confirm
-   nothing else still posts there.
-8. Send one real test from `/website-intake` (use a clearly marked test email
-   such as `enzo+website-intake-test@design-prism.com`). Confirm the inbox
-   subject is `New Website Intake Lead` and that these fields arrive:
+- Form: **Website Intake** (`xrpzlkrd`)
+- Endpoint: `https://formspree.io/f/xrpzlkrd`
+- Email workflow: enabled for `enzo@design-prism.com`
+- Submission archive: enabled
+- Formshield: enabled
+- CAPTCHA: disabled; the client sends `_gotcha` and Formshield filters the form
+- Project-wide domain restriction: intentionally unset because it applies to
+  every Prism form and would reject Vercel Preview origins
+
+Operational checklist:
+
+1. Keep `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` set to the canonical endpoint
+   for Vercel **Production** and **Preview**. `NEXT_PUBLIC_*` is baked at build
+   time, so redeploy after changing it.
+2. Leave `xpqebnbz` in place for historical "Website Customer Request, 2026
+   June" / `$300` website-order submissions. Do not delete it until nothing
+   else posts there.
+3. After form or workflow changes, send one clearly marked test from
+   `/website-intake` and confirm the inbox subject is `New Website Intake Lead`
+   and these fields arrive:
    `why_new_website`, `timeline`, `has_current_website`, `site_link`,
    `contact_method`, `email` or `phone`, optional `heard_about_us`,
    `form_name=website_intake`, `form_key=website_intake`.
-9. If you create a Formspree CLI project later, store `FORMSPREE_DEPLOY_KEY`
+4. If you create a Formspree CLI project later, store `FORMSPREE_DEPLOY_KEY`
    only in Vercel/GitHub secrets. Do not commit it.
 
 Focused checks after the hash is wired:
