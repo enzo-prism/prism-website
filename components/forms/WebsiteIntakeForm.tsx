@@ -237,7 +237,7 @@ function FieldError({ error, id }: { error: string; id: string }) {
 
 export default function WebsiteIntakeForm() {
   const formRef = useRef<HTMLFormElement>(null)
-  const startedAtRef = useRef<number>(Date.now())
+  const startedAtRef = useRef<number>(0)
   const currentStepIndexRef = useRef(0)
   const hasInteractedRef = useRef(false)
   const hasTrackedFormStartRef = useRef(false)
@@ -346,6 +346,10 @@ export default function WebsiteIntakeForm() {
     }
     return null
   }, [contactMethod, currentStep, email, hasWebsite, phone, siteLink, timeline, why])
+
+  useEffect(() => {
+    startedAtRef.current = Date.now()
+  }, [])
 
   useEffect(() => {
     const draft = readIntakeDraft()
