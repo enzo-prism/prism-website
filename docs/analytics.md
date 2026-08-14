@@ -56,7 +56,9 @@ plus a Google Ads conversion. Two modes:
   mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
   navigates on success.
 - `immediate` fires inline. Use when the form shows an in-page success screen
-  and never navigates — `/website-intake` is the live case.
+  and never navigates — `/website-intake` is the live case. Formspree still
+  needs a dedicated Website Intake form from someone with dashboard access;
+  see [`docs/forms.md`](forms.md#formspree-dashboard-handoff-needs-account-access).
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
 so Smart Bidding can weigh a $300 order against a free-audit request. Before it

@@ -172,7 +172,7 @@ Quick reference for the pages we edit most often.
 - `/website-intake` is the focused one-question-per-screen PRO website lead funnel. It is noindex and excluded from sitemap/LLM maps.
 - The page uses the same focused chrome as `/apply`: minimal header (Prism home + Exit back to `/websites`), no footer, and no ElevenLabs widget.
 - `components/forms/WebsiteIntakeForm.tsx` asks why, timeline, current site/link, and preferred contact. Why and timeline auto-advance after a tap. Progress saves in `sessionStorage` for the current tab.
-- Successful submits stay on-page and offer an optional 30-minute Zoom booking CTA. Formspree uses `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` or the existing website-request form at `https://formspree.io/f/xpqebnbz`.
+- Successful submits stay on-page and offer an optional 30-minute Zoom booking CTA. Formspree uses `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` or the temporary `https://formspree.io/f/xpqebnbz` fallback. A developer with Formspree access should create a dedicated **Website Intake** form; the checklist is in [`docs/forms.md`](forms.md#formspree-dashboard-handoff-needs-account-access).
 - Warm social traffic from `/tiktok`, `/ig`, and `/youtube` routes the primary website card here.
 
 ## Apply (`app/apply/page.tsx`)

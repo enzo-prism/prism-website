@@ -152,11 +152,17 @@ chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
   - `_gotcha` (honeypot)
   - `appendFormspreeOpsMetadata(formData, "website_intake")`
 - Endpoint strategy:
-  - `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` ?? `https://formspree.io/f/xpqebnbz`
-    (reuses the existing Prism "Website Customer Request, 2026 June" Formspree
-    form that already notifies `enzo@design-prism.com`)
+  - Preferred: a dedicated Formspree form named **Website Intake**, then set
+    `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` in Vercel Production + Preview
+    and update the code fallback below
+  - Current fallback: `https://formspree.io/f/xpqebnbz` (the existing Prism
+    "Website Customer Request, 2026 June" form that already emails
+    `enzo@design-prism.com`). This is a temporary reuse so the funnel can
+    submit before a dedicated form exists. Do not point this funnel at
+    `mreroojo` (Growth Dashboard / `/apply`).
 - Success flow:
-  - In-page success screen with `trackLeadConversion(..., { conversionMode: "immediate" })`
+  - In-page success screen with
+    `trackFormSubmission("website_intake", "website_intake_page", { conversionMode: "immediate", sendGoogleAdsConversion: true, extraParams: { lead_type: "website_intake" } })`
   - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`
 - UX contract:
   - Four questions: why, timeline, current site/link, contact
@@ -168,6 +174,44 @@ chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
     `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_success`,
     `_submit_error`, `_source_select`, `_booking_click`, `_abandon`
   - Do not include user-entered emails, phones, URLs, or free-text in GA params
+
+### Formspree dashboard handoff (needs account access)
+
+This repo cannot create or rename Formspree forms. A developer signed into
+[formspree.io/forms](https://formspree.io/forms) as `enzo@design-prism.com`
+should finish setup:
+
+1. Create a new form in the Prism Formspree project named **Website Intake**.
+2. Set the notify email to `enzo@design-prism.com`.
+3. Optional: set the form's default subject to `New Website Intake Lead`. The
+   site already sends that via `_subject`.
+4. Copy the endpoint (`https://formspree.io/f/xxxxxxxx`).
+5. In Vercel → prism-website → Settings → Environment Variables, set
+   `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` for **Production** and
+   **Preview**. `NEXT_PUBLIC_*` is baked at build time, so redeploy after
+   saving.
+6. Update the hardcoded fallback in `components/forms/WebsiteIntakeForm.tsx`
+   and the example value in `.env.example` to the new hash so local/dev
+   matches production without an env file.
+7. Leave `xpqebnbz` in place for historical "Website Customer Request, 2026
+   June" / `$300` website-order submissions. Rename that old form only if you
+   want the inbox labels to stay obvious; do not delete it until you confirm
+   nothing else still posts there.
+8. Send one real test from `/website-intake` (use a clearly marked test email
+   such as `enzo+website-intake-test@design-prism.com`). Confirm the inbox
+   subject is `New Website Intake Lead` and that these fields arrive:
+   `why_new_website`, `timeline`, `has_current_website`, `site_link`,
+   `contact_method`, `email` or `phone`, optional `heard_about_us`,
+   `form_name=website_intake`, `form_key=website_intake`.
+9. If you create a Formspree CLI project later, store `FORMSPREE_DEPLOY_KEY`
+   only in Vercel/GitHub secrets. Do not commit it.
+
+Focused checks after the hash is wired:
+
+```bash
+pnpm exec jest __tests__/components/WebsiteIntakeForm.test.tsx --runInBand
+pnpm verify:pricing-consistency
+```
 
 ## `/websites`: marketing page + intake handoff
 
@@ -289,7 +333,7 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. (The `/websites` order flow no longer redirects here — it shows an in-page success screen, then opens the Stripe `$300` Payment Link.)
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
 - `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — the **post-payment** confirmation for the `$300` website order, reached by Stripe's redirect with `?session_id={CHECKOUT_SESSION_ID}`. Mounts `PurchaseSuccessTracker`, which shape-checks the session id and fires GA4 `purchase` once per transaction. It deliberately does nothing without a well-formed id, so it is safe to link to but pointless to visit directly.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.
