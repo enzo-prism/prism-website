@@ -27,6 +27,10 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/privacy-policy',
   '/terms-of-service',
   '/why-dental-practices-love-prism',
+  '/why-consulting-companies-love-prism',
+  '/why-local-shop-owners-love-prism',
+  '/why-nonprofits-love-prism',
+  '/why-online-community-founders-love-prism',
   '/dental-website',
   '/dental-practice-seo-expert',
   '/custom-email-for-dental-practices',
@@ -74,10 +78,6 @@ export const NOINDEX_ROUTES = [
   '/thanks-call',
   '/tiktok',
   '/website-intake',
-  '/why-consulting-companies-love-prism',
-  '/why-local-shop-owners-love-prism',
-  '/why-nonprofits-love-prism',
-  '/why-online-community-founders-love-prism',
   '/youtube',
 ] as const
 
@@ -92,12 +92,15 @@ export const NOINDEX_PREFIXES = [
 ] as const
 
 export const INDEXABLE_BLOG_SLUGS = [
+  '2026-belongs-to-the-founders-who-can-delegate',
   'adapting-small-business-ai-search-revolution-2025',
   'ai-ad-stack-2026-practical-guide-for-smb-founders',
+  'ai-agents-agentic-commerce-local-business',
   'ai-effortlessly-welcome-more-patients-dental-practice',
   'ai-rip-eyes-out-dental-software',
   'ai-search-for-dental-practice',
   'business-visibility-chatgpt',
+  'claude-code-to-figma-why-this-changes-how-we-build',
   'claude-opus-4-8-what-it-means-for-small-business-owners',
   'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',

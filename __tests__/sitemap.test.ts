@@ -23,12 +23,16 @@ describe("sitemap", () => {
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/case-studies/roseville-dental-academy",
       "https://www.design-prism.com/blog",
+      "https://www.design-prism.com/why-consulting-companies-love-prism",
+      "https://www.design-prism.com/why-local-shop-owners-love-prism",
+      "https://www.design-prism.com/why-nonprofits-love-prism",
+      "https://www.design-prism.com/why-online-community-founders-love-prism",
     ]))
 
     // Upper bound allows the deliberately promoted service pages and curated
     // blog posts in lib/seo/search-visibility.ts.
     expect(urls.length).toBeGreaterThanOrEqual(85)
-    expect(urls.length).toBeLessThanOrEqual(120)
+    expect(urls.length).toBeLessThanOrEqual(130)
 
     const seen = new Set<string>()
     for (const url of urls) {
