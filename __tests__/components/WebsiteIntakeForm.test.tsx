@@ -136,6 +136,11 @@ describe('WebsiteIntakeForm', () => {
       target: { value: 'owner@example.com' },
     })
     fireEvent.click(screen.getByText(/tiktok/i))
+    const honeypot = screen
+      .getByTestId('website-intake-form')
+      .querySelector<HTMLInputElement>('input[name="_gotcha"]')
+    expect(honeypot).not.toBeNull()
+    fireEvent.change(honeypot!, { target: { value: 'bot-filled-value' } })
     fireEvent.click(screen.getByRole('button', { name: /get my new website/i }))
 
     await waitFor(() => {
@@ -156,6 +161,7 @@ describe('WebsiteIntakeForm', () => {
     expect(body.get('heard_about_us')).toBe('TikTok')
     expect(body.get('utm_source')).toBe('tiktok')
     expect(body.get('form_key')).toBe('website_intake')
+    expect(body.get('_gotcha')).toBe('bot-filled-value')
 
     await waitFor(() => {
       expect(screen.getByTestId('intake-success')).toBeInTheDocument()
@@ -205,6 +211,75 @@ describe('WebsiteIntakeForm', () => {
     expect(body.get('site_link')).toBe('https://instagram.com/mybiz')
     expect(body.get('contact_method')).toBe('text')
     expect(body.get('phone')).toBe('(555) 123-4567')
+  })
+
+  it.each([
+    ['current website', /yes, i have a website/i, 'example.com'],
+    ['social profile', /no website yet/i, 'instagram.com/mybiz'],
+  ])(
+    'only accepts HTTP(S) URLs for a %s while normalizing a domain',
+    async (_linkKind, optionLabel, ordinaryDomain) => {
+      render(<WebsiteIntakeForm />)
+
+      await advanceFromWhy()
+      await advanceFromTimeline()
+
+      fireEvent.click(screen.getByText(optionLabel))
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'ftp://example.com' },
+      })
+      fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+      expect(screen.getByText(/add a valid link/i)).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { name: /do you have a current website/i }),
+      ).toBeInTheDocument()
+
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: ordinaryDomain },
+      })
+      fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+      expect(
+        screen.getByRole('heading', {
+          name: /how would you like us to reach you/i,
+        }),
+      ).toBeInTheDocument()
+    },
+  )
+
+  it('guards against rapid duplicate submissions before React state updates', async () => {
+    let resolveFetch: ((response: Response) => void) | undefined
+    fetchSpy.mockImplementation(
+      () =>
+        new Promise<Response>((resolve) => {
+          resolveFetch = resolve
+        }),
+    )
+    render(<WebsiteIntakeForm />)
+
+    await advanceFromWhy()
+    await advanceFromTimeline()
+    fireEvent.click(screen.getByText(/yes, i have a website/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'example.com' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByText(/email me/i))
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'owner@example.com' },
+    })
+
+    const form = screen.getByTestId('website-intake-form')
+    fireEvent.submit(form)
+    fireEvent.submit(form)
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+
+    resolveFetch?.(createMockResponse(true))
+    await waitFor(() => {
+      expect(screen.getByTestId('intake-success')).toBeInTheDocument()
+    })
   })
 
   it('rejects an invalid email on the contact step', async () => {

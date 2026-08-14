@@ -130,6 +130,9 @@ function isValidLink(value: string) {
   if (/\s/.test(value)) return false
   try {
     const parsed = new URL(value)
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+      return false
+    }
     if (!parsed.hostname) return false
     return /^(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/.test(
       parsed.hostname,
@@ -245,6 +248,7 @@ export default function WebsiteIntakeForm() {
   const hasTrackedFormStartRef = useRef(false)
   const hasTrackedAbandonRef = useRef(false)
   const hasSubmittedRef = useRef(false)
+  const isSubmittingRef = useRef(false)
   const viewedStepsRef = useRef<Set<string>>(new Set())
   const shouldFocusStepRef = useRef(false)
   const pendingAdvanceRef = useRef(false)
@@ -487,6 +491,9 @@ export default function WebsiteIntakeForm() {
   }, [currentStep, stepIndex])
 
   const handleSubmit = useCallback(async () => {
+    if (isSubmittingRef.current) return
+    isSubmittingRef.current = true
+
     const elapsedSeconds = Math.max(
       1,
       Math.round((Date.now() - startedAtRef.current) / 1000),
@@ -498,7 +505,9 @@ export default function WebsiteIntakeForm() {
       elapsed_seconds: elapsedSeconds,
     })
 
-    const formData = new FormData()
+    const formData = formRef.current
+      ? new FormData(formRef.current)
+      : new FormData()
     formData.set('_subject', 'New Website Intake Lead')
     formData.set('form_name', FORM_NAME)
     formData.set('why_new_website', why)
@@ -512,6 +521,7 @@ export default function WebsiteIntakeForm() {
     formData.set('elapsed_seconds', String(elapsedSeconds))
     appendFormspreeOpsMetadata(formData, 'website_intake')
 
+    let didSubmit = false
     setIsSubmitting(true)
     try {
       const response = await fetch(FORM_ACTION, {
@@ -529,6 +539,7 @@ export default function WebsiteIntakeForm() {
         setSubmitError("We couldn't submit right now. Try again?")
         return
       }
+      didSubmit = true
     } catch {
       trackEvent('website_intake_submit_error', {
         form_name: FORM_NAME,
@@ -538,6 +549,7 @@ export default function WebsiteIntakeForm() {
       return
     } finally {
       setIsSubmitting(false)
+      if (!didSubmit) isSubmittingRef.current = false
     }
 
     hasSubmittedRef.current = true
