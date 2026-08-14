@@ -5,6 +5,7 @@ Quick reference for the pages we edit most often.
 ## Growth-First Search Visibility
 
 - `lib/seo/search-visibility.ts` is the source of truth for which routes and blog posts are indexable.
+- The four `/why-*` verticals (consulting, local shops, nonprofits, community founders) plus `/why-dental-practices-love-prism` are indexable because `/ads` and `/local-listings` link them. Keep them in `public/llms.txt` and the sitemap.
 - Prism's public search/LLM footprint should read as business growth systems: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, and the Growth Dashboard to Light Audit funnel.
 - Broad pages can stay live for direct users, but they should remain noindex and out of `app/sitemap.ts` / `public/llms.txt` unless they become part of the growth-system story or a deliberate specialty cluster.
 - All case study detail pages remain indexable because they are unique proof. Dental case studies should stay prominent, but non-dental case studies should also support the broader growth story.
@@ -209,6 +210,7 @@ Quick reference for the pages we edit most often.
 
 - `app/layout.tsx` injects `GlobalSchemaGraph` from `components/schema-markup.tsx` (Organization, WebSite, LocalBusiness).
 - `components/breadcrumbs.tsx` emits `BreadcrumbList` JSON-LD with canonical URLs.
+- Service offer schema on `/ads`, `/seo`, `/local-listings`, `/websites`, `/dental-website`, and `/dental-practice-seo-expert` stays price-free. Do not reintroduce `60-Day Growth Sprint` or numeric `price` fields.
 
 ## Homepage (`app/client-page.tsx`)
 
@@ -220,7 +222,7 @@ Quick reference for the pages we edit most often.
 - The primary hero CTA is "Get a PRO website" and points to `/websites`; the secondary CTA is "Wall of Love" and points to `/wall-of-love` (2026-07-30; it previously hash-scrolled to `#offers` as "Explore plans").
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
 - The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified case studies` line, auto-computed from the slides where relevant). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
-- There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS` (slide order is hand-curated to interleave industries, not to mirror the data order). Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
+- There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS`. Slide order is hand-curated to lead with measured non-dental Search Console wins (Olympic Bootworks, Saorsa, Belize Kids), then mix remaining markets. Do not invent metrics. Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
 - Cover Flow cards render **real client-website screenshots** — the portrait `public/case-studies/<slug>-home-mobile.jpg` capture referenced by each slide's `image` field. Because the card crops to its top ~62%, a capture must lead with the site's clean branded hero: dismiss cookie/consent banners, newsletter/promo popups, chat widgets (incl. the ElevenLabs `convai` embed), and top announcement bars before shooting, and for a sparse or text-first hero, scroll the branded section to the top. The previous abstract `AbstractClientWinVisual` / `data-client-win-abstract` / no-image contract (and `HomeDentistWinsCarousel`) were retired; the current contract is covered by `__tests__/components/HomeClientCoverFlow.test.tsx`.
 - The deck is a restrained 3D Cover Flow / diagonal card fan: one shared camera, a one-time back-to-front entrance fan-open on scroll-in, hover lift + neighbour yield, damped pointer parallax, press feedback, and a single `cubic-bezier(0.22,1,0.36,1)` easing — **no autoplay** (the deck is still at rest, input-led). The active cover is a real `<Link>` to its case study; the caption below shows the active client's **company name** (not a person) with `contextLabel · location` and a dedicated case-study link.
 - Touch is gated on input capability, not width: `isTouch = useMobile('(hover: none), (pointer: coarse)')` disables parallax/tilt/hover-lift, swaps to one static low-radius shadow, mounts fewer covers (a tighter fan, `maxVisible` 2 vs 3), drops the on-card CTA pill (it duplicates the caption link and wraps in a narrow card), and uses a direct 1:1 drag where a casual swipe = exactly one card and a genuine flick advances more. `touch-action: pan-y pinch-zoom` keeps page scroll + zoom; `setPointerCapture` makes the drag drop-proof; `pointercancel` aborts without committing.
@@ -257,7 +259,7 @@ Quick reference for the pages we edit most often.
 - `app/thank-you/page.tsx`
 - `app/analysis-thank-you/page.tsx`
 
-Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route now supports an apply-specific state via `?source=apply`, so keep any future branching explicit and truthful to the originating form.
+Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route supports `?source=apply` and a leftover `?source=website-build` variant; live `/website-intake` stays on-page after submit. Website-build copy must not promise a payment link. `/pricing/thank-you` is noindex and must not mention the retired growth sprint.
 
 - These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 
