@@ -108,7 +108,7 @@ Quick reference for the pages we edit most often.
 ## Founder OS (retired → redirects to `/content-os`)
 
 - Founder OS is **retired**. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`), and the route is no longer in `lib/seo/search-visibility.ts` / `public/llms.txt`.
-- The `app/founder-os/*` page files and `components/forms/FounderOsApplicationForm.tsx` remain only as archival code behind the redirect; do not link to them from active pages or treat Founder OS as a live offer.
+- Founder OS page and form files are gone. Keep the `/founder-os` and `/founder-os/apply` redirects. Do not treat Founder OS as a live offer.
 
 ## Apps (`app/apps/page.tsx`)
 
@@ -146,6 +146,7 @@ Quick reference for the pages we edit most often.
 ## Dental Website (`app/dental-website/page.tsx`)
 
 - Dentist-focused website page targeting “dentist website design”.
+- Primary CTAs say "Start my website" and route to `/website-intake`. The final section keeps a secondary `BOOK_A_CALL_CTA`. Offer schema is price-free and points at `/pricing`.
 - Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-website`): `/dentist-website-design`, `/dental-website-design`, `/dental-clinic-website-design`.
 
@@ -195,7 +196,7 @@ Quick reference for the pages we edit most often.
 
 - Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav (2026-07-27 redesign) is a flat seven-item rail: the four offers, then `wall of love` + `case studies`, then `contact` — no dropdown, no `pricing` or `get started` items, and NO CTA button. Desktop links are quiet rounded pills (active `white/[0.08]` wash) in three hairline-divided groups (offers | proof | contact), taking over from the menu button at `lg` (1024px); the logo tagline hides between `lg` and `xl` so the rail fits. The full-height mobile panel keeps the same seven items as a flat list of plain labels (no index prefixes), locks scroll on both `html` and `body`, marks the page behind it `inert`, and animates in with staggered links. The footer System column links `PRO Website` and `Content OS` (the old `Founder OS` link became Content OS), and the Company column carries `Refer a friend — $100` (`/refer`).
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
-- The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Order a website` (`/websites`, `label="Order a website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
+- The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Start my website` (`/website-intake`, `label="Start my website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
 
 ## AI Agents for Dentists (`app/ai-agents/dental/page.tsx`)
@@ -211,9 +212,9 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
-- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, final CTA, and then `HomeOffersSection` ("Four ways to grow with Prism.") as the **last** section.
+- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, `HomeOffersSection` ("Four ways to grow with Prism."), then the final free-audit CTA.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx`; copy comes from `components/home/homepage-content.ts`. The H1 is "Prism" with the subhead "the #1 growth partner for small businesses". The proof block now leads with **attention + traffic, not revenue**: 18,563 new users/month to client sites, 71,000 followers, and 17M+ views across YouTube/Instagram/TikTok (each linking to the profile in a new tab), plus a "Grown end to end by Prism, powered by Content OS" attribution that links to `/content-os`. The old "Get found. Get trusted. Get chosen." / revenue framing is retired. Copy voice (2026-07-29): the homepage leads with relationship + results, not AI mechanics — Prism plugs into the founder's existing team, results compound, and founders stay. The hero pill is "The growth team founders keep" (heart icon), the hero description ends "You get the results without the workload.", the system strip closes with Tracking (not AI), and the offers eyebrow is "Ways to work together". AI stays only where it is buyer-facing reality (the problem section's "Can AI recommend you?" and the AI discovery service card); do not reintroduce "driven by AI" / "AI Agents" method claims on this page.
-- The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers and ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
+- The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers. The Website card uses `WEBSITE_START_CTA` ("Start my website" → `/website-intake`); the other three keep `BOOK_A_CALL_CTA`. The section ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
 - Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band; exposes the final value once to assistive technology while animated and sizing copies remain hidden), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
 - The primary hero CTA is "Get a PRO website" and points to `/websites`; the secondary CTA is "Wall of Love" and points to `/wall-of-love` (2026-07-30; it previously hash-scrolled to `#offers` as "Explore plans").
