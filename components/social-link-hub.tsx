@@ -7,6 +7,7 @@ import type { ReactNode } from 'react'
 import BrandLogo from '@/components/brand-logo'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
+import { WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
@@ -242,7 +243,7 @@ export default function SocialLinkHub({
                 title="Premium Website Design"
                 detail="rank on ChatGPT and Google"
                 ariaLabel="Premium Website Design, for businesses under $1M a year. Rank on ChatGPT and Google."
-                href="/website-intake"
+                href={WEBSITE_START_CTA.href}
                 tone="primary"
                 location={actionsLocation}
                 icon={

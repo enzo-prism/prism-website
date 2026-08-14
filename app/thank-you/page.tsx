@@ -58,7 +58,7 @@ const WEBSITE_BUILD_NEXT_STEPS = [
   {
     label: "01",
     title: "Request received",
-    body: "Your one-time website build request is in the review queue.",
+    body: "Your website request is in the review queue.",
   },
   {
     label: "02",
@@ -67,8 +67,8 @@ const WEBSITE_BUILD_NEXT_STEPS = [
   },
   {
     label: "03",
-    title: "Payment link follows",
-    body: "If accepted, Prism sends next steps and a payment link before production starts.",
+    title: "We reach out",
+    body: "If the project is a fit, Prism replies within 24 hours with next steps or a 30-minute scoping call.",
   },
 ] as const
 
@@ -99,7 +99,7 @@ export default async function ThankYouPage({
   const body = isApplyFlow
     ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard. Claim it to follow the review from one place."
     : isWebsiteBuildFlow
-      ? "Thanks, we've got it. Prism reviews one-time website requests before sending a payment link. If the project is a fit, the team will reply with next steps."
+      ? "Thanks, we've got it. Prism reviews website requests before scoping the build. If the project is a fit, the team will reply within 24 hours."
       : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."
 
   return (

@@ -619,12 +619,10 @@ export default function DentalPracticeSeoExpertPage() {
         serviceType="Dentist SEO services"
         areaServed="United States"
         offerDetails={{
-          name: "60-Day Growth Sprint",
+          name: "Dentist SEO",
           description:
-            "Focused dentist SEO, maps, listings, reviews, and on-page sprint scoped from the Prism Growth Dashboard and audit path.",
+            "Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings. Scoped on a 30-minute call.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          price: "3500",
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}

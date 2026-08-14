@@ -58,6 +58,15 @@ export const BOOK_A_CALL_CTA = {
   href: BOOKING_URL,
 } as const
 
+/**
+ * Website-offer start path. `/websites` remains the indexable marketing page.
+ * This CTA always opens the focused four-question intake.
+ */
+export const WEBSITE_START_CTA = {
+  label: "Start my website",
+  href: "/website-intake",
+} as const
+
 export const PRICING_PRIMARY_CTA = BOOK_A_CALL_CTA
 
 export const PRICING_SECONDARY_CTA = {

@@ -7,6 +7,7 @@ import {
   PRICING_PRIMARY_CTA,
   PRISM_INFINITY_PRICE_LABEL,
   WEBSITE_PRICE_LABEL,
+  WEBSITE_START_CTA,
 } from "@/lib/pricing-model"
 import { BOOKING_URL } from "@/lib/booking"
 
@@ -58,6 +59,13 @@ describe("pricing model", () => {
       )
     }
     expect(PRICING_PRIMARY_CTA).toEqual(BOOK_A_CALL_CTA)
+  })
+
+  it("keeps the website start CTA on the focused intake", () => {
+    expect(WEBSITE_START_CTA).toEqual({
+      label: "Start my website",
+      href: "/website-intake",
+    })
   })
 
   it("keeps an internal explore link for every offer page", () => {

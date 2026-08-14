@@ -27,7 +27,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/GetStartedForm.tsx` (`/apply`)
 - `components/forms/WebsiteIntakeForm.tsx` (`/website-intake`)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
-- `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
+- Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content-os`.
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
@@ -165,6 +165,7 @@ chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
   - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`
 - UX contract:
   - Four questions: why, timeline, current site/link, contact
+  - Final submit label is "Start my website"
   - Single-select why/timeline steps auto-advance after a short confirm delay
   - Visible inline validation, desktop autofocus, Enter/arrow keyboard progression
   - Same-tab draft restore via versioned `sessionStorage`; drafts expire after
@@ -224,7 +225,7 @@ landing target for the legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 
-> **Retired.** Founder OS is no longer a live offer. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`), so this form receives no active traffic. The contract below is kept only as archival reference for the `components/forms/FounderOsApplicationForm.tsx` code that still exists behind the redirect.
+> **Retired.** Founder OS is no longer a live offer. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`). The application form files have been deleted. The contract below is historical only.
 
 `components/forms/FounderOsApplicationForm.tsx` powered the premium Founder OS application on `app/founder-os/apply/page.tsx`. Unlike the marketing forms above, it was a long, **selective application** (not a contact form): a 90-second fit check, then ~12 substantive screens grouped into six named sections (Fit → Leverage → Workflow → Systems → Control → Readiness).
 
@@ -253,7 +254,7 @@ landing target for the legacy live Stripe link.
   - `founder_os_application_submit_success`
   - `founder_os_application_submit_error`
   - Do not include user-entered names, emails, URLs, or free-text answers in analytics params.
-- The `/founder-os/apply` route is `noindex` (transactional surface); the marketing page `/founder-os` is the indexable acquisition surface.
+- Both `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` and are no longer indexable.
 
 ## New flow: `/aeo` + free AEO assessment
 
@@ -332,7 +333,8 @@ Important routing note:
 
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. `?source=website-build` is a leftover variant for historical redirects and must not promise a payment link. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
+- `/pricing/thank-you` ([`app/pricing/thank-you/page.tsx`](../app/pricing/thank-you/page.tsx)) — noindex leftover. Copy must not mention the retired growth sprint.
 - `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — the **post-payment** confirmation for the `$300` website order, reached by Stripe's redirect with `?session_id={CHECKOUT_SESSION_ID}`. Mounts `PurchaseSuccessTracker`, which shape-checks the session id and fires GA4 `purchase` once per transaction. It deliberately does nothing without a well-formed id, so it is safe to link to but pointless to visit directly.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.
 - `/aeo-thank-you` ([`app/aeo-thank-you/page.tsx`](../app/aeo-thank-you/page.tsx)) — used by the AEO assessment form.

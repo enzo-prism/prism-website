@@ -35,8 +35,8 @@ describe('Footer', () => {
       screen.queryByRole('link', { name: /book call/i }),
     ).not.toBeInTheDocument()
     expect(
-      screen.getByRole('link', { name: /order a website/i }),
-    ).toHaveAttribute('href', '/websites')
+      screen.getByRole('link', { name: /start my website/i }),
+    ).toHaveAttribute('href', '/website-intake')
     expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
       'href',
       '/pricing',

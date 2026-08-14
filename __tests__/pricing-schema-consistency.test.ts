@@ -5,6 +5,8 @@ const schemaPages = [
   "app/ads/page.tsx",
   "app/seo/page.tsx",
   "app/local-listings/page.tsx",
+  "app/dental-website/page.tsx",
+  "app/dental-practice-seo-expert/page.tsx",
 ] as const
 
 describe("pricing schema consistency", () => {

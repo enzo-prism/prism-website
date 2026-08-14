@@ -130,7 +130,12 @@ describe('SEO indexability guards', () => {
     expect(isRouteIndexable('/apps')).toBe(false)
     expect(isRouteIndexable('/secret-pearl/privacy')).toBe(false)
     expect(isRouteIndexable('/openai/site-rebuild')).toBe(false)
-    expect(isRouteIndexable('/why-nonprofits-love-prism')).toBe(false)
+    expect(isRouteIndexable('/why-nonprofits-love-prism')).toBe(true)
+    expect(isRouteIndexable('/why-consulting-companies-love-prism')).toBe(true)
+    expect(isRouteIndexable('/why-local-shop-owners-love-prism')).toBe(true)
+    expect(isRouteIndexable('/why-online-community-founders-love-prism')).toBe(
+      true,
+    )
   })
 
   it('curates blog posts for growth, dental, and local search intent', () => {

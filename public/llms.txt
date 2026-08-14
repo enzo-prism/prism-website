@@ -37,6 +37,10 @@ Important notes for LLMs and agents:
 - Dental OS (the full Prism growth system packaged for dental practices, scoped on a 30-minute call): https://www.design-prism.com/dental-os
 - Prism Infinity (unlimited design, web, video, content, and ads on one monthly subscription, scoped on a 30-minute call): https://www.design-prism.com/prism-infinity
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
+- Consulting companies: https://www.design-prism.com/why-consulting-companies-love-prism
+- Local shop owners: https://www.design-prism.com/why-local-shop-owners-love-prism
+- Nonprofits: https://www.design-prism.com/why-nonprofits-love-prism
+- Online community founders: https://www.design-prism.com/why-online-community-founders-love-prism
 - Dental website design: https://www.design-prism.com/dental-website
 - SEO: https://www.design-prism.com/seo
 - SEO audit: https://www.design-prism.com/seo/audit
@@ -139,4 +143,7 @@ Best measured examples:
 - Prism's approach to small business growth: https://www.design-prism.com/blog/prism-approach-small-business-growth
 - The Prism flywheel for brick-and-mortar growth: https://www.design-prism.com/blog/prism-flywheel-skyrocket-brick-and-mortar-growth
 - Who Prism is for: https://www.design-prism.com/blog/who-prism-is-for
+- 2026 belongs to the founders who can delegate: https://www.design-prism.com/blog/2026-belongs-to-the-founders-who-can-delegate
+- AI agents and agentic commerce for local business: https://www.design-prism.com/blog/ai-agents-agentic-commerce-local-business
+- Claude Code to Figma: https://www.design-prism.com/blog/claude-code-to-figma-why-this-changes-how-we-build
 - Dental software and AI: https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software

@@ -43,8 +43,8 @@ const agentFeatures = [
 
 const impactStats = [
   {
-    stat: "35%",
-    label: "of dental calls go unanswered during business hours",
+    stat: "Missed",
+    label: "calls during chair time never reach a human",
     context: "calls that ring out during business hours never reach a human",
   },
   {

@@ -8,7 +8,7 @@ Prism currently has three valid image patterns:
 
 - Use `next/image` directly for simple route-local imagery, screenshots, logos, and decorative assets when no custom retry/fallback behavior is needed.
 - Use `components/core-image.tsx` (`CoreImage`) for shared marketing surfaces that need Prism's loading placeholder, fallback source, and image-failure analytics.
-- Leave existing `components/image.tsx`, `components/optimized-image.tsx`, and `components/enhanced-image.tsx` call sites alone unless you are already touching that surface for a real bug or performance issue.
+- Leave existing `components/image.tsx` and `components/core-image.tsx` call sites alone unless you are already touching that surface for a real bug or performance issue.
 
 ## Do not do this anymore
 

@@ -153,7 +153,7 @@ describe('WebsiteIntakeForm', () => {
       .querySelector<HTMLInputElement>('input[name="_gotcha"]')
     expect(honeypot).not.toBeNull()
     fireEvent.change(honeypot!, { target: { value: 'bot-filled-value' } })
-    fireEvent.click(screen.getByRole('button', { name: /get my new website/i }))
+    fireEvent.click(screen.getByRole('button', { name: /start my website/i }))
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -215,7 +215,7 @@ describe('WebsiteIntakeForm', () => {
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '(555) 123-4567' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /get my new website/i }))
+    fireEvent.click(screen.getByRole('button', { name: /start my website/i }))
 
     await waitFor(() => expect(fetchSpy).toHaveBeenCalledTimes(1))
     const body = fetchSpy.mock.calls[0][1]?.body as FormData
@@ -484,7 +484,7 @@ describe('WebsiteIntakeForm', () => {
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'not-an-email' },
     })
-    fireEvent.click(screen.getByRole('button', { name: /get my new website/i }))
+    fireEvent.click(screen.getByRole('button', { name: /start my website/i }))
 
     expect(fetchSpy).not.toHaveBeenCalled()
     expect(screen.getByText(/enter a valid email/i)).toBeInTheDocument()

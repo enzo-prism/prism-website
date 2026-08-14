@@ -103,10 +103,9 @@ function checkImageComponentsUsage() {
 
   try {
     // Check if we have a standardized image component
-    const hasStandardImageComponent =
-      fs.existsSync(path.join(componentsDir, "core-image.tsx")) ||
-      fs.existsSync(path.join(componentsDir, "enhanced-image.tsx")) ||
-      fs.existsSync(path.join(componentsDir, "optimized-image.tsx"))
+    const hasStandardImageComponent = fs.existsSync(
+      path.join(componentsDir, "core-image.tsx"),
+    )
 
     if (!hasStandardImageComponent) {
       issues.push("⚠️ No standardized image component found (recommended: components/core-image.tsx)")

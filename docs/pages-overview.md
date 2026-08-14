@@ -5,6 +5,7 @@ Quick reference for the pages we edit most often.
 ## Growth-First Search Visibility
 
 - `lib/seo/search-visibility.ts` is the source of truth for which routes and blog posts are indexable.
+- The four `/why-*` verticals (consulting, local shops, nonprofits, community founders) plus `/why-dental-practices-love-prism` are indexable because `/ads` and `/local-listings` link them. Keep them in `public/llms.txt` and the sitemap.
 - Prism's public search/LLM footprint should read as business growth systems: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, and the Growth Dashboard to Light Audit funnel.
 - Broad pages can stay live for direct users, but they should remain noindex and out of `app/sitemap.ts` / `public/llms.txt` unless they become part of the growth-system story or a deliberate specialty cluster.
 - All case study detail pages remain indexable because they are unique proof. Dental case studies should stay prominent, but non-dental case studies should also support the broader growth story.
@@ -108,7 +109,7 @@ Quick reference for the pages we edit most often.
 ## Founder OS (retired → redirects to `/content-os`)
 
 - Founder OS is **retired**. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`), and the route is no longer in `lib/seo/search-visibility.ts` / `public/llms.txt`.
-- The `app/founder-os/*` page files and `components/forms/FounderOsApplicationForm.tsx` remain only as archival code behind the redirect; do not link to them from active pages or treat Founder OS as a live offer.
+- Founder OS page and form files are gone. Keep the `/founder-os` and `/founder-os/apply` redirects. Do not treat Founder OS as a live offer.
 
 ## Apps (`app/apps/page.tsx`)
 
@@ -146,6 +147,7 @@ Quick reference for the pages we edit most often.
 ## Dental Website (`app/dental-website/page.tsx`)
 
 - Dentist-focused website page targeting “dentist website design”.
+- Primary CTAs say "Start my website" and route to `/website-intake`. The final section keeps a secondary `BOOK_A_CALL_CTA`. Offer schema is price-free and points at `/pricing`.
 - Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-website`): `/dentist-website-design`, `/dental-website-design`, `/dental-clinic-website-design`.
 
@@ -195,7 +197,7 @@ Quick reference for the pages we edit most often.
 
 - Header nav labels live in `NAV_ITEMS` in `lib/constants.ts`; the current public nav (2026-07-27 redesign) is a flat seven-item rail: the four offers, then `wall of love` + `case studies`, then `contact` — no dropdown, no `pricing` or `get started` items, and NO CTA button. Desktop links are quiet rounded pills (active `white/[0.08]` wash) in three hairline-divided groups (offers | proof | contact), taking over from the menu button at `lg` (1024px); the logo tagline hides between `lg` and `xl` so the rail fits. The full-height mobile panel keeps the same seven items as a flat list of plain labels (no index prefixes), locks scroll on both `html` and `body`, marks the page behind it `inert`, and animates in with staggered links. The footer System column links `PRO Website` and `Content OS` (the old `Founder OS` link became Content OS), and the Company column carries `Refer a friend — $100` (`/refer`).
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
-- The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Order a website` (`/websites`, `label="Order a website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
+- The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with two CTAs: `Start my website` (`/website-intake`, `label="Start my website"`) and `Get started free` (`/get-started`, `label="Get started free"`), both through `TrackedLink` with `location="footer"`.
 - Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
 
 ## AI Agents for Dentists (`app/ai-agents/dental/page.tsx`)
@@ -208,18 +210,19 @@ Quick reference for the pages we edit most often.
 
 - `app/layout.tsx` injects `GlobalSchemaGraph` from `components/schema-markup.tsx` (Organization, WebSite, LocalBusiness).
 - `components/breadcrumbs.tsx` emits `BreadcrumbList` JSON-LD with canonical URLs.
+- Service offer schema on `/ads`, `/seo`, `/local-listings`, `/websites`, `/dental-website`, and `/dental-practice-seo-expert` stays price-free. Do not reintroduce `60-Day Growth Sprint` or numeric `price` fields.
 
 ## Homepage (`app/client-page.tsx`)
 
-- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, final CTA, and then `HomeOffersSection` ("Four ways to grow with Prism.") as the **last** section.
+- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with count-up stats, audience fit cards, short process, compact proof grid, `HomeOffersSection` ("Four ways to grow with Prism."), then the final free-audit CTA.
 - The homepage hero is built from `components/home/HomeHeroSection.tsx`; copy comes from `components/home/homepage-content.ts`. The H1 is "Prism" with the subhead "the #1 growth partner for small businesses". The proof block now leads with **attention + traffic, not revenue**: 18,563 new users/month to client sites, 71,000 followers, and 17M+ views across YouTube/Instagram/TikTok (each linking to the profile in a new tab), plus a "Grown end to end by Prism, powered by Content OS" attribution that links to `/content-os`. The old "Get found. Get trusted. Get chosen." / revenue framing is retired. Copy voice (2026-07-29): the homepage leads with relationship + results, not AI mechanics — Prism plugs into the founder's existing team, results compound, and founders stay. The hero pill is "The growth team founders keep" (heart icon), the hero description ends "You get the results without the workload.", the system strip closes with Tracking (not AI), and the offers eyebrow is "Ways to work together". AI stays only where it is buyer-facing reality (the problem section's "Can AI recommend you?" and the AI discovery service card); do not reintroduce "driven by AI" / "AI Agents" method claims on this page.
-- The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers and ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
+- The "Four ways to grow with Prism" offers section (`components/home/HomeOffersSection.tsx`) renders the four offers. The Website card uses `WEBSITE_START_CTA` ("Start my website" → `/website-intake`); the other three keep `BOOK_A_CALL_CTA`. The section ends with a free on-ramp callout: "Not ready to buy? Start free..." → `/get-started` ("Get started free").
 - Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (stat count-up in the 90-day band; exposes the final value once to assistive technology while animated and sizing copies remain hidden), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
 - The homepage is growth-first and dental-proven. Default language should speak to founders, owners, operators, qualified demand, Google/AI visibility, reviews, conversion paths, tracking, and measurable growth opportunities.
 - The primary hero CTA is "Get a PRO website" and points to `/websites`; the secondary CTA is "Wall of Love" and points to `/wall-of-love` (2026-07-30; it previously hash-scrolled to `#offers` as "Explore plans").
 - Keep homepage copy extremely short: use labels, one-line headings, and compact cards. Move longer explanations to deeper pages.
 - The client proof surface under the hero is the `HOMEPAGE_CLIENT_WINS` deck, rendered by `components/home/HomeClientCoverFlow.tsx` (mounted via the legacy-named `HomeDentistWinsSection.tsx` wrapper that keeps the "Great companies use Prism" heading + `N client stories · M markets · Verified case studies` line, auto-computed from the slides where relevant). It is a mixed-client set spanning retail, dental, education, community, consulting, nonprofit, hospitality, B2B services, and specialty healthcare proof.
-- There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS` (slide order is hand-curated to interleave industries, not to mirror the data order). Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
+- There is **one card per published case study** (currently 22) — the deck is kept in sync with the `/case-studies` index and `CASE_STUDIES` in `lib/case-study-data.ts`. When a case study is added/removed there, add/remove the matching slide in `HOMEPAGE_CLIENT_WINS`. Slide order is hand-curated to lead with measured non-dental Search Console wins (Olympic Bootworks, Saorsa, Belize Kids), then mix remaining markets. Do not invent metrics. Each slide carries `company` (the brand/business name shown as the prominent card label — **never a person's name**), `location`, `contextLabel`, plus `href` + `image` derived from the slug.
 - Cover Flow cards render **real client-website screenshots** — the portrait `public/case-studies/<slug>-home-mobile.jpg` capture referenced by each slide's `image` field. Because the card crops to its top ~62%, a capture must lead with the site's clean branded hero: dismiss cookie/consent banners, newsletter/promo popups, chat widgets (incl. the ElevenLabs `convai` embed), and top announcement bars before shooting, and for a sparse or text-first hero, scroll the branded section to the top. The previous abstract `AbstractClientWinVisual` / `data-client-win-abstract` / no-image contract (and `HomeDentistWinsCarousel`) were retired; the current contract is covered by `__tests__/components/HomeClientCoverFlow.test.tsx`.
 - The deck is a restrained 3D Cover Flow / diagonal card fan: one shared camera, a one-time back-to-front entrance fan-open on scroll-in, hover lift + neighbour yield, damped pointer parallax, press feedback, and a single `cubic-bezier(0.22,1,0.36,1)` easing — **no autoplay** (the deck is still at rest, input-led). The active cover is a real `<Link>` to its case study; the caption below shows the active client's **company name** (not a person) with `contextLabel · location` and a dedicated case-study link.
 - Touch is gated on input capability, not width: `isTouch = useMobile('(hover: none), (pointer: coarse)')` disables parallax/tilt/hover-lift, swaps to one static low-radius shadow, mounts fewer covers (a tighter fan, `maxVisible` 2 vs 3), drops the on-card CTA pill (it duplicates the caption link and wraps in a narrow card), and uses a direct 1:1 drag where a casual swipe = exactly one card and a genuine flick advances more. `touch-action: pan-y pinch-zoom` keeps page scroll + zoom; `setPointerCapture` makes the drag drop-proof; `pointercancel` aborts without committing.
@@ -256,7 +259,7 @@ Quick reference for the pages we edit most often.
 - `app/thank-you/page.tsx`
 - `app/analysis-thank-you/page.tsx`
 
-Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route now supports an apply-specific state via `?source=apply`, so keep any future branching explicit and truthful to the originating form.
+Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route supports `?source=apply` and a leftover `?source=website-build` variant; live `/website-intake` stays on-page after submit. Website-build copy must not promise a payment link. `/pricing/thank-you` is noindex and must not mention the retired growth sprint.
 
 - These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 

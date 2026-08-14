@@ -32,7 +32,7 @@ export const LEAD_VALUE_USD_BY_TYPE: Record<string, number> = {
   // Consultative inbound: real intent, but several conversations from revenue.
   growth_application: 150,
   founder_os_application: 150,
-  checkout_inquiry: 150, // components/checkout-form.tsx, any plan
+  checkout_inquiry: 150, // retired checkout form; keep for historical events
 
   // Referral submissions are a payout obligation, not a sale. Valued for
   // internal reporting only — ReferralForm sends no Ads conversion.
