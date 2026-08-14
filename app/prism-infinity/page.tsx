@@ -245,7 +245,7 @@ export default function PrismInfinityPage() {
                 )}
               />
 
-              <div className="relative z-10 grid gap-10 px-6 py-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-end lg:px-12 lg:py-16">
+              <div className="relative z-10 grid gap-8 px-6 py-8 sm:gap-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-end lg:px-12 lg:py-16">
                 <div className="flex flex-col gap-5">
                   <p className="flex items-center gap-2.5 font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#797165]">
                     <InfinityGlyph className="h-5 w-10" />
