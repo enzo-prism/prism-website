@@ -15,6 +15,7 @@ Next.js 16.2.11 App Router project that powers Prism's business growth systems w
    - `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` is optional for the shared floating widget on `/pricing` and `/contact`; otherwise the stock Prism Sales agent id is used.
 4. **Run the dev server** – `pnpm dev` (defaults to `http://localhost:3000`).
 5. **Optional quality gates** – `pnpm lint && pnpm typecheck && pnpm test` before opening a PR.
+6. **Cloud Agents** – `.cursor/environment.json` is the repo-managed Cloud Agent environment. Install seeds pnpm deps, `.env.local`, and Playwright browsers; a shared terminal starts `pnpm dev` on port 3000. See **Cursor Cloud specific instructions** in [`AGENTS.md`](./AGENTS.md).
 
 > **Canonical instructions**  
 > README.md and AGENTS.md are the single source of truth for technical guidance. Any conflicting direction elsewhere (including CLAUDE.md, legacy playbooks, or scripts) is deprecated until updated to match these files.

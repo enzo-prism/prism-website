@@ -8,6 +8,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 
 - Install deps with `pnpm install` (repo assumes pnpm).
 - Start the Next.js dev server with `pnpm dev`.
+- Cloud Agents use the repo-managed `.cursor/environment.json` (install + start scripts under `.cursor/`, plus a shared `pnpm dev` terminal on port 3000). See **Cursor Cloud specific instructions** in `AGENTS.md`.
 - If you use `pnpm exec next start` for a production-parity preview, always run `pnpm build` immediately beforehand. `next start` serves the last production bundle on disk, so source edits will appear "ignored" until you rebuild.
 - Read `/DESIGN.md` before changing UI, layout, motion, or visual tokens. It is the code-facing design contract for this repo.
 - For repeated frontend work, use `.agents/skills/ui-design-system/SKILL.md` alongside `/DESIGN.md`.
