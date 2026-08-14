@@ -152,8 +152,9 @@ chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
   - `_gotcha` (honeypot)
   - `appendFormspreeOpsMetadata(formData, "website_intake")`
 - Endpoint strategy:
-  - `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` (unset shows an in-form
-    "not configured" notice instead of submitting)
+  - `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` ?? `https://formspree.io/f/xpqebnbz`
+    (reuses the existing Prism "Website Customer Request, 2026 June" Formspree
+    form that already notifies `enzo@design-prism.com`)
 - Success flow:
   - In-page success screen with `trackLeadConversion(..., { conversionMode: "immediate" })`
   - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`

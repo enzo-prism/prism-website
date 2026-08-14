@@ -19,7 +19,9 @@ import { appendFormspreeOpsMetadata } from './FormspreeOpsFields'
 
 import styles from './website-intake.module.css'
 
-const FORM_ACTION = process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT || ''
+const FORM_ACTION =
+  process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT ||
+  'https://formspree.io/f/xpqebnbz'
 const FORM_NAME = 'website_intake'
 const FORM_LOCATION = 'website_intake_page'
 const DRAFT_STORAGE_KEY = 'prism_website_intake_draft_v1'
@@ -485,11 +487,6 @@ export default function WebsiteIntakeForm() {
   }, [currentStep, stepIndex])
 
   const handleSubmit = useCallback(async () => {
-    if (!FORM_ACTION) {
-      setSubmitError('This form is not configured yet. Please try again soon.')
-      return
-    }
-
     const elapsedSeconds = Math.max(
       1,
       Math.round((Date.now() - startedAtRef.current) / 1000),
