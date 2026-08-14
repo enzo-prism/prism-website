@@ -109,6 +109,7 @@ describe('SEO indexability guards', () => {
       'https://www.design-prism.com/refer',
       'https://www.design-prism.com/software',
       'https://www.design-prism.com/tiktok',
+      'https://www.design-prism.com/website-intake',
       'https://www.design-prism.com/youtube',
     ]
 
@@ -123,6 +124,7 @@ describe('SEO indexability guards', () => {
     expect(isRouteIndexable('/ai-agents/dental')).toBe(true)
     expect(isRouteIndexable('/local-seo-agency')).toBe(true)
     expect(isRouteIndexable('/local-seo-services')).toBe(true)
+    expect(isRouteIndexable('/website-intake')).toBe(false)
     expect(isRouteIndexable('/ai')).toBe(false)
     expect(isRouteIndexable('/ai-agents')).toBe(false)
     expect(isRouteIndexable('/apps')).toBe(false)

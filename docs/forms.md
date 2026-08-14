@@ -25,6 +25,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/FreeAnalysisForm.tsx`
 - `components/forms/ContactForm.tsx`
 - `components/forms/GetStartedForm.tsx` (`/apply`)
+- `components/forms/WebsiteIntakeForm.tsx` (`/website-intake`)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - `components/forms/FounderOsApplicationForm.tsx` (legacy archival form code; `/founder-os/apply` now 301-redirects to `/content-os` and should not receive active traffic)
 - `components/forms/ScalingRoadmapForm.tsx`
@@ -129,15 +130,53 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## `/websites`: booking-only (order form retired 2026-07-27)
+## `/website-intake`: focused PRO website lead funnel
 
-The `/websites` PRO website page has **no form**. The old fullscreen order
-dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
-Payment Link flow (`lib/payment-links.ts`) were deleted when the offer went
-call-first. Every CTA on the page opens the 30-minute Notion Calendar booking
-link (`BOOK_A_CALL_CTA` in `lib/pricing-model.ts`) in a new tab. The noindex
-`/checkout/website/thank-you` route remains only as the landing target for the
-legacy live Stripe link.
+`components/forms/WebsiteIntakeForm.tsx` is the one-question-per-screen intake
+for the Website offer. `/websites` remains the indexable marketing page; its
+primary CTAs now route here. The route is noindex, uses focused `/apply`-style
+chrome (no navbar, footer, or ElevenLabs widget), and posts to Formspree.
+
+- Required payload fields:
+  - `why_new_website`
+  - `timeline`
+  - `has_current_website`
+  - `site_link`
+  - `contact_method`
+  - `email` or `phone` (whichever method they chose)
+- Optional payload fields:
+  - `heard_about_us`
+- Hidden metadata contract:
+  - `_subject` = `New Website Intake Lead`
+  - `form_name` = `website_intake`
+  - `_gotcha` (honeypot)
+  - `appendFormspreeOpsMetadata(formData, "website_intake")`
+- Endpoint strategy:
+  - `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` (unset shows an in-form
+    "not configured" notice instead of submitting)
+- Success flow:
+  - In-page success screen with `trackLeadConversion(..., { conversionMode: "immediate" })`
+  - Optional booking CTA uses `BOOKING_URL` / `trackBookCallClick`
+- UX contract:
+  - Four questions: why, timeline, current site/link, contact
+  - Single-select why/timeline steps auto-advance after a short confirm delay
+  - Visible inline validation, desktop autofocus, Enter/arrow keyboard progression
+  - Same-tab draft restore via `sessionStorage` (`prism_website_intake_draft_v1`)
+- Analytics:
+  - `website_intake_form_view`, `_form_start`, `_step_view`, `_step_complete`,
+    `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_success`,
+    `_submit_error`, `_source_select`, `_booking_click`, `_abandon`
+  - Do not include user-entered emails, phones, URLs, or free-text in GA params
+
+## `/websites`: marketing page + intake handoff
+
+The `/websites` PRO website page has **no on-page form**. The old fullscreen
+order dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
+Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero and final
+CTAs now say "Start my website" and route to `/website-intake`. A secondary
+`BOOK_A_CALL_CTA` remains on the final section for visitors who want to skip
+the form. The noindex `/checkout/website/thank-you` route remains only as the
+landing target for the legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 

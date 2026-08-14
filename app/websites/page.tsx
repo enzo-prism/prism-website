@@ -196,14 +196,12 @@ export default function WebsitesPage() {
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <CoreActionLink
-                  href={BOOK_A_CALL_CTA.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/website-intake"
                   variant="heroPrimary"
-                  label="book a free demo"
+                  label="start my website"
                   location="websites hero"
                 >
-                  {BOOK_A_CALL_CTA.label}
+                  Start my website
                 </CoreActionLink>
                 <CoreActionLink
                   href="#work"
@@ -476,14 +474,22 @@ export default function WebsitesPage() {
           >
             <CoreSectionHeading
               title="Get your presence fully dialed."
-              description="Book a 30-minute Zoom call. We will map your business, define the scope, and present a clear price."
+              description="Four short questions, then we scope the build. Prefer a call? Book a 30-minute Zoom and we will map the work live."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <CoreActionLink
+                href="/website-intake"
+                variant="heroPrimary"
+                label="start my website"
+                location="websites final"
+              >
+                Start my website
+              </CoreActionLink>
               <CoreActionLink
                 href={BOOK_A_CALL_CTA.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                variant="heroPrimary"
+                variant="heroSecondary"
                 label="book a free demo"
                 location="websites final"
               >

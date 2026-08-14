@@ -56,7 +56,7 @@ plus a Google Ads conversion. Two modes:
   mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
   navigates on success.
 - `immediate` fires inline. Use when the form shows an in-page success screen
-  and never navigates — the retired `/websites` order form was the case in point.
+  and never navigates — `/website-intake` is the live case.
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
 so Smart Bidding can weigh a $300 order against a free-audit request. Before it

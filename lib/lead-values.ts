@@ -26,6 +26,9 @@ export const LEAD_VALUE_USD_BY_TYPE: Record<string, number> = {
   // See docs/analytics.md.
   website_order: 300, // canonical $300 flat website build
 
+  // High-intent PRO website intake: scoped on a call after four questions.
+  website_intake: 180,
+
   // Consultative inbound: real intent, but several conversations from revenue.
   growth_application: 150,
   founder_os_application: 150,
