@@ -511,6 +511,21 @@ describe('Vercel analytics URL normalization', () => {
       })
     })
 
+    it('maps the allowlisted timeout submission error category', () => {
+      expect(
+        buildVercelCustomEvent('website_intake_submit_error', {
+          form_name: 'website_intake',
+          reason: 'timeout',
+        }),
+      ).toEqual({
+        name: 'Website Intake Submit Error',
+        properties: {
+          form_name: 'website_intake',
+          reason: 'timeout',
+        },
+      })
+    })
+
     it('intentionally leaves unapproved website intake events unmapped', () => {
       expect(
         buildVercelCustomEvent('website_intake_draft_saved', {

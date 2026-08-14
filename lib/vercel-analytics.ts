@@ -58,6 +58,7 @@ const WEBSITE_INTAKE_SOURCES = new Set([
 const WEBSITE_INTAKE_ERROR_REASONS = new Set([
   'network_failure',
   'non_ok_response',
+  'timeout',
 ])
 
 function compactProperties(
