@@ -282,7 +282,7 @@ describe('SocialLinkHub', () => {
     // Revenue bands are routing copy, not public pricing; the Infinity detail
     // stays price-free and avoids the retired "Everything Prism, unlimited".
     expect(
-      screen.getByText(/unlimited design, web, content, and ads/i),
+      screen.getByText(/unlimited landing pages, ads, and websites/i),
     ).toBeInTheDocument()
   })
 })

@@ -35,7 +35,7 @@ Important notes for LLMs and agents:
 - Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; scoped on a 30-minute call): https://www.design-prism.com/websites
 - Content OS (AI agents that scale content and ads across every social platform and your website, implemented over 3 months then optimized monthly, scoped on a 30-minute call): https://www.design-prism.com/content-os
 - Dental OS (the full Prism growth system packaged for dental practices, scoped on a 30-minute call): https://www.design-prism.com/dental-os
-- Prism Infinity (unlimited design, web, video, content, and ads on one monthly subscription, scoped on a 30-minute call): https://www.design-prism.com/prism-infinity
+- Prism Infinity (unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription, scoped on a 30-minute call): https://www.design-prism.com/prism-infinity
 - Dental practices: https://www.design-prism.com/why-dental-practices-love-prism
 - Consulting companies: https://www.design-prism.com/why-consulting-companies-love-prism
 - Local shop owners: https://www.design-prism.com/why-local-shop-owners-love-prism

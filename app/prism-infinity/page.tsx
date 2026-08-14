@@ -1,26 +1,6 @@
 import type { Metadata } from 'next'
-import type { ComponentType, ReactNode } from 'react'
-import {
-  BadgeDollarSign,
-  Camera,
-  Check,
-  CirclePause,
-  Clapperboard,
-  Contact,
-  CreditCard,
-  FolderCheck,
-  Gem,
-  Globe,
-  ListPlus,
-  Megaphone,
-  PackageCheck,
-  PenTool,
-  Presentation,
-  Printer,
-  SlidersHorizontal,
-  Sparkles,
-  Zap,
-} from 'lucide-react'
+import type { ReactNode } from 'react'
+import { Check } from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
@@ -33,10 +13,26 @@ import {
   coreRouteHeroFrameClassName,
   coreRouteSectionClassName,
   coreRouteSectionCompactClassName,
+  coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import HomeCountUp from '@/components/home/HomeCountUp'
 import HomeReveal from '@/components/home/HomeReveal'
 import InfinityRotatingWord from '@/components/prism-infinity/InfinityRotatingWord'
+import {
+  ALSO_INCLUDED,
+  CANONICAL_URL,
+  DELIVERABLES,
+  FAQ_ITEMS,
+  HERO_FACTS,
+  HOW_IT_WORKS,
+  MARQUEE_ITEMS,
+  OWNER_REASONS,
+  PAGE_DESCRIPTION,
+  PAGE_TITLE,
+  QUEUE_BOARD,
+  ROTATING_WORDS,
+} from '@/components/prism-infinity/infinity-content'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { BOOK_A_CALL_CTA, PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
@@ -44,10 +40,6 @@ import { cn } from '@/lib/utils'
 
 import styles from './prism-infinity.module.css'
 
-const PAGE_TITLE = 'Prism Infinity'
-const PAGE_DESCRIPTION =
-  'Unlimited design, websites, video, content, and ads on one monthly subscription. Submit one request at a time and pause anytime.'
-const CANONICAL_URL = 'https://www.design-prism.com/prism-infinity'
 const SUBSCRIBE_HREF = BOOK_A_CALL_CTA.href
 const SUBSCRIBE_LABEL = BOOK_A_CALL_CTA.label
 
@@ -57,133 +49,6 @@ export const metadata: Metadata = buildRouteMetadata({
   path: '/prism-infinity',
   ogImage: '/prism-opengraph.png',
 })
-
-const ROTATING_WORDS = [
-  'design',
-  'websites',
-  'video',
-  'content',
-  'ads',
-] as const
-
-const HERO_FACTS = [
-  'Unlimited requests',
-  'Delivered one at a time',
-  'Pause or cancel anytime',
-] as const
-
-type IconComponent = ComponentType<{ className?: string }>
-
-const HOW_IT_WORKS: readonly {
-  label: string
-  body: string
-  icon: IconComponent
-}[] = [
-  {
-    label: 'Subscribe',
-    body: 'Start your plan at a single flat monthly rate and get your own Prism request board on day one.',
-    icon: CreditCard,
-  },
-  {
-    label: 'Request',
-    body: 'Add as many requests as you like: design, web, video, content, ads, and more. Your queue is yours.',
-    icon: ListPlus,
-  },
-  {
-    label: 'Receive',
-    body: 'We deliver one request at a time, fast. The moment one ships, we start the next in your queue.',
-    icon: PackageCheck,
-  },
-] as const
-
-const INCLUDED: readonly {
-  title: string
-  body: string
-  icon: IconComponent
-}[] = [
-  {
-    title: 'Logo design',
-    body: 'Marks, wordmarks, and refreshes built for real brand systems.',
-    icon: PenTool,
-  },
-  {
-    title: 'Print design',
-    body: 'Brochures, signage, menus, and collateral that match your brand.',
-    icon: Printer,
-  },
-  {
-    title: 'Web development',
-    body: 'Landing pages, sites, and front-end builds shipped production-ready.',
-    icon: Globe,
-  },
-  {
-    title: 'Video editing',
-    body: 'Short-form, ads, and long-form cuts edited to your story.',
-    icon: Clapperboard,
-  },
-  {
-    title: 'Content creation',
-    body: 'Posts, graphics, and creative for every platform you publish on.',
-    icon: Sparkles,
-  },
-  {
-    title: 'Ads',
-    body: 'Ad creative and variations built to test, scale, and convert.',
-    icon: Megaphone,
-  },
-  {
-    title: 'Slide deck design',
-    body: 'Pitch, sales, and investor decks designed to land the room.',
-    icon: Presentation,
-  },
-  {
-    title: 'In-person pro photoshoots',
-    body: 'On-location shoots that give you a library of owned, on-brand imagery.',
-    icon: Camera,
-  },
-  {
-    title: 'Business card design',
-    body: 'Cards and small-format print that carry the brand into the room.',
-    icon: Contact,
-  },
-] as const
-
-const BENEFITS: readonly {
-  title: string
-  body: string
-  icon: IconComponent
-}[] = [
-  {
-    title: 'Fixed monthly rate',
-    body: 'One flat monthly subscription. No scope creep, no surprise invoices, no hourly billing.',
-    icon: BadgeDollarSign,
-  },
-  {
-    title: 'Fast delivery',
-    body: 'Most requests land in just a few days, delivered one at a time so quality holds.',
-    icon: Zap,
-  },
-  {
-    title: 'Top-tier quality',
-    body: 'The same Prism craft behind our case-study work, applied to every request.',
-    icon: Gem,
-  },
-  {
-    title: 'Flexible & scalable',
-    body: 'Scale the queue up or down as your needs shift, without renegotiating a contract.',
-    icon: SlidersHorizontal,
-  },
-  {
-    title: 'Pause or cancel anytime',
-    body: 'No lock-in. Pause when work slows and keep your unused time, or cancel outright.',
-    icon: CirclePause,
-  },
-  {
-    title: 'All yours',
-    body: 'Every deliverable is yours to keep, with full ownership of the final files.',
-    icon: FolderCheck,
-  },
-] as const
 
 const PROOF_STATS: readonly {
   value: string
@@ -215,45 +80,6 @@ const PROOF_STATS: readonly {
     brand: 'tiktok',
   },
 ] as const
-
-const FAQ_ITEMS = [
-  {
-    question: 'What counts as a request?',
-    answer:
-      'A request is one focused deliverable: a logo, a landing page, a video edit, a slide deck, an ad set, a photoshoot. If it is something Prism does, it can be a request.',
-  },
-  {
-    question: 'How fast is turnaround?',
-    answer:
-      'Most requests are delivered in a few days. Larger requests are broken into clear milestones so you always see momentum while we work through your queue one item at a time.',
-  },
-  {
-    question: 'How many active requests can I have?',
-    answer:
-      'Add as many requests as you like to your queue. Prism works on one active request at a time and starts the next the moment one is delivered, so the queue keeps moving without ever capping how much you submit.',
-  },
-  {
-    question: 'Can I really pause or cancel anytime?',
-    answer:
-      'Yes. Pause your plan when work slows and keep your unused days for when you return, or cancel outright. There are no contracts and no penalties.',
-  },
-  {
-    question: 'What is out of scope?',
-    answer:
-      'Prism Infinity covers design, web, video, content, and ads production. It does not include paid ad spend, third-party software or licensing fees, or large custom software builds. We flag those up front and scope them separately.',
-  },
-  {
-    question: 'How much does Prism Infinity cost?',
-    answer:
-      'One flat monthly subscription, scoped to your business. Book a 30-minute Zoom call and we will size the plan together. You leave the call knowing exactly what it costs and what you get.',
-  },
-] as const
-
-const QUEUE_BOARD = {
-  delivered: 'Logo refresh',
-  active: 'Homepage redesign',
-  queued: ['Ad creative (3 variations)', 'Pitch deck refresh'],
-} as const
 
 function SectionKicker({ children }: { children: ReactNode }) {
   return (
@@ -368,11 +194,9 @@ function QueueBoard() {
 }
 
 function ServiceMarquee() {
-  const items = INCLUDED.map(({ title, icon }) => ({ title, icon }))
-
   return (
     <div
-      aria-label="Services included in Prism Infinity. Focus to pause the animation."
+      aria-label="Growth deliverables included in Prism Infinity. Focus to pause the animation."
       className={cn('overflow-hidden border-y border-white/10', styles.marquee)}
       role="region"
       tabIndex={0}
@@ -384,12 +208,15 @@ function ServiceMarquee() {
             aria-hidden={duplicate || undefined}
             className="flex shrink-0 items-center"
           >
-            {items.map(({ title, icon: Icon }) => (
+            {MARQUEE_ITEMS.map((title) => (
               <li
                 key={title}
                 className="flex items-center gap-3 whitespace-nowrap pr-14"
               >
-                <Icon aria-hidden="true" className="h-4 w-4 text-[#d8bc79]" />
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-[#d8bc79]"
+                />
                 <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#b8afa2]">
                   {title}
                 </span>
@@ -407,7 +234,6 @@ export default function PrismInfinityPage() {
     <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        {/* 1. Hero */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <div className={coreRouteHeroFrameClassName}>
@@ -425,8 +251,9 @@ export default function PrismInfinityPage() {
                     <InfinityGlyph className="h-5 w-10" />
                     Prism Infinity
                   </p>
-                  <h1 className="max-w-[13ch] text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]">
-                    Unlimited{' '}
+                  <h1 className="max-w-[16ch] text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]">
+                    Unlimited
+                    <br />
                     <InfinityRotatingWord
                       words={ROTATING_WORDS}
                       animationClassName={styles.rotatingWord}
@@ -436,15 +263,16 @@ export default function PrismInfinityPage() {
                     One subscription.
                   </h1>
                   <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
-                    One monthly subscription for unlimited design, web, video,
-                    content, ads, and more, delivered one request at a time.
+                    One monthly plan for the deliverables that grow a business.
+                    Fill a queue with landing pages, ads, websites, video, and
+                    photoshoots. We ship one at a time.
                   </p>
                 </div>
 
                 <div className="space-y-5 border-t border-white/12 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
                   <div>
                     <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      One subscription
+                      Monthly plan
                     </p>
                     <p
                       className={cn(
@@ -490,17 +318,16 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 2. Service marquee */}
         <ServiceMarquee />
 
-        {/* 3. How it works + live queue */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <HomeReveal>
               <CoreSectionHeading
                 eyebrow="How it works"
-                title="Subscribe, request, receive."
-                description="Unlimited requests, delivered one by one. You keep the queue full; Prism keeps it moving."
+                title="Name the need. We keep shipping."
+                description="Unlimited requests, delivered one by one. You keep the queue full of work that grows the business. Prism keeps it moving."
+                titleClassName="max-w-[16ch] xl:max-w-[18ch]"
               />
             </HomeReveal>
             <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start">
@@ -515,12 +342,12 @@ export default function PrismInfinityPage() {
                       )}
                     >
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03]">
-                        <step.icon
+                        <PixelishIcon
+                          src={step.iconSrc}
+                          alt=""
+                          size={20}
                           aria-hidden="true"
-                          className={cn(
-                            'h-5 w-5 text-[#b8afa2]',
-                            styles.cardIcon,
-                          )}
+                          className={cn('h-5 w-5 opacity-80', styles.cardIcon)}
                         />
                       </div>
                       <div>
@@ -545,44 +372,58 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 4. What's included */}
         <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
+          <div
+            className={cn(
+              coreRouteContainerClassName,
+              coreRouteSplitLayoutClassName,
+            )}
+          >
             <HomeReveal>
               <CoreSectionHeading
-                eyebrow="What's included"
-                title="One plan. Every deliverable."
-                description="Your subscription covers the full range of work Prism makes. Request whatever the moment calls for."
+                eyebrow="What you'll request"
+                title="The work owners actually need."
+                description="Prism Infinity is an infinite queue of growth deliverables, not a catalog of agency extras. Request whatever the moment calls for."
+                titleClassName="max-w-[14ch] xl:max-w-[16ch]"
               />
             </HomeReveal>
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {INCLUDED.map((item, index) => (
+            <ol className="divide-y divide-white/10 border-y border-white/10">
+              {DELIVERABLES.map((item, index) => (
                 <li key={item.title}>
                   <HomeReveal
-                    delay={(index % 3) * 80}
-                    className={cn(
-                      'h-full rounded-[1.4rem] border border-white/10 bg-[#070707] p-5',
-                      styles.liftCard,
-                    )}
+                    delay={index * 60}
+                    className="flex gap-4 py-5 sm:gap-5 sm:py-6"
                   >
-                    <item.icon
-                      aria-hidden="true"
-                      className={cn('h-5 w-5 text-[#8f877b]', styles.cardIcon)}
-                    />
-                    <h3 className="mt-4 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-6 text-[#b8afa2]">
-                      {item.body}
-                    </p>
+                    <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-black/40">
+                      <PixelishIcon
+                        src={item.iconSrc}
+                        alt=""
+                        size={18}
+                        aria-hidden="true"
+                        className="h-4 w-4 opacity-80"
+                      />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[#7d766a]">
+                        {String(index + 1).padStart(2, '0')}
+                      </p>
+                      <h3 className="mt-2 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8] sm:text-xl">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-pretty text-sm leading-6 text-[#b8afa2]">
+                        {item.body}
+                      </p>
+                    </div>
                   </HomeReveal>
                 </li>
               ))}
-            </ul>
+            </ol>
+          </div>
+          <div className={cn(coreRouteContainerClassName, 'mt-6')}>
             <HomeReveal delay={120}>
               <div
                 className={cn(
-                  'mt-4 flex flex-col gap-3 rounded-[1.4rem] border border-[#d8bc79]/25 bg-[#d8bc79]/[0.05] p-5 sm:flex-row sm:items-center sm:gap-5',
+                  'flex flex-col gap-3 rounded-[1.4rem] border border-[#d8bc79]/25 bg-[#d8bc79]/[0.05] p-5 sm:flex-row sm:items-center sm:gap-5',
                   styles.liftCard,
                 )}
               >
@@ -594,11 +435,10 @@ export default function PrismInfinityPage() {
                 </span>
                 <div>
                   <p className="text-base font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                    Anything we add to Prism later
+                    {ALSO_INCLUDED.title}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-[#b8afa2]">
-                    As Prism grows, your subscription grows with it. New
-                    services join the plan at no extra cost.
+                    {ALSO_INCLUDED.body}
                   </p>
                 </div>
               </div>
@@ -606,86 +446,57 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 5. Membership benefits */}
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div className={coreRouteContainedSectionClassName}>
-              <HomeReveal>
-                <CoreSectionHeading
-                  eyebrow="Membership benefits"
-                  title="Built like a product, not a retainer."
-                  description="A productized subscription means predictable cost, fast turnaround, and zero lock-in."
-                />
-              </HomeReveal>
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {BENEFITS.map((benefit, index) => (
-                  <HomeReveal key={benefit.title} delay={(index % 3) * 80}>
-                    <article
-                      className={cn(
-                        'h-full rounded-[1.4rem] border border-white/10 bg-[#070707] p-5',
-                        styles.liftCard,
-                      )}
-                    >
-                      <benefit.icon
-                        aria-hidden="true"
-                        className={cn(
-                          'h-5 w-5 text-[#8f877b]',
-                          styles.cardIcon,
-                        )}
-                      />
-                      <h3 className="mt-4 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                        {benefit.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                        {benefit.body}
-                      </p>
-                    </article>
-                  </HomeReveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 6. Risk reversal */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <div
               className={cn(
                 coreRouteContainedSectionClassName,
-                'grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center',
+                'grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start',
               )}
             >
               <HomeReveal>
                 <div className="space-y-5">
-                  <SectionKicker>No lock-in</SectionKicker>
+                  <SectionKicker>Why owners stay</SectionKicker>
                   <p className="font-sans text-[clamp(1.7rem,3.2vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.045em] text-[#f5f0e8]">
-                    Pause or cancel anytime.
+                    Stop hiring a new vendor for every project.
                   </p>
                   <p className="max-w-[34rem] text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
-                    Work in bursts? Pause your plan between projects and keep
-                    your unused days for when you return. No contracts, no
-                    penalties, no awkward conversations.
+                    One team, one queue, one monthly rate. Pause when work
+                    slows. No contracts, no penalties, no awkward conversations.
                   </p>
+                  <CoreActionLink
+                    href={SUBSCRIBE_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="primary"
+                    label="book a free demo"
+                    location="prism-infinity owner reasons"
+                  >
+                    Ask us how it works
+                  </CoreActionLink>
                 </div>
               </HomeReveal>
-              <HomeReveal delay={120} className="lg:justify-self-end">
-                <CoreActionLink
-                  href={SUBSCRIBE_HREF}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="primary"
-                  label="book a free demo"
-                  location="prism-infinity risk reversal"
-                >
-                  Ask us how it works
-                </CoreActionLink>
-              </HomeReveal>
+              <ul className="grid gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10 sm:grid-cols-2">
+                {OWNER_REASONS.map((reason, index) => (
+                  <li key={reason.title} className="bg-black p-5 sm:p-6">
+                    <HomeReveal delay={(index % 2) * 80}>
+                      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[#7d766a]">
+                        {String(index + 1).padStart(2, '0')}
+                      </p>
+                      <h3 className="mt-3 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8]">
+                        {reason.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
+                        {reason.body}
+                      </p>
+                    </HomeReveal>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* 7. Proof band */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <div className={coreRouteContainedSectionClassName}>
@@ -723,7 +534,6 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 8. Pricing recap */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <div
@@ -742,7 +552,7 @@ export default function PrismInfinityPage() {
               <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
                 <InfinityGlyph className="h-14 w-28" />
                 <div className="mt-6">
-                  <SectionKicker>One subscription</SectionKicker>
+                  <SectionKicker>Monthly plan</SectionKicker>
                 </div>
                 <p
                   className={cn(
@@ -753,9 +563,9 @@ export default function PrismInfinityPage() {
                   {PRISM_INFINITY_PRICE_LABEL}
                 </p>
                 <p className="mt-5 max-w-md text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
-                  Unlimited requests across design, web, video, content, and
-                  ads. Pause or cancel anytime. Book a 30-minute Zoom call and
-                  we&apos;ll scope your subscription together.
+                  Unlimited landing pages, ad creative, websites, video, and
+                  photoshoots. Pause or cancel anytime. Book a 30-minute Zoom
+                  call and we&apos;ll scope your subscription together.
                 </p>
                 <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
                   <CoreActionLink
@@ -774,7 +584,6 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 9. FAQ */}
         <section className={coreRouteSectionCompactClassName}>
           <div className={coreRouteContainerClassName}>
             <HomeReveal>
@@ -811,14 +620,14 @@ export default function PrismInfinityPage() {
           </div>
         </section>
 
-        {/* 10. Final CTA */}
         <section className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <HomeReveal>
                 <CoreSectionHeading
-                  title="Start Prism Infinity."
-                  description="One subscription for everything Prism does. Book a 30-minute Zoom call and we'll scope it together."
+                  title="Keep the queue full."
+                  description="One subscription for the deliverables that grow the business. Book a 30-minute Zoom call and we'll scope it together."
+                  titleClassName="max-w-[14ch] xl:max-w-[16ch]"
                 />
               </HomeReveal>
               <HomeReveal delay={120}>
@@ -844,13 +653,13 @@ export default function PrismInfinityPage() {
       <ServiceSchema
         serviceId="prism-infinity"
         name="Prism Infinity"
-        description="Unlimited design, web, video, content, and ads on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime."
+        description="Unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime."
         serviceType="Productized creative subscription"
         areaServed="United States"
         offerDetails={{
           name: 'Prism Infinity',
           description:
-            'Unlimited Prism across design, web, video, content, and ads on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Scoped on a 30-minute call.',
+            'Unlimited growth deliverables across landing pages, ad creative, websites, video, photoshoots, and content on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Scoped on a 30-minute call.',
           businessFunction: 'http://purl.org/goodrelations/v1#Sell',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

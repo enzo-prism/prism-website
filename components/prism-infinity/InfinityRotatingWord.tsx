@@ -12,7 +12,7 @@ type InfinityRotatingWordProps = {
 }
 
 /**
- * Cycles through service words in the Prism Infinity hero headline.
+ * Cycles through owner-valued deliverable names in the Prism Infinity hero.
  *
  * Server-renders the first word so crawlers, no-JS visitors, and the LCP
  * paint all see real copy. A hidden stack of every word reserves the widest

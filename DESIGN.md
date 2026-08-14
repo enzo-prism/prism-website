@@ -166,6 +166,8 @@ Dental remains one of Prism's strongest proof verticals, but the main homepage a
 
 Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the growth offer obvious in seconds.
 
+Offer pages should lead with the deliverables owners already want (landing pages, ad creative, websites, photoshoots, video), not an agency service catalog. On `/prism-infinity`, keep the infinite-queue mechanic visible and treat brand extras (cards, print, decks) as supporting work, not peer cards in the included grid.
+
 ### Abstract Client Proof Cards
 
 The homepage client proof carousel uses real client website screenshots, not abstract placeholder artwork. Those screenshots are part of the proof system: they let buyers and AI/search systems connect Prism's claims to visible portfolio quality and live case-study pages.

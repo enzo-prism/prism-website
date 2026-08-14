@@ -136,7 +136,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: PRISM_INFINITY_PRICE_LABEL,
     priceSubLabel: "Unlimited requests. Pause or cancel anytime.",
     description:
-      "Unlimited Prism across engineering, design, and marketing: logo and print design, web development, video editing, content, ads, slide decks, in-person photoshoots, and more. One monthly subscription.",
+      "Unlimited growth deliverables on one monthly subscription: landing pages, ad creative, websites, video, photoshoots, and content. Request as many as you need, delivered one at a time. Pause or cancel anytime.",
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: "Explore Prism Infinity",
