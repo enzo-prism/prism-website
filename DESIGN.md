@@ -387,9 +387,11 @@ case studies, then contact; no dropdowns and no CTA button): links are quiet
 rounded pills — active is a soft `white/[0.08]` wash, hover a lighter
 `white/[0.04]` — with 1px `white/14` hairlines dividing the three groups
 (offers | proof | contact). The inline rail takes over from the menu button
-at `lg` (1024px), and the logo tagline hides between `lg` and `xl` so the
-rail fits. The mobile panel keeps the same seven items as a flat divided
-list with aria-hidden mono index prefixes (01–07) for texture.
+at `lg` (1024px), and the logo tagline shows only from `xl` so the compact
+bar and the 1024px rail both stay a single 72px row. The mobile sheet is a
+full-viewport panel pinned under that chrome (offers | proof | contact, no
+index prefixes). It must stay out of flow so opening it never rewrites
+`--prism-header-height` or shifts the page underneath.
 
 ### Social proof
 
