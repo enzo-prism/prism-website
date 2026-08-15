@@ -9,7 +9,6 @@ import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
 import {
   CONTACT_NAV_ITEM,
   LOGO_CONFIG,
-  NAV_ITEMS,
   OFFER_NAV_ITEMS,
   PROOF_NAV_ITEMS,
 } from '@/lib/constants'
@@ -40,7 +39,7 @@ const HEADER_CLASSES =
 const DESKTOP_LINK_CLASSES =
   'whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors'
 const MOBILE_LINK_CLASSES =
-  'block py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
+  'flex min-h-11 items-center py-4 text-sm font-semibold uppercase tracking-[0.24em] transition-colors'
 
 function getCaseStudyBreadcrumbs(
   pathname: string | null,
@@ -70,12 +69,12 @@ function getNavItemClasses(active: boolean, variant: NavVariant) {
   const activeClasses =
     variant === 'desktop'
       ? 'bg-white/[0.08] text-[#f5f0e8]'
-      : 'text-[#f5f0e8]'
+      : 'bg-white/[0.08] text-[#f5f0e8]'
 
   const inactiveClasses =
     variant === 'desktop'
       ? 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8]'
-      : 'text-[#8f877b] hover:text-[#f5f0e8]'
+      : 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8]'
 
   return cn(
     variant === 'desktop' ? DESKTOP_LINK_CLASSES : MOBILE_LINK_CLASSES,
@@ -119,9 +118,41 @@ function NavbarLinks({
   )
 }
 
+function MobileNavGroups({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string | null
+  onNavigate: (label: string, href: string) => void
+}) {
+  const groups = [OFFER_NAV_ITEMS, PROOF_NAV_ITEMS, [CONTACT_NAV_ITEM]] as const
+
+  return (
+    <div className="flex flex-col">
+      {groups.map((items, groupIndex) => (
+        <div
+          key={items[0]?.href ?? groupIndex}
+          className={cn(
+            groupIndex > 0 && 'border-t border-white/14',
+            'divide-y divide-white/12',
+          )}
+        >
+          <NavbarLinks
+            items={[...items]}
+            pathname={pathname}
+            variant="mobile"
+            onNavigate={onNavigate}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function Navbar() {
   const pathname = usePathname()
   const headerRef = useRef<HTMLElement | null>(null)
+  const chromeRef = useRef<HTMLDivElement | null>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const isHome = pathname === '/'
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
@@ -187,13 +218,16 @@ export default function Navbar() {
   }, [isMobileMenuOpen])
 
   useLayoutEffect(() => {
-    const header = headerRef.current
-    if (!header) return
+    const chrome = chromeRef.current
+    if (!chrome) return
 
+    // Measure only the 72px bar (+ breadcrumbs). The mobile sheet is
+    // out-of-flow and must never rewrite this variable, or the homepage
+    // hero padding and every sticky offset jump when the menu opens.
     const updateHeaderHeight = () => {
       document.documentElement.style.setProperty(
         '--prism-header-height',
-        `${header.getBoundingClientRect().height}px`,
+        `${chrome.getBoundingClientRect().height}px`,
       )
     }
 
@@ -204,7 +238,7 @@ export default function Navbar() {
         ? new ResizeObserver(updateHeaderHeight)
         : null
 
-    resizeObserver?.observe(header)
+    resizeObserver?.observe(chrome)
     window.addEventListener('resize', updateHeaderHeight)
 
     return () => {
@@ -223,9 +257,15 @@ export default function Navbar() {
       ref={headerRef}
       className={cn(
         HEADER_CLASSES,
+        'relative',
         isHome ? 'fixed inset-x-0 top-0 z-50' : 'sticky top-0 z-50 w-full',
       )}
     >
+      <div
+        ref={chromeRef}
+        data-navbar-chrome
+        className="pt-[env(safe-area-inset-top,0px)]"
+      >
       <div className="container-px-safe container mx-auto flex h-[72px] items-center justify-between">
         <Link
           href="/"
@@ -263,7 +303,7 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
               Prism
             </span>
-            <span className="max-[479px]:hidden lg:max-xl:hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5">
+            <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5 xl:block">
               impossible is temporary
             </span>
             <span
@@ -320,8 +360,8 @@ export default function Navbar() {
             <span aria-hidden="true" className="relative block h-3.5 w-4">
               <span
                 className={cn(
-                  'absolute left-0 top-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
-                  isMobileMenuOpen ? 'top-[6px] rotate-45' : '',
+                  'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                  isMobileMenuOpen ? 'top-[6px] rotate-45' : 'top-0',
                 )}
               />
               <span
@@ -332,35 +372,14 @@ export default function Navbar() {
               />
               <span
                 className={cn(
-                  'absolute left-0 top-3 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
-                  isMobileMenuOpen ? 'top-[6px] -rotate-45' : '',
+                  'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                  isMobileMenuOpen ? 'top-[6px] -rotate-45' : 'top-[12px]',
                 )}
               />
             </span>
           </button>
         </div>
       </div>
-
-      {isMobileMenuOpen ? (
-        <div
-          id={MOBILE_NAV_ID}
-          className="h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-white/12 bg-black motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
-        >
-          <nav
-            aria-label="Mobile"
-            className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
-          >
-            <div className="divide-y divide-white/12">
-              <NavbarLinks
-                items={NAV_ITEMS}
-                pathname={pathname}
-                variant="mobile"
-                onNavigate={handleNavigate}
-              />
-            </div>
-          </nav>
-        </div>
-      ) : null}
 
       {caseStudyBreadcrumbs ? (
         <div className="border-t border-white/12 bg-black">
@@ -370,6 +389,24 @@ export default function Navbar() {
               className="mb-0 py-2 text-[#b8afa2]"
             />
           </div>
+        </div>
+      ) : null}
+      </div>
+
+      {isMobileMenuOpen ? (
+        <div
+          id={MOBILE_NAV_ID}
+          className="absolute inset-x-0 top-full z-50 h-[calc(100dvh-var(--prism-header-height))] overflow-y-auto overscroll-contain border-t border-white/12 bg-black motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
+        >
+          <nav
+            aria-label="Mobile"
+            className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+          >
+            <MobileNavGroups
+              pathname={pathname}
+              onNavigate={handleNavigate}
+            />
+          </nav>
         </div>
       ) : null}
     </header>

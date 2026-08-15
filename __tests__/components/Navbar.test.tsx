@@ -208,6 +208,76 @@ describe('Navbar', () => {
     ).not.toBeInTheDocument()
   })
 
+  it('keeps --prism-header-height stable when the mobile menu opens', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    const originalRect = HTMLElement.prototype.getBoundingClientRect
+    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
+      if (this.hasAttribute('data-navbar-chrome')) {
+        return {
+          x: 0,
+          y: 0,
+          top: 0,
+          left: 0,
+          right: 390,
+          bottom: 73,
+          width: 390,
+          height: 73,
+          toJSON() {
+            return {}
+          },
+        } as DOMRect
+      }
+      return originalRect.call(this)
+    }
+
+    try {
+      render(<Navbar />)
+      expect(
+        document.documentElement.style.getPropertyValue('--prism-header-height'),
+      ).toBe('73px')
+
+      fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+      expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
+      expect(
+        document.documentElement.style.getPropertyValue('--prism-header-height'),
+      ).toBe('73px')
+    } finally {
+      HTMLElement.prototype.getBoundingClientRect = originalRect
+    }
+  })
+
+  it('groups the mobile sheet as offers, proof, then contact', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+    const panel = document.querySelector('#mobile-site-nav')
+    expect(panel).toBeInTheDocument()
+
+    const groups = panel?.querySelectorAll(':scope nav > div > div')
+    expect(groups).toHaveLength(3)
+    expect(groups?.[1]?.className).toContain('border-t')
+    expect(groups?.[2]?.className).toContain('border-t')
+    expect(
+      within(groups?.[0] as HTMLElement).getByRole('link', {
+        name: /^websites$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(groups?.[1] as HTMLElement).getByRole('link', {
+        name: /^wall of love$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(groups?.[2] as HTMLElement).getByRole('link', {
+        name: /^contact$/i,
+      }),
+    ).toBeInTheDocument()
+  })
+
   it('keeps all seven items one tap away in the mobile panel', () => {
     mockUsePathname.mockReturnValue('/about')
 
