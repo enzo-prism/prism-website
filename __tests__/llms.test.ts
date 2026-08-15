@@ -38,7 +38,7 @@ describe('llms.txt', () => {
         'https://www.design-prism.com/dental-website',
         'https://www.design-prism.com/ai-agents/dental',
         'https://www.design-prism.com/case-studies/roseville-dental-academy',
-        'https://www.design-prism.com/case-studies/saorsa-growth-partners',
+        'https://www.design-prism.com/case-studies/olympic-bootworks',
         'https://www.design-prism.com/case-studies/belize-kids-foundation',
         'https://www.design-prism.com/blog/dental-seo-guide',
       ]),

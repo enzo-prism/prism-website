@@ -24,15 +24,9 @@ const DENTAL_CLIENTS: DentalClient[] = [
     focus: "modernized booking + analytics",
   },
   {
-    name: "Laguna Beach Dental Arts",
-    location: "Laguna Beach, CA",
-    url: "https://lagunabeachdentalarts.com",
-    focus: "post-M&A relaunch, cosmetic & general",
-  },
-  {
     name: "Coast Periodontics",
-    location: "Redondo Beach, CA",
-    url: "http://coastperiodontics.com",
+    location: "San Luis Obispo, CA",
+    url: "https://www.coastperiodontics.com",
     focus: "specialty periodontic growth system",
   },
   {
@@ -43,7 +37,7 @@ const DENTAL_CLIENTS: DentalClient[] = [
   },
   {
     name: "Exquisite Dentistry",
-    location: "Los Angeles, CA",
+    location: "Beverly Hills, CA",
     url: "https://exquisitedentistryla.com/",
     focus: "luxury cosmetic + general dentistry",
   },
@@ -58,12 +52,6 @@ const DENTAL_CLIENTS: DentalClient[] = [
     location: "Los Gatos, CA",
     url: "https://famfirstsmile.com/",
     focus: "family dentistry growth system",
-  },
-  {
-    name: "sr4 Partners",
-    location: "Chicago, IL",
-    url: "https://www.sr4partners.com/",
-    focus: "consulting operations partnership",
   },
 ]
 

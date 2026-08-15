@@ -1,153 +1,94 @@
 {
   "company": {
-    "name": "Prism Agency",
-    "tagline": "websites, local listings, and ads that grow revenue",
-    "description": "Prism Agency builds high-converting websites, manages local listing optimization, and runs online ad campaigns that grow revenue for ambitious businesses. Founded by Enzo Sison, we specialize in systems that turn searches into customers.",
-    "founded": "2020",
+    "name": "Prism",
+    "tagline": "websites, SEO, and ads that help small businesses get found, trusted, and chosen",
+    "description": "Prism builds growth systems for founders, owners, and operators: conversion-first websites, Google and AI search, reviews, ads, content, and tracking. Founded by Enzo Sison. Dental is a strong proof vertical, not the only market.",
+    "founded": "2023",
     "website": "https://www.design-prism.com",
     "email": "support@design-prism.com",
-    "phone": "+1-800-123-4567",
-    "booking": "https://calendly.com/enzomarzorati/30min",
+    "booking": "https://calendar.notion.so/meet/enzosison/oj1fm4o2p",
     "location": "United States",
     "areas_served": ["United States", "Canada", "Global"]
   },
-  "services": {
+  "offers": {
     "primary": [
       {
-        "name": "Website Development",
-        "description": "Custom websites built with AI-powered optimization for maximum conversion rates",
-        "keywords": ["website development", "web design", "conversion optimization", "AI websites"],
-        "starting_price": "$2,500",
-        "turnaround": "2-4 weeks"
+        "name": "Website",
+        "url": "https://www.design-prism.com/websites",
+        "description": "Ultra-premium PRO website: design system, software-grade engineering, and analytics structured to rank on Google and be cited by AI. Scoped on a 30-minute call. No public price.",
+        "cta": "Start my website",
+        "cta_url": "https://www.design-prism.com/website-intake"
       },
       {
-        "name": "Mobile App Development",
-        "description": "Native and cross-platform mobile applications that drive user engagement",
-        "keywords": ["mobile app development", "iOS apps", "Android apps", "cross-platform"],
-        "starting_price": "$10,000",
-        "turnaround": "8-12 weeks"
+        "name": "Content OS",
+        "url": "https://www.design-prism.com/content-os",
+        "description": "AI agents that scale content and ads across social platforms and the website. Implemented over 3 months, then optimized monthly. Scoped on a 30-minute call. No public price."
       },
       {
-        "name": "Digital Marketing",
-        "description": "AI-powered marketing campaigns that generate qualified leads and increase revenue",
-        "keywords": ["digital marketing", "AI marketing", "lead generation", "SEO"],
-        "starting_price": "$1,500/month",
-        "turnaround": "Ongoing"
+        "name": "Dental OS",
+        "url": "https://www.design-prism.com/dental-os",
+        "description": "The full Prism growth system packaged for dental practices. Custom-priced and scoped on a 30-minute call. No public price."
       },
       {
-        "name": "UI/UX Design",
-        "description": "Beautiful, user-centered designs that improve customer experience and conversion",
-        "keywords": ["UI design", "UX design", "user experience", "conversion design"],
-        "starting_price": "$1,000",
-        "turnaround": "1-2 weeks"
+        "name": "Prism Infinity",
+        "url": "https://www.design-prism.com/prism-infinity",
+        "description": "Unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription. Scoped on a 30-minute call. No public price."
       }
-    ]
-  },
-  "methodology": {
-    "name": "The Prism Method",
-    "description": "A 4-step process for creating revenue-focused digital solutions",
-    "steps": [
-      {
-        "step": 1,
-        "name": "Discovery & Strategy",
-        "description": "Understanding your business goals and target audience"
-      },
-      {
-        "step": 2,
-        "name": "Design & Prototyping",
-        "description": "Creating beautiful, conversion-focused designs"
-      },
-      {
-        "step": 3,
-        "name": "Development & Testing",
-        "description": "Building with AI-powered optimization and thorough testing"
-      },
-      {
-        "step": 4,
-        "name": "Launch & Growth",
-        "description": "Deploying and continuously optimizing for maximum results"
-      }
-    ]
-  },
-  "team": {
-    "founder": {
-      "name": "Enzo Sison",
-      "title": "Founder & CEO",
-      "description": "Former Apple intern turned digital agency founder, specializing in AI-powered business solutions",
-      "social": {
-        "twitter": "https://x.com/NosisTheGod",
-        "instagram": "https://www.instagram.com/the_design_prism/",
-        "linkedin": "https://www.linkedin.com/company/web-prism/"
-      }
+    ],
+    "free_onramp": {
+      "name": "Growth Dashboard",
+      "url": "https://www.design-prism.com/get-started",
+      "description": "Free on-ramp: Growth Dashboard plus a request for a free deep audit from the team."
     }
+  },
+  "pricing_policy": {
+    "public_exact_prices": false,
+    "how_pricing_works": "Every offer is scoped on a 30-minute Zoom call. The visitor leaves with a clear plan and a clear price.",
+    "booking_url": "https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
   },
   "case_studies": [
     {
-      "client": "Exquisite Dentistry",
-      "industry": "Healthcare/Dental",
-      "result": "300% increase in patient bookings",
-      "services": ["Website Development", "Digital Marketing"],
-      "url": "https://www.design-prism.com/case-studies/exquisite-dentistry"
+      "client": "Olympic Bootworks",
+      "industry": "Retail / ecommerce",
+      "location": "Tahoe, CA",
+      "result": "+1,302% Google Search impressions year over year; 13.6k GA4 sessions in the latest complete 90 days",
+      "source": "Google Search Console and GA4",
+      "url": "https://www.design-prism.com/case-studies/olympic-bootworks"
     },
     {
-      "client": "Dr. Christopher Wong",
-      "industry": "Healthcare/Dental",
-      "result": "500% increase in online visibility",
-      "services": ["Website Development", "SEO"],
+      "client": "Dr. Christopher B. Wong",
+      "industry": "Healthcare / dental",
+      "location": "Palo Alto, CA",
+      "result": "+142% Google Search impressions year over year",
+      "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/dr-christopher-wong"
     },
     {
-      "client": "Olympic Bootworks",
-      "industry": "Retail/E-commerce",
-      "result": "150% increase in online sales",
-      "services": ["Website Development", "E-commerce"],
-      "url": "https://www.design-prism.com/case-studies/olympic-bootworks"
+      "client": "Roseville Dental Academy",
+      "industry": "Dental education",
+      "location": "Roseville, CA",
+      "result": "593 Google clicks and 14.2k impressions in the first full month after launch",
+      "source": "Google Search Console",
+      "url": "https://www.design-prism.com/case-studies/roseville-dental-academy"
+    },
+    {
+      "client": "Belize Kids Foundation",
+      "industry": "Nonprofit",
+      "location": "San Pedro, Belize",
+      "result": "+90% Google Search impressions year over year",
+      "source": "Google Search Console",
+      "url": "https://www.design-prism.com/case-studies/belize-kids-foundation"
     }
   ],
-  "frequently_asked_questions": [
-    {
-      "question": "What makes Prism different from other digital agencies?",
-      "answer": "We specialize in AI-powered solutions that focus on revenue growth, not just pretty designs. Our proven methodology has helped businesses achieve 300%+ increases in conversions."
-    },
-    {
-      "question": "How much does a website cost?",
-      "answer": "Our websites start at $2,500 and are customized based on your specific needs. We offer flexible pricing options including monthly plans starting at $297."
-    },
-    {
-      "question": "What's included in your website development service?",
-      "answer": "Complete website design and development, AI-powered optimization, mobile responsiveness, SEO setup, hosting, and ongoing support."
-    },
-    {
-      "question": "How long does it take to build a website?",
-      "answer": "Most websites are completed in 2-4 weeks, depending on complexity. We provide regular updates throughout the process."
-    },
-    {
-      "question": "Do you work with small businesses?",
-      "answer": "Yes! We specialize in helping small and medium businesses grow their revenue through beautiful, conversion-focused digital solutions."
-    }
-  ],
-  "social_proof": {
-    "testimonials_count": 50,
-    "projects_completed": 100,
-    "client_satisfaction": "98%",
-    "industries_served": ["Healthcare", "Retail", "Professional Services", "E-commerce", "Technology"]
-  },
   "contact_methods": [
     {
       "method": "Email",
-      "value": "support@design-prism.com",
-      "response_time": "24 hours"
-    },
-    {
-      "method": "Phone",
-      "value": "+1-800-123-4567",
-      "response_time": "Business hours"
+      "value": "support@design-prism.com"
     },
     {
       "method": "Booking",
-      "value": "https://calendly.com/enzomarzorati/30min",
-      "response_time": "Immediate scheduling"
+      "value": "https://calendar.notion.so/meet/enzosison/oj1fm4o2p"
     }
   ],
-  "last_updated": "2025-01-17"
+  "last_updated": "2026-08-15"
 }

@@ -47,7 +47,13 @@ describe("GlobalSchemaGraph", () => {
         expect.objectContaining({
           url: "https://www.design-prism.com/case-studies/roseville-dental-academy",
         }),
+        expect.objectContaining({
+          url: "https://www.design-prism.com/case-studies/olympic-bootworks",
+        }),
       ]),
+    )
+    expect(JSON.stringify(organization.subjectOf)).not.toContain(
+      "saorsa-growth-partners",
     )
 
     expect(localBusiness).toBeTruthy()

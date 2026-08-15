@@ -23,7 +23,7 @@ const coreServices: CoreService[] = [
     summary: "Design systems, copy, and development that give you a conversion-ready site, managed end to end by Prism.",
     learnMoreLinks: [
       { label: "website design services", href: "/websites" },
-      { label: "start a website project", href: "/get-started?service=website-design" },
+      { label: "start a website project", href: "/website-intake" },
     ],
     illustration: "websites",
     outcomes: [
@@ -32,7 +32,7 @@ const coreServices: CoreService[] = [
       "Launch support, hosting, and ongoing optimizations",
     ],
     caseStudies: [
-      { label: "Laguna Beach Dental Arts", href: "/case-studies/laguna-beach-dental-arts" },
+      { label: "Olympic Bootworks", href: "/case-studies/olympic-bootworks" },
       { label: "Family First Smile Care", href: "/case-studies/family-first-smile-care" },
       { label: "Infobell IT", href: "/case-studies/infobell-it" },
     ],
@@ -100,32 +100,32 @@ const coreServices: CoreService[] = [
     ],
     caseStudies: [
       { label: "Practice Transitions Institute", href: "/case-studies/practice-transitions-institute" },
-      { label: "sr4 Partners", href: "/case-studies/sr4-partners" },
+      { label: "Roseville Dental Academy", href: "/case-studies/roseville-dental-academy" },
     ],
   },
 ]
 
 const bundleExamples = [
   {
-    name: "Growth Dashboard Path",
-    description: "Best for teams that want Prism to diagnose the clearest visible opportunities first.",
-    includes: ["Free dashboard intake", "Light Audit", "Clear next step"],
-    ctaLabel: "Create Growth Dashboard",
-    ctaHref: "/pricing",
+    name: "Website",
+    description: "Best for teams that need a conversion-ready PRO website first.",
+    includes: ["Design system", "Engineering", "Analytics from day one"],
+    ctaLabel: "Start my website",
+    ctaHref: "/website-intake",
   },
   {
-    name: "60-Day Sprint Path",
-    description: "Best for teams ready to act on a focused audit-backed growth priority.",
-    includes: ["Scoped sprint", "Highest-leverage opportunities", "Clear tracking"],
-    ctaLabel: "See sprint pricing",
-    ctaHref: "/pricing",
+    name: "Content OS",
+    description: "Best for teams that want a content and ads engine that keeps running.",
+    includes: ["3-month implementation", "Monthly optimization", "Every major platform"],
+    ctaLabel: "See Content OS",
+    ctaHref: "/content-os",
   },
   {
-    name: "Ongoing Partner Path",
-    description: "Best after a sprint creates enough signal for continued growth execution.",
-    includes: ["Support level", "Execution level", "Premium partner level"],
-    ctaLabel: "See partner levels",
-    ctaHref: "/pricing",
+    name: "Prism Infinity",
+    description: "Best when you want landing pages, ads, websites, and content on one monthly plan.",
+    includes: ["Unlimited request queue", "Owner-valued deliverables", "Pause anytime"],
+    ctaLabel: "See Prism Infinity",
+    ctaHref: "/prism-infinity",
   },
 ]
 
@@ -175,7 +175,7 @@ const deliverables = [
 const proofLinks = [
   { label: "Olympic Bootworks", href: "/case-studies/olympic-bootworks" },
   { label: "Dr. Christopher B. Wong", href: "/case-studies/dr-christopher-wong" },
-  { label: "sr4 Partners", href: "/case-studies/sr4-partners" },
+  { label: "Roseville Dental Academy", href: "/case-studies/roseville-dental-academy" },
 ]
 
 const faqItems = [

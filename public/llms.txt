@@ -75,21 +75,18 @@ Best measured examples:
 - Dr. Christopher B. Wong: +142% Google Search impressions year over year, Google Search Console.
 - Olympic Bootworks: +1,302% Google Search impressions year over year and 13.6k GA4 sessions in the latest complete 90 days.
 - Roseville Dental Academy: 593 Google clicks and 14.2k impressions in the first full month after launch, Google Search Console.
-- Saorsa Growth Partners: 5.3x monthly Google clicks and +273% impressions in five months, Google Search Console.
 - Belize Kids Foundation: +90% Google Search impressions year over year, Google Search Console.
 
 - Case studies hub: https://www.design-prism.com/case-studies
 - Dr. Christopher Wong (+142% Google Search impressions YoY): https://www.design-prism.com/case-studies/dr-christopher-wong
 - Exquisite Dentistry: https://www.design-prism.com/case-studies/exquisite-dentistry
 - Olympic Bootworks (+1,302% Google Search impressions YoY): https://www.design-prism.com/case-studies/olympic-bootworks
-- Laguna Beach Dental Arts: https://www.design-prism.com/case-studies/laguna-beach-dental-arts
 - Family First Smile Care: https://www.design-prism.com/case-studies/family-first-smile-care
 - Town Centre Dental: https://www.design-prism.com/case-studies/town-centre-dental
 - Grace Dental Santa Rosa: https://www.design-prism.com/case-studies/grace-dental-santa-rosa
 - Roseville Dental Academy (593 clicks and 14.2k impressions in month one): https://www.design-prism.com/case-studies/roseville-dental-academy
 - Rebellious Aging: https://www.design-prism.com/case-studies/rebellious-aging
 - Wine Country Root Canal: https://www.design-prism.com/case-studies/wine-country-root-canal
-- sr4 Partners: https://www.design-prism.com/case-studies/sr4-partners
 - Infobell IT: https://www.design-prism.com/case-studies/infobell-it
 - Canary Foundation: https://www.design-prism.com/case-studies/canary-foundation
 - Belize Kids Foundation (+90% Google Search impressions YoY): https://www.design-prism.com/case-studies/belize-kids-foundation
@@ -99,7 +96,6 @@ Best measured examples:
 - Practice Transitions Institute: https://www.design-prism.com/case-studies/practice-transitions-institute
 - Dentist Retreat: https://www.design-prism.com/case-studies/leadership-retreat
 - Dental Strategies / Michael Njo DDS: https://www.design-prism.com/case-studies/michael-njo-dds
-- Saorsa Growth Partners (5.3x monthly Google clicks in five months): https://www.design-prism.com/case-studies/saorsa-growth-partners
 - Mataria Dental Group: https://www.design-prism.com/case-studies/mataria-dental-group
 - Wall of love: https://www.design-prism.com/wall-of-love
 - Prism Proof: https://www.design-prism.com/proof

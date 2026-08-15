@@ -15,7 +15,7 @@ export const metadata: Metadata = buildRouteMetadata({
 const faqs = [
   {
     question: "What makes Prism different from other digital agencies?",
-    answer: "Prism specializes in AI-powered solutions that focus on revenue growth, not just pretty designs. Our proven methodology, 'The Prism Method,' has helped businesses achieve 300%+ increases in conversions. We combine beautiful design with data-driven optimization to ensure every project delivers measurable results."
+    answer: "Prism is one team for the whole growth system: website, search, ads, reviews, content, and tracking. We publish dated Google Search Console and GA4 results on case studies when we can verify them, then keep optimizing from that measurement. You get the work and the proof, not a vendor stack."
   },
   {
     question: "How much does a website cost?",
@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     question: "What's your typical client ROI?",
-    answer: "Our clients typically see 200-500% increases in online visibility, 150-300% increases in conversions, and significant improvements in lead generation within 3-6 months. Specific ROI varies by industry and business model, but we focus on measurable revenue growth."
+    answer: "Results vary by market and starting point. The numbers we publish are dated and source-attributed: Olympic Bootworks +1,302% Google Search impressions year over year, Dr. Christopher Wong +142% impressions year over year, and Roseville Dental Academy 593 Google clicks in month one. We do not quote a typical ROI percentage."
   },
   {
     question: "Do you offer AI-powered website features?",

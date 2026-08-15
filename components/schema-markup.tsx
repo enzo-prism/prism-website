@@ -262,10 +262,11 @@ export function GlobalSchemaGraph() {
       {
         '@type': 'Article',
         '@id':
-          'https://www.design-prism.com/case-studies/saorsa-growth-partners#article',
-        name: 'Saorsa Growth Partners case study',
-        url: 'https://www.design-prism.com/case-studies/saorsa-growth-partners',
-        abstract: '5.3x monthly Google clicks in five months.',
+          'https://www.design-prism.com/case-studies/olympic-bootworks#article',
+        name: 'Olympic Bootworks case study',
+        url: 'https://www.design-prism.com/case-studies/olympic-bootworks',
+        abstract:
+          '+1,302% Google Search impressions year over year and 13.6k GA4 sessions in the latest complete 90 days.',
       },
     ],
     url: 'https://www.design-prism.com',
