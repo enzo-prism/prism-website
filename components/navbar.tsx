@@ -257,7 +257,6 @@ export default function Navbar() {
       ref={headerRef}
       className={cn(
         HEADER_CLASSES,
-        'relative',
         isHome ? 'fixed inset-x-0 top-0 z-50' : 'sticky top-0 z-50 w-full',
       )}
     >
