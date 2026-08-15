@@ -60,6 +60,10 @@ const HIDE_WIDGET_CSS = `
 const MOBILE_RECIPES = {
   'olympic-bootworks': {
     dismissButtons: [/allow analytics/i],
+    dismissSelectors: [
+      '.location-banner button[aria-label="Close"]',
+      '.location-banner button',
+    ],
     waitFor: 'img[alt*="Lake Tahoe" i]',
     settleMs: 600,
   },
@@ -68,8 +72,8 @@ const MOBILE_RECIPES = {
     settleMs: 1200,
   },
   'belize-kids-foundation': {
-    dismissSelectors: ['button.tf-v1-widget-close'],
-    scrollY: 120,
+    // Do not click Typeform Close — it opens the form and jumps the page.
+    scrollY: 0,
     settleMs: 800,
   },
   'sr4-partners': {
@@ -86,7 +90,7 @@ const MOBILE_RECIPES = {
     settleMs: 400,
   },
   'dr-christopher-wong': {
-    scrollY: 320,
+    scrollY: 80,
     waitFor: 'img[alt*="Palo Alto dental office"]',
     settleMs: 800,
   },
@@ -103,7 +107,7 @@ const MOBILE_RECIPES = {
     dismissSelectors: [
       'button[aria-label="Dismiss Saturday Academy announcement"]',
     ],
-    scrollY: 280,
+    scrollY: 180,
     waitFor: 'img[alt*="students celebrating" i]',
     settleMs: 600,
   },
@@ -144,7 +148,7 @@ const MOBILE_RECIPES = {
     settleMs: 800,
   },
   'town-centre-dental': {
-    scrollY: 300,
+    scrollY: 200,
     waitFor:
       'img[alt*="waiting room at Town Centre Dental" i]',
     settleMs: 800,
