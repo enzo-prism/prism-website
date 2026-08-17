@@ -137,10 +137,10 @@ const PROOF_BUILDS = [
     url: 'https://www.olympicbootworks.com',
   },
   {
-    title: 'Saorsa Growth Partners',
-    type: 'Advisory',
-    image: '/case-studies/saorsa-growth-partners-home-desktop.jpg',
-    url: 'https://www.saorsapartners.com',
+    title: 'Roseville Dental Academy',
+    type: 'Education',
+    image: '/case-studies/roseville-dental-academy-home-desktop.jpg',
+    url: 'https://www.rosevilledentalacademy.com',
   },
 ] as const
 
@@ -148,9 +148,9 @@ const PROOF_BUILDS = [
 // Console). Keep in sync with the source; do not invent metrics.
 const PROOF_POINTS = [
   {
-    value: '5.3×',
-    label: 'monthly Google clicks in five months for Saorsa Growth Partners',
-    href: '/case-studies/saorsa-growth-partners',
+    value: '+1,302%',
+    label: 'Google Search impressions year over year for Olympic Bootworks',
+    href: '/case-studies/olympic-bootworks',
   },
   {
     value: '593',

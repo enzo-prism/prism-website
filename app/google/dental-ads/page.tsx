@@ -110,25 +110,26 @@ const restrictedItems = [
 
 const caseStudies = [
   {
-    name: "Dr. Chris Wong, DDS (Los Angeles)",
+    name: "Dr. Christopher B. Wong (Palo Alto)",
     outcomes: [
-      "3× increase in monthly implant inquiries",
-      "58% drop in cost per lead after restructuring campaigns"
-    ]
+      "+142% Google Search impressions year over year",
+      "Search visibility roughly tripled after the rebuild",
+    ],
   },
   {
-    name: "Wine Country Root Canal (Napa)",
+    name: "Roseville Dental Academy (Roseville)",
     outcomes: [
-      "400% lift in appointment bookings",
-      "First-page ranking on “root canal Napa” and “endodontist near me”"
-    ]
+      "593 Google clicks in the first full month after launch",
+      "14.2k impressions in that same first month",
+    ],
   },
   {
-    name: "Grace Dental (Santa Rosa)",
+    name: "Wine Country Root Canal (Santa Rosa)",
     outcomes: [
-      "2× higher conversion rate from Performance Max campaigns"
-    ]
-  }
+      "Specialty endodontic site built for a calm patient journey",
+      "Clear next step from urgent need to booked care",
+    ],
+  },
 ]
 
 const pricingPlans = [

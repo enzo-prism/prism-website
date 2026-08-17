@@ -23,7 +23,7 @@ const CASE_STUDY_ICONS: Record<string, string> = {
   'olympic-bootworks': '/pixelish/handbag.svg',
   'roseville-dental-academy': '/pixelish/kanban.svg',
   'rebellious-aging': '/pixelish/emoji-heart.svg',
-  'saorsa-growth-partners': '/pixelish/briefcase.svg',
+  'infobell-it': '/pixelish/briefcase.svg',
   'belize-kids-foundation': '/pixelish/award-plus.svg',
   'canary-cove': '/pixelish/house.svg',
 }

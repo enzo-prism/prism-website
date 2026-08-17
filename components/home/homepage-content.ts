@@ -82,7 +82,7 @@ export const HOMEPAGE_CASE_STUDY_SLUGS = [
   'olympic-bootworks',
   'roseville-dental-academy',
   'rebellious-aging',
-  'saorsa-growth-partners',
+  'infobell-it',
   'belize-kids-foundation',
   'canary-cove',
 ] as const
@@ -177,18 +177,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       },
     },
     {
-      company: 'Saorsa Growth Partners',
-      location: 'San Francisco, CA',
-      href: '/case-studies/saorsa-growth-partners',
-      contextLabel: 'Consulting',
-      image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
-      metric: {
-        value: '5.3×',
-        label: 'monthly Google clicks in 5 months',
-        source: 'Google Search Console',
-      },
-    },
-    {
       company: 'Belize Kids',
       location: 'San Pedro, Belize',
       href: '/case-studies/belize-kids-foundation',
@@ -199,13 +187,6 @@ export const HOMEPAGE_CLIENT_WINS = {
         label: 'Google search impressions YoY',
         source: 'Google Search Console',
       },
-    },
-    {
-      company: 'sr4 Partners',
-      location: 'Chicago, IL',
-      href: '/case-studies/sr4-partners',
-      contextLabel: 'Leadership consulting',
-      image: '/case-studies/sr4-partners-home-mobile.jpg',
     },
     {
       company: 'Rebellious Aging',
@@ -239,13 +220,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/exquisite-dentistry',
       contextLabel: 'Dental growth',
       image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
-    },
-    {
-      company: 'Laguna Beach Dental Arts',
-      location: 'Laguna Beach, CA',
-      href: '/case-studies/laguna-beach-dental-arts',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/laguna-beach-dental-arts-home-mobile.jpg',
     },
     {
       company: 'Roseville Dental Academy',
@@ -594,8 +568,6 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'A calmer, more credible dental presence shaped around patient trust and appointment momentum.',
   'exquisite-dentistry':
     'A premium dental website that makes it easier for patients to understand care, trust the team, and take action.',
-  'laguna-beach-dental-arts':
-    'A coastal dental brand presence that balances high-end care with local warmth and approachability.',
   'family-first-smile-care':
     'A family-focused practice story built to feel reassuring, organized, and easy for new patients to enter.',
   'grace-dental-santa-rosa':
@@ -612,8 +584,8 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
   'rebellious-aging':
     'A movement gained the digital foundation and local discovery groundwork to grow with more clarity.',
-  'saorsa-growth-partners':
-    'A consulting firm gained sharper positioning, credibility, and lead capture.',
+  'infobell-it':
+    'A managed IT firm gained clearer positioning, service pages, and decision-maker trust.',
   'belize-kids-foundation':
     'A nonprofit gained clearer program storytelling, supporter journeys, and analytics groundwork.',
   'canary-cove':
@@ -634,12 +606,6 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     artifact: 'Premium dental rebuild',
     outcome: 'Trust + booking clarity',
     proof: 'Digital presence matched the level of clinical care.',
-  },
-  'laguna-beach-dental-arts': {
-    artifact: 'Local brand system',
-    outcome: 'Premium coastal trust',
-    proof:
-      'The practice feels distinctive without making patients work to understand it.',
   },
   'family-first-smile-care': {
     artifact: 'Family care journey',
@@ -684,11 +650,11 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     proof:
       'The brand gained a clearer home for people ready to join the movement.',
   },
-  'saorsa-growth-partners': {
-    artifact: 'Advisory positioning',
-    outcome: 'Credibility + lead capture',
+  'infobell-it': {
+    artifact: 'Trust architecture',
+    outcome: 'Decision-maker clarity',
     proof:
-      'The site makes the offer sharper for enterprise and founder conversations.',
+      'Managed IT, cybersecurity, and cloud offers now read as credible before the first call.',
   },
   'belize-kids-foundation': {
     artifact: 'Impact storytelling',

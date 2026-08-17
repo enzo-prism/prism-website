@@ -22,13 +22,6 @@ export const websiteProjects: WebsiteProject[] = [
     description: "empowering children through education and community",
   },
   {
-    id: "7",
-    title: "laguna beach dental arts",
-    url: "https://lagunabeachdentalarts.com",
-    category: "healthcare",
-    description: "exceptional dental care in coastal california",
-  },
-  {
     id: "3",
     title: "olympic bootworks",
     url: "https://www.olympicbootworks.com",

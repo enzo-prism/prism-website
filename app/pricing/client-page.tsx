@@ -89,9 +89,9 @@ const partnerLevels = [
 // sync with the source; do not invent metrics.
 const CTA_PROOF_POINTS = [
   {
-    value: '5.3×',
-    label: 'monthly Google clicks in five months (Saorsa Growth Partners)',
-    href: '/case-studies/saorsa-growth-partners',
+    value: '+1,302%',
+    label: 'Google Search impressions year over year (Olympic Bootworks)',
+    href: '/case-studies/olympic-bootworks',
   },
   {
     value: '593',

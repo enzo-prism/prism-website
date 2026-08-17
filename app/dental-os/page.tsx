@@ -121,10 +121,10 @@ const DENTAL_CLIENTS = [
     slug: 'exquisite-dentistry',
   },
   {
-    name: 'Laguna Beach Dental Arts',
-    location: 'Laguna Beach, CA',
-    focus: 'Post-M&A relaunch with end-to-end tracking',
-    slug: 'laguna-beach-dental-arts',
+    name: 'Dr. Christopher B. Wong',
+    location: 'Palo Alto, CA',
+    focus: 'M&A handoff with measured search growth',
+    slug: 'dr-christopher-wong',
   },
   {
     name: 'Family First Smile Care',

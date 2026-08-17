@@ -27,14 +27,6 @@ export const CLIENTS: ClientInfo[] = [
     category: "dentistry",
   },
   {
-    title: "Laguna Beach Dental Arts",
-    location: "Laguna Beach, CA",
-    image: "/laguna-beach-dental-arts.webp",
-    website: "https://lagunabeachdentalarts.com",
-    href: "/case-studies/laguna-beach-dental-arts",
-    category: "dentistry",
-  },
-  {
     title: "Town Centre Dental",
     location: "Brentwood, CA",
     image: "/town-centre-dental.webp",
@@ -54,7 +46,7 @@ export const CLIENTS: ClientInfo[] = [
     title: "Coast Periodontics",
     location: "San Luis Obispo, CA",
     image: "/coast-periodontics.webp",
-    website: "http://coastperiodontics.com",
+    website: "https://www.coastperiodontics.com",
     href: "/case-studies/coast-periodontics-and-laser-surgery",
     category: "dentistry",
   },
@@ -115,22 +107,9 @@ export const CLIENTS: ClientInfo[] = [
     category: "dentistry",
   },
   {
-    title: "sr4 Partners",
-    location: "Chicago, IL",
-    image: "/sr4-partners.webp",
-    website: "https://www.sr4partners.com/",
-    href: "/case-studies/sr4-partners",
-    category: "consulting",
-  },
-  {
     title: "Infobell IT",
     location: "San Jose, CA",
     category: "it",
-  },
-  {
-    title: "Saorsa Growth Partners",
-    location: "San Francisco, CA",
-    category: "consulting",
   },
   {
     title: "We Are Saplings",
