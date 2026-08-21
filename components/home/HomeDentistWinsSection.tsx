@@ -12,7 +12,7 @@ import TrackedLink from '@/components/tracked-link'
 export default function HomeDentistWinsSection() {
   const { title, slides } = HOMEPAGE_CLIENT_WINS
   const clientCount = slides.length
-  const marketCount = new Set(slides.map((slide) => slide.location)).size
+  const locationCount = new Set(slides.map((slide) => slide.location)).size
 
   return (
     <section className={coreRouteSectionCompactClassName}>
@@ -35,9 +35,9 @@ export default function HomeDentistWinsSection() {
               </span>
               <span className="whitespace-nowrap">
                 <span className="text-[#f5f0e8] tabular-nums">
-                  {marketCount}
+                  {locationCount}
                 </span>{' '}
-                markets
+                client locations
               </span>
               <span aria-hidden="true" className="text-white/20">
                 ·

@@ -1,6 +1,12 @@
 import { getHeroReviewCount, quotesData } from '@/content/wall-of-love-data'
 import type { BrandLogoKey, BrandLogoTheme } from '@/components/brand-logo'
-import { HOTTEST_CONTENT } from '@/lib/hottest-content'
+import { getCaseStudyMetric } from '@/lib/case-study-data'
+import {
+  CONNECTED_CLIENT_TRAFFIC,
+  PROOF_METRICS_VERIFIED_AT,
+  SOCIAL_PROOF,
+  SOCIAL_PROOF_CHANNELS,
+} from '@/lib/proof-metrics'
 
 export type HomepageFAQBlock =
   | { type: 'paragraph'; content: string }
@@ -91,6 +97,11 @@ const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
 const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
   HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
+const OLYMPIC_SEARCH_METRIC = getCaseStudyMetric('olympic-bootworks')
+const SAORSA_SEARCH_METRIC = getCaseStudyMetric('saorsa-growth-partners')
+const BELIZE_SEARCH_METRIC = getCaseStudyMetric('belize-kids-foundation')
+const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
+
 export const HOMEPAGE_HERO = {
   title: 'Prism',
   subheading: 'the #1 growth partner for small businesses',
@@ -105,41 +116,30 @@ export const HOMEPAGE_HERO = {
     },
   ] satisfies readonly HomepageHeroSupportPoint[],
   stats: {
-    note: 'Latest · June 2026',
+    note: `Verified · ${PROOF_METRICS_VERIFIED_AT}`,
     headline: {
       label: 'Traffic & attention',
       items: [
         {
-          value: '18,563',
+          value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
           unit: '/month',
-          label: 'new users to client websites',
+          label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites`,
         },
-        { value: '71,000', unit: '', label: 'followers across our channels' },
-        { value: '17M+', unit: '', label: 'views across our channels' },
+        {
+          value: SOCIAL_PROOF.combinedAudience,
+          unit: '',
+          label: 'followers across our channels',
+        },
+        {
+          value: SOCIAL_PROOF.tiktok.activity,
+          unit: '',
+          label: 'TikTok views in the last 60 days',
+        },
       ],
     },
     reach: {
       label: 'Our channels',
-      channels: [
-        {
-          platform: 'YouTube',
-          followers: '24,000',
-          views: '3M+',
-          url: 'https://www.youtube.com/@the_design_prism',
-        },
-        {
-          platform: 'Instagram',
-          followers: '37,000',
-          views: '10M+',
-          url: 'https://www.instagram.com/the_design_prism/',
-        },
-        {
-          platform: 'TikTok',
-          followers: '10,000',
-          views: '4M+',
-          url: 'https://www.tiktok.com/@the_design_prism',
-        },
-      ],
+      channels: SOCIAL_PROOF_CHANNELS,
     },
   },
   systemStrip: [
@@ -152,7 +152,7 @@ export const HOMEPAGE_HERO = {
     'Tracking',
   ],
   socialProof: {
-    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} reviews from founders, doctors, operators, and local leaders`,
+    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} featured voices from founders, doctors, operators, and local leaders`,
     linkLabel: 'See results',
   },
   primaryCta: { label: 'Get a PRO website', href: '/websites' },
@@ -171,9 +171,9 @@ export const HOMEPAGE_CLIENT_WINS = {
       contextLabel: 'Retail + ecommerce',
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
       metric: {
-        value: '+1,302%',
-        label: 'Google search impressions YoY',
-        source: 'Google Search Console',
+        value: OLYMPIC_SEARCH_METRIC.value,
+        label: OLYMPIC_SEARCH_METRIC.label,
+        source: OLYMPIC_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
     },
     {
@@ -183,9 +183,9 @@ export const HOMEPAGE_CLIENT_WINS = {
       contextLabel: 'Consulting',
       image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
       metric: {
-        value: '5.3×',
-        label: 'monthly Google clicks in 5 months',
-        source: 'Google Search Console',
+        value: SAORSA_SEARCH_METRIC.value,
+        label: SAORSA_SEARCH_METRIC.label,
+        source: SAORSA_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
     },
     {
@@ -195,9 +195,9 @@ export const HOMEPAGE_CLIENT_WINS = {
       contextLabel: 'Nonprofit impact',
       image: '/case-studies/belize-kids-foundation-home-mobile.jpg',
       metric: {
-        value: '+90%',
-        label: 'Google search impressions YoY',
-        source: 'Google Search Console',
+        value: BELIZE_SEARCH_METRIC.value,
+        label: BELIZE_SEARCH_METRIC.label,
+        source: BELIZE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
     },
     {
@@ -228,9 +228,9 @@ export const HOMEPAGE_CLIENT_WINS = {
       contextLabel: 'Dental growth',
       image: '/case-studies/dr-christopher-wong-home-mobile.jpg',
       metric: {
-        value: '+142%',
-        label: 'Google search impressions YoY',
-        source: 'Google Search Console',
+        value: DR_WONG_SEARCH_METRIC.value,
+        label: DR_WONG_SEARCH_METRIC.label,
+        source: DR_WONG_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
     },
     {
@@ -818,30 +818,9 @@ export const HOMEPAGE_CAPABILITIES = [
   },
 ] as const
 
-const UNIQUE_HOTTEST_CONTENT = Array.from(
-  new Map(
-    HOTTEST_CONTENT.filter((item) => item.platform === 'instagram').map(
-      (item) => [item.instagramUrl, item] as const,
-    ),
-  ).values(),
-)
-
-const HOMEPAGE_CONTENT_VIEW_COUNT = UNIQUE_HOTTEST_CONTENT.reduce(
-  (sum, item) => sum + item.views,
-  0,
-)
-
-function formatHomepageMetric(value: number) {
-  if (value >= 1_000_000) {
-    return `${(value / 1_000_000).toFixed(1)}M`
-  }
-
-  return `${Math.round(value / 1_000)}k`
-}
-
 export const HOMEPAGE_CONTENT_PROOF = {
   eyebrow: 'content delivery',
-  summary: `${formatHomepageMetric(HOMEPAGE_CONTENT_VIEW_COUNT)}+ views across Prism content systems.`,
+  summary: 'Strategy, production, and distribution in one content system.',
   href: '/hottest-content',
 } as const
 

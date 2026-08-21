@@ -58,14 +58,14 @@ const statCards = [
     detail: 'Search, behavior, and custom conversion visibility.',
   },
   {
-    label: 'Lead system',
-    value: 'Formspree + AI',
-    detail: 'Cleaner inquiry routing plus an ElevenLabs assistant.',
+    label: 'Latest Google clicks',
+    value: '701',
+    detail: 'Google Search Console · July 2026.',
   },
   {
-    label: 'Trust signal',
-    value: '77 Google reviews',
-    detail: 'A 5.0-star reputation made easier to surface.',
+    label: 'Latest search impressions',
+    value: '17.5K',
+    detail: 'Google Search Console · July 2026.',
   },
 ]
 

@@ -21,15 +21,13 @@ import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 // drift from what the detail pages publish.
 const measuredHighlights = CASE_STUDIES.flatMap((study) => {
   const metric = study.structured?.results?.[0]
-  return metric
-    ? [{ client: study.client, slug: study.slug, metric }]
-    : []
+  return metric ? [{ client: study.client, slug: study.slug, metric }] : []
 }).slice(0, 4)
 
 const measuredCaseStudyCount = CASE_STUDIES.filter(
   (study) => (study.structured?.results?.length ?? 0) > 0,
 ).length
-const marketCount = new Set(CASE_STUDIES.map((study) => study.industry)).size
+const industryCount = new Set(CASE_STUDIES.map((study) => study.industry)).size
 const screenshotBackedCount = CASE_STUDIES.filter((study) =>
   screenshotSrcFor(study.slug),
 ).length
@@ -89,7 +87,7 @@ export default function CaseStudiesPage() {
               <HeroBackgroundLoop
                 videoSrc={CASE_STUDIES_HERO_VIDEO}
                 posterSrc={CASE_STUDIES_HERO_POSTER}
-              posterAlt="ASCII ocean animation preview"
+                posterAlt="ASCII ocean animation preview"
                 posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-52 sm:object-cover sm:opacity-45"
                 videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-46 sm:object-cover sm:opacity-40"
                 posterUnoptimized
@@ -106,10 +104,9 @@ export default function CaseStudiesPage() {
                   recent client work
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  One growth system for founders, doctors, and local
-                  operators: websites, SEO, reviews, ads, photography, and
-                  tracking that turn searches into booked patients, clients,
-                  and customers.
+                  One growth system for founders, doctors, and local operators:
+                  websites, SEO, reviews, ads, photography, and tracking that
+                  turn searches into booked patients, clients, and customers.
                 </p>
               </div>
             </div>
@@ -167,16 +164,18 @@ export default function CaseStudiesPage() {
                     {
                       value: CASE_STUDIES.length.toString(),
                       label: 'published client stories',
-                      detail: 'Each links to a live client site when available.',
+                      detail:
+                        'Each links to a live client site when available.',
                     },
                     {
                       value: measuredCaseStudyCount.toString(),
                       label: 'measured result sets',
-                      detail: 'Every number names GA4 or Google Search Console.',
+                      detail:
+                        'Every number names GA4 or Google Search Console.',
                     },
                     {
-                      value: marketCount.toString(),
-                      label: 'markets represented',
+                      value: industryCount.toString(),
+                      label: 'industries represented',
                       detail: `${screenshotBackedCount} studies include real website screenshots.`,
                     },
                   ].map((item) => (
@@ -209,7 +208,7 @@ export default function CaseStudiesPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
               Prism builds websites, search visibility, reviews, ads, and
-                  analytics as one connected growth system, then measures what
+              analytics as one connected growth system, then measures what
               changes.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4">

@@ -110,13 +110,6 @@ const faqItems = [
 ]
 
 export default function LocalSeoServicesPage() {
-  const aggregateRating = {
-    "@type": "AggregateRating" as const,
-    ratingValue: "4.9",
-    reviewCount: "200",
-    bestRating: "5",
-    worstRating: "1",
-  }
   const relatedCaseStudies = [
     {
       title: "Wine Country Root Canal",
@@ -417,7 +410,6 @@ export default function LocalSeoServicesPage() {
         description="local seo services for small businesses: google business profile, listings, reviews, local pages, and reporting that compounds."
         serviceType="Local SEO services"
         areaServed="United States"
-        aggregateRating={aggregateRating}
       />
       <HowToSchema
         name="Local SEO service process"

@@ -226,13 +226,6 @@ const audienceSegments = [
 ]
 
 export default async function LocalListingsPage() {
-  const aggregateRating = {
-    '@type': 'AggregateRating' as const,
-    ratingValue: '4.9',
-    reviewCount: '200',
-    bestRating: '5',
-    worstRating: '1',
-  }
   const allPosts = (await getAllPosts()) ?? []
   const localListingsPosts = allPosts
     .filter((post) => {
@@ -694,7 +687,6 @@ export default async function LocalListingsPage() {
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',
         }}
-        aggregateRating={aggregateRating}
       />
       <FAQSchema questions={faqItems} />
     </div>

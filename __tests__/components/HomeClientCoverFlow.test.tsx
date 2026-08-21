@@ -38,7 +38,13 @@ jest.mock('next/image', () => ({
     className?: string
     [key: string]: unknown
   }) {
-    return <img alt={alt} src={typeof src === 'string' ? src : ''} className={className} />
+    return (
+      <img
+        alt={alt}
+        src={typeof src === 'string' ? src : ''}
+        className={className}
+      />
+    )
   },
 }))
 
@@ -54,7 +60,7 @@ const slides = [
     contextLabel: 'Retail + ecommerce',
     image: '/case-studies/olympic-bootworks-home-mobile.jpg',
     metric: {
-      value: '+142%',
+      value: '+239%',
       label: 'search impressions',
       source: 'Google Search Console',
     },
@@ -92,7 +98,9 @@ describe('HomeClientCoverFlow', () => {
   it('renders real client website screenshots as the covers', () => {
     render(<HomeClientCoverFlow slides={slides} />)
 
-    const cover = screen.getByAltText('Olympic Bootworks website built by Prism')
+    const cover = screen.getByAltText(
+      'Olympic Bootworks website built by Prism',
+    )
     expect(cover).toBeInTheDocument()
     expect(cover).toHaveAttribute(
       'src',
@@ -103,7 +111,9 @@ describe('HomeClientCoverFlow', () => {
   it('exposes carousel semantics with a live region for the active client', () => {
     const { container } = render(<HomeClientCoverFlow slides={slides} />)
 
-    const carousel = container.querySelector('[aria-roledescription="carousel"]')
+    const carousel = container.querySelector(
+      '[aria-roledescription="carousel"]',
+    )
     expect(carousel).toBeInTheDocument()
 
     const live = container.querySelector('[aria-live="polite"]')
@@ -132,7 +142,7 @@ describe('HomeClientCoverFlow', () => {
   it('shows a verified headline metric with its source when present', () => {
     render(<HomeClientCoverFlow slides={slides} />)
 
-    expect(screen.getByText('+142%')).toBeInTheDocument()
+    expect(screen.getByText('+239%')).toBeInTheDocument()
     expect(screen.getByText('search impressions')).toBeInTheDocument()
     // the source attribution must travel with the metric (anti-fabrication)
     expect(screen.getByText('Google Search Console')).toBeInTheDocument()

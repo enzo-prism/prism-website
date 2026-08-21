@@ -15,6 +15,7 @@ import {
   coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import {
   BOOK_A_CALL_CTA,
@@ -88,26 +89,30 @@ const DENTAL_DIFFERENCE = [
 // Real, source-attributed dental results from lib/case-study-data.ts. Every
 // value is verified against Google Search Console — do not edit without the
 // source. Gold proof treatment is sanctioned for this band only.
+const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
+const wongJulyImpressions = getCaseStudyMetric('dr-christopher-wong', 1)
+const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
+
 const PROOF_METRICS = [
   {
     client: 'Dr. Christopher Wong',
-    value: '+142%',
-    label: 'Google Search impressions, year over year',
-    source: 'Google Search Console · Mar–May 2025 vs 2026',
+    value: wongImpressions.value,
+    label: wongImpressions.label,
+    source: `${wongImpressions.sourceName} · ${wongImpressions.dateRange}`,
     href: '/case-studies/dr-christopher-wong',
   },
   {
     client: 'Dr. Christopher Wong',
-    value: '~3×',
-    label: 'monthly search visibility growth after the rebuild',
-    source: 'Google Search Console · Feb 2025 → Apr–May 2026',
+    value: wongJulyImpressions.value,
+    label: wongJulyImpressions.label,
+    source: `${wongJulyImpressions.sourceName} · ${wongJulyImpressions.dateRange}`,
     href: '/case-studies/dr-christopher-wong',
   },
   {
     client: 'Roseville Dental Academy',
-    value: '593',
-    label: 'Google clicks in the first full month after launch',
-    source: 'Google Search Console · May 2026 · 14.2k impressions',
+    value: rosevilleClicks.value,
+    label: rosevilleClicks.label,
+    source: `${rosevilleClicks.sourceName} · ${rosevilleClicks.dateRange}`,
     href: '/case-studies/roseville-dental-academy',
   },
 ] as const

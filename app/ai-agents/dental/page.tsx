@@ -48,13 +48,13 @@ const impactStats = [
     context: "calls that ring out during business hours never reach a human",
   },
   {
-    stat: "$200+",
-    label: "average lifetime value lost per missed call",
+    stat: "After-hours",
+    label: "inquiries can still reach the practice",
     context: "each unanswered call represents a potential long-term patient relationship",
   },
   {
-    stat: "40–60%",
-    label: "reduction in front desk call volume",
+    stat: "Overflow",
+    label: "routine calls can be handled during busy periods",
     context: "practices using ai agents free up staff to focus on in-office patient care",
   },
   {

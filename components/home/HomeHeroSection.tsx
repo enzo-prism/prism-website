@@ -245,21 +245,24 @@ export default function HomeHeroSection() {
                             </div>
                             <div className="mt-3 flex items-baseline gap-1.5">
                               <span className="font-sans text-[1.45rem] font-medium leading-none tracking-[-0.02em] text-[#f5f0e8]">
-                                {channel.followers}
+                                {channel.audience}
                               </span>
                               <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7d766a]">
-                                followers
+                                {channel.audienceLabel}
                               </span>
                             </div>
                             <div className="mt-2 flex items-baseline gap-1.5">
                               <span className="font-sans text-[1.05rem] font-medium leading-none tracking-[-0.01em] text-[#cfc7ba]">
-                                {channel.views}
+                                {channel.activity}
                               </span>
                               <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7d766a]">
-                                views
+                                {channel.activityLabel}
                               </span>
                             </div>
-                            <span className="sr-only"> (opens in a new tab)</span>
+                            <span className="sr-only">
+                              {' '}
+                              (opens in a new tab)
+                            </span>
                           </TrackedAnchor>
                         </li>
                       ))}
@@ -292,14 +295,22 @@ export default function HomeHeroSection() {
                 </div>
 
                 <p className="sr-only">
-                  Each month, Prism drives 18,563 new users to client websites,
-                  based on the latest data from June 2026. Across YouTube,
-                  Instagram, and TikTok, Prism&apos;s own channels reach 71,000
-                  followers and over 17 million views: 24,000 YouTube followers
-                  with over 3 million views, 37,000 Instagram followers with over
-                  10 million views, and 10,000 TikTok followers with over 4
-                  million views. These channels are grown end to end by Prism,
-                  powered by Content OS.
+                  {HOMEPAGE_HERO.stats.note}.{' '}
+                  {HOMEPAGE_HERO.stats.headline.items
+                    .map(
+                      (stat) =>
+                        `${stat.value}${stat.unit ? ` ${stat.unit}` : ''} ${stat.label}`,
+                    )
+                    .join('. ')}
+                  .{' '}
+                  {HOMEPAGE_HERO.stats.reach.channels
+                    .map(
+                      (channel) =>
+                        `${channel.platform}: ${channel.audience} ${channel.audienceLabel}, ${channel.activity} ${channel.activityLabel}`,
+                    )
+                    .join('. ')}
+                  . These channels are grown end to end by Prism, powered by
+                  Content OS.
                 </p>
               </div>
 
@@ -315,17 +326,6 @@ export default function HomeHeroSection() {
                   className="group flex flex-col gap-3 border-t border-white/10 pt-5 transition-colors hover:border-white/18 focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:flex-row sm:items-center sm:justify-between sm:gap-6"
                 >
                   <div className="flex items-center gap-3">
-                    <div
-                      aria-label="5 star rating"
-                      role="img"
-                      className="inline-flex shrink-0 items-center gap-1 text-[0.78rem] leading-none text-[#d8bc79]/85"
-                    >
-                      {Array.from({ length: 5 }).map((_, index) => (
-                        <span key={`hero-star-${index}`} aria-hidden="true">
-                          ★
-                        </span>
-                      ))}
-                    </div>
                     <p className="text-pretty font-sans text-[0.94rem] leading-6 text-[#a8a092] sm:text-[0.98rem]">
                       {HOMEPAGE_HERO.socialProof.headline}
                     </p>
@@ -365,7 +365,11 @@ export default function HomeHeroSection() {
                     <span
                       aria-hidden="true"
                       className="home-signal-dot h-1 w-1 rounded-full bg-[#d8bc79]"
-                      style={{ '--signal-delay': `${index * 260}ms` } as CSSProperties}
+                      style={
+                        {
+                          '--signal-delay': `${index * 260}ms`,
+                        } as CSSProperties
+                      }
                     />
                     {item}
                   </li>

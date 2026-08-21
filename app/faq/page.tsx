@@ -15,7 +15,7 @@ export const metadata: Metadata = buildRouteMetadata({
 const faqs = [
   {
     question: "What makes Prism different from other digital agencies?",
-    answer: "Prism specializes in AI-powered solutions that focus on revenue growth, not just pretty designs. Our proven methodology, 'The Prism Method,' has helped businesses achieve 300%+ increases in conversions. We combine beautiful design with data-driven optimization to ensure every project delivers measurable results."
+    answer: "Prism combines conversion-first design, software-grade implementation, search foundations, and analytics. Results are measured against each client's real goals, and dated source-attributed examples are published in our case studies."
   },
   {
     question: "How much does a website cost?",
@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     question: "What's your typical client ROI?",
-    answer: "Our clients typically see 200-500% increases in online visibility, 150-300% increases in conversions, and significant improvements in lead generation within 3-6 months. Specific ROI varies by industry and business model, but we focus on measurable revenue growth."
+    answer: "Results vary by market, starting position, scope, and measurement window. We set the baseline before work begins, track the agreed outcomes, and publish dated Google Search Console or GA4 evidence when there is enough verified data to make a claim."
   },
   {
     question: "Do you offer AI-powered website features?",

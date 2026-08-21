@@ -626,13 +626,6 @@ export default function DentalPracticeSeoExpertPage() {
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}
-        aggregateRating={{
-          "@type": "AggregateRating",
-          ratingValue: "4.9",
-          reviewCount: "200",
-          bestRating: "5",
-          worstRating: "1",
-        }}
       />
       <FAQSchema questions={faqItems} />
       <HowToSchema

@@ -16,10 +16,8 @@ import {
   coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import {
-  BOOK_A_CALL_CTA,
-  CANONICAL_PRICING_OFFERS,
-} from '@/lib/pricing-model'
+import { BOOK_A_CALL_CTA, CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
+import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
@@ -85,20 +83,29 @@ const PROOF_TILES = [
   {
     platform: 'YouTube',
     brand: 'youtube',
-    value: '24,000',
-    detail: '3M+ views',
+    value: SOCIAL_PROOF.youtube.audience,
+    label: SOCIAL_PROOF.youtube.audienceLabel,
+    detail: `${SOCIAL_PROOF.youtube.activity} ${SOCIAL_PROOF.youtube.activityLabel}`,
   },
   {
     platform: 'Instagram',
     brand: 'instagram',
-    value: '37,000',
-    detail: '10M+ views',
+    value: SOCIAL_PROOF.instagram.audience,
+    label: SOCIAL_PROOF.instagram.audienceLabel,
+    detail: `${SOCIAL_PROOF.instagram.activity} ${SOCIAL_PROOF.instagram.activityLabel}`,
   },
-  { platform: 'TikTok', brand: 'tiktok', value: '10,000', detail: '4M+ views' },
+  {
+    platform: 'TikTok',
+    brand: 'tiktok',
+    value: SOCIAL_PROOF.tiktok.audience,
+    label: SOCIAL_PROOF.tiktok.audienceLabel,
+    detail: `${SOCIAL_PROOF.tiktok.activity} ${SOCIAL_PROOF.tiktok.activityLabel}`,
+  },
 ] as const satisfies readonly {
   platform: string
   brand: BrandLogoKey
   value: string
+  label: string
   detail: string
 }[]
 
@@ -170,8 +177,8 @@ export default function ContentOsPage() {
                   <span className="font-medium text-[#f5f0e8]">
                     Implemented over 3 months
                   </span>
-                  {', '}then optimized every month. Scoped to your business on
-                  a 30-minute call.
+                  {', '}then optimized every month. Scoped to your business on a
+                  30-minute call.
                 </p>
 
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -296,14 +303,17 @@ export default function ContentOsPage() {
                     {tile.value}
                   </p>
                   <p className="mt-4 text-sm leading-6 text-[#b8afa2]">
-                    followers · {tile.detail}
+                    {tile.label} · {tile.detail}
                   </p>
                 </div>
               ))}
             </div>
             <p className="mt-4 border border-[#d8bc79]/25 bg-[#d8bc79]/[0.05] p-6 text-[0.98rem] leading-7 text-[#c9c1b6]">
-              <span className="font-medium text-[#d8bc79]">$100,000</span> in
-              revenue driven for clients in June 2026.
+              <span className="font-medium text-[#d8bc79]">
+                {CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US')}
+              </span>{' '}
+              new users across {CONNECTED_CLIENT_TRAFFIC.connectedSites}{' '}
+              connected client sites in {CONNECTED_CLIENT_TRAFFIC.month}.
             </p>
           </div>
         </section>

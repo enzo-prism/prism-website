@@ -38,7 +38,10 @@ export function buildCloudinaryVideoPoster(videoUrl: string) {
   // version segment — they target video codecs and don't apply to the
   // derived poster frame.
   return videoUrl
-    .replace(/\/video\/upload\/(?:[^/]+\/)*?(v\d+\/)/, '/video/upload/so_0,q_auto/$1')
+    .replace(
+      /\/video\/upload\/(?:[^/]+\/)*?(v\d+\/)/,
+      '/video/upload/so_0,q_auto/$1',
+    )
     .replace(/\.mp4($|\?)/, '.jpg$1')
 }
 
@@ -107,14 +110,14 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     industry: 'Dentistry',
     location: 'Palo Alto, CA',
     description:
-      'How we helped achieve 100% patient retention during practice transition and drive sustainable growth.',
+      'How we supported a clear practice transition and built a stronger, measurable growth system.',
     slug: 'dr-christopher-wong',
     segments: ['dental', 'local'],
     structured: {
       heroImage: 'https://www.design-prism.com/dr-wong-polaroids.png',
       heroVideoId: 'HrksJeYb02Q',
       datePublished: '2025-01-15T00:00:00.000Z',
-      dateModified: '2026-06-09T00:00:00.000Z',
+      dateModified: '2026-08-21T00:00:00.000Z',
       outcomes: [
         'The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.',
         'The practice now runs on a modern dental website with strong SEO foundations and clean UX.',
@@ -124,20 +127,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       results: [
         {
-          value: '+142%',
-          label: 'Google Search impressions, year over year',
+          value: '+239%',
+          label:
+            'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'Mar-May 2025 vs Mar-May 2026',
+          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
           detail:
-            'Google Search Console: Mar–May 2025 vs Mar–May 2026 (9.2k → 22.4k impressions).',
+            'Google Search Console: 6,564 impressions grew to 22,283 in the latest complete 90-day year-over-year window.',
         },
         {
-          value: '~3×',
-          label: 'monthly search visibility growth',
+          value: '4.3×',
+          label: 'July Google Search impressions, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'Feb 2025 to Apr-May 2026',
+          dateRange: 'July 2025 vs July 2026',
           detail:
-            'Google Search Console: ~2.8k impressions in Feb 2025 grew to ~8.4k/month by Apr–May 2026.',
+            'Google Search Console: 1,703 impressions in July 2025 grew to 7,335 in July 2026.',
         },
       ],
       story: {
@@ -146,7 +150,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism rebuilt the patient-facing brand and digital operations: a modern website with clear ownership messaging, strong SEO foundations, aligned local listings and review profiles, and AI-optimized Google campaigns, all reporting into one rhythm.',
         result:
-          'The transition held. Patients understood the handoff instead of guessing, acquisition shifted from passive word-of-mouth to measured active channels, and search visibility roughly tripled, with impressions up 142% year over year per Google Search Console.',
+          'Patients gained a clearer digital handoff, acquisition shifted from passive word-of-mouth to measured active channels, and Google Search impressions rose 239% year over year in the latest complete 90-day window.',
       },
       focus: 'Dental M&A handoff',
       scope: 'Website, SEO, ads, AI stack',
@@ -180,7 +184,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     },
     explainerVideo: {
       src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726440/exquisite-case-study-notebook-lm_l5ruuq.mp4',
-      title: 'See the rebuild that turned legacy prestige into a modern growth engine',
+      title:
+        'See the rebuild that turned legacy prestige into a modern growth engine',
       summary:
         'A quick breakdown of how Prism rebuilt the site, cleaned up the funnel, and protected discovery while bringing the digital experience up to the level of the practice.',
       keyMoments: [
@@ -210,7 +215,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/olympic-bootworks.png',
       heroVideoId: 'Cgi7CZHMYQ0',
       datePublished: '2025-02-15T00:00:00.000Z',
-      dateModified: '2026-06-25T00:00:00.000Z',
+      dateModified: '2026-08-21T00:00:00.000Z',
       outcomes: [
         'Traffic, search impressions, and online engagement compounded over time.',
         'Olympic Bootworks went from “great store, weak website” to a two-site system built for brand + ecommerce.',
@@ -220,20 +225,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       results: [
         {
-          value: '+1,302%',
-          label: 'Google Search impressions, year over year',
+          value: '+48%',
+          label:
+            'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'Mar 24-Jun 21, 2025 vs Mar 24-Jun 21, 2026',
+          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
           detail:
-            'Google Search Console: 801 impressions (Mar 24–Jun 21, 2025) grew to 11,234 impressions (Mar 24–Jun 21, 2026).',
+            'Google Search Console: 7,082 impressions grew to 10,461 in the latest complete 90-day year-over-year window.',
         },
         {
-          value: '13.6k',
+          value: '11.8k',
           label: 'GA4 sessions in the latest complete 90 days',
           sourceName: 'GA4',
-          dateRange: 'Mar 26-Jun 23, 2026',
+          dateRange: 'May 23-Aug 20, 2026',
           detail:
-            'GA4: 13,604 sessions and 12,992 new users from Mar 26–Jun 23, 2026.',
+            'GA4: 11,794 sessions and 11,203 new users from May 23–Aug 20, 2026.',
         },
       ],
       story: {
@@ -242,7 +248,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, launched a dedicated Fantic Warehouse microsite built for confident online buying, linked inventory to the POS, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
-          'The website became a sales channel and an ops asset instead of a brochure: Google Search impressions grew from 801 to 11,234 year over year, GA4 recorded 13,604 sessions in the latest complete 90-day window, and Fantic inventory gained a real online sales channel.',
+          'The website became a sales channel and an ops asset instead of a brochure: Google Search impressions rose 48% year over year in the latest complete 90-day window, GA4 recorded 11,794 sessions, and Fantic inventory gained a real online sales channel.',
       },
       focus: 'Ecommerce + multi-site launch',
       scope:
@@ -365,21 +371,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage:
         'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
       datePublished: '2026-05-22T00:00:00.000Z',
-      dateModified: '2026-06-09T00:00:00.000Z',
+      dateModified: '2026-08-21T00:00:00.000Z',
       results: [
         {
-          value: '593',
-          label: 'Google clicks in the first full month after launch',
+          value: '701',
+          label: 'Google clicks in the latest complete month',
           sourceName: 'Google Search Console',
-          dateRange: 'May 2026',
-          detail: 'Google Search Console, May 2026.',
+          dateRange: 'July 2026',
+          detail: 'Google Search Console: 701 clicks in July 2026.',
         },
         {
-          value: '14.2k',
-          label: 'Google Search impressions in the first full month',
+          value: '17.5k',
+          label: 'Google Search impressions in the latest complete month',
           sourceName: 'Google Search Console',
-          dateRange: 'May 2026',
-          detail: 'Google Search Console, May 2026.',
+          dateRange: 'July 2026',
+          detail: 'Google Search Console: 17,506 impressions in July 2026.',
         },
       ],
       outcomes: [
@@ -417,7 +423,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         'A content-first website at rebelwithsuz.com built for a growing library, search-first discovery, and clear paths from reader to community member.',
         'A Substack publication designed so Suz can publish essays and grow an owned email audience that does not depend on social algorithms.',
         'A YouTube channel established for long-form video that anchors the content series and feeds the rest of the ecosystem.',
-        'A TikTok presence that turns the movement\'s point of view into short-form discovery and reach.',
+        "A TikTok presence that turns the movement's point of view into short-form discovery and reach.",
         'A Facebook community built as the gathering place where readers become members and the conversation lives.',
         'Business cards, slide decks, and supporting collateral designed in the same system so every offline and presentation touchpoint matches the brand.',
       ],
@@ -429,7 +435,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         result:
           'Rebellious Aging now has a brand and a connected audience engine as bold as its positioning. An owned home, owned email, owned video, and an active community work together instead of scattered, disconnected profiles.',
       },
-      canonicalUrl: 'https://www.design-prism.com/case-studies/rebellious-aging',
+      canonicalUrl:
+        'https://www.design-prism.com/case-studies/rebellious-aging',
     },
   },
   {
@@ -480,7 +487,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     },
     explainerVideo: {
       src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726565/sr4-case-study-notebook-lm_ayuxeg.mp4',
-      title: 'Watch how Prism translated SR4’s methodology into a sharper digital presence',
+      title:
+        'Watch how Prism translated SR4’s methodology into a sharper digital presence',
       summary:
         'This explainer walks through the brand refresh, the narrative structure of the new site, and the search foundation Prism built so the right organizations can find SR4.',
       keyMoments: [
@@ -567,15 +575,16 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'belize-kids-foundation',
     segments: ['nonprofit'],
     structured: {
-      dateModified: '2026-06-09T00:00:00.000Z',
+      dateModified: '2026-08-21T00:00:00.000Z',
       results: [
         {
-          value: '+90%',
-          label: 'Google Search impressions, year over year',
+          value: '+171%',
+          label:
+            'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'Jun-Aug 2025 vs Mar-May 2026',
+          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
           detail:
-            'Google Search Console: ~460/month avg (Jun–Aug 2025) grew to ~870/month avg (Mar–May 2026).',
+            'Google Search Console: 1,155 impressions grew to 3,133 in the latest complete 90-day year-over-year window.',
         },
       ],
       story: {
@@ -584,7 +593,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism built a warm, vivid identity inspired by the Belize landscape, program storytelling that makes impact tangible, multiple giving pathways with clear impact statements, search architecture for donors actively looking for meaningful causes, and analytics across the donation funnel.',
         result:
-          'Giving now feels immediate and concrete instead of abstract, and search visibility roughly doubled year over year (+90% impressions per Google Search Console), reaching donors beyond the founders’ personal networks.',
+          'Giving now feels immediate and concrete instead of abstract, and Google Search impressions rose 171% year over year in the latest complete 90-day window, reaching donors beyond the founders’ personal networks.',
       },
     },
   },
@@ -675,7 +684,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       story: {
         situation:
-          'PTI had earned a 4.97/5 rating across 35 reviews and supported clients across 100+ dental offices in California, but its digital footprint didn’t look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
+          'PTI had deep credibility in dental practice transitions, but its digital footprint did not look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
         approach:
           'Prism built the site around PTI’s six-stage process (discovery, valuation, deal navigation, transition support, protection, and next moves), with real client testimonials as trust infrastructure, a search-driven content hierarchy, local SEO, and analytics across the inquiry funnel.',
         result:
@@ -684,7 +693,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     },
     explainerVideo: {
       src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726719/pti-case-study-notebook-lm_j9ggam.mp4',
-      title: 'Watch how Prism turned PTI’s reputation into visible authority online',
+      title:
+        'Watch how Prism turned PTI’s reputation into visible authority online',
       summary:
         'This walkthrough shows how Prism built the site, search presence, and trust infrastructure for a firm guiding dentists through one of the biggest decisions of their careers.',
       keyMoments: [
@@ -757,22 +767,23 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'saorsa-growth-partners',
     segments: ['consulting'],
     structured: {
-      dateModified: '2026-06-09T00:00:00.000Z',
+      dateModified: '2026-08-21T00:00:00.000Z',
       results: [
         {
-          value: '5.3×',
-          label: 'monthly Google clicks in five months',
+          value: '1.9×',
+          label: 'monthly Google clicks in seven months',
           sourceName: 'Google Search Console',
-          dateRange: 'Jan-May 2026',
-          detail: 'Google Search Console: 10 clicks (Jan 2026) → 53 (May 2026).',
+          dateRange: 'Jan-Jul 2026',
+          detail:
+            'Google Search Console: 10 clicks (Jan 2026) → 19 (Jul 2026).',
         },
         {
-          value: '+273%',
-          label: 'Google Search impressions in five months',
+          value: '+114%',
+          label: 'Google Search impressions in seven months',
           sourceName: 'Google Search Console',
-          dateRange: 'Jan-May 2026',
+          dateRange: 'Jan-Jul 2026',
           detail:
-            'Google Search Console: 505 impressions (Jan 2026) → 1,883 (May 2026).',
+            'Google Search Console: 505 impressions (Jan 2026) → 1,080 (Jul 2026).',
         },
       ],
       story: {
@@ -781,7 +792,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism shipped fast-loading pages, concise offers, and inquiry paths designed to surface the right work, with search and analytics instrumentation in place from launch.',
         result:
-          'Within five months, monthly Google clicks grew 5.3× and impressions grew 273% (Google Search Console, Jan–May 2026). That is a measured visibility ramp for a brand-new presence.',
+          'Within seven months, monthly Google clicks grew 1.9× and impressions grew 114% (Google Search Console, Jan–Jul 2026). That is a measured visibility ramp for a brand-new presence.',
       },
     },
   },
@@ -798,7 +809,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'mataria-dental-group',
     segments: ['dental', 'local'],
     structured: {
-      heroImage: 'https://www.design-prism.com/case-studies/mataria-dental-group-home-desktop.jpg',
+      heroImage:
+        'https://www.design-prism.com/case-studies/mataria-dental-group-home-desktop.jpg',
       heroVideoId: 'VIDEO_PLACEHOLDER',
       datePublished: '2025-02-01T00:00:00.000Z',
       dateModified: '2025-02-01T00:00:00.000Z',
@@ -823,3 +835,14 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     },
   },
 ]
+
+export function getCaseStudyMetric(slug: string, metricIndex = 0) {
+  const metric = CASE_STUDIES.find((study) => study.slug === slug)?.structured
+    ?.results?.[metricIndex]
+
+  if (!metric) {
+    throw new Error(`Missing measured result ${metricIndex} for ${slug}`)
+  }
+
+  return metric
+}

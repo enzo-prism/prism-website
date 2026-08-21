@@ -34,7 +34,11 @@ import {
 } from '@/components/prism-infinity/infinity-content'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { BOOK_A_CALL_CTA, PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
+import {
+  BOOK_A_CALL_CTA,
+  PRISM_INFINITY_PRICE_LABEL,
+} from '@/lib/pricing-model'
+import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
@@ -57,26 +61,26 @@ const PROOF_STATS: readonly {
   brand?: BrandLogoKey
 }[] = [
   {
-    value: '$100K',
-    label: 'revenue driven for clients',
-    detail: 'June 2026',
+    value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
+    label: 'new users across connected client sites',
+    detail: `${CONNECTED_CLIENT_TRAFFIC.month} · ${CONNECTED_CLIENT_TRAFFIC.connectedSites} sites`,
   },
   {
-    value: '24K',
-    label: 'YouTube followers',
-    detail: '3M+ views',
+    value: SOCIAL_PROOF.youtube.audience,
+    label: `YouTube ${SOCIAL_PROOF.youtube.audienceLabel}`,
+    detail: `${SOCIAL_PROOF.youtube.activity} ${SOCIAL_PROOF.youtube.activityLabel}`,
     brand: 'youtube',
   },
   {
-    value: '37K',
-    label: 'Instagram followers',
-    detail: '10M+ views',
+    value: SOCIAL_PROOF.instagram.audience,
+    label: `Instagram ${SOCIAL_PROOF.instagram.audienceLabel}`,
+    detail: `${SOCIAL_PROOF.instagram.activity} ${SOCIAL_PROOF.instagram.activityLabel}`,
     brand: 'instagram',
   },
   {
-    value: '10K',
-    label: 'TikTok followers',
-    detail: '4M+ views',
+    value: SOCIAL_PROOF.tiktok.audience,
+    label: `TikTok ${SOCIAL_PROOF.tiktok.audienceLabel}`,
+    detail: `${SOCIAL_PROOF.tiktok.activity} ${SOCIAL_PROOF.tiktok.activityLabel}`,
     brand: 'tiktok',
   },
 ] as const

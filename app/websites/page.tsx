@@ -14,6 +14,7 @@ import {
   coreRouteSectionCompactClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { BOOK_A_CALL_CTA, WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { websiteProjects } from '@/lib/website-projects'
@@ -146,21 +147,24 @@ const PROOF_BUILDS = [
 
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
 // Console). Keep in sync with the source; do not invent metrics.
+const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
+const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
+const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
+
 const PROOF_POINTS = [
   {
-    value: '5.3×',
-    label: 'monthly Google clicks in five months for Saorsa Growth Partners',
+    value: saorsaClicks.value,
+    label: `${saorsaClicks.label} for Saorsa Growth Partners`,
     href: '/case-studies/saorsa-growth-partners',
   },
   {
-    value: '593',
-    label:
-      'Google clicks in the first full month after launch for Roseville Dental Academy',
+    value: rosevilleClicks.value,
+    label: `${rosevilleClicks.label} for Roseville Dental Academy`,
     href: '/case-studies/roseville-dental-academy',
   },
   {
-    value: '+142%',
-    label: 'Google Search impressions year over year for Dr. Christopher Wong',
+    value: wongImpressions.value,
+    label: `${wongImpressions.label} for Dr. Christopher Wong`,
     href: '/case-studies/dr-christopher-wong',
   },
 ] as const
@@ -188,10 +192,10 @@ export default function WebsitesPage() {
                 Your online presence, fully dialed.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Considered design, precise engineering, and analytics of
-                record for serious businesses. Built on a bespoke design
-                system, engineered to rank on Google, and structured to be
-                found and cited by AI.
+                Considered design, precise engineering, and analytics of record
+                for serious businesses. Built on a bespoke design system,
+                engineered to rank on Google, and structured to be found and
+                cited by AI.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -443,10 +447,7 @@ export default function WebsitesPage() {
 
         <section className={coreRouteSectionCompactClassName}>
           <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="FAQ"
-              title="Before the call."
-            />
+            <CoreSectionHeading eyebrow="FAQ" title="Before the call." />
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {FAQ_ITEMS.map((item) => (
                 <details key={item.question} className="group py-6">

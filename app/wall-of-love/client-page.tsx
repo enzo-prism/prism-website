@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { trackCTAClick } from '@/utils/analytics'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import {
   formatSocialHandle,
   isClientQuote,
@@ -75,7 +76,7 @@ export default function WallOfLoveClientPage() {
               posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-88 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
               videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-82 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
               posterUnoptimized
-              playbackPolicy={prefersReducedMotion ? "forcePoster" : "auto"}
+              playbackPolicy={prefersReducedMotion ? 'forcePoster' : 'auto'}
             />
 
             <div
@@ -92,15 +93,15 @@ export default function WallOfLoveClientPage() {
               </p>
 
               <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-foreground sm:text-sm">
-                <span>Instagram: 37,000+</span>
+                <span>Instagram: {SOCIAL_PROOF.instagram.audience}</span>
                 <span className="hidden text-muted-foreground sm:inline">
                   •
                 </span>
-                <span>TikTok: 10,000+</span>
+                <span>TikTok: {SOCIAL_PROOF.tiktok.audience}</span>
                 <span className="hidden text-muted-foreground sm:inline">
                   •
                 </span>
-                <span>YouTube: 24,000+</span>
+                <span>YouTube: {SOCIAL_PROOF.youtube.audience}</span>
               </p>
 
               <div className="mt-8">

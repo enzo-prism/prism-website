@@ -1,3 +1,6 @@
+// Historical editorial metadata only. Its engagement fields are not verified
+// often enough to support aggregate proof claims, so do not render or sum them
+// as current Prism statistics.
 export type HottestContentItem = {
   slug: string
   title: string

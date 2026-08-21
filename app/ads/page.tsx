@@ -193,13 +193,6 @@ const audienceSegments = [
 ]
 
 export default async function AdsPage() {
-  const aggregateRating = {
-    "@type": "AggregateRating" as const,
-    ratingValue: "4.9",
-    reviewCount: "200",
-    bestRating: "5",
-    worstRating: "1",
-  }
   const allPosts = (await getAllPosts()) ?? []
   const adsBlogPosts = allPosts
     .filter(post => {
@@ -567,7 +560,6 @@ export default async function AdsPage() {
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}
-        aggregateRating={aggregateRating}
       />
       <FAQSchema questions={faqItems} />
     </div>

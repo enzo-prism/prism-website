@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
+import { getCaseStudyMetric } from '@/lib/case-study-data'
 
 export const serializeJsonLd = (data: unknown) =>
   JSON.stringify(data)
@@ -191,6 +192,10 @@ export function CaseStudySchema({
 }
 
 export function GlobalSchemaGraph() {
+  const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
+  const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
+  const rosevilleImpressions = getCaseStudyMetric('roseville-dental-academy', 1)
+  const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -248,7 +253,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/dr-christopher-wong#article',
         name: 'Dr. Christopher B. Wong case study',
         url: 'https://www.design-prism.com/case-studies/dr-christopher-wong',
-        abstract: '+142% Google Search impressions year over year.',
+        abstract: `${wongImpressions.value} ${wongImpressions.label}.`,
       },
       {
         '@type': 'Article',
@@ -256,8 +261,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/roseville-dental-academy#article',
         name: 'Roseville Dental Academy case study',
         url: 'https://www.design-prism.com/case-studies/roseville-dental-academy',
-        abstract:
-          '593 Google clicks and 14.2k impressions in the first full month after launch.',
+        abstract: `${rosevilleClicks.value} ${rosevilleClicks.label} and ${rosevilleImpressions.value} ${rosevilleImpressions.label}.`,
       },
       {
         '@type': 'Article',
@@ -265,7 +269,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/saorsa-growth-partners#article',
         name: 'Saorsa Growth Partners case study',
         url: 'https://www.design-prism.com/case-studies/saorsa-growth-partners',
-        abstract: '5.3x monthly Google clicks in five months.',
+        abstract: `${saorsaClicks.value} ${saorsaClicks.label}.`,
       },
     ],
     url: 'https://www.design-prism.com',

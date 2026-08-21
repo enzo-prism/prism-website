@@ -110,23 +110,23 @@ const restrictedItems = [
 
 const caseStudies = [
   {
-    name: "Dr. Chris Wong, DDS (Los Angeles)",
+    name: "Dr. Christopher Wong (Palo Alto)",
     outcomes: [
-      "3× increase in monthly implant inquiries",
-      "58% drop in cost per lead after restructuring campaigns"
+      "Search and conversion tracking connected to the practice website",
+      "Campaign structure aligned with high-intent dental services"
     ]
   },
   {
-    name: "Wine Country Root Canal (Napa)",
+    name: "Wine Country Root Canal (Santa Rosa)",
     outcomes: [
-      "400% lift in appointment bookings",
-      "First-page ranking on “root canal Napa” and “endodontist near me”"
+      "High-intent landing pages built around endodontic services",
+      "Measurement tied to calls and appointment requests"
     ]
   },
   {
     name: "Grace Dental (Santa Rosa)",
     outcomes: [
-      "2× higher conversion rate from Performance Max campaigns"
+      "Local dental campaign structure and conversion measurement"
     ]
   }
 ]

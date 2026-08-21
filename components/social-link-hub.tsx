@@ -9,6 +9,7 @@ import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
 import { WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
+import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
 /**
@@ -28,8 +29,8 @@ type PlatformConfig = {
   label: string
   handle: string
   profileHref: string
-  /** Two-number proof line: one attention stat, one business stat. */
-  proofStrip: [attention: string, business: string]
+  /** Two current public or authenticated platform proof points. */
+  proofStrip: [audience: string, activity: string]
 }
 
 const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
@@ -37,19 +38,28 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     label: 'TikTok',
     handle: '@the_design_prism',
     profileHref: 'https://www.tiktok.com/@the_design_prism',
-    proofStrip: ['17M+ views', '$5 million+ revenue driven for clients'],
+    proofStrip: [
+      `${SOCIAL_PROOF.tiktok.audience} followers`,
+      `${SOCIAL_PROOF.tiktok.activity} views in 60 days`,
+    ],
   },
   instagram: {
     label: 'Instagram',
     handle: '@the_design_prism',
     profileHref: 'https://www.instagram.com/the_design_prism/',
-    proofStrip: ['37k followers', '$5 million+ revenue driven for clients'],
+    proofStrip: [
+      `${SOCIAL_PROOF.instagram.audience} followers`,
+      `${SOCIAL_PROOF.instagram.activity} public posts`,
+    ],
   },
   youtube: {
     label: 'YouTube',
     handle: '@the_design_prism',
     profileHref: 'https://www.youtube.com/@the_design_prism',
-    proofStrip: ['24k subscribers', '$5 million+ revenue driven for clients'],
+    proofStrip: [
+      `${SOCIAL_PROOF.youtube.audience} subscribers`,
+      `${SOCIAL_PROOF.youtube.activity} views`,
+    ],
   },
 }
 

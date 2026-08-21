@@ -90,24 +90,26 @@ describe('HomeHeroSection', () => {
     ).toBeInTheDocument()
 
     const stats = screen.getByTestId('home-hero-stats')
-    expect(stats).toHaveTextContent('18,563')
-    expect(stats).toHaveTextContent('71,000')
-    expect(stats).toHaveTextContent('17M+')
+    expect(stats).toHaveTextContent('16,882')
+    expect(stats).toHaveTextContent('74K')
+    expect(stats).toHaveTextContent('1.2M')
     expect(stats).not.toHaveTextContent('$100,000')
     expect(stats).toHaveTextContent(/youtube/i)
     expect(stats).toHaveTextContent(/instagram/i)
     expect(stats).toHaveTextContent(/tiktok/i)
 
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
-      /20\+ reviews from founders, doctors, operators, and local leaders/i,
+      /20\+ featured voices from founders, doctors, operators, and local leaders/i,
     )
-    expect(screen.getByLabelText(/5 star rating/i)).toBeInTheDocument()
+    expect(screen.queryByLabelText(/5 star rating/i)).not.toBeInTheDocument()
 
     const supportPoints = screen.getAllByTestId('home-hero-support-point')
     const supportIcon = supportPoints[0]?.querySelector('img')
 
     expect(supportPoints).toHaveLength(1)
-    expect(screen.getByText(/the growth team founders keep/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/the growth team founders keep/i),
+    ).toBeInTheDocument()
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
     expect(supportIcon).toHaveAttribute('src', '/pixelish/emoji-heart.svg')
     expect(supportIcon).toHaveClass('invert')
@@ -121,13 +123,14 @@ describe('HomeHeroSection', () => {
     expect(
       screen.getByRole('link', { name: /get a pro website/i }),
     ).toHaveAttribute('href', '/websites')
-    expect(
-      screen.getByRole('link', { name: /wall of love/i }),
-    ).toHaveAttribute('href', '/wall-of-love')
+    expect(screen.getByRole('link', { name: /wall of love/i })).toHaveAttribute(
+      'href',
+      '/wall-of-love',
+    )
 
     expect(
       screen.getByRole('link', {
-        name: /5 star rating 20\+ reviews from founders, doctors, operators, and local leaders see results/i,
+        name: /20\+ featured voices from founders, doctors, operators, and local leaders see results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
   })

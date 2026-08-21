@@ -109,11 +109,9 @@ describe('SocialLinkHub', () => {
       ),
     ).toBeInTheDocument()
 
-    // Proof strip pairs an attention number with a business number.
-    expect(screen.getByText(/17m\+ views/i)).toBeInTheDocument()
-    expect(
-      screen.getByText(/\$5 million\+ revenue driven for clients/i),
-    ).toBeInTheDocument()
+    // Proof strip uses current public profile and authenticated analytics data.
+    expect(screen.getByText(/11\.3k followers/i)).toBeInTheDocument()
+    expect(screen.getByText(/1\.2m views in 60 days/i)).toBeInTheDocument()
 
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
@@ -181,9 +179,7 @@ describe('SocialLinkHub', () => {
 
     // Call-first offers never show exact public pricing. The detail line is
     // sentence copy rendered mixed-case (no uppercase transform).
-    expect(
-      screen.getByText('rank on ChatGPT and Google'),
-    ).toBeInTheDocument()
+    expect(screen.getByText('rank on ChatGPT and Google')).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()
@@ -229,9 +225,7 @@ describe('SocialLinkHub', () => {
         name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByText(/37k followers/i),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/38k followers/i)).toBeInTheDocument()
     expect(
       within(
         screen.getByRole('navigation', { name: /instagram page actions/i }),
@@ -245,7 +239,7 @@ describe('SocialLinkHub', () => {
         name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/24k subscribers/i)).toBeInTheDocument()
+    expect(screen.getByText(/24\.7k subscribers/i)).toBeInTheDocument()
 
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,

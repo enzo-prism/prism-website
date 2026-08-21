@@ -22,13 +22,6 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default async function SeoPage() {
-  const aggregateRating = {
-    "@type": "AggregateRating" as const,
-    ratingValue: "4.9",
-    reviewCount: "200",
-    bestRating: "5",
-    worstRating: "1",
-  }
   const { hero, scoringQuestions, seoModes, onPagePreview, offPagePreview, packages, benefits } = seoOverviewContent
   const allPosts = (await getAllPosts()) ?? []
   const seoBlogPosts = allPosts
@@ -582,7 +575,6 @@ export default async function SeoPage() {
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",
         }}
-        aggregateRating={aggregateRating}
       />
     </>
   )

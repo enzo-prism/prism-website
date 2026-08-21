@@ -10,6 +10,7 @@ import {
   coreRouteSectionClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { getCaseStudyMetric } from '@/lib/case-study-data'
 import {
   CANONICAL_PRICING_OFFERS,
   PRICING_OFFER_ORDER,
@@ -87,20 +88,24 @@ const partnerLevels = [
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
 // Console). Used as quantified proof beside the primary pricing CTA — keep in
 // sync with the source; do not invent metrics.
+const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
+const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
+const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
+
 const CTA_PROOF_POINTS = [
   {
-    value: '5.3×',
-    label: 'monthly Google clicks in five months (Saorsa Growth Partners)',
+    value: saorsaClicks.value,
+    label: `${saorsaClicks.label} (Saorsa Growth Partners)`,
     href: '/case-studies/saorsa-growth-partners',
   },
   {
-    value: '593',
-    label: 'Google clicks in the first month after launch (Roseville Dental Academy)',
+    value: rosevilleClicks.value,
+    label: `${rosevilleClicks.label} (Roseville Dental Academy)`,
     href: '/case-studies/roseville-dental-academy',
   },
   {
-    value: '+142%',
-    label: 'Google Search impressions year over year (Dr. Christopher Wong)',
+    value: wongImpressions.value,
+    label: `${wongImpressions.label} (Dr. Christopher Wong)`,
     href: '/case-studies/dr-christopher-wong',
   },
 ] as const
@@ -221,7 +226,9 @@ export default function PricingPageClient() {
                     <CoreActionLink
                       href={offer.primaryCta.href}
                       target={
-                        offer.primaryCta.href.startsWith('/') ? undefined : '_blank'
+                        offer.primaryCta.href.startsWith('/')
+                          ? undefined
+                          : '_blank'
                       }
                       rel={
                         offer.primaryCta.href.startsWith('/')
@@ -407,7 +414,8 @@ export default function PricingPageClient() {
             </CoreActionLink>
           </div>
           <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-            scoped on a 30-min call &middot; built to the Prism standard &middot; iterations until you love it
+            scoped on a 30-min call &middot; built to the Prism standard
+            &middot; iterations until you love it
           </p>
         </div>
       </section>
