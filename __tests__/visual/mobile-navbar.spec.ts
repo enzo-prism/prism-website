@@ -4,6 +4,13 @@ import path from 'node:path'
 import { expect, test, type Page } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
+  // Keep third-party Vimeo/WPE teardown outside this navigation regression.
+  // The suite verifies when Prism requests the player and the control geometry,
+  // while Vimeo playback itself is independent of the mobile menu contract.
+  await page.route(
+    /^https:\/\/(?:player\.vimeo\.com|f\.vimeocdn\.com)\//,
+    (route) => route.abort(),
+  )
   await page.emulateMedia({ reducedMotion: 'reduce' })
 })
 
