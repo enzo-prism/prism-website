@@ -29,12 +29,14 @@ jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
   default: function MockDeferredAsciiHeroBackdrop({
     className,
     focusScrimClassName,
+    forceAutoplay,
     quality,
     scrimClassName,
     zoom,
   }: {
     className?: string
     focusScrimClassName?: string
+    forceAutoplay?: boolean
     quality?: string
     scrimClassName?: string
     zoom?: number
@@ -44,6 +46,7 @@ jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
         data-testid="home-hero-ascii-backdrop"
         data-class-name={className}
         data-focus-scrim-class-name={focusScrimClassName}
+        data-force-autoplay={forceAutoplay ? 'true' : 'false'}
         data-quality={quality}
         data-scrim-class-name={scrimClassName}
         data-zoom={zoom}
@@ -60,6 +63,7 @@ describe('HomeHeroSection', () => {
 
     expect(heroBackdrop).toBeInTheDocument()
     expect(heroBackdrop).toHaveAttribute('data-quality', 'high')
+    expect(heroBackdrop).toHaveAttribute('data-force-autoplay', 'false')
     expect(heroBackdrop).toHaveAttribute('data-zoom', '0.84')
     expect(heroBackdrop.getAttribute('data-class-name')).toContain(
       '!opacity-[0.72]',

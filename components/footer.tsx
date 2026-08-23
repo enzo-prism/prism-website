@@ -104,7 +104,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
 
   return (
     <footer className="border-t border-white/12 bg-black">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16 lg:py-20">
+      <div className="container-px-safe mx-auto max-w-6xl py-14 sm:py-16 lg:py-20">
         {/* Top region: brand block + link columns */}
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           {/* Brand block */}

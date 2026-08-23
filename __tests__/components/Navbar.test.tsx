@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react'
 
 import Navbar from '@/components/navbar'
 
@@ -62,6 +68,8 @@ describe('Navbar', () => {
   beforeEach(() => {
     mockUsePathname.mockReset()
     document.body.innerHTML = ''
+    document.body.removeAttribute('style')
+    document.documentElement.removeAttribute('style')
   })
 
   it('uses the home solid treatment on the homepage route', () => {
@@ -149,6 +157,86 @@ describe('Navbar', () => {
     ).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /^websites$/i })).toHaveLength(2)
     expect(screen.getAllByRole('link', { name: /content os/i })).toHaveLength(2)
+    expect(
+      within(
+        document.querySelector('#mobile-site-nav') as HTMLElement,
+      ).getByRole('link', { name: /^websites$/i }),
+    ).toHaveFocus()
+  })
+
+  it('never makes a body-level header inert when the menu opens', () => {
+    mockUsePathname.mockReturnValue('/wall-of-love')
+
+    render(<Navbar />, { container: document.body })
+    const header = screen.getByRole('banner')
+
+    // Reproduce Next App Router pages where the header is a direct body child.
+    expect(header.parentElement).toBe(document.body)
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+    expect(header).not.toHaveAttribute('inert')
+    expect(screen.getByRole('button', { name: /close menu/i })).toBeEnabled()
+    const mobilePanel = document.querySelector('#mobile-site-nav')
+    expect(mobilePanel).toBeInTheDocument()
+    expect(
+      within(mobilePanel as HTMLElement).getByRole('link', {
+        name: /^websites$/i,
+      }),
+    ).toBeEnabled()
+  })
+
+  it('preserves pre-existing inert state and restores overflow on close', () => {
+    mockUsePathname.mockReturnValue('/about')
+    const main = document.createElement('main')
+    const footer = document.createElement('footer')
+    main.setAttribute('inert', '')
+    document.body.append(main, footer)
+    document.body.style.overflow = 'clip'
+    document.documentElement.style.overflow = 'scroll'
+
+    render(<Navbar />)
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+    expect(main).toHaveAttribute('inert')
+    expect(footer).toHaveAttribute('inert')
+    expect(document.body.style.overflow).toBe('hidden')
+    expect(document.documentElement.style.overflow).toBe('hidden')
+
+    fireEvent.click(screen.getByRole('button', { name: /close menu/i }))
+
+    expect(main).toHaveAttribute('inert')
+    expect(footer).not.toHaveAttribute('inert')
+    expect(document.body.style.overflow).toBe('clip')
+    expect(document.documentElement.style.overflow).toBe('scroll')
+  })
+
+  it('closes on Escape and returns focus to the menu button', async () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+
+    const toggle = screen.getByRole('button', { name: /open menu/i })
+    toggle.focus()
+    fireEvent.click(toggle)
+    fireEvent.keyDown(document, { key: 'Escape' })
+
+    expect(document.querySelector('#mobile-site-nav')).not.toBeInTheDocument()
+    await waitFor(() => expect(toggle).toHaveFocus())
+  })
+
+  it('closes and restores page state at the desktop breakpoint', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: 1024,
+    })
+    fireEvent(window, new Event('resize'))
+
+    expect(document.querySelector('#mobile-site-nav')).not.toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('')
+    expect(document.documentElement.style.overflow).toBe('')
   })
 
   it('links the websites item to the website order page and highlights it on that route', () => {
@@ -159,6 +247,7 @@ describe('Navbar', () => {
     const websitesLinks = screen.getAllByRole('link', { name: /^websites$/i })
     expect(websitesLinks).toHaveLength(1)
     expect(websitesLinks[0]).toHaveAttribute('href', '/websites')
+    expect(websitesLinks[0]).toHaveAttribute('aria-current', 'page')
     expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
   })
 
@@ -170,7 +259,9 @@ describe('Navbar', () => {
     expect(
       screen.queryByRole('link', { name: /order now/i }),
     ).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /^order$/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^order$/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('shows the flat seven-item rail with no pricing item and no more dropdown', () => {
@@ -212,36 +303,41 @@ describe('Navbar', () => {
     mockUsePathname.mockReturnValue('/about')
 
     const originalRect = HTMLElement.prototype.getBoundingClientRect
-    HTMLElement.prototype.getBoundingClientRect = function getBoundingClientRect() {
-      if (this.hasAttribute('data-navbar-chrome')) {
-        return {
-          x: 0,
-          y: 0,
-          top: 0,
-          left: 0,
-          right: 390,
-          bottom: 73,
-          width: 390,
-          height: 73,
-          toJSON() {
-            return {}
-          },
-        } as DOMRect
+    HTMLElement.prototype.getBoundingClientRect =
+      function getBoundingClientRect() {
+        if (this.hasAttribute('data-navbar-chrome')) {
+          return {
+            x: 0,
+            y: 0,
+            top: 0,
+            left: 0,
+            right: 390,
+            bottom: 73,
+            width: 390,
+            height: 73,
+            toJSON() {
+              return {}
+            },
+          } as DOMRect
+        }
+        return originalRect.call(this)
       }
-      return originalRect.call(this)
-    }
 
     try {
       render(<Navbar />)
       expect(
-        document.documentElement.style.getPropertyValue('--prism-header-height'),
+        document.documentElement.style.getPropertyValue(
+          '--prism-header-height',
+        ),
       ).toBe('73px')
 
       fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
 
       expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
       expect(
-        document.documentElement.style.getPropertyValue('--prism-header-height'),
+        document.documentElement.style.getPropertyValue(
+          '--prism-header-height',
+        ),
       ).toBe('73px')
     } finally {
       HTMLElement.prototype.getBoundingClientRect = originalRect

@@ -34,6 +34,9 @@ jobs:
       - name: Visual regression (locked routes)
         run: pnpm test:visual:locked
 
+      - name: Mobile navbar regression (Chromium + WebKit)
+        run: PLAYWRIGHT_PORT=3330 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.mobile-navbar.config.ts
+
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest

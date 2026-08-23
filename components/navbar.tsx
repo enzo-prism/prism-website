@@ -95,25 +95,30 @@ function NavbarLinks({
 }) {
   return (
     <>
-      {items.map((item, index) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          onClick={() => onNavigate(item.label, item.href)}
-          className={cn(
-            getNavItemClasses(isNavItemActive(pathname, item.href), variant),
-            variant === 'mobile' &&
-              'motion-safe:animate-[nav-item-rise_360ms_cubic-bezier(0.22,1,0.36,1)_both]',
-          )}
-          style={
-            variant === 'mobile'
-              ? { animationDelay: `${index * 40}ms` }
-              : undefined
-          }
-        >
-          {item.label}
-        </Link>
-      ))}
+      {items.map((item, index) => {
+        const active = isNavItemActive(pathname, item.href)
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={active ? 'page' : undefined}
+            onClick={() => onNavigate(item.label, item.href)}
+            className={cn(
+              getNavItemClasses(active, variant),
+              variant === 'mobile' &&
+                'motion-safe:animate-[nav-item-rise_360ms_cubic-bezier(0.22,1,0.36,1)_both]',
+            )}
+            style={
+              variant === 'mobile'
+                ? { animationDelay: `${index * 40}ms` }
+                : undefined
+            }
+          >
+            {item.label}
+          </Link>
+        )
+      })}
     </>
   )
 }
@@ -153,6 +158,9 @@ export default function Navbar() {
   const pathname = usePathname()
   const headerRef = useRef<HTMLElement | null>(null)
   const chromeRef = useRef<HTMLDivElement | null>(null)
+  const mobilePanelRef = useRef<HTMLDivElement | null>(null)
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null)
+  const restoreFocusAfterCloseRef = useRef(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const isHome = pathname === '/'
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
@@ -170,6 +178,9 @@ export default function Navbar() {
     // overflow alone does not reach the viewport when the root element
     // carries its own overflow styles.
     const { body, documentElement } = document
+    const header = headerRef.current
+    const menuButton = menuButtonRef.current
+    const previouslyFocused = document.activeElement
     const previousBodyOverflow = body.style.overflow
     const previousHtmlOverflow = documentElement.style.overflow
     body.style.overflow = 'hidden'
@@ -185,13 +196,25 @@ export default function Navbar() {
       (element): element is HTMLElement =>
         element instanceof HTMLElement &&
         element.tagName !== 'SCRIPT' &&
-        !element.hasAttribute('inert') &&
-        !element.querySelector('header'),
+        element !== header &&
+        (!header || !element.contains(header)),
     )
-    const allInertTargets = [...inertTargets, ...bodyLevelTargets]
+    const allInertTargets = Array.from(
+      new Set([...inertTargets, ...bodyLevelTargets]),
+    )
+    const priorInertState = new Map(
+      allInertTargets.map((element) => [
+        element,
+        element.hasAttribute('inert'),
+      ]),
+    )
     allInertTargets.forEach((element) => {
       element.setAttribute('inert', '')
     })
+
+    mobilePanelRef.current
+      ?.querySelector<HTMLAnchorElement>('a[href]')
+      ?.focus({ preventScroll: true })
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setIsMobileMenuOpen(false)
@@ -212,8 +235,21 @@ export default function Navbar() {
       body.style.overflow = previousBodyOverflow
       documentElement.style.overflow = previousHtmlOverflow
       allInertTargets.forEach((element) => {
-        element.removeAttribute('inert')
+        if (!priorInertState.get(element)) element.removeAttribute('inert')
       })
+
+      if (restoreFocusAfterCloseRef.current) {
+        if (
+          previouslyFocused instanceof HTMLElement &&
+          previouslyFocused !== body &&
+          previouslyFocused !== documentElement &&
+          document.contains(previouslyFocused)
+        ) {
+          previouslyFocused.focus({ preventScroll: true })
+        } else {
+          menuButton?.focus({ preventScroll: true })
+        }
+      }
     }
   }, [isMobileMenuOpen])
 
@@ -249,6 +285,7 @@ export default function Navbar() {
 
   const handleNavigate = (label: string, href: string) => {
     trackNavigation(label, href)
+    restoreFocusAfterCloseRef.current = false
     setIsMobileMenuOpen(false)
   }
 
@@ -257,7 +294,9 @@ export default function Navbar() {
       ref={headerRef}
       className={cn(
         HEADER_CLASSES,
-        isHome ? 'fixed inset-x-0 top-0 z-50' : 'sticky top-0 z-50 w-full',
+        isHome || isMobileMenuOpen
+          ? 'fixed inset-x-0 top-0 z-50 w-full'
+          : 'sticky top-0 z-50 w-full',
       )}
     >
       <div
@@ -265,146 +304,148 @@ export default function Navbar() {
         data-navbar-chrome
         className="pt-[env(safe-area-inset-top,0px)]"
       >
-      <div className="container-px-safe container mx-auto flex h-[72px] items-center justify-between">
-        <Link
-          href="/"
-          className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
-          onClick={() => trackNavigation('logo', '/')}
-          aria-label="Prism home"
-        >
-          <div
-            data-testid="navbar-logo-mark"
-            className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.24)] transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover/logo:border-white/45 group-hover/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] group-focus-visible/logo:border-white/45 group-focus-visible/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] motion-safe:group-hover/logo:scale-105 motion-safe:group-focus-visible/logo:scale-105"
+        <div className="container-px-safe container mx-auto flex h-[72px] items-center justify-between">
+          <Link
+            href="/"
+            className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
+            onClick={() => handleNavigate('logo', '/')}
+            aria-label="Prism home"
           >
-            <span
-              data-testid="navbar-logo-glow"
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(118deg,rgba(92,220,255,0.55)_0%,rgba(255,255,255,0.3)_46%,rgba(255,69,207,0.55)_100%)] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100"
-            />
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 -left-1/2 z-20 w-1/2 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-0 transition-[transform,opacity] duration-500 ease-out group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-safe:group-hover/logo:translate-x-[300%] motion-safe:group-focus-visible/logo:translate-x-[300%]"
-            />
-            <CoreImage
-              src={LOGO_CONFIG.src}
-              alt={LOGO_CONFIG.alt}
-              width={40}
-              height={40}
-              className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
-              priority
-              fallbackSrc={LOGO_CONFIG.fallbackSrc}
-              trackingId="navbar_logo"
-              quality={90}
-            />
-          </div>
-
-          <div className="relative flex min-w-0 flex-col justify-center">
-            <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
-              Prism
-            </span>
-            <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5 xl:block">
-              impossible is temporary
-            </span>
-            <span
-              aria-hidden="true"
-              className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#5cdcff]/80 via-white/55 to-[#ff45cf]/80 opacity-0 transition-[width,opacity] duration-300 group-hover/logo:w-full group-hover/logo:opacity-100 group-focus-visible/logo:w-full group-focus-visible/logo:opacity-100"
-            />
-          </div>
-        </Link>
-
-        <div className="flex items-center gap-3 sm:gap-4">
-          <nav
-            aria-label="Main"
-            className="hidden items-center gap-0.5 lg:flex xl:gap-1 2xl:gap-2"
-          >
-            <NavbarLinks
-              items={OFFER_NAV_ITEMS}
-              pathname={pathname}
-              variant="desktop"
-              onNavigate={handleNavigate}
-            />
-            <span
-              aria-hidden="true"
-              className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
-            />
-            <NavbarLinks
-              items={PROOF_NAV_ITEMS}
-              pathname={pathname}
-              variant="desktop"
-              onNavigate={handleNavigate}
-            />
-            <span
-              aria-hidden="true"
-              className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
-            />
-            <NavbarLinks
-              items={[CONTACT_NAV_ITEM]}
-              pathname={pathname}
-              variant="desktop"
-              onNavigate={handleNavigate}
-            />
-          </nav>
-
-          <button
-            type="button"
-            aria-controls={MOBILE_NAV_ID}
-            aria-expanded={isMobileMenuOpen}
-            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black lg:hidden"
-            onClick={() => setIsMobileMenuOpen((open) => !open)}
-          >
-            <span className="sr-only">
-              {isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-            </span>
-            <span aria-hidden="true" className="relative block h-3.5 w-4">
+            <div
+              data-testid="navbar-logo-mark"
+              className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.24)] transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover/logo:border-white/45 group-hover/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] group-focus-visible/logo:border-white/45 group-focus-visible/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] motion-safe:group-hover/logo:scale-105 motion-safe:group-focus-visible/logo:scale-105"
+            >
               <span
-                className={cn(
-                  'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
-                  isMobileMenuOpen ? 'top-[6px] rotate-45' : 'top-0',
-                )}
+                data-testid="navbar-logo-glow"
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(118deg,rgba(92,220,255,0.55)_0%,rgba(255,255,255,0.3)_46%,rgba(255,69,207,0.55)_100%)] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100"
               />
               <span
-                className={cn(
-                  'absolute left-0 top-[6px] h-[1.5px] w-4 rounded-full bg-current transition-opacity duration-200',
-                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
-                )}
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 -left-1/2 z-20 w-1/2 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-0 transition-[transform,opacity] duration-500 ease-out group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-safe:group-hover/logo:translate-x-[300%] motion-safe:group-focus-visible/logo:translate-x-[300%]"
+              />
+              <CoreImage
+                src={LOGO_CONFIG.src}
+                alt={LOGO_CONFIG.alt}
+                width={40}
+                height={40}
+                className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
+                priority
+                fallbackSrc={LOGO_CONFIG.fallbackSrc}
+                trackingId="navbar_logo"
+                quality={90}
+              />
+            </div>
+
+            <div className="relative flex min-w-0 flex-col justify-center">
+              <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-[0.22em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
+                Prism
+              </span>
+              <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5 xl:block">
+                impossible is temporary
+              </span>
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#5cdcff]/80 via-white/55 to-[#ff45cf]/80 opacity-0 transition-[width,opacity] duration-300 group-hover/logo:w-full group-hover/logo:opacity-100 group-focus-visible/logo:w-full group-focus-visible/logo:opacity-100"
+              />
+            </div>
+          </Link>
+
+          <div className="flex items-center gap-3 sm:gap-4">
+            <nav
+              aria-label="Main"
+              className="hidden items-center gap-0.5 lg:flex xl:gap-1 2xl:gap-2"
+            >
+              <NavbarLinks
+                items={OFFER_NAV_ITEMS}
+                pathname={pathname}
+                variant="desktop"
+                onNavigate={handleNavigate}
               />
               <span
-                className={cn(
-                  'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
-                  isMobileMenuOpen ? 'top-[6px] -rotate-45' : 'top-[12px]',
-                )}
+                aria-hidden="true"
+                className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
               />
-            </span>
-          </button>
-        </div>
-      </div>
+              <NavbarLinks
+                items={PROOF_NAV_ITEMS}
+                pathname={pathname}
+                variant="desktop"
+                onNavigate={handleNavigate}
+              />
+              <span
+                aria-hidden="true"
+                className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
+              />
+              <NavbarLinks
+                items={[CONTACT_NAV_ITEM]}
+                pathname={pathname}
+                variant="desktop"
+                onNavigate={handleNavigate}
+              />
+            </nav>
 
-      {caseStudyBreadcrumbs ? (
-        <div className="border-t border-white/12 bg-black">
-          <div className="container mx-auto px-4 sm:px-6">
-            <Breadcrumbs
-              items={caseStudyBreadcrumbs}
-              className="mb-0 py-2 text-[#b8afa2]"
-            />
+            <button
+              ref={menuButtonRef}
+              type="button"
+              aria-controls={MOBILE_NAV_ID}
+              aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black lg:hidden"
+              onClick={() => {
+                restoreFocusAfterCloseRef.current = true
+                setIsMobileMenuOpen((open) => !open)
+              }}
+            >
+              <span className="sr-only">
+                {isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              </span>
+              <span aria-hidden="true" className="relative block h-3.5 w-4">
+                <span
+                  className={cn(
+                    'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                    isMobileMenuOpen ? 'top-[6px] rotate-45' : 'top-0',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'absolute left-0 top-[6px] h-[1.5px] w-4 rounded-full bg-current transition-opacity duration-200',
+                    isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
+                  )}
+                />
+                <span
+                  className={cn(
+                    'absolute left-0 h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200',
+                    isMobileMenuOpen ? 'top-[6px] -rotate-45' : 'top-[12px]',
+                  )}
+                />
+              </span>
+            </button>
           </div>
         </div>
-      ) : null}
+
+        {caseStudyBreadcrumbs ? (
+          <div className="border-t border-white/12 bg-black">
+            <div className="container mx-auto px-4 sm:px-6">
+              <Breadcrumbs
+                items={caseStudyBreadcrumbs}
+                className="mb-0 py-2 text-[#b8afa2]"
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {isMobileMenuOpen ? (
         <div
+          ref={mobilePanelRef}
           id={MOBILE_NAV_ID}
-          className="absolute inset-x-0 top-full z-50 h-[calc(100dvh-var(--prism-header-height))] overflow-y-auto overscroll-contain border-t border-white/12 bg-black motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
+          className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-50 overflow-y-auto overscroll-contain border-t border-white/12 bg-black [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
         >
           <nav
             aria-label="Mobile"
             className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
           >
-            <MobileNavGroups
-              pathname={pathname}
-              onNavigate={handleNavigate}
-            />
+            <MobileNavGroups pathname={pathname} onNavigate={handleNavigate} />
           </nav>
         </div>
       ) : null}

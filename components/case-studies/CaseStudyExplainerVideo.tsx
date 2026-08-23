@@ -5,7 +5,10 @@ import { useEffect, useRef, useState } from "react"
 
 import { VideoSchema } from "@/components/schema-markup"
 import { Badge } from "@/components/ui/badge"
-import { buildCloudinaryVideoPoster, type CaseStudyExplainerVideo } from "@/lib/case-study-data"
+import {
+  buildCloudinaryVideoPoster,
+  type CaseStudyExplainerVideo,
+} from "@/lib/case-study-data"
 import { cn } from "@/lib/utils"
 
 type CaseStudyExplainerVideoProps = {
@@ -53,7 +56,9 @@ export default function CaseStudyExplainerVideo({
 }: CaseStudyExplainerVideoProps) {
   const playerShellRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const chromeHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const chromeHideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  )
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -189,8 +194,14 @@ export default function CaseStudyExplainerVideo({
     player.addEventListener("volumechange", handleVolumeChange)
     player.addEventListener("timeupdate", handleTimeUpdate)
     player.addEventListener("ended", handleEnded)
-    player.addEventListener("webkitbeginfullscreen", handleNativeFullscreenBegin as EventListener)
-    player.addEventListener("webkitendfullscreen", handleNativeFullscreenEnd as EventListener)
+    player.addEventListener(
+      "webkitbeginfullscreen",
+      handleNativeFullscreenBegin as EventListener,
+    )
+    player.addEventListener(
+      "webkitendfullscreen",
+      handleNativeFullscreenEnd as EventListener,
+    )
 
     return () => {
       player.removeEventListener("loadedmetadata", syncDuration)
@@ -241,21 +252,32 @@ export default function CaseStudyExplainerVideo({
     const doc = document as FullscreenDocument
 
     const syncFullscreenState = () => {
-      const activeElement = doc.fullscreenElement ?? doc.webkitFullscreenElement ?? null
+      const activeElement =
+        doc.fullscreenElement ?? doc.webkitFullscreenElement ?? null
 
       if (!activeElement) {
         unlockOrientation()
       }
 
-      setIsFullscreen(Boolean(activeElement && playerShellRef.current?.contains(activeElement)))
+      setIsFullscreen(
+        Boolean(
+          activeElement && playerShellRef.current?.contains(activeElement),
+        ),
+      )
     }
 
     document.addEventListener("fullscreenchange", syncFullscreenState)
-    document.addEventListener("webkitfullscreenchange", syncFullscreenState as EventListener)
+    document.addEventListener(
+      "webkitfullscreenchange",
+      syncFullscreenState as EventListener,
+    )
 
     return () => {
       document.removeEventListener("fullscreenchange", syncFullscreenState)
-      document.removeEventListener("webkitfullscreenchange", syncFullscreenState as EventListener)
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        syncFullscreenState as EventListener,
+      )
     }
   }, [])
 
@@ -330,7 +352,8 @@ export default function CaseStudyExplainerVideo({
       return
     }
 
-    await (playerShell.requestFullscreen?.() ?? playerShell.webkitRequestFullscreen?.())
+    await (playerShell.requestFullscreen?.() ??
+      playerShell.webkitRequestFullscreen?.())
     await lockLandscapeOrientation()
   }
 
@@ -428,29 +451,39 @@ export default function CaseStudyExplainerVideo({
                       <button
                         type="button"
                         onClick={togglePlayback}
-                        className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-white/90"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-white/90"
                         aria-pressed={isPlaying}
                         aria-label={isPlaying ? "Pause video" : "Play video"}
                       >
-                        {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                        {isPlaying ? (
+                          <Pause className="h-4 w-4" />
+                        ) : (
+                          <Play className="h-4 w-4" />
+                        )}
                         {isPlaying ? "Pause" : "Play"}
                       </button>
                       <button
                         type="button"
                         onClick={toggleMute}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
                         aria-pressed={isMuted}
                         aria-label={isMuted ? "Unmute video" : "Mute video"}
                       >
-                        {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                        {isMuted ? (
+                          <VolumeX className="h-4 w-4" />
+                        ) : (
+                          <Volume2 className="h-4 w-4" />
+                        )}
                         {isMuted ? "Unmute" : "Sound on"}
                       </button>
                       <button
                         type="button"
                         onClick={toggleFullscreen}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
                         aria-pressed={isFullscreen}
-                        aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                        aria-label={
+                          isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+                        }
                       >
                         {isFullscreen ? (
                           <Minimize className="h-4 w-4" />
@@ -470,9 +503,11 @@ export default function CaseStudyExplainerVideo({
                         max={100}
                         step={0.1}
                         value={progress}
-                        onChange={(event) => handleSeek(Number(event.target.value))}
+                        onChange={(event) =>
+                          handleSeek(Number(event.target.value))
+                        }
                         className={cn(
-                          "h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-white/15 accent-white",
+                          "h-11 flex-1 cursor-pointer appearance-none rounded-full bg-transparent accent-white",
                           "[&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-white/15",
                           "[&::-webkit-slider-thumb]:mt-[-5px] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white",
                           "[&::-moz-range-track]:h-1.5 [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-white/15",
@@ -524,7 +559,9 @@ export default function CaseStudyExplainerVideo({
                   </div>
                 </div>
                 <p className="mt-8 text-sm leading-6 text-white/45">
-                  Start with the video for the fast narrative, then scroll into Prism’s work stack below for the specific systems, channels, and tooling behind the engagement.
+                  Start with the video for the fast narrative, then scroll into
+                  Prism’s work stack below for the specific systems, channels,
+                  and tooling behind the engagement.
                 </p>
               </div>
             </div>

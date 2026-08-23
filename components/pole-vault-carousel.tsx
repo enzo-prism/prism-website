@@ -17,7 +17,11 @@ const slides: Slide[] = [
   { id: "1116465400", thumb: "/white.svg", label: "fresno, ca" },
   { id: "1116465387", thumb: "/white.svg", label: "manila, philippines" },
   { id: "1116471573", thumb: "/white.svg", label: "palo alto, ca" },
-  { id: "1116471566", thumb: "/white.svg", label: "new clark city, philippines" },
+  {
+    id: "1116471566",
+    thumb: "/white.svg",
+    label: "new clark city, philippines",
+  },
 ]
 
 export default function PoleVaultCarousel() {
@@ -34,7 +38,8 @@ export default function PoleVaultCarousel() {
     if (touchStartX.current == null) return
     const dx = e.changedTouches[0].clientX - touchStartX.current
     if (Math.abs(dx) > 40) {
-      if (dx < 0) next(); else prev();
+      if (dx < 0) next()
+      else prev()
     }
     touchStartX.current = null
   }
@@ -42,7 +47,11 @@ export default function PoleVaultCarousel() {
   const current = slides[index]
 
   return (
-    <div className="relative w-full max-w-[420px] sm:max-w-[520px] mx-auto" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+    <div
+      className="relative w-full max-w-[420px] sm:max-w-[520px] mx-auto"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <MinimalistVideoPlayer
         videoId={current.id}
         thumbnailSrc={current.thumb}
@@ -61,7 +70,7 @@ export default function PoleVaultCarousel() {
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-left-4 sm:p-2.5"
+        className="absolute left-2 top-1/2 z-30 h-11 w-11 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-left-4"
       >
         <ChevronLeft className="h-5 w-5" aria-hidden="true" focusable="false" />
       </Button>
@@ -73,18 +82,27 @@ export default function PoleVaultCarousel() {
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-right-4 sm:p-2.5"
+        className="absolute right-2 top-1/2 z-30 h-11 w-11 -translate-y-1/2 rounded-md border border-border/60 bg-card/60 shadow-lg shadow-black/40 backdrop-blur active:scale-95 sm:-right-4"
       >
-        <ChevronRight className="h-5 w-5" aria-hidden="true" focusable="false" />
+        <ChevronRight
+          className="h-5 w-5"
+          aria-hidden="true"
+          focusable="false"
+        />
       </Button>
 
       {/* Dots */}
       <div className="flex items-center justify-center gap-2 mt-3">
         {slides.map((_, i) => (
-          <span key={i} className={`h-1.5 w-1.5 rounded-full ${i === index ? 'bg-foreground' : 'bg-border/60'}`} />
+          <span
+            key={i}
+            className={`h-2 w-2 rounded-full ${i === index ? "bg-foreground" : "bg-border/60"}`}
+          />
         ))}
       </div>
-      <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">{current.label}</p>
+      <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
+        {current.label}
+      </p>
     </div>
   )
 }

@@ -55,6 +55,8 @@ export default function HomeSystemGrid({ items }: HomeSystemGridProps) {
 
   const handlePointerMove = useCallback(
     (event: ReactPointerEvent<HTMLElement>) => {
+      if (event.pointerType !== 'mouse') return
+
       pendingRef.current = {
         node: event.currentTarget,
         clientX: event.clientX,

@@ -6,10 +6,10 @@ import TrackedLink from '@/components/tracked-link'
 import { cn } from '@/lib/utils'
 
 export const coreRouteSectionClassName =
-  'border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24'
+  'container-px-safe border-b border-white/12 py-20 sm:py-24'
 
 export const coreRouteSectionCompactClassName =
-  'border-b border-white/12 px-4 py-16 sm:px-6 sm:py-20'
+  'container-px-safe border-b border-white/12 py-16 sm:py-20'
 
 export const coreRouteContainerClassName = 'mx-auto max-w-6xl'
 
@@ -158,7 +158,7 @@ export function CoreSectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            'font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#797165]',
+            'font-mono text-[11px] font-medium uppercase tracking-[0.26em] text-[#8f877b]',
             eyebrowClassName,
           )}
         >

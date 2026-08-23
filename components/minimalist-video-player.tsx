@@ -28,6 +28,7 @@ export default function MinimalistVideoPlayer({
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [isControlsVisible, setIsControlsVisible] = useState(false)
+  const [shouldLoadPlayer, setShouldLoadPlayer] = useState(false)
   const playerRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -40,10 +41,35 @@ export default function MinimalistVideoPlayer({
     currentVideoIdRef.current = videoId
   }, [videoId])
 
-  // Load Vimeo API
+  // Keep the below-the-fold Vimeo player out of the critical mobile path.
   useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    if (!("IntersectionObserver" in window)) {
+      globalThis.setTimeout(() => setShouldLoadPlayer(true), 0)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        setShouldLoadPlayer(true)
+        observer.disconnect()
+      },
+      { rootMargin: "240px 0px" },
+    )
+    observer.observe(container)
+
+    return () => observer.disconnect()
+  }, [])
+
+  // Load Vimeo API only when the player is near the viewport.
+  useEffect(() => {
+    if (!shouldLoadPlayer) return
+
     // If Vimeo is already present, initialize immediately
-    if (typeof window !== 'undefined' && (window as any).Vimeo) {
+    if (typeof window !== "undefined" && (window as any).Vimeo) {
       initializePlayer()
     } else {
       const existingScript = document.getElementById(
@@ -70,7 +96,7 @@ export default function MinimalistVideoPlayer({
       playerRef.current?.destroy?.().catch?.(() => void 0)
       playerRef.current = null
     }
-  }, [])
+  }, [shouldLoadPlayer])
 
   const initializePlayer = () => {
     if (!window.Vimeo || !containerRef.current) return
@@ -114,7 +140,11 @@ export default function MinimalistVideoPlayer({
       // Track progress at 25%, 50%, 75%
       const percent = Math.floor(data.percent * 100)
       if (percent === 25 || percent === 50 || percent === 75) {
-        trackVideoInteraction(videoId, `progress_${percent}`, `Video ${percent}% complete`)
+        trackVideoInteraction(
+          videoId,
+          `progress_${percent}`,
+          `Video ${percent}% complete`,
+        )
       }
     })
 
@@ -238,7 +268,6 @@ export default function MinimalistVideoPlayer({
             alt="Video thumbnail"
             fill
             className="object-cover"
-            priority
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="rounded-full bg-black/50 p-4">
@@ -259,19 +288,27 @@ export default function MinimalistVideoPlayer({
       >
         <button
           onClick={togglePlay}
-          className="rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/70"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
-          {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+          {isPlaying ? (
+            <Pause className="h-5 w-5" />
+          ) : (
+            <Play className="h-5 w-5" />
+          )}
         </button>
 
         {shouldShowMuteButton ? (
           <button
             onClick={toggleMute}
-            className="rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/70"
             aria-label={isMuted ? "Unmute" : "Mute"}
           >
-            {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+            {isMuted ? (
+              <VolumeX className="h-5 w-5" />
+            ) : (
+              <Volume2 className="h-5 w-5" />
+            )}
           </button>
         ) : null}
       </div>

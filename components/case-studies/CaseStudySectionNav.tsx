@@ -53,14 +53,16 @@ function findSectionTarget(id: string): HTMLElement | null {
 }
 
 function prefersReducedMotion() {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function")
+    return false
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
 function getHeaderOffset() {
   const root = document.documentElement
   const styles = getComputedStyle(root)
-  const header = Number.parseFloat(styles.getPropertyValue("--prism-header-height")) || 0
+  const header =
+    Number.parseFloat(styles.getPropertyValue("--prism-header-height")) || 0
   return header
 }
 
@@ -74,11 +76,17 @@ export function CaseStudySectionNav({
   const listRef = React.useRef<HTMLDivElement>(null)
   useCaseStudyStickyNavHeight(navRef)
 
-  const [activeSection, setActiveSection] = React.useState<string>(sections[0]?.id ?? "")
+  const [activeSection, setActiveSection] = React.useState<string>(
+    sections[0]?.id ?? "",
+  )
   const [isSheetOpen, setIsSheetOpen] = React.useState(false)
   const [intersectionOffset, setIntersectionOffset] = React.useState(120)
   const activeLabel = React.useMemo(() => {
-    return sections.find((section) => section.id === activeSection)?.label ?? sections[0]?.label ?? ""
+    return (
+      sections.find((section) => section.id === activeSection)?.label ??
+      sections[0]?.label ??
+      ""
+    )
   }, [activeSection, sections])
 
   React.useLayoutEffect(() => {
@@ -90,7 +98,10 @@ export function CaseStudySectionNav({
 
     updateOffset()
 
-    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateOffset) : null
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(updateOffset)
+        : null
     if (navRef.current && resizeObserver) resizeObserver.observe(navRef.current)
     window.addEventListener("resize", updateOffset)
 
@@ -105,18 +116,24 @@ export function CaseStudySectionNav({
 
     const elements = sections
       .map((section) => ({ id: section.id, el: findSectionTarget(section.id) }))
-      .filter((item): item is { id: string; el: HTMLElement } => Boolean(item.el))
+      .filter((item): item is { id: string; el: HTMLElement } =>
+        Boolean(item.el),
+      )
 
     if (!elements.length) return
 
-    const elementToId = new Map<Element, string>(elements.map((item) => [item.el, item.id]))
+    const elementToId = new Map<Element, string>(
+      elements.map((item) => [item.el, item.id]),
+    )
 
     const observer = new IntersectionObserver(
       (entries) => {
         const intersecting = entries.filter((entry) => entry.isIntersecting)
         if (!intersecting.length) return
 
-        intersecting.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        intersecting.sort(
+          (a, b) => a.boundingClientRect.top - b.boundingClientRect.top,
+        )
         const next = elementToId.get(intersecting[0].target)
         if (next) setActiveSection(next)
       },
@@ -124,7 +141,7 @@ export function CaseStudySectionNav({
         root: null,
         threshold: 0,
         rootMargin: `-${intersectionOffset}px 0px -70% 0px`,
-      }
+      },
     )
 
     elements.forEach((item) => observer.observe(item.el))
@@ -135,7 +152,9 @@ export function CaseStudySectionNav({
   React.useEffect(() => {
     if (!listRef.current || !activeSection) return
     const safe = escapeSelector(activeSection)
-    const activeItem = listRef.current.querySelector<HTMLElement>(`[data-section-id="${safe}"]`)
+    const activeItem = listRef.current.querySelector<HTMLElement>(
+      `[data-section-id="${safe}"]`,
+    )
     if (!activeItem) return
 
     activeItem.scrollIntoView({
@@ -150,7 +169,10 @@ export function CaseStudySectionNav({
     if (!el) return
 
     setActiveSection(id)
-    el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" })
+    el.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    })
   }, [])
 
   if (!sections.length) return null
@@ -159,11 +181,11 @@ export function CaseStudySectionNav({
     <div
       ref={navRef}
       className={cn(
-        "sticky top-[var(--prism-header-height)] z-40 border-b border-border/60 bg-background/80 px-4 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
-        className
+        "container-px-safe sticky top-[var(--prism-header-height)] z-40 border-b border-border/60 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60",
+        className,
       )}
     >
-      <div className={cn("container mx-auto px-4 md:px-6", containerClassName)}>
+      <div className={cn("container mx-auto", containerClassName)}>
         <div className="flex flex-col gap-2 py-3 lg:flex-row lg:items-center">
           <div className="lg:hidden">
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -194,7 +216,10 @@ export function CaseStudySectionNav({
                         key={section.id}
                         type="button"
                         variant={isActive ? "default" : "outline"}
-                        className={cn("justify-start rounded-md", !isActive && "bg-transparent")}
+                        className={cn(
+                          "justify-start rounded-md",
+                          !isActive && "bg-transparent",
+                        )}
                         onClick={() => {
                           scrollTo(section.id)
                           setIsSheetOpen(false)

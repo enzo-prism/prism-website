@@ -20,7 +20,7 @@ export default function HomeHeroSection() {
   return (
     <section
       id="homepage-hero"
-      className="border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
+      className="container-px-safe border-b border-white/12 py-20 sm:py-24"
     >
       <div className={coreRouteContainerClassName}>
         <div className={coreRouteHeroFrameClassName}>
@@ -32,7 +32,6 @@ export default function HomeHeroSection() {
             renderMode="canvas"
             textSize="text-[2.3px] sm:text-[2.8px] md:text-[3.2px]"
             ariaLabel="Wave ASCII animation behind the homepage hero"
-            forceAutoplay
             zoom={0.84}
             className="!opacity-[0.72] drop-shadow-[0_0_18px_rgba(245,240,232,0.22)] sm:!opacity-[0.88] md:!opacity-100 md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)]"
             scrimClassName="absolute inset-0 bg-gradient-to-b from-background/28 via-background/42 to-background/68 sm:from-background/20 sm:via-background/34 sm:to-background/58 md:from-background/12 md:via-background/24 md:to-background/48"
@@ -247,7 +246,7 @@ export default function HomeHeroSection() {
                               <span className="font-sans text-[1.45rem] font-medium leading-none tracking-[-0.02em] text-[#f5f0e8]">
                                 {channel.audience}
                               </span>
-                              <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7d766a]">
+                              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b]">
                                 {channel.audienceLabel}
                               </span>
                             </div>
@@ -255,7 +254,7 @@ export default function HomeHeroSection() {
                               <span className="font-sans text-[1.05rem] font-medium leading-none tracking-[-0.01em] text-[#cfc7ba]">
                                 {channel.activity}
                               </span>
-                              <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7d766a]">
+                              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f877b]">
                                 {channel.activityLabel}
                               </span>
                             </div>
@@ -293,25 +292,6 @@ export default function HomeHeroSection() {
                     </div>
                   </div>
                 </div>
-
-                <p className="sr-only">
-                  {HOMEPAGE_HERO.stats.note}.{' '}
-                  {HOMEPAGE_HERO.stats.headline.items
-                    .map(
-                      (stat) =>
-                        `${stat.value}${stat.unit ? ` ${stat.unit}` : ''} ${stat.label}`,
-                    )
-                    .join('. ')}
-                  .{' '}
-                  {HOMEPAGE_HERO.stats.reach.channels
-                    .map(
-                      (channel) =>
-                        `${channel.platform}: ${channel.audience} ${channel.audienceLabel}, ${channel.activity} ${channel.activityLabel}`,
-                    )
-                    .join('. ')}
-                  . These channels are grown end to end by Prism, powered by
-                  Content OS.
-                </p>
               </div>
 
               <div

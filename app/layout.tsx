@@ -13,7 +13,12 @@ import { GlobalSchemaGraph } from "@/components/schema-markup"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, IS_ANALYTICS_ENABLED, IS_PRODUCTION_ENV } from "@/lib/constants"
+import {
+  GA_MEASUREMENT_ID,
+  GOOGLE_ADS_ID,
+  IS_ANALYTICS_ENABLED,
+  IS_PRODUCTION_ENV,
+} from "@/lib/constants"
 import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
 
 const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
@@ -160,18 +165,16 @@ export default function RootLayout({
         {IS_PRODUCTION_ENV && (
           // Hotjar instruments DOM mutation/scroll/input observers, one of
           // the heaviest third parties for input latency on low-end phones.
-          // Load it only after the visitor first interacts (or after 12s as
-          // a fallback) instead of on every page load.
+          // Queue it after the first interaction has settled (or after 12s),
+          // never synchronously inside Safari's first tap/scroll handler.
           <Script id="hotjar-loader" strategy="afterInteractive">
             {`
               (function(){
                 var loaded = false;
+                var queued = false;
                 function loadHotjar(){
                   if (loaded) return;
                   loaded = true;
-                  ['pointerdown','scroll','keydown','touchstart'].forEach(function(evt){
-                    window.removeEventListener(evt, loadHotjar);
-                  });
                   (function(h,o,t,j,a,r){
                     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
                     h._hjSettings={hjid:3698826,hjsv:6};
@@ -181,10 +184,24 @@ export default function RootLayout({
                     a.appendChild(r);
                   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                 }
-                ['pointerdown','scroll','keydown','touchstart'].forEach(function(evt){
-                  window.addEventListener(evt, loadHotjar, { passive: true, once: false });
+                function queueHotjar(){
+                  if (queued) return;
+                  queued = true;
+                  ['pointerdown','scroll','keydown'].forEach(function(evt){
+                    window.removeEventListener(evt, queueHotjar);
+                  });
+                  setTimeout(function(){
+                    if ('requestIdleCallback' in window) {
+                      window.requestIdleCallback(loadHotjar, { timeout: 2500 });
+                    } else {
+                      setTimeout(loadHotjar, 0);
+                    }
+                  }, 800);
+                }
+                ['pointerdown','scroll','keydown'].forEach(function(evt){
+                  window.addEventListener(evt, queueHotjar, { passive: true, once: false });
                 });
-                setTimeout(loadHotjar, 12000);
+                setTimeout(queueHotjar, 12000);
               })();
             `}
           </Script>
@@ -199,7 +216,11 @@ export default function RootLayout({
         {/* YouTube Embed Handler */}
         {/* YouTube embeds are now handled natively with iframe - no custom JavaScript needed */}
         {/* Preconnect to Cloudinary for faster image/video loading */}
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
