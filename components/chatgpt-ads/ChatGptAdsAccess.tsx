@@ -1,7 +1,6 @@
 'use client'
 
 import { FormEvent, useEffect, useId, useRef, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 
 import TrackedAnchor from '@/components/tracked-anchor'
 import {
@@ -44,33 +43,31 @@ type UnlockResponse =
   | { ok: true; invite: ChatGptAdsInvite }
   | { ok: false; error?: string }
 
-export default function ChatGptAdsAccess() {
+type ChatGptAdsAccessProps = {
+  initialInvite?: ChatGptAdsInvite | null
+  initialError?: string | null
+}
+
+export default function ChatGptAdsAccess({
+  initialInvite = null,
+  initialError = null,
+}: ChatGptAdsAccessProps) {
   const inputId = useId()
-  const searchParams = useSearchParams()
-  const queryAttempted = useRef(false)
   const pendingRef = useRef(false)
   const [code, setCode] = useState('')
-  const [invite, setInvite] = useState<ChatGptAdsInvite | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [invite, setInvite] = useState<ChatGptAdsInvite | null>(initialInvite)
+  const [error, setError] = useState<string | null>(initialError)
   const [pending, setPending] = useState(false)
 
   useEffect(() => {
-    const stored = readStoredInvite()
-    if (stored) {
-      setInvite(stored)
+    if (initialInvite) {
+      persistInvite(initialInvite)
       return
     }
 
-    const queryCode =
-      searchParams.get('code') ||
-      new URLSearchParams(window.location.search).get('code')
-
-    if (!queryCode || queryAttempted.current) return
-    queryAttempted.current = true
-    setCode(queryCode)
-    void submitCode(queryCode)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
+    const stored = readStoredInvite()
+    if (stored) setInvite(stored)
+  }, [initialInvite])
 
   async function submitCode(nextCode: string) {
     const trimmed = nextCode.trim()
@@ -178,7 +175,7 @@ export default function ChatGptAdsAccess() {
       <form
         className={styles.form}
         method="get"
-        action="/chatgpt-ads"
+        action="/chatgpt-ads#access"
         onSubmit={handleSubmit}
         noValidate
       >

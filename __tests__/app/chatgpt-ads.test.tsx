@@ -66,8 +66,8 @@ jest.mock('@/components/brand-logo', () => ({
 }))
 
 describe('/chatgpt-ads page', () => {
-  it('leads with the invite-only ChatGPT ads story', () => {
-    render(<ChatGptAdsPage />)
+  it('leads with the invite-only ChatGPT ads story', async () => {
+    render(await ChatGptAdsPage({ searchParams: Promise.resolve({}) }))
 
     expect(
       screen.getByRole('heading', { level: 1, name: /ads, inside chatgpt/i }),

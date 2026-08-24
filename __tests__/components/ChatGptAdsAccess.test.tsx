@@ -2,12 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react'
 
 import ChatGptAdsAccess from '@/components/chatgpt-ads/ChatGptAdsAccess'
 
-const searchParams = new URLSearchParams()
-
-jest.mock('next/navigation', () => ({
-  useSearchParams: () => searchParams,
-}))
-
 const trackEvent = jest.fn()
 
 jest.mock('@/utils/analytics', () => ({
@@ -17,7 +11,7 @@ jest.mock('@/utils/analytics', () => ({
 
 describe('ChatGptAdsAccess', () => {
   beforeEach(() => {
-    searchParams.delete('code')
+    window.history.replaceState({}, '', '/chatgpt-ads')
     window.sessionStorage.clear()
     document.cookie = 'prism_chatgpt_ads_invite=; max-age=0; path=/'
     trackEvent.mockReset()
@@ -77,27 +71,30 @@ describe('ChatGptAdsAccess', () => {
     ).toHaveAttribute('href', expect.stringContaining('calendar.notion.so'))
   })
 
-  it('auto-unlocks from the code query param', async () => {
-    searchParams.set('code', 'michael')
-    global.fetch = jest.fn().mockResolvedValue({
-      ok: true,
-      json: async () => ({
-        ok: true,
-        invite: { partnerId: 'michael', invitedBy: 'Dr. Michael Njo' },
-      }),
-    }) as unknown as typeof fetch
-
-    render(<ChatGptAdsAccess />)
+  it('auto-unlocks from a server-accepted invite', () => {
+    render(
+      <ChatGptAdsAccess
+        initialInvite={{ partnerId: 'michael', invitedBy: 'Dr. Michael Njo' }}
+      />,
+    )
 
     expect(
-      await screen.findByRole('heading', { name: /you're in/i }),
+      screen.getByRole('heading', { name: /you're in/i }),
     ).toBeInTheDocument()
-    expect(global.fetch).toHaveBeenCalledWith(
-      '/api/chatgpt-ads/unlock',
-      expect.objectContaining({
-        method: 'POST',
-        body: JSON.stringify({ code: 'michael' }),
-      }),
+    expect(screen.getByText(/invited by dr. michael njo/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /book your setup call/i }),
+    ).toHaveAttribute('href', expect.stringContaining('calendar.notion.so'))
+  })
+
+  it('shows a server-side rejection without fetching', () => {
+    render(
+      <ChatGptAdsAccess initialError="That code is not recognized." />,
     )
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/not recognized/i)
+    expect(
+      screen.queryByRole('link', { name: /book your setup call/i }),
+    ).not.toBeInTheDocument()
   })
 })

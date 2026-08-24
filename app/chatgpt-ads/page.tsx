@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import type { Metadata } from 'next'
 
 import BrandLogo from '@/components/brand-logo'
@@ -8,6 +7,7 @@ import styles from '@/components/chatgpt-ads/chatgpt-ads.module.css'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { verifyChatGptAdsInvite } from '@/lib/chatgpt-ads-invites'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'ChatGPT Ads'
@@ -87,17 +87,22 @@ const faqs = [
   },
 ] as const
 
-function AccessFallback() {
-  return (
-    <div className={styles.accessCard}>
-      <p className={styles.accessMark}>Invite required</p>
-      <h2 className={styles.accessTitle}>This program is invite only.</h2>
-      <p className={styles.accessBody}>Loading the access gate…</p>
-    </div>
-  )
+type ChatGptAdsPageProps = {
+  searchParams?: Promise<{ code?: string | string[] }>
 }
 
-export default function ChatGptAdsPage() {
+function firstQueryValue(value?: string | string[]) {
+  return Array.isArray(value) ? value[0] : value
+}
+
+export default async function ChatGptAdsPage({
+  searchParams,
+}: ChatGptAdsPageProps) {
+  const params = searchParams ? await searchParams : {}
+  const code = firstQueryValue(params.code)
+  const invite = code ? verifyChatGptAdsInvite(code) : null
+  const rejected = Boolean(code && !invite)
+
   return (
     <div className={styles.page}>
       <Navbar />
@@ -206,9 +211,12 @@ export default function ChatGptAdsPage() {
                   setup call.
                 </p>
               </div>
-              <Suspense fallback={<AccessFallback />}>
-                <ChatGptAdsAccess />
-              </Suspense>
+              <ChatGptAdsAccess
+                initialInvite={invite}
+                initialError={
+                  rejected ? 'That code is not recognized.' : null
+                }
+              />
             </div>
           </div>
         </section>
