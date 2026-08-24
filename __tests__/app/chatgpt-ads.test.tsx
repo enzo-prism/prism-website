@@ -72,7 +72,7 @@ describe('/chatgpt-ads page', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /ads, inside chatgpt/i }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/invite only/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/invite only/i).length).toBeGreaterThan(0)
     expect(screen.getByText(/a code is required/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /get started/i })).toHaveAttribute(
       'href',

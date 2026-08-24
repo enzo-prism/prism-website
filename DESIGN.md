@@ -194,7 +194,9 @@ Other routes can diverge when the content format truly requires it, but they sho
 
 ### Scoped surface: ChatGPT Ads (`/chatgpt-ads`)
 
-`/chatgpt-ads` is an intentional exception to the dark-first core. It is an invite-only partner program, so the canvas borrows OpenAI product-marketing grammar: warm off-white field, near-black type, generous whitespace, hairline rules, and pill CTAs. Navbar and footer stay Prism black. Geist remains the type family. ChatGPT green `#10A37F` is a page-scoped accent for the invite seal and sponsored label only. Do not reuse this surface on other routes.
+`/chatgpt-ads` is an intentional exception to the dark-first core. It is an invite-only partner program, so the canvas borrows OpenAI product-marketing grammar: warm off-white field, near-black type, generous whitespace, hairline rules, and pill CTAs. Navbar and footer stay Prism black. Geist remains the type family.
+
+The page implements the current shadcn/ui (radix-vega) grammar on that warm canvas: `components/chatgpt-ads/chatgpt-ads.module.css` remaps the shadcn semantic tokens (`--background`, `--card`, `--border`, `--ring`, and friends) inside `<main>` only, and the markup uses semantic utilities (`bg-card`, `ring-1 ring-foreground/10` hairlines with `shadow-xs`, `focus-visible:ring-3 ring-ring/50` focus, `active:translate-y-px` press states, InputGroup-style invite form, native `<details>` FAQ accordion). ChatGPT green `#10A37F` is a page-scoped accent (`--cga-accent`, also the scoped `--ring`) for the invite and unlocked marks, the sponsored label, step indices, and focus rings only. Do not reuse this surface or its token remap on other routes, and do not use the repo's pixel-styled `components/ui` primitives here.
 
 If Prism later adds `.stitch/`, keep `.stitch/DESIGN.md` as concept memory and keep this root `DESIGN.md` as the implementation contract for shipped code.
 
