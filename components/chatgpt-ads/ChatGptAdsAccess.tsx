@@ -168,7 +168,7 @@ export default function ChatGptAdsAccess({
       <p className={styles.accessMark}>Invite required</p>
       <h2 className={styles.accessTitle}>This program is invite only.</h2>
       <p className={styles.accessBody}>
-        Access is reserved for businesses in Prism&apos;s network — the
+        Access is reserved for businesses in Prism&apos;s network: the
         operators, founders, and partners we already trust. If someone sent you
         here, they also sent a code.
       </p>
