@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent, useEffect, useId, useState } from 'react'
+import { FormEvent, useEffect, useId, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import TrackedAnchor from '@/components/tracked-anchor'
@@ -47,6 +47,8 @@ type UnlockResponse =
 export default function ChatGptAdsAccess() {
   const inputId = useId()
   const searchParams = useSearchParams()
+  const queryAttempted = useRef(false)
+  const pendingRef = useRef(false)
   const [code, setCode] = useState('')
   const [invite, setInvite] = useState<ChatGptAdsInvite | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -54,16 +56,21 @@ export default function ChatGptAdsAccess() {
 
   useEffect(() => {
     const stored = readStoredInvite()
-    if (stored) setInvite(stored)
-
-    const queryCode = searchParams.get('code')
-    if (queryCode && !stored) {
-      setCode(queryCode)
-      void submitCode(queryCode)
+    if (stored) {
+      setInvite(stored)
+      return
     }
-    // We only honor the arriving URL once.
+
+    const queryCode =
+      searchParams.get('code') ||
+      new URLSearchParams(window.location.search).get('code')
+
+    if (!queryCode || queryAttempted.current) return
+    queryAttempted.current = true
+    setCode(queryCode)
+    void submitCode(queryCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [searchParams])
 
   async function submitCode(nextCode: string) {
     const trimmed = nextCode.trim()
@@ -72,6 +79,8 @@ export default function ChatGptAdsAccess() {
       return
     }
 
+    if (pendingRef.current) return
+    pendingRef.current = true
     setPending(true)
     setError(null)
 
@@ -116,6 +125,7 @@ export default function ChatGptAdsAccess() {
     } catch {
       setError('Something went wrong. Try again.')
     } finally {
+      pendingRef.current = false
       setPending(false)
     }
   }
@@ -190,7 +200,16 @@ export default function ChatGptAdsAccess() {
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? `${inputId}-error` : `${inputId}-hint`}
           />
-          <button className={styles.unlockButton} type="submit" disabled={pending}>
+          <button
+            className={styles.unlockButton}
+            type="submit"
+            disabled={pending}
+            onClick={(event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              void submitCode(code)
+            }}
+          >
             {pending ? 'Checking…' : 'Unlock'}
           </button>
         </div>
