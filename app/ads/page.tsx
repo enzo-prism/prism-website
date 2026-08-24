@@ -357,6 +357,24 @@ export default async function AdsPage() {
               </div>
             ))}
           </div>
+          <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-neutral-200 bg-white px-6 py-8 text-left sm:px-8">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-neutral-400">
+              invite only
+            </p>
+            <h3 className="mt-2 text-2xl font-semibold text-neutral-900">
+              ChatGPT Ads
+            </h3>
+            <p className="mt-2 max-w-2xl text-sm text-neutral-600">
+              A new place to show up: inside the conversation. Access is limited
+              to Prism&apos;s network. If you were invited, bring your code.
+            </p>
+            <Link
+              href="/chatgpt-ads"
+              className="mt-5 inline-flex text-sm font-semibold text-neutral-900 underline underline-offset-4"
+            >
+              See the program
+            </Link>
+          </div>
         </section>
 
         <section className="px-4 py-16 sm:py-20">

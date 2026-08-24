@@ -19,6 +19,7 @@ export const PRICING_STRICT_FILES = [
   'app/get-started/page.tsx',
   'app/websites/page.tsx',
   'app/ads/page.tsx',
+  'app/chatgpt-ads/page.tsx',
   'app/seo/page.tsx',
   'app/local-listings/page.tsx',
   'components/footer.tsx',

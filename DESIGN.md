@@ -192,6 +192,10 @@ Other routes can diverge when the content format truly requires it, but they sho
 
 `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os`. The leftover `[data-surface='founder-os']` CSS in `app/globals.css` and `components/founder-os/FosReveal.tsx` are archival only. Do not revive the light Founder OS theme on a live route, and do not leak those tokens onto other pages.
 
+### Scoped surface: ChatGPT Ads (`/chatgpt-ads`)
+
+`/chatgpt-ads` is an intentional exception to the dark-first core. It is an invite-only partner program, so the canvas borrows OpenAI product-marketing grammar: warm off-white field, near-black type, generous whitespace, hairline rules, and pill CTAs. Navbar and footer stay Prism black. Geist remains the type family. ChatGPT green `#10A37F` is a page-scoped accent for the invite seal and sponsored label only. Do not reuse this surface on other routes.
+
 If Prism later adds `.stitch/`, keep `.stitch/DESIGN.md` as concept memory and keep this root `DESIGN.md` as the implementation contract for shipped code.
 
 ## Code anchors
