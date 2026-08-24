@@ -1,58 +1,85 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, LockKeyhole } from 'lucide-react'
 
 import styles from './chatgpt-ads.module.css'
 
 export default function ChatGptAdsConversation() {
   return (
     <aside className="relative" aria-hidden="true">
-      <div
-        className="pointer-events-none absolute -inset-8 rounded-[3rem] bg-[radial-gradient(58%_58%_at_72%_18%,rgb(16_163_127/0.13),transparent_72%)]"
-      />
-      <div className="relative overflow-hidden rounded-3xl bg-card ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.05),0_16px_48px_-20px_rgb(16_16_16/0.22),0_48px_96px_-40px_rgb(16_16_16/0.28)]">
+      <div className="pointer-events-none absolute -inset-10 rounded-[3.5rem] bg-[radial-gradient(58%_58%_at_68%_22%,var(--cga-accent-soft),transparent_74%)]" />
+      <div className="relative overflow-hidden rounded-[1.75rem] bg-card ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.05),0_22px_60px_-26px_rgb(16_16_16/0.24),0_60px_110px_-48px_rgb(16_16_16/0.3)]">
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
-          <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            ChatGPT
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Illustrative placement
           </span>
-          <span className="flex gap-1.5">
-            <span className="size-2 rounded-full bg-foreground/10" />
-            <span className="size-2 rounded-full bg-foreground/10" />
-            <span className="size-2 rounded-full bg-foreground/10" />
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+            <LockKeyhole className="size-3" />
+            Private chat
           </span>
         </div>
-        <div className="flex flex-col gap-3 px-5 py-6 sm:px-6">
-          <div className="max-w-[88%] self-end rounded-2xl rounded-br-md bg-muted px-4 py-3 text-sm leading-relaxed">
-            Who is a great dentist near me that takes new patients?
+        <div className="flex flex-col gap-3 px-5 py-6 sm:px-6 sm:py-7">
+          <div className="ml-auto max-w-[90%] rounded-2xl rounded-br-md bg-muted px-4 py-3 text-sm leading-relaxed">
+            I need a dentist near Austin taking new patients, with Saturday
+            appointments and online booking.
           </div>
-          <div className="max-w-[88%] self-start rounded-2xl rounded-bl-md border border-border px-4 py-3 text-sm leading-relaxed text-muted-foreground">
-            Here are a few well-reviewed options in your area, with hours and
-            how to book.
+          <div className="max-w-[90%] rounded-2xl rounded-bl-md border border-border bg-card px-4 py-3 text-sm leading-relaxed text-muted-foreground">
+            I can help you compare nearby practices by availability, services,
+            and how to book.
           </div>
-          <div className="mt-1 rounded-2xl p-4 shadow-xs ring-1 ring-(--cga-accent-ring) [background:linear-gradient(180deg,var(--cga-accent-soft),transparent_46%),var(--card)] sm:p-5">
-            <div className="flex items-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-(--cga-accent)" />
-              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-(--cga-accent)">
+          <div className="relative mt-1 overflow-hidden rounded-2xl bg-card p-4 shadow-xs ring-1 ring-(--cga-accent-ring) sm:p-5">
+            <div
+              className={`pointer-events-none absolute inset-x-0 top-0 h-px ${styles.scanLine}`}
+            />
+            <div className="flex items-center justify-between gap-4">
+              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-(--cga-accent)">
+                <span className="size-1.5 rounded-full bg-(--cga-accent)" />
                 Sponsored
               </span>
+              <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Matches the ask
+              </span>
             </div>
-            <p className="mt-2.5 text-base font-medium tracking-[-0.02em]">
-              Your business, in the answer.
+            <p className="mt-3 text-lg font-medium tracking-[-0.03em]">
+              A practice ready for this patient.
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              A clearly labeled card under the reply. Shown when someone is
-              already asking to buy.
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              New-patient availability, Saturday hours, and a direct path to
+              book.
             </p>
-            <span className="mt-3.5 inline-flex items-center gap-1 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium shadow-xs">
-              Learn more
-              <ArrowUpRight className="size-3 text-muted-foreground" />
+            <div className="mt-4 flex flex-wrap gap-2">
+              {['New patients', 'Saturday hours', 'Book online'].map((item) => (
+                <span
+                  className="rounded-full border border-border bg-background px-2.5 py-1 text-[10px] font-medium text-muted-foreground"
+                  key={item}
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-xs font-medium text-primary-foreground shadow-xs">
+              Check availability
+              <ArrowUpRight className="size-3" />
             </span>
           </div>
         </div>
-      </div>
-      <div className="pointer-events-none absolute -bottom-4 left-6 hidden items-center gap-2 rounded-full bg-card px-3.5 py-2 ring-1 ring-foreground/10 shadow-[0_12px_32px_-12px_rgb(16_16_16/0.3)] sm:inline-flex">
-        <span className={styles.pulse} />
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-          Labeled, never the answer
-        </span>
+        <div className="grid grid-cols-3 border-t border-border bg-background/55">
+          {[
+            ['Answer', 'Independent'],
+            ['Chat', 'Private'],
+            ['Ad', 'Labeled'],
+          ].map(([label, value], index) => (
+            <div
+              className={`px-3 py-3 ${index > 0 ? 'border-l border-border' : ''}`}
+              key={label}
+            >
+              <span className="block font-mono text-[8px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                {label}
+              </span>
+              <span className="mt-0.5 block text-[11px] font-medium">
+                {value}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </aside>
   )
