@@ -72,12 +72,14 @@ describe('/chatgpt-ads page', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /ads, inside chatgpt/i }),
     ).toBeInTheDocument()
-    expect(screen.getAllByText(/invite only/i).length).toBeGreaterThan(0)
-    expect(screen.getByText(/a code is required/i)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /get started/i })).toHaveAttribute(
-      'href',
-      '#access',
-    )
+    expect(screen.getAllByText(/invitation required/i).length).toBeGreaterThan(0)
+    expect(screen.getByText(/private partner access/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: /the answer stays independent/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /enter invite code/i }),
+    ).toHaveAttribute('href', '#access')
     expect(screen.getByTestId('chatgpt-ads-access')).toBeInTheDocument()
     expect(document.body.textContent).not.toMatch(/\bmichael\b/i)
     expect(document.body.textContent).not.toMatch(/\bnjo\b/i)

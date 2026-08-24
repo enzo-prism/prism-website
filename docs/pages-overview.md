@@ -327,8 +327,8 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 ## ChatGPT Ads (`app/chatgpt-ads/page.tsx`)
 
-- Invite-only landing page for ChatGPT ads. Public marketing copy explains the channel; booking is gated behind a partner invite code.
-- Visual surface is OpenAI-informed (warm off-white, hairline rules, pill CTAs) while the Prism navbar/footer stay black. Built on the shadcn/ui radix-vega grammar via a page-scoped semantic token remap in `components/chatgpt-ads/chatgpt-ads.module.css` (`ring-1 ring-foreground/10` cards with `shadow-xs`, `focus-visible:ring-3` focus, InputGroup-style invite form, native `<details>` FAQ accordion). Scoped in `DESIGN.md`.
+- Invite-only landing page for Prism’s managed ChatGPT ads program. Public copy follows OpenAI’s published principles (independent answers, private conversations, clearly labeled sponsored placements); booking is gated behind a partner invite code.
+- Visual surface is OpenAI-informed (warm off-white, hairline rules, pill CTAs) while the Prism navbar/footer stay black. Built on the shadcn/ui radix-vega grammar via a page-scoped semantic token remap in `components/chatgpt-ads/chatgpt-ads.module.css`. The page alternates an editorial hero, near-black trust band, intent rail, contained process panel, quiet invite frame, and native `<details>` FAQ. Scoped in `DESIGN.md`.
 - Access gate: `components/chatgpt-ads/ChatGptAdsAccess.tsx` posts to `/api/chatgpt-ads/unlock`. Valid codes live in `lib/chatgpt-ads-invites.ts` (not the client bundle). Example partner code: `michael` for Dr. Michael Njo.
 - After unlock, the page reveals Prism’s 30-minute Notion booking CTA (`BOOK_A_CALL_CTA`).
 - Indexable. Keep it in `lib/seo/search-visibility.ts` and `public/llms.txt`. Custom OG via `app/chatgpt-ads/opengraph-image.tsx`.

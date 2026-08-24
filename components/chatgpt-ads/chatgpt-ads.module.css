@@ -58,6 +58,79 @@
   color-scheme: light;
 }
 
+.heroBackdrop {
+  background:
+    radial-gradient(
+      52% 42% at 82% 20%,
+      var(--cga-accent-soft),
+      transparent 72%
+    ),
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size:
+    auto,
+    64px 64px,
+    64px 64px;
+  background-position:
+    center,
+    -1px -1px,
+    -1px -1px;
+}
+
+.heroBackdrop::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: '';
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    transparent 18%,
+    transparent 72%,
+    var(--background) 100%
+  );
+}
+
+.heroBackdrop > * {
+  position: relative;
+  z-index: 1;
+}
+
+.intentRail::before {
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 1.1rem;
+  width: 1px;
+  content: '';
+  background: linear-gradient(
+    to bottom,
+    var(--cga-accent-ring),
+    var(--border)
+  );
+}
+
+.accessBackdrop {
+  background:
+    radial-gradient(
+      36rem 24rem at 88% 50%,
+      var(--cga-accent-soft),
+      transparent 74%
+    ),
+    var(--background);
+}
+
+.scanLine {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cga-accent),
+    transparent
+  );
+  transform: translateX(-70%);
+}
+
 /* Live signal dot on the hero kicker. */
 .pulse {
   width: 0.45rem;
@@ -91,6 +164,10 @@
   .riseDelay4 {
     animation-delay: 380ms;
   }
+
+  .scanLine {
+    animation: cga-scan 4.8s ease-in-out infinite;
+  }
 }
 
 @keyframes cga-pulse {
@@ -110,5 +187,24 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes cga-scan {
+  0%,
+  18% {
+    transform: translateX(-70%);
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.8;
+  }
+  72% {
+    opacity: 0.8;
+  }
+  82%,
+  100% {
+    transform: translateX(70%);
+    opacity: 0;
   }
 }

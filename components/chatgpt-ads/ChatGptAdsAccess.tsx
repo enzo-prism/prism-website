@@ -16,7 +16,7 @@ import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
 import { trackEvent } from '@/utils/analytics'
 
 const cardClass =
-  'rounded-3xl bg-card p-6 text-card-foreground ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.05),0_20px_48px_-24px_rgb(16_16_16/0.24),0_48px_96px_-44px_rgb(16_16_16/0.24)] sm:p-8'
+  'relative overflow-hidden rounded-[1.75rem] bg-card p-6 text-card-foreground ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.05),0_22px_56px_-26px_rgb(16_16_16/0.25),0_56px_100px_-48px_rgb(16_16_16/0.28)] sm:p-8'
 
 const markClass =
   'inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-(--cga-accent)'
@@ -143,6 +143,7 @@ export default function ChatGptAdsAccess({
   if (invite) {
     return (
       <div className={cardClass}>
+        <div className="absolute inset-x-0 top-0 h-1 bg-(--cga-accent)" />
         <p className={markClass}>
           <span className="inline-flex size-5 items-center justify-center rounded-full bg-(--cga-accent) text-white">
             <Check className="size-3" strokeWidth={3} />
@@ -153,8 +154,8 @@ export default function ChatGptAdsAccess({
           You&apos;re in.
         </h2>
         <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
-          Book 30 minutes with Prism. We&apos;ll map ChatGPT ads to your
-          business and the exact next steps to get them live.
+          Your invitation is verified. Book 30 minutes with Enzo to decide
+          whether ChatGPT ads fit your offer and what Prism should build next.
         </p>
         <div className="mt-5 flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3">
           <span
@@ -168,7 +169,7 @@ export default function ChatGptAdsAccess({
               Invited by {invite.invitedBy}.
             </span>
             <span className="block text-xs text-muted-foreground">
-              Verified partner invitation
+              Partner invitation verified
             </span>
           </span>
         </div>
@@ -186,7 +187,7 @@ export default function ChatGptAdsAccess({
           </TrackedAnchor>
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
-          30 minutes over Zoom with Prism.
+          Private booking link · 30 minutes over Zoom
         </p>
       </div>
     )
@@ -194,17 +195,17 @@ export default function ChatGptAdsAccess({
 
   return (
     <div className={cardClass}>
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-(--cga-accent) to-transparent opacity-70" />
       <p className={markClass}>
         <span className="size-1.5 rounded-full bg-(--cga-accent)" />
         Invite required
       </p>
       <h2 className="mt-4 text-[clamp(1.85rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-[-0.04em] text-balance">
-        This program is invite only.
+        Your code opens the next step.
       </h2>
       <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
-        Access is reserved for businesses in Prism&apos;s network: the
-        operators, founders, and partners we already trust. If someone sent you
-        here, they also sent a code.
+        This program is invite only. Enter the code from Prism or your
+        referring partner to reveal Enzo&apos;s private booking link.
       </p>
       <form
         className="mt-6 flex flex-col gap-3"
@@ -263,8 +264,7 @@ export default function ChatGptAdsAccess({
             className="text-sm leading-relaxed text-muted-foreground"
             id={`${inputId}-hint`}
           >
-            Codes come from Prism or a trusted partner. We do not take open
-            applications.
+            No code? Ask the partner who sent you here.
           </p>
         )}
       </form>

@@ -21,8 +21,9 @@ describe('ChatGptAdsAccess', () => {
     render(<ChatGptAdsAccess />)
 
     expect(
-      screen.getByRole('heading', { name: /this program is invite only/i }),
+      screen.getByRole('heading', { name: /your code opens the next step/i }),
     ).toBeInTheDocument()
+    expect(screen.getByText(/this program is invite only/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/invite code/i)).toHaveAttribute('name', 'code')
     expect(
       screen.queryByRole('link', { name: /book your setup call/i }),
