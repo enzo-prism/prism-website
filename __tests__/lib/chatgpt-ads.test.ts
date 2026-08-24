@@ -11,6 +11,7 @@ describe('ChatGPT ads invites', () => {
     expect(normalizeInviteCode(' Michael ')).toBe('michael')
     expect(verifyChatGptAdsInvite('Michael')?.invitedBy).toBe('Dr. Michael Njo')
     expect(verifyChatGptAdsInvite('njo')?.partnerId).toBe('michael')
+    expect(verifyChatGptAdsInvite('neo')?.partnerId).toBe('michael')
     expect(verifyChatGptAdsInvite('prism')?.invitedBy).toBe('Prism')
   })
 

@@ -94,6 +94,21 @@ export default function ChatGptAdsAccess() {
 
       persistInvite(payload.invite)
       setInvite(payload.invite)
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        if (url.searchParams.has('code')) {
+          url.searchParams.delete('code')
+          const query = url.searchParams.toString()
+          window.history.replaceState(
+            {},
+            '',
+            `${url.pathname}${query ? `?${query}` : ''}${url.hash || '#access'}`,
+          )
+        }
+        document.getElementById('access')?.scrollIntoView({
+          block: 'start',
+        })
+      }
       trackEvent('cta_click', {
         cta_name: 'chatgpt_ads_unlock',
         location: 'chatgpt_ads',
@@ -107,7 +122,10 @@ export default function ChatGptAdsAccess() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    void submitCode(code)
+    event.stopPropagation()
+    const formData = new FormData(event.currentTarget)
+    const fromForm = String(formData.get('code') ?? '').trim()
+    void submitCode(fromForm || code)
   }
 
   if (invite) {
@@ -147,13 +165,20 @@ export default function ChatGptAdsAccess() {
         operators, founders, and partners we already trust. If someone sent you
         here, they also sent a code.
       </p>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form
+        className={styles.form}
+        method="get"
+        action="/chatgpt-ads"
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <label className={styles.label} htmlFor={inputId}>
           Invite code
         </label>
         <div className={styles.inputRow}>
           <input
             id={inputId}
+            name="code"
             className={styles.input}
             value={code}
             onChange={(event) => setCode(event.target.value)}
@@ -161,6 +186,7 @@ export default function ChatGptAdsAccess() {
             autoCapitalize="characters"
             spellCheck={false}
             placeholder="Enter code"
+            required
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? `${inputId}-error` : `${inputId}-hint`}
           />

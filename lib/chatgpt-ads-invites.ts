@@ -14,6 +14,10 @@ const INVITES: Record<string, ChatGptAdsInvite> = {
     partnerId: 'michael',
     invitedBy: 'Dr. Michael Njo',
   },
+  neo: {
+    partnerId: 'michael',
+    invitedBy: 'Dr. Michael Njo',
+  },
   prism: {
     partnerId: 'prism',
     invitedBy: 'Prism',
