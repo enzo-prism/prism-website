@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useEffect, useId, useRef, useState } from 'react'
+import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 
 import TrackedAnchor from '@/components/tracked-anchor'
 import {
@@ -14,7 +15,11 @@ import {
 import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
 import { trackEvent } from '@/utils/analytics'
 
-import styles from './chatgpt-ads.module.css'
+const cardClass =
+  'rounded-3xl bg-card p-6 text-card-foreground ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.05),0_20px_48px_-24px_rgb(16_16_16/0.24),0_48px_96px_-44px_rgb(16_16_16/0.24)] sm:p-8'
+
+const markClass =
+  'inline-flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-(--cga-accent)'
 
 function readStoredInvite(): ChatGptAdsInvite | null {
   if (typeof window === 'undefined') return null
@@ -137,56 +142,88 @@ export default function ChatGptAdsAccess({
 
   if (invite) {
     return (
-      <div className={styles.accessCard}>
-        <p className={styles.accessMark}>Unlocked</p>
-        <h2 className={styles.accessTitle}>You&apos;re in.</h2>
-        <p className={styles.accessBody}>
+      <div className={cardClass}>
+        <p className={markClass}>
+          <span className="inline-flex size-5 items-center justify-center rounded-full bg-(--cga-accent) text-white">
+            <Check className="size-3" strokeWidth={3} />
+          </span>
+          Unlocked
+        </p>
+        <h2 className="mt-4 text-[clamp(1.85rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-[-0.04em] text-balance">
+          You&apos;re in.
+        </h2>
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
           Book 30 minutes with Prism. We&apos;ll map ChatGPT ads to your
           business and the exact next steps to get them live.
         </p>
-        <p className={styles.unlockedMeta}>
-          Invited by {invite.invitedBy}.
-        </p>
-        <div className={styles.actions} style={{ marginTop: '1.4rem' }}>
+        <div className="mt-5 flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3">
+          <span
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-mono text-sm font-semibold text-primary-foreground"
+            aria-hidden="true"
+          >
+            {invite.invitedBy.charAt(0)}
+          </span>
+          <span className="min-w-0">
+            <span className="block text-sm font-medium">
+              Invited by {invite.invitedBy}.
+            </span>
+            <span className="block text-xs text-muted-foreground">
+              Verified partner invitation
+            </span>
+          </span>
+        </div>
+        <div className="mt-6">
           <TrackedAnchor
             href={BOOK_A_CALL_CTA.href}
             label="Book your setup call"
             location="chatgpt_ads_unlocked"
-            className={styles.bookButton}
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary bg-clip-padding px-6 text-sm font-medium text-primary-foreground transition-all select-none hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px sm:w-auto [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             target="_blank"
             rel="noopener noreferrer"
           >
             Book your setup call
+            <ArrowUpRight aria-hidden="true" />
           </TrackedAnchor>
         </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          30 minutes over Zoom with Prism.
+        </p>
       </div>
     )
   }
 
   return (
-    <div className={styles.accessCard}>
-      <p className={styles.accessMark}>Invite required</p>
-      <h2 className={styles.accessTitle}>This program is invite only.</h2>
-      <p className={styles.accessBody}>
+    <div className={cardClass}>
+      <p className={markClass}>
+        <span className="size-1.5 rounded-full bg-(--cga-accent)" />
+        Invite required
+      </p>
+      <h2 className="mt-4 text-[clamp(1.85rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-[-0.04em] text-balance">
+        This program is invite only.
+      </h2>
+      <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
         Access is reserved for businesses in Prism&apos;s network: the
         operators, founders, and partners we already trust. If someone sent you
         here, they also sent a code.
       </p>
       <form
-        className={styles.form}
+        className="mt-6 flex flex-col gap-3"
         method="get"
         action="/chatgpt-ads#access"
         onSubmit={handleSubmit}
         noValidate
       >
-        <label className={styles.label} htmlFor={inputId}>
+        <label
+          className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground"
+          htmlFor={inputId}
+        >
           Invite code
         </label>
-        <div className={styles.inputRow}>
+        <div className="flex w-full items-stretch gap-1.5 rounded-full border border-input bg-card p-1.5 shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/30 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20">
           <input
             id={inputId}
             name="code"
-            className={styles.input}
+            className="h-11 w-full min-w-0 flex-1 rounded-full bg-transparent px-4 text-base uppercase tracking-[0.1em] outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-muted-foreground/70"
             value={code}
             onChange={(event) => setCode(event.target.value)}
             autoComplete="off"
@@ -198,7 +235,7 @@ export default function ChatGptAdsAccess({
             aria-describedby={error ? `${inputId}-error` : `${inputId}-hint`}
           />
           <button
-            className={styles.unlockButton}
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-primary bg-clip-padding px-5 text-sm font-medium text-primary-foreground transition-all select-none hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             type="submit"
             disabled={pending}
             onClick={(event) => {
@@ -207,15 +244,25 @@ export default function ChatGptAdsAccess({
               void submitCode(code)
             }}
           >
+            {pending ? (
+              <LoaderCircle className="animate-spin" aria-hidden="true" />
+            ) : null}
             {pending ? 'Checking…' : 'Unlock'}
           </button>
         </div>
         {error ? (
-          <p className={styles.error} id={`${inputId}-error`} role="alert">
+          <p
+            className="text-sm font-medium text-destructive"
+            id={`${inputId}-error`}
+            role="alert"
+          >
             {error}
           </p>
         ) : (
-          <p className={styles.hint} id={`${inputId}-hint`}>
+          <p
+            className="text-sm leading-relaxed text-muted-foreground"
+            id={`${inputId}-hint`}
+          >
             Codes come from Prism or a trusted partner. We do not take open
             applications.
           </p>
