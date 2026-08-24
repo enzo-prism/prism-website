@@ -31,6 +31,7 @@ describe('llms.txt', () => {
         'https://www.design-prism.com/local-seo-services',
         'https://www.design-prism.com/local-listings',
         'https://www.design-prism.com/ads',
+        'https://www.design-prism.com/chatgpt-ads',
         'https://www.design-prism.com/why-consulting-companies-love-prism',
         'https://www.design-prism.com/why-local-shop-owners-love-prism',
         'https://www.design-prism.com/why-nonprofits-love-prism',

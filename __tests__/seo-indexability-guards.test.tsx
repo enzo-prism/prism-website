@@ -119,6 +119,7 @@ describe('SEO indexability guards', () => {
   })
 
   it('keeps the shared search policy growth-first with dental specialty routes', () => {
+    expect(isRouteIndexable('/chatgpt-ads')).toBe(true)
     expect(isRouteIndexable('/dental-website')).toBe(true)
     expect(isRouteIndexable('/dental-practice-seo-expert')).toBe(true)
     expect(isRouteIndexable('/ai-agents/dental')).toBe(true)

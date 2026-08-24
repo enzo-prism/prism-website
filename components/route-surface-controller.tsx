@@ -1,20 +1,18 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 
-const HOME_ROUTE_SURFACE = 'home-black'
-const DEFAULT_ROUTE_SURFACE = 'default'
+import { routeSurfaceForPath } from '@/lib/route-surface'
 
 export default function RouteSurfaceController() {
   const pathname = usePathname()
 
-  useEffect(() => {
-    const routeSurface =
-      pathname === '/' ? HOME_ROUTE_SURFACE : DEFAULT_ROUTE_SURFACE
+  useLayoutEffect(() => {
+    const surface = routeSurfaceForPath(pathname)
 
-    document.documentElement.dataset.routeSurface = routeSurface
-    document.body.dataset.routeSurface = routeSurface
+    document.documentElement.dataset.routeSurface = surface
+    document.body.dataset.routeSurface = surface
 
     return () => {
       delete document.documentElement.dataset.routeSurface

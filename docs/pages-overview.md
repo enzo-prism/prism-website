@@ -323,6 +323,16 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.
 - The hero uses the page-specific `components/animated/AdsHeroIllustration.tsx` instead of the shared `ServiceIllustration` set so the hover motion and geometry can stay tailored to `/ads` without affecting other routes that still use the generic ads icon.
 - `VideoPlayer` is imported directly in `app/ads/page.tsx`; keep schema metadata up to date (id, upload date, duration) when swapping clips so Google’s video rich results stay accurate.
+- Cross-links to the invite-only `/chatgpt-ads` program from the platforms section.
+
+## ChatGPT Ads (`app/chatgpt-ads/page.tsx`)
+
+- Invite-only landing page for ChatGPT ads. Public marketing copy explains the channel; booking is gated behind a partner invite code.
+- Visual surface is OpenAI-informed (warm off-white, hairline rules, pill CTAs) while the Prism navbar/footer stay black. Scoped in `DESIGN.md`.
+- Access gate: `components/chatgpt-ads/ChatGptAdsAccess.tsx` posts to `/api/chatgpt-ads/unlock`. Valid codes live in `lib/chatgpt-ads-invites.ts` (not the client bundle). Example partner code: `michael` for Dr. Michael Njo.
+- After unlock, the page reveals Prism’s 30-minute Notion booking CTA (`BOOK_A_CALL_CTA`).
+- Indexable. Keep it in `lib/seo/search-visibility.ts` and `public/llms.txt`. Custom OG via `app/chatgpt-ads/opengraph-image.tsx`.
+- Not in the main nav or footer. Share the URL, or `/chatgpt-ads?code=michael`.
 
 ## Facebook Ads for Dentists (`app/facebook-ads-for-dentists/page.tsx`)
 

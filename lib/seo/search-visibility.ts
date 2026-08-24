@@ -15,6 +15,7 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/dental-os',
   '/prism-infinity',
   '/ads',
+  '/chatgpt-ads',
   '/local-listings',
   '/seo',
   '/seo/audit',

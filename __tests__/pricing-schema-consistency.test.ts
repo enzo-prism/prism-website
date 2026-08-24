@@ -3,6 +3,7 @@ import path from "node:path"
 
 const schemaPages = [
   "app/ads/page.tsx",
+  "app/chatgpt-ads/page.tsx",
   "app/seo/page.tsx",
   "app/local-listings/page.tsx",
   "app/dental-website/page.tsx",

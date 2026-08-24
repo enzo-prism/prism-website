@@ -51,6 +51,7 @@ Important notes for LLMs and agents:
 - Local SEO services: https://www.design-prism.com/local-seo-services
 - Local listings: https://www.design-prism.com/local-listings
 - Ads: https://www.design-prism.com/ads
+- ChatGPT Ads (invite-only): https://www.design-prism.com/chatgpt-ads
 - Google Ads for dentists: https://www.design-prism.com/google/dental-ads
 - Google patient forms: https://www.design-prism.com/google/dental-patient-forms
 - Facebook ads for dentists: https://www.design-prism.com/facebook-ads-for-dentists

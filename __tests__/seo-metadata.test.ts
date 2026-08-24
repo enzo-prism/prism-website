@@ -146,4 +146,16 @@ describe("buildRouteMetadata", () => {
       TITLE_MAX_LENGTH,
     )
   })
+
+  it("omits default social images when a route ships a file-based opengraph image", () => {
+    const metadata = buildRouteMetadata({
+      titleStem: "ChatGPT Ads",
+      description: "Invite-only ads in ChatGPT, set up by Prism.",
+      path: "/chatgpt-ads",
+      ogImage: false,
+    })
+
+    expect(metadata.openGraph?.images).toBeUndefined()
+    expect(metadata.twitter?.images).toBeUndefined()
+  })
 })

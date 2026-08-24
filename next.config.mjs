@@ -193,6 +193,11 @@ images: {
       // useful instead of a dead end.
       { source: '/contact-us', destination: '/contact', permanent: true },
       { source: '/hours', destination: '/contact', permanent: true },
+      { source: '/chatgptads', destination: '/chatgpt-ads', permanent: true },
+      { source: '/openai-ads', destination: '/chatgpt-ads', permanent: true },
+      { source: '/chat-gpt-ads', destination: '/chatgpt-ads', permanent: true },
+      { source: '/chatgpt-ad', destination: '/chatgpt-ads', permanent: true },
+      { source: '/openai-chatgpt-ads', destination: '/chatgpt-ads', permanent: true },
     ]
   },
 }
