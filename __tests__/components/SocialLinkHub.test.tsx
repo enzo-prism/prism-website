@@ -109,9 +109,10 @@ describe('SocialLinkHub', () => {
       ),
     ).toBeInTheDocument()
 
-    // Proof strip uses current public profile and authenticated analytics data.
-    expect(screen.getByText(/11\.3k followers/i)).toBeInTheDocument()
-    expect(screen.getByText(/1\.2m views in 60 days/i)).toBeInTheDocument()
+    // Keep the hub focused on routing rather than social or revenue proof.
+    expect(screen.queryByText(/followers/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/views in 60 days/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/revenue driven/i)).not.toBeInTheDocument()
 
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
@@ -216,14 +217,15 @@ describe('SocialLinkHub', () => {
     )
   })
 
-  it('tunes the attention stat per platform while keeping the shared headline and two actions', () => {
+  it('keeps every platform free of audience and view stats while sharing two actions', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
         name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/38k followers/i)).toBeInTheDocument()
+    expect(screen.queryByText(/followers/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/public posts/i)).not.toBeInTheDocument()
     expect(
       within(
         screen.getByRole('navigation', { name: /instagram page actions/i }),
@@ -237,7 +239,8 @@ describe('SocialLinkHub', () => {
         name: /grow your business with prism/i,
       }),
     ).toBeInTheDocument()
-    expect(screen.getByText(/24\.7k subscribers/i)).toBeInTheDocument()
+    expect(screen.queryByText(/subscribers/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/views/i)).not.toBeInTheDocument()
 
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,

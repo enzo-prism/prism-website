@@ -9,7 +9,6 @@ import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
 import { WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { cn } from '@/lib/utils'
-import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
 /**
@@ -19,7 +18,7 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * routes intent instead of thanking them. The two offer cards sit under
  * short sans routing questions ("Doing under $1M a year?" / "Doing $1M–$10M
  * a year?") so the revenue segmentation is read before each offer. One
- * template, platform-aware stats.
+ * quiet, shared template keeps the focus on those actions.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -28,8 +27,6 @@ type PlatformConfig = {
   label: string
   handle: string
   profileHref: string
-  /** Two current public or authenticated platform proof points. */
-  proofStrip: [audience: string, activity: string]
 }
 
 const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
@@ -37,28 +34,16 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
     label: 'TikTok',
     handle: '@the_design_prism',
     profileHref: 'https://www.tiktok.com/@the_design_prism',
-    proofStrip: [
-      `${SOCIAL_PROOF.tiktok.audience} followers`,
-      `${SOCIAL_PROOF.tiktok.activity} views in 60 days`,
-    ],
   },
   instagram: {
     label: 'Instagram',
     handle: '@the_design_prism',
     profileHref: 'https://www.instagram.com/the_design_prism/',
-    proofStrip: [
-      `${SOCIAL_PROOF.instagram.audience} followers`,
-      `${SOCIAL_PROOF.instagram.activity} public posts`,
-    ],
   },
   youtube: {
     label: 'YouTube',
     handle: '@the_design_prism',
     profileHref: 'https://www.youtube.com/@the_design_prism',
-    proofStrip: [
-      `${SOCIAL_PROOF.youtube.audience} subscribers`,
-      `${SOCIAL_PROOF.youtube.activity} views`,
-    ],
   },
 }
 
@@ -232,12 +217,6 @@ export default function SocialLinkHub({
           <p className="mt-4 max-w-[40ch] text-pretty font-sans text-[1rem] font-normal leading-[1.6] tracking-[-0.01em] text-[#cfc7ba]">
             We implement the strategies and tactics we post about to level up
             your business.
-          </p>
-
-          <p className="mt-3 font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em] text-[#b8afa2]">
-            <span className="whitespace-nowrap">{config.proofStrip[0]}</span>
-            {' · '}
-            <span className="whitespace-nowrap">{config.proofStrip[1]}</span>
           </p>
 
           <nav aria-label={`${config.label} page actions`} className="mt-7">
