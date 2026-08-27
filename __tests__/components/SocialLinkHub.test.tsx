@@ -95,7 +95,7 @@ describe('SocialLinkHub', () => {
     jest.clearAllMocks()
   })
 
-  it('frames the page around business growth with exactly three routed actions', () => {
+  it('frames the page around business growth with exactly two offer actions', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
@@ -116,7 +116,16 @@ describe('SocialLinkHub', () => {
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
     })
-    expect(within(nav).getAllByRole('link')).toHaveLength(3)
+    expect(within(nav).getAllByRole('link')).toHaveLength(2)
+    expect(
+      within(nav).queryByRole('link', { name: /refer a friend/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/you get \$100/i)).not.toBeInTheDocument()
+    expect(
+      within(nav)
+        .getAllByRole('link')
+        .some((link) => link.getAttribute('href') === '/refer'),
+    ).toBe(false)
 
     // The retired cards stay retired.
     expect(screen.queryByText(/see the proof/i)).not.toBeInTheDocument()
@@ -162,19 +171,10 @@ describe('SocialLinkHub', () => {
       'prism infinity',
       'tiktok landing actions',
     )
-
-    const referLink = screen.getByRole('link', { name: /refer a friend/i })
-    expect(referLink).toHaveAttribute('href', '/refer')
-    expect(referLink).toHaveAttribute('data-cta-text', 'refer a friend')
-
-    fireEvent.click(referLink)
-    expect(trackCTAClick).toHaveBeenCalledWith(
-      'refer a friend',
-      'tiktok landing actions',
-    )
+    expect(trackCTAClick).toHaveBeenCalledTimes(2)
   })
 
-  it('keeps canonical pricing language and spells out the $100 referral reward', () => {
+  it('keeps canonical pricing language without referral copy', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     // Call-first offers never show exact public pricing. The detail line is
@@ -183,10 +183,8 @@ describe('SocialLinkHub', () => {
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()
-    // The referral card makes the referrer's reward explicit.
-    expect(
-      screen.getByText(/you get \$100 when they become a client/i),
-    ).toBeInTheDocument()
+    expect(screen.queryByText(/refer/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/you get \$100/i)).not.toBeInTheDocument()
     // Never the retired "/mo" shorthand.
     expect(screen.queryByText(/\/mo\b/)).not.toBeInTheDocument()
   })
@@ -218,7 +216,7 @@ describe('SocialLinkHub', () => {
     )
   })
 
-  it('tunes the attention stat per platform while keeping the shared headline and three actions', () => {
+  it('tunes the attention stat per platform while keeping the shared headline and two actions', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
@@ -230,7 +228,7 @@ describe('SocialLinkHub', () => {
       within(
         screen.getByRole('navigation', { name: /instagram page actions/i }),
       ).getAllByRole('link'),
-    ).toHaveLength(3)
+    ).toHaveLength(2)
     unmount()
 
     render(<SocialLinkHub platform="youtube" />)
@@ -244,7 +242,7 @@ describe('SocialLinkHub', () => {
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,
     })
-    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
+    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(2)
     expect(
       within(youtubeNav).getByRole('link', { name: /premium website design/i }),
     ).toHaveAttribute('href', '/website-intake')
@@ -252,8 +250,8 @@ describe('SocialLinkHub', () => {
       within(youtubeNav).getByRole('link', { name: /prism infinity/i }),
     ).toHaveAttribute('href', '/prism-infinity')
     expect(
-      within(youtubeNav).getByRole('link', { name: /refer a friend/i }),
-    ).toHaveAttribute('href', '/refer')
+      within(youtubeNav).queryByRole('link', { name: /refer a friend/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('segments the offer cards by founder revenue with routing questions', () => {

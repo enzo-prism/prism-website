@@ -329,7 +329,7 @@ Important routing note:
 - Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
-- Entry points: /tiktok /ig /youtube link hubs ("Refer a friend" card), footer Company column, `/referral` + `/referrals` + `/affiliate` redirects.
+- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only Website and Prism Infinity.
 
 ## Thank-you pages
 

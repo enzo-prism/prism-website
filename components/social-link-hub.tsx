@@ -18,9 +18,8 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Visitors arrive warm — they just watched Prism's content — so the page
  * routes intent instead of thanking them. The two offer cards sit under
  * short sans routing questions ("Doing under $1M a year?" / "Doing $1M–$10M
- * a year?") so the revenue segmentation is read before the offer; the
- * referral card sits after a hairline so it never reads as a third revenue
- * tier. One template, platform-aware stats.
+ * a year?") so the revenue segmentation is read before each offer. One
+ * template, platform-aware stats.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -284,23 +283,6 @@ export default function SocialLinkHub({
                 icon={
                   <PixelishIcon
                     src="/pixelish/arrow-refresh.svg"
-                    alt=""
-                    size={16}
-                    aria-hidden="true"
-                  />
-                }
-              />
-            </div>
-
-            <div className="mt-4 border-t border-white/12 pt-4">
-              <ActionCard
-                title="Refer a friend"
-                detail="You get $100 when they become a client"
-                href="/refer"
-                location={actionsLocation}
-                icon={
-                  <PixelishIcon
-                    src="/pixelish/currency-dollar.svg"
                     alt=""
                     size={16}
                     aria-hidden="true"
