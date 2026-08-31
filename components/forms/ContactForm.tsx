@@ -35,7 +35,14 @@ export default function ContactForm() {
           setSubmitError("We couldn't submit right now. Try again?")
           return
         }
-        trackFormSubmission('contact', 'contact_form')
+        // Immediate, not pending: page_path on generate_lead must stay
+        // /contact (same pattern as /website-intake). Pending would fire
+        // again on /thank-you via LeadSuccessTracker and double-count.
+        // Apply still owns /thank-you?source=apply via ApplySuccessTracker.
+        trackFormSubmission('contact', 'contact_form', {
+          conversionMode: 'immediate',
+          lead_type: 'contact',
+        })
         router.push('/thank-you')
       },
     })
