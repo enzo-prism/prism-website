@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   // The suite verifies when Prism requests the player and the control geometry,
   // while Vimeo playback itself is independent of the mobile menu contract.
   await page.route(
-    /^https:\/\/(?:player\.vimeo\.com|f\.vimeocdn\.com)\//,
+    /^https:\/\/(?:player\.vimeo\.com|f\.vimeocdn\.com)\/,
     (route) => route.abort(),
   )
   await page.emulateMedia({ reducedMotion: 'reduce' })
@@ -56,7 +56,7 @@ async function expectOpenMenuGeometry(page: Page) {
   expect(result?.bodyOverflow).toBe('hidden')
   expect(result?.htmlOverflow).toBe('hidden')
   await expect(page.locator('#mobile-site-nav').getByRole('link')).toHaveCount(
-    7,
+    6,
   )
 }
 
@@ -73,11 +73,11 @@ for (const route of ['/', '/about', '/wall-of-love'] as const) {
     await openMenu(page)
     await expectOpenMenuGeometry(page)
 
-    const contactLink = page
+    const homeLink = page
       .locator('#mobile-site-nav')
-      .getByRole('link', { name: 'contact', exact: true })
-    await contactLink.scrollIntoViewIfNeeded()
-    await expect(contactLink).toBeVisible()
+      .getByRole('link', { name: 'home', exact: true })
+    await homeLink.scrollIntoViewIfNeeded()
+    await expect(homeLink).toBeVisible()
 
     if (testInfo.project.name === 'mobile-webkit' && route === '/') {
       const outputDir = process.env.PRISM_MOBILE_AUDIT_OUTPUT
@@ -117,11 +117,11 @@ test('mobile menu stays bounded in landscape and closes at desktop width', async
   await openMenu(page)
   await expectOpenMenuGeometry(page)
 
-  const contactLink = page
+  const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'contact', exact: true })
-  await contactLink.scrollIntoViewIfNeeded()
-  await expect(contactLink).toBeVisible()
+    .getByRole('link', { name: 'case studies', exact: true })
+  await caseStudiesLink.scrollIntoViewIfNeeded()
+  await expect(caseStudiesLink).toBeVisible()
 
   if (testInfo.project.name === 'mobile-webkit') {
     const outputDir = process.env.PRISM_MOBILE_AUDIT_OUTPUT
@@ -147,12 +147,12 @@ test('a mobile navigation link remains tappable on direct-body-header pages', as
 }) => {
   await page.goto('/wall-of-love', { waitUntil: 'domcontentloaded' })
   await openMenu(page)
-  const contactLink = page
+  const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'contact', exact: true })
-  await contactLink.scrollIntoViewIfNeeded()
-  await contactLink.click()
-  await expect(page).toHaveURL(/\/contact$/)
+    .getByRole('link', { name: 'case studies', exact: true })
+  await caseStudiesLink.scrollIntoViewIfNeeded()
+  await caseStudiesLink.click()
+  await expect(page).toHaveURL(/\/case-studies$/)
   await expect(page.locator('#mobile-site-nav')).toHaveCount(0)
 })
 

@@ -65,7 +65,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
   - `/pricing` compares the four productized offers — ALL call-first, no public exact price on any offer, every primary CTA = `BOOK_A_CALL_CTA` — sourced from `lib/pricing-model.ts`
   - `/websites` publishes the ultra-premium PRO website offer (booking-only, no form, no price), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces (all-call-first policy), as is retired fixed-plan language such as `Website Overhaul` — `pnpm verify:pricing-consistency` enforces this
-  - `/founder-os` redirects to `/content-os`; other legacy pricing routes resolve to `/pricing`
+  - `/founder-os` redirects to `/content`; other legacy pricing routes resolve to `/pricing`
   - `/ads`, `/seo`, `/local-listings` ship price-free offer schemas; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
