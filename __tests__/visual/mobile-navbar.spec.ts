@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
   // The suite verifies when Prism requests the player and the control geometry,
   // while Vimeo playback itself is independent of the mobile menu contract.
   await page.route(
-    /^https:\/\/(?:player\.vimeo\.com|f\.vimeocdn\.com)\/,
+    /^https:\/\/(?:player\.vimeo\.com|f\.vimeocdn\.com)\//,
     (route) => route.abort(),
   )
   await page.emulateMedia({ reducedMotion: 'reduce' })
