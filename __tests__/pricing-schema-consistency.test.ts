@@ -37,8 +37,9 @@ describe('pricing schema consistency', () => {
         'utf8',
       )
       // The five-tier ladder (60-day sprints at $3,500) is retired; service
-      // schemas publish price-free offers that point at /pricing instead of
-      // claiming amounts that can rot.
+      // schemas publish price-free offers. `/ads` points at `/ads`; the
+      // other listed pages point at `/pricing` instead of claiming amounts
+      // that can rot.
       expect(content).not.toMatch(/60-Day Growth Sprint/)
       expect(content).not.toMatch(/price: ["']3500["']/)
       expect(content).not.toContain('price: "1000"')

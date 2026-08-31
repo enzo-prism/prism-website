@@ -1,0 +1,53 @@
+name: Decode locked snapshots
+
+on:
+  push:
+    branches:
+      - cursor/three-services-nav-26d6
+    paths:
+      - 'tmp/locked-snapshots/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: decode-locked-snapshots
+  cancel-in-progress: false
+
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Decode base64 snapshots
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64
+
+          src = Path('tmp/locked-snapshots')
+          dest = Path('__tests__/visual/locked-routes.spec.ts-snapshots')
+          dest.mkdir(parents=True, exist_ok=True)
+          for path in sorted(src.glob('*.b64')):
+              name = path.name.removesuffix('.b64')
+              data = base64.b64decode(path.read_text().strip())
+              out = dest / name
+              out.write_bytes(data)
+              print(f'wrote {out} ({len(data)} bytes)')
+          PY
+
+      - name: Commit decoded PNGs
+        run: |
+          git config user.name enzo
+          git config user.email enzo@design-prism.com
+          git add __tests__/visual/locked-routes.spec.ts-snapshots
+          if git diff --staged --quiet; then
+            echo 'No snapshot changes'
+          else
+            git commit -m "Refresh locked UI snapshots for three-service nav."
+            git push
+          fi
