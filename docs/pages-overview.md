@@ -32,7 +32,7 @@ Quick reference for the pages we edit most often.
 
 ## Pricing (`app/pricing/client-page.tsx`)
 
-- `/pricing` is the single canonical pricing URL and now compares Prism's **four productized offers**, all sourced from `CANONICAL_PRICING_OFFERS` / `PRICING_OFFER_ORDER` in `lib/pricing-model.ts`:
+- `/pricing` is the single canonical pricing URL and now compares Prism's **four packaged offers**, all sourced from `CANONICAL_PRICING_OFFERS` / `PRICING_OFFER_ORDER` in `lib/pricing-model.ts`. Public chrome still frames three services (Website, Content, Ads); Dental OS and Infinity are packaged here and are not top-nav items.
   - **Website** — the ultra-premium PRO website; scoped on a 30-minute call (`/websites`).
   - **Content OS** — implemented over 3 months, then optimized monthly; scoped on a 30-minute call. Public service page: `/content` (`/content-os` 301s there).
   - **Dental OS** — custom-priced, scoped on a 30-minute call (`/dental-os`).
@@ -94,6 +94,10 @@ Quick reference for the pages we edit most often.
 
 - Public service page for **Ads**: Google, Meta, TikTok, and Yelp campaigns with tracking, budget guardrails, and weekly optimization. Black System / core-route chrome. Primary CTA is `BOOK_A_CALL_CTA`; `/free-analysis` stays as a secondary on-ramp.
 - Indexable, in `public/llms.txt`, and in the sitemap. Do not revive the leftover light/white ads theme.
+
+## Services hub (`app/services/page.tsx`)
+
+- Indexable overview of the growth system. The hero now reads "Website. Content. Ads." to match public IA. Footer Services includes "All services" here. The rest of the page is still a broader catalog (websites, local, ads, content, analytics) on the leftover light surface; do not treat it as the canonical Website / Content / Ads acquisition page, and do not restyle it unless product asks.
 
 ## Dental OS (`app/dental-os/page.tsx`)
 
@@ -164,7 +168,7 @@ Quick reference for the pages we edit most often.
 ## Get Started (`app/get-started/page.tsx`)
 
 - `/get-started` is the free Growth Audit entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
-- After the repositioning to the four productized offers, `/get-started` is **intentionally kept as the free on-ramp** (free Growth Dashboard + request a free deep audit from the team). It stays surfaced in the nav ("get started"), the footer ("Get started free"), and a callout under the homepage offers section, even though the rest of the pricing ladder it used to anchor is retired.
+- After the repositioning to the four packaged offers on `/pricing`, `/get-started` is **intentionally kept as the free on-ramp** (free Growth Dashboard + request a free deep audit from the team). It stays surfaced in the footer ("Get started free") and a callout under the homepage offers section, even though the rest of the pricing ladder it used to anchor is retired. It is **not** in the header nav.
 - The hero is conversion-first: headline, one-line value statement, trust chips (free / ≈1 minute / reviewed by a real person), and the primary "Start my free growth audit" CTA must all land in the first viewport on mobile. The three-step Lordicon row (`Share your business`, `We audit it`, `Get your next move`) sits compact below the CTA — do not let it push the CTA back below the fold.
 - User-facing copy on this funnel leads with the free Growth Audit; the Growth Dashboard is positioned as where the audit is delivered. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
@@ -215,7 +219,7 @@ Quick reference for the pages we edit most often.
 
 - `app/layout.tsx` injects `GlobalSchemaGraph` from `components/schema-markup.tsx` (Organization, WebSite, LocalBusiness).
 - `components/breadcrumbs.tsx` emits `BreadcrumbList` JSON-LD with canonical URLs.
-- Service offer schema on `/ads`, `/seo`, `/local-listings`, `/websites`, `/dental-website`, and `/dental-practice-seo-expert` stays price-free. Do not reintroduce `60-Day Growth Sprint` or numeric `price` fields.
+- Service offer schema stays price-free. `/ads` points its Offer URL at `/ads`. `/seo`, `/local-listings`, `/websites`, `/dental-website`, and `/dental-practice-seo-expert` stay price-free as documented (most point at `/pricing`). Do not reintroduce `60-Day Growth Sprint` or numeric `price` fields.
 
 ## Homepage (`app/client-page.tsx`)
 

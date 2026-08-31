@@ -207,6 +207,7 @@ When working on UI, these files are the fastest way to understand the live syste
 - `app/globals.css` for the global canvas, type tokens, dark mode tokens, and page-wide atmosphere
 - `tailwind.config.cjs` for mapped theme tokens and typography scale
 - `components/core-route/CoreRoutePrimitives.tsx` for the shared section, panel, and CTA primitives used across the core routes
+- `lib/services.ts` for the three public services (Website, Content, Ads) that drive the header dropdown and homepage offers
 - `components/navbar.tsx` and `components/footer.tsx` for the shared chrome language
 - `components/home/homepage-content.ts` for the current homepage copy structure and content blocks
 - `components/home/*` for homepage-specific composition patterns
