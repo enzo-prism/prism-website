@@ -60,7 +60,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /four ways to grow with prism\./i,
+        name: /website\. content\. ads\./i,
       }),
     ).toBeInTheDocument()
     expect(

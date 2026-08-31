@@ -88,7 +88,7 @@ describe('Navbar', () => {
       'false',
     )
     expect(
-      screen.getAllByRole('link', { name: /^websites$/i })[0].className,
+      screen.getAllByRole('link', { name: /^home$/i })[0].className,
     ).toContain('rounded-full')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/^prism$/i)).toBeInTheDocument()
@@ -107,7 +107,7 @@ describe('Navbar', () => {
       screen.getByRole('button', { name: /open menu/i }),
     ).toBeInTheDocument()
     expect(
-      screen.getAllByRole('link', { name: /^websites$/i })[0].className,
+      screen.getAllByRole('link', { name: /^home$/i })[0].className,
     ).toContain('rounded-full')
     expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
     expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
@@ -155,12 +155,12 @@ describe('Navbar', () => {
     expect(
       screen.queryByRole('link', { name: /our story/i }),
     ).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /^websites$/i })).toHaveLength(2)
-    expect(screen.getAllByRole('link', { name: /content os/i })).toHaveLength(2)
+    expect(screen.getAllByRole('link', { name: /^website$/i })).toHaveLength(1)
+    expect(screen.getAllByRole('link', { name: /^content$/i })).toHaveLength(1)
     expect(
       within(
         document.querySelector('#mobile-site-nav') as HTMLElement,
-      ).getByRole('link', { name: /^websites$/i }),
+      ).getByRole('link', { name: /^home$/i }),
     ).toHaveFocus()
   })
 
@@ -180,7 +180,7 @@ describe('Navbar', () => {
     expect(mobilePanel).toBeInTheDocument()
     expect(
       within(mobilePanel as HTMLElement).getByRole('link', {
-        name: /^websites$/i,
+        name: /^home$/i,
       }),
     ).toBeEnabled()
   })
@@ -239,16 +239,20 @@ describe('Navbar', () => {
     expect(document.documentElement.style.overflow).toBe('')
   })
 
-  it('links the websites item to the website order page and highlights it on that route', () => {
+  it('highlights the services trigger on a service route', () => {
     mockUsePathname.mockReturnValue('/websites')
 
     render(<Navbar />)
 
-    const websitesLinks = screen.getAllByRole('link', { name: /^websites$/i })
-    expect(websitesLinks).toHaveLength(1)
-    expect(websitesLinks[0]).toHaveAttribute('href', '/websites')
-    expect(websitesLinks[0]).toHaveAttribute('aria-current', 'page')
-    expect(websitesLinks[0].className).toContain('text-[#f5f0e8]')
+    const servicesTrigger = screen.getByRole('button', { name: /services/i })
+    expect(servicesTrigger).toHaveAttribute('aria-expanded', 'false')
+    expect(servicesTrigger.className).toContain('text-[#f5f0e8]')
+
+    fireEvent.click(servicesTrigger)
+
+    const websiteLink = screen.getByRole('link', { name: /^website$/i })
+    expect(websiteLink).toHaveAttribute('href', '/websites')
+    expect(websiteLink).toHaveAttribute('aria-current', 'page')
   })
 
   it('carries no order CTA button — links only', () => {
@@ -264,27 +268,38 @@ describe('Navbar', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('shows the flat seven-item rail with no pricing item and no more dropdown', () => {
+  it('shows home, a services dropdown, then proof — with no pricing, contact, or packaged offers in the header', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
-    // The 2026-07-27 redesign: offers | proof | contact, all inline. Pricing
-    // and get-started left the top nav entirely, the "more" disclosure is
-    // gone, and there is no CTA button.
+    expect(screen.getByRole('link', { name: /^home$/i })).toHaveAttribute(
+      'href',
+      '/',
+    )
+    expect(
+      screen.getByRole('button', { name: /services/i }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /^case studies$/i }),
+    ).toHaveAttribute('href', '/case-studies')
+    expect(
+      screen.getByRole('link', { name: /^wall of love$/i }),
+    ).toHaveAttribute('href', '/wall-of-love')
+
+    expect(
+      screen.queryByRole('link', { name: /^website$/i }),
+    ).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /services/i }))
+
     for (const [label, href] of [
-      ['websites', '/websites'],
-      ['content os', '/content-os'],
-      ['dental os', '/dental-os'],
-      ['prism infinity', '/prism-infinity'],
-      ['wall of love', '/wall-of-love'],
-      ['case studies', '/case-studies'],
-      ['contact', '/contact'],
+      ['website', '/websites'],
+      ['content', '/content'],
+      ['ads', '/ads'],
     ] as const) {
       expect(
-        screen.getAllByRole('link', {
-          name: new RegExp(`^${label}$`, 'i'),
-        })[0],
+        screen.getByRole('link', { name: new RegExp(`^${label}$`, 'i') }),
       ).toHaveAttribute('href', href)
     }
 
@@ -293,6 +308,15 @@ describe('Navbar', () => {
     ).not.toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: /^get started$/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^contact$/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /dental os/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /prism infinity/i }),
     ).not.toBeInTheDocument()
     expect(
       screen.queryByRole('button', { name: /^more$/i }),
@@ -344,7 +368,7 @@ describe('Navbar', () => {
     }
   })
 
-  it('groups the mobile sheet as offers, proof, then contact', () => {
+  it('groups the mobile sheet as home, services, then proof', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
@@ -359,22 +383,37 @@ describe('Navbar', () => {
     expect(groups?.[2]?.className).toContain('border-t')
     expect(
       within(groups?.[0] as HTMLElement).getByRole('link', {
-        name: /^websites$/i,
+        name: /^home$/i,
       }),
     ).toBeInTheDocument()
     expect(
       within(groups?.[1] as HTMLElement).getByRole('link', {
-        name: /^wall of love$/i,
+        name: /^website$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(groups?.[1] as HTMLElement).getByRole('link', {
+        name: /^content$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(groups?.[1] as HTMLElement).getByRole('link', {
+        name: /^ads$/i,
       }),
     ).toBeInTheDocument()
     expect(
       within(groups?.[2] as HTMLElement).getByRole('link', {
-        name: /^contact$/i,
+        name: /^case studies$/i,
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(groups?.[2] as HTMLElement).getByRole('link', {
+        name: /^wall of love$/i,
       }),
     ).toBeInTheDocument()
   })
 
-  it('keeps all seven items one tap away in the mobile panel', () => {
+  it('keeps all six items one tap away in the mobile panel', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
@@ -383,15 +422,13 @@ describe('Navbar', () => {
     const panel = document.querySelector('#mobile-site-nav')
     expect(panel).toBeInTheDocument()
 
-    // Plain labels only — the retired mono index prefixes (01–07) stay retired.
     for (const [pattern, href] of [
-      [/^websites$/i, '/websites'],
-      [/^content os$/i, '/content-os'],
-      [/^dental os$/i, '/dental-os'],
-      [/^prism infinity$/i, '/prism-infinity'],
-      [/^wall of love$/i, '/wall-of-love'],
+      [/^home$/i, '/'],
+      [/^website$/i, '/websites'],
+      [/^content$/i, '/content'],
+      [/^ads$/i, '/ads'],
       [/^case studies$/i, '/case-studies'],
-      [/^contact$/i, '/contact'],
+      [/^wall of love$/i, '/wall-of-love'],
     ] as const) {
       expect(
         within(panel as HTMLElement).getByRole('link', { name: pattern }),
@@ -401,7 +438,9 @@ describe('Navbar', () => {
     expect(
       within(panel as HTMLElement).queryByRole('link', { name: /pricing/i }),
     ).not.toBeInTheDocument()
-    // No order CTA inside the panel either.
+    expect(
+      within(panel as HTMLElement).queryByRole('link', { name: /^contact$/i }),
+    ).not.toBeInTheDocument()
     expect(
       within(panel as HTMLElement).queryByRole('link', { name: /order now/i }),
     ).not.toBeInTheDocument()

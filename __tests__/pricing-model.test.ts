@@ -72,8 +72,8 @@ describe("pricing model", () => {
     expect(CANONICAL_PRICING_OFFERS.website.secondaryCta?.href).toBe(
       "/websites",
     )
-    expect(CANONICAL_PRICING_OFFERS.content_os.secondaryCta?.href).toBe(
-      "/content-os",
+      expect(CANONICAL_PRICING_OFFERS.content_os.secondaryCta?.href).toBe(
+      "/content",
     )
     expect(CANONICAL_PRICING_OFFERS.dental_os.secondaryCta?.href).toBe(
       "/dental-os",

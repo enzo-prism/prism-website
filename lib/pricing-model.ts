@@ -102,11 +102,11 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: CONTENT_OS_PRICE_LABEL,
     priceSubLabel: 'Scoped to your business on a 30-min call',
     description:
-      'A system that runs your content and ads across every social platform and your website. Implemented over 3 months, then optimized every month.',
+      'A system that plans, produces, and publishes content across your website and every social platform. Implemented over 3 months, then optimized every month.',
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
-      label: 'Explore Content OS',
-      href: '/content-os',
+      label: 'Explore Content',
+      href: '/content',
     },
   },
   dental_os: {

@@ -18,12 +18,13 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 2. `pnpm lint` – catch ESLint/Tailwind issues early.
 3. `pnpm typecheck` – required before shipping.
 4. `pnpm test` – recommended before touching shared components or hooks.
-5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, or `/get-started`.
-6. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
-7. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
-8. `pnpm audit --prod` – required after dependency or lockfile changes; production dependencies must report zero known vulnerabilities.
-9. `pnpm build` – mirrors the production bundle.
-10. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
+5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, `/get-started`, the navbar, the footer, or homepage offers. Update snapshots with `pnpm test:visual:locked:update` before merging to `main`.
+6. `pnpm test:mobile-navbar` – required when touching header chrome or the mobile sheet.
+7. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
+8. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
+9. `pnpm audit --prod` – required after dependency or lockfile changes; production dependencies must report zero known vulnerabilities.
+10. `pnpm build` – mirrors the production bundle.
+11. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
 
 ### Production-parity preview
 
@@ -62,11 +63,11 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - `/pricing` compares the four productized offers — ALL call-first, no public exact price on any offer, every primary CTA = `BOOK_A_CALL_CTA` — sourced from `lib/pricing-model.ts`
-  - `/websites` publishes the ultra-premium PRO website offer (booking-only, no form, no price), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp
+  - Public chrome frames three services (Website, Content, Ads). `/pricing` compares the four packaged offers — ALL call-first, no public exact price on any offer, every primary CTA = `BOOK_A_CALL_CTA` — sourced from `lib/pricing-model.ts`
+  - `/websites` publishes the ultra-premium PRO website offer (booking-only, no form, no price), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp in the footer and homepage callout (not the header)
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces (all-call-first policy), as is retired fixed-plan language such as `Website Overhaul` — `pnpm verify:pricing-consistency` enforces this
-  - `/founder-os` redirects to `/content-os`; other legacy pricing routes resolve to `/pricing`
-  - `/ads`, `/seo`, `/local-listings` ship price-free offer schemas; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
+  - `/founder-os` redirects to `/content`; other legacy pricing routes resolve to `/pricing`
+  - `/ads` ships a price-free offer schema pointing at `/ads`; `/seo` and `/local-listings` ship price-free offer schemas pointing at `/pricing`; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`
@@ -79,7 +80,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## CI parity notes
 
 - Production workflow order is:
-  1. `UI Lock Screenshots` (`pnpm test:visual:locked`, blocking)
+  1. `UI Lock Screenshots` (`pnpm test:visual:locked`, then `pnpm test:mobile-navbar`, blocking)
   2. `Build and Deploy` (`pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`)
 - Keep local troubleshooting aligned with that order.
 - If production deploy fails, reproduce locally with `pnpm build` first. Most failures are deterministic once you mirror the production bundle.
@@ -93,7 +94,10 @@ After the workflow succeeds, verify the public domain instead of assuming the re
 curl -sS -L https://www.design-prism.com/sitemap.xml
 curl -sS -L https://www.design-prism.com/robots.txt
 curl -sS -L https://www.design-prism.com/llms.txt
+curl -sSI https://www.design-prism.com/content-os
 ```
+
+Confirm `/content-os` 301s to `/content`. Spot-check the public service pages `/websites`, `/content`, and `/ads`, plus header chrome (Home, Services dropdown, Case studies, Wall of love).
 
 Spot-check robots tags on both sides of the search policy:
 

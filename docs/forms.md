@@ -27,7 +27,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/GetStartedForm.tsx` (`/apply`)
 - `components/forms/WebsiteIntakeForm.tsx` (`/website-intake`)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
-- Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content-os`.
+- Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content`.
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `components/forms/AeoAssessmentForm.tsx`
@@ -225,7 +225,7 @@ landing target for the legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 
-> **Retired.** Founder OS is no longer a live offer. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` (see `next.config.mjs`). The application form files have been deleted. The contract below is historical only.
+> **Retired.** Founder OS is no longer a live offer. `/founder-os` and `/founder-os/apply` now 301-redirect to `/content` (see `next.config.mjs`). The application form files have been deleted. The contract below is historical only.
 
 `components/forms/FounderOsApplicationForm.tsx` powered the premium Founder OS application on `app/founder-os/apply/page.tsx`. Unlike the marketing forms above, it was a long, **selective application** (not a contact form): a 90-second fit check, then ~12 substantive screens grouped into six named sections (Fit → Leverage → Workflow → Systems → Control → Readiness).
 
@@ -254,7 +254,7 @@ landing target for the legacy live Stripe link.
   - `founder_os_application_submit_success`
   - `founder_os_application_submit_error`
   - Do not include user-entered names, emails, URLs, or free-text answers in analytics params.
-- Both `/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os` and are no longer indexable.
+- Both `/founder-os` and `/founder-os/apply` now 301-redirect to `/content` and are no longer indexable.
 
 ## New flow: `/aeo` + free AEO assessment
 

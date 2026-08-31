@@ -297,7 +297,7 @@ export function GlobalSchemaGraph() {
         name: CANONICAL_PRICING_OFFERS.content_os.name,
         description: CANONICAL_PRICING_OFFERS.content_os.description,
         availability: 'https://schema.org/InStock',
-        url: 'https://www.design-prism.com/content-os',
+        url: 'https://www.design-prism.com/content',
       },
       {
         '@type': 'Offer',

@@ -5,6 +5,7 @@ import { Globe, Megaphone, Share2, Sparkles } from 'lucide-react'
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import { ServiceSiblings } from '@/components/services/ServiceSiblings'
 import {
   CoreActionLink,
   CoreSectionHeading,
@@ -21,14 +22,14 @@ import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
-const CANONICAL_URL = 'https://www.design-prism.com/content-os'
+const CANONICAL_URL = 'https://www.design-prism.com/content'
 const CONTENT_OS_OFFER = CANONICAL_PRICING_OFFERS.content_os
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Content OS',
+  titleStem: 'Content',
   description:
-    'AI agents that create and improve content and ads across your website and social channels.',
-  path: '/content-os',
+    'A content system that plans, produces, and publishes across your website and every social platform.',
+  path: '/content',
   ogImage: '/prism-opengraph.png',
 })
 
@@ -50,8 +51,8 @@ const CAPABILITIES = [
     icon: Share2,
   },
   {
-    title: 'Ad creative',
-    body: 'Winning organic content becomes paid ad creative, with variations the agents launch, measure, and iterate on.',
+    title: 'Ready for ads',
+    body: 'Winning organic posts become the raw material for paid campaigns. Content and ads stay in the same story. Ads is a separate Prism service when you are ready to spend.',
     icon: Megaphone,
   },
   {
@@ -70,7 +71,7 @@ const STEPS = [
   {
     label: 'Launch the agent system',
     detail: 'Go live',
-    body: 'Agents start producing, distributing, and testing content and ads across every platform and your website.',
+    body: 'Agents start producing, distributing, and testing content across every platform and your website.',
   },
   {
     label: 'Scale every month',
@@ -111,14 +112,14 @@ const PROOF_TILES = [
 
 const FAQ_ITEMS = [
   {
-    question: 'What do the Content OS agents actually do?',
+    question: 'What do the content agents actually do?',
     answer:
-      'They plan, draft, edit, schedule, and publish content across your social platforms and website, then turn the best performers into paid ad creative, all reviewed against your brand and offers.',
+      'They plan, draft, edit, schedule, and publish content across your social platforms and website, reviewed against your brand and offers. The best performers can later become ad creative on the Ads service.',
   },
   {
     question: 'What does the 3-month implementation include?',
     answer:
-      'We connect your channels, define your brand voice and offers, build the agent system, and ship the first wave of content and ads so the engine is live and producing by the end of the three months.',
+      'We connect your channels, define your brand voice and offers, build the agent system, and ship the first wave of content so the engine is live and producing by the end of the three months.',
   },
   {
     question: 'What does the monthly optimization cover?',
@@ -136,7 +137,7 @@ const FAQ_ITEMS = [
       'Yes. After the 3-month implementation, the monthly optimization is month-to-month. You can pause or cancel anytime.',
   },
   {
-    question: 'How much does Content OS cost?',
+    question: 'How much does the content system cost?',
     answer:
       'Pricing is scoped to your business. Book a 30-minute Zoom call and we will map your channels, goals, and the right system together. You leave the call with a clear plan and a clear price.',
   },
@@ -167,9 +168,9 @@ export default function ContentOsPage() {
                 <CoreSectionHeading
                   as="h1"
                   variant="hero"
-                  eyebrow="Content OS"
-                  title="AI agents that scale your content and ads."
-                  description="Across every social platform and your website. Implemented in 3 months, then optimized every month."
+                  eyebrow="Content"
+                  title="Content that gets found and shared."
+                  description="A system that plans, produces, and publishes across every social platform and your website. Implemented in 3 months, then optimized every month."
                   titleClassName="max-w-[20ch]"
                 />
 
@@ -188,7 +189,7 @@ export default function ContentOsPage() {
                     rel="noopener noreferrer"
                     variant="heroPrimary"
                     label="book a free demo"
-                    location="content-os hero"
+                    location="content hero"
                   >
                     {BOOK_A_CALL_CTA.label}
                   </CoreActionLink>
@@ -213,7 +214,7 @@ export default function ContentOsPage() {
           >
             <CoreSectionHeading
               eyebrow="What it does"
-              title="A content and ads team, run by agents."
+              title="A content team, run by agents."
               description="Four capabilities working as one system, so your brand ships more, everywhere, without a bigger team."
             />
             <div className="grid gap-4 sm:grid-cols-2">
@@ -280,7 +281,7 @@ export default function ContentOsPage() {
             <CoreSectionHeading
               eyebrow="Proof"
               title="Our own reach is the proof."
-              description="Content OS is the same system Prism runs on itself. These are our audiences and the views behind them."
+              description="This is the same system Prism runs on itself. These are our audiences and the views behind them."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               {PROOF_TILES.map((tile) => (
@@ -350,7 +351,7 @@ export default function ContentOsPage() {
                   rel="noopener noreferrer"
                   variant="heroPrimary"
                   label="book a free demo"
-                  location="content-os pricing"
+                  location="content pricing"
                 >
                   {BOOK_A_CALL_CTA.label}
                 </CoreActionLink>
@@ -388,8 +389,8 @@ export default function ContentOsPage() {
             )}
           >
             <CoreSectionHeading
-              title="Start Content OS."
-              description="Put AI agents to work on your content and ads across every platform and your website."
+              title="Start the content system."
+              description="Put a publishing engine to work on your social channels and website. When you are ready to spend, Prism Ads picks up the winners."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
@@ -398,24 +399,25 @@ export default function ContentOsPage() {
                 rel="noopener noreferrer"
                 variant="heroPrimary"
                 label="book a free demo"
-                location="content-os final"
+                location="content final"
               >
                 {BOOK_A_CALL_CTA.label}
               </CoreActionLink>
             </div>
           </div>
         </section>
+        <ServiceSiblings current="content" />
       </main>
       <Footer />
       <ServiceSchema
-        serviceId="content-os"
-        name={CONTENT_OS_OFFER.name}
+        serviceId="content"
+        name="Prism Content"
         description={CONTENT_OS_OFFER.description}
         serviceType="Content and social media marketing"
         areaServed="United States"
         offerDetails={{
           name: CONTENT_OS_OFFER.name,
-          description: `AI agents that scale content and ads across every social platform and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
+          description: `A content system that plans, produces, and publishes across every social platform and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

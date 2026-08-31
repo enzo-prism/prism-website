@@ -77,6 +77,7 @@ const coreServices: CoreService[] = [
     illustration: 'ads',
     summary:
       'Strategy, creative, and execution for always-on paid search and paid social campaigns.',
+    learnMoreLinks: [{ label: 'ads', href: '/ads' }],
     outcomes: [
       'Full-funnel campaign setup across Google, Meta, and TikTok',
       'High-performing creative, landing pages, and reporting',
@@ -99,6 +100,7 @@ const coreServices: CoreService[] = [
     summary:
       'Operator-friendly content systems for email, video, blogs, and in-practice storytelling.',
     learnMoreLinks: [
+      { label: 'content', href: '/content' },
       {
         label: 'custom email for dental practices',
         href: '/custom-email-for-dental-practices',
@@ -266,7 +268,7 @@ const slugify = (value: string) =>
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Services',
   description:
-    'Websites, local SEO, paid ads, content, and analytics built to help your business get found, trusted, and chosen.',
+    'Website, content, and ads: the three Prism services that help your business get found, trusted, and chosen.',
   path: '/services',
   ogImage: '/prism-opengraph.png',
 })
@@ -286,26 +288,33 @@ export default function ServicesPage() {
               <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
                 services
               </p>
-              <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                one partner for every growth lever
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+                Website. Content. Ads.
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Prism brings together websites, local presence, paid media,
-                content, and analytics so you don't have to juggle five vendors.
-                Pick what you need today and add new levers when you're ready.
+                Prism helps with three things. The website makes choosing you
+                easy. Content keeps you found and trusted. Ads bring the right
+                customers without wasted spend. Everything else supports those
+                three.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/get-started"
+                  href="/websites"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
-                  get started
+                  Website
                 </Link>
                 <Link
-                  href="/get-started"
+                  href="/content"
                   className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
                 >
-                  talk with prism
+                  Content
+                </Link>
+                <Link
+                  href="/ads"
+                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+                >
+                  Ads
                 </Link>
               </div>
             </div>
