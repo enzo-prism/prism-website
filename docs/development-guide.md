@@ -121,6 +121,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
   - If `seo/inventory.csv` shows a clipped or vague result, improve the route’s source copy first; do **not** immediately tighten or loosen the global limits.
 - Default metadata workflow for blog and library routes:
   - Let the generator fall back to `title` / `description` by default.
+  - Keep Library title tags to the post title; speaker names belong in the visible page content and should not crowd the compact metadata budget.
   - Add `seoTitle` / `seoDescription` only when the rendered inventory shows a weak snippet, duplicate title, or low-intent phrasing.
   - Keep blog overrides aligned with the visible article promise; do not write clickbait search titles that diverge from the actual post.
 - Use `seo/inventory.csv` as the source of truth for final rendered snippets. Review `final_title` and `meta_description`, not just the source `titleStem` or frontmatter strings.

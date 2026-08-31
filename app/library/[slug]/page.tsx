@@ -24,8 +24,7 @@ interface PageProps {
 
 const buildMetadata = (post: LibraryPost): Metadata => {
   const canonical = canonicalUrl(`/library/${post.slug}`)
-  const speakerName = post.editorial?.speaker?.name
-  const rawTitle = speakerName ? `${speakerName}: ${post.title}` : post.title
+  const rawTitle = post.title
   const title = buildAbsoluteTitle(rawTitle)
   const description = buildMinimalDescription(
     rawTitle,

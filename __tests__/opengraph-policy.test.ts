@@ -64,4 +64,14 @@ describe('site-wide Open Graph image policy', () => {
       existsSync(join(appDirectory, 'chatgpt-ads/twitter-image.tsx')),
     ).toBe(false)
   })
+
+  it('keeps Library metadata titles compact by excluding speaker prefixes', () => {
+    const source = readFileSync(
+      join(appDirectory, 'library/[slug]/page.tsx'),
+      'utf8',
+    )
+
+    expect(source).toContain('const rawTitle = post.title')
+    expect(source).not.toContain('speakerName ?')
+  })
 })
