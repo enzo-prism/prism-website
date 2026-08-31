@@ -190,7 +190,7 @@ Other routes can diverge when the content format truly requires it, but they sho
 
 ### Retired light surface: Founder OS
 
-`/founder-os` and `/founder-os/apply` now 301-redirect to `/content-os`. The leftover `[data-surface='founder-os']` CSS in `app/globals.css` and `components/founder-os/FosReveal.tsx` are archival only. Do not revive the light Founder OS theme on a live route, and do not leak those tokens onto other pages.
+`/founder-os` and `/founder-os/apply` now 301-redirect to `/content`. `/content-os` also 301-redirects to `/content`. The leftover `[data-surface='founder-os']` CSS in `app/globals.css` and `components/founder-os/FosReveal.tsx` are archival only. Do not revive the light Founder OS theme on a live route, and do not leak those tokens onto other pages.
 
 ### Scoped surface: ChatGPT Ads (`/chatgpt-ads`)
 
@@ -388,14 +388,16 @@ The navbar should stay minimal:
 
 It should feel like part of the page shell, not a separate app chrome layer.
 
-The 2026-07 rail is a flat seven-item list (the four offers, wall of love +
-case studies, then contact; no dropdowns and no CTA button): links are quiet
-rounded pills — active is a soft `white/[0.08]` wash, hover a lighter
-`white/[0.04]` — with 1px `white/14` hairlines dividing the three groups
-(offers | proof | contact). The inline rail takes over from the menu button
-at `lg` (1024px), and the logo tagline shows only from `xl` so the compact
-bar and the 1024px rail both stay a single 72px row. The mobile sheet is a
-full-viewport panel pinned under that chrome (offers | proof | contact, no
+The 2026-08 rail is Home, a Services dropdown (website / content / ads),
+then case studies and wall of love. Contact, pricing, Dental OS, and
+Infinity stay in the footer and on `/pricing`. There is no CTA button in
+the header. Desktop links are quiet rounded pills — active is a soft
+`white/[0.08]` wash, hover a lighter `white/[0.04]`. The Services menu is
+an out-of-flow absolute panel so it never rewrites `--prism-header-height`.
+The inline rail takes over from the menu button at `lg` (1024px), and the
+logo tagline shows only from `xl` so the compact bar and the 1024px rail
+both stay a single 72px row. The mobile sheet is a full-viewport panel
+pinned under that chrome (home | services | proof, no nested dropdown, no
 index prefixes). It must stay out of flow so opening it never rewrites
 `--prism-header-height` or shifts the page underneath.
 
