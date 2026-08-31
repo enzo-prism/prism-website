@@ -75,7 +75,7 @@ const partnerLevels = [
     title: 'Content OS',
     price: 'Scoped on a call',
     description:
-      'A system that runs your content and ads across every platform and your website. Implemented over 3 months, then optimized every month.',
+      'A system that plans, produces, and publishes content across your website and every social platform. Implemented over 3 months, then optimized every month.',
   },
   {
     title: 'Prism Infinity',
@@ -457,7 +457,7 @@ function PricingStructuredData() {
           description: contentOs.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
-          url: 'https://www.design-prism.com/content-os',
+                          url: 'https://www.design-prism.com/content',
         }}
       />
       <ServiceSchema
