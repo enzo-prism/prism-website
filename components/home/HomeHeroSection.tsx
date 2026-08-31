@@ -274,12 +274,12 @@ export default function HomeHeroSection() {
                       <p className="text-pretty font-sans text-[0.9rem] leading-6 text-[#cfc7ba]">
                         Grown end to end by Prism, powered by{' '}
                         <TrackedLink
-                          href="/content-os"
-                          label="content os"
+                          href="/content"
+                          label="content"
                           location="homepage hero social reach"
                           className="group/cos inline-flex items-baseline gap-0.5 font-medium text-[#d8bc79] underline-offset-4 transition-colors hover:text-[#e8cd8a] hover:underline focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                         >
-                          Content OS
+                          Content
                           <span
                             aria-hidden="true"
                             className="transition-transform duration-300 group-hover/cos:translate-x-0.5"
