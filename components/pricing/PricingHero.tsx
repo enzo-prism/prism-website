@@ -31,7 +31,7 @@ export default function PricingHero() {
             <CoreSectionHeading
               eyebrow="Pricing"
               title="A clearer way to invest in growth."
-              description="Pick how you want to grow: a PRO website for your online presence, Content OS to scale your content and ads, Dental OS for your whole practice, or every Prism service on tap with Prism Infinity. Each one scoped on a 30-minute call."
+              description="Pick how you want to grow: a PRO website for your online presence, Content OS to keep you publishing, Dental OS for your whole practice, or every Prism service on tap with Prism Infinity. Each one scoped on a 30-minute call."
               as="h1"
               variant="hero"
               titleClassName="max-w-[9ch]"

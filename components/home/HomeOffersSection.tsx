@@ -6,19 +6,9 @@ import {
   CoreSectionHeading,
 } from '@/components/core-route/CoreRoutePrimitives'
 import HomeReveal from '@/components/home/HomeReveal'
-import {
-  CANONICAL_PRICING_OFFERS,
-  PRICING_OFFER_ORDER,
-  WEBSITE_START_CTA,
-} from '@/lib/pricing-model'
+import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { PRISM_SERVICES } from '@/lib/services'
 import { cn } from '@/lib/utils'
-
-const OFFER_INDEX_LABELS: Record<string, string> = {
-  website: '01 · Website',
-  content_os: '02 · Content',
-  dental_os: '03 · Dental',
-  prism_infinity: '04 · Infinity',
-}
 
 export default function HomeOffersSection() {
   return (
@@ -26,22 +16,22 @@ export default function HomeOffersSection() {
       <div className={coreRouteContainerClassName}>
         <HomeReveal>
           <CoreSectionHeading
-            eyebrow="Ways to work together"
-            title="Four ways to grow with Prism."
-            description="A PRO website for your online presence, a system that runs your content, your whole dental front office, or every Prism service at once. Each scoped on a 30-minute call."
+            eyebrow="What Prism does"
+            title="Website. Content. Ads."
+            description="Three jobs that grow a practice. Start with the website, then keep the content and ads running so the phone stays busy."
+            titleClassName="max-w-[18ch]"
           />
         </HomeReveal>
 
-        <div className="mt-12 grid gap-4 sm:gap-5 lg:grid-cols-2">
-          {PRICING_OFFER_ORDER.map((offerId, index) => {
-            const offer = CANONICAL_PRICING_OFFERS[offerId]
-            const isLead = offerId === 'website'
+        <div className="mt-12 grid gap-4 sm:gap-5 lg:grid-cols-3">
+          {PRISM_SERVICES.map((service, index) => {
+            const isLead = service.id === 'website'
             const primaryCta =
-              offerId === 'website' ? WEBSITE_START_CTA : offer.primaryCta
+              service.id === 'website' ? WEBSITE_START_CTA : service.primaryCta
 
             return (
               <HomeReveal
-                key={offerId}
+                key={service.id}
                 delay={80 + index * 60}
                 className="h-full"
               >
@@ -52,36 +42,24 @@ export default function HomeOffersSection() {
                     isLead && 'border-white/20 bg-black/45',
                   )}
                 >
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
-                  {OFFER_INDEX_LABELS[offerId] ?? `0${index + 1}`}
-                </p>
-
-                <div className="space-y-3">
-                  <h3 className="font-sans text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-[#f5f0e8]">
-                    {offer.name}
-                  </h3>
-                  <div>
-                    <p className="font-sans text-[1.05rem] text-[#f5f0e8]">
-                      {offer.priceLabel}
-                    </p>
-                    {offer.priceSubLabel ? (
-                      <p className="mt-1 font-sans text-[0.82rem] leading-snug text-[#8f877b]">
-                        {offer.priceSubLabel}
-                      </p>
-                    ) : null}
-                  </div>
-                  <p className="text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
-                    {offer.description}
+                  <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
+                    {`0${index + 1} · ${service.name}`}
                   </p>
-                </div>
 
-                  <div className="mt-auto pt-2">
+                  <div className="space-y-3">
+                    <h3 className="font-sans text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-[#f5f0e8]">
+                      {service.homeTitle}
+                    </h3>
+                    <p className="text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
+                      {service.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto flex flex-col gap-3 pt-2">
                     <CoreActionLink
                       href={primaryCta.href}
                       target={
-                        primaryCta.href.startsWith('/')
-                          ? undefined
-                          : '_blank'
+                        primaryCta.href.startsWith('/') ? undefined : '_blank'
                       }
                       rel={
                         primaryCta.href.startsWith('/')
@@ -89,10 +67,19 @@ export default function HomeOffersSection() {
                           : 'noopener noreferrer'
                       }
                       label={primaryCta.label.toLowerCase()}
-                      location={`homepage offers · ${offer.name}`}
+                      location={`homepage offers · ${service.name}`}
                       variant="primary"
                     >
                       {primaryCta.label}
+                    </CoreActionLink>
+                    <CoreActionLink
+                      href={service.href}
+                      label={service.homeCta.toLowerCase()}
+                      location={`homepage offers · explore ${service.name}`}
+                      variant="primary"
+                      className="border-transparent text-[#8f877b] hover:border-[#f5f0e8] hover:text-[#f5f0e8]"
+                    >
+                      {service.homeCta}
                     </CoreActionLink>
                   </div>
                 </div>
@@ -103,8 +90,18 @@ export default function HomeOffersSection() {
 
         <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
-            Not ready to buy? Start free. Create a Growth Dashboard and request
-            a free deep audit from our team.
+            Dental OS and Prism Infinity package these services for practices
+            that want the whole system running.{' '}
+            <CoreActionLink
+              href="/pricing"
+              label="see packaged offers"
+              location="homepage offers · packaged"
+              variant="primary"
+              className="inline-flex min-h-0 border-transparent pb-0 text-[0.96rem] font-medium normal-case tracking-normal text-[#f5f0e8]"
+            >
+              See packaged offers
+            </CoreActionLink>
+            . Not ready to buy? Start free.
           </p>
           <CoreActionLink
             href="/get-started"
