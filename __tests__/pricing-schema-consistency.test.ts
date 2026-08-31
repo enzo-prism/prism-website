@@ -18,9 +18,15 @@ describe('pricing schema consistency', () => {
         'utf8',
       )
       expect(content).not.toContain('priceRange')
-      expect(content).toMatch(
-        /url: ["']https:\/\/www\.design-prism\.com\/pricing["']/,
-      )
+      if (relativePath === 'app/ads/page.tsx') {
+        expect(content).toMatch(
+          /url: ["']https:\/\/www\.design-prism\.com\/ads["']/,
+        )
+      } else {
+        expect(content).toMatch(
+          /url: ["']https:\/\/www\.design-prism\.com\/pricing["']/,
+        )
+      }
     })
   }
 

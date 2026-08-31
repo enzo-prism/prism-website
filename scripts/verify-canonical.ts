@@ -3,6 +3,7 @@ const DEFAULT_PATHS = [
   "/",
   "/services",
   "/websites",
+  "/content",
   "/ads",
   "/local-listings",
   "/pricing",

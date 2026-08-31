@@ -11,7 +11,7 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/free-analysis',
   '/services',
   '/websites',
-  '/content-os',
+  '/content',
   '/dental-os',
   '/prism-infinity',
   '/ads',
