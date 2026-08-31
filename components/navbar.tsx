@@ -7,16 +7,16 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Breadcrumbs from '@/components/breadcrumbs'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
 import {
-  CONTACT_NAV_ITEM,
-  LOGO_CONFIG,
-  OFFER_NAV_ITEMS,
+  HOME_NAV_ITEM,
   PROOF_NAV_ITEMS,
 } from '@/lib/constants'
 import type { NavItem } from '@/lib/constants'
+import { PRISM_SERVICES, isServicePath } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 
 import CoreImage from './core-image'
+import { LOGO_CONFIG } from '@/lib/constants'
 
 type BreadcrumbItem = {
   name: string
@@ -26,16 +26,10 @@ type BreadcrumbItem = {
 type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
-// The inline desktop nav takes over from the menu button at this width.
-// Dropping the "more" dropdown freed enough row width for the flat five-item
-// rail to appear from lg (1024px) instead of xl.
+const SERVICES_MENU_ID = 'services-menu'
 const DESKTOP_NAV_BREAKPOINT = 1024
 const HEADER_CLASSES =
   'border-b border-white/12 bg-black text-[#f5f0e8] transition-[background-color,border-color,color]'
-// Flat rail (2026-07-27 redesign): quiet rounded pills instead of underlines —
-// the active route reads as gentle containment, hover is a lighter wash. Tiny
-// uppercase tracking per the DESIGN.md navbar contract. Compact horizontal
-// padding so the seven items (offers | proof | contact) fit from lg (1024px).
 const DESKTOP_LINK_CLASSES =
   'whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors'
 const MOBILE_LINK_CLASSES =
@@ -66,11 +60,7 @@ function isNavItemActive(pathname: string | null, href: string) {
 }
 
 function getNavItemClasses(active: boolean, variant: NavVariant) {
-  const activeClasses =
-    variant === 'desktop'
-      ? 'bg-white/[0.08] text-[#f5f0e8]'
-      : 'bg-white/[0.08] text-[#f5f0e8]'
-
+  const activeClasses = 'bg-white/[0.08] text-[#f5f0e8]'
   const inactiveClasses =
     variant === 'desktop'
       ? 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8]'
@@ -87,11 +77,13 @@ function NavbarLinks({
   pathname,
   variant,
   onNavigate,
+  startIndex = 0,
 }: {
   items: NavItem[]
   pathname: string | null
   variant: NavVariant
   onNavigate: (label: string, href: string) => void
+  startIndex?: number
 }) {
   return (
     <>
@@ -111,7 +103,7 @@ function NavbarLinks({
             )}
             style={
               variant === 'mobile'
-                ? { animationDelay: `${index * 40}ms` }
+                ? { animationDelay: `${(startIndex + index) * 40}ms` }
                 : undefined
             }
           >
@@ -123,6 +115,123 @@ function NavbarLinks({
   )
 }
 
+function ServicesDropdown({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string | null
+  onNavigate: (label: string, href: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  const closeTimer = useRef<number | null>(null)
+  const serviceActive = isServicePath(pathname)
+
+  const clearCloseTimer = () => {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current)
+      closeTimer.current = null
+    }
+  }
+
+  const scheduleClose = () => {
+    clearCloseTimer()
+    closeTimer.current = window.setTimeout(() => setOpen(false), 120)
+  }
+
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!open) return
+
+    const handlePointer = (event: MouseEvent) => {
+      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+
+    document.addEventListener('mousedown', handlePointer)
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      document.removeEventListener('mousedown', handlePointer)
+      document.removeEventListener('keydown', handleKey)
+    }
+  }, [open])
+
+  useEffect(() => () => clearCloseTimer(), [])
+
+  return (
+    <div
+      ref={wrapRef}
+      className="relative"
+      onMouseEnter={() => {
+        clearCloseTimer()
+        setOpen(true)
+      }}
+      onMouseLeave={scheduleClose}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-controls={SERVICES_MENU_ID}
+        className={getNavItemClasses(serviceActive || open, 'desktop')}
+        onClick={() => {
+          clearCloseTimer()
+          setOpen((value) => !value)
+        }}
+      >
+        services
+        <span
+          aria-hidden="true"
+          className={cn(
+            'ml-1.5 inline-block text-[9px] transition-transform duration-200',
+            open && 'rotate-180',
+          )}
+        >
+          ▾
+        </span>
+      </button>
+      {open ? (
+        <div
+          id={SERVICES_MENU_ID}
+          className="absolute left-0 top-[calc(100%+0.65rem)] z-[60] w-[19.5rem] rounded-2xl border border-white/12 bg-black p-2 shadow-[0_28px_70px_-32px_rgba(0,0,0,0.9)]"
+        >
+          <p className="sr-only">Services</p>
+          {PRISM_SERVICES.map((service) => {
+            const active = isNavItemActive(pathname, service.href)
+            return (
+              <Link
+                key={service.href}
+                href={service.href}
+                aria-label={service.label}
+                aria-current={active ? 'page' : undefined}
+                onClick={() => onNavigate(service.label, service.href)}
+                className={cn(
+                  'flex flex-col rounded-xl px-3.5 py-3 transition-colors',
+                  active
+                    ? 'bg-white/[0.08] text-[#f5f0e8]'
+                    : 'text-[#f5f0e8] hover:bg-white/[0.05]',
+                )}
+              >
+                <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
+                  {service.label}
+                </span>
+                <span className="mt-1 font-sans text-[0.82rem] font-normal normal-case tracking-[-0.01em] text-[#b8afa2]">
+                  {service.navDescription}
+                </span>
+              </Link>
+            )
+          })}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
 function MobileNavGroups({
   pathname,
   onNavigate,
@@ -130,7 +239,11 @@ function MobileNavGroups({
   pathname: string | null
   onNavigate: (label: string, href: string) => void
 }) {
-  const groups = [OFFER_NAV_ITEMS, PROOF_NAV_ITEMS, [CONTACT_NAV_ITEM]] as const
+  const groups = [
+    [HOME_NAV_ITEM],
+    PRISM_SERVICES.map(({ label, href }) => ({ label, href })),
+    PROOF_NAV_ITEMS,
+  ] as const
 
   return (
     <div className="flex flex-col">
@@ -142,11 +255,17 @@ function MobileNavGroups({
             'divide-y divide-white/12',
           )}
         >
+          {groupIndex === 1 ? (
+            <p className="px-0 pt-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
+              services
+            </p>
+          ) : null}
           <NavbarLinks
             items={[...items]}
             pathname={pathname}
             variant="mobile"
             onNavigate={onNavigate}
+            startIndex={groupIndex * 3}
           />
         </div>
       ))}
@@ -172,11 +291,6 @@ export default function Navbar() {
   useEffect(() => {
     if (!isMobileMenuOpen) return
 
-    // Full-screen menu: lock the page behind it (touch scroll otherwise
-    // chains to the body) and make it inert so focus cannot tab into
-    // content underneath the panel. Both scrollers are locked: body
-    // overflow alone does not reach the viewport when the root element
-    // carries its own overflow styles.
     const { body, documentElement } = document
     const header = headerRef.current
     const menuButton = menuButtonRef.current
@@ -189,9 +303,6 @@ export default function Navbar() {
     const inertTargets = Array.from(
       document.querySelectorAll<HTMLElement>('main, footer'),
     ).filter((element) => !element.closest('header'))
-    // Body-level overlays (e.g. the ElevenLabs widget) are siblings of the
-    // app root and can paint above the menu — inert them too, keeping only
-    // subtrees that contain this header.
     const bodyLevelTargets = Array.from(document.body.children).filter(
       (element): element is HTMLElement =>
         element instanceof HTMLElement &&
@@ -220,8 +331,6 @@ export default function Navbar() {
       if (event.key === 'Escape') setIsMobileMenuOpen(false)
     }
     const handleResize = () => {
-      // The horizontal nav takes over at lg (1024px); close the panel so it
-      // never lingers behind the desktop layout after a resize or rotation.
       if (window.innerWidth >= DESKTOP_NAV_BREAKPOINT)
         setIsMobileMenuOpen(false)
     }
@@ -257,9 +366,6 @@ export default function Navbar() {
     const chrome = chromeRef.current
     if (!chrome) return
 
-    // Measure only the 72px bar (+ breadcrumbs). The mobile sheet is
-    // out-of-flow and must never rewrite this variable, or the homepage
-    // hero padding and every sticky offset jump when the menu opens.
     const updateHeaderHeight = () => {
       document.documentElement.style.setProperty(
         '--prism-header-height',
@@ -357,9 +463,13 @@ export default function Navbar() {
               className="hidden items-center gap-0.5 lg:flex xl:gap-1 2xl:gap-2"
             >
               <NavbarLinks
-                items={OFFER_NAV_ITEMS}
+                items={[HOME_NAV_ITEM]}
                 pathname={pathname}
                 variant="desktop"
+                onNavigate={handleNavigate}
+              />
+              <ServicesDropdown
+                pathname={pathname}
                 onNavigate={handleNavigate}
               />
               <span
@@ -368,16 +478,6 @@ export default function Navbar() {
               />
               <NavbarLinks
                 items={PROOF_NAV_ITEMS}
-                pathname={pathname}
-                variant="desktop"
-                onNavigate={handleNavigate}
-              />
-              <span
-                aria-hidden="true"
-                className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
-              />
-              <NavbarLinks
-                items={[CONTACT_NAV_ITEM]}
                 pathname={pathname}
                 variant="desktop"
                 onNavigate={handleNavigate}
