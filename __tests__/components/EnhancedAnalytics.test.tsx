@@ -138,6 +138,28 @@ describe('EnhancedAnalytics', () => {
     )
   })
 
+  it('does not emit generate_lead when /contact is viewed', () => {
+    mockNavigationState.pathname = '/contact'
+    mockNavigationState.searchParams = new URLSearchParams()
+    window.history.replaceState({}, '', '/contact')
+    document.title = 'Contact | Prism'
+
+    render(<EnhancedAnalytics title="Contact | Prism" />)
+    flushAnalyticsDelay()
+
+    expect(mockTrackPageView).toHaveBeenCalledWith(
+      '/contact',
+      'Contact | Prism',
+      {
+        previousPath: null,
+        previousUrl: null,
+      },
+    )
+    expect(
+      mockTrackEvent.mock.calls.some(([eventName]) => eventName === 'generate_lead'),
+    ).toBe(false)
+  })
+
   it('keeps search parameter change events on the standard page_path field', () => {
     mockNavigationState.searchParams = new URLSearchParams('utm_source=codex')
     window.history.replaceState({}, '', '/?utm_source=codex')
