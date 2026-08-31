@@ -331,7 +331,7 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 - Visual surface is OpenAI-informed (warm off-white, hairline rules, pill CTAs) while the Prism navbar/footer stay black. Built on the shadcn/ui radix-vega grammar via a page-scoped semantic token remap in `components/chatgpt-ads/chatgpt-ads.module.css`. The page alternates an editorial hero, near-black trust band, intent rail, contained process panel, quiet invite frame, and native `<details>` FAQ. Scoped in `DESIGN.md`.
 - Access gate: `components/chatgpt-ads/ChatGptAdsAccess.tsx` posts to `/api/chatgpt-ads/unlock`. Valid codes live in `lib/chatgpt-ads-invites.ts` (not the client bundle). Example partner code: `michael` for Dr. Michael Njo.
 - After unlock, the page reveals Prism’s 30-minute Notion booking CTA (`BOOK_A_CALL_CTA`).
-- Indexable. Keep it in `lib/seo/search-visibility.ts` and `public/llms.txt`. Custom OG via `app/chatgpt-ads/opengraph-image.tsx`.
+- Indexable. Keep it in `lib/seo/search-visibility.ts` and `public/llms.txt`. Like every route, it uses the site-wide `public/prism-opengraph.png` social image.
 - Not in the main nav or footer. Share the URL, or `/chatgpt-ads?code=michael`.
 
 ## Facebook Ads for Dentists (`app/facebook-ads-for-dentists/page.tsx`)

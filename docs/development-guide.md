@@ -112,7 +112,8 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 - Route-level metadata should use `buildRouteMetadata` from `lib/seo/metadata.ts` so titles, descriptions, canonical URLs, Open Graph, Twitter, and robots directives stay consistent.
 - Titles use one `| Prism` suffix unless the title already starts with the brand, such as `Prism Infinity`; descriptions are normalized with shared rules in `lib/seo/rules.ts`.
-- Metadata should stay clean, descriptive, and concise. The shared internal budgets trim page titles to 56 characters and meta descriptions to 150 characters across route, blog, and library pages; these are editorial guardrails, not limits published by Google.
+- Metadata should stay clean, descriptive, and minimal. The shared internal budgets trim page titles to 48 characters and meta descriptions to 96 characters across route, blog, and library pages; these are editorial guardrails, not limits published by Google.
+- Authored descriptions that already fit the compact budget are preserved. Longer copy keeps a complete opening sentence when possible; otherwise the helper creates a short title-led overview instead of publishing a clipped fragment.
 - Shared normalization preserves common search terms and product nouns (`SEO`, `AI`, `Google Maps`, `ChatGPT`, `TikTok`, etc.) and keeps useful brand descriptors like `Case Study`, `Podcast`, and `Careers` instead of stripping them out.
 - Default metadata workflow for static routes:
   - Set a clear `titleStem` + `description` on the page and let `buildRouteMetadata` generate the final title, canonical, OG, Twitter, and robots fields.

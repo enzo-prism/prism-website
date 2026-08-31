@@ -1,9 +1,13 @@
 import BlogPostLayout from '@/components/blog-post-layout'
 import { getPost } from '@/lib/mdx-data'
-import { getBlogOpenGraphImage } from '@/lib/blog-images'
 import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
-import { buildAbsoluteTitle, buildMinimalDescription } from '@/lib/seo/rules'
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  buildAbsoluteTitle,
+  buildMinimalDescription,
+} from '@/lib/seo/rules'
 import {
   getOutboundLinkRulesForPost,
   type BlogOutboundLinkProfile,
@@ -74,22 +78,15 @@ export async function generateMetadata({
 
   const base =
     process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
-  const datedOpenGraphImage = getBlogOpenGraphImage(
-    frontmatter.date,
-    frontmatter.image,
-    base,
-  )
   const ogImages = [
     {
-      url: datedOpenGraphImage,
+      url: DEFAULT_OG_IMAGE,
       width: 1200,
       height: 630,
-      alt: frontmatter.title,
+      alt: DEFAULT_OG_IMAGE_ALT,
     },
   ]
-  // Twitter must advertise the same image the OG policy selects; frontmatter
-  // image lists are intentionally overridden by the dated OG image system.
-  const twitterImages = [datedOpenGraphImage]
+  const twitterImages = [DEFAULT_OG_IMAGE]
 
   const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
   const seoTitle = buildAbsoluteTitle(frontmatter.seoTitle || frontmatter.title || 'Blog post')

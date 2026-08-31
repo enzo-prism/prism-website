@@ -20,7 +20,6 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   path: '/chatgpt-ads',
-  ogImage: false,
 })
 
 const shellClass = 'mx-auto w-full max-w-6xl px-5 sm:px-8'

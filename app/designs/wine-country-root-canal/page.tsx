@@ -5,7 +5,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = 'Wine Country Root Canal design review'
 const PAGE_DESCRIPTION =
-  'Review the live design system, collateral, and next steps for Dr. Anderson on Prism\'s design board, where feedback, files, and rollout notes live.'
+  'Review Dr. Anderson\'s live design system, collateral, feedback, and rollout notes.'
 const CANONICAL_URL = "https://www.design-prism.com/designs/wine-country-root-canal"
 
 export const metadata: Metadata = buildRouteMetadata({

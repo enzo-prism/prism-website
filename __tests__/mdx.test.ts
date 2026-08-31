@@ -8,6 +8,7 @@ import BlogPostPage, { generateMetadata } from '../app/blog/[slug]/page'
 import { renderPost } from '../lib/mdx'
 import { getAllPosts, getPost } from '../lib/mdx-data'
 import { DEFAULT_BLOG_FEATURED_IMAGE, getBlogOpenGraphImage } from '../lib/blog-images'
+import { DEFAULT_OG_IMAGE, DEFAULT_OG_IMAGE_ALT } from '../lib/seo/rules'
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(() => {
@@ -52,17 +53,17 @@ describe('mdx helpers', () => {
     expect(ogImage).toBe('https://www.design-prism.com/blog/brand-strategy.png')
   })
 
-  test('generateMetadata sets OG image by post date rule', async () => {
+  test('generateMetadata sets the site-wide OG image for every post date', async () => {
     const oldPostMetadata = await generateMetadata({
       params: Promise.resolve({ slug: 'how-to-choose-local-seo-agency' }),
     })
 
     expect(oldPostMetadata.openGraph?.images).toEqual([
       {
-        url: DEFAULT_BLOG_FEATURED_IMAGE,
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'how to choose a local seo agency (checklist + red flags)',
+        alt: DEFAULT_OG_IMAGE_ALT,
       },
     ])
 
@@ -72,10 +73,10 @@ describe('mdx helpers', () => {
 
     expect(newPostMetadata.openGraph?.images).toEqual([
       {
-        url: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770782009/Skier_xzs8az.png',
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'openclaw, manus, and codex are scaling my business',
+        alt: DEFAULT_OG_IMAGE_ALT,
       },
     ])
   })

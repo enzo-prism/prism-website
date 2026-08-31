@@ -2,15 +2,14 @@ export const BRAND_NAME = "Prism"
 export const BRAND_SUFFIX = " | Prism"
 
 export const TITLE_MIN_LENGTH = 10
-// Google does not publish a fixed title limit. This is an internal budget for
-// concise, descriptive titles that display cleanly across common devices.
-export const TITLE_MAX_LENGTH = 56
+// Compact brand standard; Google does not publish a fixed title limit.
+export const TITLE_MAX_LENGTH = 48
 export const DESCRIPTION_MIN_LENGTH = 24
-// Google truncates snippets to fit the device. Keep authored descriptions
-// focused while leaving enough room to explain the page's main value.
-export const DESCRIPTION_MAX_LENGTH = 150
+// Keep snippets to one short, plain-language thought.
+export const DESCRIPTION_MAX_LENGTH = 96
 
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
+export const DEFAULT_OG_IMAGE_ALT = "Prism logo on a black background"
 
 export const BLOG_MANUAL_OVERRIDE_KEYWORDS = /(dental|seo|ads|local|website|agency|consultant|checklist|playbook)/i
 
@@ -23,6 +22,7 @@ const TRAILING_TITLE_PARTIAL_GROUP_PATTERN = /\s*[\(\[\{][^)\]\}]*$/g
 const TRAILING_DESCRIPTION_JOINER_PATTERN = /\s+(?:and|or|for|to|with|in|on|at|by|of|the|a|an|but)$/i
 const TRAILING_DESCRIPTION_PUNCTUATION_PATTERN = /[\s,:;+–—-]+$/g
 const SENTENCE_END_PATTERN = /[.!?](?=\s|$)/g
+const DESCRIPTION_CLAUSE_END_PATTERN = /[,;:](?=\s|$)/g
 
 const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bai\b/gi, "AI"],
@@ -252,10 +252,7 @@ export function stripLeadingBrand(input: string): string {
   return `${label}: ${rest}`
 }
 
-// Normalize a title stem while PRESERVING keyword-rich phrasing (qualifiers like
-// "for dentists", "local", "management"). Aggressive simplification is reserved
-// for the overflow fallback in buildAbsoluteTitle so we only drop keywords when
-// a title genuinely exceeds the SERP budget.
+// Normalize a title stem while preserving the words that distinguish the page.
 export function normalizeTitleStem(input: string): string {
   const withoutBrand = stripTerminalBrand(stripLeadingBrand(input))
   const cased = capitalizeLeadingLetter(
@@ -264,8 +261,7 @@ export function normalizeTitleStem(input: string): string {
   return cased || BRAND_NAME
 }
 
-// Collapse a stem to its most minimal keyword form. Used only when the full
-// keyword-rich stem is too long to fit within TITLE_MAX_LENGTH.
+// Collapse a stem to its most minimal keyword form for editorial tooling.
 export function simplifyTitleStem(input: string): string {
   const withoutBrand = stripTerminalBrand(stripLeadingBrand(input))
   const cased = capitalizeLeadingLetter(
@@ -279,19 +275,18 @@ export function simplifyTitleStem(input: string): string {
 export function buildAbsoluteTitle(stem: string): string {
   const maxStemLength = TITLE_MAX_LENGTH - BRAND_SUFFIX.length
 
-  // Prefer the full keyword-rich stem whenever it fits the SERP budget.
-  const fullStem = cleanTrimmedTitle(normalizeTitleStem(stem))
+  // Keep the page's distinguishing words and trim cleanly at the compact budget.
+  const normalizedStem = normalizeTitleStem(stem)
+  const fullStem = cleanTrimmedTitle(normalizedStem)
   if (/^Prism(?:\s|$)/i.test(fullStem)) {
     return cleanTrimmedTitle(trimToWordBoundary(fullStem, TITLE_MAX_LENGTH))
   }
-  if (fullStem && fullStem !== BRAND_NAME && fullStem.length <= maxStemLength) {
-    return `${fullStem}${BRAND_SUFFIX}`
+  if (normalizedStem && normalizedStem !== BRAND_NAME && normalizedStem.length <= maxStemLength) {
+    return `${normalizedStem}${BRAND_SUFFIX}`
   }
-
-  // Too long: fall back to the simplified stem, then hard-trim to the budget.
-  const simplified = cleanTrimmedTitle(simplifyTitleStem(stem))
-  const candidate = simplified && simplified.length <= maxStemLength ? simplified : fullStem || simplified
-  const trimmedStem = cleanTrimmedTitle(trimToWordBoundary(candidate, maxStemLength))
+  const trimmedStem = cleanTrimmedTitle(
+    trimToWordBoundary(fullStem, maxStemLength),
+  )
   return `${trimmedStem || BRAND_NAME}${BRAND_SUFFIX}`
 }
 
@@ -308,9 +303,18 @@ export function normalizeDescription(input: string): string {
 
   if (
     typeof lastSentenceEnd === "number" &&
-    lastSentenceEnd >= Math.floor(DESCRIPTION_MAX_LENGTH * 0.6)
+    lastSentenceEnd >= DESCRIPTION_MIN_LENGTH
   ) {
     return hardSlice.slice(0, lastSentenceEnd + 1).trim()
+  }
+
+  const clauseEndings = Array.from(hardSlice.matchAll(DESCRIPTION_CLAUSE_END_PATTERN))
+  const lastClauseEnd = clauseEndings.at(-1)?.index
+  if (
+    typeof lastClauseEnd === "number" &&
+    lastClauseEnd >= Math.floor(DESCRIPTION_MAX_LENGTH * 0.55)
+  ) {
+    return cleanTrimmedDescription(hardSlice.slice(0, lastClauseEnd))
   }
 
   return cleanTrimmedDescription(trimToWordBoundary(collapsed, DESCRIPTION_MAX_LENGTH))
@@ -335,15 +339,22 @@ export function buildMinimalDescription(
   const prose = (description ?? "").trim()
   if (prose.length >= DESCRIPTION_MIN_LENGTH) {
     const normalized = normalizeDescription(prose)
-    if (normalized) return ensureSentenceEnd(normalized)
+    if (normalized && (prose.length <= DESCRIPTION_MAX_LENGTH || /[.!?]$/.test(normalized))) {
+      return ensureSentenceEnd(normalized)
+    }
   }
 
-  // Fallback: derive a concise description from the (keyword-preserving) title.
-  const stem = normalizeTitleStem(titleStem.trim().length > 0 ? titleStem : BRAND_NAME)
-  const fromStem = cleanTrimmedDescription(
-    trimToWordBoundary(stem, DESCRIPTION_MAX_LENGTH - 1),
-  )
-  if (fromStem && fromStem !== BRAND_NAME) return ensureSentenceEnd(fromStem)
+  // Long prose often clips mid-thought. Use the compact final title instead.
+  const fromStem = buildAbsoluteTitle(
+    titleStem.trim().length > 0 ? titleStem : BRAND_NAME,
+  ).replace(BRAND_SUFFIX, "")
+  if (fromStem && fromStem !== BRAND_NAME) {
+    return ensureSentenceEnd(
+      normalizeDescription(
+        `${fromStem}. A concise overview with the key details from Prism.`,
+      ),
+    )
+  }
 
   // Last resort: use whatever prose we have, even if short.
   if (prose) return ensureSentenceEnd(normalizeDescription(prose))

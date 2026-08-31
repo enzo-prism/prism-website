@@ -40,9 +40,9 @@ const OUTPUT_CSV = path.join(OUTPUT_DIR, "inventory.csv")
 const CANONICAL_HOST = "www.design-prism.com"
 const BRAND_SUFFIX = " | Prism"
 const TITLE_MIN_LENGTH = 10
-const TITLE_MAX_LENGTH = 56
+const TITLE_MAX_LENGTH = 48
 const DESCRIPTION_MIN_LENGTH = 24
-const DESCRIPTION_MAX_LENGTH = 150
+const DESCRIPTION_MAX_LENGTH = 96
 
 const TERMINAL_BRAND_PATTERN = /\s*(?:\||-|–|—|:)\s*(?:design\s+)?prism(?:\s+((?:agency|blog|careers|podcast|services|openai\s+guide|case\s+study)))?\s*$/i
 const LEADING_BRAND_PATTERN = /^\s*(?:design\s+)?prism(?:\s+((?:ai|blog|careers|podcast|services|openai\s+guide)))?\s*(?:\||-|–|—|:)\s*/i
@@ -52,6 +52,7 @@ const TRAILING_TITLE_PUNCTUATION_PATTERN = /[\s,:;+&/-]+$/g
 const TRAILING_DESCRIPTION_JOINER_PATTERN = /\s+(?:and|or|for|to|with|in|on|at|by|of|the|a|an|but)$/i
 const TRAILING_DESCRIPTION_PUNCTUATION_PATTERN = /[\s,:;+–—-]+$/g
 const SENTENCE_END_PATTERN = /[.!?](?=\s|$)/g
+const DESCRIPTION_CLAUSE_END_PATTERN = /[,;:](?=\s|$)/g
 
 const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bai\b/gi, "AI"],
@@ -270,6 +271,9 @@ function buildAbsoluteTitle(stem: string): string {
     return cleanTrimmedTitle(trimToWordBoundary(normalizedStem, TITLE_MAX_LENGTH))
   }
   const maxStemLength = TITLE_MAX_LENGTH - BRAND_SUFFIX.length
+  if (normalizedStem && normalizedStem !== "Prism" && normalizedStem.length <= maxStemLength) {
+    return `${normalizedStem}${BRAND_SUFFIX}`
+  }
   return `${cleanTrimmedTitle(trimToWordBoundary(normalizedStem, maxStemLength))}${BRAND_SUFFIX}`
 }
 
@@ -286,12 +290,51 @@ function normalizeDescription(input: string): string {
 
   if (
     typeof lastSentenceEnd === "number" &&
-    lastSentenceEnd >= Math.floor(DESCRIPTION_MAX_LENGTH * 0.6)
+    lastSentenceEnd >= DESCRIPTION_MIN_LENGTH
   ) {
     return hardSlice.slice(0, lastSentenceEnd + 1).trim()
   }
 
+  const clauseEndings = Array.from(hardSlice.matchAll(DESCRIPTION_CLAUSE_END_PATTERN))
+  const lastClauseEnd = clauseEndings.at(-1)?.index
+  if (
+    typeof lastClauseEnd === "number" &&
+    lastClauseEnd >= Math.floor(DESCRIPTION_MAX_LENGTH * 0.55)
+  ) {
+    return cleanTrimmedDescription(hardSlice.slice(0, lastClauseEnd))
+  }
+
   return cleanTrimmedDescription(trimToWordBoundary(collapsed, DESCRIPTION_MAX_LENGTH))
+}
+
+function ensureSentenceEnd(value: string): string {
+  if (!value) return "Prism."
+  if (/[.!?]$/.test(value)) return value
+  const trimmed = cleanTrimmedDescription(
+    trimToWordBoundary(value, DESCRIPTION_MAX_LENGTH - 1),
+  )
+  return `${trimmed || "Prism"}.`
+}
+
+function buildMinimalDescription(titleStem: string, description?: string): string {
+  const prose = (description ?? "").trim()
+  if (prose.length >= DESCRIPTION_MIN_LENGTH) {
+    const normalized = normalizeDescription(prose)
+    if (normalized && (prose.length <= DESCRIPTION_MAX_LENGTH || /[.!?]$/.test(normalized))) {
+      return ensureSentenceEnd(normalized)
+    }
+  }
+
+  const fromStem = buildAbsoluteTitle(titleStem || "Prism").replace(BRAND_SUFFIX, "")
+  if (fromStem && fromStem !== "Prism") {
+    return ensureSentenceEnd(
+      normalizeDescription(
+        `${fromStem}. A concise overview with the key details from Prism.`,
+      ),
+    )
+  }
+  if (prose) return ensureSentenceEnd(normalizeDescription(prose))
+  return "Prism."
 }
 
 function computeSeoIssueFlags(value: string, kind: "title" | "description"): string[] {
@@ -428,7 +471,8 @@ function extractMetadataFromObject(
     titleStem = getStringFromExpression(titleExpr, constStrings) ?? ""
   }
 
-  const description = normalizeDescription(
+  const description = buildMinimalDescription(
+    titleStem,
     getStringFromExpression(getProp(metadataObj, "description"), constStrings) ?? "",
   )
 
@@ -467,7 +511,10 @@ function extractMetadataFromHelperCall(
   if (!arg || !ts.isObjectLiteralExpression(arg)) return {}
 
   const titleStem = getStringFromExpression(getProp(arg, "titleStem"), constStrings) ?? ""
-  const description = normalizeDescription(getStringFromExpression(getProp(arg, "description"), constStrings) ?? "")
+  const description = buildMinimalDescription(
+    titleStem,
+    getStringFromExpression(getProp(arg, "description"), constStrings) ?? "",
+  )
   const routePath = getStringFromExpression(getProp(arg, "path"), constStrings) ?? fallbackRoute
 
   const indexExpr = getProp(arg, "index")
@@ -630,7 +677,8 @@ function listLibraryEntries(): LibraryEntry[] {
       if (!post.id || !post.platform) return null
       const slug = `${post.platform}-${post.id}`
       const titleStem = normalizeTitleStem(post.title || "Prism library short")
-      const description = normalizeDescription(
+      const description = buildMinimalDescription(
+        titleStem,
         post.caption || `Short lesson from Prism Library: ${post.title || titleStem}.`,
       )
       return {
@@ -660,7 +708,10 @@ function computeBlogSeo(slug: string): {
   const fm = parsed.data as Record<string, unknown>
 
   const titleStem = normalizeTitleStem(String(fm.seoTitle || fm.title || "Blog post"))
-  const description = normalizeDescription(String(fm.seoDescription || fm.description || ""))
+  const description = buildMinimalDescription(
+    titleStem,
+    String(fm.seoDescription || fm.description || ""),
+  )
   const canonical = canonicalUrl(String(fm.canonical || `/blog/${slug}`))
   const h1 = String(fm.h1Title || fm.title || "")
   const robots = getBlogSearchVisibility(slug, fm.searchVisibility)

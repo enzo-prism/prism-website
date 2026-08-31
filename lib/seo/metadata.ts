@@ -4,9 +4,9 @@ import { canonicalUrl } from "@/lib/canonical"
 import {
   BRAND_NAME,
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
   buildAbsoluteTitle,
   buildMinimalDescription,
-  normalizeTitleStem,
 } from "@/lib/seo/rules"
 import { isRouteIndexable } from "@/lib/seo/search-visibility"
 
@@ -15,36 +15,23 @@ export type RouteSeoInput = {
   description: string
   path: string
   index?: boolean
-  /** Pass false when the route ships a file-based opengraph-image. */
+  /** @deprecated Prism now uses one site-wide social image on every route. */
   ogImage?: string | false
-}
-
-function imageFromInput(image?: string | false) {
-  if (image === false) return null
-  return image && image.trim().length > 0 ? image : DEFAULT_OG_IMAGE
-}
-
-function altFromTitle(titleStem: string) {
-  const normalized = normalizeTitleStem(titleStem)
-  return normalized.length > 0 ? normalized : BRAND_NAME
 }
 
 export function buildRouteMetadata(input: RouteSeoInput): Metadata {
   const title = buildAbsoluteTitle(input.titleStem)
   const description = buildMinimalDescription(input.titleStem, input.description)
   const canonical = canonicalUrl(input.path)
-  const ogImage = imageFromInput(input.ogImage)
   const index = input.index !== false && isRouteIndexable(input.path)
-  const images = ogImage
-    ? [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: altFromTitle(input.titleStem),
-        },
-      ]
-    : undefined
+  const images = [
+    {
+      url: DEFAULT_OG_IMAGE,
+      width: 1200,
+      height: 630,
+      alt: DEFAULT_OG_IMAGE_ALT,
+    },
+  ]
 
   return {
     title: {
@@ -61,13 +48,13 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
       siteName: BRAND_NAME,
       type: "website",
       locale: "en_US",
-      ...(images ? { images } : {}),
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(ogImage ? { images: [ogImage] } : {}),
+      images: [DEFAULT_OG_IMAGE],
     },
     robots: index
       ? {

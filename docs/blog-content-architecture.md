@@ -36,23 +36,13 @@ Each MDX file must define:
 
 Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
 
-If you want one consistent social preview image everywhere, set all three fields to the same URL:
-
-```yaml
-image: "https://..."
-openGraph:
-  images:
-    - url: "https://..."
-twitter:
-  images:
-    - "https://..."
-```
+Social previews are intentionally site-wide: every blog post advertises `public/prism-opengraph.png` through both Open Graph and Twitter metadata. Frontmatter `image`, `openGraph.images`, and `twitter.images` values do not override that policy; they can still support visible cards and article content.
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
-Open Graph behavior is date-based in `app/blog/[slug]/page.tsx`: posts before 2026 always use the shared Prism OG image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`), while posts in 2026 and later use each post’s resolved featured image (`frontmatter.image`). Twitter images still honor explicit `twitter.images` first, then `openGraph.images`, then the date-based OG fallback.
+Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` always use `/prism-opengraph.png`. The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
 
-`app/api/og/blog/[slug]/route.tsx` runs on Node.js and reads the same `content/blog/<slug>.mdx` source through `getPost()`. New posts therefore receive a generated OG image without adding a second slug or metadata registry; successful images use immutable caching and unknown slugs return 404. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
+`app/api/og/blog/[slug]/route.tsx` remains available for legacy or explicit API consumers, but it no longer controls the social metadata emitted by blog pages. It runs on Node.js, reads the same `content/blog/<slug>.mdx` source through `getPost()`, uses immutable caching, and returns 404 for unknown slugs. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
 
 `components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads. The site-wide page markdown control lives in `components/copy-page-markdown-button.tsx` and is hidden on blog posts so this source-level copy remains the primary blog behavior.
 

@@ -12,6 +12,11 @@ import {
 } from "@/lib/seo/rules"
 
 describe("SEO metadata rules", () => {
+  it("uses compact site-wide metadata budgets", () => {
+    expect(TITLE_MAX_LENGTH).toBe(48)
+    expect(DESCRIPTION_MAX_LENGTH).toBe(96)
+  })
+
   it("normalizes title stems by removing trailing brand suffix variants", () => {
     expect(normalizeTitleStem("seo audit service | prism | prism")).toBe("SEO audit service")
     expect(normalizeTitleStem("local listings - Design Prism")).toBe("Local listings")
@@ -41,21 +46,22 @@ describe("SEO metadata rules", () => {
     expect(simplifyTitleStem("local seo agency | prism")).toBe("SEO")
   })
 
-  it("preserves keyword-rich titles that fit within the SERP budget", () => {
+  it("keeps distinguishing words while trimming titles to the compact budget", () => {
     expect(buildAbsoluteTitle("Paid Ads Management for Small Businesses")).toBe(
       "Paid Ads Management for Small Businesses | Prism",
     )
     expect(buildAbsoluteTitle("Local Listing Optimization for Small Businesses")).toBe(
-      "Local Listing Optimization for Small Businesses | Prism",
+      "Local Listing Optimization for Small | Prism",
     )
   })
 
-  it("falls back to a simplified, trimmed stem when a title overflows the budget", () => {
+  it("trims long titles cleanly without collapsing them to a generic label", () => {
     const title = buildAbsoluteTitle(
       "Comprehensive Local SEO Services and Google Maps Optimization for Multi-Location Dental Practices",
     )
     expect(title.endsWith(BRAND_SUFFIX)).toBe(true)
     expect(title.length).toBeLessThanOrEqual(TITLE_MAX_LENGTH)
+    expect(title).not.toBe("SEO | Prism")
   })
 
   it("builds absolute titles with exactly one Prism suffix", () => {
@@ -114,9 +120,9 @@ describe("SEO metadata rules", () => {
     expect(description.length).toBeLessThanOrEqual(DESCRIPTION_MAX_LENGTH)
   })
 
-  it("synthesizes a description from the title only when no prose is provided", () => {
+  it("synthesizes a compact title-led overview when no prose is provided", () => {
     expect(buildMinimalDescription("Local SEO services + strategy")).toBe(
-      "Local SEO services + strategy.",
+      "Local SEO services + strategy. A concise overview with the key details from Prism.",
     )
   })
 })
@@ -139,15 +145,20 @@ describe("buildRouteMetadata", () => {
     expect(metadata.title).toEqual({ absolute: "Pricing | Prism" })
     expect(metadata.description).toBe("Simple pricing for local growth teams.")
     expect(metadata.alternates?.canonical).toBe("https://www.design-prism.com/pricing")
-    expect(ogImages[0]).toMatchObject({ url: "/pricing-og.png" })
-    expect(metadata.twitter?.images).toEqual(["/pricing-og.png"])
+    expect(ogImages[0]).toMatchObject({
+      url: "/prism-opengraph.png",
+      width: 1200,
+      height: 630,
+      alt: "Prism logo on a black background",
+    })
+    expect(metadata.twitter?.images).toEqual(["/prism-opengraph.png"])
     expect(metadata.robots).toEqual({ index: false, follow: false })
     expect((metadata.title as { absolute: string }).absolute.length).toBeLessThanOrEqual(
       TITLE_MAX_LENGTH,
     )
   })
 
-  it("omits default social images when a route ships a file-based opengraph image", () => {
+  it("enforces the site-wide social image even when a legacy override is supplied", () => {
     const metadata = buildRouteMetadata({
       titleStem: "ChatGPT Ads",
       description: "Invite-only ads in ChatGPT, set up by Prism.",
@@ -155,7 +166,13 @@ describe("buildRouteMetadata", () => {
       ogImage: false,
     })
 
-    expect(metadata.openGraph?.images).toBeUndefined()
-    expect(metadata.twitter?.images).toBeUndefined()
+    const ogImages = Array.isArray(metadata.openGraph?.images)
+      ? metadata.openGraph.images
+      : metadata.openGraph?.images
+        ? [metadata.openGraph.images]
+        : []
+
+    expect(ogImages[0]).toMatchObject({ url: "/prism-opengraph.png" })
+    expect(metadata.twitter?.images).toEqual(["/prism-opengraph.png"])
   })
 })

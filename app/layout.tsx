@@ -19,7 +19,12 @@ import {
   IS_ANALYTICS_ENABLED,
   IS_PRODUCTION_ENV,
 } from "@/lib/constants"
-import { buildAbsoluteTitle, buildMinimalDescription } from "@/lib/seo/rules"
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  buildAbsoluteTitle,
+  buildMinimalDescription,
+} from "@/lib/seo/rules"
 
 const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
 const DEFAULT_DESCRIPTION = buildMinimalDescription("Websites, SEO + ads")
@@ -34,10 +39,10 @@ export const metadata: Metadata = {
     siteName: "Prism",
     images: [
       {
-        url: "/prism-opengraph.png",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "prism - beautiful software that grows revenue",
+        alt: DEFAULT_OG_IMAGE_ALT,
       },
     ],
     locale: "en_US",
@@ -47,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/prism-opengraph.png"],
+    images: [DEFAULT_OG_IMAGE],
   },
   icons: {
     icon: [

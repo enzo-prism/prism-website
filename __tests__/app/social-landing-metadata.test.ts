@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import InstagramPage, { metadata as instagramMetadata } from '@/app/ig/page'
 import TikTokPage, { metadata as tiktokMetadata } from '@/app/tiktok/page'
 import YouTubePage, { metadata as youtubeMetadata } from '@/app/youtube/page'
+import { DESCRIPTION_MAX_LENGTH } from '@/lib/seo/rules'
 
 const SOCIAL_METADATA = [
   ['Instagram', instagramMetadata, InstagramPage],
@@ -40,7 +41,7 @@ describe('social landing metadata', () => {
 
       expect(openGraphDescription).toBe(description)
       expect(twitterDescription).toBe(description)
-      expect(description.length).toBeLessThanOrEqual(150)
+      expect(description.length).toBeLessThanOrEqual(DESCRIPTION_MAX_LENGTH)
     },
   )
 })

@@ -11,7 +11,12 @@ import { canonicalUrl } from '@/lib/canonical'
 import { getLibraryPosts } from '@/lib/library/getLibraryPosts'
 import { getTikTokVideoId } from '@/lib/library/tiktok'
 import type { LibraryPost } from '@/lib/library/types'
-import { buildAbsoluteTitle, buildMinimalDescription } from '@/lib/seo/rules'
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  buildAbsoluteTitle,
+  buildMinimalDescription,
+} from '@/lib/seo/rules'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -29,13 +34,6 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       post.caption ??
       `Short lesson from Prism Library: ${post.title}.`,
   )
-  const ogImage =
-    post.thumbnailUrl && post.thumbnailUrl.startsWith('http')
-      ? post.thumbnailUrl
-      : post.thumbnailUrl
-        ? canonicalUrl(post.thumbnailUrl)
-        : null
-
   return {
     title: { absolute: title },
     description,
@@ -43,13 +41,20 @@ const buildMetadata = (post: LibraryPost): Metadata => {
       title,
       description,
       url: canonical,
-      images: ogImage ? [{ url: ogImage, alt: post.title }] : undefined,
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: DEFAULT_OG_IMAGE_ALT,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [DEFAULT_OG_IMAGE],
     },
     alternates: { canonical },
     robots: { index: false, follow: false },
