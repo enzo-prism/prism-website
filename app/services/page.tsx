@@ -1,240 +1,662 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, CheckCircle, Star, Zap, Target, Users, TrendingUp, Award } from 'lucide-react';
-import { generatePageMetadata, generateServiceSchema, generateBreadcrumbSchema } from '@/lib/seo';
-import { PageHero, PageSection, PageCTA } from '@/components/page-layout';
-import { getService } from '@/lib/services';
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = generatePageMetadata({
-  title: 'Services - AI-Powered Digital Marketing',
-  description: 'Discover our comprehensive suite of AI-powered digital marketing services. From websites to ads, we help businesses grow with data-driven strategies and cutting-edge technology.',
-  keywords: ['digital marketing services', 'AI marketing', 'website development', 'PPC advertising', 'content marketing', 'SEO services'],
-  canonical: '/services',
-  ogType: 'website',
-});
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
+import { ServiceSchema } from '@/components/schema-markup'
+import FAQSection from '@/components/faq-section'
+import ServiceIllustration from '@/components/animated/ServiceIllustration'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
+
+type CoreService = {
+  name: string
+  summary: string
+  illustration: 'websites' | 'local' | 'ads' | 'content' | 'analytics'
+  outcomes: string[]
+  caseStudies: { label: string; href: string }[]
+  learnMoreLinks?: { label: string; href: string }[]
+}
+
+const coreServices: CoreService[] = [
+  {
+    name: 'Websites & Experience Design',
+    summary:
+      'Design systems, copy, and development that give you a conversion-ready site, managed end to end by Prism.',
+    learnMoreLinks: [
+      { label: 'website design services', href: '/websites' },
+      {
+        label: 'start a website project',
+        href: '/get-started?service=website-design',
+      },
+    ],
+    illustration: 'websites',
+    outcomes: [
+      'Custom design, UX, and development in one sprint team',
+      'Editable component library and CMS governance',
+      'Launch support, hosting, and ongoing optimizations',
+    ],
+    caseStudies: [
+      {
+        label: 'Laguna Beach Dental Arts',
+        href: '/case-studies/laguna-beach-dental-arts',
+      },
+      {
+        label: 'Family First Smile Care',
+        href: '/case-studies/family-first-smile-care',
+      },
+      { label: 'Infobell IT Solutions', href: '/case-studies/infobell-it' },
+    ],
+  },
+  {
+    name: 'Local Presence & Reviews',
+    illustration: 'local',
+    summary:
+      'Keep your practice or storefront discoverable with listings, reputation management, and map pack reporting.',
+    learnMoreLinks: [
+      { label: 'local seo services', href: '/local-seo-services' },
+      { label: 'local seo agency', href: '/local-seo-agency' },
+      { label: 'dentist seo', href: '/dental-practice-seo-expert' },
+      { label: 'seo audit service', href: '/seo/audit' },
+      { label: 'ai seo services', href: '/ai-seo-services' },
+    ],
+    outcomes: [
+      'Google, Apple, Yelp, and niche directory management',
+      'Review capture flows and response playbooks',
+      'Local landing blocks, schema, and reporting dashboards',
+    ],
+    caseStudies: [
+      {
+        label: 'Wine Country Root Canal',
+        href: '/case-studies/wine-country-root-canal',
+      },
+      { label: 'Town Centre Dental', href: '/case-studies/town-centre-dental' },
+    ],
+  },
+  {
+    name: 'Paid Media & Creative',
+    illustration: 'ads',
+    summary:
+      'Strategy, creative, and execution for always-on paid search and paid social campaigns.',
+    learnMoreLinks: [{ label: 'ads', href: '/ads' }],
+    outcomes: [
+      'Full-funnel campaign setup across Google, Meta, and TikTok',
+      'High-performing creative, landing pages, and reporting',
+      'Weekly optimizations and offer testing',
+    ],
+    caseStudies: [
+      {
+        label: 'Dr. Christopher B. Wong',
+        href: '/case-studies/dr-christopher-wong',
+      },
+      {
+        label: 'Exquisite Dentistry',
+        href: '/case-studies/exquisite-dentistry',
+      },
+    ],
+  },
+  {
+    name: 'Content & Communications',
+    illustration: 'content',
+    summary:
+      'Operator-friendly content systems for email, video, blogs, and in-practice storytelling.',
+    learnMoreLinks: [
+      { label: 'content', href: '/content' },
+      {
+        label: 'custom email for dental practices',
+        href: '/custom-email-for-dental-practices',
+      },
+    ],
+    outcomes: [
+      'Editorial calendars and brand voice guidelines',
+      'Short-form video, blog, and email nurture production',
+      'Asset library and automation-ready templates',
+    ],
+    caseStudies: [
+      {
+        label: 'Grace Dental Santa Rosa',
+        href: '/case-studies/grace-dental-santa-rosa',
+      },
+      { label: 'Rebellious Aging', href: '/case-studies/rebellious-aging' },
+    ],
+  },
+  {
+    name: 'Analytics, Automation & Support',
+    illustration: 'analytics',
+    summary:
+      'A single source of truth with GA4, ads, CRM, and in-office tools stitched together.',
+    outcomes: [
+      'Dashboards and scorecards for leads, bookings, and revenue',
+      'Automations for follow-up, reminders, and hand-offs',
+      'Quarterly planning and priority shaping with the Prism team',
+    ],
+    caseStudies: [
+      {
+        label: 'Practice Transitions Institute',
+        href: '/case-studies/practice-transitions-institute',
+      },
+      { label: 'sr4 Partners', href: '/case-studies/sr4-partners' },
+    ],
+  },
+]
+
+const bundleExamples = [
+  {
+    name: 'Growth Dashboard Path',
+    description:
+      'Best for teams that want Prism to diagnose the clearest visible opportunities first.',
+    includes: ['Free dashboard intake', 'Light Audit', 'Clear next step'],
+    ctaLabel: 'Create Growth Dashboard',
+    ctaHref: '/pricing',
+  },
+  {
+    name: '60-Day Sprint Path',
+    description:
+      'Best for teams ready to act on a focused audit-backed growth priority.',
+    includes: [
+      'Scoped sprint',
+      'Highest-leverage opportunities',
+      'Clear tracking',
+    ],
+    ctaLabel: 'See sprint pricing',
+    ctaHref: '/pricing',
+  },
+  {
+    name: 'Ongoing Partner Path',
+    description:
+      'Best after a sprint creates enough signal for continued growth execution.',
+    includes: ['Support level', 'Execution level', 'Premium partner level'],
+    ctaLabel: 'See partner levels',
+    ctaHref: '/pricing',
+  },
+]
+
+const workflow = [
+  {
+    title: 'map the system',
+    description:
+      'we audit every touchpoint (site, listings, paid media, email, and practice operations) so we know where to focus first.',
+  },
+  {
+    title: 'build the core',
+    description:
+      'your website, analytics, and local presence are stabilized in a single project sprint, giving every other channel a reliable foundation.',
+  },
+  {
+    title: 'layer the growth levers',
+    description:
+      'paid media, content, and automation join the mix as we hit traction milestones, with scope tailored to your goals and budget.',
+  },
+  {
+    title: 'optimize and report',
+    description:
+      'weekly measurements, quarterly planning, and shared dashboards keep the entire growth engine accountable and transparent.',
+  },
+]
+
+const whoItsFor = [
+  'Local businesses that need a clear, conversion‑ready online presence.',
+  'Founders or operators tired of juggling five vendors for one growth goal.',
+  'Teams launching new locations, services, or product lines.',
+  'Brands that want one system for website, local visibility, ads, and analytics.',
+]
+
+const problemsWeSolve = [
+  'Outdated websites that look fine but don’t convert.',
+  'Inconsistent listings, reviews, and map pack visibility.',
+  'Paid ads that spend money without showing real ROI.',
+  'Disconnected analytics that make growth decisions guessy.',
+  'Manual follow‑ups and intake that slow your team down.',
+]
+
+const deliverables = [
+  'A modern website and design system you can evolve.',
+  'Listings + review engine that keeps you accurate and trusted.',
+  'Always‑on paid search/social campaigns tuned to local intent.',
+  'Content and creative that supports offers and authority.',
+  'Dashboards tying leads, bookings, and revenue to channels.',
+  'Quarterly planning and weekly optimizations with Prism.',
+]
+
+const proofLinks = [
+  { label: 'Olympic Bootworks', href: '/case-studies/olympic-bootworks' },
+  {
+    label: 'Dr. Christopher B. Wong',
+    href: '/case-studies/dr-christopher-wong',
+  },
+  { label: 'sr4 Partners', href: '/case-studies/sr4-partners' },
+]
+
+const faqItems = [
+  {
+    question: 'Do I need every service to work with Prism?',
+    answer:
+      'No. Most clients start with one foundation, usually a website or local presence, and add paid media, content, or automation once the core is stable.',
+  },
+  {
+    question: 'How do you decide what to prioritize first?',
+    answer:
+      'We start with a short audit of your website, listings, ads, and analytics, then map the fastest path to measurable wins based on your market and goals.',
+  },
+  {
+    question: 'What industries do you work with?',
+    answer:
+      'We focus on local and service‑based businesses: dental and medical practices, local retail, professional services, nonprofits, and community brands.',
+  },
+  {
+    question: 'How do you measure success?',
+    answer:
+      'We track calls, forms, bookings, and revenue lift against channel spend, then report in plain English so you know what’s working and why.',
+  },
+  {
+    question: 'Can you collaborate with our internal team?',
+    answer:
+      'Yes. We plug into existing marketing, ops, or front‑office teams, share dashboards, and provide playbooks so execution stays aligned.',
+  },
+  {
+    question: 'What does an engagement look like month to month?',
+    answer:
+      'You get a dedicated Prism sprint team, weekly check‑ins, and quarterly planning. We ship improvements continuously rather than in big, risky redesigns.',
+  },
+]
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
+
+export const metadata: Metadata = buildRouteMetadata({
+  titleStem: 'Services',
+  description:
+    'Website, content, and ads: the three Prism services that help your business get found, trusted, and chosen.',
+  path: '/services',
+  ogImage: '/prism-opengraph.png',
+})
 
 export default function ServicesPage() {
-  const websiteService = getService('website');
-  const adsService = getService('ads');
-  const contentService = getService('content');
-  const websitePrice = websiteService?.pricing.displayPrice ?? '$2,997';
-  const adsPrice = adsService?.pricing.displayPrice ?? '$2,997';
-  const contentPrice = contentService?.pricing.displayPrice ?? '$2,000';
-
-  const services = [
-    {
-      title: 'Website Development',
-      description: 'Custom websites designed to convert visitors into customers with AI-powered optimization.',
-      features: ['Custom Design & Development', 'Mobile-First Approach', 'SEO Optimization', 'Conversion Rate Optimization', 'Analytics Integration', 'Ongoing Support'],
-      price: `${websitePrice}/month`,
-      popular: true,
-      href: '/websites',
-      icon: Target
-    },
-    {
-      title: 'PPC Advertising',
-      description: 'Data-driven advertising campaigns that maximize ROI and drive qualified traffic.',
-      features: ['Google Ads Management', 'Facebook & Instagram Ads', 'LinkedIn Advertising', 'Campaign Optimization', 'A/B Testing', 'Performance Reporting'],
-      price: `${adsPrice}/month`,
-      popular: false,
-      href: '/ads',
-      icon: TrendingUp
-    },
-    {
-      title: 'Content Marketing',
-      description: 'Strategic content that builds authority, engages audiences, and drives organic growth.',
-      features: ['Content Strategy', 'Blog Writing', 'Social Media Content', 'Email Marketing', 'Video Production', 'SEO Content'],
-      price: `${contentPrice}/month`,
-      popular: false,
-      href: '/content',
-      icon: Users
-    }
-  ];
-
-  const process = [
-    {
-      step: '01',
-      title: 'Discovery & Strategy',
-      description: 'We analyze your business, competitors, and target audience to create a comprehensive strategy.'
-    },
-    {
-      step: '02',
-      title: 'Implementation',
-      description: 'Our team executes the strategy with precision, using the latest tools and technologies.'
-    },
-    {
-      step: '03',
-      title: 'Optimization',
-      description: 'We continuously monitor, test, and optimize campaigns for maximum performance.'
-    },
-    {
-      step: '04',
-      title: 'Growth',
-      description: 'Scale successful strategies and expand into new markets and opportunities.'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Sarah Johnson',
-      company: 'TechStart Inc.',
-      role: 'CEO',
-      content: 'Prism transformed our digital presence. Our website conversions increased by 300% in just 3 months.',
-      rating: 5
-    },
-    {
-      name: 'Mike Chen',
-      company: 'GrowthCo',
-      role: 'Marketing Director',
-      content: 'The PPC campaigns they created generated 5x more qualified leads than our previous agency.',
-      rating: 5
-    },
-    {
-      name: 'Emily Rodriguez',
-      company: 'ScaleUp',
-      role: 'Founder',
-      content: 'Their content strategy helped us become thought leaders in our industry. Organic traffic doubled.',
-      rating: 5
-    }
-  ];
-
-  const serviceSchema = generateServiceSchema({
-    name: 'Digital Marketing Services',
-    description: 'Comprehensive AI-powered digital marketing services including website development, PPC advertising, and content marketing.',
-    url: 'https://www.design-prism.com/services',
-    provider: {
-      name: 'Prism',
-      url: 'https://www.design-prism.com'
-    },
-    serviceType: 'Digital Marketing',
-    areaServed: 'United States'
-  });
-
-  const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.design-prism.com' },
-    { name: 'Services', url: 'https://www.design-prism.com/services' }
-  ]);
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
-      />
-      
-      <div className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <PageHero
-          title="Website. Content. Ads."
-          subtitle="AI-powered digital marketing that drives real results. We combine cutting-edge technology with proven strategies to help your business grow."
-          ctaText="Get Started"
-          ctaHref="/pricing"
-        />
-
-        {/* Services Grid */}
-        <PageSection title="Our Services" subtitle="Choose the services that best fit your business needs">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <Card key={index} className={`relative ${service.popular ? 'ring-2 ring-primary' : ''}`}>
-                  {service.popular && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Icon className="h-6 w-6 text-primary" />
-                      </div>
-                      <CardTitle className="text-xl">{service.title}</CardTitle>
-                    </div>
-                    <CardDescription className="text-base">{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="mb-6">
-                      <div className="text-3xl font-bold text-gray-900">{service.price}</div>
-                      <div className="text-sm text-gray-500">Starting price</div>
-                    </div>
-                    <ul className="space-y-3 mb-6">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center space-x-2">
-                          <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
-                          <span className="text-sm text-gray-600">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="w-full">
-                      <Link href={service.href}>
-                        Learn More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </PageSection>
-
-        {/* Process Section */}
-        <PageSection title="Our Process" subtitle="How we deliver results for your business" className="bg-gray-50">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
-                  {step.step}
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+      <Navbar />
+      <main className="bg-white">
+        <section className="relative overflow-hidden border-b border-neutral-100">
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white"
+            aria-hidden="true"
+          />
+          <div className="container relative mx-auto px-4 pb-16 pt-20 sm:pt-24 md:pb-20">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                services
+              </p>
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+                Website. Content. Ads.
+              </h1>
+              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+                Prism helps with three things. The website makes choosing you
+                easy. Content keeps you found and trusted. Ads bring the right
+                customers without wasted spend. Everything else supports those
+                three.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Link
+                  href="/websites"
+                  className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                >
+                  Website
+                </Link>
+                <Link
+                  href="/content"
+                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+                >
+                  Content
+                </Link>
+                <Link
+                  href="/ads"
+                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+                >
+                  Ads
+                </Link>
               </div>
-            ))}
+            </div>
           </div>
-        </PageSection>
+        </section>
 
-        {/* Testimonials */}
-        <PageSection title="What Our Clients Say" subtitle="Real results from real businesses">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index}>
-                <CardContent className="pt-6">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
-                    ))}
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                  who it&apos;s for
+                </h2>
+                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
+                  {whoItsFor.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span
+                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                  problems we solve
+                </h2>
+                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
+                  {problemsWeSolve.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span
+                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mx-auto mt-12 max-w-4xl text-center">
+              <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
+                what you get
+              </h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                A single sprint team that covers strategy, design, engineering,
+                and growth, so every lever stays connected.
+              </p>
+            </div>
+            <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-sm text-neutral-600 sm:grid-cols-2 sm:text-base">
+              {deliverables.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-2 rounded-2xl border border-neutral-200 bg-white p-4"
+                >
+                  <span
+                    className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto mb-12 max-w-2xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                what we run for you
+              </h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                Every engagement starts with the essentials, then layers in new
+                channels as we bank wins. Here's how each service helps.
+              </p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {coreServices.map((service) => (
+                <div
+                  key={service.name}
+                  tabIndex={0}
+                  role="group"
+                  className="group flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
+                >
+                  <div className="h-14 w-14 rounded-xl border border-neutral-200 bg-white p-2 transition-colors duration-300 group-hover:border-orange-300 group-focus-visible:border-orange-300 group-active:border-orange-400">
+                    <ServiceIllustration
+                      variant={service.illustration}
+                      className="h-10 w-10 text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
+                    />
                   </div>
-                  <p className="text-gray-600 mb-4">"{testimonial.content}"</p>
                   <div>
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}, {testimonial.company}</div>
+                    <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                      {service.name}
+                    </h3>
+                    <p className="mt-2 text-sm text-neutral-600">
+                      {service.summary}
+                    </p>
+                    {service.learnMoreLinks?.length ? (
+                      <div className="mt-3 flex flex-wrap gap-3">
+                        {service.learnMoreLinks.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <ul className="space-y-2 text-sm text-neutral-600">
+                    {service.outcomes.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span
+                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                          aria-hidden="true"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto space-y-2">
+                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                      case studies
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {service.caseStudies.map((caseStudy) => (
+                        <Link
+                          key={caseStudy.href}
+                          href={caseStudy.href}
+                          className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                        >
+                          {caseStudy.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
+              dental teams running paid social: see{' '}
+              <Link
+                href="/tiktok-ads-for-dentists"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                tiktok ads for dentists
+              </Link>
+              .
+            </div>
+            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700">
+              building an app alongside your growth stack? explore our{' '}
+              <Link
+                href="/apps"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                app development work
+              </Link>{' '}
+              or{' '}
+              <Link
+                href="/get-started?service=app-development"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                start an app project
+              </Link>
+              .
+            </div>
+            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
+              need plan details before you dive in? compare options on our{' '}
+              <Link
+                href="/pricing"
+                className="font-semibold text-neutral-900 underline underline-offset-4"
+              >
+                pricing page
+              </Link>
+              .
+            </div>
           </div>
-        </PageSection>
+        </section>
 
-        {/* CTA Section */}
-        <PageCTA
-          title="Ready to Grow Your Business?"
-          subtitle="Let's discuss how our services can help you achieve your goals."
-          ctaText="Get Started"
-          ctaHref="/pricing"
+        <section className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                how it works
+              </h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                We start with the foundation, then bring in additional services
+                as your goals expand.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {workflow.map((step, idx) => (
+                <div
+                  key={step.title}
+                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+                >
+                  <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                    step {String(idx + 1).padStart(2, '0')}
+                  </p>
+                  <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-neutral-600">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                popular bundles clients launch with
+              </h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                Use the get started plan to fine-tune your mix. These example
+                stacks show where most teams begin.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {bundleExamples.map((bundle) => (
+                <div
+                  key={bundle.name}
+                  className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+                >
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                      path
+                    </p>
+                    <h3 className="mt-2 text-xl font-semibold lowercase text-neutral-900">
+                      {bundle.name}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-neutral-600">
+                    {bundle.description}
+                  </p>
+                  <ul className="space-y-1 text-sm text-neutral-600">
+                    {bundle.includes.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto">
+                    <Link
+                      href={bundle.ctaHref}
+                      className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
+                    >
+                      {bundle.ctaLabel}
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-neutral-100 bg-neutral-50 py-16 sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
+                proof in the wild
+              </h2>
+              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
+                Recent launches showing how Prism connects design, engineering,
+                and growth for local brands.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                {proofLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-full border border-neutral-200 bg-white px-5 py-2 text-sm font-semibold lowercase text-neutral-900 transition hover:border-neutral-900"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/case-studies"
+                  className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800"
+                >
+                  see all case studies
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <FAQSection
+          title="services faq"
+          subtitle="Answers about scope, timing, and how to start."
+          items={faqItems}
+          className="bg-neutral-50"
         />
-      </div>
+
+        <section className="bg-neutral-900 py-16 text-white sm:py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-3xl font-semibold lowercase sm:text-4xl">
+                build your mix with prism
+              </h2>
+              <p className="mt-3 text-sm text-neutral-300 sm:text-base">
+                Tell us where you need momentum (local visibility, conversions,
+                or full-funnel growth) and we'll recommend the right combination
+                of services.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Link
+                  href="/get-started"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
+                >
+                  claim your audit & plan
+                </Link>
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                >
+                  see client wins
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+      {coreServices.map((service) => (
+        <ServiceSchema
+          key={`service-schema-${slugify(service.name)}`}
+          serviceId={slugify(service.name)}
+          name={service.name}
+          description={service.summary}
+          serviceType={service.name}
+          areaServed="United States"
+        />
+      ))}
     </>
-  );
+  )
 }
