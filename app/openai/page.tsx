@@ -12,7 +12,7 @@ const openAiStack = [
   {
     title: 'strategic copilots',
     description:
-      'We build proprietary GPT-4.1 and o1 workspaces that mirror your voice, offers, and service areas so every campaign draft starts with context.',
+      'We configure reasoning and multimodal workflows around your approved voice, offers, and service areas so campaign drafts start with useful context.',
     highlights: [
       'Persona and journey modeling to pinpoint local demand',
       'Offer testing scripts that recommend angles before we launch',
@@ -22,7 +22,7 @@ const openAiStack = [
   {
     title: 'content engines',
     description:
-      'OpenAI powered workflows turn transcripts, reviews, and practice intel into production-ready articles, videos, and nurture sequences.',
+      'OpenAI-powered workflows help turn transcripts, reviews, and practice knowledge into draft articles, video briefs, and nurture sequences for human review.',
     highlights: [
       'Topic clustering with embeddings to map authority gaps',
       'Voice-adapted outlines that hand off cleanly to our writers',
@@ -41,21 +41,21 @@ const openAiStack = [
   },
 ]
 
-const distributionPartners = [
+const discoverySurfaces = [
   {
-    name: 'ChatGPT',
+    name: 'ChatGPT search',
     summary:
-      'We monitor prompts and suggested follow-ups to learn how prospects evaluate providers, then tailor your answers and site structure accordingly.',
+      'We publish clear, well-sourced site content and monitor attributable traffic where data is available. OpenAI decides what ChatGPT surfaces and cites.',
   },
   {
-    name: 'OpenAI Search & Assistants',
+    name: 'Agents and tools',
     summary:
-      'As OpenAI ships new search flows, we study how results are sourced so your offers, FAQs, and locality data stay present in answer cards.',
+      'We can connect client-approved data and actions to agent workflows using supported APIs, with scoped permissions and human review.',
   },
   {
-    name: 'Third-party GPT Plug-ins',
+    name: 'Structured web content',
     summary:
-      'For GPTs that recommend local businesses, we supply structured data, reviews, and proof points so you surface when prospects explore options.',
+      'We keep services, locations, FAQs, and proof consistent across public pages and structured data so search systems can interpret them accurately.',
   },
 ]
 
@@ -63,17 +63,17 @@ const workflow = [
   {
     title: 'map your growth signals',
     description:
-      'We audit existing content, reviews, and CRM notes, then tune OpenAI copilots with the language that wins bookings for your team.',
+      'We audit approved content, reviews, and CRM notes, then configure AI workflows around the language your team actually uses.',
   },
   {
     title: 'ship high leverage assets',
     description:
-      'Campaigns, landing pages, and listings refreshes move through AI-accelerated pipelines so you launch updates in days, not months.',
+      'Campaigns, landing pages, and listing updates move through AI-assisted pipelines so your team can review and publish them more efficiently.',
   },
   {
-    title: 'amplify through distribution',
+    title: 'publish to owned sources',
     description:
-      'We sync structured data and fresh offers to OpenAI surfaces, measure exposure, and iterate so you appear where prospects research.',
+      'We publish structured data and current offers to sources you control, then measure referral and search performance where reporting is available.',
   },
   {
     title: 'keep humans in the loop',
@@ -84,7 +84,7 @@ const workflow = [
 
 const PAGE_TITLE = 'OpenAI growth systems'
 const PAGE_DESCRIPTION =
-  'See how Prism uses OpenAI tools, copilots, and distribution intelligence to expand your presence across chat, search, and assistant surfaces.'
+  'See how Prism uses OpenAI APIs and tools to build reviewed workflows for marketing, operations, search visibility, and customer support.'
 const CANONICAL_URL = 'https://www.design-prism.com/openai'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -113,16 +113,16 @@ export default function OpenAIPage() {
                   decorative
                   className="h-4 w-4"
                 />
-                <span>openai partnership</span>
+                <span>openai implementation</span>
               </p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                ai copilots that keep your presence everywhere
+                practical ai systems built around your business
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Prism works directly with OpenAI&apos;s tools and distribution
-                network so your practice shows up in the conversations,
-                searches, and recommendations happening inside ChatGPT and
-                beyond.
+                Prism is an independent agency that implements workflows with
+                supported OpenAI products and APIs. We build the content,
+                automations, and controls. OpenAI controls its products, search
+                results, model behavior, and access.
               </p>
               <p className="mt-3 text-sm text-neutral-500 sm:text-base">
                 building broader small business ai systems? explore{' '}
@@ -175,9 +175,9 @@ export default function OpenAIPage() {
                 how we use openai for clients
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Our team trains custom copilots, automates production, and
-                embeds governance so every deliverable is accurate, on-brand,
-                and measurable.
+                Our team configures task-specific copilots, automates repeatable
+                production steps, and keeps people responsible for review,
+                approval, and measurement.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -215,16 +215,16 @@ export default function OpenAIPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-10 max-w-2xl text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                showing up on openai distribution
+                preparing for ai discovery
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                We study how OpenAI showcases local businesses so your
-                expertise, proof, and offers stay visible when prospects ask for
-                help.
+                We keep your public information accurate and machine-readable.
+                That improves discoverability, but no agency can guarantee
+                inclusion, ranking, or citation in an AI response.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
-              {distributionPartners.map((partner) => (
+              {discoverySurfaces.map((partner) => (
                 <div
                   key={partner.name}
                   className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6"
@@ -307,7 +307,7 @@ export default function OpenAIPage() {
                 href="/contact"
                 className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
-                request an openai strategy session
+                request an ai strategy session
               </Link>
             </div>
           </div>

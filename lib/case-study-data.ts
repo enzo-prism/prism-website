@@ -15,7 +15,7 @@ type CaseStudyCategory =
   | 'nonprofit'
   | 'consulting'
   | 'event'
-  | 'private resort'
+  | 'private estate'
   | 'online community'
 
 export type CaseStudyExplainerVideo = {
@@ -117,7 +117,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/dr-wong-polaroids.png',
       heroVideoId: 'HrksJeYb02Q',
       datePublished: '2025-01-15T00:00:00.000Z',
-      dateModified: '2026-08-21T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       outcomes: [
         'The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.',
         'The practice now runs on a modern dental website with strong SEO foundations and clean UX.',
@@ -127,13 +127,13 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       results: [
         {
-          value: '+239%',
+          value: '+160%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
+          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
           detail:
-            'Google Search Console: 6,564 impressions grew to 22,283 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 8,704 impressions grew to 22,660 in the latest complete 90-day year-over-year window.',
         },
         {
           value: '4.3×',
@@ -150,7 +150,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism rebuilt the patient-facing brand and digital operations: a modern website with clear ownership messaging, strong SEO foundations, aligned local listings and review profiles, and AI-optimized Google campaigns, all reporting into one rhythm.',
         result:
-          'Patients gained a clearer digital handoff, acquisition shifted from passive word-of-mouth to measured active channels, and Google Search impressions rose 239% year over year in the latest complete 90-day window.',
+          'Patients gained a clearer digital handoff, acquisition shifted from passive word-of-mouth to measured active channels, and Google Search impressions rose 160% year over year in the latest complete 90-day window.',
       },
       focus: 'Dental M&A handoff',
       scope: 'Website, SEO, ads, AI stack',
@@ -167,12 +167,13 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     websiteUrl: 'https://exquisitedentistryla.com/',
     category: 'dentistry',
     industry: 'High-End Dentistry',
-    location: 'Beverly Hills, CA',
+    location: 'Los Angeles, CA',
     description:
       'Creating a sophisticated online experience that matches their premium in-person patient care.',
     slug: 'exquisite-dentistry',
     segments: ['dental', 'local'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
           'Exquisite Dentistry had everything most practices want: years of reputation, elite cosmetic work, deep community trust, and a high-end patient base. But the website undersold all of it, and because search and maps still produced leads, touching the site felt risky.',
@@ -199,60 +200,60 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   },
   {
     id: '3',
-    title: 'Olympic Bootworks: the Tahoe shop that finally sells online',
+    title: 'Olympic Bootworks: a measurable retail platform for Tahoe',
     client: 'Olympic Bootworks',
     clientLogo:
       'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353639/Olympic-bootworks_fwtza3.webp',
     websiteUrl: 'https://www.olympicbootworks.com',
     category: 'retail',
-    industry: 'Retail & E-Commerce',
+    industry: 'Retail & E-Bikes',
     location: 'Tahoe, CA',
     description:
-      'Two-site ecommerce system with POS-linked inventory, a Fantic Warehouse microsite, and an owned Google + email stack.',
+      'An integrated Fantic e-bike catalog with current pricing, test-ride inquiries, analytics, and an owned Google + email stack.',
     slug: 'olympic-bootworks',
     segments: ['local'],
     structured: {
       heroImage: 'https://www.design-prism.com/olympic-bootworks.png',
       heroVideoId: 'Cgi7CZHMYQ0',
       datePublished: '2025-02-15T00:00:00.000Z',
-      dateModified: '2026-08-21T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       outcomes: [
         'Traffic, search impressions, and online engagement compounded over time.',
-        'Olympic Bootworks went from “great store, weak website” to a two-site system built for brand + ecommerce.',
-        'Fantic inventory gained a real online sales channel instead of relying on walk-ins.',
+        'Olympic Bootworks went from “great store, weak website” to one integrated retail platform for its brand, services, and Fantic e-bikes.',
+        'Shoppers can compare the current Fantic lineup and visible pricing, then ask the shop about sizing, availability, test rides, pickup, or shipping.',
         'The business escaped website + email technical debt and moved to owned infrastructure.',
-        'Prism gained deep ecommerce + POS integration reps that now power the broader Prism flywheel.',
+        'The Fantic catalog now routes high-consideration purchases into direct guidance from the shop.',
       ],
       results: [
         {
-          value: '+48%',
+          value: '+8%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
+          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
           detail:
-            'Google Search Console: 7,082 impressions grew to 10,461 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 9,373 impressions grew to 10,129 in the latest complete 90-day year-over-year window.',
         },
         {
-          value: '11.8k',
+          value: '10.7k',
           label: 'GA4 sessions in the latest complete 90 days',
           sourceName: 'GA4',
-          dateRange: 'May 23-Aug 20, 2026',
+          dateRange: 'May 31-Aug 28, 2026',
           detail:
-            'GA4: 11,794 sessions and 11,203 new users from May 23–Aug 20, 2026.',
+            'GA4: 10,709 sessions and 10,151 new users from May 31-Aug 28, 2026.',
         },
       ],
       story: {
         situation:
-          'Olympic Bootworks had the hard part: a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online they had a basic Squarespace page, weak local discovery, and no way to sell high-ticket Fantic e-bikes without relying on walk-ins.',
+          'Olympic Bootworks had the hard part: a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online it had a basic Squarespace page, weak local discovery, and no clear way for riders to compare high-consideration Fantic e-bikes before contacting the shop.',
         approach:
-          'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, launched a dedicated Fantic Warehouse microsite built for confident online buying, linked inventory to the POS, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
+          'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, integrated the Fantic e-bike catalog at Olympic Bootworks with visible current pricing and direct email and test-ride inquiry paths, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
-          'The website became a sales channel and an ops asset instead of a brochure: Google Search impressions rose 48% year over year in the latest complete 90-day window, GA4 recorded 11,794 sessions, and Fantic inventory gained a real online sales channel.',
+          'The website became a measurable retail and operations asset instead of a brochure: Google Search impressions rose 8% year over year in the latest complete 90-day window, GA4 recorded 10,709 sessions, and riders gained a clear path from model and price research to a direct shop inquiry.',
       },
-      focus: 'Ecommerce + multi-site launch',
+      focus: 'Integrated retail catalog + growth platform',
       scope:
-        'Website rebuild, POS-linked ecommerce catalog, multi-site, analytics + SEO, Workspace + DNS cleanup',
+        'Website rebuild, Fantic e-bike catalog, pricing + inquiry paths, analytics + SEO, Workspace + DNS cleanup',
       canonicalUrl:
         'https://www.design-prism.com/case-studies/olympic-bootworks',
     },
@@ -263,7 +264,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     client: 'Laguna Beach Dental Arts',
     clientLogo:
       'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353640/Laguna-Beach-dental-arts_syypqz.webp',
-    websiteUrl: 'https://lagunabeachdentalarts.com',
     category: 'dentistry',
     industry: 'Dentistry',
     location: 'Laguna Beach, CA',
@@ -272,6 +272,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'laguna-beach-dental-arts',
     segments: ['dental', 'local'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
           'After a change in ownership, Laguna Beach Dental Arts needed a fast, confident relaunch. There was no structured SEO, no reliable ad pipeline, and inconsistent intake. Patient trust had to be preserved through the transition.',
@@ -290,7 +291,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353638/Family-First-Smile-Care_xo7qhz.webp',
     websiteUrl: 'https://famfirstsmile.com/',
     category: 'dentistry',
-    founder: 'Dr. Jayleen Pang',
+    founder: 'Dr. Tim J. Chuang',
     industry: 'Dentistry',
     location: 'Los Gatos, CA',
     description:
@@ -298,9 +299,10 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'family-first-smile-care',
     segments: ['dental', 'local'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'Family First Smile Care provides comprehensive dental care for all ages with a family-oriented approach, but its services, office comforts, and booking paths weren’t coming through clearly online.',
+          'Family First Smile Care, founded and led by Dr. Tim J. Chuang, provides comprehensive dental care for all ages with a family-oriented approach, but its services, office comforts, and booking paths weren’t coming through clearly online.',
         approach:
           'Prism designed a modern website that makes it easy to understand services, appreciate the office amenities families care about, and book care quickly, with conversion tracking behind every flow.',
         result:
@@ -371,7 +373,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage:
         'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
       datePublished: '2026-05-22T00:00:00.000Z',
-      dateModified: '2026-08-21T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       results: [
         {
           value: '701',
@@ -468,17 +470,18 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     client: 'sr4 Partners',
     websiteUrl: 'https://www.sr4partners.com',
     category: 'consulting',
-    founder: 'Srikanth Ravi',
+    founder: 'Todd “Ish” Israelite',
     industry: 'Consulting',
-    location: 'Chicago, IL',
+    location: 'Evanston, IL',
     description:
       'Messaging clarity and modular web design that support enterprise transformation engagements.',
     slug: 'sr4-partners',
     segments: ['consulting'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'sr4 Partners had decades of organizational-development work and a distinctive methodology (strategy, results, relationships, resilience), but a digital presence that communicated generic consulting instead of a specific point of view.',
+          'Founding partner Todd “Ish” Israelite and the sr4 Partners team had decades of organizational-development work and a distinctive methodology (strategy, results, relationships, resilience), but a digital presence that communicated generic consulting instead of a specific point of view.',
         approach:
           'Prism refreshed the brand rather than replacing it, structured the site around sr4’s service areas (executive coaching, team effectiveness, culture transformation, and organizational design), and built the content architecture around the searches senior leaders actually use, with analytics across service areas.',
         result:
@@ -503,35 +506,36 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   {
     id: '11',
     title: 'Making Complex IT Services Clear',
-    client: 'Infobell IT',
+    client: 'Infobell IT Solutions',
     websiteUrl: 'https://www.infobellit.com',
     category: 'consulting',
-    founder: 'Harshad Shinde',
-    industry: 'IT Services',
-    location: 'San Jose, CA',
+    industry: 'AI & Product Engineering',
+    location: 'Bengaluru, India',
     description:
-      'Approachable messaging, modular design, and analytics guardrails for managed it solutions.',
+      'Clear product storytelling for a global AI, high-performance computing, and software engineering company.',
     slug: 'infobell-it',
     segments: ['it'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'Hiring a managed IT firm is a trust decision. A business owner is choosing the partner they’ll call at 2am. Infobell IT had strong technical capability and a reliable track record, but a website that looked like every other MSP’s.',
+          'Infobell IT Solutions is a Bengaluru-headquartered, global product-engineering company spanning artificial intelligence, high-performance computing, cloud-native development, performance engineering, and its own software products. Its breadth needed a clearer story than a generic IT-services website could provide.',
         approach:
-          'Prism built a trust architecture: a visual identity that signals calm competence, service pages for managed IT, cybersecurity, cloud, and compliance organized around the buyer’s decision journey, testimonials and a clear service model, and search plus analytics so growth could be measured instead of guessed.',
+          'Prism organized the website around Infobell’s current engineering capabilities and product portfolio, giving enterprise buyers clearer paths into AI, HPC, cloud modernization, performance optimization, and software solutions, with search and analytics supporting discovery.',
         result:
-          'Infobell now reads as credible before the first conversation: differentiated positioning, decision-maker clarity, and visibility into which services high-value prospects research.',
+          'Infobell now presents itself as the global AI and product-engineering company it is, with complex capabilities and software products easier for enterprise buyers to understand before the first conversation.',
       },
     },
     explainerVideo: {
       src: 'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1774726921/infobell-case-study-notebook-lm_rzpjwc.mp4',
-      title: 'Understand the trust architecture Prism built for Infobell IT',
+      title:
+        'See how Prism clarified Infobell’s AI and product-engineering story',
       summary:
-        'A concise walkthrough of how Prism made a technical service business feel more credible, easier to understand, and more discoverable for high-intent MSP buyers.',
+        'A concise walkthrough of how Prism made a complex AI, HPC, and software portfolio easier for enterprise buyers to understand and discover.',
       keyMoments: [
-        'Why generic MSP positioning was costing Infobell trust before conversations even started.',
-        'How the brand, website, and service structure were redesigned for decision-maker clarity.',
-        'How Prism set up search and analytics so growth could be measured instead of guessed.',
+        'Why Infobell’s breadth across AI, HPC, cloud, and software products needed a clearer narrative.',
+        'How the website structure was redesigned around enterprise engineering capabilities and products.',
+        'How search and analytics support discovery across Infobell’s global offering.',
       ],
       uploadDate: '2026-03-28T00:00:00.000Z',
       creatorName: 'Enzo Sison',
@@ -564,10 +568,10 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   {
     id: '13',
     title: 'Story-First Nonprofit Hub',
-    client: 'Belize Kids Foundation',
+    client: 'Belize Kids',
     websiteUrl: 'https://www.belizekids.org',
     category: 'nonprofit',
-    founder: 'Tamara Sniffin',
+    founder: 'Don Listwin',
     industry: 'Nonprofit',
     location: 'San Pedro, Belize',
     description:
@@ -575,25 +579,25 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'belize-kids-foundation',
     segments: ['nonprofit'],
     structured: {
-      dateModified: '2026-08-21T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       results: [
         {
-          value: '+171%',
+          value: '+121%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 21-Aug 18, 2025 vs May 21-Aug 18, 2026',
+          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
           detail:
-            'Google Search Console: 1,155 impressions grew to 3,133 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 1,313 impressions grew to 2,903 in the latest complete 90-day year-over-year window.',
         },
       ],
       story: {
         situation:
-          'Belize Kids Foundation is rooted in real relationships with the communities it serves, but most donors are thousands of miles away. The site had to close that distance and earn trust from supporters with no prior connection to the founders or to Belize.',
+          'Belize Kids, founded by Don Listwin, is rooted in real relationships with the communities it serves, but most donors are thousands of miles away. The site had to close that distance and earn trust from supporters with no prior connection to Belize.',
         approach:
           'Prism built a warm, vivid identity inspired by the Belize landscape, program storytelling that makes impact tangible, multiple giving pathways with clear impact statements, search architecture for donors actively looking for meaningful causes, and analytics across the donation funnel.',
         result:
-          'Giving now feels immediate and concrete instead of abstract, and Google Search impressions rose 171% year over year in the latest complete 90-day window, reaching donors beyond the founders’ personal networks.',
+          'Giving now feels immediate and concrete instead of abstract, and Google Search impressions rose 121% year over year in the latest complete 90-day window, reaching donors beyond the founder’s personal network.',
       },
     },
   },
@@ -602,55 +606,57 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     title: 'Private Retreat Storytelling',
     client: 'Canary Cove',
     websiteUrl: 'https://canarycove.com',
-    category: 'private resort',
+    category: 'private estate',
     industry: 'Hospitality',
     location: 'San Pedro, Belize',
     description:
-      'Immersive visuals, concierge-ready booking flows, and analytics for a private island experience.',
+      'Immersive visuals, direct inquiry flows, and analytics for a private beachfront estate on Ambergris Caye.',
     slug: 'canary-cove',
     segments: ['hospitality', 'local'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'Canary Cove is a private island retreat in Belize. For a destination like this the website is the first visit. It has to create desire and trust long before a guest ever arrives.',
+          'Canary Cove is a private beachfront estate on Ambergris Caye, reserved for one group at a time. For a destination like this the website is the first visit. It has to create desire and trust long before a guest ever arrives.',
         approach:
           'Prism built an immersive, visuals-first experience with concierge-ready booking flows and analytics that show how guests discover and explore the retreat.',
         result:
-          'The island’s digital presence now matches the experience itself: immersive storytelling backed by clean inquiry paths and measurement.',
+          'The estate’s digital presence now matches the experience itself: immersive storytelling backed by clean inquiry paths and measurement.',
       },
     },
   },
   {
     id: '15',
-    title: 'Joyful Education Platform',
+    title: 'Story-Led Emotional Learning Brand',
     client: 'We Are Saplings',
     websiteUrl: 'https://www.wearesaplings.com',
     category: 'education',
-    founder: 'Lizzie Alexander',
-    industry: 'Education',
-    location: 'New York City, NY',
+    founder: 'Clare Frattarola',
+    industry: 'Children’s Emotional Learning',
+    location: 'Los Angeles, CA',
     description:
-      'Parent-friendly storytelling, enrollment journeys, and resource hubs for curiosity-led learning.',
+      'A character-led home for emotional intelligence, mindfulness, and storytelling tools for children.',
     slug: 'we-are-saplings',
     segments: ['community', 'education'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'We Are Saplings takes early childhood education outside, not as a field trip but as the primary classroom. For many parents that’s an unfamiliar concept, and choosing a program for young children is one of the highest-trust decisions they make.',
+          'Founder Clare Frattarola created We Are Saplings to help children build emotional intelligence through storytelling, mindfulness, and play. The brand needed to make emotional learning feel simple, approachable, and engaging for children and caregivers.',
         approach:
-          'Prism built a joyful, grounded brand and a site structured around the parent’s journey: what nature-based learning is, what a day looks like, how safety is handled, and how to enroll, with family testimonials, streamlined inquiry flows, search architecture for parents exploring alternatives, and analytics on the enrollment funnel.',
+          'Prism built a joyful, character-led website around the Forest of Feelings, Clare’s founder story, and gentle tools that help children name emotions and practice coping skills, with clear paths to explore the brand’s stories and resources.',
         result:
-          'Curious parents get educated and reassured in one visit, and the program can see what drives enrollment instead of guessing.',
+          'Families and educators can quickly understand how We Are Saplings uses stories and mindfulness to support emotional development, without mistaking it for a location-based preschool.',
       },
     },
   },
   {
     id: '16',
     title: 'Specialty Dental Foundations',
-    client: 'Coast Periodontics & Laser Surgery',
+    client: 'Coast Periodontics',
     websiteUrl: 'https://www.coastperiodontics.com',
     category: 'dentistry',
-    founder: 'Dr. Steven S. Ku',
+    founder: 'Dr. Bryce Chun',
     industry: 'Dentistry',
     location: 'San Luis Obispo, CA',
     description:
@@ -658,9 +664,10 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'coast-periodontics-and-laser-surgery',
     segments: ['dental', 'local'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
-          'Coast Periodontics serves two audiences with opposite needs: anxious patients facing gum surgery and implants, and referring general dentists who need to see specialist authority before trusting a colleague with complex cases.',
+          'Coast Periodontics, led by board-certified periodontist Dr. Bryce Chun, serves two audiences with opposite needs: anxious patients facing gum surgery and implants, and referring general dentists who need to see specialist authority before trusting a colleague with complex cases.',
         approach:
           'Prism built a calm-authority brand and a site that serves both: plain-language service pages that reassure rather than intimidate, credential depth for referring dentists, prominent testimonials, immediate booking, and local SEO covering both patient and professional referral searches.',
         result:
@@ -674,7 +681,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     client: 'Practice Transitions Institute',
     websiteUrl: 'https://www.practicetransitionsinstitute.com',
     category: 'consulting',
-    founder: 'Dr. Kurt Laue',
+    founder: 'Dr. Michael Njo',
     industry: 'Consulting',
     location: 'San Mateo, CA',
     description:
@@ -682,6 +689,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'practice-transitions-institute',
     segments: ['consulting'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
           'PTI had deep credibility in dental practice transitions, but its digital footprint did not look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
@@ -708,18 +716,18 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   },
   {
     id: '18',
-    title: 'Dentist Retreat Digital Presence',
-    client: 'Dentist Retreat',
+    title: 'Leadership Retreat Digital Presence',
+    client: 'Leadership Retreat',
     websiteUrl: 'https://www.dentistretreat.com',
     category: 'event',
-    founder: 'Leadership Summit Team',
     industry: 'Professional Development',
-    location: 'San Francisco, CA',
+    location: 'Savannah, GA',
     description:
-      'Conversion-friendly retreat site with clear agenda, speakers, and booking paths.',
+      'The 2026 Leadership Retreat at Thompson Savannah, with a clear agenda, speakers, registration, and hotel booking paths.',
     slug: 'leadership-retreat',
     segments: ['education', 'community'],
     structured: {
+      dateModified: '2026-08-30T00:00:00.000Z',
       story: {
         situation:
           'The retreat is a small, intentionally curated gathering for dental professionals, boutique by design. Each year it moves cities, so each year the site must re-establish legitimacy and convert intrigued-but-skeptical dentists into booked rooms, with every registration mattering.',
@@ -767,7 +775,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'saorsa-growth-partners',
     segments: ['consulting'],
     structured: {
-      dateModified: '2026-08-21T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       results: [
         {
           value: '1.9×',
@@ -811,9 +819,8 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     structured: {
       heroImage:
         'https://www.design-prism.com/case-studies/mataria-dental-group-home-desktop.jpg',
-      heroVideoId: 'VIDEO_PLACEHOLDER',
       datePublished: '2025-02-01T00:00:00.000Z',
-      dateModified: '2025-02-01T00:00:00.000Z',
+      dateModified: '2026-08-30T00:00:00.000Z',
       outcomes: [
         'Mataria Dental Group relaunched with a modern dental website, aligned local listings, and structured analytics.',
         'Patients received a clear, human story about Dr. Mataria and why the transition benefits them.',

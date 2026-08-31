@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils'
 
 const PAGE_TITLE = 'Pro websites'
 const PAGE_DESCRIPTION =
-  'Ultra-premium websites for serious businesses: bespoke design systems, precise engineering, and analytics built to rank on Google and be cited by AI.'
+  'Ultra-premium websites for serious businesses: bespoke design systems, precise engineering, analytics, and foundations that support Google and AI discovery.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -108,9 +108,9 @@ const FAQ_ITEMS = [
       'Every build is scoped to your business on a 30-minute Zoom call. You leave with a clear plan and a clear price. There are no email estimates and no surprises in scope.',
   },
   {
-    question: 'How do you make a website rank on AI assistants?',
+    question: 'How do you support visibility in AI assistants?',
     answer:
-      'Through structured data, entity-clear content, clean semantics, and verifiable proof. The same discipline that earns rankings on Google makes a business straightforward for ChatGPT, Gemini, Claude, and Perplexity to find, trust, and cite.',
+      'Through structured data, entity-clear content, clean semantics, and verifiable proof. These foundations can make a business easier for search engines and AI assistants to understand, but no agency can guarantee rankings, citations, or recommendations.',
   },
   {
     question: 'Do I own the website?',
@@ -194,8 +194,8 @@ export default function WebsitesPage() {
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
                 Considered design, precise engineering, and analytics of record
                 for serious businesses. Built on a bespoke design system,
-                engineered to rank on Google, and structured to be found and
-                cited by AI.
+                engineered for search fundamentals, and structured to support
+                discovery by AI systems without guaranteeing placement.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -220,7 +220,7 @@ export default function WebsitesPage() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
                 {[
                   'Design systems',
-                  'Engineered to rank',
+                  'Search foundations',
                   'Analytics wired in',
                   'Google + AI search',
                 ].map((item) => (
@@ -325,8 +325,8 @@ export default function WebsitesPage() {
             <div className="space-y-7">
               <CoreSectionHeading
                 eyebrow="Visibility"
-                title="Rank on Google. Get cited by AI."
-                description="Your next customer asks a search engine, or asks an AI assistant. A PRO website is structured to win both: technical and local SEO foundations for Google, with entity-clear content and structured data that allow AI systems to find, trust, and recommend you."
+                title="Support discovery on Google and in AI."
+                description="Your next customer may ask a search engine or an AI assistant. A PRO website provides technical and local SEO foundations, entity-clear content, and structured data that help those systems understand your business. Rankings, citations, and recommendations are never guaranteed."
               />
               <div className="flex flex-wrap gap-2">
                 {SEARCH_SURFACES.map((surface) => (
@@ -394,8 +394,12 @@ export default function WebsitesPage() {
                 <Link
                   key={project.id}
                   href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={project.external === false ? undefined : '_blank'}
+                  rel={
+                    project.external === false
+                      ? undefined
+                      : 'noopener noreferrer'
+                  }
                   className="group bg-black p-5 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
                 >
                   <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
@@ -408,7 +412,9 @@ export default function WebsitesPage() {
                     {project.description}
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-                    Open site
+                    {project.external === false
+                      ? 'View case study'
+                      : 'Open site'}
                     <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
                   </span>
                 </Link>
@@ -504,7 +510,7 @@ export default function WebsitesPage() {
       <ServiceSchema
         serviceId="pro-website"
         name="Prism PRO website"
-        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, and analytics configured from day one, structured to rank on Google and be cited by AI assistants. Scoped on a 30-minute call."
+        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, analytics configured from day one, and foundations that support Google and AI discovery. Scoped on a 30-minute call; placement is not guaranteed."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{

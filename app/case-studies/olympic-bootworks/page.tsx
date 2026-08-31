@@ -6,9 +6,9 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 const cs = CASE_STUDIES.find((item) => item.slug === 'olympic-bootworks')
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Olympic Bootworks: Tahoe retail goes online',
+  titleStem: 'Olympic Bootworks retail case study',
   description:
-    'How Prism helped Olympic Bootworks, a legendary Tahoe boot-fitting shop, finally sell online without losing the craft that made its reputation.',
+    'How Prism rebuilt Olympic Bootworks online around its Tahoe locations, boot-fitting expertise, repair services, and current Fantic e-bike catalog.',
   path: '/case-studies/olympic-bootworks',
   ogImage: cs?.structured?.heroImage ?? '/olympic-bootworks.png',
 })

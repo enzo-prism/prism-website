@@ -1,27 +1,35 @@
-import fs from "node:fs"
-import path from "node:path"
+import fs from 'node:fs'
+import path from 'node:path'
 
 const schemaPages = [
-  "app/ads/page.tsx",
-  "app/chatgpt-ads/page.tsx",
-  "app/seo/page.tsx",
-  "app/local-listings/page.tsx",
-  "app/dental-website/page.tsx",
-  "app/dental-practice-seo-expert/page.tsx",
+  'app/ads/page.tsx',
+  'app/chatgpt-ads/page.tsx',
+  'app/seo/page.tsx',
+  'app/local-listings/page.tsx',
+  'app/dental-website/page.tsx',
+  'app/dental-practice-seo-expert/page.tsx',
 ] as const
 
-describe("pricing schema consistency", () => {
+describe('pricing schema consistency', () => {
   for (const relativePath of schemaPages) {
     it(`${relativePath} does not publish conflicting price ranges`, () => {
-      const content = fs.readFileSync(path.join(process.cwd(), relativePath), "utf8")
-      expect(content).not.toContain("priceRange")
-      expect(content).toMatch(/url: ["']https:\/\/www\.design-prism\.com\/pricing["']/)
+      const content = fs.readFileSync(
+        path.join(process.cwd(), relativePath),
+        'utf8',
+      )
+      expect(content).not.toContain('priceRange')
+      expect(content).toMatch(
+        /url: ["']https:\/\/www\.design-prism\.com\/pricing["']/,
+      )
     })
   }
 
-  it("keeps retired pricing out of service schemas", () => {
+  it('keeps retired pricing out of service schemas', () => {
     for (const relativePath of schemaPages) {
-      const content = fs.readFileSync(path.join(process.cwd(), relativePath), "utf8")
+      const content = fs.readFileSync(
+        path.join(process.cwd(), relativePath),
+        'utf8',
+      )
       // The five-tier ladder (60-day sprints at $3,500) is retired; service
       // schemas publish price-free offers that point at /pricing instead of
       // claiming amounts that can rot.
@@ -33,12 +41,26 @@ describe("pricing schema consistency", () => {
     }
   })
 
-  it("keeps the websites schema price-free and call-first", () => {
-    const content = fs.readFileSync(path.join(process.cwd(), "app/websites/page.tsx"), "utf8")
-    expect(content).toContain("Prism PRO website")
+  it('keeps the websites schema price-free and call-first', () => {
+    const content = fs.readFileSync(
+      path.join(process.cwd(), 'app/websites/page.tsx'),
+      'utf8',
+    )
+    expect(content).toContain('Prism PRO website')
     expect(content).not.toMatch(/price: ["']\d/)
-    expect(content).not.toContain("$300")
+    expect(content).not.toContain('$300')
     expect(content).toMatch(/url: CANONICAL_URL/)
-    expect(content).not.toContain("60-Day Growth Sprint")
+    expect(content).not.toContain('60-Day Growth Sprint')
+  })
+
+  it('keeps the custom pricing-page offers price-free', () => {
+    const content = fs.readFileSync(
+      path.join(process.cwd(), 'app/pricing/client-page.tsx'),
+      'utf8',
+    )
+
+    expect(content).not.toContain('price: String(website.price)')
+    expect(content).not.toContain("priceCurrency: 'USD'")
+    expect(content).not.toContain('priceCurrency: "USD"')
   })
 })

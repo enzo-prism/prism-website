@@ -1,18 +1,20 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
-import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
-import TrackedAnchor from "@/components/tracked-anchor"
-import { Button } from "@/components/ui/button"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import ScrollToTop from '@/components/scroll-to-top'
+import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
+import TrackedAnchor from '@/components/tracked-anchor'
+import { Button } from '@/components/ui/button'
+import { BOOKING_URL } from '@/lib/booking'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Shoot request received',
-  description: 'Your photography windows are on our calendar. Look for a confirmation email from Prism with next steps and how to prep your team.',
-  path: "/book-a-shoot/thank-you",
+  description:
+    'Your photography windows are on our calendar. Look for a confirmation email from Prism with next steps and how to prep your team.',
+  path: '/book-a-shoot/thank-you',
   index: false,
 })
 
@@ -24,13 +26,16 @@ export default function BookAShootThankYouPage() {
       <main className="bg-white text-neutral-900">
         <section className="border-b border-neutral-200 bg-neutral-50 px-4 py-12 sm:py-20">
           <div className="container mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-neutral-500">shoot request sent</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-neutral-500">
+              shoot request sent
+            </p>
             <h1 className="mt-3 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
               windows received. Thanks for the details.
             </h1>
             <p className="mt-4 text-base text-neutral-600">
-              We&apos;ll reply within one business day to confirm your preferred time, share travel details, and send the prep
-              checklist for your team.
+              We&apos;ll reply within one business day to confirm your preferred
+              time, share travel details, and send the prep checklist for your
+              team.
             </p>
           </div>
         </section>
@@ -38,35 +43,52 @@ export default function BookAShootThankYouPage() {
         <section className="px-4 py-16">
           <div className="container mx-auto grid max-w-5xl gap-6 lg:grid-cols-[3fr_2fr]">
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">what happens next</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                what happens next
+              </p>
               <div className="mt-6 space-y-5">
                 <div className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
-                  <p className="text-sm font-semibold text-neutral-900">1. Confirmation email</p>
+                  <p className="text-sm font-semibold text-neutral-900">
+                    1. Confirmation email
+                  </p>
                   <p className="mt-2 text-sm text-neutral-600">
-                    Expect a note from <span className="font-semibold">support@design-prism.com</span> confirming the shoot window
-                    and travel logistics.
+                    Expect a note from{' '}
+                    <span className="font-semibold">
+                      support@design-prism.com
+                    </span>{' '}
+                    confirming the shoot window and travel logistics.
                   </p>
                 </div>
                 <div className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
-                  <p className="text-sm font-semibold text-neutral-900">2. Prep checklist</p>
+                  <p className="text-sm font-semibold text-neutral-900">
+                    2. Prep checklist
+                  </p>
                   <p className="mt-2 text-sm text-neutral-600">
-                    We&apos;ll include lighting, wardrobe, and staging tips so your team, ops lead, and signage look production-ready.
+                    We&apos;ll include lighting, wardrobe, and staging tips so
+                    your team, ops lead, and signage look production-ready.
                   </p>
                 </div>
                 <div className="rounded-2xl border border-neutral-100 bg-neutral-50 p-5">
-                  <p className="text-sm font-semibold text-neutral-900">3. Shoot day reminders</p>
+                  <p className="text-sm font-semibold text-neutral-900">
+                    3. Shoot day reminders
+                  </p>
                   <p className="mt-2 text-sm text-neutral-600">
-                    We send reminders 48 hours ahead with final timing, gear list, and what to expect when the crew arrives.
+                    We send reminders 48 hours ahead with final timing, gear
+                    list, and what to expect when the crew arrives.
                   </p>
                 </div>
               </div>
             </div>
 
             <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">stay ready</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                stay ready
+              </p>
               <div className="mt-4 space-y-4 text-sm text-neutral-600">
                 <div>
-                  <p className="font-semibold text-neutral-900">Get the office + team checklist</p>
+                  <p className="font-semibold text-neutral-900">
+                    Get the office + team checklist
+                  </p>
                   <Link
                     href="/dental-photography/office-team"
                     className="text-neutral-900 underline-offset-4 hover:underline"
@@ -75,7 +97,9 @@ export default function BookAShootThankYouPage() {
                   </Link>
                 </div>
                 <div>
-                  <p className="font-semibold text-neutral-900">Dial in before + after shots</p>
+                  <p className="font-semibold text-neutral-900">
+                    Dial in before + after shots
+                  </p>
                   <Link
                     href="/dental-photography/before-after"
                     className="text-neutral-900 underline-offset-4 hover:underline"
@@ -105,7 +129,7 @@ export default function BookAShootThankYouPage() {
                   className="w-full rounded-2xl border border-neutral-200 bg-white px-6 py-3 text-base font-semibold text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50"
                 >
                   <TrackedAnchor
-                    href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                    href={BOOKING_URL}
                     label="book a call"
                     location="book_a_shoot_thank_you"
                     target="_blank"
@@ -119,7 +143,6 @@ export default function BookAShootThankYouPage() {
             </div>
           </div>
         </section>
-
       </main>
       <Footer />
       <ScrollToTop />

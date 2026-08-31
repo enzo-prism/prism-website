@@ -101,10 +101,11 @@ const OLYMPIC_SEARCH_METRIC = getCaseStudyMetric('olympic-bootworks')
 const SAORSA_SEARCH_METRIC = getCaseStudyMetric('saorsa-growth-partners')
 const BELIZE_SEARCH_METRIC = getCaseStudyMetric('belize-kids-foundation')
 const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
+const ROSEVILLE_SEARCH_METRIC = getCaseStudyMetric('roseville-dental-academy')
 
 export const HOMEPAGE_HERO = {
   title: 'Prism',
-  subheading: 'the #1 growth partner for small businesses',
+  subheading: 'a growth team for small businesses',
   description:
     'One team that plugs into yours and runs everything that grows your business: website, content, ads, search, and social. You get the results without the workload.',
   supportPoints: [
@@ -168,7 +169,7 @@ export const HOMEPAGE_CLIENT_WINS = {
       company: 'Olympic Bootworks',
       location: 'Tahoe, CA',
       href: '/case-studies/olympic-bootworks',
-      contextLabel: 'Retail + ecommerce',
+      contextLabel: 'Retail + e-bike catalog',
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
       metric: {
         value: OLYMPIC_SEARCH_METRIC.value,
@@ -202,7 +203,7 @@ export const HOMEPAGE_CLIENT_WINS = {
     },
     {
       company: 'sr4 Partners',
-      location: 'Chicago, IL',
+      location: 'Evanston, IL',
       href: '/case-studies/sr4-partners',
       contextLabel: 'Leadership consulting',
       image: '/case-studies/sr4-partners-home-mobile.jpg',
@@ -215,10 +216,10 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/rebellious-aging-home-mobile.jpg',
     },
     {
-      company: 'Infobell IT',
-      location: 'San Jose, CA',
+      company: 'Infobell IT Solutions',
+      location: 'Bengaluru, India',
       href: '/case-studies/infobell-it',
-      contextLabel: 'B2B services',
+      contextLabel: 'AI + product engineering',
       image: '/case-studies/infobell-it-home-mobile.jpg',
     },
     {
@@ -235,7 +236,7 @@ export const HOMEPAGE_CLIENT_WINS = {
     },
     {
       company: 'Exquisite Dentistry',
-      location: 'Beverly Hills, CA',
+      location: 'Los Angeles, CA',
       href: '/case-studies/exquisite-dentistry',
       contextLabel: 'Dental growth',
       image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
@@ -254,9 +255,9 @@ export const HOMEPAGE_CLIENT_WINS = {
       contextLabel: 'Education + analytics',
       image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
       metric: {
-        value: '593',
-        label: 'Google clicks in month one',
-        source: 'Google Search Console',
+        value: ROSEVILLE_SEARCH_METRIC.value,
+        label: ROSEVILLE_SEARCH_METRIC.label,
+        source: ROSEVILLE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
     },
     {
@@ -290,9 +291,9 @@ export const HOMEPAGE_CLIENT_WINS = {
     },
     {
       company: 'We Are Saplings',
-      location: 'New York City, NY',
+      location: 'Los Angeles, CA',
       href: '/case-studies/we-are-saplings',
-      contextLabel: 'Education',
+      contextLabel: 'Children’s emotional learning',
       image: '/case-studies/we-are-saplings-home-mobile.jpg',
     },
     {
@@ -332,7 +333,7 @@ export const HOMEPAGE_CLIENT_WINS = {
     },
     {
       company: 'Leadership Retreat',
-      location: 'San Francisco, CA',
+      location: 'Savannah, GA',
       href: '/case-studies/leadership-retreat',
       contextLabel: 'Events + education',
       image: '/case-studies/leadership-retreat-home-mobile.jpg',
@@ -350,27 +351,30 @@ export const HOMEPAGE_CLIENT_WINS = {
 export const HOMEPAGE_GROWTH_RAMP = {
   eyebrow: 'What to expect',
   title: 'First 90 days.',
-  microcopy: 'Clear targets. Real systems. No guesswork.',
-  finePrint: 'Targets vary by market, offer, starting point, and budget.',
+  microcopy: 'Audit. Ship. Measure. Improve.',
+  finePrint:
+    'The exact sequence and timing depend on scope, access, and your starting point.',
   metrics: [
     {
       day: 'Day 30',
-      value: '+25%',
-      label: 'qualified actions',
-      detail: 'Calls, forms, booking clicks, demos, directions, or inquiries.',
+      value: 'Baseline',
+      label: 'measurement + priorities',
+      detail:
+        'Audit the current funnel, verify tracking, and rank the highest-leverage fixes.',
     },
     {
       day: 'Day 60',
-      value: '+50%',
-      label: 'qualified demand',
-      detail: 'Higher-intent traffic and clearer source attribution.',
+      value: 'Live',
+      label: 'core improvements shipped',
+      detail:
+        'Launch the agreed website, search, content, or campaign improvements.',
     },
     {
       day: 'Day 90',
-      value: '10-30',
-      label: 'growth opportunities/mo',
+      value: 'Cadence',
+      label: 'measure + improve',
       detail:
-        'Target range once website, search, proof, and ads compound for you.',
+        'Review source data, keep what works, and set the next iteration.',
     },
   ] satisfies readonly HomepageGrowthRampMetric[],
 } as const
@@ -514,7 +518,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   },
   {
     title: 'AI discovery',
-    description: 'Be the business ChatGPT and AI search recommend.',
+    description: 'Build the signals that help ChatGPT and AI search find you.',
     iconSrc: '/pixelish/chatgpt.svg',
     brandLogo: 'openai',
     brandLogoTheme: 'dark',
@@ -607,7 +611,7 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
   'wine-country-root-canal':
     'An endodontic experience that makes urgent specialty care feel calm, precise, and easier to choose.',
   'olympic-bootworks':
-    'A Tahoe retail business gained a two-site ecommerce system and cleaner owned infrastructure.',
+    'A Tahoe retail business gained an integrated Fantic e-bike catalog, visible pricing, direct inquiry paths, and cleaner owned infrastructure.',
   'roseville-dental-academy':
     'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
   'rebellious-aging':
@@ -617,7 +621,7 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
   'belize-kids-foundation':
     'A nonprofit gained clearer program storytelling, supporter journeys, and analytics groundwork.',
   'canary-cove':
-    'A private island experience gained immersive visuals, concierge-ready booking flows, and tracking.',
+    'A private beachfront estate on Ambergris Caye gained immersive visuals, direct inquiry flows, and tracking.',
 }
 
 export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
@@ -667,10 +671,10 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     proof: 'Root canal care feels precise, calm, and easier to act on.',
   },
   'olympic-bootworks': {
-    artifact: 'Ecommerce growth base',
-    outcome: 'Retail demand captured',
+    artifact: 'Integrated e-bike catalog',
+    outcome: 'High-consideration demand clarified',
     proof:
-      'Inventory, brand story, search, and email moved into one owned system.',
+      'Current pricing, model comparisons, test rides, search, and email moved into one owned system.',
   },
   'roseville-dental-academy': {
     artifact: 'Admissions platform',
@@ -699,7 +703,7 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     artifact: 'Hospitality experience',
     outcome: 'Concierge-ready demand',
     proof:
-      'The private resort story became more immersive and easier to act on.',
+      'The private beachfront estate became more immersive and easier to act on.',
   },
 }
 

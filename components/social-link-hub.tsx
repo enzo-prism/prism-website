@@ -229,8 +229,8 @@ export default function SocialLinkHub({
             <div className="mt-2">
               <ActionCard
                 title="Premium Website Design"
-                detail="rank on ChatGPT and Google"
-                ariaLabel="Premium Website Design, for businesses under $1M a year. Rank on ChatGPT and Google."
+                detail="support visibility on ChatGPT and Google"
+                ariaLabel="Premium Website Design, for businesses under $1M a year. Support visibility on ChatGPT and Google."
                 href={WEBSITE_START_CTA.href}
                 tone="primary"
                 location={actionsLocation}

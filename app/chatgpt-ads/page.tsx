@@ -14,7 +14,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'ChatGPT Ads'
 const PAGE_DESCRIPTION =
-  'Invite-only ChatGPT ads strategy and setup for businesses in Prism’s network.'
+  'Prism-managed ChatGPT ads strategy, campaign setup, landing paths, and measurement for eligible advertisers.'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
@@ -73,8 +73,8 @@ const intentMoments = [
 
 const steps = [
   {
-    title: 'Verify access',
-    body: 'Enter the code from Prism or your referring partner. No public application, no generic waitlist.',
+    title: 'Verify the Prism invitation',
+    body: 'Enter the code from Prism or your referrer to unlock our private consultation. The code does not create or guarantee OpenAI advertising access.',
   },
   {
     title: 'Sharpen the offer',
@@ -109,7 +109,7 @@ const faqs = [
   {
     question: 'Can any business join?',
     answer:
-      'OpenAI is expanding access through partners and a beta Ads Manager. Prism’s managed program is separate and remains invitation-only for businesses in our network.',
+      'OpenAI provides its own advertiser sign-up and controls product availability, account eligibility, and approval. Prism’s invitation-only service is separate: our code unlocks a private strategy call, not OpenAI access.',
   },
   {
     question: 'What happens on the 30-minute call?',
@@ -152,11 +152,11 @@ export default async function ChatGptAdsPage({
                     decorative
                     className="h-4 w-4"
                   />
-                  Prism × ChatGPT Ads
+                  Prism for ChatGPT Ads
                 </span>
               </p>
               <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-3.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] shadow-xs backdrop-blur-sm">
-                Private partner access
+                Independent managed service
               </span>
             </div>
 
@@ -170,9 +170,10 @@ export default async function ChatGptAdsPage({
                 <p
                   className={`mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty sm:text-[1.35rem] ${styles.rise} ${styles.riseDelay2}`}
                 >
-                  The next search bar is a conversation. OpenAI is working with
-                  Prism to bring ChatGPT ads to a small group of businesses in
-                  our network.
+                  The next search bar is a conversation. Prism is an independent
+                  agency that helps eligible advertisers plan campaigns, landing
+                  paths, and measurement. OpenAI controls access, approvals,
+                  placement, and delivery.
                 </p>
                 <div
                   className={`mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap ${styles.rise} ${styles.riseDelay3}`}
@@ -202,7 +203,7 @@ export default async function ChatGptAdsPage({
 
             <div className="mt-16 grid border-y border-border sm:grid-cols-3 lg:mt-20">
               {[
-                ['Access', 'Invitation required'],
+                ['Prism access', 'Consultation code required'],
                 ['Placement', 'Sponsored, below the response'],
                 ['Next step', '30 minutes with Prism'],
               ].map(([label, value], index) => (
@@ -263,11 +264,11 @@ export default async function ChatGptAdsPage({
               </p>
               <a
                 className="inline-flex shrink-0 items-center gap-1.5 font-medium text-background transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background/70"
-                href="https://openai.com/index/our-approach-to-advertising-and-expanding-access/"
+                href="https://developers.openai.com/ads"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                OpenAI&apos;s ad principles
+                OpenAI&apos;s current ads documentation
                 <ExternalLink className="size-3.5" aria-hidden="true" />
               </a>
             </div>
@@ -322,10 +323,14 @@ export default async function ChatGptAdsPage({
             <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
               <div>
                 <p className={sectionLabelClass}>The Prism program</p>
-                <h2 className={sectionTitleClass}>From invitation to a real campaign.</h2>
+                <h2 className={sectionTitleClass}>
+                  From invitation to a real campaign.
+                </h2>
                 <p className={sectionLedeClass}>
-                  Access is only the beginning. Prism turns the opportunity into
-                  a clear offer, a credible destination, and a measured launch.
+                  A Prism invitation unlocks our consultation, not platform
+                  access. If your OpenAI account is eligible, Prism can turn the
+                  opportunity into a clear offer, credible destination, and
+                  measured launch.
                 </p>
               </div>
               <ol className="overflow-hidden rounded-3xl bg-card ring-1 ring-foreground/10 shadow-[0_1px_2px_rgb(16_16_16/0.04),0_28px_72px_-44px_rgb(16_16_16/0.26)]">
@@ -359,12 +364,15 @@ export default async function ChatGptAdsPage({
           <div className={`${shellClass} py-16 sm:py-24`}>
             <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-center md:gap-16">
               <div>
-                <p className={sectionLabelClass}>Private access</p>
-                <h2 className={sectionTitleClass}>One code. One focused call.</h2>
+                <p className={sectionLabelClass}>Private Prism access</p>
+                <h2 className={sectionTitleClass}>
+                  One code. One focused call.
+                </h2>
                 <p className={sectionLedeClass}>
                   Enter the invitation from Prism or your referring partner.
                   Once verified, Enzo&apos;s private 30-minute booking link
-                  appears here.
+                  appears here. This code has no effect on OpenAI account
+                  eligibility.
                 </p>
                 <div className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-5">
                   <div>
@@ -420,16 +428,19 @@ export default async function ChatGptAdsPage({
         </section>
 
         <section className="border-t border-border py-20 sm:py-28">
-          <div className={`${shellClass} flex flex-col items-center text-center`}>
+          <div
+            className={`${shellClass} flex flex-col items-center text-center`}
+          >
             <span className="inline-flex items-center rounded-full border border-border bg-card px-3.5 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] shadow-xs">
-              Invitation required
+              Prism invitation required
             </span>
             <h2 className="mt-5 max-w-[15ch] text-[clamp(2.4rem,5vw,4.75rem)] font-medium leading-[0.96] tracking-[-0.055em] text-balance">
-              If you have the code, you have the next move.
+              The code unlocks a focused Prism strategy call.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
-              Verify your invitation, book the call, and find out whether
-              ChatGPT ads belong in your growth system.
+              Verify your Prism invitation, book the call, and assess whether
+              the channel fits. OpenAI separately controls advertiser access and
+              approval.
             </p>
             <a className={`mt-8 ${primaryPillClass}`} href="#access">
               Verify invitation
@@ -444,14 +455,14 @@ export default async function ChatGptAdsPage({
       <Footer />
       <ServiceSchema
         serviceId="chatgpt-ads-service"
-        name="ChatGPT ads for select businesses"
-        description="Invite-only ChatGPT advertising strategy and setup for businesses in Prism's network, scoped on a 30-minute call."
+        name="Prism-managed ChatGPT ads service"
+        description="ChatGPT advertising strategy, campaign setup, landing paths, and measurement for eligible advertisers, scoped on a 30-minute call with Prism."
         serviceType="Digital advertising"
         areaServed="United States"
         offerDetails={{
           name: 'ChatGPT ads strategy and setup with Prism',
           description:
-            'Invite-only ChatGPT ads strategy and setup, scoped with Prism on a 30-minute call. No public price.',
+            'Prism-managed ChatGPT ads strategy and setup for eligible advertisers, scoped on a 30-minute call. OpenAI separately controls platform access and approval. No public price.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/pricing',

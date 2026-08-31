@@ -1,19 +1,21 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import RevealOnScroll from "@/components/reveal-on-scroll"
-import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
-import TrackedAnchor from "@/components/tracked-anchor"
-import { Button } from "@/components/ui/button"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import RevealOnScroll from '@/components/reveal-on-scroll'
+import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
+import TrackedAnchor from '@/components/tracked-anchor'
+import { Button } from '@/components/ui/button'
+import { BOOKING_URL } from '@/lib/booking'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Your AEO assessment is on its way',
-  description: 'Your free AEO assessment is submitted. The Prism team will review your answer-engine visibility and send tailored recommendations shortly.',
-  path: "/aeo-thank-you",
+  description:
+    'Your free AEO assessment is submitted. The Prism team will review your answer-engine visibility and send tailored recommendations shortly.',
+  path: '/aeo-thank-you',
   index: false,
 })
 
@@ -37,12 +39,15 @@ export default function AeoThankYouPage() {
                       aria-hidden
                     />
                     <div className="space-y-3">
-                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">Assessment received</p>
+                      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500">
+                        Assessment received
+                      </p>
                       <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
                         Your free AEO assessment is on its way.
                       </h1>
                       <p className="text-base text-slate-600">
-                        Thanks for submitting. We will review your site, then send your assessment and next-step recommendations.
+                        Thanks for submitting. We will review your site, then
+                        send your assessment and next-step recommendations.
                       </p>
                     </div>
                   </div>
@@ -52,17 +57,22 @@ export default function AeoThankYouPage() {
               <RevealOnScroll delay={0.1}>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">next</p>
-                    <p className="mt-3 text-lg font-semibold text-slate-900">Want a discovery call next?</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                      next
+                    </p>
+                    <p className="mt-3 text-lg font-semibold text-slate-900">
+                      Want a discovery call next?
+                    </p>
                     <p className="mt-2 text-sm text-slate-600">
-                      Bring the assessment and your goals. We’ll confirm priorities and map a launch sequence that keeps momentum.
+                      Bring the assessment and your goals. We’ll confirm
+                      priorities and map a launch sequence that keeps momentum.
                     </p>
                     <Button
                       asChild
                       className="mt-5 w-full rounded-full border border-black bg-black px-6 py-3 text-base font-semibold text-white hover:bg-black/90"
                     >
                       <TrackedAnchor
-                        href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                        href={BOOKING_URL}
                         label="Book a call"
                         location="aeo_thank_you"
                         target="_blank"
@@ -74,23 +84,38 @@ export default function AeoThankYouPage() {
                     </Button>
                   </div>
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">explore next</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                      explore next
+                    </p>
                     <div className="mt-3 space-y-3 text-sm text-slate-600">
                       <div>
-                        <p className="font-semibold text-slate-900">See AEO framework details</p>
-                        <Link href="/aeo" className="text-slate-900 underline-offset-4 hover:underline">
+                        <p className="font-semibold text-slate-900">
+                          See AEO framework details
+                        </p>
+                        <Link
+                          href="/aeo"
+                          className="text-slate-900 underline-offset-4 hover:underline"
+                        >
                           Read the AEO page →
                         </Link>
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">Browse AI SEO services</p>
-                        <Link href="/ai-seo-services" className="text-slate-900 underline-offset-4 hover:underline">
+                        <p className="font-semibold text-slate-900">
+                          Browse AI SEO services
+                        </p>
+                        <Link
+                          href="/ai-seo-services"
+                          className="text-slate-900 underline-offset-4 hover:underline"
+                        >
                           AI SEO services →
                         </Link>
                       </div>
                       <p>
-                        Need a deeper roadmap? Check out{" "}
-                        <Link href="/seo/audit" className="text-slate-900 underline-offset-4 hover:underline">
+                        Need a deeper roadmap? Check out{' '}
+                        <Link
+                          href="/seo/audit"
+                          className="text-slate-900 underline-offset-4 hover:underline"
+                        >
                           SEO audit service
                         </Link>
                         .

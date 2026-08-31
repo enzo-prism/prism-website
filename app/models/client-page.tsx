@@ -83,10 +83,18 @@ const howItWorks = [
   },
 ]
 
-const dentalPartners = [
+type DentalPartner = {
+  name: string
+  location: string
+  doctor: string
+  url: string
+  external?: boolean
+}
+
+const dentalPartners: DentalPartner[] = [
   {
     name: 'exquisite dentistry',
-    location: 'beverly hills, ca',
+    location: 'los angeles, ca',
     doctor: 'dr. alexie aguil',
     url: 'https://exquisitedentistryla.com',
   },
@@ -94,7 +102,8 @@ const dentalPartners = [
     name: 'laguna beach dental arts',
     location: 'laguna beach, ca',
     doctor: 'dr. teagan willes',
-    url: 'https://lagunabeachdentalarts.com',
+    url: '/case-studies/laguna-beach-dental-arts',
+    external: false,
   },
   {
     name: 'dr. christopher b. wong',
@@ -245,9 +254,17 @@ export default function ModelsPageClient() {
                   <a
                     key={partner.name}
                     href={partner.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`visit ${partner.name} website`}
+                    target={partner.external === false ? undefined : '_blank'}
+                    rel={
+                      partner.external === false
+                        ? undefined
+                        : 'noopener noreferrer'
+                    }
+                    aria-label={
+                      partner.external === false
+                        ? `view ${partner.name} case study`
+                        : `visit ${partner.name} website`
+                    }
                     onClick={() =>
                       trackCTAClick('models_dental_partner', partner.name)
                     }
@@ -438,7 +455,7 @@ export default function ModelsPageClient() {
                     <Input
                       id="models-location"
                       name="location"
-                      placeholder="beverly hills, ca"
+                      placeholder="los angeles, ca"
                       required
                       className="h-11"
                       aria-invalid={Boolean(getError('location'))}

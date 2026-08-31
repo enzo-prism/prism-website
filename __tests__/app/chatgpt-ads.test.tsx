@@ -66,14 +66,21 @@ jest.mock('@/components/brand-logo', () => ({
 }))
 
 describe('/chatgpt-ads page', () => {
-  it('leads with the invite-only ChatGPT ads story', async () => {
+  it('separates Prism consultation access from OpenAI ad access', async () => {
     render(await ChatGptAdsPage({ searchParams: Promise.resolve({}) }))
 
     expect(
       screen.getByRole('heading', { level: 1, name: /ads, inside chatgpt/i }),
     ).toBeInTheDocument()
-    expect(screen.getAllByText(/invitation required/i).length).toBeGreaterThan(0)
-    expect(screen.getByText(/private partner access/i)).toBeInTheDocument()
+    expect(screen.getByText(/independent managed service/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/openai controls access, approvals/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /this code has no effect on openai account eligibility/i,
+      ),
+    ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: /the answer stays independent/i }),
     ).toBeInTheDocument()

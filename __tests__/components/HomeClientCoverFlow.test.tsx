@@ -60,14 +60,14 @@ const slides = [
     contextLabel: 'Retail + ecommerce',
     image: '/case-studies/olympic-bootworks-home-mobile.jpg',
     metric: {
-      value: '+239%',
+      value: '+8%',
       label: 'search impressions',
       source: 'Google Search Console',
     },
   },
   {
     company: 'Exquisite Dentistry',
-    location: 'Beverly Hills, CA',
+    location: 'Los Angeles, CA',
     href: '/case-studies/exquisite-dentistry',
     contextLabel: 'Dental growth',
     image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
@@ -142,7 +142,7 @@ describe('HomeClientCoverFlow', () => {
   it('shows a verified headline metric with its source when present', () => {
     render(<HomeClientCoverFlow slides={slides} />)
 
-    expect(screen.getByText('+239%')).toBeInTheDocument()
+    expect(screen.getByText('+8%')).toBeInTheDocument()
     expect(screen.getByText('search impressions')).toBeInTheDocument()
     // the source attribution must travel with the metric (anti-fabrication)
     expect(screen.getByText('Google Search Console')).toBeInTheDocument()

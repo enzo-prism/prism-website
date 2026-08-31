@@ -1257,7 +1257,7 @@ export default function WebsiteIntakeForm() {
         ? 'This helps us scope the first version.'
         : currentStep === 'current-site'
           ? 'A link is enough. We will review it before we reply.'
-          : 'We reply within 24 hours on the channel you pick.'
+          : 'We reply within two business days on the channel you pick.'
 
   if (isSuccess) {
     return (
@@ -1282,7 +1282,7 @@ export default function WebsiteIntakeForm() {
                 Request received
               </p>
               <h2 className="text-balance text-[clamp(1.8rem,5vw,2.8rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#F5F0E8]">
-                Prism will reach out to you within 24 hours.
+                Prism will reach out to you within two business days.
               </h2>
             </div>
 

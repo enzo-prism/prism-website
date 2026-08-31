@@ -5,7 +5,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Exquisite Dentistry brand relaunch',
   description:
-    'How Prism turned a legacy Beverly Hills dental brand into a modern, trackable growth engine, with a new site, SEO, and full-funnel analytics.',
+    'How Prism turned a legacy Los Angeles dental brand into a modern, trackable growth engine, with a new site, SEO, and full-funnel analytics.',
   path: '/case-studies/exquisite-dentistry',
   ogImage: '/exquisite-dentistry-consultation.png',
 })

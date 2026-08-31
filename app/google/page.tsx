@@ -60,7 +60,7 @@ const servicesHighlights = [
 ]
 
 const partnershipPoints = [
-  'Official Google Workspace Partner',
+  'Google Workspace setup and migration support',
   'Deep expertise in Ads, Analytics, and Business Profile optimization',
   'Hands-on setup, support, and automation',
   'Proven results with local businesses across industries',
@@ -82,9 +82,9 @@ const learningLinks = [
   },
 ]
 
-const PAGE_TITLE = 'Google Workspace & Ads partner'
+const PAGE_TITLE = 'Google Workspace, Ads & Analytics services'
 const PAGE_DESCRIPTION =
-  'Prism is a Google partner helping small businesses grow with Workspace, Google Ads, Analytics, and Business Profile optimization done right.'
+  'Prism helps small businesses use Google Workspace, Google Ads, Analytics, and Business Profile as one connected growth system.'
 const CANONICAL_URL = 'https://www.design-prism.com/google'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -112,11 +112,10 @@ export default function GooglePage() {
               <div className="space-y-6 md:text-left">
                 <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
                   <BrandLogo brand="google" decorative className="h-4 w-4" />
-                  prism × google
+                  google systems by prism
                 </span>
                 <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                  prism + google: growing local businesses with the world’s best
-                  tools
+                  grow your local business with a connected google system
                 </h1>
                 <p className="text-base text-white/80 sm:text-lg">
                   we help small businesses and local practices grow faster by
@@ -267,7 +266,7 @@ export default function GooglePage() {
                 Why partner with Prism
               </p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                A Google Partner that actually helps you grow.
+                Google expertise that helps your systems work together.
               </h2>
             </div>
             <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
@@ -316,19 +315,19 @@ export default function GooglePage() {
                 hipaa patient intake
               </p>
               <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                make google workspace safe for dental forms.
+                configure Google Workspace for safer dental intake.
               </h2>
             </div>
             <div className="space-y-6 text-base text-neutral-700 sm:text-lg">
               <p>
                 dental practices ask us how to collect new patient histories
                 without leaving workspace. our implementation-grade guide walks
-                through baa execution, shared drive controls, dlp, and checklist
-                tooling so your intake stays hipaa-ready.
+                through BAA execution, shared-drive controls, edition-dependent
+                safeguards, and checklist tooling for a HIPAA-aware setup.
               </p>
               <p>
-                we also include our partner discount so you can spin up
-                workspace on the covered editions before you build the form.
+                eligible new customers can use our referral discount, then
+                confirm that their edition includes each required control.
               </p>
               <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
                 <Button

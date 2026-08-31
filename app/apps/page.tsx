@@ -1,62 +1,64 @@
-import Footer from "@/components/footer"
-import MinimalAppsList from "@/components/minimal-apps-list"
-import Navbar from "@/components/navbar"
-import ScrollProgressBar from "@/components/scroll-progress-bar"
-import SeoTextSection from "@/components/seo-text-section"
-import { ItemListSchema } from "@/components/schema-markup"
-import { Button } from "@/components/ui/button"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import MinimalAppsList from '@/components/minimal-apps-list'
+import Navbar from '@/components/navbar'
+import ScrollProgressBar from '@/components/scroll-progress-bar'
+import SeoTextSection from '@/components/seo-text-section'
+import { ItemListSchema } from '@/components/schema-markup'
+import { Button } from '@/components/ui/button'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Mobile app development & portfolio',
-  description: 'Explore custom mobile apps for restaurants, healthcare, and small businesses, with live demos of native iOS and Android builds from Prism.',
-  path: "/apps",
-  ogImage: "/prism-opengraph.png",
+  titleStem: 'App development & product portfolio',
+  description:
+    'Explore selected Prism product work across web, iOS, and Android, including public projects and archived portfolio work.',
+  path: '/apps',
+  ogImage: '/prism-opengraph.png',
 })
 
 const appProjects = [
   {
-    id: "1",
-    title: "prism dashboard",
-    url: "https://growthprism.app",
-    description: "real-time analytics and insights for growing businesses",
-    category: "business",
-    platforms: ["Web"],
+    id: '1',
+    title: 'prism dashboard',
+    description: 'private client analytics and growth reporting workspace',
+    category: 'business',
+    platforms: ['Web'],
+    status: 'private',
   },
   {
-    id: "2",
-    title: "peak surf",
-    url: "https://peaksurf.club",
-    description: "surf forecasts, tide data, and community features",
-    category: "lifestyle",
-    platforms: ["iOS", "Android", "Web"],
+    id: '2',
+    title: 'peak surf',
+    url: 'https://peaksurf.club',
+    description: 'surf forecasts, tide data, and community features',
+    category: 'lifestyle',
+    platforms: ['iOS', 'Android', 'Web'],
   },
   {
-    id: "3",
-    title: "track & field",
-    url: "https://pv-schedule.com",
-    description: "athletic performance tracking and event scheduling",
-    category: "sports",
-    platforms: ["Web"],
+    id: '3',
+    title: 'track & field',
+    url: 'https://pv-schedule.com',
+    description: 'athletic performance tracking and event scheduling',
+    category: 'sports',
+    platforms: ['Web'],
   },
   {
-    id: "4",
-    title: "sison yum",
-    url: "https://sisonyum.com",
-    description: "private restaurant reviews and dining recommendations",
-    category: "food",
-    platforms: ["Web"],
+    id: '4',
+    title: 'sison yum',
+    description:
+      'archived restaurant reviews and dining recommendations project',
+    category: 'food',
+    platforms: ['Web'],
+    status: 'archived',
   },
   {
-    id: "5",
-    title: "grind deck",
-    url: "https://www.grinddeck.com/",
-    description: "gamified productivity with rewards and achievements",
-    category: "productivity",
-    platforms: ["iOS", "Android"],
+    id: '5',
+    title: 'grind deck',
+    url: 'https://www.grinddeck.com/',
+    description: 'gamified productivity with rewards and achievements',
+    category: 'productivity',
+    platforms: ['iOS', 'Android'],
   },
 ]
 
@@ -65,7 +67,7 @@ export default function AppsPage() {
     <div className="flex min-h-screen flex-col bg-white">
       <ScrollProgressBar />
       <Navbar />
-      
+
       <main className="flex-1">
         {/* Hero - Ultra minimal */}
         <section className="px-4 pt-24 pb-8 sm:pt-32 sm:pb-12">
@@ -74,15 +76,24 @@ export default function AppsPage() {
               apps
             </h1>
             <p className="text-base sm:text-lg text-neutral-600 font-light flex items-center gap-3 flex-wrap">
-              we design and build your app, add it to the app store, then grow it.
+              we design and build your app, add it to the app store, then grow
+              it.
               <span className="flex items-center gap-2">
                 {/* Apple Logo */}
-                <svg className="h-5 w-5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                <svg
+                  className="h-5 w-5 text-neutral-600"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                 </svg>
                 {/* Android Logo */}
-                <svg className="h-5 w-5 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0989L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
+                <svg
+                  className="h-5 w-5 text-neutral-600"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0989L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396" />
                 </svg>
               </span>
             </p>
@@ -104,7 +115,9 @@ export default function AppsPage() {
             </h2>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <span className="text-xs text-neutral-400 font-mono mt-0.5">01</span>
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">
+                  01
+                </span>
                 <div>
                   <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
                     discovery & strategy
@@ -115,7 +128,9 @@ export default function AppsPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="text-xs text-neutral-400 font-mono mt-0.5">02</span>
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">
+                  02
+                </span>
                 <div>
                   <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
                     design & prototype
@@ -126,7 +141,9 @@ export default function AppsPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="text-xs text-neutral-400 font-mono mt-0.5">03</span>
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">
+                  03
+                </span>
                 <div>
                   <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
                     develop & test
@@ -137,7 +154,9 @@ export default function AppsPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="text-xs text-neutral-400 font-mono mt-0.5">04</span>
+                <span className="text-xs text-neutral-400 font-mono mt-0.5">
+                  04
+                </span>
                 <div>
                   <h3 className="text-base sm:text-lg font-light text-neutral-900 mb-1">
                     launch & grow
@@ -171,13 +190,14 @@ export default function AppsPage() {
         {/* SEO supporting copy - minimal prose */}
         <SeoTextSection title="mobile app development services">
           <p>
-            we design and ship production‑ready ios and android apps: architecture, ui, and deployment.
-            our team handles the full lifecycle: strategy, design, development, testing, app store
-            submission, and growth. whether you are validating an mvp or scaling an existing product, we
-            prioritize performance, accessibility, and a clean codebase you can maintain.
+            we design and ship production‑ready ios and android apps:
+            architecture, ui, and deployment. our team handles the full
+            lifecycle: strategy, design, development, testing, app store
+            submission, and growth. whether you are validating an mvp or scaling
+            an existing product, we prioritize performance, accessibility, and a
+            clean codebase you can maintain.
           </p>
         </SeoTextSection>
-
       </main>
       <Footer />
       <ItemListSchema
@@ -187,8 +207,10 @@ export default function AppsPage() {
         items={appProjects.map((project) => ({
           name: project.title,
           description: project.description,
-          url: project.url,
-          itemType: "CreativeWork",
+          url:
+            project.url ??
+            `https://www.design-prism.com/apps#app-project-${project.id}`,
+          itemType: 'CreativeWork',
         }))}
       />
     </div>

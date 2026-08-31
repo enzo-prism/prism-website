@@ -27,8 +27,6 @@ import {
   HOW_IT_WORKS,
   MARQUEE_ITEMS,
   OWNER_REASONS,
-  PAGE_DESCRIPTION,
-  PAGE_TITLE,
   QUEUE_BOARD,
   ROTATING_WORDS,
 } from '@/components/prism-infinity/infinity-content'
@@ -48,8 +46,9 @@ const SUBSCRIBE_HREF = BOOK_A_CALL_CTA.href
 const SUBSCRIBE_LABEL = BOOK_A_CALL_CTA.label
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
+  titleStem: 'Prism Infinity',
+  description:
+    'Unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription. Request what the business needs, one at a time. Pause anytime.',
   path: '/prism-infinity',
   ogImage: '/prism-opengraph.png',
 })

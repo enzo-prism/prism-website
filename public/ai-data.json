@@ -47,30 +47,30 @@
         "source": "Public YouTube profile"
       },
       "instagram": {
-        "followers": "38K",
+        "followers": "37K",
         "posts": 644,
         "source": "Public Instagram profile"
       },
       "tiktok": {
-        "followers": "11.3K",
+        "followers": "11.4K",
         "views_last_60_days": "1.2M",
-        "source": "Public profile and authenticated analytics"
+        "source": "Public profile verified August 30, 2026; authenticated analytics verified August 21, 2026"
       },
-      "combined_audience": "74K"
+      "combined_audience": "73K+"
     }
   },
   "case_studies": [
     {
       "client": "Dr. Christopher B. Wong",
-      "result": "+239% Google Search impressions year over year in the latest 90 days",
-      "period": "May 21-August 18, 2025 vs 2026",
+      "result": "+160% Google Search impressions year over year in the latest 90 days",
+      "period": "May 31-August 28, 2025 vs 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/dr-christopher-wong"
     },
     {
       "client": "Olympic Bootworks",
-      "result": "+48% Google Search impressions year over year in the latest 90 days; 11.8K GA4 sessions",
-      "period": "May 21-August 20, 2026",
+      "result": "+8% Google Search impressions year over year in the latest 90 days; 10,709 GA4 sessions",
+      "period": "GSC: May 31-August 28, 2025 vs 2026; GA4: May 31-August 28, 2026",
       "sources": ["Google Search Console", "Google Analytics 4"],
       "url": "https://www.design-prism.com/case-studies/olympic-bootworks"
     },
@@ -89,18 +89,18 @@
       "url": "https://www.design-prism.com/case-studies/saorsa-growth-partners"
     },
     {
-      "client": "Belize Kids Foundation",
-      "result": "+171% Google Search impressions year over year in the latest 90 days",
-      "period": "May 21-August 18, 2025 vs 2026",
+      "client": "Belize Kids",
+      "result": "+121% Google Search impressions year over year in the latest 90 days",
+      "period": "May 31-August 28, 2025 vs 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/belize-kids-foundation"
     }
   ],
   "proof_inventory": {
     "published_case_studies": 22,
-    "community_voices": 257,
+    "community_voices": 242,
     "case_studies_url": "https://www.design-prism.com/case-studies",
     "wall_of_love_url": "https://www.design-prism.com/wall-of-love"
   },
-  "last_verified": "2026-08-21"
+  "last_verified": "2026-08-30"
 }

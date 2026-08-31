@@ -279,7 +279,7 @@ export function GlobalSchemaGraph() {
       'https://www.youtube.com/@the_design_prism',
       'https://x.com/NosisTheGod',
       'https://www.tiktok.com/@the_design_prism',
-      'https://www.linkedin.com/company/web-prism/?viewAsMember=true',
+      'https://www.linkedin.com/company/web-prism',
     ],
     // Canonical offers so AI/search engines see Prism's core products. Values
     // come from lib/pricing-model.ts — do not hardcode here. Every offer is
@@ -301,33 +301,19 @@ export function GlobalSchemaGraph() {
       },
       {
         '@type': 'Offer',
+        name: CANONICAL_PRICING_OFFERS.dental_os.name,
+        description: CANONICAL_PRICING_OFFERS.dental_os.description,
+        availability: 'https://schema.org/InStock',
+        url: 'https://www.design-prism.com/dental-os',
+      },
+      {
+        '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.prism_infinity.name,
         description: CANONICAL_PRICING_OFFERS.prism_infinity.description,
         availability: 'https://schema.org/InStock',
         url: 'https://www.design-prism.com/prism-infinity',
       },
     ],
-  }
-
-  const localBusiness = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': 'https://www.design-prism.com/#localbusiness',
-    name: 'Prism',
-    url: 'https://www.design-prism.com',
-    image: 'https://www.design-prism.com/prism-opengraph.png',
-    logo: 'https://www.design-prism.com/prism-logo.jpeg',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '548 Market St #62411',
-      addressLocality: 'San Francisco',
-      addressRegion: 'CA',
-      postalCode: '94104',
-      addressCountry: 'US',
-    },
-    areaServed: 'US',
-    sameAs: organization.sameAs,
-    parentOrganization: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
   const website = {
@@ -339,7 +325,7 @@ export function GlobalSchemaGraph() {
     publisher: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
-  return renderJsonLd([organization, localBusiness, website])
+  return renderJsonLd([organization, website])
 }
 
 export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
@@ -963,7 +949,6 @@ export function OrganizationSchema() {
       'https://www.youtube.com/@the_design_prism',
       'https://x.com/NosisTheGod',
       'https://www.instagram.com/the_design_prism/',
-      'https://www.linkedin.com/company/design-prism/',
     ],
   }
 

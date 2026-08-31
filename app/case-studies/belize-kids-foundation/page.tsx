@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Belize Kids Foundation case study',
+  titleStem: 'Belize Kids case study',
   description:
-    'How Prism built a warm, conversion-focused website and brand for Belize Kids Foundation, a nonprofit expanding education and opportunity for kids in Belize.',
+    'How Prism built a warm, conversion-focused website for Belize Kids, Don Listwin’s nonprofit supporting children’s education, health, and well-being in Belize.',
   path: '/case-studies/belize-kids-foundation',
   ogImage: '/case-studies/belize-kids-foundation-home-desktop.jpg',
 })

@@ -14,14 +14,14 @@ describe('CaseStudySchema', () => {
         industry="Dentistry"
         location="Palo Alto, CA"
         scope="Website, SEO, analytics"
-        outcome="+239% Google Search impressions year over year in the latest 90 days."
+        outcome="+160% Google Search impressions year over year in the latest 90 days."
         results={[
           {
-            value: '+239%',
+            value: '+160%',
             label: 'Google Search impressions, year over year',
-            detail: 'Google Search Console: Mar-May 2025 vs Mar-May 2026.',
+            detail: 'Google Search Console: May 31-August 28, 2025 vs 2026.',
             sourceName: 'Google Search Console',
-            dateRange: 'Mar-May 2025 vs Mar-May 2026',
+            dateRange: 'May 31-August 28, 2025 vs 2026',
           },
         ]}
       />,
@@ -34,7 +34,7 @@ describe('CaseStudySchema', () => {
     expect(article).toMatchObject({
       '@id': 'https://www.design-prism.com/case-studies/example#article',
       abstract:
-        '+239% Google Search impressions year over year in the latest 90 days.',
+        '+160% Google Search impressions year over year in the latest 90 days.',
       about: {
         name: 'Example Client',
         url: 'https://example.com',
@@ -45,15 +45,15 @@ describe('CaseStudySchema', () => {
     )
     expect(article.citation).toEqual(
       expect.arrayContaining([
-        'Google Search Console: Mar-May 2025 vs Mar-May 2026.',
+        'Google Search Console: May 31-August 28, 2025 vs 2026.',
       ]),
     )
     expect(article.mentions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          name: '+239% Google Search impressions, year over year',
+          name: '+160% Google Search impressions, year over year',
           measurementTechnique: 'Google Search Console',
-          temporalCoverage: 'Mar-May 2025 vs Mar-May 2026',
+          temporalCoverage: 'May 31-August 28, 2025 vs 2026',
         }),
       ]),
     )

@@ -82,10 +82,11 @@ export default function HomeProofBandSection() {
                 </div>
 
                 <p className="sr-only">
-                  Prism targets a first 90 day growth ramp for businesses: day
-                  30, plus 25 percent qualified actions; day 60, plus 50
-                  percent qualified demand; day 90, 10 to 30 growth
-                  opportunities per month.
+                  Prism&apos;s first 90 day process: by day 30, establish the
+                  measurement baseline and priorities; by day 60, ship the
+                  agreed core improvements; by day 90, review source data and
+                  establish a measured improvement cadence. Exact timing depends
+                  on scope, access, and the starting point.
                 </p>
               </div>
             </div>

@@ -121,7 +121,7 @@ const PROOF_METRICS = [
 const DENTAL_CLIENTS = [
   {
     name: 'Exquisite Dentistry',
-    location: 'Beverly Hills, CA',
+    location: 'Los Angeles, CA',
     focus: 'Luxury cosmetic practice, evidence-first rebuild',
     slug: 'exquisite-dentistry',
   },
@@ -156,7 +156,7 @@ const DENTAL_CLIENTS = [
     slug: 'wine-country-root-canal',
   },
   {
-    name: 'Coast Periodontics & Laser Surgery',
+    name: 'Coast Periodontics',
     location: 'San Luis Obispo, CA',
     focus: 'Periodontics for patients and referring dentists',
     slug: 'coast-periodontics-and-laser-surgery',

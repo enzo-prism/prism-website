@@ -7,7 +7,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Start your new website'
 const PAGE_DESCRIPTION =
-  'Answer four short questions and Prism will reach out within 24 hours to scope your PRO website.'
+  'Answer four short questions and Prism will reach out within two business days to scope your PRO website.'
 const CANONICAL_URL = 'https://www.design-prism.com/website-intake'
 
 export const metadata: Metadata = buildRouteMetadata({

@@ -3,9 +3,9 @@ import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Infobell IT case study',
+  titleStem: 'Infobell IT Solutions case study',
   description:
-    'How Prism built a credible digital presence for Infobell IT, a managed-services and cybersecurity firm competing in a trust-driven B2B market.',
+    'How Prism clarified Infobell IT Solutions’ global AI, high-performance computing, product-engineering, and software portfolio for enterprise buyers.',
   path: '/case-studies/infobell-it',
   ogImage: '/case-studies/infobell-it-home-desktop.jpg',
 })

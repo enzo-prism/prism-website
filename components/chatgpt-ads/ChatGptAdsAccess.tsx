@@ -169,7 +169,7 @@ export default function ChatGptAdsAccess({
               Invited by {invite.invitedBy}.
             </span>
             <span className="block text-xs text-muted-foreground">
-              Partner invitation verified
+              Prism/referrer invitation verified
             </span>
           </span>
         </div>
@@ -204,8 +204,8 @@ export default function ChatGptAdsAccess({
         Your code opens the next step.
       </h2>
       <p className="mt-3 text-base leading-relaxed text-muted-foreground text-pretty">
-        This program is invite only. Enter the code from Prism or your
-        referring partner to reveal Enzo&apos;s private booking link.
+        This program is invite only. Enter the code from Prism or your referring
+        partner to reveal Enzo&apos;s private booking link.
       </p>
       <form
         className="mt-6 flex flex-col gap-3"

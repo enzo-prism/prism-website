@@ -1,15 +1,16 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
-import { trackCTAClick } from "@/utils/analytics"
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
+import { trackCTAClick } from '@/utils/analytics'
 
 interface AppProject {
   id: string
   title: string
-  url: string
+  url?: string
   category: string
   description: string
+  status?: string
 }
 
 interface MinimalAppsListProps {
@@ -19,16 +20,12 @@ interface MinimalAppsListProps {
 export default function MinimalAppsList({ projects }: MinimalAppsListProps) {
   return (
     <div className="space-y-1">
-      {projects.map((project, index) => (
-        <Link
-          key={project.id}
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackCTAClick("app-portfolio-click", project.title)}
-          className="group block"
-        >
-          <div className="py-8 px-4 sm:px-6 border-t border-neutral-100 hover:bg-neutral-50 transition-colors duration-200">
+      {projects.map((project, index) => {
+        const card = (
+          <div
+            id={`app-project-${project.id}`}
+            className="py-8 px-4 sm:px-6 border-t border-neutral-100 hover:bg-neutral-50 transition-colors duration-200"
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline gap-2 mb-1">
@@ -46,13 +43,39 @@ export default function MinimalAppsList({ projects }: MinimalAppsListProps) {
                   {project.description}
                 </p>
               </div>
-              <div className="shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center group-hover:bg-neutral-900 transition-colors duration-200">
-                <ArrowUpRight className="w-3 h-3 text-neutral-400 group-hover:text-white transition-colors duration-200" />
-              </div>
+              {project.url ? (
+                <div className="shrink-0 w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center group-hover:bg-neutral-900 transition-colors duration-200">
+                  <ArrowUpRight className="w-3 h-3 text-neutral-400 group-hover:text-white transition-colors duration-200" />
+                </div>
+              ) : (
+                <span className="shrink-0 text-xs uppercase tracking-wider text-neutral-400">
+                  {project.status ?? 'private'}
+                </span>
+              )}
             </div>
           </div>
-        </Link>
-      ))}
+        )
+
+        return project.url ? (
+          <Link
+            key={project.id}
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackCTAClick('app-portfolio-click', project.title)}
+            className="group block"
+          >
+            {card}
+          </Link>
+        ) : (
+          <div
+            key={project.id}
+            aria-label={`${project.title}: ${project.status ?? 'private'}`}
+          >
+            {card}
+          </div>
+        )
+      })}
     </div>
   )
-} 
+}

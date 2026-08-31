@@ -1,78 +1,94 @@
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { FAQSchema } from "@/components/schema-markup"
-import type { Metadata } from "next"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import { FAQSchema } from '@/components/schema-markup'
+import type { Metadata } from 'next'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'FAQ',
-  description: 'Answers about Prism pricing, timelines, services, and how our website, SEO, ads, and growth work fits together.',
-  path: "/faq",
-  ogImage: "/prism-opengraph.png",
+  description:
+    'Answers about Prism pricing, timelines, services, and how our website, SEO, ads, and growth work fits together.',
+  path: '/faq',
+  ogImage: '/prism-opengraph.png',
 })
 
 const faqs = [
   {
-    question: "What makes Prism different from other digital agencies?",
-    answer: "Prism combines conversion-first design, software-grade implementation, search foundations, and analytics. Results are measured against each client's real goals, and dated source-attributed examples are published in our case studies."
+    question: 'What makes Prism different from other digital agencies?',
+    answer:
+      "Prism combines conversion-first design, software-grade implementation, search foundations, and analytics. Results are measured against each client's real goals, and dated source-attributed examples are published in our case studies.",
   },
   {
-    question: "How much does a website cost?",
-    answer: "A Prism website is an ultra-premium PRO build: a bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI. It is scoped to your business on a 30-minute Zoom call, so you leave the call with a clear plan and a clear price. Optional ongoing care is scoped with your build."
+    question: 'How much does a website cost?',
+    answer:
+      'A Prism website is an ultra-premium PRO build: a bespoke design system, software-grade engineering, analytics wired from day one, and foundations that support Google and AI discovery without guaranteeing placement. It is scoped to your business on a 30-minute Zoom call, so you leave the call with a clear plan and a clear price. Optional ongoing care is scoped with your build.',
   },
   {
     question: "What's included in your website development service?",
-    answer: "Complete website design and development, AI-powered optimization, mobile responsiveness, SEO setup, hosting, SSL certificates, analytics integration, and ongoing support. We also include conversion optimization, speed optimization, and basic content management system training."
+    answer:
+      'Complete website design and development, AI-powered optimization, mobile responsiveness, SEO setup, hosting, SSL certificates, analytics integration, and ongoing support. We also include conversion optimization, speed optimization, and basic content management system training.',
   },
   {
-    question: "How long does it take to build a website?",
-    answer: "Most websites are completed in 2-4 weeks, depending on complexity. Simple business websites take 2-3 weeks, while complex e-commerce or custom applications may take 4-8 weeks. We provide regular updates throughout the process and work efficiently to meet your launch goals."
+    question: 'How long does it take to build a website?',
+    answer:
+      'Most websites are completed in 2-4 weeks, depending on complexity. Simple business websites take 2-3 weeks, while complex e-commerce or custom applications may take 4-8 weeks. We provide regular updates throughout the process and work efficiently to meet your launch goals.',
   },
   {
-    question: "Do you work with small businesses?",
-    answer: "Yes! We specialize in helping small and medium businesses grow their revenue through beautiful, conversion-focused digital solutions. Many of our clients are local businesses, startups, and growing companies looking to establish a strong online presence."
+    question: 'Do you work with small businesses?',
+    answer:
+      'Yes! We specialize in helping small and medium businesses grow their revenue through beautiful, conversion-focused digital solutions. Many of our clients are local businesses, startups, and growing companies looking to establish a strong online presence.',
   },
   {
-    question: "What industries do you serve?",
-    answer: "We work with businesses across all industries, with particular expertise in healthcare (dental practices), retail, professional services, e-commerce, and technology companies. Our case studies include successful projects with dental practices, retail stores, and service-based businesses."
+    question: 'What industries do you serve?',
+    answer:
+      'We work with businesses across all industries, with particular expertise in healthcare (dental practices), retail, professional services, e-commerce, and technology companies. Our case studies include successful projects with dental practices, retail stores, and service-based businesses.',
   },
   {
-    question: "Do you offer mobile app development?",
-    answer: "Yes. We develop native and cross-platform apps as custom projects. App work is scoped separately from Prism's core website and growth offers, so pricing is quoted based on requirements, timeline, and integrations."
+    question: 'Do you offer mobile app development?',
+    answer:
+      "Yes. We develop native and cross-platform apps as custom projects. App work is scoped separately from Prism's core website and growth offers, so pricing is quoted based on requirements, timeline, and integrations.",
   },
   {
-    question: "What is your digital marketing approach?",
-    answer: "Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Content OS installs a content engine that compounds, and Prism Infinity covers every Prism service under one monthly plan when you want us running the whole system."
+    question: 'What is your digital marketing approach?',
+    answer:
+      'Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Content OS installs a content engine that compounds, and Prism Infinity covers every Prism service under one monthly plan when you want us running the whole system.',
   },
   {
-    question: "Do you provide ongoing support and maintenance?",
-    answer: "Yes. Websites can add an ongoing care plan for updates, edits, and support, scoped with your build. For ongoing growth across everything (websites, content, SEO, ads, and more), Prism Infinity is a monthly subscription with unlimited requests, one at a time. Book a 30-minute call to scope it."
+    question: 'Do you provide ongoing support and maintenance?',
+    answer:
+      'Yes. Websites can add an ongoing care plan for updates, edits, and support, scoped with your build. For ongoing growth across everything (websites, content, SEO, ads, and more), Prism Infinity is a monthly subscription with unlimited requests, one at a time. Book a 30-minute call to scope it.',
   },
   {
     question: "What is 'The Prism Method'?",
-    answer: "The Prism Method is our proven 4-step process: 1) Discovery & Strategy (understanding your business goals), 2) Design & Prototyping (creating conversion-focused designs), 3) Development & Testing (building with AI optimization), and 4) Launch & Growth (deploying and optimizing for results)."
+    answer:
+      'The Prism Method is our proven 4-step process: 1) Discovery & Strategy (understanding your business goals), 2) Design & Prototyping (creating conversion-focused designs), 3) Development & Testing (building with AI optimization), and 4) Launch & Growth (deploying and optimizing for results).',
   },
   {
-    question: "Can you help improve my existing website?",
-    answer: "Absolutely! We offer website redesign and optimization services to improve your current site's performance, conversion rates, and user experience. We can also add new features, improve speed, and enhance SEO without starting from scratch."
+    question: 'Can you help improve my existing website?',
+    answer:
+      "Absolutely! We offer website redesign and optimization services to improve your current site's performance, conversion rates, and user experience. We can also add new features, improve speed, and enhance SEO without starting from scratch.",
   },
   {
     question: "What's your typical client ROI?",
-    answer: "Results vary by market, starting position, scope, and measurement window. We set the baseline before work begins, track the agreed outcomes, and publish dated Google Search Console or GA4 evidence when there is enough verified data to make a claim."
+    answer:
+      'Results vary by market, starting position, scope, and measurement window. We set the baseline before work begins, track the agreed outcomes, and publish dated Google Search Console or GA4 evidence when there is enough verified data to make a claim.',
   },
   {
-    question: "Do you offer AI-powered website features?",
-    answer: "Yes, we integrate AI-powered features like chatbots, personalization, predictive analytics, and automated optimization. These features help improve user experience, increase conversions, and provide valuable insights about your customers' behavior."
+    question: 'Do you offer AI-powered website features?',
+    answer:
+      "Yes, we integrate AI-powered features like chatbots, personalization, predictive analytics, and automated optimization. These features help improve user experience, increase conversions, and provide valuable insights about your customers' behavior.",
   },
   {
     question: "What's your payment structure?",
-    answer: "Every offer (the PRO website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call, so you always leave the call with a clear price. You can also start free: create a Growth Dashboard and request a free deep audit from the team."
+    answer:
+      'Every offer (the PRO website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call, so you always leave the call with a clear price. You can also start free: create a Growth Dashboard and request a free deep audit from the team.',
   },
   {
-    question: "How do you measure success?",
-    answer: "We track key performance indicators including conversion rates, page load speeds, search engine rankings, lead generation, and revenue attribution. We provide detailed reports and work with you to continuously optimize performance based on real data."
-  }
+    question: 'How do you measure success?',
+    answer:
+      'We track key performance indicators including conversion rates, page load speeds, search engine rankings, lead generation, and revenue attribution. We provide detailed reports and work with you to continuously optimize performance based on real data.',
+  },
 ]
 
 export default function FAQPage() {

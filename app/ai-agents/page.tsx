@@ -1,134 +1,134 @@
-import Link from "next/link"
-import type { Metadata } from "next"
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import { WebPageSchema } from "@/components/schema-markup"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
+import { WebPageSchema } from '@/components/schema-markup'
+import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const agentCapabilities = [
   {
-    title: "natural conversations",
+    title: 'natural conversations',
     description:
-      "powered by elevenlabs’ industry-leading voice technology, your agent sounds human, not robotic. it understands accents, handles interruptions, and responds naturally.",
+      'built with ElevenLabs voice technology, your agent can handle turn-taking, interruptions, and approved customer questions in a natural-sounding conversation.',
     highlights: [
-      "Lifelike voices that match your brand personality",
-      "Context-aware responses that feel like real conversations",
-      "Multilingual support for diverse customer bases",
+      'Lifelike voices that match your brand personality',
+      'Context-aware responses that feel like real conversations',
+      'Multilingual support for diverse customer bases',
     ],
   },
   {
-    title: "smart actions",
+    title: 'smart actions',
     description:
-      "agents don’t just talk. They book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.",
+      'agents don’t just talk. They book appointments, check availability, route calls, collect information, and trigger workflows in your existing systems.',
     highlights: [
-      "Real-time calendar and CRM integrations",
-      "Automated follow-ups and confirmations",
-      "Intelligent call routing based on intent",
+      'Real-time calendar and CRM integrations',
+      'Automated follow-ups and confirmations',
+      'Intelligent call routing based on intent',
     ],
   },
   {
-    title: "always available",
+    title: 'extended availability',
     description:
-      "your ai agent works 24/7/365. no hold times, no voicemail, no missed opportunities. every call gets answered on the first ring.",
+      'your ai agent can extend coverage beyond staffed hours and absorb routine-call overflow, with fallback and escalation rules for outages or unsupported requests.',
     highlights: [
-      "Zero wait times for inbound calls",
-      "After-hours coverage without overtime costs",
-      "Peak-hour overflow handling so no call goes unanswered",
+      'Configurable inbound-call coverage',
+      'After-hours answers for approved workflows',
+      'Peak-hour overflow with human handoff',
     ],
   },
 ]
 
 const useCases = [
   {
-    title: "dental practices",
+    title: 'dental practices',
     description:
-      "answer patient calls, schedule appointments, handle insurance questions, and send reminders, even after hours.",
-    href: "/ai-agents/dental",
+      'answer patient calls, schedule appointments, handle insurance questions, and send reminders, even after hours.',
+    href: '/ai-agents/dental',
   },
   {
-    title: "local services",
+    title: 'local services',
     description:
-      "plumbers, hvac, electricians: capture emergency calls 24/7, dispatch the right team, and never lose a lead to voicemail.",
+      'plumbers, hvac, electricians: capture after-hours requests, route urgent calls, and reduce leads lost to voicemail.',
     href: null,
   },
   {
-    title: "e-commerce & retail",
+    title: 'e-commerce & retail',
     description:
-      "handle order status, returns, product questions, and upsell opportunities through natural voice conversations.",
+      'handle order status, returns, product questions, and upsell opportunities through natural voice conversations.',
     href: null,
   },
   {
-    title: "professional services",
+    title: 'professional services',
     description:
-      "law firms, accounting, consulting: qualify leads, schedule consultations, and route calls by expertise.",
+      'law firms, accounting, consulting: qualify leads, schedule consultations, and route calls by expertise.',
     href: null,
   },
   {
-    title: "property management",
+    title: 'property management',
     description:
-      "manage tenant requests, schedule showings, handle maintenance dispatches, and provide property information around the clock.",
+      'manage tenant requests, schedule showings, handle maintenance dispatches, and provide property information around the clock.',
     href: null,
   },
 ]
 
 const workflow = [
   {
-    step: "01",
-    title: "discovery & strategy",
+    step: '01',
+    title: 'discovery & strategy',
     description:
-      "we map your call flows, faqs, and business rules to design an agent that sounds and acts like your best team member.",
+      'we map your call flows, faqs, and business rules to design an agent that sounds and acts like your best team member.',
   },
   {
-    step: "02",
-    title: "build & train",
+    step: '02',
+    title: 'build & configure',
     description:
-      "we configure your elevenlabs agent with custom voice, knowledge base, tool integrations (calendar, crm, pms), and conversation flows.",
+      'we configure your elevenlabs agent with custom voice, knowledge base, tool integrations (calendar, crm, pms), and conversation flows.',
   },
   {
-    step: "03",
-    title: "test & refine",
+    step: '03',
+    title: 'test & refine',
     description:
-      "real call testing with your team to fine-tune responses, edge cases, and handoff protocols before going live.",
+      'real call testing with your team to fine-tune responses, edge cases, and handoff protocols before going live.',
   },
   {
-    step: "04",
-    title: "launch & optimize",
+    step: '04',
+    title: 'launch & optimize',
     description:
-      "we deploy your agent, monitor call quality, and continuously improve based on real conversation data.",
+      'we deploy your agent, monitor call quality, and continuously improve based on real conversation data.',
   },
 ]
 
 const whyPrism = [
   {
-    title: "elevenlabs certified partner",
+    title: 'elevenlabs implementation',
     description:
-      "we work directly with elevenlabs’ commercial partner program, giving you access to priority support, advanced features, and best practices.",
+      'we configure ElevenLabs agents around your approved knowledge, call flows, integrations, and escalation rules. Platform access and support remain governed by ElevenLabs and your account.',
   },
   {
-    title: "full-stack implementation",
+    title: 'full-stack implementation',
     description:
-      "we don’t just configure a chatbot. We build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.",
+      'we don’t just configure a chatbot. We build complete voice agent systems with crm integrations, custom workflows, analytics dashboards, and ongoing optimization.',
   },
   {
-    title: "small business focused",
+    title: 'small business focused',
     description:
-      "enterprise agencies charge enterprise prices. prism specializes in making ai accessible and affordable for small and medium businesses.",
+      'prism scopes voice automation around the team, systems, call volume, and review process a small or medium business already has.',
   },
 ]
 
 const PAGE_TITLE = 'AI voice agents for small business'
 const PAGE_DESCRIPTION =
-  'Prism builds and deploys custom ElevenLabs AI voice agents that answer calls, book appointments, and convert leads for small businesses, 24/7.'
-const CANONICAL_URL = "https://www.design-prism.com/ai-agents"
+  'Prism builds and manages ElevenLabs voice agents for call handling, appointment workflows, routing, and after-hours coverage.'
+const CANONICAL_URL = 'https://www.design-prism.com/ai-agents'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/ai-agents",
+  path: '/ai-agents',
   index: false,
-  ogImage: "/prism-opengraph.png",
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function AIAgentsPage() {
@@ -138,21 +138,31 @@ export default function AIAgentsPage() {
       <main className="bg-white">
         {/* Hero */}
         <section className="relative overflow-hidden border-b border-neutral-100">
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white"
+            aria-hidden="true"
+          />
           <div className="container relative mx-auto px-4 pb-16 pt-20 sm:pt-24 md:pb-20">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">elevenlabs certified partner</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                elevenlabs voice implementation
+              </p>
               <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                ai voice agents that answer, book, and convert, 24/7
+                ai voice agents for calls, booking, and follow-up
               </h1>
               <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                prism builds custom elevenlabs ai agents for small and medium businesses. your customers get instant,
-                natural voice support. you get more booked appointments, fewer missed calls, and a team that never
-                sleeps.
+                prism builds custom elevenlabs ai agents for small and medium
+                businesses. extend phone coverage, handle approved routine
+                requests, and route the conversations that need a person.
+                results depend on call volume, integrations, and the workflows
+                approved during testing.
               </p>
               <p className="mt-3 text-sm text-neutral-500 sm:text-base">
-                already using openai tools? explore{" "}
-                <Link href="/openai" className="font-semibold text-neutral-900 underline underline-offset-4">
+                already using openai tools? explore{' '}
+                <Link
+                  href="/openai"
+                  className="font-semibold text-neutral-900 underline underline-offset-4"
+                >
                   openai growth systems
                 </Link>
                 .
@@ -183,9 +193,11 @@ export default function AIAgentsPage() {
                 what is an elevenlabs ai agent?
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                ai agents are intelligent voice assistants that handle real phone conversations. They understand context,
-                answer questions, schedule appointments, transfer calls, and integrate with your existing tools, all
-                with natural-sounding voices that represent your brand.
+                ai agents are intelligent voice assistants that handle real
+                phone conversations. They understand context, answer questions,
+                schedule appointments, transfer calls, and integrate with your
+                existing tools, all with natural-sounding voices that represent
+                your brand.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -195,13 +207,20 @@ export default function AIAgentsPage() {
                   className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div>
-                    <h3 className="text-xl font-semibold lowercase text-neutral-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+                    <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-neutral-600">
+                      {item.description}
+                    </p>
                   </div>
                   <ul className="space-y-2 text-sm text-neutral-600">
                     {item.highlights.map((highlight) => (
                       <li key={highlight} className="flex gap-2">
-                        <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900" aria-hidden="true" />
+                        <span
+                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                          aria-hidden="true"
+                        />
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -213,23 +232,31 @@ export default function AIAgentsPage() {
         </section>
 
         {/* Use Cases / Industries */}
-        <section id="use-cases" className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20">
+        <section
+          id="use-cases"
+          className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20"
+        >
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-10 max-w-2xl text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                built for businesses that depend on every call
+                built for businesses where calls matter
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                from dental offices to property management companies, prism deploys ai agents tailored to your industry,
-                workflows, and customer expectations.
+                from dental offices to property management companies, prism
+                deploys ai agents tailored to your industry, workflows, and
+                customer expectations.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {useCases.map((item) => {
                 const card = (
                   <div className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                    <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                    <p className="text-sm text-neutral-600">{item.description}</p>
+                    <h3 className="text-lg font-semibold lowercase text-neutral-900">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-neutral-600">
+                      {item.description}
+                    </p>
                     {item.href && (
                       <span className="mt-auto inline-flex items-center text-sm font-semibold text-neutral-900 underline underline-offset-4">
                         learn more
@@ -254,11 +281,12 @@ export default function AIAgentsPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                from first call to full deployment in days
+                from first call to a tested deployment
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                every engagement blends elevenlabs technology with prism strategists so you get the velocity of ai and
-                the judgment of a seasoned implementation team.
+                every engagement blends elevenlabs technology with prism
+                strategists so you get the velocity of ai and the judgment of a
+                seasoned implementation team.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
@@ -270,8 +298,12 @@ export default function AIAgentsPage() {
                   <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
                     {stage.step}
                   </span>
-                  <h3 className="mt-3 text-xl font-semibold lowercase text-neutral-900">{stage.title}</h3>
-                  <p className="mt-3 text-sm text-neutral-600">{stage.description}</p>
+                  <h3 className="mt-3 text-xl font-semibold lowercase text-neutral-900">
+                    {stage.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-neutral-600">
+                    {stage.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -286,14 +318,20 @@ export default function AIAgentsPage() {
                 why build your ai agent with prism
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                anyone can sign up for elevenlabs. prism brings the strategy, integrations, and ongoing optimization that
-                turn a voice agent into a revenue-generating team member.
+                anyone can evaluate a voice platform. prism brings the strategy,
+                integrations, testing, and ongoing review needed to turn it into
+                a dependable part of the call workflow.
               </p>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
               {whyPrism.map((item) => (
-                <div key={item.title} className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6">
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
+                <div
+                  key={item.title}
+                  className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6"
+                >
+                  <h3 className="text-lg font-semibold lowercase text-neutral-900">
+                    {item.title}
+                  </h3>
                   <p className="text-sm text-neutral-600">{item.description}</p>
                 </div>
               ))}
@@ -306,11 +344,12 @@ export default function AIAgentsPage() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                ready to never miss another call?
+                ready to reduce missed calls?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                start with a free growth audit. We&apos;ll map your call flows, identify automation opportunities,
-                and show how an ai agent fits your business.
+                start with a free growth audit. We&apos;ll map your call flows,
+                identify automation opportunities, and show how an ai agent fits
+                your business.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link

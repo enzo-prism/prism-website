@@ -5,9 +5,10 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Coast Periodontics case study',
   description:
-    'How Prism built a calming, authority-driven digital presence for Coast Periodontics and Laser Surgery, a specialist periodontic and implant practice.',
+    'How Prism built a calming, authority-driven digital presence for Coast Periodontics, a specialist periodontal and implant practice in San Luis Obispo.',
   path: '/case-studies/coast-periodontics-and-laser-surgery',
-  ogImage: '/case-studies/coast-periodontics-and-laser-surgery-home-desktop.jpg',
+  ogImage:
+    '/case-studies/coast-periodontics-and-laser-surgery-home-desktop.jpg',
 })
 
 export default function CoastPeriodonticsCaseStudyPage() {

@@ -133,7 +133,7 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
   'app/websites/page.tsx': [
     'Prism PRO website',
     'BOOK_A_CALL_CTA',
-    'Rank on Google. Get cited by AI.',
+    'Support discovery on Google and in AI.',
   ],
 }
 

@@ -13,7 +13,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Contact',
-  description: 'Send Prism a note. We reply within 24 hours.',
+  description: 'Send Prism a note. We reply within two business days.',
   path: '/contact',
   ogImage: '/prism-opengraph.png',
 })
@@ -28,7 +28,7 @@ export default function ContactPage() {
             <CoreSectionHeading
               eyebrow="Contact"
               title="Talk to Prism."
-              description="Send a note. We reply within 24 hours."
+              description="Send a note. We reply within two business days."
               as="h1"
               variant="hero"
             />

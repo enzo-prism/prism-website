@@ -119,7 +119,7 @@ const faqs = [
   {
     question: 'What does the PRO website include?',
     answer:
-      'A bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI assistants like ChatGPT, Gemini, and Claude. Iterations continue until you love it, and the finished site is 100% yours.',
+      'A bespoke design system, software-grade engineering, and analytics wired from day one, with foundations that support Google and AI discovery without guaranteeing placement. The finished site is 100% yours.',
   },
   {
     question: 'What is Website Care?',
@@ -263,8 +263,8 @@ export default function PricingPageClient() {
         <div className={coreRouteContainerClassName}>
           <div className={coreRouteIntroBandClassName}>
             <CoreSectionHeading
-              eyebrow="How a website order works"
-              title="Describe it, pay, and it is live in 7 days."
+              eyebrow="How an engagement starts"
+              title="Map it, scope it, then build it."
               description="Every engagement starts the same way: a 30-minute Zoom call, a clear scope, and a clear price."
               titleClassName="max-w-[14ch]"
             />
@@ -415,7 +415,7 @@ export default function PricingPageClient() {
           </div>
           <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
             scoped on a 30-min call &middot; built to the Prism standard
-            &middot; iterations until you love it
+            &middot; scope and price confirmed before work begins
           </p>
         </div>
       </section>
@@ -442,8 +442,6 @@ function PricingStructuredData() {
           name: website.name,
           description: website.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          price: String(website.price),
-          priceCurrency: 'USD',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/websites',
         }}

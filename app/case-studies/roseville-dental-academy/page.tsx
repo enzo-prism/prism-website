@@ -474,9 +474,13 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
 
                 <div className="mt-6 space-y-4 border-t border-border/60 pt-6">
                   <div>
-                    <p className="text-3xl font-semibold tracking-tight">5.0</p>
+                    <p className="text-3xl font-semibold tracking-tight">
+                      Public proof
+                    </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Google review average surfaced from 77 public reviews.
+                      Current reviews and student trust signals are surfaced
+                      without freezing a volatile rating or count in this case
+                      study.
                     </p>
                   </div>
                   <div>

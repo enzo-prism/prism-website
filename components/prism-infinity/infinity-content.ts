@@ -1,6 +1,3 @@
-export const PAGE_TITLE = 'Prism Infinity'
-export const PAGE_DESCRIPTION =
-  'Unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription. Request what the business needs, one at a time. Pause anytime.'
 export const CANONICAL_URL = 'https://www.design-prism.com/prism-infinity'
 
 export const ROTATING_WORDS = [

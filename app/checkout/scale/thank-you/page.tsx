@@ -1,18 +1,20 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { CheckCircle2, Calendar } from "lucide-react"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
-import TrackedLink from "@/components/tracked-link"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
+import { Button } from '@/components/ui/button'
+import { CheckCircle2, Calendar } from 'lucide-react'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
+import TrackedLink from '@/components/tracked-link'
+import { BOOKING_URL } from '@/lib/booking'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Scale plan order received',
-  description: 'We received your Scale plan order. Book a kickoff call with Prism to accelerate next steps and scale your website and growth systems.',
-  path: "/checkout/scale/thank-you",
+  description:
+    'We received your Scale plan order. Book a kickoff call with Prism to accelerate next steps and scale your website and growth systems.',
+  path: '/checkout/scale/thank-you',
   index: false,
 })
 
@@ -39,27 +41,32 @@ export default function ScaleThankYouPage() {
             />
           </h1>
           <p className="text-lg text-muted-foreground">
-            We've received your submission. Our team will get back to you within 48 hours to find a time to meet to discuss the next steps of your project.
+            We've received your submission. Our team will get back to you within
+            two business days to discuss the next steps of your project.
           </p>
-          
+
           <div className="mt-6 rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm">
-             <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel">
+            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel">
               Want to accelerate the process?
             </p>
             <div className="flex flex-col items-center gap-3">
               <Button asChild size="lg" className="w-full rounded-md">
                 <TrackedLink
-                  href="https://calendar.notion.so/meet/enzosison/sfux4ogo"
+                  href={BOOKING_URL}
                   label="Book Meeting Now"
                   location="checkout_scale_thank_you"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                   <Calendar className="mr-2 h-4 w-4" />
+                  <Calendar className="mr-2 h-4 w-4" />
                   Book Meeting Now
                 </TrackedLink>
               </Button>
-              <Button asChild variant="link" className="text-muted-foreground hover:text-foreground">
+              <Button
+                asChild
+                variant="link"
+                className="text-muted-foreground hover:text-foreground"
+              >
                 <Link href="/">Return to Home</Link>
               </Button>
             </div>

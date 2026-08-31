@@ -85,8 +85,9 @@ describe('HomeHeroSection', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/the #1 growth partner for small businesses/i),
+      screen.getByText(/a growth team for small businesses/i),
     ).toBeInTheDocument()
+    expect(screen.queryByText(/#1 growth partner/i)).not.toBeInTheDocument()
     expect(
       screen.getByText(
         /one team that plugs into yours and runs everything that grows your business/i,
@@ -95,7 +96,7 @@ describe('HomeHeroSection', () => {
 
     const stats = screen.getByTestId('home-hero-stats')
     expect(stats).toHaveTextContent('16,882')
-    expect(stats).toHaveTextContent('74K')
+    expect(stats).toHaveTextContent('73K+')
     expect(stats).toHaveTextContent('1.2M')
     expect(stats).not.toHaveTextContent('$100,000')
     expect(stats).toHaveTextContent(/youtube/i)

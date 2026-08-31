@@ -1,23 +1,23 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import FreeAnalysisForm from "@/components/forms/FreeAnalysisForm"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import { WebPageSchema } from "@/components/schema-markup"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import FreeAnalysisForm from '@/components/forms/FreeAnalysisForm'
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { WebPageSchema } from '@/components/schema-markup'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Free website analysis'
 const PAGE_DESCRIPTION =
   'Get a clear review of your website, Google Business Profile, and search visibility with prioritized fixes.'
-const CANONICAL_URL = "https://www.design-prism.com/free-analysis"
+const CANONICAL_URL = 'https://www.design-prism.com/free-analysis'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/free-analysis",
-  ogImage: "/prism-opengraph.png",
+  path: '/free-analysis',
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function FreeAnalysisPage() {
@@ -34,11 +34,12 @@ export default function FreeAnalysisPage() {
               Get a free analysis of your current website and visibility.
             </h1>
             <p className="text-lg text-muted-foreground">
-              We will review your site, Google listing, and performance, then show you how AI-powered design could double
-              your traffic. No cost, no commitment.
+              We will review your site, Google listing, and performance, then
+              show you the highest-priority opportunities to improve visibility
+              and conversion. No cost, no commitment.
             </p>
             <p className="text-sm text-muted-foreground">
-              Need a deeper crawl and prioritized fixes? See our{" "}
+              Need a deeper crawl and prioritized fixes? See our{' '}
               <Link
                 href="/seo/audit"
                 className="font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border"
@@ -62,8 +63,9 @@ export default function FreeAnalysisPage() {
                 </h2>
               </div>
               <p className="text-sm text-muted-foreground">
-                Our team analyzes your online presence and delivers actionable insights within 48 hours.
-                Here is what your free analysis includes:
+                Our team analyzes your online presence and delivers actionable
+                insights within two business days. Here is what your free
+                analysis includes:
               </p>
               <ul className="space-y-4 text-sm text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -75,7 +77,10 @@ export default function FreeAnalysisPage() {
                     aria-hidden="true"
                     className="mt-0.5 opacity-90 dark:invert"
                   />
-                  <span>Technical and SEO health score with prioritized fixes to improve your search rankings.</span>
+                  <span>
+                    Technical and SEO health score with prioritized fixes to
+                    improve your search rankings.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <PixelishIcon
@@ -86,7 +91,10 @@ export default function FreeAnalysisPage() {
                     aria-hidden="true"
                     className="mt-0.5 opacity-90 dark:invert"
                   />
-                  <span>Visibility snapshot across Google Search, Google Maps, and social channels.</span>
+                  <span>
+                    Visibility snapshot across Google Search, Google Maps, and
+                    social channels.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <PixelishIcon
@@ -97,7 +105,10 @@ export default function FreeAnalysisPage() {
                     aria-hidden="true"
                     className="mt-0.5 opacity-90 dark:invert"
                   />
-                  <span>Design and messaging improvements tailored to your specific offers and target audience.</span>
+                  <span>
+                    Design and messaging improvements tailored to your specific
+                    offers and target audience.
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <PixelishIcon
@@ -108,13 +119,17 @@ export default function FreeAnalysisPage() {
                     aria-hidden="true"
                     className="mt-0.5 opacity-90 dark:invert"
                   />
-                  <span>Competitor comparison showing how you stack up against similar businesses in your area.</span>
+                  <span>
+                    Competitor comparison showing how you stack up against
+                    similar businesses in your area.
+                  </span>
                 </li>
               </ul>
               <div className="rounded-2xl border border-dashed border-border/60 bg-muted/40 p-5 text-sm text-muted-foreground">
                 <p>
-                  <strong className="text-foreground">Need it sooner?</strong> Mention your timeline in the notes and we
-                  prioritize urgent requests and can often deliver within 24 hours.
+                  <strong className="text-foreground">Have a deadline?</strong>{' '}
+                  Add it to the notes so the team can account for it during
+                  review.
                 </p>
               </div>
             </div>

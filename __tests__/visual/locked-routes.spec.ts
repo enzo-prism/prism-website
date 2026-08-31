@@ -80,13 +80,10 @@ async function stabilizeSectionHeight(
   const viewportWidth = page.viewportSize()?.width ?? 0
   const lockedHeight = viewportWidth >= 1280 ? heights.desktop : heights.mobile
 
-  await locator.evaluate(
-    (node, height) => {
-      ;(node as HTMLElement).style.minHeight = `${height}px`
-      ;(node as HTMLElement).style.height = `${height}px`
-    },
-    lockedHeight,
-  )
+  await locator.evaluate((node, height) => {
+    ;(node as HTMLElement).style.minHeight = `${height}px`
+    ;(node as HTMLElement).style.height = `${height}px`
+  }, lockedHeight)
 }
 
 const lockedRoutes = [
@@ -94,7 +91,7 @@ const lockedRoutes = [
     name: 'home',
     path: '/',
     readyHeading: /^prism$/i,
-    mustContain: [/the #1 growth partner for small businesses/i],
+    mustContain: [/a growth team for small businesses/i],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -355,35 +352,38 @@ test('home fit and service cards stay contained across responsive breakpoints', 
         sectionConfig.expectedCount,
       )
 
-      const containment = await section.evaluate((sectionNode, cardSelector) => {
-        const cards = Array.from(
-          sectionNode.querySelectorAll<HTMLElement>(cardSelector),
-        )
+      const containment = await section.evaluate(
+        (sectionNode, cardSelector) => {
+          const cards = Array.from(
+            sectionNode.querySelectorAll<HTMLElement>(cardSelector),
+          )
 
-        return cards.map((card) => {
-          const heading = card.querySelector('h3')
-          const description = card.querySelector('p:last-of-type')
-          const cardRect = card.getBoundingClientRect()
-          const titleRect = heading?.getBoundingClientRect()
-          const descriptionRect = description?.getBoundingClientRect()
+          return cards.map((card) => {
+            const heading = card.querySelector('h3')
+            const description = card.querySelector('p:last-of-type')
+            const cardRect = card.getBoundingClientRect()
+            const titleRect = heading?.getBoundingClientRect()
+            const descriptionRect = description?.getBoundingClientRect()
 
-          return {
-            title: heading?.textContent?.trim() ?? 'unknown',
-            titleWithin:
-              !!titleRect &&
-              titleRect.top >= cardRect.top &&
-              titleRect.left >= cardRect.left &&
-              titleRect.right <= cardRect.right &&
-              titleRect.bottom <= cardRect.bottom,
-            descriptionWithin:
-              !descriptionRect ||
-              (descriptionRect.top >= cardRect.top &&
-                descriptionRect.left >= cardRect.left &&
-                descriptionRect.right <= cardRect.right &&
-                descriptionRect.bottom <= cardRect.bottom),
-          }
-        })
-      }, sectionConfig.cardSelector)
+            return {
+              title: heading?.textContent?.trim() ?? 'unknown',
+              titleWithin:
+                !!titleRect &&
+                titleRect.top >= cardRect.top &&
+                titleRect.left >= cardRect.left &&
+                titleRect.right <= cardRect.right &&
+                titleRect.bottom <= cardRect.bottom,
+              descriptionWithin:
+                !descriptionRect ||
+                (descriptionRect.top >= cardRect.top &&
+                  descriptionRect.left >= cardRect.left &&
+                  descriptionRect.right <= cardRect.right &&
+                  descriptionRect.bottom <= cardRect.bottom),
+            }
+          })
+        },
+        sectionConfig.cardSelector,
+      )
 
       for (const card of containment) {
         expect(
@@ -435,9 +435,9 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     ).toBeVisible({
       timeout: 20_000,
     })
-    await expect(
-      hero.getByRole('link', { name: /wall of love/i }),
-    ).toBeVisible({ timeout: 20_000 })
+    await expect(hero.getByRole('link', { name: /wall of love/i })).toBeVisible(
+      { timeout: 20_000 },
+    )
 
     const result = await page.evaluate(() => {
       const hero = document.getElementById('homepage-hero')

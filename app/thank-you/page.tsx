@@ -1,74 +1,74 @@
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
 
-import Link from "next/link"
+import Link from 'next/link'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import ApplyDashboardClaimCta from "@/components/thank-you/ApplyDashboardClaimCta"
-import ApplySuccessTracker from "@/components/thank-you/ApplySuccessTracker"
-import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
-import { firstSearchParamString } from "@/lib/search-params"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import ApplyDashboardClaimCta from '@/components/thank-you/ApplyDashboardClaimCta'
+import ApplySuccessTracker from '@/components/thank-you/ApplySuccessTracker'
+import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
+import { firstSearchParamString } from '@/lib/search-params'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Thank you',
   description:
     'We received your submission. Every real inquiry is reviewed, and Prism reaches out when the next step is genuinely a fit for both sides.',
-  path: "/thank-you",
+  path: '/thank-you',
   index: false,
 })
 
 const DEFAULT_NEXT_STEPS = [
   {
-    label: "01",
-    title: "Submission received",
-    body: "Your form is in. The team has what it needs to begin the review.",
+    label: '01',
+    title: 'Submission received',
+    body: 'Your form is in. The team has what it needs to begin the review.',
   },
   {
-    label: "02",
-    title: "Review is guaranteed",
-    body: "Every real submission gets reviewed. That review is part of the standard flow.",
+    label: '02',
+    title: 'Review is guaranteed',
+    body: 'Every real submission gets reviewed. That review is part of the standard flow.',
   },
   {
-    label: "03",
-    title: "Next step is selective",
-    body: "If there is a fit, Prism will reach out with the right next step, including a strategy conversation when it makes sense.",
+    label: '03',
+    title: 'Next step is selective',
+    body: 'If there is a fit, Prism will reach out with the right next step, including a strategy conversation when it makes sense.',
   },
 ] as const
 
 const APPLY_NEXT_STEPS = [
   {
-    label: "01",
-    title: "Request received",
-    body: "Your free Growth Audit request is in the queue.",
+    label: '01',
+    title: 'Request received',
+    body: 'Your free Growth Audit request is in the queue.',
   },
   {
-    label: "02",
-    title: "Dashboard link sent",
-    body: "Your audit lives in a free dashboard. Claim it here or from your inbox.",
+    label: '02',
+    title: 'Dashboard link sent',
+    body: 'Your audit lives in a free dashboard. Claim it here or from your inbox.',
   },
   {
-    label: "03",
-    title: "Growth Audit follows",
-    body: "Findings and your clearest next move land in the dashboard.",
+    label: '03',
+    title: 'Growth Audit follows',
+    body: 'Findings and your clearest next move land in the dashboard.',
   },
 ] as const
 
 const WEBSITE_BUILD_NEXT_STEPS = [
   {
-    label: "01",
-    title: "Request received",
-    body: "Your website request is in the review queue.",
+    label: '01',
+    title: 'Request received',
+    body: 'Your website request is in the review queue.',
   },
   {
-    label: "02",
-    title: "Fit review",
-    body: "Prism checks the scope, assets, timing, and whether the team can make the work excellent.",
+    label: '02',
+    title: 'Fit review',
+    body: 'Prism checks the scope, assets, timing, and whether the team can make the work excellent.',
   },
   {
-    label: "03",
-    title: "We reach out",
-    body: "If the project is a fit, Prism replies within 24 hours with next steps or a 30-minute scoping call.",
+    label: '03',
+    title: 'We reach out',
+    body: 'If the project is a fit, Prism replies within two business days with next steps or a 30-minute scoping call.',
   },
 ] as const
 
@@ -79,27 +79,27 @@ export default async function ThankYouPage({
 }) {
   const resolvedSearchParams = await searchParams
   const source = firstSearchParamString(resolvedSearchParams?.source)
-  const isApplyFlow = source === "apply"
-  const isWebsiteBuildFlow = source === "website-build"
+  const isApplyFlow = source === 'apply'
+  const isWebsiteBuildFlow = source === 'website-build'
   const nextSteps = isApplyFlow
     ? APPLY_NEXT_STEPS
     : isWebsiteBuildFlow
       ? WEBSITE_BUILD_NEXT_STEPS
       : DEFAULT_NEXT_STEPS
   const kicker = isApplyFlow
-    ? "FREE GROWTH AUDIT"
+    ? 'FREE GROWTH AUDIT'
     : isWebsiteBuildFlow
-      ? "WEBSITE BUILD"
-      : "RECEIVED"
+      ? 'WEBSITE BUILD'
+      : 'RECEIVED'
   const headline = isApplyFlow
-    ? "Audit request received."
+    ? 'Audit request received.'
     : isWebsiteBuildFlow
-      ? "Website request received."
-      : "Review in progress."
+      ? 'Website request received.'
+      : 'Review in progress.'
   const body = isApplyFlow
     ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard. Claim it to follow the review from one place."
     : isWebsiteBuildFlow
-      ? "Thanks, we've got it. Prism reviews website requests before scoping the build. If the project is a fit, the team will reply within 24 hours."
+      ? "Thanks, we've got it. Prism reviews website requests before scoping the build. If the project is a fit, the team will reply within two business days."
       : "We received your submission. Every real inquiry gets reviewed. If there's a fit, we'll reach out with the right next step."
 
   return (
@@ -145,14 +145,14 @@ export default async function ThankYouPage({
             <div className="flex flex-col gap-4 border border-white/10 bg-[#070707] px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
-                  {isApplyFlow ? "While we review" : "In the meantime"}
+                  {isApplyFlow ? 'While we review' : 'In the meantime'}
                 </p>
                 <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
                   {isApplyFlow
-                    ? "Check your inbox for the same dashboard link."
+                    ? 'Check your inbox for the same dashboard link.'
                     : isWebsiteBuildFlow
-                      ? "Gather any copy, images, links, or references you want Prism to review."
-                    : "You can review case studies or head back home."}
+                      ? 'Gather any copy, images, links, or references you want Prism to review.'
+                      : 'You can review case studies or head back home.'}
                 </p>
               </div>
 

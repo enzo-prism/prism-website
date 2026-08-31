@@ -179,14 +179,11 @@ describe('WebsiteIntakeForm', () => {
       expect(screen.getByTestId('intake-success')).toBeInTheDocument()
     })
     expect(
-      screen.getByText(/prism will reach out to you within 24 hours/i),
+      screen.getByText(/prism will reach out to you within two business days/i),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: /book a 30 min zoom with prism/i }),
-    ).toHaveAttribute(
-      'href',
-      'https://calendar.notion.so/meet/enzosison/test',
-    )
+    ).toHaveAttribute('href', 'https://calendar.notion.so/meet/enzosison/test')
     expect(trackFormSubmission).toHaveBeenCalledWith(
       'website_intake',
       'website_intake_page',

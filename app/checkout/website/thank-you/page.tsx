@@ -1,19 +1,19 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import PurchaseSuccessTracker from "@/components/thank-you/PurchaseSuccessTracker"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
-import { firstSearchParamString } from "@/lib/search-params"
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import PurchaseSuccessTracker from '@/components/thank-you/PurchaseSuccessTracker'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { firstSearchParamString } from '@/lib/search-params'
 
 const ORDER_PRICE = 300
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Website order confirmed',
+  titleStem: 'Website order received',
   description:
-    'Your $300 website payment is confirmed. Prism starts the build now and delivers your first version in about 7 days, then iterates until you love it.',
-  path: "/checkout/website/thank-you",
+    'Prism received your website order and will review the brief before confirming scope, timing, and next steps.',
+  path: '/checkout/website/thank-you',
   index: false,
 })
 
@@ -51,22 +51,22 @@ export default async function WebsiteOrderThankYouPage({
       <main className="flex flex-1 items-center justify-center px-6 py-24">
         <div className="w-full max-w-xl border border-white/10 bg-[#070707] p-8 shadow-[0_30px_90px_-60px_rgba(216,188,121,0.65)] sm:p-12">
           <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#d8bc79]">
-            Payment confirmed
+            Order received
           </p>
           <h1 className="mt-5 text-balance font-sans text-[clamp(1.9rem,5vw,2.8rem)] font-medium leading-[1.02] tracking-[-0.045em]">
-            We're building your website.
+            We&apos;ve received your website order.
           </h1>
           <p className="mt-5 text-[1rem] leading-7 text-[#b8afa2]">
-            Your $300 payment is in and your brief is already with the team. Your
-            first version lands in about 7 days, and then we iterate until you
-            love it.
+            Your brief is with the team. Prism will verify the order, review the
+            requested scope, and reply within two business days with timing and
+            next steps.
           </p>
 
           <ol className="mt-9 space-y-4 border-t border-white/10 pt-7">
             {[
-              'A confirmation email is on its way with your receipt.',
-              'We review your brief and start the build. No kickoff call required.',
-              'You get your first version in about 7 days, then unlimited revisions.',
+              'Stripe sends the payment receipt when the transaction completes.',
+              'We review the brief, scope, and requested launch path.',
+              'Prism confirms timing and the next step within two business days.',
             ].map((step, index) => (
               <li key={step} className="flex gap-4">
                 <span className="mt-[0.15rem] font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[#d8bc79]">

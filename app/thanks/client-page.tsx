@@ -1,14 +1,19 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import Link from "next/link"
-import { ArrowRight, Calendar, CheckCircle, Home } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { trackBookCallClick, trackContactActionClick, trackCTAClick } from "@/utils/analytics"
-import { useEffect } from "react"
-import CoreImage from "@/components/core-image"
-import confetti from "@/utils/confetti"
-import { LOGO_CONFIG, LOGO_SIZES } from "@/lib/constants"
+import { useState } from 'react'
+import Link from 'next/link'
+import { ArrowRight, Calendar, CheckCircle, Home } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import {
+  trackBookCallClick,
+  trackContactActionClick,
+  trackCTAClick,
+} from '@/utils/analytics'
+import { useEffect } from 'react'
+import CoreImage from '@/components/core-image'
+import confetti from '@/utils/confetti'
+import { LOGO_CONFIG, LOGO_SIZES } from '@/lib/constants'
+import { BOOKING_URL } from '@/lib/booking'
 
 export default function ThanksPageClient() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -17,25 +22,25 @@ export default function ThanksPageClient() {
     setIsLoaded(true)
 
     // If Rewardful is available, mark conversion
-    if (typeof window !== "undefined" && window.rewardful) {
+    if (typeof window !== 'undefined' && window.rewardful) {
       try {
         // @ts-ignore - Rewardful is added via script
-        window.rewardful("conversion")
+        window.rewardful('conversion')
       } catch (error) {
-        console.error("Error tracking Rewardful conversion:", error)
+        console.error('Error tracking Rewardful conversion:', error)
       }
     }
   }, [])
 
   const handleScheduleClick = () => {
     trackBookCallClick(
-      "Book Your 15-Minute Prism Site Kickoff Call",
-      "thanks_page",
-      "https://calendar.notion.so/meet/enzosison/sfux4ogo",
+      'Book Your 15-Minute Prism Site Kickoff Call',
+      'thanks_page',
+      BOOKING_URL,
     )
     confetti()
     setTimeout(() => {
-      window.open("https://calendar.notion.so/meet/enzosison/sfux4ogo", "_blank")
+      window.open(BOOKING_URL, '_blank')
     }, 500)
   }
 
@@ -60,11 +65,13 @@ export default function ThanksPageClient() {
           <CheckCircle className="h-16 w-16 text-green-500" />
         </div>
 
-        <h1 className="mb-3 text-4xl font-bold lowercase tracking-tight md:text-5xl">thank you for your payment</h1>
+        <h1 className="mb-3 text-4xl font-bold lowercase tracking-tight md:text-5xl">
+          thank you for your payment
+        </h1>
 
         <p className="mb-8 text-lg text-gray-600">
-          We're excited to start working on your project. The next step is to schedule your kickoff call so we can get
-          started right away.
+          We're excited to start working on your project. The next step is to
+          schedule your kickoff call so we can get started right away.
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -79,7 +86,10 @@ export default function ThanksPageClient() {
             <ArrowRight className="h-4 w-4" />
           </Button>
 
-          <Link href="/" onClick={() => trackCTAClick("Return Home", "thanks_page")}>
+          <Link
+            href="/"
+            onClick={() => trackCTAClick('Return Home', 'thanks_page')}
+          >
             <Button variant="outline" size="lg" className="gap-2">
               <Home className="h-5 w-5" />
               Return Home
@@ -88,21 +98,25 @@ export default function ThanksPageClient() {
         </div>
 
         <p className="text-sm text-gray-500">
-          Schedule a quick call to confirm your goals and launch your AI-powered website. You'll get a clear plan, asset
-          checklist, and next steps to go live this week.
+          Schedule a quick call to confirm your goals and launch your AI-powered
+          website. You'll get a clear plan, asset checklist, and next steps to
+          go live this week.
         </p>
       </div>
 
       {isLoaded && (
         <div className="mt-16 text-center text-sm text-gray-500">
-          <p>A confirmation email has been sent to your inbox with your receipt and next steps.</p>
+          <p>
+            A confirmation email has been sent to your inbox with your receipt
+            and next steps.
+          </p>
           <p className="mt-2">
-            If you have any questions, you can reply to the email I just sent you
-            or email me directly at{" "}
+            If you have any questions, you can reply to the email I just sent
+            you or email me directly at{' '}
             <a
               href="mailto:support@design-prism.com"
               className="underline hover:text-gray-700"
-              onClick={() => trackContactActionClick("email", "thanks_page")}
+              onClick={() => trackContactActionClick('email', 'thanks_page')}
             >
               support@design-prism.com
             </a>

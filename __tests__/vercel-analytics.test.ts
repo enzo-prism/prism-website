@@ -66,7 +66,7 @@ describe('Vercel analytics URL normalization', () => {
     expect(
       buildVercelCustomEvent('external_link_click', {
         destination_url:
-          'https://calendar.notion.so/meet/enzosison/sfux4ogo?foo=bar',
+          'https://calendar.notion.so/meet/enzosison/oj1fm4o2p?foo=bar',
         link_text: 'Book now',
       }),
     ).toEqual({

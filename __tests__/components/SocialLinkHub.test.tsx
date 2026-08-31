@@ -180,7 +180,9 @@ describe('SocialLinkHub', () => {
 
     // Call-first offers never show exact public pricing. The detail line is
     // sentence copy rendered mixed-case (no uppercase transform).
-    expect(screen.getByText('rank on ChatGPT and Google')).toBeInTheDocument()
+    expect(
+      screen.getByText('support visibility on ChatGPT and Google'),
+    ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()

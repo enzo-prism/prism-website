@@ -96,7 +96,7 @@ export default function FreeAnalysisForm() {
       />
 
       <p className="text-sm text-muted-foreground">
-        We'll send your analysis within 24 hours.
+        We'll send your analysis within two business days.
       </p>
 
       <div className="grid gap-2">
