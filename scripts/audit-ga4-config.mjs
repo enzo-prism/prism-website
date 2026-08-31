@@ -164,6 +164,35 @@ function parseKeyEvents(source) {
   return byDestination
 }
 
+/**
+ * Compiled GA4 / Google-tag "Create event" rules that copy page_view into
+ * generate_lead. Those rules are the /contact page-view leak: they run after
+ * the hit arrives, so first-party code never calls generate_lead on load, but
+ * the property still stars a conversion for every /contact page_view.
+ *
+ * Not every create-event is compiled into gtag.js (some stay server-side).
+ * When the tag does embed one, fail the audit so it cannot silently return.
+ */
+function parsePageViewLeadCreateEvents(source) {
+  const rules = []
+  const createEventBlocks = source.matchAll(
+    /\{"function":"__(?:ogt|ccd)_[^"]*(?:create_event|event_create|ga_event)[^"]*"[\s\S]{0,4000}?"vtp_instanceDestinationId":"([^"]+)"[\s\S]{0,4000}?\}/g,
+  )
+
+  for (const match of createEventBlocks) {
+    const block = match[0]
+    const destination = match[1]
+    const createsLead = /generate_lead/.test(block)
+    const copiesPageView = /page_view/.test(block)
+    const mentionsContact = /\\\/contact|\/contact/.test(block)
+    if (createsLead && (copiesPageView || mentionsContact)) {
+      rules.push({ destination, mentionsContact, copiesPageView })
+    }
+  }
+
+  return rules
+}
+
 async function main() {
   const source = await fetchTag(measurementId)
 
@@ -174,6 +203,7 @@ async function main() {
   const destinations = [...destinationPaths.keys()].sort()
   const enhancedMeasurement = parseEnhancedMeasurement(source)
   const keyEvents = parseKeyEvents(source)
+  const pageViewLeadCreateEvents = parsePageViewLeadCreateEvents(source)
 
   const problems = []
 
@@ -193,7 +223,21 @@ async function main() {
     })
   }
 
-  // 2. Unexpected destinations silently receiving every hit.
+  // 2. /contact page_view copied into the starred generate_lead key event.
+  for (const rule of pageViewLeadCreateEvents) {
+    problems.push({
+      code: 'contact_page_view_generate_lead_create_event',
+      destination: rule.destination,
+      message:
+        `${rule.destination} has a compiled Create event that copies page_view` +
+        `${rule.mentionsContact ? ' (and mentions /contact)' : ''} into generate_lead. ` +
+        'That is the /contact page-view leak: every load of the form is starred as a conversion. ' +
+        'Fix: GA4 Admin > Events > Create event > delete the page_view → generate_lead rule. ' +
+        'First-party code already fires generate_lead only after a successful contact submit.',
+    })
+  }
+
+  // 3. Unexpected destinations silently receiving every hit.
   for (const destination of destinations) {
     if (!allowedDestinations.has(destination)) {
       const chain = destinationPaths.get(destination) ?? [destination]
@@ -223,7 +267,14 @@ async function main() {
   if (asJson) {
     console.log(
       JSON.stringify(
-        { measurementId, destinations, enhancedMeasurement, keyEvents, problems },
+        {
+          measurementId,
+          destinations,
+          enhancedMeasurement,
+          keyEvents,
+          pageViewLeadCreateEvents,
+          problems,
+        },
         null,
         2,
       ),
@@ -252,6 +303,17 @@ async function main() {
     log('\nKey events:')
     for (const [destination, names] of Object.entries(keyEvents)) {
       log(`  ${destination}: ${names.join(', ') || '(none)'}`)
+    }
+
+    log('\nCreate events that copy page_view → generate_lead:')
+    if (pageViewLeadCreateEvents.length === 0) {
+      log('  (none compiled into this tag; server-side Admin rules can still exist)')
+    } else {
+      for (const rule of pageViewLeadCreateEvents) {
+        log(
+          `  ✗ ${rule.destination}${rule.mentionsContact ? '  (/contact)' : ''}`,
+        )
+      }
     }
 
     if (problems.length === 0) {

@@ -232,6 +232,48 @@ describe('analytics utilities', () => {
     )
   })
 
+  it('fires a contact generate_lead immediately and does not leave a pending thank-you conversion', () => {
+    window.history.replaceState({}, '', '/contact')
+
+    trackFormSubmission('contact', 'contact_form', {
+      conversionMode: 'immediate',
+      lead_type: 'contact',
+    })
+
+    const generateLeadCalls = (window.gtag as jest.Mock).mock.calls.filter(
+      ([, eventName]) => eventName === 'generate_lead',
+    )
+    expect(generateLeadCalls).toHaveLength(1)
+    expect(generateLeadCalls[0][2]).toEqual(
+      expect.objectContaining({
+        form_name: 'contact',
+        form_location: 'contact_form',
+        lead_type: 'contact',
+        page_path: '/contact',
+        value: 60,
+        currency: 'USD',
+      }),
+    )
+    expect(consumePendingLeadConversion()).toBeNull()
+  })
+
+  it('does not emit generate_lead from a pending contact submission until thank-you consumes it', () => {
+    window.history.replaceState({}, '', '/contact')
+
+    trackFormSubmission('contact', 'contact_form')
+
+    expect(
+      (window.gtag as jest.Mock).mock.calls.some(
+        ([, eventName]) => eventName === 'generate_lead',
+      ),
+    ).toBe(false)
+    expect(consumePendingLeadConversion()).toEqual({
+      form_name: 'contact',
+      form_location: 'contact_form',
+      lead_type: 'contact',
+    })
+  })
+
   it('can measure non-sales form leads without sending Google Ads conversion data', () => {
     trackFormSubmission('scholarship_application', 'scholarship_form', {
       conversionMode: 'immediate',

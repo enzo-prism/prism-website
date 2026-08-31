@@ -151,7 +151,7 @@ export default function RootLayout({
                   // NOTE this does NOT enable EEA conversion modeling. That needs a
                   // real CMP emitting a denied-to-granted consent update, which the
                   // site does not have. It also has no region scoping, so EEA/UK
-                  // visitors are not handled compliantly. See docs/analytics.md step 7.
+                  // visitors are not handled compliantly. See docs/analytics.md step 8.
                   gtag('consent', 'default', {
                     ad_storage: 'granted',
                     ad_user_data: 'granted',
