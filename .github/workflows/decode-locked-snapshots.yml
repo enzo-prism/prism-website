@@ -5,7 +5,7 @@ on:
     branches:
       - cursor/three-services-nav-26d6
     paths:
-      - 'tmp/locked-snapshots/**'
+      - 'tmp/**'
 
 permissions:
   contents: write
@@ -23,6 +23,26 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Apply docs patch
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, gzip, subprocess, sys
+
+          patch_b64 = Path('tmp/remaining-docs.patch.gz.b64')
+          if patch_b64.exists():
+              data = gzip.decompress(base64.b64decode(patch_b64.read_text().strip()))
+              Path('tmp/remaining-docs.patch').write_bytes(data)
+              result = subprocess.run(['git', 'apply', 'tmp/remaining-docs.patch'], capture_output=True, text=True)
+              sys.stdout.write(result.stdout)
+              sys.stderr.write(result.stderr)
+              if result.returncode != 0:
+                  raise SystemExit(result.returncode)
+              print('applied docs patch')
+          else:
+              print('no docs patch')
+          PY
+
       - name: Decode base64 snapshots
         run: |
           python3 - <<'PY'
@@ -32,22 +52,25 @@ jobs:
           src = Path('tmp/locked-snapshots')
           dest = Path('__tests__/visual/locked-routes.spec.ts-snapshots')
           dest.mkdir(parents=True, exist_ok=True)
-          for path in sorted(src.glob('*.b64')):
-              name = path.name.removesuffix('.b64')
-              data = base64.b64decode(path.read_text().strip())
-              out = dest / name
-              out.write_bytes(data)
-              print(f'wrote {out} ({len(data)} bytes)')
+          if not src.exists():
+              print('no snapshot payloads')
+          else:
+              for path in sorted(src.glob('*.b64')):
+                  name = path.name.removesuffix('.b64')
+                  data = base64.b64decode(path.read_text().strip())
+                  out = dest / name
+                  out.write_bytes(data)
+                  print(f'wrote {out} ({len(data)} bytes)')
           PY
 
-      - name: Commit decoded PNGs
+      - name: Commit decoded files
         run: |
           git config user.name enzo
           git config user.email enzo@design-prism.com
-          git add __tests__/visual/locked-routes.spec.ts-snapshots
+          git add AGENTS.md README.md DESIGN.md docs __tests__/visual/locked-routes.spec.ts-snapshots
           if git diff --staged --quiet; then
-            echo 'No snapshot changes'
+            echo 'No decoded changes'
           else
-            git commit -m "Refresh locked UI snapshots for three-service nav."
+            git commit -m "Apply docs patch and refresh locked UI snapshots."
             git push
           fi
