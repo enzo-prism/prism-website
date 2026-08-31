@@ -331,9 +331,24 @@ Important routing note:
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
 - Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only Website and Prism Infinity.
 
+## `/contact`
+
+`components/forms/ContactForm.tsx` is the general inbound form on
+`app/contact/page.tsx`.
+
+- Endpoint: `https://formspree.io/f/xjkjbpdb`
+- DOM analytics contract: `<form id="contact" name="contact">`
+- Success flow: client-side `fetch` with `Accept: application/json`, then
+  `router.push("/thank-you")` for confirmation copy.
+- Analytics: `trackFormSubmission("contact", "contact_form", { conversionMode: "immediate", lead_type: "contact" })` **only after** a successful Formspree POST. Same pattern as `/website-intake`: `generate_lead` fires on the form route so `page_path` is `/contact`. Do not store a pending lead — `/thank-you` still mounts `LeadSuccessTracker` for other forms, and a pending contact lead would double-count. Apply `generate_lead` on `/thank-you?source=apply` is owned by `ApplySuccessTracker` and must stay intact.
+- Do not fire `generate_lead` on `/contact` page load, form render, or
+  `form_start`. First-party code never did; a GA4 Admin Create event that
+  copies `/contact` `page_view` → `generate_lead` is the page-view leak
+  and must be deleted in the GA4 UI. See [`docs/analytics.md`](analytics.md).
+
 ## Thank-you pages
 
-- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. The Prism Growth Dashboard flow sends `?source=apply`. `?source=website-build` is a leftover variant for historical redirects and must not promise a payment link. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
+- `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — used by Apply and Contact. Apply is the conversion owner here (`?source=apply` → `ApplySuccessTracker` → `generate_lead`). Contact still lands on this route for copy, but its `generate_lead` already fired on `/contact` at submit (`conversionMode: "immediate"`) and must not fire again. `?source=website-build` is a leftover variant for historical redirects and must not promise a payment link. `/website-intake` does not use this route; it stays on-page after a successful Formspree submit.
 - `/pricing/thank-you` ([`app/pricing/thank-you/page.tsx`](../app/pricing/thank-you/page.tsx)) — noindex leftover. Copy must not mention the retired growth sprint.
 - `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — the **post-payment** confirmation for the `$300` website order, reached by Stripe's redirect with `?session_id={CHECKOUT_SESSION_ID}`. Mounts `PurchaseSuccessTracker`, which shape-checks the session id and fires GA4 `purchase` once per transaction. It deliberately does nothing without a well-formed id, so it is safe to link to but pointless to visit directly.
 - `/analysis-thank-you` ([`app/analysis-thank-you/page.tsx`](../app/analysis-thank-you/page.tsx)) — used by the Free Analysis form.

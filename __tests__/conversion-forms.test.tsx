@@ -11,6 +11,7 @@ import BookAShootForm from '@/app/book-a-shoot/BookAShootForm'
 import ModelsPageClient from '@/app/models/client-page'
 import ScholarshipPageClient from '@/app/scholarship/ScholarshipPageClient'
 import AiWebsiteLaunchForm from '@/components/ai-website-launch/AiWebsiteLaunchForm'
+import ContactForm from '@/components/forms/ContactForm'
 
 const pushMock = jest.fn()
 jest.mock('next/navigation', () => ({
@@ -332,6 +333,83 @@ describe('secondary conversion forms', () => {
     expect(phone).toHaveAttribute('aria-invalid', 'true')
     expect(phone).toHaveAttribute('aria-describedby', 'models-phone-error')
     expect(document.activeElement).toBe(phone)
+  })
+
+  it('does not treat a /contact render as a lead conversion', () => {
+    window.history.replaceState({}, '', '/contact')
+    render(<ContactForm />)
+
+    expect(trackFormSubmission).not.toHaveBeenCalled()
+    expect(trackCTAClick).not.toHaveBeenCalled()
+    expect(pushMock).not.toHaveBeenCalled()
+  })
+
+  it('fires the contact lead conversion once on successful submit, then thanks the visitor', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    window.history.replaceState({}, '', '/contact')
+    render(<ContactForm />)
+
+    fireEvent.change(screen.getByLabelText(/^name$/i), {
+      target: { value: 'Jordan Ramirez' },
+    })
+    fireEvent.change(screen.getByLabelText(/^email$/i), {
+      target: { value: 'jordan@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/^message$/i), {
+      target: { value: 'Need a website rebuild for a local practice.' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /send message/i }))
+
+    await waitFor(() => {
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(trackFormSubmission).toHaveBeenCalledTimes(1)
+      expect(trackFormSubmission).toHaveBeenCalledWith(
+        'contact',
+        'contact_form',
+        {
+          conversionMode: 'immediate',
+          lead_type: 'contact',
+        },
+      )
+      expect(pushMock).toHaveBeenCalledWith('/thank-you')
+    })
+
+    const [, options] = fetchSpy.mock.calls[0] as [
+      RequestInfo | URL,
+      RequestInit,
+    ]
+    const formData = options.body as FormData
+    expect(formData.get('form_name')).toBe('contact')
+    expect(formData.get('name')).toBe('Jordan Ramirez')
+    expect(formData.get('email')).toBe('jordan@example.com')
+    expect(formData.get('message')).toBe(
+      'Need a website rebuild for a local practice.',
+    )
+  })
+
+  it('does not convert a failed contact submit', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(false))
+    window.history.replaceState({}, '', '/contact')
+    render(<ContactForm />)
+
+    fireEvent.change(screen.getByLabelText(/^email$/i), {
+      target: { value: 'jordan@example.com' },
+    })
+    fireEvent.change(screen.getByLabelText(/^message$/i), {
+      target: { value: 'Need a website rebuild for a local practice.' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /send message/i }))
+
+    await waitFor(() => {
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(
+        screen.getByText(/we couldn't submit right now/i),
+      ).toBeInTheDocument()
+    })
+    expect(trackFormSubmission).not.toHaveBeenCalled()
+    expect(pushMock).not.toHaveBeenCalled()
   })
 
   it('keeps the AI launch thank-you redirect from polluting GA attribution', async () => {

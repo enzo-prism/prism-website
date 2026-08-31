@@ -192,6 +192,7 @@ Quick reference for the pages we edit most often.
 - Deliberately minimal (2026-07-29 redesign): a dark core-route hero ("Talk to Prism." + "Send a note. We reply within two business days."), the `ContactForm` card, and one "Prefer email?" line with `support@design-prism.com`. The old `What to Expect` checklist and Silicon Valley blurb stay retired; do not reintroduce them.
 - Do not add demo-booking or calendar CTAs here; the footer and primary free-audit path should route to `/get-started`.
 - Uses `ContactForm` for all validation/submission logic (short labels: Name, Email, Phone (optional), Message).
+- Analytics: `generate_lead` fires once after a successful Formspree submit (`conversionMode: "immediate"`), not on page view or form render. `/thank-you` after contact is confirmation copy only; Apply still owns `/thank-you?source=apply` `generate_lead`.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 

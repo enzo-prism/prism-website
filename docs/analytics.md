@@ -54,11 +54,36 @@ plus a Google Ads conversion. Two modes:
 
 - `pending` (default) stores context in sessionStorage; the `/thank-you` route
   mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
-  navigates on success.
-- `immediate` fires inline. Use when the form shows an in-page success screen
-  and never navigates — `/website-intake` is the live case and posts to the
-  dedicated Prism Website Intake form (`xrpzlkrd`); see
+  navigates on success **and** the conversion should be attributed to the
+  thank-you page (Apply is the remaining first-party case).
+- `immediate` fires inline on confirmed submit. Use when the form shows an
+  in-page success screen (`/website-intake`, dedicated Formspree form
+  `xrpzlkrd`) **or** when the conversion must keep `page_path` on the form
+  route. `/contact` is the latter: it still navigates to `/thank-you` for
+  copy, but fires `generate_lead` once on successful Formspree POST so the
+  event's `page_path` is `/contact`. It must not also store a pending lead,
+  or `LeadSuccessTracker` on `/thank-you` would double-count. Apply
+  `generate_lead` on `/thank-you?source=apply` is unchanged
+  (`ApplySuccessTracker`). See
   [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
+
+**`/contact` page-view leak (fixed in code 2026-08-31; admin follow-up).**
+First-party code never called `generate_lead` on `/contact` page load or
+form render. `ContactForm` only called `trackFormSubmission` after a
+successful POST (historically in `pending` mode), `app/contact/page.tsx`
+has no conversion call, and `EnhancedAnalytics` only sends `page_view`.
+Last-30-day equality of `/contact` `generate_lead` = `page_view` = starred
+key events (with `form_submit_success` / `form_start` at 1) is therefore a
+**GA4 Admin "Create event"** (or a migrated Universal Analytics destination
+goal) that copies `page_view` → `generate_lead` when `page_path` is
+`/contact`. Those rules run server-side after the hit arrives; they do not
+appear as `gtag('event', 'generate_lead')` in this repo.
+
+Delete that create-event in GA4 Admin → Events → Create event (and any
+Google tag event-creation analogue that matches `/contact` page views).
+Until it is gone, every `/contact` page view still inflates the starred
+key event, and a real submit would count twice (page-view copy + first-party
+submit). Do not mark `page_view` itself as a key event on `/contact`.
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
 so Smart Bidding can weigh a $300 order against a free-audit request. Before it
@@ -256,7 +281,18 @@ conversions in the trailing 30 days before it behaves well. Also re-tune values
 **rarely and in one batch**: each change can re-trigger the bid strategy's
 learning period, which takes up to about two weeks to settle.
 
-### 7. Open question — Consent Mode defaults for EEA visitors
+### 7. Delete the `/contact` page_view → `generate_lead` Create event
+
+GA4 Admin → Events → Create event. Remove any rule whose destination event
+is `generate_lead` and whose condition is `page_view` (or `page_location` /
+`page_path` contains `/contact`). Also check Google tag → Event settings
+for a compiled analogue. That rule is what made `/contact` `generate_lead`
+equal `/contact` `page_view` and inflated the starred key event. First-party
+code now fires `generate_lead` only after a successful contact submit.
+
+Leave the Apply `/thank-you?source=apply` `generate_lead` alone.
+
+### 8. Open question — Consent Mode defaults for EEA visitors
 
 `app/layout.tsx` grants all four consent signals by default, with no
 region scoping. That is defensible for genuinely US-only traffic, but Consent
