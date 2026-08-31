@@ -1,11 +1,12 @@
-name: Decode locked snapshots
+name: Refresh locked snapshots
 
 on:
   push:
     branches:
       - cursor/three-services-nav-26d6
     paths:
-      - 'tmp/**'
+      - ".github/workflows/decode-locked-snapshots.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,62 +16,68 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  decode:
+  refresh:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.57.0-jammy
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
 
-      - name: Apply docs patch
+      - name: Mark git directory safe
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Apply docs
+        run: |
+          if [ -f tmp/apply-docs.py ]; then
+            python3 tmp/apply-docs.py
+          else
+            echo apply-docs.py missing; skip docs
+          fi
+
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.0.0 --activate
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Refresh locked snapshots
+        env:
+          CI: "true"
+          NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: "true"
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import base64, gzip, subprocess, sys
-
-          patch_b64 = Path('tmp/remaining-docs.patch.gz.b64')
-          if patch_b64.exists():
-              data = gzip.decompress(base64.b64decode(patch_b64.read_text().strip()))
-              Path('tmp/remaining-docs.patch').write_bytes(data)
-              result = subprocess.run(['git', 'apply', 'tmp/remaining-docs.patch'], capture_output=True, text=True)
-              sys.stdout.write(result.stdout)
-              sys.stderr.write(result.stderr)
-              if result.returncode != 0:
-                  raise SystemExit(result.returncode)
-              print('applied docs patch')
-          else:
-              print('no docs patch')
+          p = Path("playwright.locked.config.ts")
+          text = p.read_text()
+          if "maxDiffPixelRatio: 0.05" not in text:
+              raise SystemExit("expected maxDiffPixelRatio: 0.05")
+          p.write_text(text.replace("maxDiffPixelRatio: 0.05", "maxDiffPixelRatio: 0"))
           PY
+          pnpm test:visual:locked:update
+          git checkout -- playwright.locked.config.ts
 
-      - name: Decode base64 snapshots
+      - name: Commit docs and snapshots
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import base64
-
-          src = Path('tmp/locked-snapshots')
-          dest = Path('__tests__/visual/locked-routes.spec.ts-snapshots')
-          dest.mkdir(parents=True, exist_ok=True)
-          if not src.exists():
-              print('no snapshot payloads')
-          else:
-              for path in sorted(src.glob('*.b64')):
-                  name = path.name.removesuffix('.b64')
-                  data = base64.b64decode(path.read_text().strip())
-                  out = dest / name
-                  out.write_bytes(data)
-                  print(f'wrote {out} ({len(data)} bytes)')
-          PY
-
-      - name: Commit decoded files
-        run: |
+          set -euo pipefail
           git config user.name enzo
           git config user.email enzo@design-prism.com
+          git rm -r --ignore-unmatch tmp
           git add AGENTS.md README.md DESIGN.md docs __tests__/visual/locked-routes.spec.ts-snapshots
           if git diff --staged --quiet; then
-            echo 'No decoded changes'
+            echo No changes to commit
           else
-            git commit -m "Apply docs patch and refresh locked UI snapshots."
-            git push
+            git commit -m "Apply service IA docs and refresh locked UI snapshots."
+            git push origin HEAD:cursor/three-services-nav-26d6
           fi
