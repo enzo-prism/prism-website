@@ -14,12 +14,11 @@ type FooterColumn = {
 
 const footerColumns: FooterColumn[] = [
   {
-    heading: 'Offers',
+    heading: 'Services',
     links: [
-      { label: 'PRO Website', href: '/websites' },
-      { label: 'Content OS', href: '/content-os' },
-      { label: 'Dental OS', href: '/dental-os' },
-      { label: 'Prism Infinity', href: '/prism-infinity' },
+      { label: 'Website', href: '/websites' },
+      { label: 'Content', href: '/content' },
+      { label: 'Ads', href: '/ads' },
       { label: 'All services', href: '/services' },
     ],
   },
@@ -36,6 +35,8 @@ const footerColumns: FooterColumn[] = [
     links: [
       { label: 'About', href: '/about' },
       { label: 'Pricing', href: '/pricing' },
+      { label: 'Dental OS', href: '/dental-os' },
+      { label: 'Prism Infinity', href: '/prism-infinity' },
       { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Refer a friend ($100)', href: '/refer' },
@@ -119,7 +120,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </div>
 
             <p className="text-sm leading-7 text-pretty text-[#b8afa2]">
-              Conversion-first websites. One growth system.
+              Website. Content. Ads. One growth system.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">

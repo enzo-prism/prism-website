@@ -99,9 +99,12 @@ images: {
   },
   async redirects() {
     return [
-      // Founder OS retired and refocused as Content OS
-      { source: '/founder-os', destination: '/content-os', permanent: true },
-      { source: '/founder-os/apply', destination: '/content-os', permanent: true },
+      // Content is the public service page. Content OS remains the packaged
+      // offer name on /pricing. Founder OS stays retired.
+      { source: '/content-os', destination: '/content', permanent: true },
+      { source: '/founder-os', destination: '/content', permanent: true },
+      { source: '/founder-os/apply', destination: '/content', permanent: true },
+      { source: '/website', destination: '/websites', permanent: true },
       // Specific legacy mappings
       { source: '/dr-chris-wong', destination: '/case-studies/dr-christopher-wong', permanent: true },
       { source: '/our-work/chris-wong-case-study', destination: '/case-studies/dr-christopher-wong', permanent: true },
