@@ -70,6 +70,7 @@ describe('Navbar', () => {
     document.body.innerHTML = ''
     document.body.removeAttribute('style')
     document.documentElement.removeAttribute('style')
+    delete document.documentElement.dataset.mobileNavOpen
   })
 
   it('uses the home solid treatment on the homepage route', () => {
@@ -139,6 +140,19 @@ describe('Navbar', () => {
     expect(logoGlow.className).toContain('group-focus-visible/logo:opacity-100')
   })
 
+  it('keeps the mobile chrome on one row with a non-shrinking menu button', () => {
+    mockUsePathname.mockReturnValue('/about')
+
+    render(<Navbar />)
+
+    expect(screen.getByRole('banner').className).toContain('overflow-x-clip')
+    expect(screen.getByRole('button', { name: /open menu/i }).className).toContain(
+      'shrink-0',
+    )
+    const chrome = document.querySelector('[data-navbar-chrome] > div')
+    expect(chrome?.className).toContain('flex-nowrap')
+  })
+
   it('opens a simple inline mobile nav instead of a separate modal layer', () => {
     mockUsePathname.mockReturnValue('/about')
 
@@ -151,7 +165,11 @@ describe('Navbar', () => {
       'aria-expanded',
       'true',
     )
-    expect(document.querySelector('#mobile-site-nav')).toBeInTheDocument()
+    expect(document.documentElement.dataset.mobileNavOpen).toBe('true')
+    const mobilePanel = document.querySelector('#mobile-site-nav')
+    expect(mobilePanel).toBeInTheDocument()
+    expect(mobilePanel?.parentElement).toBe(document.body)
+    expect(screen.getByRole('banner').contains(mobilePanel)).toBe(false)
     expect(
       screen.queryByRole('link', { name: /our story/i }),
     ).not.toBeInTheDocument()
@@ -178,6 +196,8 @@ describe('Navbar', () => {
     expect(screen.getByRole('button', { name: /close menu/i })).toBeEnabled()
     const mobilePanel = document.querySelector('#mobile-site-nav')
     expect(mobilePanel).toBeInTheDocument()
+    expect(mobilePanel).not.toHaveAttribute('inert')
+    expect(mobilePanel?.parentElement).toBe(document.body)
     expect(
       within(mobilePanel as HTMLElement).getByRole('link', {
         name: /^home$/i,
@@ -202,12 +222,15 @@ describe('Navbar', () => {
     expect(document.body.style.overflow).toBe('hidden')
     expect(document.documentElement.style.overflow).toBe('hidden')
 
+    expect(document.documentElement.dataset.mobileNavOpen).toBe('true')
+
     fireEvent.click(screen.getByRole('button', { name: /close menu/i }))
 
     expect(main).toHaveAttribute('inert')
     expect(footer).not.toHaveAttribute('inert')
     expect(document.body.style.overflow).toBe('clip')
     expect(document.documentElement.style.overflow).toBe('scroll')
+    expect(document.documentElement.dataset.mobileNavOpen).toBeUndefined()
   })
 
   it('closes on Escape and returns focus to the menu button', async () => {
@@ -329,7 +352,7 @@ describe('Navbar', () => {
     const originalRect = HTMLElement.prototype.getBoundingClientRect
     HTMLElement.prototype.getBoundingClientRect =
       function getBoundingClientRect() {
-        if (this.hasAttribute('data-navbar-chrome')) {
+        if (this.tagName === 'HEADER') {
           return {
             x: 0,
             y: 0,

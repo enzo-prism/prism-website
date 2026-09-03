@@ -403,6 +403,11 @@ select {
   user-select: text;
 }
 
+/* Keep bottom sticky chrome out of the full-screen mobile sheet. */
+html[data-mobile-nav-open] [data-sticky-cta] {
+  display: none;
+}
+
 /* Mobile nav panel entrance (transform/opacity only; motion-safe gated at
    the call site). */
 @keyframes nav-panel-in {

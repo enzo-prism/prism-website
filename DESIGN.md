@@ -399,8 +399,11 @@ The inline rail takes over from the menu button at `lg` (1024px), and the
 logo tagline shows only from `xl` so the compact bar and the 1024px rail
 both stay a single 72px row. The mobile sheet is a full-viewport panel
 pinned under that chrome (home | services | proof, no nested dropdown, no
-index prefixes). It must stay out of flow so opening it never rewrites
-`--prism-header-height` or shifts the page underneath.
+index prefixes). It portals to `document.body` so iOS Safari cannot trap
+`position: fixed` inside the sticky/fixed header and collapse the sheet
+into the 72px bar. It must stay out of flow so opening it never rewrites
+`--prism-header-height` or shifts the page underneath. `--prism-header-height`
+is the painted header height, including the 1px bottom border.
 
 ### Social proof
 
