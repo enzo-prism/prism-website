@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
@@ -276,7 +277,6 @@ function MobileNavGroups({
 export default function Navbar() {
   const pathname = usePathname()
   const headerRef = useRef<HTMLElement | null>(null)
-  const chromeRef = useRef<HTMLDivElement | null>(null)
   const mobilePanelRef = useRef<HTMLDivElement | null>(null)
   const menuButtonRef = useRef<HTMLButtonElement | null>(null)
   const restoreFocusAfterCloseRef = useRef(true)
@@ -299,15 +299,18 @@ export default function Navbar() {
     const previousHtmlOverflow = documentElement.style.overflow
     body.style.overflow = 'hidden'
     documentElement.style.overflow = 'hidden'
+    documentElement.dataset.mobileNavOpen = 'true'
 
     const inertTargets = Array.from(
       document.querySelectorAll<HTMLElement>('main, footer'),
     ).filter((element) => !element.closest('header'))
+    const mobilePanel = mobilePanelRef.current
     const bodyLevelTargets = Array.from(document.body.children).filter(
       (element): element is HTMLElement =>
         element instanceof HTMLElement &&
         element.tagName !== 'SCRIPT' &&
         element !== header &&
+        element !== mobilePanel &&
         (!header || !element.contains(header)),
     )
     const allInertTargets = Array.from(
@@ -343,6 +346,7 @@ export default function Navbar() {
       window.removeEventListener('resize', handleResize)
       body.style.overflow = previousBodyOverflow
       documentElement.style.overflow = previousHtmlOverflow
+      delete documentElement.dataset.mobileNavOpen
       allInertTargets.forEach((element) => {
         if (!priorInertState.get(element)) element.removeAttribute('inert')
       })
@@ -363,13 +367,13 @@ export default function Navbar() {
   }, [isMobileMenuOpen])
 
   useLayoutEffect(() => {
-    const chrome = chromeRef.current
-    if (!chrome) return
+    const header = headerRef.current
+    if (!header) return
 
     const updateHeaderHeight = () => {
       document.documentElement.style.setProperty(
         '--prism-header-height',
-        `${chrome.getBoundingClientRect().height}px`,
+        `${header.getBoundingClientRect().height}px`,
       )
     }
 
@@ -380,7 +384,7 @@ export default function Navbar() {
         ? new ResizeObserver(updateHeaderHeight)
         : null
 
-    resizeObserver?.observe(chrome)
+    resizeObserver?.observe(header)
     window.addEventListener('resize', updateHeaderHeight)
 
     return () => {
@@ -395,22 +399,39 @@ export default function Navbar() {
     setIsMobileMenuOpen(false)
   }
 
+  const mobilePanel =
+    isMobileMenuOpen ? (
+      <div
+        ref={mobilePanelRef}
+        id={MOBILE_NAV_ID}
+        className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-[60] overflow-y-auto overscroll-contain border-t border-white/12 bg-black [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
+      >
+        <nav
+          aria-label="Mobile"
+          className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+        >
+          <MobileNavGroups pathname={pathname} onNavigate={handleNavigate} />
+        </nav>
+      </div>
+    ) : null
+
   return (
+    <>
     <header
       ref={headerRef}
       className={cn(
         HEADER_CLASSES,
+        'overflow-x-clip',
         isHome || isMobileMenuOpen
           ? 'fixed inset-x-0 top-0 z-50 w-full'
           : 'sticky top-0 z-50 w-full',
       )}
     >
       <div
-        ref={chromeRef}
         data-navbar-chrome
         className="pt-[env(safe-area-inset-top,0px)]"
       >
-        <div className="container-px-safe container mx-auto flex h-[72px] items-center justify-between">
+        <div className="container-px-safe container mx-auto flex h-[72px] min-w-0 flex-nowrap items-center justify-between">
           <Link
             href="/"
             className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
@@ -435,7 +456,7 @@ export default function Navbar() {
                 alt={LOGO_CONFIG.alt}
                 width={40}
                 height={40}
-                className={`h-full w-full object-contain ${LOGO_CONFIG.className}`}
+                className="h-full w-full rounded-none object-cover"
                 priority
                 fallbackSrc={LOGO_CONFIG.fallbackSrc}
                 trackingId="navbar_logo"
@@ -490,7 +511,7 @@ export default function Navbar() {
               aria-controls={MOBILE_NAV_ID}
               aria-expanded={isMobileMenuOpen}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black lg:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black lg:hidden"
               onClick={() => {
                 restoreFocusAfterCloseRef.current = true
                 setIsMobileMenuOpen((open) => !open)
@@ -535,20 +556,10 @@ export default function Navbar() {
         ) : null}
       </div>
 
-      {isMobileMenuOpen ? (
-        <div
-          ref={mobilePanelRef}
-          id={MOBILE_NAV_ID}
-          className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-50 overflow-y-auto overscroll-contain border-t border-white/12 bg-black [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
-        >
-          <nav
-            aria-label="Mobile"
-            className="container-px-safe container mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))]"
-          >
-            <MobileNavGroups pathname={pathname} onNavigate={handleNavigate} />
-          </nav>
-        </div>
-      ) : null}
     </header>
+    {mobilePanel && typeof document !== 'undefined'
+      ? createPortal(mobilePanel, document.body)
+      : null}
+    </>
   )
 }
