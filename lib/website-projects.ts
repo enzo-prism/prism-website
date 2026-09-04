@@ -9,6 +9,24 @@ export type WebsiteProject = {
 
 export const websiteProjects: WebsiteProject[] = [
   {
+    id: '19',
+    title: 'waikiki dental',
+    url: '/case-studies/waikiki-dental',
+    external: false,
+    category: 'healthcare',
+    description:
+      'anxiety-friendly family, cosmetic, implant, and sedation dentistry in roseville',
+  },
+  {
+    id: '20',
+    title: 'sacramento dental medicine',
+    url: '/case-studies/sacramento-dental-medicine',
+    external: false,
+    category: 'healthcare',
+    description:
+      'modern family, cosmetic, and restorative dentistry in antelope',
+  },
+  {
     id: '4',
     title: 'exquisite dentistry',
     url: 'https://exquisitedentistryla.com/',

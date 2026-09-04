@@ -45,6 +45,8 @@ export const CASE_STUDY_NAV_ITEMS: readonly CaseStudyNavItem[] = [
   { slug: 'michael-njo-dds', client: 'Dental Strategies' },
   { slug: 'saorsa-growth-partners', client: 'Saorsa Growth Partners' },
   { slug: 'mataria-dental-group', client: 'Mataria Dental Group' },
+  { slug: 'waikiki-dental', client: 'Waikiki Dental' },
+  { slug: 'sacramento-dental-medicine', client: 'Sacramento Dental Medicine' },
 ]
 
 export function findCaseStudyNavItem(

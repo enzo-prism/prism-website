@@ -48,27 +48,27 @@ export default function HomeProofBandSection() {
               <div className="relative">
                 <div
                   aria-hidden="true"
-                  className="absolute left-[1.35rem] top-6 bottom-6 w-px bg-linear-to-b from-[#d8bc79]/0 via-[#d8bc79]/35 to-[#d8bc79]/0 md:left-0 md:right-0 md:top-[2.15rem] md:bottom-auto md:h-px md:w-auto md:bg-linear-to-r"
+                  className="absolute left-[1.35rem] top-6 bottom-6 w-px bg-linear-to-b from-[#d8bc79]/0 via-[#d8bc79]/35 to-[#d8bc79]/0 xl:left-0 xl:right-0 xl:top-12 xl:bottom-auto xl:h-px xl:w-auto xl:bg-linear-to-r"
                 />
 
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 xl:grid-cols-3">
                   {HOMEPAGE_GROWTH_RAMP.metrics.map((metric) => (
                     <article
                       key={metric.day}
                       data-home-ramp-metric={metric.day}
                       className="relative rounded-[1.35rem] border border-white/12 bg-black/45 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition-[border-color,background-color,transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:bg-white/[0.045] hover:shadow-[0_26px_70px_-55px_rgba(216,188,121,0.8)] motion-reduce:transition-none sm:p-6"
                     >
-                      <div className="mb-7 flex items-center gap-3 md:mb-8 md:block">
-                        <span className="relative z-10 inline-flex h-11 min-w-11 items-center justify-center rounded-full border border-[#d8bc79]/45 bg-black px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d8bc79] shadow-[0_0_34px_-16px_rgba(216,188,121,0.9)] md:h-12">
+                      <div className="mb-7 flex items-center gap-3 xl:mb-8 xl:block">
+                        <span className="relative z-10 inline-flex h-11 min-w-11 items-center justify-center rounded-full border border-[#d8bc79]/45 bg-black px-3 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#d8bc79] shadow-[0_0_34px_-16px_rgba(216,188,121,0.9)] xl:h-12">
                           {metric.day}
                         </span>
                         <span
                           aria-hidden="true"
-                          className="h-px flex-1 bg-white/10 md:hidden"
+                          className="h-px flex-1 bg-white/10 xl:hidden"
                         />
                       </div>
 
-                      <p className="font-sans text-[44px] font-medium leading-none tracking-[-0.065em] text-[#f5f0e8] sm:text-[52px] lg:text-[60px]">
+                      <p className="font-sans text-[44px] font-medium leading-none tracking-[-0.065em] text-[#f5f0e8] sm:text-[52px] xl:text-[40px]">
                         <HomeCountUp value={metric.value} />
                       </p>
                       <p className="mt-4 max-w-[12rem] font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d8bc79]/85">

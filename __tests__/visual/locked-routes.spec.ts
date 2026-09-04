@@ -483,3 +483,81 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     ).toBe(true)
   }
 })
+
+test('home growth ramp values stay contained across responsive breakpoints', async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name !== 'desktop-chromium',
+    'Manual breakpoint loop already covers mobile and tablet sizes.',
+  )
+
+  await disableElevenLabsWidget(page)
+
+  const breakpoints = [
+    { width: 1440, height: 960 },
+    { width: 1280, height: 900 },
+    { width: 1024, height: 900 },
+    { width: 768, height: 1200 },
+    { width: 390, height: 1200 },
+  ]
+
+  for (const breakpoint of breakpoints) {
+    await page.setViewportSize(breakpoint)
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
+    await page.waitForTimeout(250)
+
+    const rampHeading = page.getByRole('heading', {
+      level: 2,
+      name: /first 90 days\./i,
+    })
+    await expect(rampHeading).toBeVisible({ timeout: 20_000 })
+
+    const section = rampHeading.locator('xpath=ancestor::section[1]')
+    await expect(section).toBeVisible()
+    await section.scrollIntoViewIfNeeded()
+
+    await expect(
+      section.locator('[data-home-ramp-metric]'),
+    ).toHaveCount(3)
+
+    const containment = await section.evaluate((sectionNode) => {
+      const cards = Array.from(
+        sectionNode.querySelectorAll<HTMLElement>('[data-home-ramp-metric]'),
+      )
+
+      return cards.map((card) => {
+        const value = card.querySelector<HTMLElement>('p')
+        const pill = card.querySelector<HTMLElement>('span.rounded-full')
+        const cardRect = card.getBoundingClientRect()
+        const valueRect = value?.getBoundingClientRect()
+        const pillRect = pill?.getBoundingClientRect()
+
+        return {
+          day: card.dataset.homeRampMetric ?? 'unknown',
+          valueWithin:
+            !!value &&
+            value.scrollWidth <= value.clientWidth + 1 &&
+            !!valueRect &&
+            valueRect.left >= cardRect.left - 1 &&
+            valueRect.right <= cardRect.right + 1,
+          pillWithin:
+            !!pillRect &&
+            pillRect.left >= cardRect.left - 1 &&
+            pillRect.right <= cardRect.right + 1,
+        }
+      })
+    })
+
+    for (const card of containment) {
+      expect(
+        card.valueWithin,
+        `${card.day} value overflowed its card at ${breakpoint.width}px`,
+      ).toBe(true)
+      expect(
+        card.pillWithin,
+        `${card.day} pill overflowed its card at ${breakpoint.width}px`,
+      ).toBe(true)
+    }
+  }
+})

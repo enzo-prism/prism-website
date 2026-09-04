@@ -13,8 +13,10 @@ import {
 } from '@/lib/constants'
 import type { NavItem } from '@/lib/constants'
 import { PRISM_SERVICES, isServicePath } from '@/lib/services'
+import type { PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
+import { Globe, Megaphone, PenLine, type LucideIcon } from 'lucide-react'
 
 import CoreImage from './core-image'
 import { LOGO_CONFIG } from '@/lib/constants'
@@ -28,6 +30,12 @@ type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
 const SERVICES_MENU_ID = 'services-menu'
+
+const SERVICE_MENU_ICONS: Record<PrismServiceId, LucideIcon> = {
+  website: Globe,
+  content: PenLine,
+  ads: Megaphone,
+}
 const DESKTOP_NAV_BREAKPOINT = 1024
 const HEADER_CLASSES =
   'border-b border-white/12 bg-black text-[#f5f0e8] transition-[background-color,border-color,color]'
@@ -233,6 +241,7 @@ function ServicesDropdown({
           <p className="sr-only">Services</p>
           {PRISM_SERVICES.map((service) => {
             const active = isNavItemActive(pathname, service.href)
+            const ServiceIcon = SERVICE_MENU_ICONS[service.id]
             return (
               <Link
                 key={service.href}
@@ -241,17 +250,25 @@ function ServicesDropdown({
                 aria-current={active ? 'page' : undefined}
                 onClick={() => onNavigate(service.label, service.href)}
                 className={cn(
-                  'flex flex-col rounded-xl px-3.5 py-3 transition-colors',
+                  'flex items-center gap-3 rounded-xl px-3.5 py-3 transition-colors',
                   active
                     ? 'bg-white/[0.08] text-[#f5f0e8]'
                     : 'text-[#f5f0e8] hover:bg-white/[0.05]',
                 )}
               >
-                <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
-                  {service.label}
+                <span
+                  aria-hidden="true"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-white/[0.04]"
+                >
+                  <ServiceIcon className="size-4 text-[#d8bc79]" strokeWidth={1.75} />
                 </span>
-                <span className="mt-1 font-sans text-[0.82rem] font-normal normal-case tracking-[-0.01em] text-[#b8afa2]">
-                  {service.navDescription}
+                <span className="flex min-w-0 flex-col">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
+                    {service.label}
+                  </span>
+                  <span className="mt-1 font-sans text-[0.82rem] font-normal normal-case tracking-[-0.01em] text-[#b8afa2]">
+                    {service.navDescription}
+                  </span>
                 </span>
               </Link>
             )

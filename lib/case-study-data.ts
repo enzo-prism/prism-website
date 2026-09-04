@@ -841,6 +841,81 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         'https://www.design-prism.com/case-studies/mataria-dental-group',
     },
   },
+  {
+    id: '24',
+    title: 'Pacific Premium Website for Anxiety-Free Dentistry',
+    client: 'Waikiki Dental',
+    websiteUrl: 'https://waikikidental.com',
+    category: 'dentistry',
+    industry: 'Dentistry',
+    location: 'Roseville, CA',
+    description:
+      'Live website redesign with on-site appointment requests, a 14-service search structure, and a Pacific Premium design system for an anxiety-friendly practice.',
+    slug: 'waikiki-dental',
+    segments: ['dental', 'local'],
+    structured: {
+      heroImage:
+        'https://www.design-prism.com/case-studies/waikiki-dental-home-desktop.jpg',
+      datePublished: '2026-09-04T00:00:00.000Z',
+      dateModified: '2026-09-04T00:00:00.000Z',
+      outcomes: [
+        'Waikiki Dental relaunched on a live Next.js site with every call-to-action staying on site at a 3-step request-appointment flow.',
+        'Fourteen services organized by category, with dedicated pages for IV sedation, implants, and same-day crowns.',
+        'A Pacific Premium design system (Fraunces display serif, Manrope sans, royal Pacific blue, hibiscus coral) with real team photography.',
+        'Formspree lead capture with saved drafts, plus Vercel Analytics and GA4 wired from launch day.',
+        'The practice’s 4.9-star reputation across 426 Google reviews is surfaced throughout the site as trust infrastructure.',
+      ],
+      story: {
+        situation:
+          'Waikiki Dental pairs family, cosmetic, implant, and sedation dentistry with an anxiety-friendly chairside manner. The practice needed a front door that matched that positioning: on-site appointment requests instead of third-party scheduling links, and a visual home for its comfort story.',
+        approach:
+          'Prism rebuilt the site on Next.js with a single source of truth for practice details, hours, services, and reviews; a 3-step Visit, When, Reach booking flow with saved drafts that submits to Formspree; a Pacific Premium design system with real team photography; and analytics wired from launch day.',
+        result:
+          'New patients now meet the comfort story first (IV sedation, implants, and same-day crowns up front) and can request an appointment without ever leaving the site. The live site carries the 4.9-star reputation the practice earned across 426 Google reviews.',
+      },
+      focus: 'Dental website redesign',
+      scope: 'Website, booking flow, local SEO, analytics',
+      canonicalUrl: 'https://www.design-prism.com/case-studies/waikiki-dental',
+    },
+  },
+  {
+    id: '23',
+    title: 'Clinical-Premium Redesign for a Family Practice',
+    client: 'Sacramento Dental Medicine',
+    websiteUrl: 'https://sacramentodentalmedicine.com',
+    category: 'dentistry',
+    industry: 'Dentistry',
+    location: 'Antelope, CA',
+    description:
+      'Live website redesign with a mobile-first scheduler, a dedicated emergency path, and Dentist plus FAQ schema for a family practice.',
+    slug: 'sacramento-dental-medicine',
+    segments: ['dental', 'local'],
+    structured: {
+      heroImage:
+        'https://www.design-prism.com/case-studies/sacramento-dental-medicine-home-desktop.jpg',
+      datePublished: '2026-09-04T00:00:00.000Z',
+      dateModified: '2026-09-04T00:00:00.000Z',
+      outcomes: [
+        'Sacramento Dental Medicine relaunched on a live Next.js site with a mobile-first scheduler (visit type, day-part window, contact) and Formspree lead delivery.',
+        'A distinct emergency path that routes high-intent visitors to a phone call, not a form.',
+        'A dedicated reviews page built on all 632 Google ratings (4.8 average) with verified distribution and short excerpts.',
+        'A Doctors section introducing Dr. Michael Narodovich and Dr. Lucas L. Sheppard, plus a gallery of real Elverta Road office photography alongside clearly labeled atmospheric stand-ins.',
+        'Dentist and FAQPage JSON-LD, sitemap discipline, and reduced-motion plus keyboard-accessible controls.',
+      ],
+      story: {
+        situation:
+          'Sacramento Dental Medicine provides modern family, cosmetic, and restorative dentistry in Antelope, including emergency care. The practice needed a site built to turn visits into booked chairs: a scheduler patients can complete on a phone, a fast lane for emergencies, and search fundamentals that hold up on the live domain.',
+        approach:
+          'Prism redesigned the site around taking action: a mobile-first scheduler with large tap targets and front-desk-confirmed times, an “in pain? call now” band kept separate from the form flow, four service sections, a reviews page grounded in all 632 Google ratings, a Doctors section for both doctors, and Dentist plus FAQ schema underneath.',
+        result:
+          'The redesign is live at sacramentodentalmedicine.com with analytics and lead delivery in place. New patients meet a calm, clinical-premium front door, and the practice owns a review and doctor story it can point every referral to.',
+      },
+      focus: 'Dental website redesign',
+      scope: 'Website, scheduler UX, SEO schema, analytics',
+      canonicalUrl:
+        'https://www.design-prism.com/case-studies/sacramento-dental-medicine',
+    },
+  },
 ]
 
 export function getCaseStudyMetric(slug: string, metricIndex = 0) {

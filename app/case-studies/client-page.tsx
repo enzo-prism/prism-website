@@ -111,8 +111,12 @@ export default function CaseStudiesPage() {
               </div>
             </div>
 
+            <div className="mt-10 md:mt-12">
+              <CaseStudiesList studies={caseStudyListItems} />
+            </div>
+
             {measuredHighlights.length > 0 ? (
-              <div className="mt-8 rounded-3xl border border-border/60 bg-card/40 px-6 py-7 md:px-8">
+              <div className="mt-10 rounded-3xl border border-border/60 bg-card/40 px-6 py-7 md:mt-12 md:px-8">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
                   measured results · google search console
                 </p>
@@ -194,10 +198,6 @@ export default function CaseStudiesPage() {
                 </div>
               </div>
             </section>
-
-            <div className="mt-10 md:mt-12">
-              <CaseStudiesList studies={caseStudyListItems} />
-            </div>
           </div>
         </section>
 
