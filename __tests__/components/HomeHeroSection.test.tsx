@@ -90,7 +90,7 @@ describe('HomeHeroSection', () => {
     expect(screen.queryByText(/#1 growth partner/i)).not.toBeInTheDocument()
     expect(
       screen.getByText(
-        /one team that plugs into yours and runs everything that grows your business/i,
+        /we build your website, create your content, and run your ads/i,
       ),
     ).toBeInTheDocument()
 
@@ -104,7 +104,7 @@ describe('HomeHeroSection', () => {
     expect(stats).toHaveTextContent(/tiktok/i)
 
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
-      /20\+ featured voices from founders, doctors, operators, and local leaders/i,
+      /20\+ stories from founders, doctors, and business owners/i,
     )
     expect(screen.queryByLabelText(/5 star rating/i)).not.toBeInTheDocument()
 
@@ -112,9 +112,7 @@ describe('HomeHeroSection', () => {
     const supportIcon = supportPoints[0]?.querySelector('img')
 
     expect(supportPoints).toHaveLength(1)
-    expect(
-      screen.getByText(/the growth team founders keep/i),
-    ).toBeInTheDocument()
+    expect(screen.getByText(/your business\. our team\./i)).toBeInTheDocument()
     expect(screen.queryByText(/^google maps$/i)).not.toBeInTheDocument()
     expect(supportIcon).toHaveAttribute('src', '/pixelish/emoji-heart.svg')
     expect(supportIcon).toHaveClass('invert')
@@ -135,7 +133,7 @@ describe('HomeHeroSection', () => {
 
     expect(
       screen.getByRole('link', {
-        name: /20\+ featured voices from founders, doctors, operators, and local leaders see results/i,
+        name: /20\+ stories from founders, doctors, and business owners see results/i,
       }),
     ).toHaveAttribute('href', '/case-studies')
   })

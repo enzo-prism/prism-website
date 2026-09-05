@@ -31,7 +31,7 @@ const CANONICAL_URL = 'https://www.design-prism.com/ads'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Ads',
   description:
-    'Google, Meta, TikTok, and Yelp ads built to drive qualified calls, form fills, and booked appointments, without wasting spend.',
+    'Google, Meta, TikTok, and Yelp ad campaigns with creative, landing pages, and tracking focused on qualified calls, inquiries, and appointments.',
   path: '/ads',
   ogImage: '/prism-opengraph.png',
 })
@@ -47,15 +47,15 @@ const HERO_CHIPS = [
 const WHAT_YOU_GET = [
   {
     title: 'Strategy that fits the goal',
-    body: 'Clear targets, ideal customer profiles, and the fastest path to qualified demand.',
+    body: 'Define the customers you want to reach, the action you want them to take, and the budget to test it.',
   },
   {
     title: 'Creative that earns the click',
-    body: 'Thumb-stopping visuals and plain-English copy that turns interest into a call or form fill.',
+    body: 'Images, video, and clear copy built around your offer and the next step you want customers to take.',
   },
   {
     title: 'Landing page alignment',
-    body: 'Every click points to a tuned offer, so the visit is ready to convert.',
+    body: 'Send visitors to a relevant page with a clear offer and a straightforward way to call, book, or inquire.',
   },
   {
     title: 'Full-funnel setup',
@@ -73,8 +73,8 @@ const WHAT_YOU_GET = [
 
 const BUDGET_GUARDS = [
   {
-    title: 'No wasted clicks',
-    body: 'Block bad searches, irrelevant audiences, and spam leads before they burn budget.',
+    title: 'Reduce irrelevant clicks',
+    body: 'Use search exclusions and audience filters to reduce irrelevant traffic, then review lead quality as campaigns run.',
   },
   {
     title: 'Show up when buyers are ready',
@@ -85,8 +85,8 @@ const BUDGET_GUARDS = [
     body: 'Geo-targeting and exclusions keep spend local and high quality.',
   },
   {
-    title: 'Relentless testing',
-    body: 'Headlines, images, offers, and forms refined until cost per lead comes down.',
+    title: 'Keep testing the details',
+    body: 'Test headlines, images, offers, and forms to learn what improves lead quality and cost per lead.',
   },
 ] as const
 
@@ -129,11 +129,11 @@ const PROCESS_STEPS = [
   },
   {
     step: 'Launch',
-    body: 'Start lean and gather signal quickly without wasting spend.',
+    body: 'Start with a focused budget and gather performance data before expanding.',
   },
   {
     step: 'Optimize',
-    body: 'Shift spend to winners and cut losers fast.',
+    body: 'Review results, adjust spend, and test the next improvement.',
   },
   {
     step: 'Report',
@@ -272,8 +272,8 @@ export default async function AdsPage() {
                   as="h1"
                   variant="hero"
                   eyebrow="Ads"
-                  title="Ads that bring the right customers."
-                  description="We plan, create, and optimize campaigns across Google, Meta, TikTok, and Yelp so you reach the people most likely to call, without overspending."
+                  title="Turn attention into qualified inquiries."
+                  description="Reach potential customers on Google, Meta, TikTok, and Yelp. We connect ad creative, landing pages, and tracking so you can see which campaigns bring useful leads."
                   titleClassName="max-w-[16ch]"
                 />
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -351,8 +351,8 @@ export default async function AdsPage() {
           >
             <CoreSectionHeading
               eyebrow="What you get"
-              title="Paid demand, run in the open."
-              description="Everything built to drive qualified calls and prove ROI. No black-box reporting."
+              title="From campaign strategy to the next call."
+              description="Creative, targeting, and reporting focused on calls, inquiries, and booked appointments."
             />
             <div className="grid gap-4 sm:grid-cols-2">
               {WHAT_YOU_GET.map((item) => (
@@ -379,8 +379,8 @@ export default async function AdsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Budget"
-              title="How we protect every dollar."
-              description="Guardrails that keep spend on qualified buyers."
+              title="Keep your budget focused."
+              description="Practical checks that help reduce waste and improve the quality of your leads."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {BUDGET_GUARDS.map((item) => (
@@ -482,7 +482,7 @@ export default async function AdsPage() {
             <CoreSectionHeading
               eyebrow="Fit"
               title="Who we help scale with ads."
-              description="Ambitious local teams that need predictable demand without wasting budget."
+              description="Local teams that want to reach more potential customers and understand what their ad spend delivers."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {AUDIENCE_SEGMENTS.map((segment) => (
@@ -533,7 +533,7 @@ export default async function AdsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Process"
-              title="Fast to launch. Ruthless about signal."
+              title="Launch, learn, and improve."
               description="A simple loop from first brief to weekly optimization."
               titleClassName="max-w-[16ch]"
             />
@@ -562,8 +562,8 @@ export default async function AdsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Outcomes"
-              title="What you should feel in the calendar."
-              description="Performance you can see in calls, pipeline, and revenue."
+              title="What we work to improve."
+              description="We review lead quality, conversion rates, and cost per lead to guide the next decision."
               titleClassName="max-w-[16ch]"
             />
             <ul className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -695,7 +695,7 @@ export default async function AdsPage() {
           >
             <CoreSectionHeading
               title="Ready to reach better customers?"
-              description="We'll map a simple plan to hit your goals, protect your budget, and grow what works."
+              description="We will map your audience, channels, and starting budget, with a clear plan for measuring results."
               titleClassName="max-w-[16ch]"
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">

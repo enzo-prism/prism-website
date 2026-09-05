@@ -146,9 +146,9 @@ describe('Navbar', () => {
     render(<Navbar />)
 
     expect(screen.getByRole('banner').className).toContain('overflow-x-clip')
-    expect(screen.getByRole('button', { name: /open menu/i }).className).toContain(
-      'shrink-0',
-    )
+    expect(
+      screen.getByRole('button', { name: /open menu/i }).className,
+    ).toContain('shrink-0')
     const chrome = document.querySelector('[data-navbar-chrome] > div')
     expect(chrome?.className).toContain('flex-nowrap')
   })
@@ -276,6 +276,47 @@ describe('Navbar', () => {
     const websiteLink = screen.getByRole('link', { name: /^website$/i })
     expect(websiteLink).toHaveAttribute('href', '/websites')
     expect(websiteLink).toHaveAttribute('aria-current', 'page')
+  })
+
+  it('keeps Services open on the first pointer click after hover, then allows dismissal', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    const trigger = screen.getByRole('button', { name: /services/i })
+    fireEvent.mouseEnter(trigger.parentElement as HTMLElement)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('link', { name: /^website$/i })).toBeInTheDocument()
+    fireEvent.click(trigger)
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('returns keyboard focus to Services on Escape and closes when focus leaves', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    const trigger = screen.getByRole('button', { name: /services/i })
+    fireEvent.click(trigger)
+    const website = screen.getByRole('link', { name: /^website$/i })
+    website.focus()
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(trigger).toHaveFocus()
+
+    fireEvent.click(trigger)
+    fireEvent.blur(screen.getByRole('link', { name: /^website$/i }), {
+      relatedTarget: screen.getByRole('link', { name: /^case studies$/i }),
+    })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('keeps mobile service descriptions visible without changing link names', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+    const panel = document.querySelector('#mobile-site-nav') as HTMLElement
+    const website = within(panel).getByRole('link', { name: /^website$/i })
+    expect(website.querySelector('img')).toHaveAttribute('alt', '')
+    expect(website.querySelector('.font-sans')?.textContent).toBeTruthy()
   })
 
   it('carries no order CTA button — links only', () => {

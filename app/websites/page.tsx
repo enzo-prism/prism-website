@@ -37,8 +37,8 @@ export const metadata: Metadata = buildRouteMetadata({
 const PILLARS = [
   {
     label: 'Design',
-    title: 'A design system, not a template',
-    body: 'Every engagement begins with a dedicated design system. Typography, color, spacing, and motion are defined once and applied with intention, so every page signals credibility at first glance.',
+    title: 'Design that feels like your business',
+    body: 'We define your typography, color, spacing, and motion, then carry them through every page. The result is a consistent website that makes your business easier to recognize and understand.',
     points: [
       'Bespoke design system per brand',
       'Typography, color, and motion standards',
@@ -47,18 +47,18 @@ const PILLARS = [
   },
   {
     label: 'Engineering',
-    title: 'Built like software, not a brochure',
-    body: 'A modern architecture that treats performance and accessibility as baseline requirements. Fast on every device, resilient under audit, and structured so search engines read each page with precision.',
+    title: 'Fast, accessible, easy to navigate',
+    body: 'We build for speed, accessibility, and everyday use across devices. Clear page structure helps visitors find what they need and search engines understand what you offer.',
     points: [
-      'Core Web Vitals in the green',
-      'Accessible, semantic, hardened markup',
+      'Core Web Vitals optimization',
+      'Accessible, semantic page structure',
       'Technical SEO foundations built in',
     ],
   },
   {
     label: 'Analytics',
-    title: 'Instrumented from day one',
-    body: 'Measurement is part of the build itself. Analytics and conversion tracking are configured before launch, so you know precisely what your website delivers from its first day in service.',
+    title: 'Know what brings people in',
+    body: 'Analytics and conversion tracking are part of the build. See how people find your site, which pages they visit, and where they take the next step.',
     points: [
       'GA4 and conversion tracking configured at launch',
       'Lead and call attribution',
@@ -88,12 +88,12 @@ const PROCESS_STEPS = [
     body: 'We develop the design system, compose each page, and engineer the entire build to the Prism standard.',
   },
   {
-    label: 'Instrument everything',
+    label: 'Set up measurement',
     body: 'Analytics, conversion tracking, structured data, and search foundations are in place before launch, never retrofitted after it.',
   },
   {
     label: 'Refine and maintain',
-    body: 'We refine until it is exactly right, then keep the entire presence tuned across search, AI visibility, and conversion.',
+    body: 'We review the site with you before launch, then plan any ongoing updates to content, search visibility, and conversion paths.',
   },
 ] as const
 
@@ -190,13 +190,12 @@ export default function WebsitesPage() {
             <div className="mx-auto max-w-4xl text-center">
               <SectionKicker>The PRO website</SectionKicker>
               <h1 className="mx-auto mt-6 max-w-[16ch] text-balance text-[clamp(2.65rem,7.5vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
-                Your online presence, fully dialed.
+                A better website. A clearer next step.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Considered design, precise engineering, and analytics of record
-                for serious businesses. Built on a bespoke design system,
-                engineered for search fundamentals, and structured to support
-                discovery by AI systems without guaranteeing placement.
+                Custom design, fast pages, and clear paths from a first visit
+                to an inquiry. Built with analytics and search foundations
+                that help Google and AI systems understand your business.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -279,7 +278,7 @@ export default function WebsitesPage() {
             <CoreSectionHeading
               eyebrow="The standard"
               title="Design. Engineering. Analytics."
-              description="Three disciplines brought to a single standard. The difference between a website and a serious online presence."
+              description="A clear visual identity, a dependable build, and the tracking to understand what works."
             />
             <div className="mt-10 grid gap-4 lg:grid-cols-3">
               {PILLARS.map((pillar, index) => (
@@ -481,7 +480,7 @@ export default function WebsitesPage() {
             )}
           >
             <CoreSectionHeading
-              title="Get your presence fully dialed."
+              title="Build a website you can grow with."
               description="Four short questions, then we scope the build. Prefer a call? Book a 30-minute Zoom and we will map the work live."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">

@@ -181,7 +181,7 @@ describe('case study data freshness', () => {
     expect(HOMEPAGE_GROWTH_RAMP.metrics.map((metric) => metric.value)).toEqual([
       'Baseline',
       'Live',
-      'Cadence',
+      'Progress',
     ])
     expect(JSON.stringify(HOMEPAGE_GROWTH_RAMP)).not.toMatch(
       /\+25%|\+50%|10-30/,

@@ -107,10 +107,10 @@ export const HOMEPAGE_HERO = {
   title: 'Prism',
   subheading: 'a growth team for small businesses',
   description:
-    'One team that plugs into yours and runs everything that grows your business: website, content, ads, search, and social. You get the results without the workload.',
+    'We build your website, create your content, and run your ads. One team helps customers find you, understand your value, and take the next step.',
   supportPoints: [
     {
-      label: 'The growth team founders keep',
+      label: 'Your business. Our team.',
       iconSrc: '/pixelish/emoji-heart.svg',
       iconInvert: true,
       variant: 'aiRecommendation',
@@ -153,7 +153,7 @@ export const HOMEPAGE_HERO = {
     'Tracking',
   ],
   socialProof: {
-    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} featured voices from founders, doctors, operators, and local leaders`,
+    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} stories from founders, doctors, and business owners`,
     linkLabel: 'See results',
   },
   primaryCta: { label: 'Get a PRO website', href: '/websites' },
@@ -351,7 +351,7 @@ export const HOMEPAGE_CLIENT_WINS = {
 export const HOMEPAGE_GROWTH_RAMP = {
   eyebrow: 'What to expect',
   title: 'First 90 days.',
-  microcopy: 'Audit. Ship. Measure. Improve.',
+  microcopy: 'Set priorities. Launch. Learn.',
   finePrint:
     'The exact sequence and timing depend on scope, access, and your starting point.',
   metrics: [
@@ -360,21 +360,21 @@ export const HOMEPAGE_GROWTH_RAMP = {
       value: 'Baseline',
       label: 'measurement + priorities',
       detail:
-        'Audit the current funnel, verify tracking, and rank the highest-leverage fixes.',
+        'Review how customers find you, check your tracking, and agree on what to fix first.',
     },
     {
       day: 'Day 60',
       value: 'Live',
-      label: 'core improvements shipped',
+      label: 'first improvements live',
       detail:
         'Launch the agreed website, search, content, or campaign improvements.',
     },
     {
       day: 'Day 90',
-      value: 'Cadence',
+      value: 'Progress',
       label: 'measure + improve',
       detail:
-        'Review source data, keep what works, and set the next iteration.',
+        'Review the results, see what is working, and choose the next improvements.',
     },
   ] satisfies readonly HomepageGrowthRampMetric[],
 } as const
@@ -383,29 +383,30 @@ export const HOMEPAGE_PROBLEM = {
   eyebrow: 'Why it works',
   title: 'Buyers check everything before they choose.',
   description:
-    'Your website. Your reviews. Your Google listing. Even ChatGPT. If one piece is weak, people quietly pick someone else, and you never find out why.',
-  closingLine: 'Prism makes every one of those checks work in your favor.',
+    'People compare your website, reviews, and Google listing before they call. Each should make it easy to understand what you do and why to choose you.',
+  closingLine:
+    'We connect those details into a clear path from discovery to inquiry.',
   points: [
     {
       label: 'Can people find you?',
-      text: 'Search and maps decide who gets seen.',
+      text: 'Help customers find you in search and on maps.',
       iconSrc: '/pixelish/lens.svg',
     },
     {
       label: 'Do they trust you?',
-      text: 'Reviews and proof decide who makes the shortlist.',
+      text: 'Show real reviews and work that earns confidence.',
       iconSrc: '/pixelish/award-checkmark.svg',
     },
     {
       label: 'Can AI recommend you?',
-      text: 'ChatGPT and AI search now answer before you can.',
+      text: 'Make your business easier for AI search to understand.',
       iconSrc: '/pixelish/chatgpt.svg',
       brandLogo: 'openai',
       brandLogoTheme: 'dark',
     },
     {
       label: 'Is the next step easy?',
-      text: 'Calls, forms, and booking decide who gets chosen.',
+      text: 'Make calling, asking a question, or booking simple.',
       iconSrc: '/pixelish/calendar.svg',
     },
   ] satisfies readonly HomepageProblemPoint[],
@@ -467,7 +468,7 @@ export const HOMEPAGE_SERVICES = {
   eyebrow: 'What Prism does',
   title: 'One team. The whole system.',
   description:
-    'Most businesses juggle five vendors and hope it adds up. Prism plugs into your team, builds every piece, and keeps it all working together.',
+    'Your website, content, and ads should work toward the same goal. We plan, build, and improve them together, with clear priorities and one team to call.',
   closingLine: '',
 } as const
 
@@ -487,7 +488,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   },
   {
     title: 'Local & Maps',
-    description: 'Win the Google map pack and local searches near you.',
+    description: 'Help nearby customers find your business on Google Maps.',
     iconSrc: '/pixelish/lens.svg',
     brandLogo: 'googleMaps',
     href: '/local-seo-services',
@@ -500,7 +501,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   },
   {
     title: 'Ads',
-    description: 'Reach the right people without wasting budget.',
+    description: 'Test campaigns, reach relevant audiences, and track results.',
     iconSrc: '/pixelish/device-radio.svg',
     href: '/ads',
   },
@@ -512,7 +513,7 @@ export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
   },
   {
     title: 'Tracking',
-    description: 'Know exactly where calls and customers come from.',
+    description: 'See which channels bring calls, inquiries, and customers.',
     iconSrc: '/pixelish/bar-chart-average.svg',
     href: '/services',
   },
@@ -534,19 +535,19 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
   {
     title: 'Simple enough for a busy operator',
     description:
-      'Clear priorities, plain-English updates, and no extra homework for your team.',
+      'Clear priorities and plain-language updates, so you know what is happening.',
     iconSrc: '/pixelish/checkmark.svg',
   },
   {
     title: 'Premium without feeling generic',
     description:
-      'A calm, modern presence that feels high-trust without turning your company into another template.',
+      'Thoughtful design that reflects your business and makes your offer clear.',
     iconSrc: '/pixelish/award.svg',
   },
   {
     title: 'One connected partner',
     description:
-      'Website, search, proof, ads, content, tracking, and AI visibility move together instead of fighting across vendors.',
+      'The same team connects your website, content, campaigns, and tracking.',
     iconSrc: '/pixelish/command.svg',
   },
   {
@@ -558,7 +559,7 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
   {
     title: 'Honest and steady',
     description:
-      'No loud agency promises. No confusing reports. Just the clearest next move and the work to make it happen.',
+      'See the work, understand the results, and know what we recommend next.',
     iconSrc: '/pixelish/emoji-heart.svg',
   },
 ] as const
@@ -571,17 +572,17 @@ export const HOMEPAGE_HOW_IT_WORKS = {
 export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
     title: 'Tell us about your business',
-    description: 'Takes about a minute. No long brief, no sales maze.',
+    description: 'Share your website, goals, and what you want to improve.',
   },
   {
-    title: 'We audit your growth path',
+    title: 'We review what customers see',
     description:
       'A real person reviews your website, search visibility, reviews, and tracking.',
   },
   {
     title: 'Get your growth plan, free',
     description:
-      'A clear read on what is working, what is leaking, and the next move worth making.',
+      'Find out what is working, what needs attention, and where to start.',
   },
 ] as const
 
@@ -589,7 +590,7 @@ export const HOMEPAGE_PROOF = {
   eyebrow: 'Results',
   title: 'Proof across markets',
   description:
-    'Dental is where the system is proven deepest. The same system grows retail, consulting, education, hospitality, nonprofits, and founder-led brands.',
+    'Explore our work with dental practices, retailers, consultants, schools, nonprofits, and hospitality brands.',
   ctaLabel: 'See client results',
 } as const
 
@@ -711,19 +712,19 @@ export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
   {
     title: 'Founders & startup teams',
     description:
-      'Deep in the tech or done thinking about it, you are building something real and need customers to find it.',
+      'You have a product worth choosing. You need a clear story and a way to reach the right customers.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
     title: 'Local & specialty practices',
     description:
-      'Dentists, clinics, and local services where trust decides everything. Dental is where Prism has the deepest proof.',
+      'Help nearby customers understand your services and feel ready to call. Explore our work with dental practices.',
     iconSrc: '/pixelish/award.svg',
   },
   {
     title: 'Owners & operators',
     description:
-      'You run the business day to day and want one partner to own growth, not another vendor to manage.',
+      'You need a team that handles the website, content, and campaigns while you run the business.',
     iconSrc: '/pixelish/users.svg',
   },
 ] as const
@@ -732,9 +733,9 @@ export const HOMEPAGE_FIT = {
   eyebrow: 'Who it is for',
   title: 'Built for the people running the business.',
   description:
-    'You should not have to become the marketing department to grow. Prism plugs into your team, results compound, and founders stay.',
+    'Get a dedicated partner for the work that brings customers to your business, with clear updates and practical next steps.',
   notFitLine:
-    'Not a fit if you want the cheapest option or overnight results. Prism builds growth that lasts.',
+    'Our best partnerships start with clear goals and room to keep improving.',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
     'You are a founder, owner, or operator who wants more qualified demand.',
@@ -757,11 +758,11 @@ export const HOMEPAGE_FIT = {
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  title: 'Find the growth leak.',
+  title: 'Know what to improve next.',
   description:
-    'Get a free audit of your website, search visibility, reviews, and tracking. See exactly where growth is leaking, plus the clearest next move for your business. No pressure. No obligation.',
+    'Get a free review of your website, search visibility, reviews, and tracking. We will explain what needs attention and recommend where to start.',
   primaryCtaLabel: 'Start my free growth audit',
-  supportLine: 'Reviewed by a real person, not a bot.',
+  supportLine: 'Reviewed by our team. No obligation.',
 } as const
 
 export const HOMEPAGE_STATS = [
@@ -824,7 +825,7 @@ export const HOMEPAGE_CAPABILITIES = [
 
 export const HOMEPAGE_CONTENT_PROOF = {
   eyebrow: 'content delivery',
-  summary: 'Strategy, production, and distribution in one content system.',
+  summary: 'From the first idea to the finished post.',
   href: '/hottest-content',
 } as const
 
@@ -834,7 +835,7 @@ export const HOMEPAGE_SEARCH_PROOF = {
   width: 498,
   height: 667,
   eyebrow: 'search visibility',
-  summary: 'Local visibility that compounds.',
+  summary: 'See the search results behind the work.',
 } as const
 
 export const HOMEPAGE_SEARCH_CONSOLE_SLIDES = [
@@ -895,7 +896,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          "No. Dental is one of Prism's strongest proof areas, but Prism also works with retail, consulting, nonprofit, education, hospitality, local service, and founder-led companies.",
+          'No. We work with retailers, consultants, nonprofits, schools, hospitality brands, and local services. Dental practices are a specialty, and you can explore examples in our case studies.',
       },
     ],
   },
@@ -905,7 +906,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'We review the website, search visibility, proof, offer clarity, tracking, and the trust signals that affect whether someone takes the next step.',
+          'We review your website, search visibility, reviews, and tracking. We look for what makes your business easy to find, understand, and contact.',
       },
     ],
   },
@@ -935,7 +936,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Start with the free growth audit. Submit your company, and we will review the growth path before recommending next steps.',
+          'Request a free growth audit and share your website. We will review it and recommend next steps. Paid work is scoped on a 30-minute Zoom call before you commit.',
       },
     ],
   },

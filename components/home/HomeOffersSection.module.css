@@ -1,0 +1,52 @@
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .icon {
+    transition:
+      transform 320ms ease,
+      border-color 320ms ease;
+  }
+
+  .card:is(:hover, :focus-within) .icon {
+    transform: translateY(-4px) rotate(-4deg);
+    border-color: var(--foreground);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+  }
+
+  .card:is(:hover, :focus-within)::after {
+    animation: light-pass 700ms ease both;
+  }
+}
+
+@keyframes light-pass {
+  to {
+    transform: translateX(100%);
+  }
+}

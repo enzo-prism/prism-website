@@ -108,7 +108,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /find the growth leak\./i,
+        name: /know what to improve next\./i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -142,9 +142,9 @@ describe('ClientPage homepage flow', () => {
   it('renders the system, fit, and proof card grids', () => {
     const { container } = render(<ClientPage />)
 
-    expect(
-      container.querySelectorAll('[data-home-service-card]'),
-    ).toHaveLength(8)
+    expect(container.querySelectorAll('[data-home-service-card]')).toHaveLength(
+      8,
+    )
     expect(container.querySelectorAll('[data-home-fit-card]')).toHaveLength(3)
     expect(
       container.querySelectorAll('[data-home-proof-card]').length,

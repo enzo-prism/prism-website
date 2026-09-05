@@ -389,25 +389,34 @@ The navbar should stay minimal:
 
 It should feel like part of the page shell, not a separate app chrome layer.
 
-The 2026-08 rail is Home, a Services dropdown (website / content / ads),
-then case studies and wall of love. Contact, pricing, Dental OS, and
-Infinity stay in the footer and on `/pricing`. There is no CTA button in
-the header. Desktop links are quiet rounded pills — active is a soft
-`white/[0.08]` wash, hover a lighter `white/[0.04]`. The Services menu is
-an out-of-flow absolute panel so it never rewrites `--prism-header-height`.
-The inline rail takes over from the menu button at `lg` (1024px), and the
-logo tagline shows only from `xl` so the compact bar and the 1024px rail
-both stay a single 72px row. The mobile sheet is a full-viewport panel
-pinned under that chrome (home | services | proof, no nested dropdown, no
-index prefixes): tiny muted eyebrows label the Services and Proof groups,
-rows are 56px rounded cards with a trailing arrow (full opacity on the
-active route, faint otherwise), and rows compact to 44px on
-short/landscape viewports. A faint cyan/pink radial glow textures the top
-of the sheet. It portals to `document.body` so iOS Safari cannot trap
-`position: fixed` inside the sticky/fixed header and collapse the sheet
-into the 72px bar. It must stay out of flow so opening it never rewrites
-`--prism-header-height` or shifts the page underneath. `--prism-header-height`
-is the painted header height, including the 1px bottom border.
+The navigation groups Home, Services (website / content / ads), Case studies,
+and Wall of love into one outlined capsule rail on desktop. Small Pixelish
+icons make each destination recognizable; the active destination uses a quiet
+ivory wash. The brand pairs the triangle mark with a larger sans wordmark and
+a mono tagline from `xl`. No header CTA; the inline rail starts at `lg`.
+Keep the painted header at 73px including its bottom border.
+
+Services opens an out-of-flow panel with icon-led rows, a short description
+for each service, and directional arrows. Pointer, keyboard, outside-click,
+and Escape dismissal must work; Escape returns focus to the trigger.
+The panel entrance is a short fade and rise for motion-enabled visitors.
+
+Mobile uses a labeled Menu / Close toggle and a portaled full-viewport sheet
+below the header. Group Home, Services, and Proof with icon-led rows and
+short service descriptions. Hide the descriptions and compact rows for short
+viewports. Use a quiet neutral wash rather than colored atmospheric effects.
+Opening the sheet must never change `--prism-header-height` or shift content.
+Preserve focus trapping, Escape dismissal, scroll locking, and route-close.
+
+### Service offer cards
+
+Website, Content, and Ads use matching Pixelish browser, camera, and chart
+icons in a contained leading tile. On hover or keyboard focus, a brief light
+pass and small icon lift provide feedback. These effects run only with
+`prefers-reduced-motion: no-preference`; no new client runtime is required.
+Use the existing palette and 64px spacing scale for the icon tile. Copy states
+what is delivered and how customers can act, without guaranteeing growth,
+rankings, attribution completeness, or zero wasted ad spend.
 
 ### Social proof
 

@@ -31,7 +31,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'A site that makes choosing you easy.',
     homeCta: 'Explore websites',
     description:
-      'An ultra-premium PRO website: a bespoke design system, software-grade engineering, analytics from day one, and foundations for Google and AI discovery.',
+      'A custom-designed, fast website with clear paths to call or book. Built with analytics from day one and foundations for Google and AI search.',
     primaryCta: WEBSITE_START_CTA,
   },
   {
@@ -43,7 +43,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Content that gets found and shared.',
     homeCta: 'Explore content',
     description:
-      'A system that plans, produces, and publishes content across your website and every social platform. Implemented over 3 months, then optimized every month.',
+      'We plan, produce, and publish content for your website and social channels. Set up over 3 months, then improved each month as we learn what connects.',
     primaryCta: BOOK_A_CALL_CTA,
   },
   {
@@ -51,11 +51,11 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     label: 'ads',
     name: 'Ads',
     href: '/ads',
-    navDescription: 'Paid demand without wasted spend.',
-    homeTitle: 'Paid demand without wasted spend.',
+    navDescription: 'Ads built around better leads.',
+    homeTitle: 'Ads built around better leads.',
     homeCta: 'Explore ads',
     description:
-      'Google, Meta, TikTok, and Yelp ads built to drive qualified calls, form fills, and booked appointments, with tracking that shows what actually worked.',
+      'Campaigns across Google, Meta, TikTok, and Yelp, chosen for your audience. Track calls, inquiries, and bookings to see where your budget works hardest.',
     primaryCta: BOOK_A_CALL_CTA,
   },
 ] as const

@@ -28,7 +28,7 @@ const CONTENT_OS_OFFER = CANONICAL_PRICING_OFFERS.content_os
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Content',
   description:
-    'A content system that plans, produces, and publishes across your website and every social platform.',
+    'A content system that plans, produces, and publishes across your website and your social channels.',
   path: '/content',
   ogImage: '/prism-opengraph.png',
 })
@@ -41,23 +41,23 @@ const HERO_CHIPS = [
 
 const CAPABILITIES = [
   {
-    title: 'Content engine',
+    title: 'Posts, scripts, and video ideas',
     body: 'AI agents draft, edit, and schedule a steady stream of on-brand posts, scripts, and short-form video concepts built around your offers.',
     icon: Sparkles,
   },
   {
-    title: 'Multi-platform distribution',
-    body: 'Every piece is adapted and published natively across YouTube, Instagram, TikTok, LinkedIn, and more. No manual reformatting.',
+    title: 'Adapted for each channel',
+    body: 'We adapt and publish your content for YouTube, Instagram, TikTok, LinkedIn, and more, with formats that fit each channel.',
     icon: Share2,
   },
   {
     title: 'Ready for ads',
-    body: 'Winning organic posts become the raw material for paid campaigns. Content and ads stay in the same story. Ads is a separate Prism service when you are ready to spend.',
+    body: 'Strong organic posts can become creative for paid campaigns. Prism Ads is a separate service when you are ready to add paid distribution.',
     icon: Megaphone,
   },
   {
     title: 'On-site content',
-    body: 'Your website stays alive with landing pages, blog posts, and SEO content wired to the same engine.',
+    body: 'Landing pages, blog posts, and search-focused content give visitors more ways to discover your business on your own website.',
     icon: Globe,
   },
 ] as const
@@ -71,12 +71,12 @@ const STEPS = [
   {
     label: 'Launch the agent system',
     detail: 'Go live',
-    body: 'Agents start producing, distributing, and testing content across every platform and your website.',
+    body: 'Agents start producing, distributing, and testing content across your channels and your website.',
   },
   {
-    label: 'Scale every month',
+    label: 'Review and improve',
     detail: 'Ongoing',
-    body: 'Each month we optimize what is working, retire what is not, and push for more reach, revenue, and creative.',
+    body: 'Each month we review performance, refine topics and formats, and use what we learn to plan the next round of content.',
   },
 ] as const
 
@@ -124,7 +124,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does the monthly optimization cover?',
     answer:
-      'Ongoing operation and optimization: the agents keep producing and distributing across every platform, and Prism tunes the system each month based on what is driving reach and revenue.',
+      'Ongoing operation and optimization: the agents keep producing and distributing across your channels, and Prism tunes the system each month based on what is driving reach and revenue.',
   },
   {
     question: 'Which platforms do you cover?',
@@ -169,8 +169,8 @@ export default function ContentOsPage() {
                   as="h1"
                   variant="hero"
                   eyebrow="Content"
-                  title="Content that gets found and shared."
-                  description="A system that plans, produces, and publishes across every social platform and your website. Implemented in 3 months, then optimized every month."
+                  title="Your expertise. Published consistently."
+                  description="Turn your ideas and offers into posts, scripts, and website content. We handle planning, production, and publishing across your social channels and site."
                   titleClassName="max-w-[20ch]"
                 />
 
@@ -214,8 +214,8 @@ export default function ContentOsPage() {
           >
             <CoreSectionHeading
               eyebrow="What it does"
-              title="A content team, run by agents."
-              description="Four capabilities working as one system, so your brand ships more, everywhere, without a bigger team."
+              title="From the first idea to the published post."
+              description="Prism combines AI agents and brand review to keep content moving across your channels."
             />
             <div className="grid gap-4 sm:grid-cols-2">
               {CAPABILITIES.map((capability) => {
@@ -247,8 +247,8 @@ export default function ContentOsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="How it works"
-              title="Implement once. Compound every month."
-              description="A focused build, then a system that keeps producing and improving on its own cadence."
+              title="Set it up. Keep showing up."
+              description="Three months to connect your channels and build the system, followed by monthly reviews and improvements."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-3">
               {STEPS.map((step, index) => (
@@ -280,7 +280,7 @@ export default function ContentOsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Proof"
-              title="Our own reach is the proof."
+              title="See it on our own channels."
               description="This is the same system Prism runs on itself. These are our audiences and the views behind them."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
@@ -390,7 +390,7 @@ export default function ContentOsPage() {
           >
             <CoreSectionHeading
               title="Start the content system."
-              description="Put a publishing engine to work on your social channels and website. When you are ready to spend, Prism Ads picks up the winners."
+              description="Give your social channels and website a consistent publishing plan. We will map the content, workflow, and scope with you."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
@@ -417,7 +417,7 @@ export default function ContentOsPage() {
         areaServed="United States"
         offerDetails={{
           name: CONTENT_OS_OFFER.name,
-          description: `A content system that plans, produces, and publishes across every social platform and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
+          description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

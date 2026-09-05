@@ -5,6 +5,8 @@ import {
   coreRouteSectionClassName,
   CoreSectionHeading,
 } from '@/components/core-route/CoreRoutePrimitives'
+import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import styles from './HomeOffersSection.module.css'
 import HomeReveal from '@/components/home/HomeReveal'
 import { WEBSITE_START_CTA } from '@/lib/pricing-model'
 import { PRISM_SERVICES } from '@/lib/services'
@@ -18,7 +20,7 @@ export default function HomeOffersSection() {
           <CoreSectionHeading
             eyebrow="What Prism does"
             title="Website. Content. Ads."
-            description="Three jobs that grow a practice. Start with the website, then keep the content and ads running so the phone stays busy."
+            description="Start with what your business needs most. Build a better website, give people a reason to trust you, and reach the right customers."
             titleClassName="max-w-[18ch]"
           />
         </HomeReveal>
@@ -38,13 +40,29 @@ export default function HomeOffersSection() {
                 <div
                   className={cn(
                     coreRoutePanelClassName,
-                    'flex h-full flex-col gap-5 p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:shadow-[0_28px_60px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none sm:p-8',
+                    styles.card,
+                    'flex h-full flex-col gap-5 p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-[#d8bc79]/35 hover:shadow-[0_28px_60px_-40px_rgba(216,188,121,0.5)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-8',
                     isLead && 'border-white/20 bg-black/45',
                   )}
                 >
-                  <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
-                    {`0${index + 1} · ${service.name}`}
-                  </p>
+                  <div className="flex items-center justify-between gap-4">
+                    <span className={styles.icon} aria-hidden="true">
+                      <PixelishIcon
+                        src={
+                          service.id === 'website'
+                            ? '/pixelish/browser.svg'
+                            : service.id === 'content'
+                              ? '/pixelish/device-camera.svg'
+                              : '/pixelish/graph-chart-high.svg'
+                        }
+                        alt=""
+                        size={24}
+                      />
+                    </span>
+                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
+                      {`0${index + 1} · ${service.name}`}
+                    </p>
+                  </div>
 
                   <div className="space-y-3">
                     <h3 className="font-sans text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-[#f5f0e8]">
@@ -90,8 +108,8 @@ export default function HomeOffersSection() {
 
         <div className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
-            Dental OS and Prism Infinity package these services for practices
-            that want the whole system running.{' '}
+            Need a broader partnership? Explore Dental OS for practices and
+            Prism Infinity for ongoing creative work.{' '}
             <CoreActionLink
               href="/pricing"
               label="see packaged offers"
@@ -101,7 +119,7 @@ export default function HomeOffersSection() {
             >
               See packaged offers
             </CoreActionLink>
-            . Not ready to buy? Start free.
+            . Start with a free audit if you need help deciding.
           </p>
           <CoreActionLink
             href="/get-started"
