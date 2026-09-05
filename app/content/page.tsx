@@ -34,7 +34,7 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 const HERO_CHIPS = [
-  'Every social platform',
+  'Your social channels',
   'Your website',
   '3-month implementation',
 ] as const
