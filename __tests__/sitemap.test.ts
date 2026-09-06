@@ -1,8 +1,30 @@
 jest.mock("server-only", () => ({}), { virtual: true })
 
 import sitemap from "@/app/sitemap"
+import * as mdxData from "@/lib/mdx-data"
 
 describe("sitemap", () => {
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  it("uses the authored modification date instead of publication for updated posts", async () => {
+    jest.spyOn(mdxData, "getAllPosts").mockResolvedValue([
+      {
+        slug: "dental-seo-guide",
+        date: "2025-12-14",
+        openGraph: { modifiedTime: "2026-09-05T00:00:00.000Z" },
+      },
+      { slug: "business-visibility-chatgpt", date: "invalid" },
+    ] as Awaited<ReturnType<typeof mdxData.getAllPosts>>)
+
+    const entries = await sitemap()
+    expect(entries.find((entry) => entry.url.endsWith("/blog/dental-seo-guide"))?.lastModified)
+      .toEqual(new Date("2026-09-05T00:00:00.000Z"))
+    expect(entries.find((entry) => entry.url.endsWith("/blog/business-visibility-chatgpt")))
+      .not.toHaveProperty("lastModified")
+  })
+
   it("returns canonical URLs and includes core pages", async () => {
     const entries = await sitemap()
     const urls = entries.map((e) => e.url)

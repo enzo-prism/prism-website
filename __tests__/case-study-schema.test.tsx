@@ -51,9 +51,11 @@ describe('CaseStudySchema', () => {
     expect(article.mentions).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          name: '+160% Google Search impressions, year over year',
+          '@type': 'PropertyValue',
+          name: 'Google Search impressions, year over year',
+          value: '+160%',
           measurementTechnique: 'Google Search Console',
-          temporalCoverage: 'May 31-August 28, 2025 vs 2026',
+          valueReference: 'May 31-August 28, 2025 vs 2026',
         }),
       ]),
     )

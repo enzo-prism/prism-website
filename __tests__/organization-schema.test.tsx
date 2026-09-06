@@ -23,12 +23,11 @@ describe('GlobalSchemaGraph', () => {
       expect.arrayContaining([
         'https://www.instagram.com/the_design_prism/',
         'https://www.youtube.com/@the_design_prism',
-        'https://x.com/NosisTheGod',
         'https://www.tiktok.com/@the_design_prism',
         'https://www.linkedin.com/company/web-prism',
       ]),
     )
-    expect(organization.hasPart).toEqual(
+    expect(nodes.find((node) => node['@type'] === 'WebSite').hasPart).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           url: 'https://www.design-prism.com/case-studies',
@@ -41,6 +40,9 @@ describe('GlobalSchemaGraph', () => {
         }),
       ]),
     )
+    expect(organization.hasPart).toBeUndefined()
+    expect(organization.sameAs).not.toContain('https://x.com/NosisTheGod')
+    expect(organization.founder.sameAs).toContain('https://x.com/NosisTheGod')
     expect(organization.subjectOf).toEqual(
       expect.arrayContaining([
         expect.objectContaining({

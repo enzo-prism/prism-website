@@ -32,7 +32,9 @@ function buildSitemapEntry(route: StaticRouteInput): MetadataRoute.Sitemap[numbe
 
   // Only set lastModified when we actually know it (blog/case studies/library).
   // Google ignores changefreq/priority, so we avoid emitting unsupported hints.
-  if (route.lastModified) entry.lastModified = route.lastModified
+  if (route.lastModified && Number.isFinite(route.lastModified.getTime())) {
+    entry.lastModified = route.lastModified
+  }
 
   return entry
 }
@@ -69,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           url: `${baseOrigin}/blog/${post.slug}`,
           changeFrequency: "monthly",
           priority: 0.7,
-          lastModified: new Date(post.date),
+          lastModified: new Date(post.openGraph?.modifiedTime || post.date),
         })
       }
     }

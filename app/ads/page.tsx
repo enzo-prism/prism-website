@@ -164,6 +164,16 @@ const HANDLED_FOR_YOU = [
 
 const FAQ_ITEMS = [
   {
+    question: 'What does Prism’s Ads service include?',
+    answer:
+      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. We review the audience, channels, and starting budget with you before scoping the work on a 30-minute call.',
+  },
+  {
+    question: 'What is the difference between paid ads and SEO?',
+    answer:
+      'Paid ads buy placements through advertising platforms. SEO improves the visibility of your website in unpaid search results. Ads need a media budget and ongoing testing; SEO builds on useful content, technical foundations, and authority. The two can work together, but buying ads does not improve organic rankings.',
+  },
+  {
     question: 'How fast will I see results?',
     answer:
       'Search and Yelp tend to produce leads quickly. Paid social ramps as creative tests find winners. Most clients see meaningful signal in weeks, not months.',

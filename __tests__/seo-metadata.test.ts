@@ -110,6 +110,18 @@ describe("SEO metadata rules", () => {
     ).toBe("Done-for-you website design, content systems, SEO, and paid ads for local brands.")
   })
 
+  it("preserves specific authored copy when a long sentence needs trimming", () => {
+    const description = buildMinimalDescription(
+      "Dental websites",
+      "Custom dental websites help patients find your practice, explore treatments, and request appointments with a clear mobile experience.",
+    )
+
+    expect(description).toContain("Custom dental websites help patients find your practice")
+    expect(description).not.toContain("concise overview")
+    expect(description).not.toMatch(/\b(and|for|with)\.$/)
+    expect(description.length).toBeLessThanOrEqual(DESCRIPTION_MAX_LENGTH)
+  })
+
   it("keeps sentence punctuation within the description budget", () => {
     const description = buildMinimalDescription(
       "Local SEO",

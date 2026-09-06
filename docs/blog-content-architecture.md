@@ -46,6 +46,8 @@ Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` always use `/prism
 
 `components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads. The site-wide page markdown control lives in `components/copy-page-markdown-button.tsx` and is hidden on blog posts so this source-level copy remains the primary blog behavior.
 
+The Markdown endpoint responds with `text/markdown; charset=utf-8`, keeps the source readable to crawlers, and sends `X-Robots-Tag: noindex, follow` plus an HTTP `Link` canonical to the HTML article. Missing or unrenderable posts return 404. The article advertises this source on the canonical production host regardless of preview environment configuration. Article schema uses the same canonical as page metadata, rather than a potentially stale `openGraph.url`.
+
 `seoTitle` and `seoDescription` are optional manual overrides used by the post metadata generator. If omitted, the generator falls back to `title` and `description`, then normalizes with the shared SEO rules (`lib/seo/rules.ts`) to enforce sentence case, canonical host, and consistent Prism title branding.
 
 Use overrides sparingly. The default workflow is:

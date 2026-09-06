@@ -19,6 +19,12 @@ describe('llms.txt', () => {
     )
     const urls = extractDesignPrismUrls(llms)
 
+    expect(llms).not.toContain('Light Audit')
+    expect(llms).toContain('no exact service prices are published')
+    expect(llms).toContain('does not guarantee indexing or AI citations')
+    expect(llms).toContain('[Website (')
+    expect(llms).not.toContain('latest 90 days')
+
     expect(urls).toEqual(
       expect.arrayContaining([
         'https://www.design-prism.com/pricing',

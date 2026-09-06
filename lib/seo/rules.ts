@@ -339,12 +339,13 @@ export function buildMinimalDescription(
   const prose = (description ?? "").trim()
   if (prose.length >= DESCRIPTION_MIN_LENGTH) {
     const normalized = normalizeDescription(prose)
-    if (normalized && (prose.length <= DESCRIPTION_MAX_LENGTH || /[.!?]$/.test(normalized))) {
+    if (normalized) {
       return ensureSentenceEnd(normalized)
     }
   }
 
-  // Long prose often clips mid-thought. Use the compact final title instead.
+  // Only synthesize an overview when no usable authored prose was supplied.
+  // A long description still carries more page-specific meaning than boilerplate.
   const fromStem = buildAbsoluteTitle(
     titleStem.trim().length > 0 ? titleStem : BRAND_NAME,
   ).replace(BRAND_SUFFIX, "")

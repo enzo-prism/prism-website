@@ -1,9 +1,9 @@
-import { render } from "@testing-library/react"
+import { render } from '@testing-library/react'
 
-import { PodcastEpisodeSchema } from "@/components/schema-markup"
+import { PodcastEpisodeSchema } from '@/components/schema-markup'
 
-describe("PodcastEpisodeSchema", () => {
-  it("renders VideoObject markup with required fields when video data is present", () => {
+describe('PodcastEpisodeSchema', () => {
+  it('renders VideoObject markup with required fields when video data is present', () => {
     const { container } = render(
       <PodcastEpisodeSchema
         episodeId="ep-1"
@@ -21,18 +21,23 @@ describe("PodcastEpisodeSchema", () => {
     const script = container.querySelector('script[type="application/ld+json"]')
     expect(script).toBeTruthy()
 
-    const data = JSON.parse(script?.textContent || "{}") as any
-    expect(data["@type"]).toBe("PodcastEpisode")
+    const data = JSON.parse(script?.textContent || '{}') as any
+    expect(data['@type']).toBe('PodcastEpisode')
     expect(data.associatedMedia).toBeTruthy()
-    expect(data.associatedMedia["@type"]).toBe("VideoObject")
-    expect(data.associatedMedia.name).toBe("Episode 1: Test Guest")
-    expect(data.associatedMedia.thumbnailUrl).toBe("https://img.youtube.com/vi/abc123/hqdefault.jpg")
-    expect(data.associatedMedia.uploadDate).toBe("2025-12-12T00:00:00.000Z")
-    expect(data.associatedMedia.embedUrl).toBe("https://www.youtube.com/embed/abc123")
-    expect(data.associatedMedia.contentUrl).toBe("https://www.youtube.com/watch?v=abc123")
+    expect(data.associatedMedia['@type']).toBe('VideoObject')
+    expect(data.associatedMedia.name).toBe('Episode 1: Test Guest')
+    expect(data.associatedMedia.thumbnailUrl).toBe(
+      'https://img.youtube.com/vi/abc123/hqdefault.jpg',
+    )
+    expect(data.associatedMedia.uploadDate).toBe('2025-12-12T00:00:00.000Z')
+    expect(data.associatedMedia.embedUrl).toBe(
+      'https://www.youtube.com/embed/abc123',
+    )
+    expect(data.associatedMedia.contentUrl).toBeUndefined()
+    expect(data['@id']).toBe('https://www.design-prism.com/podcast#ep-1')
   })
 
-  it("omits VideoObject markup when required video fields are missing", () => {
+  it('omits VideoObject markup when required video fields are missing', () => {
     const { container } = render(
       <PodcastEpisodeSchema
         episodeId="ep-2"
@@ -48,9 +53,8 @@ describe("PodcastEpisodeSchema", () => {
     const script = container.querySelector('script[type="application/ld+json"]')
     expect(script).toBeTruthy()
 
-    const data = JSON.parse(script?.textContent || "{}") as any
-    expect(data["@type"]).toBe("PodcastEpisode")
+    const data = JSON.parse(script?.textContent || '{}') as any
+    expect(data['@type']).toBe('PodcastEpisode')
     expect(data.associatedMedia).toBeUndefined()
   })
 })
-

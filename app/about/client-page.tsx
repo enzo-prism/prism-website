@@ -164,7 +164,6 @@ export default function AboutClientPage() {
         sameAs={[
           'https://x.com/NosisTheGod',
           'https://www.linkedin.com/in/enzo-sison',
-          'https://www.instagram.com/the_design_prism/',
         ]}
       />
     </div>

@@ -81,6 +81,22 @@ describe('mdx helpers', () => {
     ])
   })
 
+  test('markdown alternates always point to production even with a preview base URL', async () => {
+    const previousBase = process.env.NEXT_PUBLIC_BASE_URL
+    process.env.NEXT_PUBLIC_BASE_URL = 'https://preview.example'
+    try {
+      const metadata = await generateMetadata({
+        params: Promise.resolve({ slug: 'dental-seo-guide' }),
+      })
+      expect(metadata.alternates?.types?.['text/markdown']).toEqual([
+        expect.objectContaining({ url: 'https://www.design-prism.com/api/blog/dental-seo-guide/markdown' }),
+      ])
+    } finally {
+      if (previousBase === undefined) delete process.env.NEXT_PUBLIC_BASE_URL
+      else process.env.NEXT_PUBLIC_BASE_URL = previousBase
+    }
+  })
+
   test('getAllPosts defaults to the curated indexable blog set', async () => {
     const posts = await getAllPosts()
     const slugs = posts?.map((post) => post.slug) ?? []

@@ -112,6 +112,16 @@ const PROOF_TILES = [
 
 const FAQ_ITEMS = [
   {
+    question: 'What is Prism Content OS?',
+    answer:
+      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Scope is agreed on a 30-minute call.',
+  },
+  {
+    question: 'How does website content support SEO and AI discovery?',
+    answer:
+      'Useful website content answers customer questions and explains your services with clear, accurate information. It gives search engines and AI assistants relevant pages to find and reference. Content works alongside technical SEO and verifiable business information; publishing alone does not guarantee rankings or citations.',
+  },
+  {
     question: 'What do the content agents actually do?',
     answer:
       'They plan, draft, edit, schedule, and publish content across your social platforms and website, reviewed against your brand and offers. The best performers can later become ad creative on the Ads service.',

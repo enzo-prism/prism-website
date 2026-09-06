@@ -2,6 +2,7 @@ import { BlogPostErrorBoundary } from '@/components/blog-error-boundary'
 import BlogScrollProgress from '@/components/blog/BlogScrollProgress'
 import Navbar from '@/components/navbar'
 import { BlogPostSchema, HowToSchema } from '@/components/schema-markup'
+import { canonicalUrl } from '@/lib/canonical'
 import { toAbsoluteUrl } from '@/lib/url'
 import Link from 'next/link'
 
@@ -56,7 +57,7 @@ export default function BlogPostLayout({
     ? toAbsoluteUrl(image)
     : toAbsoluteUrl('/prism-opengraph.png')
   const postUrl =
-    openGraph?.url || canonical || `https://www.design-prism.com/blog/${slug}`
+    canonicalUrl(canonical || `/blog/${slug}`)
   const publishedLabel =
     publishedDate ||
     new Intl.DateTimeFormat(undefined, {

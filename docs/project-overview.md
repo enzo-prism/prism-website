@@ -66,6 +66,17 @@ Prism is a business growth systems website. Public chrome frames three services:
 
 ## Search Surface Rules
 
+SEO and answer-engine maintenance (September 2026):
+
+- Preserve authored meta descriptions; the shared rules trim at sentence, clause, or word boundaries within the existing 96-character brand budget. Generic title-derived copy is a fallback for missing prose, not long prose. The inventory generator imports these same rules to prevent audit/runtime drift.
+- Blog sitemap `lastmod` uses authored `openGraph.modifiedTime` when present, otherwise publication date. Invalid dates are omitted; never synthesize freshness from build time.
+- `/seo`, `/content`, and `/ads` provide visible service-scope answers. Each FAQ schema uses the same question/answer array as its page. Keep answers factual and avoid promises of rankings or AI citations.
+- `llms.txt` is a curated navigation aid with canonical Markdown links and dated proof. It is not a requirement or guarantee for AI-search inclusion. Keep the free audit/assessment distinct from paid, call-scoped services.
+- Shared structured data links pages to the WebSite and its publisher, keeps company and founder profiles distinct, and uses ImageObject and PropertyValue for page images and sourced metrics. Video `contentUrl` is only emitted for a real direct media URL, never a watch page or fabricated URL.
+- Blog Markdown responses remain crawlable but carry `X-Robots-Tag: noindex, follow` and an HTTP canonical to the HTML article. Article metadata and schema share the HTML canonical; alternate source links always use the production origin.
+
+These improvements follow [Google's AI-search guidance](https://developers.google.com/search/docs/appearance/ai-features): accessible useful text, internal discovery, and structured data that matches visible content. Rankings, indexing, and AI citations still require observation after release.
+
 `lib/seo/search-visibility.ts` is the canonical search policy.
 
 - Add a static route to `INDEXABLE_STATIC_ROUTES` only when it supports Prism's growth system, pricing, proof, legal, the Growth Dashboard funnel, or a deliberate specialty cluster.

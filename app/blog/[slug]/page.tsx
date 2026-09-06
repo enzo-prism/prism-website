@@ -76,8 +76,6 @@ export async function generateMetadata({
   if (!post) notFound()
   const { frontmatter } = post
 
-  const base =
-    process.env.NEXT_PUBLIC_BASE_URL || 'https://www.design-prism.com'
   const ogImages = [
     {
       url: DEFAULT_OG_IMAGE,
@@ -118,7 +116,7 @@ export async function generateMetadata({
       types: {
         "text/markdown": [
           {
-            url: `${base}/api/blog/${slug}/markdown`,
+            url: canonicalUrl(`/api/blog/${slug}/markdown`),
             title: `${frontmatter.title} (Markdown)`,
           },
         ],
@@ -162,7 +160,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       category={frontmatter.category}
       image={frontmatter.image}
       openGraph={frontmatter.openGraph}
-      canonical={frontmatter.canonical}
+      canonical={canonicalUrl(frontmatter.canonical || `/blog/${slug}`)}
       howTo={frontmatter.howTo}
     >
       {content}

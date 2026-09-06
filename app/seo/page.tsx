@@ -5,7 +5,7 @@ import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoExpandableImage } from "@/components/seo/seo-expandable-image"
 import { SeoSection } from "@/components/seo/seo-section"
 import { seoOverviewContent } from "@/content/seo"
-import { ServiceSchema } from "@/components/schema-markup"
+import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
 import SimpleBlogGrid from "@/components/simple-blog-grid"
 import SimpleBlogPostCard from "@/components/simple-blog-post-card"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,25 @@ export const metadata: Metadata = buildRouteMetadata({
   path: "/seo",
   ogImage: "/prism-opengraph.png",
 })
+
+const seoQuestions = [
+  {
+    question: "What does Prism’s SEO service include?",
+    answer: "Prism’s SEO work combines technical cleanup, service-page content, internal links, local listings, reviews, and authority building. We assess the current site and competition, then scope the priorities on a 30-minute call. The work connects search visibility to calls, inquiries, and other useful conversions.",
+  },
+  {
+    question: "What is the difference between SEO and AEO?",
+    answer: "SEO helps people find your business through search engines. Answer engine optimization (AEO) focuses on making your business and its answers clear and verifiable for AI search experiences. They share foundations: accessible pages, accurate content, clear business details, and credible evidence. Neither guarantees a ranking or an AI citation.",
+  },
+  {
+    question: "How do you measure whether SEO is working?",
+    answer: "We use Google Search Console to review search impressions, clicks, queries, and landing pages, alongside analytics and conversion tracking for inquiries and calls. Results should be compared over stated periods and connected to lead quality, rather than judged by rankings alone.",
+  },
+  {
+    question: "Do I need a new website before starting SEO?",
+    answer: "Not always. An audit can identify improvements to the existing site, such as crawl access, page structure, service content, and conversion paths. A rebuild makes sense when the current platform or user experience prevents those changes. The initial review helps determine the right scope.",
+  },
+] as const
 
 export default async function SeoPage() {
   const { hero, scoringQuestions, seoModes, onPagePreview, offPagePreview, packages, benefits } = seoOverviewContent
@@ -560,6 +579,29 @@ export default async function SeoPage() {
           </Button>
         </div>
       </section>
+
+      <SeoSection
+        id="seo-questions"
+        eyebrow="common questions"
+        title="Before you invest in SEO"
+      >
+        <div className="divide-y divide-border border-y border-border">
+          {seoQuestions.map((item) => (
+            <details key={item.question} className="group py-6">
+              <summary className="cursor-pointer text-lg font-medium text-foreground">
+                {item.question}
+              </summary>
+              <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Start with an <Link className="underline underline-offset-4" href="/seo/audit">SEO audit</Link>,
+          explore <Link className="underline underline-offset-4" href="/ai-seo-services">AI SEO services</Link>,
+          or request a <Link className="underline underline-offset-4" href="/aeo">free AEO assessment</Link>.
+        </p>
+      </SeoSection>
+      <FAQSchema questions={[...seoQuestions]} />
 
       <ServiceSchema
         serviceId="seo-service"

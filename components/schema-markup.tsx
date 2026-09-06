@@ -2,6 +2,11 @@ import React from 'react'
 
 import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
+import {
+  schemaEntityId,
+  schemaImage,
+  videoContentUrl as getVideoContentUrl,
+} from '@/lib/schema-helpers'
 
 export const serializeJsonLd = (data: unknown) =>
   JSON.stringify(data)
@@ -93,7 +98,7 @@ export function CaseStudySchema({
   }
 
   const organizationId = organization?.url
-    ? `${organization.url}#organization`
+    ? schemaEntityId(organization.url, 'organization')
     : undefined
   const webpageId = `${url}#webpage`
   const videoId = video ? `${url}#video` : undefined
@@ -109,7 +114,7 @@ export function CaseStudySchema({
     name: title,
     description,
     url,
-    mainEntityOfPage: webpageId,
+    mainEntityOfPage: { '@id': webpageId },
     image: imageUrl,
     datePublished,
     dateModified,
@@ -123,13 +128,13 @@ export function CaseStudySchema({
     keywords: [industry, location, scope, 'Prism case study'].filter(Boolean),
     citation: results?.map((metric) => metric.detail),
     mentions: results?.map((metric) => ({
-      '@type': 'Thing',
-      name: `${metric.value} ${metric.label}`,
+      '@type': 'PropertyValue',
+      name: metric.label,
+      value: metric.value,
       description: metric.detail,
-      additionalType: 'https://schema.org/QuantitativeValue',
       measurementTechnique: metric.sourceName,
-      temporalCoverage: metric.dateRange,
-      sameAs: metric.sourceUrl,
+      valueReference: metric.dateRange,
+      url: metric.sourceUrl,
     })),
     abstract: outcome,
   })
@@ -141,7 +146,9 @@ export function CaseStudySchema({
     url,
     name: title,
     description,
-    primaryImageOfPage: imageUrl,
+    primaryImageOfPage: schemaImage(imageUrl),
+    isPartOf: { '@id': 'https://www.design-prism.com/#website' },
+    mainEntity: { '@id': `${url}#article` },
     about: clientName
       ? { '@type': 'Organization', name: clientName, url: clientUrl }
       : undefined,
@@ -226,26 +233,6 @@ export function GlobalSchemaGraph() {
       'review and reputation systems',
       'analytics and conversion tracking',
     ],
-    hasPart: [
-      {
-        '@type': 'CollectionPage',
-        '@id': 'https://www.design-prism.com/case-studies#collection',
-        name: 'Prism case studies',
-        url: 'https://www.design-prism.com/case-studies',
-      },
-      {
-        '@type': 'WebPage',
-        '@id': 'https://www.design-prism.com/proof#webpage',
-        name: 'Prism Proof',
-        url: 'https://www.design-prism.com/proof',
-      },
-      {
-        '@type': 'WebPage',
-        '@id': 'https://www.design-prism.com/wall-of-love#webpage',
-        name: 'Prism client testimonials',
-        url: 'https://www.design-prism.com/wall-of-love',
-      },
-    ],
     subjectOf: [
       {
         '@type': 'Article',
@@ -277,7 +264,6 @@ export function GlobalSchemaGraph() {
     sameAs: [
       'https://www.instagram.com/the_design_prism/',
       'https://www.youtube.com/@the_design_prism',
-      'https://x.com/NosisTheGod',
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism',
     ],
@@ -322,6 +308,26 @@ export function GlobalSchemaGraph() {
     '@id': 'https://www.design-prism.com/#website',
     name: 'Prism',
     url: 'https://www.design-prism.com',
+    hasPart: [
+      {
+        '@type': 'CollectionPage',
+        '@id': 'https://www.design-prism.com/case-studies#collection',
+        name: 'Prism case studies',
+        url: 'https://www.design-prism.com/case-studies',
+      },
+      {
+        '@type': 'WebPage',
+        '@id': 'https://www.design-prism.com/proof#webpage',
+        name: 'Prism Proof',
+        url: 'https://www.design-prism.com/proof',
+      },
+      {
+        '@type': 'WebPage',
+        '@id': 'https://www.design-prism.com/wall-of-love#webpage',
+        name: 'Prism client testimonials',
+        url: 'https://www.design-prism.com/wall-of-love',
+      },
+    ],
     publisher: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
@@ -358,7 +364,7 @@ export function WebPageSchema({
   description,
   url,
   image,
-  isPartOfId,
+  isPartOfId = 'https://www.design-prism.com/#website',
 }: WebPageSchemaProps) {
   const data = {
     '@context': 'https://schema.org',
@@ -367,7 +373,7 @@ export function WebPageSchema({
     name,
     description,
     url,
-    primaryImageOfPage: image,
+    primaryImageOfPage: schemaImage(image),
     isPartOf: isPartOfId ? { '@id': isPartOfId } : undefined,
   }
 
@@ -385,7 +391,7 @@ export function CollectionPageSchema({
   name,
   description,
   url,
-  isPartOfId,
+  isPartOfId = 'https://www.design-prism.com/#website',
 }: CollectionPageSchemaProps) {
   const data = {
     '@context': 'https://schema.org',
@@ -466,7 +472,10 @@ export function PersonSchema({
   const node = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    '@id': `${url}#${personId}`,
+    '@id':
+      personId === 'enzo-sison'
+        ? 'https://www.design-prism.com/#founder'
+        : schemaEntityId(url, personId),
     name,
     jobTitle,
     description,
@@ -507,10 +516,23 @@ export function BlogPostSchema({
     image: imageUrl,
     datePublished,
     dateModified: dateModified || datePublished,
-    author: {
-      '@type': 'Person',
-      name: authorName,
-    },
+    author:
+      authorName === 'Prism'
+        ? {
+            '@type': 'Organization',
+            '@id': 'https://www.design-prism.com/#organization',
+            name: 'Prism',
+          }
+        : {
+            '@type': 'Person',
+            ...(authorName === 'Enzo Sison'
+              ? {
+                  '@id': 'https://www.design-prism.com/#founder',
+                  url: 'https://www.design-prism.com/about',
+                }
+              : {}),
+            name: authorName,
+          },
     publisher: {
       '@type': 'Organization',
       '@id': 'https://www.design-prism.com/#organization',
@@ -691,7 +713,7 @@ export function VideoObjectSchema({
     thumbnailUrl,
     uploadDate,
     embedUrl,
-    contentUrl: contentUrl || embedUrl,
+    contentUrl: getVideoContentUrl(contentUrl),
     creator: creatorName
       ? {
           '@type': 'Person',
@@ -767,14 +789,14 @@ export function PodcastEpisodeSchema({
           thumbnailUrl,
           uploadDate: datePublished,
           embedUrl: videoEmbedUrl,
-          contentUrl: videoContentUrl || videoEmbedUrl,
+          contentUrl: getVideoContentUrl(videoContentUrl),
         }
       : undefined
 
   const data = {
     '@context': 'https://schema.org',
     '@type': 'PodcastEpisode',
-    '@id': `${url}#${episodeId}`,
+    '@id': schemaEntityId(url, episodeId),
     partOfSeries: {
       '@type': 'PodcastSeries',
       '@id': `https://www.design-prism.com/podcast#${seriesId}`,
@@ -944,10 +966,9 @@ export function OrganizationSchema() {
     '@id': 'https://www.design-prism.com/#organization',
     name: 'Prism',
     url: 'https://www.design-prism.com',
-    logo: 'https://www.design-prism.com/prism-opengraph.png',
+    logo: 'https://www.design-prism.com/prism-logo.jpeg',
     sameAs: [
       'https://www.youtube.com/@the_design_prism',
-      'https://x.com/NosisTheGod',
       'https://www.instagram.com/the_design_prism/',
     ],
   }
@@ -962,6 +983,7 @@ export function WebsiteSchema() {
     '@id': 'https://www.design-prism.com/#website',
     url: 'https://www.design-prism.com',
     name: 'Prism',
+    publisher: { '@id': 'https://www.design-prism.com/#organization' },
   }
 
   return renderJsonLd(data)
