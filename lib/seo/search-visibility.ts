@@ -136,6 +136,7 @@ export const INDEXABLE_BLOG_SLUGS = [
   'impossible-seo-bug-claude-code',
   'lovable-ai-review-business-owners',
   'modern-reviews-strategy-2025',
+  'muse-spark-1-3-what-it-means-for-small-business-owners',
   'new-rules-of-visibility-ai-seo',
   'prism-approach-small-business-growth',
   'prism-flywheel-skyrocket-brick-and-mortar-growth',
