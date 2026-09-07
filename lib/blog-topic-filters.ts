@@ -1,12 +1,11 @@
 import type { LucideIcon } from "lucide-react"
-import { Cpu, List, Megaphone, Paintbrush, Users2 } from "lucide-react"
+import { Cpu, List, Megaphone, Paintbrush } from "lucide-react"
 
 const BLOG_FILTER_BUCKETS = {
   ALL: "all",
   ENGINEERING: "engineering",
   DESIGN: "design",
   MARKETING: "marketing",
-  CULTURE: "culture",
 } as const
 
 export type BlogFilterBucket = (typeof BLOG_FILTER_BUCKETS)[keyof typeof BLOG_FILTER_BUCKETS]
@@ -32,11 +31,6 @@ export const BLOG_TOPIC_FILTERS: Array<Omit<BlogFilterConfig, "icon"> & { icon: 
     slug: BLOG_FILTER_BUCKETS.MARKETING,
     label: "marketing",
     icon: Megaphone,
-  },
-  {
-    slug: BLOG_FILTER_BUCKETS.CULTURE,
-    label: "culture",
-    icon: Users2,
   },
 ]
 
@@ -80,17 +74,16 @@ const CATEGORY_FILTER_OVERRIDES: Record<string, BlogFilterBucket> = {
   "ai-and-growth": BLOG_FILTER_BUCKETS.MARKETING,
   "ai-and-marketing": BLOG_FILTER_BUCKETS.MARKETING,
   "ai-and-business": BLOG_FILTER_BUCKETS.MARKETING,
-  "business-and-leadership": BLOG_FILTER_BUCKETS.CULTURE,
-  "motivation-and-entrepreneurship": BLOG_FILTER_BUCKETS.CULTURE,
-  entrepreneurship: BLOG_FILTER_BUCKETS.CULTURE,
-  "business-and-ai": BLOG_FILTER_BUCKETS.CULTURE,
-  "ai-and-strategy": BLOG_FILTER_BUCKETS.CULTURE,
+  "business-and-leadership": BLOG_FILTER_BUCKETS.MARKETING,
+  "motivation-and-entrepreneurship": BLOG_FILTER_BUCKETS.MARKETING,
+  entrepreneurship: BLOG_FILTER_BUCKETS.MARKETING,
+  "business-and-ai": BLOG_FILTER_BUCKETS.MARKETING,
+  "ai-and-strategy": BLOG_FILTER_BUCKETS.MARKETING,
 }
 
-const MARKETING_HINTS = ["seo", "search", "ad", "ads", "growth", "local", "content", "marketing", "reputation"]
+const MARKETING_HINTS = ["seo", "search", "ad", "ads", "growth", "local", "content", "marketing", "reputation", "leadership", "entrepreneurship", "entrepreneur", "culture", "mindset", "team", "people", "business", "strategy"]
 const ENGINEERING_HINTS = ["web", "dev", "development", "technology", "code", "tool", "tooling", "productivity", "automation", "ops", "software", "engineering", "website", "dentistry"]
 const DESIGN_HINTS = ["design", "product", "brand", "ui", "ux"]
-const CULTURE_HINTS = ["leadership", "entrepreneurship", "entrepreneur", "culture", "mindset", "team", "people"]
 
 export const isValidBlogFilter = (value: string): value is BlogFilterBucket =>
   Object.values(BLOG_FILTER_BUCKETS).includes(value as BlogFilterBucket)
@@ -116,7 +109,6 @@ export const getBlogFilterFromCategory = (category: string): Exclude<BlogFilterB
   if (hasMatch(DESIGN_HINTS)) return BLOG_FILTER_BUCKETS.DESIGN
   if (hasMatch(ENGINEERING_HINTS)) return BLOG_FILTER_BUCKETS.ENGINEERING
   if (hasMatch(MARKETING_HINTS)) return BLOG_FILTER_BUCKETS.MARKETING
-  if (hasMatch(CULTURE_HINTS)) return BLOG_FILTER_BUCKETS.CULTURE
 
   return BLOG_FILTER_BUCKETS.MARKETING
 }

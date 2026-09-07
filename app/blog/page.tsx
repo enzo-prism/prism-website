@@ -35,16 +35,13 @@ function formatDate(value: string) {
 
 function buildPageUrl({
   category,
-  query,
   page,
 }: {
   category: string
-  query: string
   page: number
 }) {
   const params = new URLSearchParams()
   if (category !== 'all') params.set('category', category)
-  if (query.trim()) params.set('q', query.trim())
   if (page > 1) params.set('page', String(page))
   const search = params.toString()
   return search ? `/blog?${search}` : '/blog'
@@ -61,7 +58,6 @@ export default async function Blog({
 }) {
   const resolvedSearchParams = await searchParams
   const rawCategory = firstSearchParamString(resolvedSearchParams?.category, 'all')
-  const searchQuery = firstSearchParamString(resolvedSearchParams?.q)
   const requestedPage = Number.parseInt(
     firstSearchParamString(resolvedSearchParams?.page, '1'),
     10,
@@ -71,7 +67,6 @@ export default async function Blog({
   if (!posts) notFound()
 
   const selectedCategory = normalizeBlogFilter(rawCategory.trim().toLowerCase())
-  const normalizedQuery = searchQuery.trim().toLowerCase()
   const filteredPosts = posts
     .map((post) => ({
       ...post,
@@ -79,12 +74,7 @@ export default async function Blog({
     }))
     .filter((post) => {
       if (selectedCategory !== 'all' && post.topic !== selectedCategory) return false
-      if (!normalizedQuery) return true
-      return (
-        post.title.toLowerCase().includes(normalizedQuery) ||
-        post.description.toLowerCase().includes(normalizedQuery) ||
-        post.category.toLowerCase().includes(normalizedQuery)
-      )
+      return true
     })
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE))
@@ -107,10 +97,7 @@ export default async function Blog({
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <section className="mx-auto max-w-4xl px-5 pb-10 pt-12 sm:px-8 sm:pb-14 sm:pt-20">
-          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-            Prism blog
-          </p>
-          <h1 className="blog-display-title mt-4 text-balance">Ideas worth building on.</h1>
+          <h1 className="blog-display-title mt-4 text-balance">Blog</h1>
           <p className="blog-hero-subtitle mt-5 text-muted-foreground">
             Clear thinking on design, technology, and growth, drawn from the work.
           </p>
@@ -118,7 +105,6 @@ export default async function Blog({
 
         <BlogFilterNavigationServer
           selectedCategory={selectedCategory}
-          query={searchQuery}
           className="mx-auto max-w-4xl"
         />
 
@@ -132,9 +118,7 @@ export default async function Blog({
                     prefetch={false}
                     className="group block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
                   >
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">
-                      <span>{post.category}</span>
-                      <span aria-hidden>·</span>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">
                       <time dateTime={new Date(post.date).toISOString()}>{formatDate(post.date)}</time>
                     </div>
                     <h2 className="mt-3 max-w-[28ch] text-balance text-[1.45rem] font-semibold leading-[1.18] tracking-[-0.025em] transition-colors group-hover:text-muted-foreground sm:text-[1.8rem]">
@@ -150,7 +134,7 @@ export default async function Blog({
           ) : (
             <div className="border-y border-border/70 py-16">
               <h2 className="text-xl font-semibold">No writing found.</h2>
-              <p className="mt-2 text-muted-foreground">Try another topic or search.</p>
+              <p className="mt-2 text-muted-foreground">Try another topic.</p>
             </div>
           )}
 
@@ -158,7 +142,7 @@ export default async function Blog({
             <nav className="mt-10 flex items-center justify-between" aria-label="Blog pages">
               {currentPage > 1 ? (
                 <Link
-                  href={buildPageUrl({ category: selectedCategory, query: searchQuery, page: currentPage - 1 })}
+                  href={buildPageUrl({ category: selectedCategory, page: currentPage - 1 })}
                   className="inline-flex min-h-11 items-center text-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground"
                 >
                   ← Newer
@@ -169,7 +153,7 @@ export default async function Blog({
               </span>
               {currentPage < totalPages ? (
                 <Link
-                  href={buildPageUrl({ category: selectedCategory, query: searchQuery, page: currentPage + 1 })}
+                  href={buildPageUrl({ category: selectedCategory, page: currentPage + 1 })}
                   className="inline-flex min-h-11 items-center text-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground"
                 >
                   Older →
