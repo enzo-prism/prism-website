@@ -174,3 +174,8 @@ The checker prints each URL’s redirect chain, final URL, and canonical tag val
 - Structured-data scripts use the shared safe JSON-LD serializer. Prism Library TikTok embeds are constructed from trusted post IDs and never inject third-party oEmbed HTML.
 
 Happy shipping! Keep docs updated when new flows (forms, env vars, integrations) are introduced so the next person can get productive quickly.
+
+
+### Service intake forms
+
+Website, Content, and Ads primary service-page CTAs start four-question forms at `/website-intake`, `/content-intake`, and `/ads-intake`. `WebsiteIntakeForm` shares UX while `lib/service-intake.ts` separates goals, dedicated Formspree endpoints, and analytics. Native WebMCP tools prepare the final review without submitting. Browser trial availability is separate from deployed code; see [forms](docs/forms.md) and [environment setup](docs/environment-setup.md).

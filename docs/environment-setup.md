@@ -90,3 +90,10 @@ curl -sS https://api.us.elevenlabs.io/v1/convai/agents/agent_4701kkcyc4efefkv5x4
 
 1. `pnpm verify:deploy` – confirms `.env.local` contains the URLs required for deployment checks and that `next.config.mjs` has the correct image configuration.
 2. For analytics overrides, run the site locally with `NEXT_PUBLIC_GA_MEASUREMENT_ID` defined and confirm the ID matches in the rendered `<head>` output.
+
+
+### Service intake and WebMCP
+
+- `NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT`: optional; defaults to `https://formspree.io/f/mwlkrezj`.
+- `NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT`: optional; defaults to `https://formspree.io/f/mnpqgaya`.
+- `WEBMCP_ORIGIN_TRIAL_TOKEN`: optional server/build setting containing a Chrome-issued token for the production origin. When set, intake routes emit `Origin-Trial`. Redeploy after changes. A token cannot be invented; browser support still depends on Chrome's trial availability. See `docs/forms.md`.

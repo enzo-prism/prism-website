@@ -63,6 +63,16 @@ images: {
     // assets must ship under a new filename (e.g. planet-lite-2026.mp4) so the
     // long-lived cache below can never serve stale content.
     return [
+      ...['/website-intake', '/content-intake', '/ads-intake'].map((source) => ({
+        source,
+        headers: [
+          { key: 'Origin-Agent-Cluster', value: '?1' },
+          { key: 'Permissions-Policy', value: 'tools=(self)' },
+          ...(process.env.WEBMCP_ORIGIN_TRIAL_TOKEN
+            ? [{ key: 'Origin-Trial', value: process.env.WEBMCP_ORIGIN_TRIAL_TOKEN }]
+            : []),
+        ],
+      })),
       {
         source: '/animations/:path*',
         headers: [

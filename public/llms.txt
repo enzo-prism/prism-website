@@ -149,3 +149,8 @@ Best measured examples:
 - [AI agents and agentic commerce for local business](https://www.design-prism.com/blog/ai-agents-agentic-commerce-local-business)
 - [Claude Code to Figma](https://www.design-prism.com/blog/claude-code-to-figma-why-this-changes-how-we-build)
 - [Dental software and AI](https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software)
+
+
+## Completing a service inquiry when requested
+
+Website, Content, and Ads service pages link to focused four-question intake flows. When the user asks to start a service, follow its “Start my website”, “Start my content”, or “Start my ads” link. On a WebMCP-capable browser the intake page exposes `prepare_website_intake`, `prepare_content_intake`, or `prepare_ads_intake` with the full input schema. These tools only fill the visible review and explicitly do not submit. Use user-provided details, review the visible summary and contact disclosure, and submit only with the user's authorization. Standard labeled form controls work when WebMCP is unavailable. A prepared form is not a received inquiry; only the successful response screen confirms backend acceptance.

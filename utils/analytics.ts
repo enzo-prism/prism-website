@@ -270,7 +270,8 @@ function sanitizeAnalyticsParamValue(key: string, value: unknown) {
 
   if (value === undefined || value === null || value === '') return undefined
 
-  if (typeof value === 'number') return Number.isFinite(value) ? value : undefined
+  if (typeof value === 'number')
+    return Number.isFinite(value) ? value : undefined
   if (typeof value === 'boolean') return value
 
   if (typeof value !== 'string') return undefined
@@ -303,7 +304,9 @@ function sanitizeAnalyticsParams(params: Record<string, any>) {
   return Object.fromEntries(
     Object.entries(params)
       .map(([key, value]) => [key, sanitizeAnalyticsParamValue(key, value)])
-      .filter(([, value]) => value !== undefined && value !== null && value !== ''),
+      .filter(
+        ([, value]) => value !== undefined && value !== null && value !== '',
+      ),
   )
 }
 
@@ -341,7 +344,10 @@ function isExternalHttpUrl(url: string) {
 
   try {
     const parsed = new URL(url, window.location.origin)
-    return parsed.protocol.startsWith('http') && parsed.origin !== window.location.origin
+    return (
+      parsed.protocol.startsWith('http') &&
+      parsed.origin !== window.location.origin
+    )
   } catch {
     return false
   }
@@ -394,6 +400,7 @@ export type EventType =
   | 'website_order_step_completed'
   | 'website_order_submitted'
   | 'website_order_begin_checkout'
+  | `${'website' | 'content' | 'ads'}_intake_${'form_view' | 'form_start' | 'step_view' | 'step_complete' | 'option_select' | 'validation_error' | 'submit_attempt' | 'submit_success' | 'submit_error' | 'source_select' | 'booking_click' | 'abandon' | 'agent_prepare'}`
   | 'website_intake_form_view'
   | 'website_intake_form_start'
   | 'website_intake_step_view'
@@ -584,7 +591,9 @@ function readRecordedPurchases(): string[] {
     const raw = window.localStorage.getItem(RECORDED_PURCHASES_STORAGE_KEY)
     if (!raw) return []
     const parsed = JSON.parse(raw)
-    return Array.isArray(parsed) ? parsed.filter((id) => typeof id === 'string') : []
+    return Array.isArray(parsed)
+      ? parsed.filter((id) => typeof id === 'string')
+      : []
   } catch {
     return []
   }
@@ -752,7 +761,10 @@ async function sha256Hex(value: string): Promise<string | null> {
   if (!subtle || typeof TextEncoder === 'undefined') return null
 
   try {
-    const digest = await subtle.digest('SHA-256', new TextEncoder().encode(value))
+    const digest = await subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(value),
+    )
     return Array.from(new Uint8Array(digest))
       .map((byte) => byte.toString(16).padStart(2, '0'))
       .join('')
@@ -860,7 +872,10 @@ export function applyStoredEnhancedConversionUserData(): boolean {
     getGtag()?.('set', 'user_data', userData)
     return true
   } catch (error) {
-    console.error('[Analytics] Error re-applying enhanced conversion data:', error)
+    console.error(
+      '[Analytics] Error re-applying enhanced conversion data:',
+      error,
+    )
     return false
   }
 }
@@ -1206,7 +1221,11 @@ export function trackLinkInteraction(
     return
   }
 
-  if (isBookingUrl(href) || hasBookingIntent(label) || hasBookingIntent(location)) {
+  if (
+    isBookingUrl(href) ||
+    hasBookingIntent(label) ||
+    hasBookingIntent(location)
+  ) {
     trackBookCallClick(label, location, href)
   }
 

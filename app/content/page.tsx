@@ -194,14 +194,12 @@ export default function ContentOsPage() {
 
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href={BOOK_A_CALL_CTA.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/content-intake"
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label="start my content"
                     location="content hero"
                   >
-                    {BOOK_A_CALL_CTA.label}
+                    Start my content
                   </CoreActionLink>
                 </div>
 
@@ -404,14 +402,12 @@ export default function ContentOsPage() {
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href={BOOK_A_CALL_CTA.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/content-intake"
                 variant="heroPrimary"
-                label="book a free demo"
+                label="start my content"
                 location="content final"
               >
-                {BOOK_A_CALL_CTA.label}
+                Start my content
               </CoreActionLink>
             </div>
           </div>

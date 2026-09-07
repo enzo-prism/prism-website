@@ -21,7 +21,6 @@ import { ServiceSiblings } from '@/components/services/ServiceSiblings'
 import SimpleBlogGrid from '@/components/simple-blog-grid'
 import SimpleBlogPostCard from '@/components/simple-blog-post-card'
 import VideoPlayer from '@/components/video-player'
-import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
 import { getAllPosts } from '@/lib/mdx-data'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
@@ -36,13 +35,7 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const HERO_CHIPS = [
-  'Google',
-  'Meta',
-  'TikTok',
-  'Yelp',
-  'ChatGPT Ads',
-] as const
+const HERO_CHIPS = ['Google', 'Meta', 'TikTok', 'Yelp', 'ChatGPT Ads'] as const
 
 const WHAT_YOU_GET = [
   {
@@ -288,14 +281,12 @@ export default async function AdsPage() {
                 />
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href={BOOK_A_CALL_CTA.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/ads-intake"
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label="start my ads"
                     location="ads hero"
                   >
-                    {BOOK_A_CALL_CTA.label}
+                    Start my ads
                   </CoreActionLink>
                   <CoreActionLink
                     href="#platforms"
@@ -382,10 +373,7 @@ export default async function AdsPage() {
           </div>
         </section>
 
-        <section
-          id="budget-protection"
-          className={coreRouteSectionClassName}
-        >
+        <section id="budget-protection" className={coreRouteSectionClassName}>
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Budget"
@@ -710,14 +698,12 @@ export default async function AdsPage() {
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href={BOOK_A_CALL_CTA.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/ads-intake"
                 variant="heroPrimary"
-                label="book a free demo"
+                label="start my ads"
                 location="ads final"
               >
-                {BOOK_A_CALL_CTA.label}
+                Start my ads
               </CoreActionLink>
               <CoreActionLink
                 href="/free-analysis"

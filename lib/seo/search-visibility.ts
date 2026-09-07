@@ -79,6 +79,8 @@ export const NOINDEX_ROUTES = [
   '/thanks-call',
   '/tiktok',
   '/website-intake',
+  '/content-intake',
+  '/ads-intake',
   '/youtube',
 ] as const
 

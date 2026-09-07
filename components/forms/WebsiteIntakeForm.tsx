@@ -3,6 +3,8 @@
 import type { FormEvent, KeyboardEvent } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { useIntakeWebMCP } from '@/hooks/use-intake-webmcp'
+
 import LordIcon from '@/components/lord-icon'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -10,6 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { BOOKING_URL } from '@/lib/booking'
 import { cn } from '@/lib/utils'
+import { SERVICE_INTAKE_CONFIG, type IntakeService } from '@/lib/service-intake'
 import {
   trackBookCallClick,
   trackEvent,
@@ -19,12 +22,6 @@ import { appendFormspreeOpsMetadata } from './FormspreeOpsFields'
 
 import styles from './website-intake.module.css'
 
-const FORM_ACTION =
-  process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT ||
-  'https://formspree.io/f/xrpzlkrd'
-const FORM_NAME = 'website_intake'
-const FORM_LOCATION = 'website_intake_page'
-const DRAFT_STORAGE_KEY = 'prism_website_intake_draft_v1'
 const DRAFT_VERSION = 2
 const DRAFT_TTL_MS = 24 * 60 * 60 * 1000
 const AUTO_ADVANCE_MS = 280
@@ -51,35 +48,6 @@ const NON_TEXT_INPUT_TYPES = new Set([
   'reset',
   'submit',
 ])
-
-type WhyOption = {
-  value: string
-  label: string
-  icon: string
-}
-
-const WHY_OPTIONS: WhyOption[] = [
-  {
-    value: 'more_customers',
-    label: 'More customers',
-    icon: '/lordicon/attract-customers.json',
-  },
-  {
-    value: 'better_design',
-    label: 'Better design',
-    icon: '/lordicon/web-design.json',
-  },
-  {
-    value: 'better_analytics',
-    label: 'Better analytics',
-    icon: '/lordicon/line-chart.json',
-  },
-  {
-    value: 'all_of_the_above',
-    label: 'All of the above',
-    icon: '/lordicon/rocket-space.json',
-  },
-]
 
 type TimelineOption = {
   value: string
@@ -125,7 +93,6 @@ type IntakeDraft = {
   stepId?: string
 }
 
-const WHY_VALUES = new Set(WHY_OPTIONS.map((option) => option.value))
 const TIMELINE_VALUES = new Set(TIMELINE_OPTIONS.map((option) => option.value))
 const SOURCE_VALUES = new Set<string>(SOURCE_OPTIONS)
 
@@ -133,7 +100,10 @@ function sanitizeDraftString(value: unknown, maxLength: number) {
   return typeof value === 'string' ? value.slice(0, maxLength) : ''
 }
 
-function sanitizeIntakeDraft(value: unknown): IntakeDraft | null {
+function sanitizeIntakeDraft(
+  value: unknown,
+  whyValues: Set<string>,
+): IntakeDraft | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null
 
   const stored = value as Record<string, unknown>
@@ -150,7 +120,7 @@ function sanitizeIntakeDraft(value: unknown): IntakeDraft | null {
 
   const draft: IntakeDraft = {
     why:
-      typeof stored.why === 'string' && WHY_VALUES.has(stored.why)
+      typeof stored.why === 'string' && whyValues.has(stored.why)
         ? stored.why
         : '',
     timeline:
@@ -255,27 +225,30 @@ function canUseSessionStorage() {
   return typeof window !== 'undefined' && Boolean(window.sessionStorage)
 }
 
-function readIntakeDraft(): IntakeDraft | null {
+function readIntakeDraft(
+  storageKey: string,
+  whyValues: Set<string>,
+): IntakeDraft | null {
   if (!canUseSessionStorage()) return null
 
   try {
-    const raw = window.sessionStorage.getItem(DRAFT_STORAGE_KEY)
+    const raw = window.sessionStorage.getItem(storageKey)
     if (!raw) return null
-    const draft = sanitizeIntakeDraft(JSON.parse(raw))
-    if (!draft) clearIntakeDraft()
+    const draft = sanitizeIntakeDraft(JSON.parse(raw), whyValues)
+    if (!draft) clearIntakeDraft(storageKey)
     return draft
   } catch {
-    clearIntakeDraft()
+    clearIntakeDraft(storageKey)
     return null
   }
 }
 
-function writeIntakeDraft(draft: IntakeDraft) {
+function writeIntakeDraft(draft: IntakeDraft, storageKey: string) {
   if (!canUseSessionStorage()) return
 
   try {
     window.sessionStorage.setItem(
-      DRAFT_STORAGE_KEY,
+      storageKey,
       JSON.stringify({
         ...draft,
         version: DRAFT_VERSION,
@@ -287,11 +260,11 @@ function writeIntakeDraft(draft: IntakeDraft) {
   }
 }
 
-function clearIntakeDraft() {
+function clearIntakeDraft(storageKey: string) {
   if (!canUseSessionStorage()) return
 
   try {
-    window.sessionStorage.removeItem(DRAFT_STORAGE_KEY)
+    window.sessionStorage.removeItem(storageKey)
   } catch {
     // no-op
   }
@@ -349,7 +322,22 @@ function FieldError({ error, id }: { error: string; id: string }) {
   )
 }
 
-export default function WebsiteIntakeForm() {
+export default function WebsiteIntakeForm({
+  service = 'website',
+}: {
+  service?: IntakeService
+}) {
+  return <ServiceIntakeForm key={service} service={service} />
+}
+
+function ServiceIntakeForm({ service }: { service: IntakeService }) {
+  const config = SERVICE_INTAKE_CONFIG[service]
+  const FORM_ACTION = config.endpoint
+  const FORM_NAME = `${service}_intake` as const
+  const FORM_LOCATION = `${service}_intake_page`
+  const storageKey = `prism_${service}_intake_draft_v1`
+  const WHY_OPTIONS = config.goals
+
   const formRef = useRef<HTMLFormElement>(null)
   const startedAtRef = useRef<number>(0)
   const currentStepIndexRef = useRef(0)
@@ -390,14 +378,14 @@ export default function WebsiteIntakeForm() {
     hasInteractedRef.current = true
     if (hasTrackedFormStartRef.current) return
     hasTrackedFormStartRef.current = true
-    trackEvent('website_intake_form_start', {
+    trackEvent(`${FORM_NAME}_form_start`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
       step: 1,
       step_id: FORM_STEPS[0],
       question_count: QUESTION_STEP_COUNT,
     })
-  }, [])
+  }, [FORM_NAME, FORM_LOCATION])
 
   const goToStep = useCallback((nextIndex: number) => {
     currentStepIndexRef.current = nextIndex
@@ -411,6 +399,31 @@ export default function WebsiteIntakeForm() {
       behavior: prefersReducedMotion() ? 'auto' : 'smooth',
     })
   }, [])
+
+  useIntakeWebMCP({
+    service,
+    goals: WHY_OPTIONS.map((option) => option.value),
+    enabled: draftReady && !isSuccess,
+    onPrepare: (values) => {
+      if (isSubmittingRef.current || hasSubmittedRef.current) {
+        throw new Error('This request is already submitting or submitted.')
+      }
+      markInteracted()
+      setWhy(values.why)
+      setTimeline(values.timeline)
+      setHasWebsite(values.hasWebsite)
+      setSiteLink(values.siteLink)
+      setContactMethod(values.contactMethod)
+      setEmail(values.email)
+      setPhone(values.phone)
+      setSource(values.source)
+      goToStep(QUESTION_STEP_COUNT - 1)
+      trackEvent(`${FORM_NAME}_agent_prepare`, {
+        form_name: FORM_NAME,
+        form_location: FORM_LOCATION,
+      })
+    },
+  })
 
   const getStepError = useCallback((): {
     field: string
@@ -501,7 +514,10 @@ export default function WebsiteIntakeForm() {
   }, [])
 
   useEffect(() => {
-    const draft = readIntakeDraft()
+    const draft = readIntakeDraft(
+      storageKey,
+      new Set(WHY_OPTIONS.map((option) => option.value)),
+    )
     if (draft && hasDraftContent(draft)) {
       setWhy(draft.why ?? '')
       setTimeline(draft.timeline ?? '')
@@ -518,29 +534,29 @@ export default function WebsiteIntakeForm() {
       setStepIndex(nextStepIndex)
     }
     setDraftReady(true)
-  }, [])
+  }, [storageKey, WHY_OPTIONS])
 
   useEffect(() => {
     if (!draftReady) return
 
-    trackEvent('website_intake_form_view', {
+    trackEvent(`${FORM_NAME}_form_view`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
     })
-  }, [draftReady])
+  }, [draftReady, FORM_NAME, FORM_LOCATION])
 
   useEffect(() => {
     if (!draftReady || isSuccess) return
     if (viewedStepsRef.current.has(currentStep)) return
     viewedStepsRef.current.add(currentStep)
-    trackEvent('website_intake_step_view', {
+    trackEvent(`${FORM_NAME}_step_view`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
       step: stepIndex + 1,
       step_id: currentStep,
       question_count: QUESTION_STEP_COUNT,
     })
-  }, [currentStep, draftReady, isSuccess, stepIndex])
+  }, [currentStep, draftReady, isSuccess, stepIndex, FORM_NAME, FORM_LOCATION])
 
   useEffect(() => {
     if (!draftReady || isSuccess) return
@@ -558,12 +574,13 @@ export default function WebsiteIntakeForm() {
     }
 
     if (!hasDraftContent(draft)) {
-      clearIntakeDraft()
+      clearIntakeDraft(storageKey)
       return
     }
 
-    writeIntakeDraft(draft)
+    writeIntakeDraft(draft, storageKey)
   }, [
+    storageKey,
     contactMethod,
     currentStep,
     draftReady,
@@ -609,7 +626,7 @@ export default function WebsiteIntakeForm() {
       if (hasSubmittedRef.current) return
       if (!hasInteractedRef.current) return
       hasTrackedAbandonRef.current = true
-      trackEvent('website_intake_abandon', {
+      trackEvent(`${FORM_NAME}_abandon`, {
         form_name: FORM_NAME,
         form_location: FORM_LOCATION,
         funnel_step: currentStepIndexRef.current + 1,
@@ -621,17 +638,17 @@ export default function WebsiteIntakeForm() {
       window.removeEventListener('pagehide', trackAbandon)
       trackAbandon()
     }
-  }, [])
+  }, [FORM_NAME, FORM_LOCATION])
 
   const completeCurrentStep = useCallback(() => {
-    trackEvent('website_intake_step_complete', {
+    trackEvent(`${FORM_NAME}_step_complete`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
       step: stepIndex + 1,
       step_id: currentStep,
       question_count: QUESTION_STEP_COUNT,
     })
-  }, [currentStep, stepIndex])
+  }, [currentStep, stepIndex, FORM_NAME, FORM_LOCATION])
 
   const handleSubmit = useCallback(async () => {
     if (isSubmittingRef.current) return
@@ -642,7 +659,7 @@ export default function WebsiteIntakeForm() {
       Math.round((Date.now() - startedAtRef.current) / 1000),
     )
 
-    trackEvent('website_intake_submit_attempt', {
+    trackEvent(`${FORM_NAME}_submit_attempt`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
       elapsed_seconds: elapsedSeconds,
@@ -651,9 +668,11 @@ export default function WebsiteIntakeForm() {
     const formData = formRef.current
       ? new FormData(formRef.current)
       : new FormData()
-    formData.set('_subject', 'New Website Intake Lead')
+    formData.set('_subject', `New ${config.label} Intake Lead`)
+    formData.set('service', service)
     formData.set('form_name', FORM_NAME)
-    formData.set('why_new_website', why)
+    formData.set(config.goalField, why)
+    formData.set('goal', why)
     formData.set('timeline', timeline)
     formData.set('has_current_website', hasWebsite)
     formData.set('site_link', normalizeLink(siteLink))
@@ -665,7 +684,7 @@ export default function WebsiteIntakeForm() {
     }
     if (source) formData.set('heard_about_us', source)
     formData.set('elapsed_seconds', String(elapsedSeconds))
-    appendFormspreeOpsMetadata(formData, 'website_intake')
+    appendFormspreeOpsMetadata(formData, FORM_NAME)
 
     const controller = new AbortController()
     let didSubmit = false
@@ -684,7 +703,7 @@ export default function WebsiteIntakeForm() {
       })
 
       if (!response.ok) {
-        trackEvent('website_intake_submit_error', {
+        trackEvent(`${FORM_NAME}_submit_error`, {
           form_name: FORM_NAME,
           reason: 'non_ok_response',
           status: response.status,
@@ -694,7 +713,7 @@ export default function WebsiteIntakeForm() {
       }
       didSubmit = true
     } catch {
-      trackEvent('website_intake_submit_error', {
+      trackEvent(`${FORM_NAME}_submit_error`, {
         form_name: FORM_NAME,
         reason: didTimeOut ? 'timeout' : 'network_failure',
       })
@@ -711,8 +730,8 @@ export default function WebsiteIntakeForm() {
     }
 
     hasSubmittedRef.current = true
-    clearIntakeDraft()
-    trackEvent('website_intake_submit_success', {
+    clearIntakeDraft(storageKey)
+    trackEvent(`${FORM_NAME}_submit_success`, {
       form_name: FORM_NAME,
       form_location: FORM_LOCATION,
       elapsed_seconds: elapsedSeconds,
@@ -725,7 +744,22 @@ export default function WebsiteIntakeForm() {
       elapsed_seconds: elapsedSeconds,
     })
     setIsSuccess(true)
-  }, [contactMethod, email, hasWebsite, phone, siteLink, source, timeline, why])
+  }, [
+    contactMethod,
+    email,
+    hasWebsite,
+    phone,
+    siteLink,
+    source,
+    timeline,
+    why,
+    FORM_ACTION,
+    FORM_NAME,
+    FORM_LOCATION,
+    config,
+    service,
+    storageKey,
+  ])
 
   const handleNext = useCallback(() => {
     markInteracted()
@@ -734,7 +768,7 @@ export default function WebsiteIntakeForm() {
     const error = getStepError()
     if (error) {
       setStepError(error)
-      trackEvent('website_intake_validation_error', {
+      trackEvent(`${FORM_NAME}_validation_error`, {
         form_name: FORM_NAME,
         step: stepIndex + 1,
         step_id: currentStep,
@@ -759,6 +793,7 @@ export default function WebsiteIntakeForm() {
 
     void handleSubmit()
   }, [
+    FORM_NAME,
     completeCurrentStep,
     currentStep,
     getStepError,
@@ -792,7 +827,7 @@ export default function WebsiteIntakeForm() {
     setWhy(value)
     setStepError(null)
     pendingAdvanceRef.current = true
-    trackEvent('website_intake_option_select', {
+    trackEvent(`${FORM_NAME}_option_select`, {
       form_name: FORM_NAME,
       step_id: 'why',
       option: value,
@@ -804,7 +839,7 @@ export default function WebsiteIntakeForm() {
     setTimeline(value)
     setStepError(null)
     pendingAdvanceRef.current = true
-    trackEvent('website_intake_option_select', {
+    trackEvent(`${FORM_NAME}_option_select`, {
       form_name: FORM_NAME,
       step_id: 'timeline',
       option: value,
@@ -816,7 +851,7 @@ export default function WebsiteIntakeForm() {
     setHasWebsite(value)
     setStepError(null)
     shouldFocusStepRef.current = true
-    trackEvent('website_intake_option_select', {
+    trackEvent(`${FORM_NAME}_option_select`, {
       form_name: FORM_NAME,
       step_id: 'current-site',
       option: value,
@@ -828,7 +863,7 @@ export default function WebsiteIntakeForm() {
     setContactMethod(value)
     setStepError(null)
     shouldFocusStepRef.current = true
-    trackEvent('website_intake_option_select', {
+    trackEvent(`${FORM_NAME}_option_select`, {
       form_name: FORM_NAME,
       step_id: 'contact',
       option: value,
@@ -838,7 +873,7 @@ export default function WebsiteIntakeForm() {
   const handleSourceSelect = (value: string) => {
     markInteracted()
     setSource(value)
-    trackEvent('website_intake_source_select', {
+    trackEvent(`${FORM_NAME}_source_select`, {
       form_name: FORM_NAME,
       source: value,
     })
@@ -877,13 +912,13 @@ export default function WebsiteIntakeForm() {
   }
 
   const handleBookingClick = () => {
-    trackEvent('website_intake_booking_click', {
+    trackEvent(`${FORM_NAME}_booking_click`, {
       form_name: FORM_NAME,
       form_location: 'success_screen',
     })
     trackBookCallClick(
       'book a 30 min zoom with prism',
-      'website intake success',
+      `${service} intake success`,
     )
   }
 
@@ -966,7 +1001,7 @@ export default function WebsiteIntakeForm() {
           <div
             className="grid gap-3"
             role="group"
-            aria-labelledby="website-intake-question"
+            aria-labelledby={`${service}-intake-question`}
           >
             {WHY_OPTIONS.map((option, index) =>
               renderOptionCard({
@@ -992,7 +1027,7 @@ export default function WebsiteIntakeForm() {
           <div
             className="grid gap-3"
             role="group"
-            aria-labelledby="website-intake-question"
+            aria-labelledby={`${service}-intake-question`}
           >
             {TIMELINE_OPTIONS.map((option, index) =>
               renderOptionCard({
@@ -1020,7 +1055,7 @@ export default function WebsiteIntakeForm() {
             <div
               className="grid gap-3 sm:grid-cols-2"
               role="group"
-              aria-labelledby="website-intake-question"
+              aria-labelledby={`${service}-intake-question`}
             >
               {renderOptionCard({
                 value: 'yes',
@@ -1101,9 +1136,29 @@ export default function WebsiteIntakeForm() {
         return (
           <div className="space-y-5">
             <div
+              className="space-y-2 rounded-md border border-border p-4 text-sm text-muted-foreground"
+              aria-label="Your request summary"
+            >
+              <p>
+                {WHY_OPTIONS.find((option) => option.value === why)?.label} ·{' '}
+                {
+                  TIMELINE_OPTIONS.find((option) => option.value === timeline)
+                    ?.label
+                }
+              </p>
+              <p className="break-all">{siteLink}</p>
+              <button
+                type="button"
+                className="underline underline-offset-4"
+                onClick={() => goToStep(0)}
+              >
+                Edit answers
+              </button>
+            </div>
+            <div
               className="grid gap-3 sm:grid-cols-2"
               role="group"
-              aria-labelledby="website-intake-question"
+              aria-labelledby={`${service}-intake-question`}
             >
               {renderOptionCard({
                 value: 'email',
@@ -1243,9 +1298,9 @@ export default function WebsiteIntakeForm() {
 
   const heading =
     currentStep === 'why'
-      ? 'Why do you want a new website?'
+      ? config.goalHeading
       : currentStep === 'timeline'
-        ? 'When do you want your new website live?'
+        ? config.timelineHeading
         : currentStep === 'current-site'
           ? 'Do you have a current website?'
           : 'How would you like us to reach you?'
@@ -1254,7 +1309,7 @@ export default function WebsiteIntakeForm() {
     currentStep === 'why'
       ? 'Tap one. We will move you to the next question.'
       : currentStep === 'timeline'
-        ? 'This helps us scope the first version.'
+        ? config.timelineHelper
         : currentStep === 'current-site'
           ? 'A link is enough. We will review it before we reply.'
           : 'We reply within two business days on the channel you pick.'
@@ -1337,7 +1392,7 @@ export default function WebsiteIntakeForm() {
       noValidate
       onSubmit={handleFinalSubmit}
       onKeyDown={handleStepKeyboardNavigation}
-      data-testid="website-intake-form"
+      data-testid={`${service}-intake-form`}
     >
       <div className={styles.noiseField} aria-hidden="true" />
       <span className={styles.corner} data-corner="tl" aria-hidden="true" />
@@ -1345,7 +1400,11 @@ export default function WebsiteIntakeForm() {
       <span className={styles.corner} data-corner="bl" aria-hidden="true" />
       <span className={styles.corner} data-corner="br" aria-hidden="true" />
 
-      <input type="hidden" name="_subject" value="New Website Intake Lead" />
+      <input
+        type="hidden"
+        name="_subject"
+        value={`New ${config.label} Intake Lead`}
+      />
       <input type="hidden" name="form_name" value={FORM_NAME} />
       <input
         type="text"
@@ -1369,13 +1428,13 @@ export default function WebsiteIntakeForm() {
               {stepIndex + 1} of {QUESTION_STEP_COUNT}
             </p>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#8F877B]">
-              PRO website intake
+              {config.eyebrow}
             </p>
           </div>
           <div
             className="h-px w-full overflow-hidden bg-white/10"
             role="progressbar"
-            aria-label="Website intake progress"
+            aria-label={`${config.label} intake progress`}
             aria-valuemin={1}
             aria-valuemax={QUESTION_STEP_COUNT}
             aria-valuenow={stepIndex + 1}
@@ -1391,7 +1450,7 @@ export default function WebsiteIntakeForm() {
           <div className={cn(styles.stepBody, 'space-y-7')} key={currentStep}>
             <div className="space-y-3">
               <h1
-                id="website-intake-question"
+                id={`${service}-intake-question`}
                 className="max-w-[16ch] text-balance text-[clamp(1.9rem,6vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-[#F5F0E8]"
               >
                 {heading}
@@ -1425,7 +1484,7 @@ export default function WebsiteIntakeForm() {
               {stepIndex === QUESTION_STEP_COUNT - 1
                 ? isSubmitting
                   ? 'Submitting…'
-                  : 'Start my website'
+                  : config.submitLabel
                 : 'Continue'}
             </Button>
           </div>

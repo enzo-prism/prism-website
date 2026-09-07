@@ -401,3 +401,28 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 
 - **Still seeing Formspree’s stock page?** Make sure `fetch` sends `Accept: application/json` and you aren’t calling `form.submit()` directly.
 - **Need different CTAs on thank-you pages?** Update the respective route page; no other files depend on that markup.
+
+
+## Content and Ads service intake (2026-09-06)
+
+`/content` and `/ads` primary CTAs start `/content-intake` and `/ads-intake`, matching `/websites` → `/website-intake`. All three use `WebsiteIntakeForm` with a service prop and `lib/service-intake.ts` configuration. Each asks for goal, timing, a website/social link, and email or text contact. The last screen recaps earlier answers with an Edit answers action. Keyboard navigation, reduced motion, same-tab 24-hour draft expiry, retry handling, and the synchronous submission lock are shared. Drafts are isolated per service and cleared on confirmed success.
+
+Dedicated forms created in the authenticated **Prism** Formspree project:
+
+| Service | Form | Endpoint | Notification destination |
+| --- | --- | --- | --- |
+| Website | Website Intake | `https://formspree.io/f/xrpzlkrd` | `enzo@design-prism.com` |
+| Content | Content Intake | `https://formspree.io/f/mwlkrezj` | `enzo@design-prism.com` |
+| Ads | Ads Intake | `https://formspree.io/f/mnpqgaya` | `enzo@design-prism.com` |
+
+Content and Ads use their dedicated endpoint by default, with optional `NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT` and `NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT` overrides. They do not depend on new Vercel environment variables. Payloads carry `service`, `goal`, service-specific `content_goal` or `ads_goal`, `${service}_intake` form name/key, the existing ops/UTM metadata, and service-specific email subjects. No real lead submission is required during automated tests; mock the Formspree response to avoid sending notifications and polluting GA.
+
+## WebMCP service form tools
+
+`hooks/use-intake-webmcp.ts` registers one native browser tool on each mounted intake page: `prepare_website_intake`, `prepare_content_intake`, or `prepare_ads_intake`. This is browser WebMCP, not the repository's development MCP servers or a remote HTTP MCP endpoint. The imperative API is intentional: earlier wizard inputs are unmounted, so declarative form discovery would expose an incomplete schema.
+
+Tools accept `why` (service goal enum), `timeline`, `hasWebsite`, `siteLink`, `contactMethod`, matching `email`/`phone`, and optional `source`. Runtime validation rejects unknown fields, invalid options, malformed contacts, and unsafe URLs. A successful tool call fills React state and opens the visible final review. It returns `ready_for_review` and `submitted: false`; it never fetches Formspree. The visitor or authorized agent reviews the summary/contact and presses the visible submit button. Text-message disclosure remains visible. Native form success appears only after Formspree returns a successful response. Agent preparation does not fire a lead conversion.
+
+The hook feature-detects current `document.modelContext` and older `navigator.modelContext`; it cleans up registration on navigation and after success. Ordinary UI remains available without WebMCP. Each intake route sends `Origin-Agent-Cluster: ?1` and `Permissions-Policy: tools=(self)`. Optional `WEBMCP_ORIGIN_TRIAL_TOKEN` adds the origin-trial response header at build time.
+
+Chrome's documentation describes an origin trial and the local `enable-webmcp-testing` flag. On 2026-09-06 the public active-trials listing did not offer WebMCP enrollment, so no trial token was issued. Do not claim universal browser activation: use a WebMCP-capable browser/flag until enrollment becomes available, then enroll the production origin, configure the token, redeploy, and verify discovery. See [Chrome WebMCP](https://developer.chrome.com/docs/ai/webmcp) and [imperative API](https://developer.chrome.com/docs/ai/webmcp/imperative-api). Never expose private records or add an automatic sending tool through this preparation API.

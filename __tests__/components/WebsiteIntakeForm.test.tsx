@@ -2,6 +2,8 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT =
   'https://formspree.io/f/websiteintake'
+process.env.NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT = 'https://formspree.io/f/contentintake'
+process.env.NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT = 'https://formspree.io/f/adsintake'
 
 jest.mock('@/components/lord-icon', () => ({
   __esModule: true,
@@ -524,4 +526,175 @@ describe('WebsiteIntakeForm', () => {
       ).toBeInTheDocument()
     })
   })
+
+  it.each([
+    ['content', 'Build trust', 'build_trust', 'content_goal', /when do you want to start creating/i],
+    ['ads', 'More qualified leads', 'more_leads', 'ads_goal', /when do you want your ads live/i],
+  ] as const)('submits the %s flow with its own goal, service, and analytics', async (service, goalLabel, goal, goalField, timelineHeading) => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    render(<WebsiteIntakeForm service={service} />)
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-label', `${service === 'ads' ? 'Ads' : 'Content'} intake progress`)
+    fireEvent.click(screen.getByRole('button', { name: goalLabel }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: timelineHeading })).toBeInTheDocument())
+    await advanceFromTimeline()
+    fireEvent.click(screen.getByText(/yes, i have a website/i))
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+    fireEvent.click(screen.getByText(/email me/i))
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'owner@example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: `Start my ${service}` }))
+    await waitFor(() => expect(screen.getByTestId('intake-success')).toBeInTheDocument())
+    expect(fetchSpy.mock.calls[0][0]).toBe(`https://formspree.io/f/${service}intake`)
+    const body = fetchSpy.mock.calls[0][1]?.body as FormData
+    expect(body.get('service')).toBe(service)
+    expect(body.get(goalField)).toBe(goal)
+    expect(body.get('form_name')).toBe(`${service}_intake`)
+    expect(body.get('form_key')).toBe(`${service}_intake`)
+    expect(body.get('_subject')).toBe(`New ${service === 'ads' ? 'Ads' : 'Content'} Intake Lead`)
+    expect(body.get('why_new_website')).toBeNull()
+    expect(trackEvent).toHaveBeenCalledWith(`${service}_intake_submit_success`, expect.objectContaining({ form_name: `${service}_intake` }))
+    expect(trackFormSubmission).toHaveBeenCalledWith(`${service}_intake`, `${service}_intake_page`, expect.objectContaining({ lead_type: `${service}_intake`, conversionMode: 'immediate' }))
+    expect(JSON.stringify(trackEvent.mock.calls)).not.toContain('owner@example.com')
+    expect(JSON.stringify(trackEvent.mock.calls)).not.toContain('https://example.com')
+  })
+
+  it('keeps drafts isolated between services', async () => {
+    const content = render(<WebsiteIntakeForm service="content" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Build trust' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: /when do you want to start creating/i })).toBeInTheDocument())
+    content.unmount()
+    const ads = render(<WebsiteIntakeForm service="ads" />)
+    expect(screen.getByText('1 of 4')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /what should your ads help you achieve/i })).toBeInTheDocument()
+    ads.unmount()
+    render(<WebsiteIntakeForm service="content" />)
+    await waitFor(() => expect(screen.getByRole('heading', { name: /when do you want to start creating/i })).toBeInTheDocument())
+  })
+
+
+
+  it('resets answers when changing the service prop and restores only the matching draft', async () => {
+    const { rerender } = render(<WebsiteIntakeForm service="content" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Build trust' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: /when do you want to start creating/i })).toBeInTheDocument())
+    rerender(<WebsiteIntakeForm service="ads" />)
+    expect(screen.getByText('1 of 4')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /what should your ads help you achieve/i })).toBeInTheDocument()
+    expect(window.sessionStorage.getItem('prism_ads_intake_draft_v1')).toBeNull()
+    rerender(<WebsiteIntakeForm service="content" />)
+    await waitFor(() => expect(screen.getByRole('heading', { name: /when do you want to start creating/i })).toBeInTheDocument())
+    expect(trackEvent).toHaveBeenCalledWith('ads_intake_step_view', expect.objectContaining({ step: 1 }))
+  })
+
+  describe('WebMCP integration', () => {
+    const registerTool = jest.fn()
+    const valid = {
+      why: 'build_trust',
+      timeline: 'next_week',
+      hasWebsite: 'yes',
+      siteLink: 'example.com',
+      contactMethod: 'email',
+      email: 'owner@example.com',
+    }
+
+    beforeEach(() => {
+      Object.defineProperty(document, 'modelContext', {
+        configurable: true,
+        value: { registerTool },
+      })
+    })
+    afterEach(() => {
+      delete (document as Document & { modelContext?: unknown }).modelContext
+    })
+
+    it('fills the contact review, sends nothing until submit, then submits once', async () => {
+      fetchSpy.mockResolvedValue(createMockResponse(true))
+      render(<WebsiteIntakeForm service="content" />)
+      const tool = registerTool.mock.calls[0][0]
+      expect(tool.name).toBe('prepare_content_intake')
+      let result
+      await act(async () => { result = await tool.execute(valid) })
+      expect(result).toMatchObject({ status: 'ready_for_review', submitted: false })
+      expect(screen.getByRole('heading', { name: /how would you like us to reach you/i })).toBeInTheDocument()
+      expect(screen.getByRole('textbox', { name: /your email address/i })).toHaveValue(valid.email)
+      expect(screen.getByLabelText('Your request summary')).toHaveTextContent('Build trust')
+      expect(screen.getByLabelText('Your request summary')).toHaveTextContent('Next week')
+      expect(screen.getByLabelText('Your request summary')).toHaveTextContent('https://example.com/')
+      expect(screen.getByRole('button', { name: /edit answers/i })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /privacy policy/i })).toBeInTheDocument()
+      expect(fetchSpy).not.toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith('content_intake_agent_prepare', expect.objectContaining({ form_name: 'content_intake' }))
+      const form = screen.getByTestId('content-intake-form')
+      fireEvent.submit(form)
+      fireEvent.submit(form)
+      await waitFor(() => expect(screen.getByTestId('intake-success')).toBeInTheDocument())
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      const body = fetchSpy.mock.calls[0][1]?.body as FormData
+      expect(body.get('content_goal')).toBe('build_trust')
+      expect(body.get('site_link')).toBe('https://example.com/')
+      expect(body.get('email')).toBe(valid.email)
+      expect(body.get('service')).toBe('content')
+      expect(JSON.stringify(trackEvent.mock.calls)).not.toContain(valid.email)
+      expect(JSON.stringify(trackEvent.mock.calls)).not.toContain(valid.siteLink)
+    })
+
+
+    it('resets submission state and unregisters the previous tool on service change', async () => {
+      fetchSpy.mockResolvedValue(createMockResponse(true))
+      const { rerender } = render(<WebsiteIntakeForm service="content" />)
+      const [contentTool, registration] = registerTool.mock.calls[0]
+      await act(async () => { await contentTool.execute(valid) })
+      fireEvent.click(screen.getByRole('button', { name: /start my content/i }))
+      await waitFor(() => expect(screen.getByTestId('intake-success')).toBeInTheDocument())
+      rerender(<WebsiteIntakeForm service="ads" />)
+      expect(screen.getByRole('heading', { name: /what should your ads help you achieve/i })).toBeInTheDocument()
+      expect(registration.signal.aborted).toBe(true)
+      const adsTool = registerTool.mock.calls.find(([tool]) => tool.name === 'prepare_ads_intake')?.[0]
+      await act(async () => { await adsTool.execute({ ...valid, why: 'more_leads' }) })
+      fireEvent.click(screen.getByRole('button', { name: /start my ads/i }))
+      await waitFor(() => expect(screen.getByTestId('intake-success')).toBeInTheDocument())
+      expect(fetchSpy).toHaveBeenCalledTimes(2)
+      const body = fetchSpy.mock.calls[1][1]?.body as FormData
+      expect(body.get('service')).toBe('ads')
+    })
+
+    it('shows text consent and clears inactive contact values for prepared requests', async () => {
+      render(<WebsiteIntakeForm service="content" />)
+      const tool = registerTool.mock.calls[0][0]
+      await act(async () => { await tool.execute({ ...valid, contactMethod: 'text', phone: '(555) 123-4567' }) })
+      expect(screen.getByRole('textbox', { name: /your phone number/i })).toHaveValue('(555) 123-4567')
+      expect(screen.getByText(/message and data rates may apply/i)).toBeInTheDocument()
+      expect(fetchSpy).not.toHaveBeenCalled()
+      fireEvent.click(screen.getByRole('button', { name: /email me/i }))
+      expect(screen.getByRole('textbox', { name: /your email address/i })).toHaveValue('')
+    })
+
+    it.each([
+      { why: 'more_customers' },
+      { siteLink: 'javascript:alert(1)' },
+      { siteLink: 'http://127.0.0.1' },
+      { siteLink: 'https://a.1' },
+      { email: 'invalid' },
+      { contactMethod: 'text', phone: '123' },
+      { arbitrary: 'field' },
+    ])('rejects invalid tool input without advancing or sending: %o', async (override) => {
+      render(<WebsiteIntakeForm service="content" />)
+      let result
+      await act(async () => { result = await registerTool.mock.calls[0][0].execute({ ...valid, ...override }) })
+      expect(result).toMatchObject({ status: 'error', submitted: false })
+      expect(screen.getByRole('heading', { name: /what should your content do for you/i })).toBeInTheDocument()
+      expect(fetchSpy).not.toHaveBeenCalled()
+      expect(trackEvent.mock.calls.some(([name]) => name === 'content_intake_agent_prepare')).toBe(false)
+    })
+
+    it('keeps final contact validation active after an agent prepares the form', async () => {
+      render(<WebsiteIntakeForm service="content" />)
+      await act(async () => { await registerTool.mock.calls[0][0].execute(valid) })
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: 'invalid' } })
+      fireEvent.click(screen.getByRole('button', { name: /start my content/i }))
+      expect(screen.getByText(/enter a valid email/i)).toBeInTheDocument()
+      expect(fetchSpy).not.toHaveBeenCalled()
+    })
+  })
+
 })
