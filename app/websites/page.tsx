@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils'
 
 const PAGE_TITLE = 'Pro websites'
 const PAGE_DESCRIPTION =
-  'Ultra-premium websites for serious businesses: bespoke design systems, precise engineering, analytics, and foundations that support Google and AI discovery.'
+  'Custom websites with clear service pages, mobile-friendly design, working inquiry forms, and analytics to help you understand what brings customers in.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -40,9 +40,9 @@ const PILLARS = [
     title: 'Design that feels like your business',
     body: 'We define your typography, color, spacing, and motion, then carry them through every page. The result is a consistent website that makes your business easier to recognize and understand.',
     points: [
-      'Bespoke design system per brand',
+      'A consistent look across every page',
       'Typography, color, and motion standards',
-      'Composed pages, never template blocks',
+      'Pages organized around customer questions',
     ],
   },
   {
@@ -50,7 +50,7 @@ const PILLARS = [
     title: 'Fast, accessible, easy to navigate',
     body: 'We build for speed, accessibility, and everyday use across devices. Clear page structure helps visitors find what they need and search engines understand what you offer.',
     points: [
-      'Core Web Vitals optimization',
+      'Page speed and mobile usability checks',
       'Accessible, semantic page structure',
       'Technical SEO foundations built in',
     ],
@@ -61,8 +61,8 @@ const PILLARS = [
     body: 'Analytics and conversion tracking are part of the build. See how people find your site, which pages they visit, and where they take the next step.',
     points: [
       'GA4 and conversion tracking configured at launch',
-      'Lead and call attribution',
-      'Reporting built for decision-making',
+      'Tracking for inquiry forms and call links',
+      'Reports that connect visits to inquiries',
     ],
   },
 ] as const
@@ -85,11 +85,11 @@ const PROCESS_STEPS = [
   },
   {
     label: 'Design & build',
-    body: 'We develop the design system, compose each page, and engineer the entire build to the Prism standard.',
+    body: 'We write and design the pages, build the site, and share a preview for your feedback on the copy, images, and experience.',
   },
   {
     label: 'Set up measurement',
-    body: 'Analytics, conversion tracking, structured data, and search foundations are in place before launch, never retrofitted after it.',
+    body: 'We configure analytics and search information, then check key pages, forms, and contact links before launch.',
   },
   {
     label: 'Refine and maintain',
@@ -101,17 +101,17 @@ const FAQ_ITEMS = [
   {
     question: 'What makes a Prism PRO website different?',
     answer:
-      'It is conceived as a complete online presence rather than a brochure: a bespoke design system, software-grade engineering, analytics from day one, and search foundations that address both Google and AI assistants such as ChatGPT, Gemini, and Claude.',
+      'We bring the copy, design, build, forms, and analytics together. Customers can understand your services and contact you easily, while you can see which pages and traffic sources lead to inquiries.',
   },
   {
     question: 'How does pricing work?',
     answer:
-      'Every build is scoped to your business on a 30-minute Zoom call. You leave with a clear plan and a clear price. There are no email estimates and no surprises in scope.',
+      'We start with a 30-minute Zoom call to understand the pages, features, and support you need. We agree on the scope and price before work begins.',
   },
   {
     question: 'How do you support visibility in AI assistants?',
     answer:
-      'Through structured data, entity-clear content, clean semantics, and verifiable proof. These foundations can make a business easier for search engines and AI assistants to understand, but no agency can guarantee rankings, citations, or recommendations.',
+      'We make your services, locations, team, and business details clear in both the page copy and its search information. Search engines and AI assistants can use that information, but rankings and recommendations remain outside our control.',
   },
   {
     question: 'Do I own the website?',
@@ -193,9 +193,9 @@ export default function WebsitesPage() {
                 A better website. A clearer next step.
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Custom design, fast pages, and clear paths from a first visit
-                to an inquiry. Built with analytics and search foundations
-                that help Google and AI systems understand your business.
+                Custom design, fast pages, and clear paths from a first visit to
+                an inquiry. Built with analytics and search foundations that
+                help Google and AI systems understand your business.
               </p>
 
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -326,7 +326,7 @@ export default function WebsitesPage() {
               <CoreSectionHeading
                 eyebrow="Visibility"
                 title="Support discovery on Google and in AI."
-                description="Your next customer may ask a search engine or an AI assistant. A PRO website provides technical and local SEO foundations, entity-clear content, and structured data that help those systems understand your business. Rankings, citations, and recommendations are never guaranteed."
+                description="We organize service pages, location details, and business information so search engines and AI assistants can understand what you do. Useful answers and accurate details support discovery; rankings and recommendations are never guaranteed."
               />
               <div className="flex flex-wrap gap-2">
                 {SEARCH_SURFACES.map((surface) => (
@@ -377,7 +377,7 @@ export default function WebsitesPage() {
               <CoreSectionHeading
                 eyebrow="The work"
                 title="Selected work."
-                description="Every build is produced by the same Prism system, with design, engineering, and analytics held to a single standard."
+                description="Explore websites we have built for practices, retailers, nonprofits, and service businesses."
               />
               <CoreActionLink
                 href="/case-studies"
@@ -511,13 +511,13 @@ export default function WebsitesPage() {
       <ServiceSchema
         serviceId="pro-website"
         name="Prism PRO website"
-        description="Ultra-premium website builds for serious businesses: a bespoke design system, software-grade engineering, analytics configured from day one, and foundations that support Google and AI discovery. Scoped on a 30-minute call; placement is not guaranteed."
+        description="Custom website design and development with service pages, inquiry forms, analytics, and search foundations. Scope and price are agreed on a 30-minute call."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{
           name: 'Prism PRO website',
           description:
-            'An ultra-premium website build covering the design system, engineering, analytics, and Google and AI search foundations. Scoped to your business on a 30-minute call.',
+            'A custom website with clear copy, mobile-friendly pages, inquiry forms, analytics, and search foundations. Scoped to your business on a 30-minute call.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

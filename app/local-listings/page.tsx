@@ -31,27 +31,27 @@ export const metadata: Metadata = buildRouteMetadata({
 
 const whatYouGet = [
   {
-    title: 'accurate, consistent info everywhere',
+    title: 'The right details in the right places',
     description:
       'name, address, phone, website, hours, service area, and categories aligned across platforms.',
   },
   {
-    title: 'conversion-ready profiles',
+    title: 'Make it easy to call or visit',
     description:
       'offers, services, photos, faqs, and action buttons built to drive calls, directions, and bookings.',
   },
   {
-    title: 'ranking boosts that last',
+    title: 'Services people can understand',
     description:
       'category tuning, service lists, attributes, and content that improve local relevance.',
   },
   {
     title: 'reviews that build trust',
-    description: 'simple review collection and fast, professional responses.',
+    description: 'a clear process for requesting honest feedback and reviewing responses.',
   },
   {
     title: 'spam cleanup and duplicate removal',
-    description: 'we fix messy listings and protect your brand.',
+    description: 'we identify duplicates and submit corrections through each platform.',
   },
   {
     title: 'transparent results',
@@ -103,9 +103,9 @@ const rankingLevers = [
       'reviews, photos, and consistent data that build authority over time.',
   },
   {
-    title: 'proximity (done right)',
+    title: 'accurate location details',
     description:
-      'clean service-area and radius settings plus smart geo-targeted content.',
+      'real addresses and service areas, so customers know where you work.',
   },
   {
     title: 'engagement',
@@ -117,11 +117,11 @@ const rankingLevers = [
 const processSteps = [
   {
     step: 'Audit and Plan',
-    description: 'review every listing, find gaps, and set clear goals.',
+    description: 'review the listings in your plan, find gaps, and set priorities.',
   },
   {
     step: 'Fix and Claim',
-    description: 'claim pages, remove duplicates, and correct bad data.',
+    description: 'claim eligible profiles, request duplicate removal, and submit corrections.',
   },
   {
     step: 'Build to Convert',
@@ -131,18 +131,18 @@ const processSteps = [
   {
     step: 'Review Engine',
     description:
-      'easy ways for happy customers to leave reviews plus responsive follow-up.',
+      'simple requests for honest customer feedback, with responses reviewed before posting.',
   },
   {
     step: 'Maintain and Improve',
     description:
-      'weekly checks, fresh content, seasonal hours, and ongoing optimizations.',
+      'checks and updates at the agreed cadence, including seasonal hours and service changes.',
   },
 ]
 
 const handledForYou = [
   'Claiming and verification',
-  'NAP consistency',
+  'Consistent name, address, and phone',
   'Categories and services',
   'Attributes and amenities',
   'Hours and holiday hours',
@@ -158,28 +158,28 @@ const handledForYou = [
 ]
 
 const outcomes = [
-  'Stronger Map Pack presence on the searches that matter.',
-  'Higher conversion rate from profile views to calls, directions, and bookings.',
-  'More and better reviews that build trust and drive ranking.',
-  'Clean, consistent listings across every major platform.',
+  'Help nearby customers find accurate business information.',
+  'Clear links for calls, directions, and appointment requests.',
+  'Genuine reviews that help people make an informed choice.',
+  'Fewer conflicting details across the platforms in your plan.',
 ]
 
 const faqItems = [
   {
     question: 'Do I need this if I already run ads?',
     answer:
-      'Yes. Optimized listings improve ad performance and capture organic demand you would otherwise miss.',
+      'Listings and ads serve different needs. People may check your address, hours, or reviews after seeing an ad. We review both before recommending what to improve.',
   },
   {
     question: 'How fast will I see results?',
     answer:
-      'Fixes like accuracy, photos, and categories can lift engagement quickly. Reviews and consistency compound over weeks and months.',
+      'Some information can be corrected quickly; other changes require platform review. We separate completed updates from changes in visibility and inquiries, which take time to assess.',
   },
   {
     question:
       'Can you help if my Google listing is suspended or has duplicates?',
     answer:
-      'Absolutely. We handle reinstatement requests, cleanup, and ongoing monitoring.',
+      'We can investigate the issue and help prepare corrections or a reinstatement request. The platform makes the final decision, so approval cannot be guaranteed.',
   },
   {
     question: 'What if I have multiple locations?',
@@ -196,7 +196,7 @@ const audienceSegments = [
   {
     name: 'Dental & medical teams',
     description:
-      'maps-first dentist seo: hipaa-aware intake flows, treatment highlights, and review engines that keep operatories full.',
+      'clear practice details, treatment information, and appointment links that help patients decide where to seek care.',
     href: '/dental-practice-seo-expert',
   },
   {
@@ -371,8 +371,8 @@ export default async function LocalListingsPage() {
               platforms we manage (and why)
             </h2>
             <p className="mt-3 text-neutral-600">
-              Coverage across every profile that influences local search, maps,
-              and discovery.
+              Coverage across the agreed profiles where customers search, compare,
+              and contact you.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
@@ -477,11 +477,11 @@ export default async function LocalListingsPage() {
         <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              how we lift rankings and conversions
+              what we improve on your profiles
             </h2>
             <p className="mt-3 text-neutral-600">
-              Practical levers that move you up the Map Pack and turn views into
-              results.
+              Accurate details and useful content that help people understand your
+              business and take the next step.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
@@ -571,7 +571,7 @@ export default async function LocalListingsPage() {
               outcomes you can expect
             </h2>
             <p className="mt-3 text-neutral-600">
-              Results that show up in your local rankings and your bottom line.
+              See what changed on your profiles and how customers use them.
             </p>
           </div>
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">

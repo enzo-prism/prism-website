@@ -28,57 +28,57 @@ export const MARQUEE_ITEMS = [
 export const HOW_IT_WORKS = [
   {
     label: 'Name the need',
-    body: 'Add the work the business actually needs: a landing page, an ad set, a website pass, a photoshoot. The queue is yours and it never caps.',
+    body: 'Add a landing page, ad creative, website update, or photoshoot to your queue. Put the most important request first.',
     iconSrc: '/pixelish/kanban.svg',
   },
   {
     label: 'We ship it',
-    body: 'Prism works one request at a time and most land in a few days. Larger work is broken into milestones so you always see movement.',
+    body: 'We confirm the brief and work on one request at a time. Larger projects have milestones so you can review progress along the way.',
     iconSrc: '/pixelish/checkmark.svg',
   },
   {
     label: 'The next one starts',
-    body: 'The moment one request ships, the next in your queue begins. Keep the board full, or pause when the calendar is full.',
+    body: 'Review the work with us, then move to the next priority. Reorder the queue as your business needs change.',
     iconSrc: '/pixelish/arrow-refresh.svg',
   },
 ] as const
 
 export const DELIVERABLES = [
   {
-    title: 'Landing pages that convert',
+    title: 'Landing pages for your offers',
     body: 'Offer pages, campaign pages, and booking flows built to turn attention into customers.',
     iconSrc: '/pixelish/browser.svg',
   },
   {
-    title: 'Ad creative that gets customers',
-    body: 'Variations for Meta, Google, and YouTube, built to test, scale, and convert.',
+    title: 'Ad creative to test',
+    body: 'Images, copy, and video variations for your campaigns on Meta, Google, and YouTube.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
-    title: 'Websites that rank and convert',
-    body: 'New sites, redesigns, and conversion passes structured for Google and AI search.',
+    title: 'New websites and site updates',
+    body: 'New sites, redesigns, service pages, and contact flows with clear copy and search foundations.',
     iconSrc: '/pixelish/house.svg',
   },
   {
-    title: 'Video that sells',
+    title: 'Video edits for your story',
     body: 'Short-form, ads, and long-form cuts edited to your offer and story.',
     iconSrc: '/pixelish/media-play.svg',
   },
   {
     title: 'Photoshoots you own',
-    body: 'On-location libraries of owned, on-brand imagery for the site, ads, and social.',
+    body: 'Team, location, and product photography for your website, ads, and social posts. We agree on the shoot brief and logistics first.',
     iconSrc: '/pixelish/device-camera.svg',
   },
   {
-    title: 'Content that compounds',
+    title: 'Content for your channels',
     body: 'Posts, pages, and creative that keep the brand visible after the campaign ends.',
     iconSrc: '/pixelish/document-letter.svg',
   },
 ] as const
 
 export const ALSO_INCLUDED = {
-  title: 'Brand systems, decks, print, and whatever Prism adds next',
-  body: 'Identity work, sales decks, and in-room collateral still count as requests. As Prism grows, new services join the plan at no extra cost.',
+  title: 'Brand design, decks, and print',
+  body: 'Request brand guidelines, sales presentations, business cards, and other print layouts alongside your website and content work.',
 } as const
 
 export const OWNER_REASONS = [
@@ -88,15 +88,15 @@ export const OWNER_REASONS = [
   },
   {
     title: 'One flat monthly rate',
-    body: 'No scope creep, no surprise invoices, no hourly billing. The queue can grow without the contract changing.',
+    body: 'Agree on the monthly plan and included work before starting. Ad spend, software, and separately scoped work stay clearly identified.',
   },
   {
-    title: 'Work in days, not quarters',
-    body: 'Most requests land in a few days, one at a time, so quality holds and the business keeps moving.',
+    title: 'Know what is being worked on',
+    body: 'One active request makes the priority clear. Larger projects are divided into milestones you can review.',
   },
   {
     title: 'Pause when the calendar is full',
-    body: 'No lock-in. Pause between bursts and keep unused days, or cancel outright. No penalties.',
+    body: 'Pause or cancel when your needs change. We explain the billing and pause terms when scoping your plan.',
   },
 ] as const
 
@@ -115,17 +115,17 @@ export const FAQ_ITEMS = [
   {
     question: 'How fast is turnaround?',
     answer:
-      'Most requests are delivered in a few days. Larger requests are broken into clear milestones so you always see momentum while we work through your queue one item at a time.',
+      'Timing depends on the request, source material, and feedback. We confirm the brief and timing before starting, and split larger projects into reviewable milestones.',
   },
   {
     question: 'How many active requests can I have?',
     answer:
-      'Add as many requests as you like to your queue. Prism works on one active request at a time and starts the next the moment one is delivered, so the queue keeps moving without ever capping how much you submit.',
+      'Add as many requests as you like to your queue. We work on one active request at a time, then move to the next priority after review. Unlimited requests does not mean unlimited work delivered at once.',
   },
   {
     question: 'Can I really pause or cancel anytime?',
     answer:
-      'Yes. Pause your plan when work slows and keep your unused days for when you return, or cancel outright. There are no contracts and no penalties.',
+      'Yes. You can pause or cancel the plan. We explain how the change affects billing and any active request before you start the subscription.',
   },
   {
     question: 'What is out of scope?',

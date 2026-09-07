@@ -104,10 +104,10 @@ const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
 const ROSEVILLE_SEARCH_METRIC = getCaseStudyMetric('roseville-dental-academy')
 
 export const HOMEPAGE_HERO = {
-  title: 'Prism',
-  subheading: 'a growth team for small businesses',
+  title: 'Your growth team.',
+  subheading: 'Website. Content. Ads. Built around your business.',
   description:
-    'We build your website, create your content, and run your ads. One team helps customers find you, understand your value, and take the next step.',
+    'You run the business. We build the website, create the content, and manage the campaigns that help people find you and get in touch.',
   supportPoints: [
     {
       label: 'Your business. Our team.',
@@ -162,7 +162,7 @@ export const HOMEPAGE_HERO = {
 
 export const HOMEPAGE_CLIENT_WINS = {
   eyebrow: 'Clients',
-  title: 'Great companies use Prism',
+  title: 'Meet the businesses we’ve helped',
   description: '',
   slides: [
     {
@@ -350,29 +350,29 @@ export const HOMEPAGE_CLIENT_WINS = {
 
 export const HOMEPAGE_GROWTH_RAMP = {
   eyebrow: 'What to expect',
-  title: 'First 90 days.',
-  microcopy: 'Set priorities. Launch. Learn.',
+  title: 'A clear plan. Real work.',
+  microcopy: 'Agree on the priorities. Put them into practice. Learn from the results.',
   finePrint:
-    'The exact sequence and timing depend on scope, access, and your starting point.',
+    'We agree on your scope and timeline before work begins.',
   metrics: [
     {
-      day: 'Day 30',
+      day: 'Step 1',
       value: 'Baseline',
-      label: 'measurement + priorities',
+      label: 'know where to start',
       detail:
         'Review how customers find you, check your tracking, and agree on what to fix first.',
     },
     {
-      day: 'Day 60',
+      day: 'Step 2',
       value: 'Live',
-      label: 'first improvements live',
+      label: 'put the plan to work',
       detail:
         'Launch the agreed website, search, content, or campaign improvements.',
     },
     {
-      day: 'Day 90',
+      day: 'Step 3',
       value: 'Progress',
-      label: 'measure + improve',
+      label: 'choose what comes next',
       detail:
         'Review the results, see what is working, and choose the next improvements.',
     },
@@ -381,11 +381,11 @@ export const HOMEPAGE_GROWTH_RAMP = {
 
 export const HOMEPAGE_PROBLEM = {
   eyebrow: 'Why it works',
-  title: 'Buyers check everything before they choose.',
+  title: 'Give people a reason to choose you.',
   description:
-    'People compare your website, reviews, and Google listing before they call. Each should make it easy to understand what you do and why to choose you.',
+    'A search gets you noticed. A clear website and real reviews help people decide. An easy way to call or book turns that interest into a conversation.',
   closingLine:
-    'We connect those details into a clear path from discovery to inquiry.',
+    'We work on the whole path, from the first search to the first inquiry.',
   points: [
     {
       label: 'Can people find you?',
@@ -398,7 +398,7 @@ export const HOMEPAGE_PROBLEM = {
       iconSrc: '/pixelish/award-checkmark.svg',
     },
     {
-      label: 'Can AI recommend you?',
+      label: 'Can AI search understand you?',
       text: 'Make your business easier for AI search to understand.',
       iconSrc: '/pixelish/chatgpt.svg',
       brandLogo: 'openai',
@@ -429,7 +429,7 @@ export const HOMEPAGE_PROBLEM = {
 } as const
 
 export const HOMEPAGE_AI_TOOLS = {
-  title: 'Modern tools, handled quietly.',
+  title: 'Modern tools. Human judgment.',
   tools: [
     {
       name: 'Codex',
@@ -466,9 +466,9 @@ export const HOMEPAGE_AI_TOOLS = {
 
 export const HOMEPAGE_SERVICES = {
   eyebrow: 'What Prism does',
-  title: 'One team. The whole system.',
+  title: 'Your marketing, working together.',
   description:
-    'Your website, content, and ads should work toward the same goal. We plan, build, and improve them together, with clear priorities and one team to call.',
+    'A useful ad needs a useful landing page. Good content needs a clear next step. We connect the work so your customers can move forward and you know what to improve.',
   closingLine: '',
 } as const
 
@@ -533,31 +533,31 @@ export const HOMEPAGE_WHY_PRISM = {
 
 export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
   {
-    title: 'Simple enough for a busy operator',
+    title: 'Clear updates. Less chasing.',
     description:
       'Clear priorities and plain-language updates, so you know what is happening.',
     iconSrc: '/pixelish/checkmark.svg',
   },
   {
-    title: 'Premium without feeling generic',
+    title: 'Design that feels like you',
     description:
       'Thoughtful design that reflects your business and makes your offer clear.',
     iconSrc: '/pixelish/award.svg',
   },
   {
-    title: 'One connected partner',
+    title: 'One team to call',
     description:
       'The same team connects your website, content, campaigns, and tracking.',
     iconSrc: '/pixelish/command.svg',
   },
   {
-    title: 'Built around buyer decisions',
+    title: 'Built for your customers',
     description:
       'Every page, profile, and campaign is shaped around how real people compare options before they act.',
     iconSrc: '/pixelish/graph-chart-high.svg',
   },
   {
-    title: 'Honest and steady',
+    title: 'Know what comes next',
     description:
       'See the work, understand the results, and know what we recommend next.',
     iconSrc: '/pixelish/emoji-heart.svg',
@@ -577,18 +577,18 @@ export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
     title: 'We review what customers see',
     description:
-      'A real person reviews your website, search visibility, reviews, and tracking.',
+      'Our team looks at your website, search presence, reviews, and available tracking.',
   },
   {
-    title: 'Get your growth plan, free',
+    title: 'Choose your next move',
     description:
-      'Find out what is working, what needs attention, and where to start.',
+      'Get practical recommendations. Decide whether to tackle them yourself or scope the work with Prism.',
   },
 ] as const
 
 export const HOMEPAGE_PROOF = {
   eyebrow: 'Results',
-  title: 'Proof across markets',
+  title: 'See what we’ve built',
   description:
     'Explore our work with dental practices, retailers, consultants, schools, nonprofits, and hospitality brands.',
   ctaLabel: 'See client results',
@@ -596,9 +596,9 @@ export const HOMEPAGE_PROOF = {
 
 export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
   'dr-christopher-wong':
-    'A calmer, more credible dental presence shaped around patient trust and appointment momentum.',
+    'Clear treatment information, a familiar practice story, and an easier path to an appointment.',
   'exquisite-dentistry':
-    'A premium dental website that makes it easier for patients to understand care, trust the team, and take action.',
+    'A dental website that introduces the team, explains care, and makes appointment requests easy to find.',
   'laguna-beach-dental-arts':
     'A coastal dental brand presence that balances high-end care with local warmth and approachability.',
   'family-first-smile-care':
@@ -616,7 +616,7 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
   'roseville-dental-academy':
     'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
   'rebellious-aging':
-    'A movement gained the digital foundation and local discovery groundwork to grow with more clarity.',
+    'A website and content home for Suzanne’s writing, community, and approach to aging.',
   'saorsa-growth-partners':
     'A consulting firm gained sharper positioning, credibility, and lead capture.',
   'belize-kids-foundation':
@@ -673,9 +673,9 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
   },
   'olympic-bootworks': {
     artifact: 'Integrated e-bike catalog',
-    outcome: 'High-consideration demand clarified',
+    outcome: 'Easier product comparison',
     proof:
-      'Current pricing, model comparisons, test rides, search, and email moved into one owned system.',
+      'Model details, prices, and test-ride inquiries sit alongside the shop’s services.',
   },
   'roseville-dental-academy': {
     artifact: 'Admissions platform',
@@ -685,7 +685,7 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
   },
   'rebellious-aging': {
     artifact: 'Movement foundation',
-    outcome: 'Community growth base',
+    outcome: 'A home for the community',
     proof:
       'The brand gained a clearer home for people ready to join the movement.',
   },
@@ -702,7 +702,7 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
   },
   'canary-cove': {
     artifact: 'Hospitality experience',
-    outcome: 'Concierge-ready demand',
+    outcome: 'Direct guest inquiries',
     proof:
       'The private beachfront estate became more immersive and easier to act on.',
   },
@@ -731,11 +731,11 @@ export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
 
 export const HOMEPAGE_FIT = {
   eyebrow: 'Who it is for',
-  title: 'Built for the people running the business.',
+  title: 'Run your business. We’ll help it grow.',
   description:
-    'Get a dedicated partner for the work that brings customers to your business, with clear updates and practical next steps.',
+    'For owners who want better marketing without managing a separate designer, developer, editor, and ads team.',
   notFitLine:
-    'Our best partnerships start with clear goals and room to keep improving.',
+    'Start with one service. Add more when the business needs it.',
   fitHeading: 'Prism is a good fit if...',
   fitItems: [
     'You are a founder, owner, or operator who wants more qualified demand.',
@@ -748,19 +748,19 @@ export const HOMEPAGE_FIT = {
   fitClosing: 'If that sounds like your company, Prism was built for you.',
   notFitHeading: 'Prism may not be the right fit if...',
   notFitItems: [
-    'You want the cheapest option.',
+    'Your decision is based on price alone.',
     'You want overnight results with no real strategy.',
-    'You want a vendor to just take random orders.',
-    'You do not value quality, trust, or long term growth.',
+    'You need execution without agreeing on goals or priorities.',
+    'You cannot make time for feedback or share the access the work needs.',
   ],
   notFitClosing:
     'We do our best work with companies that want to build something strong over time.',
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  title: 'Know what to improve next.',
+  title: 'Let’s find your next move.',
   description:
-    'Get a free review of your website, search visibility, reviews, and tracking. We will explain what needs attention and recommend where to start.',
+    'Show us your business. We’ll review what customers see and suggest the improvements worth making first.',
   primaryCtaLabel: 'Start my free growth audit',
   supportLine: 'Reviewed by our team. No obligation.',
 } as const
@@ -769,7 +769,7 @@ export const HOMEPAGE_STATS = [
   { value: '22', label: 'client growth stories' },
   { value: '7+', label: 'markets served' },
   { value: 'one team', label: 'website + search + proof + ads' },
-  { value: '24/7', label: 'AI-ready discovery layer' },
+  { value: 'clear goals', label: 'practical next steps' },
 ] as const
 
 export const HOMEPAGE_HERO_FACTS = [
@@ -777,7 +777,7 @@ export const HOMEPAGE_HERO_FACTS = [
   { value: 'one partner', label: 'from audit to execution' },
   {
     value: 'website + search + proof + ads',
-    label: 'under one growth rhythm',
+    label: 'planned and measured together',
   },
 ] as const
 

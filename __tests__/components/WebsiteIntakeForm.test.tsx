@@ -181,7 +181,7 @@ describe('WebsiteIntakeForm', () => {
       expect(screen.getByTestId('intake-success')).toBeInTheDocument()
     })
     expect(
-      screen.getByText(/prism will reach out to you within two business days/i),
+      screen.getByText(/we will review your project and follow up/i),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: /book a 30 min zoom with prism/i }),

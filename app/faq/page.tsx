@@ -15,79 +15,79 @@ export const metadata: Metadata = buildRouteMetadata({
 
 const faqs = [
   {
-    question: 'What makes Prism different from other digital agencies?',
+    question: 'What makes Prism different?',
     answer:
-      "Prism combines conversion-first design, software-grade implementation, search foundations, and analytics. Results are measured against each client's real goals, and dated source-attributed examples are published in our case studies.",
+      'We bring website design, engineering, content, and ads together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
   },
   {
     question: 'How much does a website cost?',
     answer:
-      'A Prism website is an ultra-premium PRO build: a bespoke design system, software-grade engineering, analytics wired from day one, and foundations that support Google and AI discovery without guaranteeing placement. It is scoped to your business on a 30-minute Zoom call, so you leave the call with a clear plan and a clear price. Optional ongoing care is scoped with your build.',
+      'Pricing depends on your pages, content, features, and integrations. Start with a 30-minute Zoom call to discuss your goals. We confirm the scope and price before work begins, including any optional ongoing care.',
   },
   {
-    question: "What's included in your website development service?",
+    question: "What's included in a Prism website?",
     answer:
-      'Complete website design and development, AI-powered optimization, mobile responsiveness, SEO setup, hosting, SSL certificates, analytics integration, and ongoing support. We also include conversion optimization, speed optimization, and basic content management system training.',
+      'Custom design and development, mobile layouts, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before building. Hosting, updates, and ongoing edits are available through optional Website Care.',
   },
   {
-    question: 'How long does it take to build a website?',
+    question: 'How long does a website project take?',
     answer:
-      'Most websites are completed in 2-4 weeks, depending on complexity. Simple business websites take 2-3 weeks, while complex e-commerce or custom applications may take 4-8 weeks. We provide regular updates throughout the process and work efficiently to meet your launch goals.',
+      'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date on the intake or scoping call. We will agree on a realistic schedule before work begins.',
   },
   {
     question: 'Do you work with small businesses?',
     answer:
-      'Yes! We specialize in helping small and medium businesses grow their revenue through beautiful, conversion-focused digital solutions. Many of our clients are local businesses, startups, and growing companies looking to establish a strong online presence.',
+      'Yes. We work with owners who want a stronger website, more consistent content, or help reaching customers through ads. You can start with one project and add support as your needs change.',
   },
   {
     question: 'What industries do you serve?',
     answer:
-      'We work with businesses across all industries, with particular expertise in healthcare (dental practices), retail, professional services, e-commerce, and technology companies. Our case studies include successful projects with dental practices, retail stores, and service-based businesses.',
+      'Our work includes dental practices, retailers, professional services, and other local businesses. Dental marketing is a particular specialty. Explore our case studies to see projects closest to your own.',
   },
   {
     question: 'Do you offer mobile app development?',
     answer:
-      "Yes. We develop native and cross-platform apps as custom projects. App work is scoped separately from Prism's core website and growth offers, so pricing is quoted based on requirements, timeline, and integrations.",
+      'Yes. App development is scoped as a custom project. Share what the app needs to do, who will use it, and any integrations so we can discuss the right approach.',
   },
   {
-    question: 'What is your digital marketing approach?',
+    question: 'How do your marketing services work together?',
     answer:
-      'Our digital marketing approach combines SEO, paid ads, conversion-focused creative, reviews, local visibility, and clear analytics. Content OS installs a content engine that compounds, and Prism Infinity covers every Prism service under one monthly plan when you want us running the whole system.',
+      'Your website explains the offer, content helps people understand and trust your business, and ads bring it to a relevant audience. We help you decide which part needs attention first and what to measure.',
   },
   {
-    question: 'Do you provide ongoing support and maintenance?',
+    question: 'Do you provide ongoing support?',
     answer:
-      'Yes. Websites can add an ongoing care plan for updates, edits, and support, scoped with your build. For ongoing growth across everything (websites, content, SEO, ads, and more), Prism Infinity is a monthly subscription with unlimited requests, one at a time. Book a 30-minute call to scope it.',
+      'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan on a call.',
   },
   {
-    question: "What is 'The Prism Method'?",
+    question: 'What happens after the first call?',
     answer:
-      'The Prism Method is our proven 4-step process: 1) Discovery & Strategy (understanding your business goals), 2) Design & Prototyping (creating conversion-focused designs), 3) Development & Testing (building with AI optimization), and 4) Launch & Growth (deploying and optimizing for results).',
+      'We confirm the scope, price, and next steps with you. Once approved, we gather the content and access needed, build the work, and review it with you before launch.',
   },
   {
-    question: 'Can you help improve my existing website?',
+    question: 'Can you improve my existing website?',
     answer:
-      "Absolutely! We offer website redesign and optimization services to improve your current site's performance, conversion rates, and user experience. We can also add new features, improve speed, and enhance SEO without starting from scratch.",
+      'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a rebuild if needed.',
   },
   {
-    question: "What's your typical client ROI?",
+    question: 'What results can I expect?',
     answer:
-      'Results vary by market, starting position, scope, and measurement window. We set the baseline before work begins, track the agreed outcomes, and publish dated Google Search Console or GA4 evidence when there is enough verified data to make a claim.',
+      'Results depend on your market, starting point, scope, and time frame. We agree on what success means for your business and use available data to track progress. Our case studies include the measurement periods and sources behind reported results.',
   },
   {
-    question: 'Do you offer AI-powered website features?',
+    question: 'Can you add AI features to my website?',
     answer:
-      "Yes, we integrate AI-powered features like chatbots, personalization, predictive analytics, and automated optimization. These features help improve user experience, increase conversions, and provide valuable insights about your customers' behavior.",
+      'Yes, where they serve a clear purpose. Tell us what you want customers or your team to do more easily. We can assess an assistant, workflow, or other integration as part of the project scope.',
   },
   {
-    question: "What's your payment structure?",
+    question: 'How do payments work?',
     answer:
-      'Every offer (the PRO website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call, so you always leave the call with a clear price. You can also start free: create a Growth Dashboard and request a free deep audit from the team.',
+      'Payment terms are included with your agreed scope before work starts. Book a 30-minute Zoom call to discuss a project, or begin with a free Growth Dashboard and request a free audit from the team.',
   },
   {
     question: 'How do you measure success?',
     answer:
-      'We track key performance indicators including conversion rates, page load speeds, search engine rankings, lead generation, and revenue attribution. We provide detailed reports and work with you to continuously optimize performance based on real data.',
+      'We choose measures that match your goals, such as search visibility, website inquiries, calls, or bookings. We review the available data with you and distinguish observed results from estimates or gaps in tracking.',
   },
 ]
 
@@ -106,8 +106,8 @@ export default function FAQPage() {
                 Frequently asked questions
               </h1>
               <p className="mt-5 max-w-[44rem] text-pretty font-sans text-[1.05rem] leading-7 text-[#b8afa2]">
-                Answers to common questions about our web development, app
-                development, and digital marketing services.
+                What to expect from your project, from the first conversation
+                through launch and ongoing support.
               </p>
             </header>
 
@@ -129,8 +129,8 @@ export default function FAQPage() {
                 Still have questions?
               </h2>
               <p className="mt-3 max-w-[40rem] text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
-                We&apos;re here to help. Get in touch with the team for
-                personalized answers.
+                Send us your question and a link to your business. We can help
+                you choose a useful next step.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <a

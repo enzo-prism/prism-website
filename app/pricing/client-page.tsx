@@ -27,21 +27,21 @@ const growthPathSteps = [
     title: 'Book a 30-min call',
     price: '30 minutes',
     description:
-      'A 30-minute Zoom call. We map your business, market, and goals. No long discovery process, no email estimates.',
+      'Tell us about your business, what needs work, and what you want to achieve on a 30-minute Zoom call.',
   },
   {
     stage: '02',
-    title: 'Leave with a clear price',
-    price: 'Scoped live',
+    title: 'Agree on the scope',
+    price: 'Clear scope and price',
     description:
-      'Every offer is scoped to your business on the call. You leave knowing exactly what it costs and what you get.',
+      'We recommend a starting point and confirm what is included, what it costs, and how the work will run before you commit.',
   },
   {
     stage: '03',
     title: 'We build',
     price: 'Prism standard',
     description:
-      'Design, engineering, and analytics to the Prism standard, with iterations until you love it.',
+      'We build the agreed work, review it with you, and prepare it for launch. You know what is ready and what needs your input.',
   },
 ] as const
 
@@ -75,13 +75,13 @@ const partnerLevels = [
     title: 'Content OS',
     price: 'Scoped on a call',
     description:
-      'A system that plans, produces, and publishes content across your website and every social platform. Implemented over 3 months, then optimized every month.',
+      'A plan for consistent content across your website and selected social channels. We handle production, publishing, and ongoing improvements.',
   },
   {
     title: 'Prism Infinity',
     price: 'Scoped on a call',
     description:
-      'Unlimited landing pages, ad creative, websites, video, and photoshoots, one request at a time. Pause or cancel anytime.',
+      'Ongoing landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime.',
   },
 ] as const
 
@@ -114,12 +114,12 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Every offer (the website, Content OS, Dental OS, and Prism Infinity) is scoped to your business on a 30-minute Zoom call. You leave the call with a clear plan and a clear price. No estimates by email, no surprise scope.',
+      'Start with a 30-minute Zoom call to discuss your goals and the right offer. We confirm the scope, price, and next steps before work begins.',
   },
   {
     question: 'What does the PRO website include?',
     answer:
-      'A bespoke design system, software-grade engineering, and analytics wired from day one, with foundations that support Google and AI discovery without guaranteeing placement. The finished site is 100% yours.',
+      'Custom design, engineering, analytics, and foundations for Google and AI search. We agree on the pages, features, and integrations with you before building. The finished site is yours.',
   },
   {
     question: 'What is Website Care?',
@@ -129,17 +129,17 @@ const faqs = [
   {
     question: 'How does Content OS pricing work?',
     answer:
-      'Content OS is implemented over 3 months, then optimized every month. Pricing is scoped to your business. Book a 30-minute Zoom call and we will map the system and the investment together.',
+      'Pricing reflects the content, channels, and production your business needs. Book a 30-minute Zoom call to discuss the setup and ongoing work.',
   },
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A monthly subscription for the growth work owners actually request: landing pages, ad creative, websites, video, photoshoots, and more, delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
+      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
   },
   {
     question: 'How is Dental OS priced?',
     answer:
-      'Dental OS is scoped to your practice and combines your website, SEO and AI search, Google Maps, reviews, and ads into one system. Book a 30-minute Zoom call and Prism will scope it with you.',
+      'Dental OS brings together your practice website, search visibility, Google Maps, reviews, and ads. We scope the work around your practice goals on a 30-minute Zoom call.',
   },
 ] as const
 
@@ -157,8 +157,8 @@ export default function PricingPageClient() {
         >
           <CoreSectionHeading
             eyebrow="Snapshot"
-            title="Four offers. Buy once, or run an ongoing system."
-            description="A PRO website for your online presence, a system that scales your content, your whole dental front office packaged, or every Prism service on tap."
+            title="Choose the support your business needs."
+            description="A custom website, consistent content, dental marketing, or ongoing creative support. Start with the work that matters most to your business."
           />
 
           <div className="overflow-hidden border-y border-white/12">
@@ -189,7 +189,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="The offers"
               title="Pick how you want to grow."
-              description="Book a 30-minute Zoom call and we'll scope the right Prism system together. You leave with a clear plan and a clear price."
+              description="Use a free 30-minute Zoom call to discuss your goals. We will recommend a starting point and confirm scope and pricing before work begins."
             />
           </div>
 
@@ -265,7 +265,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="How an engagement starts"
               title="Map it, scope it, then build it."
-              description="Every engagement starts the same way: a 30-minute Zoom call, a clear scope, and a clear price."
+              description="Start with a 30-minute Zoom call. Agree on the scope and price, then give us the go-ahead to build."
               titleClassName="max-w-[14ch]"
             />
           </div>
@@ -306,8 +306,8 @@ export default function PricingPageClient() {
         >
           <CoreSectionHeading
             eyebrow="Ongoing systems"
-            title="The plans that keep working every month."
-            description="When you want Prism running things on an ongoing basis, these are the recurring systems behind the offers."
+            title="Support after launch."
+            description="Keep your website maintained, your content consistent, or your next project moving with ongoing support."
           />
 
           <div className="grid gap-4">
@@ -343,7 +343,7 @@ export default function PricingPageClient() {
           <CoreSectionHeading
             eyebrow="FAQ"
             title="Common pricing questions."
-            description="Clear answers on the PRO website, ongoing care, Content OS, Prism Infinity, and Dental OS."
+            description="What is included, how ongoing care works, and how we scope your plan."
           />
 
           <div className="border-t border-white/12 lg:border-t-0">
@@ -372,8 +372,8 @@ export default function PricingPageClient() {
           )}
         >
           <CoreSectionHeading
-            title="Start with a website. Grow into the whole system."
-            description="Book a 30-minute call to scope your website, Content OS, Dental OS, or Prism Infinity."
+            title="Let’s find the right starting point."
+            description="Bring your goals and questions to a 30-minute call. We can help you choose a focused project or ongoing support."
             titleClassName="max-w-[14ch]"
           />
 

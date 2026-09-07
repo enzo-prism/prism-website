@@ -176,7 +176,7 @@ describe('case study data freshness', () => {
     expect(HOMEPAGE_CASE_STUDY_SUMMARIES['canary-cove']).not.toMatch(
       /private island/i,
     )
-    expect(HOMEPAGE_HERO.subheading).toBe('a growth team for small businesses')
+    expect(HOMEPAGE_HERO.subheading).toBe('Website. Content. Ads. Built around your business.')
     expect(HOMEPAGE_HERO.subheading).not.toMatch(/#1/i)
     expect(HOMEPAGE_GROWTH_RAMP.metrics.map((metric) => metric.value)).toEqual([
       'Baseline',

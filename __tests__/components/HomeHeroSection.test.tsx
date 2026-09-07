@@ -81,16 +81,16 @@ describe('HomeHeroSection', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^prism$/i,
+        name: /^your growth team\.$/i,
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/a growth team for small businesses/i),
+      screen.getByText(/website\. content\. ads\. built around your business\./i),
     ).toBeInTheDocument()
     expect(screen.queryByText(/#1 growth partner/i)).not.toBeInTheDocument()
     expect(
       screen.getByText(
-        /we build your website, create your content, and run your ads/i,
+        /we build the website, create the content, and manage the campaigns/i,
       ),
     ).toBeInTheDocument()
 

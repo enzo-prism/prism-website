@@ -50,7 +50,7 @@ describe('GrowthProcessSection', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /three steps to your free growth audit/i,
+        name: /a clearer place to start/i,
       }),
     ).toBeInTheDocument()
 

@@ -1307,12 +1307,12 @@ function ServiceIntakeForm({ service }: { service: IntakeService }) {
 
   const helper =
     currentStep === 'why'
-      ? 'Tap one. We will move you to the next question.'
+      ? 'Choose your main goal to continue.'
       : currentStep === 'timeline'
         ? config.timelineHelper
         : currentStep === 'current-site'
           ? 'A link is enough. We will review it before we reply.'
-          : 'We reply within two business days on the channel you pick.'
+          : 'Choose email or text for our reply about your project.'
 
   if (isSuccess) {
     return (
@@ -1337,7 +1337,7 @@ function ServiceIntakeForm({ service }: { service: IntakeService }) {
                 Request received
               </p>
               <h2 className="text-balance text-[clamp(1.8rem,5vw,2.8rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#F5F0E8]">
-                Prism will reach out to you within two business days.
+                Thanks. We will review your project and follow up.
               </h2>
             </div>
 
@@ -1355,7 +1355,7 @@ function ServiceIntakeForm({ service }: { service: IntakeService }) {
                 />
               </div>
               <p className="text-[1.05rem] font-medium text-[#F5F0E8]">
-                In a hurry to start?
+                Want to talk through your goals?
               </p>
               <a
                 href={BOOKING_URL}
@@ -1367,8 +1367,8 @@ function ServiceIntakeForm({ service }: { service: IntakeService }) {
                 Book a 30 min Zoom with Prism
               </a>
               <p className="mx-auto max-w-sm font-mono text-[0.7rem] leading-5 text-[#8F877B]">
-                If you do not book now, we will reach out on your preferred
-                channel and share the booking link.
+                Booking is optional. We can follow up by the email or text
+                option you selected.
               </p>
             </div>
           </div>

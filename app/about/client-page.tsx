@@ -44,7 +44,7 @@ export default function AboutClientPage() {
                 <div className="space-y-8">
                   <CoreSectionHeading
                     title="Built by Enzo Sison."
-                    description="Enzo built Prism to empower small businesses with frontier tech and design."
+                    description="Enzo founded Prism to help small businesses turn a stronger online presence into more customer conversations."
                     as="h1"
                     variant="hero"
                     titleClassName="max-w-[9ch]"
@@ -130,8 +130,8 @@ export default function AboutClientPage() {
             )}
           >
             <CoreSectionHeading
-              title="If the fit is right, let's build what's next."
-              description="If there is a fit, we will make the next step clear."
+              title="What would you like to build?"
+              description="Tell us about your business and what you want to improve. Start with a free growth audit, or explore our work."
               titleClassName="max-w-[10ch]"
               descriptionClassName="max-w-[24rem]"
             />
@@ -158,7 +158,7 @@ export default function AboutClientPage() {
         personId="enzo-sison"
         name="Enzo Sison"
         jobTitle="Founder & CEO"
-        description="Founder of Prism Agency, helping businesses create digital experiences that drive real results"
+        description="Founder of Prism, building websites, content, and advertising for small businesses"
         image="https://www.design-prism.com/enzo-avatar.png"
         url="https://www.design-prism.com/about"
         sameAs={[

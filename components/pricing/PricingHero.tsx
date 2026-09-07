@@ -17,6 +17,12 @@ const heroSignals = [
   CANONICAL_PRICING_OFFERS.prism_infinity,
 ] as const
 
+const heroDescriptions = {
+  website: 'Custom design, clear copy, and a site built for your customers.',
+  content_os: 'Consistent video, social posts, and website content.',
+  prism_infinity: 'Ongoing creative work, one request at a time.',
+} as const
+
 export default function PricingHero() {
   return (
     <section className={coreRouteSectionClassName}>
@@ -31,7 +37,7 @@ export default function PricingHero() {
             <CoreSectionHeading
               eyebrow="Pricing"
               title="A clearer way to invest in growth."
-              description="Pick how you want to grow: a PRO website for your online presence, Content OS to keep you publishing, Dental OS for your whole practice, or every Prism service on tap with Prism Infinity. Each one scoped on a 30-minute call."
+              description="Start with a website, build a consistent content presence, or bring your marketing together with Dental OS or Prism Infinity. We’ll match the work to your priorities, with each project scoped on a call."
               as="h1"
               variant="hero"
               titleClassName="max-w-[9ch]"
@@ -49,7 +55,7 @@ export default function PricingHero() {
                       {offer.name}
                     </p>
                     <p className="mt-1 max-w-[24rem] font-sans text-[0.92rem] leading-6 text-[#8f877b]">
-                      {offer.description}
+                      {heroDescriptions[offer.offerId as keyof typeof heroDescriptions]}
                     </p>
                   </div>
                   <p className="shrink-0 pt-1 text-right font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#b8afa2]">

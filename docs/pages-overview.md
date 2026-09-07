@@ -41,7 +41,7 @@ Quick reference for the pages we edit most often.
   - **Prism Infinity** — unlimited services on one monthly subscription; scoped on a 30-minute call (`/prism-infinity`).
 - Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx` ("A clearer way to invest in growth.").
 - `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage, `/about`, and `/get-started`.
-- Section order is intentional: hero, "Four offers. Buy once, or run an ongoing system." snapshot, per-offer cards, the call-first engagement steps (the `growthPathSteps` array: book a 30-min call → leave with a clear price → we build), ongoing-system levels (the `partnerLevels` array), FAQ (call-first pricing, the PRO website, care, Content OS, Prism Infinity, Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model. The `partnerLevels` Content OS description is hand-written copy that must stay in the same voice as `CANONICAL_PRICING_OFFERS.content_os.description` ("A system that plans, produces, and publishes content…") — the consistency guard checks tokens, not descriptions, so keep them in sync manually.
+- Section order is intentional: hero, "Choose the support your business needs." snapshot, per-offer cards, the call-first engagement steps (the `growthPathSteps` array: book a 30-min call → agree on the scope → we build), ongoing-system levels (the `partnerLevels` array), FAQ (call-first pricing, the PRO website, care, Content OS, Prism Infinity, Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model. The `partnerLevels` Content OS description is hand-written copy that must stay in the same voice as `CANONICAL_PRICING_OFFERS.content_os.description` ("Video edits, scripts, social posts, and website content…") — the consistency guard checks tokens, not descriptions, so keep them in sync manually.
 - Every primary CTA is "Book a Free Demo" (`PRICING_PRIMARY_CTA` = `BOOK_A_CALL_CTA` → the Notion Calendar `BOOKING_URL`, opened in a new tab); each offer card keeps an internal explore link as its secondary CTA.
 - The retired five-tier ladder (free Growth Dashboard pricing, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is no longer shown here; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp.
 
@@ -172,12 +172,12 @@ Quick reference for the pages we edit most often.
 - `/get-started` is the free Growth Audit entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
 - After the repositioning to the four packaged offers on `/pricing`, `/get-started` is **intentionally kept as the free on-ramp** (free Growth Dashboard + request a free deep audit from the team). It stays surfaced in the footer ("Get started free") and a callout under the homepage offers section, even though the rest of the pricing ladder it used to anchor is retired. It is **not** in the header nav.
 - The hero is conversion-first: headline, one-line value statement, trust chips (free / ≈1 minute / reviewed by a real person), and the primary "Start my free growth audit" CTA must all land in the first viewport on mobile. The three-step Lordicon row (`Share your business`, `We audit it`, `Get your next move`) sits compact below the CTA — do not let it push the CTA back below the fold.
-- User-facing copy on this funnel leads with the free Growth Audit; the Growth Dashboard is positioned as where the audit is delivered. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
+- User-facing copy on this funnel explains the sequence: create a free Growth Dashboard, request a free audit, then review next steps. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
 - It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
 - `/get-started` intentionally does not mount the stock ElevenLabs floating widget; the Growth Dashboard handoff should stay focused and route into `/apply`.
 - The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
 - The CTA handoff remains anchored at `#book-call` for compatibility with existing CTA destinations elsewhere in the site, even though the live copy now frames that section as Growth Dashboard handoff rather than a scheduled call.
-- Keep the page copy explicit that every real business submission receives a review, while the later Deep Growth Audit or sprint path is selective and not guaranteed.
+- Keep the page copy explicit that the team audit is requested after dashboard creation; do not promise automatic audit delivery or an unconfirmed response deadline.
 - The old custom sales-chat backend and supporting UI files have been removed from the supported stack. If Prism ever needs a bespoke assistant again, treat that as a fresh implementation rather than an existing route to toggle back on.
 
 ## Website intake (`app/website-intake/page.tsx`)
@@ -200,7 +200,7 @@ Quick reference for the pages we edit most often.
 
 ## Contact (`app/contact/page.tsx`)
 
-- Deliberately minimal (2026-07-29 redesign): a dark core-route hero ("Talk to Prism." + "Send a note. We reply within two business days."), the `ContactForm` card, and one "Prefer email?" line with `support@design-prism.com`. The old `What to Expect` checklist and Silicon Valley blurb stay retired; do not reintroduce them.
+- Deliberately minimal (2026-07-29 redesign): a dark core-route hero ("Talk to Prism." + a short invitation to share the project and desired timing), the `ContactForm` card, and one "Prefer email?" line with `support@design-prism.com`. The old `What to Expect` checklist and Silicon Valley blurb stay retired; do not reintroduce them.
 - Do not add demo-booking or calendar CTAs here; the footer and primary free-audit path should route to `/get-started`.
 - Uses `ContactForm` for all validation/submission logic (short labels: Name, Email, Phone (optional), Message).
 - Analytics: `generate_lead` fires once after a successful Formspree submit (`conversionMode: "immediate"`), not on page view or form render. `/thank-you` after contact is confirmation copy only; Apply still owns `/thank-you?source=apply` `generate_lead`.
@@ -403,3 +403,9 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
   - Keep canonical output stable for `/aeo` (`buildRouteMetadata`) and keep `/aeo-thank-you` noindex.
   - Keep the thank-you route out of the sitemap via `lib/seo/search-visibility.ts`.
   - Preserve discoverability links (`/ai-seo-services`, `/seo`) so this funnel remains in the AEO/SEO path.
+
+## September 2026 copy refresh
+
+- Core marketing routes use plain, concrete language about deliverables, customer benefits, the review process, and the next step. Homepage lead: “Your growth team.” / “Website. Content. Ads. Built around your business.”
+- Service pages, pricing, FAQs, contact, intake messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
+- Preserve dated case-study evidence, testimonials, canonical offer/CTA rules, form payloads, analytics identifiers, and navigation destinations when editing copy.

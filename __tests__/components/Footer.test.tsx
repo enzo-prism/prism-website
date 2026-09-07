@@ -29,7 +29,7 @@ describe('Footer', () => {
     render(<Footer />)
 
     expect(
-      screen.getByText(/website\. content\. ads\. one growth system\./i),
+      screen.getByText(/websites, content, and ads that help customers find and choose your business\./i),
     ).toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: /book call/i }),

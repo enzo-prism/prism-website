@@ -29,7 +29,7 @@ const CANONICAL_URL = 'https://www.design-prism.com/dental-os'
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Dental OS',
   description:
-    'A complete dental growth system for websites, SEO, AI search, Google Maps, reviews, and ads.',
+    'Website, search, Google Maps, review support, and ads for dental practices, with a clear path from patient research to an inquiry.',
   path: '/dental-os',
   ogImage: '/prism-opengraph.png',
 })
@@ -42,27 +42,27 @@ const BUNDLE = [
   {
     name: 'Website',
     outcome:
-      'A fast, mobile-first site that earns trust quickly and turns patient visits into booked appointments.',
+      'Clear treatment pages, team photos, and easy contact options that help patients decide whether your practice is right for them.',
   },
   {
     name: 'SEO & AI search',
     outcome:
-      'Pages structured so Google and AI assistants understand, surface, and recommend the practice.',
+      'Useful treatment and location pages, with accurate business information that search engines and AI assistants can understand.',
   },
   {
     name: 'Google Maps & local',
     outcome:
-      'A dialed-in Business Profile and local pages that win the map pack for searches near the practice.',
+      'Accurate practice details, services, photos, and hours across your Google Business Profile and local pages.',
   },
   {
     name: 'Reviews',
     outcome:
-      'A steady review engine that compounds patient trust and local ranking month over month.',
+      'Review-request workflows and response support that help your team collect and respond to patient feedback.',
   },
   {
     name: 'Ads',
     outcome:
-      'High-intent Google and Meta campaigns measured against booked treatment, not clicks.',
+      'Google and Meta campaigns with tracking for calls and inquiries, plus booking outcomes where your practice can provide them.',
   },
 ] as const
 
@@ -73,16 +73,16 @@ const DENTAL_DIFFERENCE = [
     body: 'People research a dentist long before they pick up the phone. The site, photos, and reviews have to earn trust in seconds.',
   },
   {
-    title: 'The map pack decides',
-    body: 'Most new patients choose from Google’s local map results. The Business Profile, reviews, and local pages decide who shows up.',
+    title: 'Local details matter',
+    body: 'Patients use Maps to compare nearby offices, check hours, and get directions. Accurate listings make those decisions easier.',
   },
   {
-    title: 'Reviews are the currency',
-    body: 'Recent, steady reviews drive both patient confidence and local ranking. Velocity matters as much as the average score.',
+    title: 'Reviews answer real concerns',
+    body: 'Patient feedback helps people understand the experience at your office. A clear request and response process makes it easier for your team to keep up.',
   },
   {
-    title: 'AI is the new front desk',
-    body: 'Patients now ask ChatGPT and Google’s AI for the best dentist nearby. The practice has to be easy to find, cite, and corroborate.',
+    title: 'Keep practice information clear',
+    body: 'Whether someone uses search or an AI assistant, your services, location, and contact details should be clear and consistent.',
   },
 ] as const
 
@@ -181,7 +181,7 @@ const PROCESS = [
   },
   {
     label: 'Grow',
-    body: 'Every month we optimize search, ads, reviews, and conversion, reporting against booked appointments instead of vanity metrics.',
+    body: 'We review search activity, ad spend, and inquiries with your team. Where booking data is available, we use it to understand which inquiries became appointments.',
   },
 ] as const
 
@@ -199,7 +199,7 @@ const FAQ_ITEMS = [
   {
     question: 'How long until it is live?',
     answer:
-      'Most single-location practices launch the core website and listings within a few weeks, then search, reviews, and ads compound from there. Urgent provider transitions can move faster.',
+      'We agree on the schedule after reviewing your current website, access, content, and required features. You review a preview before launch, and we coordinate the transition with your existing provider when needed.',
   },
   {
     question: 'Do we own our website and accounts?',
@@ -209,7 +209,7 @@ const FAQ_ITEMS = [
   {
     question: 'Can you handle multiple locations?',
     answer:
-      'Yes. Dental OS scales to multi-location groups with per-location pages, listings, reviews, and reporting so each office is found and chosen in its own market.',
+      'Yes. We can organize pages, listings, reviews, and reporting by location so patients get the right details for each office.',
   },
 ]
 
@@ -232,9 +232,9 @@ export default function DentalOsPage() {
                   as="h1"
                   variant="hero"
                   eyebrow="Dental OS"
-                  title="The growth system, built for dental."
+                  title="Help patients find and contact you."
                   titleClassName="max-w-[18ch]"
-                  description="Patients find, trust, and choose a practice across Google, the map pack, reviews, and now AI. Dental OS runs every one of those surfaces as a single system, so your practice becomes the obvious choice."
+                  description="Bring your website, search presence, reviews, and ads under one plan. We help patients understand your care and make it easier for your team to receive their inquiries."
                 />
                 <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center">
                   <CoreActionLink
@@ -285,8 +285,8 @@ export default function DentalOsPage() {
           >
             <CoreSectionHeading
               eyebrow="What's inside"
-              title="Five systems. One growth engine."
-              description="Dental OS is the full Prism growth stack, packaged for a practice. Each part reinforces the others, so the whole thing compounds instead of competing for budget."
+              title="One plan for your online presence."
+              description="Choose the work your practice needs across five areas. We coordinate the pages, listings, messages, and tracking so patients get consistent information."
             />
             <ul className="grid gap-px overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/10">
               {BUNDLE.map((item, index) => (
@@ -316,7 +316,7 @@ export default function DentalOsPage() {
             <CoreSectionHeading
               eyebrow="Why dental is different"
               title="Dental growth has its own rules."
-              description="A generic marketing bundle misses how patients actually pick a dentist. Dental OS is tuned to the four things that decide it."
+              description="Patients want to understand your care, meet your team, and know what to expect before calling. Your online presence should help them do that."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               {DENTAL_DIFFERENCE.map((tile) => (

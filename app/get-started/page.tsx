@@ -9,7 +9,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Free growth audit'
 const PAGE_DESCRIPTION =
-  'Get a focused review of your website, search visibility, proof, offer, and tracking with a clear path forward.'
+  'Create a free Growth Dashboard and request a free review of your website, search visibility, and customer journey.'
 const CANONICAL_URL = 'https://www.design-prism.com/get-started'
 
 export const metadata: Metadata = buildRouteMetadata({

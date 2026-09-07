@@ -37,8 +37,8 @@ export type SeoVideoContent = {
 export const seoOverviewContent = {
   hero: {
     eyebrow: "seo",
-    title: "seo that actually moves the needle",
-    subtitle: "we build websites that don’t just look good. they show up, get clicked, and turn strangers into customers.",
+    title: "Help the right customers find you",
+    subtitle: "We improve your pages, listings, and site structure so people searching for your services can find clear answers and a way to contact you.",
     primaryCta: { label: "talk with prism", href: "/get-started" },
     secondaryCta: { label: "see on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
@@ -54,22 +54,22 @@ export const seoOverviewContent = {
     },
     {
       title: "off-page seo",
-      description: "how much proof there is that the world trusts you.",
+      description: "How your business is represented on other websites, directories, and review platforms.",
     },
   ],
   onPagePreview: {
-    title: "on-page seo: make your website a perfect answer",
+    title: "Make every page useful",
     bullets: [
       "each page matches real search intent",
       "content is structured clearly for humans and search engines",
-      "core services and locations are impossible to miss",
+      "clear service and location information",
       "loading is fast, clean, and mobile friendly",
     ],
     linkText: "on-page seo services",
     linkHref: "/seo/on-page",
   },
   offPagePreview: {
-    title: "off-page seo: prove the world trusts you",
+    title: "Build a consistent presence beyond your site",
     bullets: [
       "who’s linking to you (quality over quantity)",
       "where your business is listed and how consistent it is",
@@ -89,7 +89,7 @@ export const seoOverviewContent = {
       description: "deeper content, stronger internal linking, robust schema, expanded service areas, review strategy.",
     },
     {
-      title: "domination",
+      title: "ongoing improvement",
       description: "ongoing content, advanced local listing optimization, review systems, link opportunities, continuous iteration.",
     },
   ],
@@ -103,13 +103,13 @@ export const seoOverviewContent = {
 export const seoOnPageContent = {
   hero: {
     eyebrow: "on-page seo",
-    title: "on-page seo: make your website a perfect answer",
+    title: "Make every page useful",
     subtitle: "everything you control on your own site, designed to match what people are actually searching for.",
     primaryCta: { label: "book a prism build", href: "/get-started" },
     secondaryCta: { label: "see off-page seo", href: "/seo/off-page" },
   } satisfies SeoHeroContent,
   intro:
-    "on-page seo is how we turn your website into the best possible answer to the questions your customers type into google and apple.",
+    "On-page SEO helps visitors and search engines understand your website. We organize the pages around the services you offer and the questions customers ask.",
   pillars: [
     {
       title: "content & intent match",
@@ -133,19 +133,19 @@ export const seoOnPageContent = {
         "internal linking that guides both users and crawlers",
         "no duplicate content and correct canonicals",
         "sitemap + robots.txt tuned to what should be crawled",
-        "schema/json-ld so machines understand every section",
+        "structured data that accurately describes eligible page content",
         "secure https everywhere",
       ],
     },
     {
-      title: "ux & engagement signals",
-      description: "search engines monitor how real people behave; we design for genuine engagement.",
+      title: "a clear path to an inquiry",
+      description: "Visitors should be able to understand your offer, find an answer, and contact you without getting lost.",
       bullets: [
         "easy navigation with clear menus",
         "above-the-fold clarity so people know they’re in the right place",
         "strong ctas for call, book, or message",
         "readable formatting with breathable spacing",
-        "reduced bounce by giving users obvious next steps",
+        "useful next steps after the information visitors came for",
       ],
     },
     {
@@ -162,7 +162,7 @@ export const seoOnPageContent = {
     },
   ],
   closing:
-    "on-page seo isn’t an add-on for us. It’s the spine of every prism build. depending on your package, we simply add more pages, more schema, and more iteration as you grow.",
+    "Search is part of how we plan a website. We start with useful pages and sound technical foundations, then agree on the content and improvements your business needs next.",
   closingBullets: [
     "start with the right architecture",
     "expand content as services and locations grow",
@@ -173,18 +173,18 @@ export const seoOnPageContent = {
 export const seoOffPageContent = {
   hero: {
     eyebrow: "off-page seo",
-    title: "off-page seo: prove to google and apple that the world trusts you",
-    subtitle: "everything happening off your site that boosts trust, authority, and visibility.",
-    primaryCta: { label: "tighten your ecosystem", href: "/get-started" },
+    title: "Make your reputation easier to find",
+    subtitle: "Accurate listings, genuine reviews, and relevant mentions help people check your business before they choose it.",
+    primaryCta: { label: "request a free review", href: "/get-started" },
     secondaryCta: { label: "review on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
   video: {
     id: "off-page-seo-video",
     eyebrow: "watch",
-    title: "enzo on designing off-page proof systems",
-    description: "hear enzo break down how we tighten listings, reviews, and backlinks so platforms see steady proof you’re legit.",
+    title: "Enzo on your reputation beyond your website",
+    description: "Enzo explains how listings, reviews, and relevant links fit into Prism’s search work.",
     playerTitle: "Enzo on tightening off-page proof",
-    caption: "why we build feedback loops around reviews, listings, and mentions so your reputation graph compounds.",
+    caption: "How accurate business information and genuine customer feedback support your online presence.",
     src: "https://res.cloudinary.com/dhqpqfw6w/video/upload/v1763427804/off-page-1_s9ni7k.mp4",
     poster: "https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0/off-page-1_s9ni7k.jpg",
     schema: {
@@ -225,18 +225,18 @@ export const seoOffPageContent = {
     {
       title: "reviews & reputation",
       description:
-        "reviews show volume, recency, distribution, and narrative: all signals engines monitor.",
+        "Recent, genuine feedback helps customers understand what it is like to work with you.",
       bullets: [
         "google reviews",
         "yelp + facebook",
         "third-party aggregators like birdeye or podium",
-        "flows that make it easy for happy customers to share",
+        "simple requests for honest customer feedback",
       ],
     },
     {
       title: "real-world engagement",
       description:
-        "engagement metrics like map clicks and calls reinforce that you’re an active business.",
+        "Profile interactions help you see how people use your listings and where to improve them.",
       bullets: [
         "maps listing clicks and direction requests",
         "calls from listings",
@@ -257,7 +257,7 @@ export const seoOffPageContent = {
     {
       title: "mentions & entity building",
       description:
-        "even without links, brand mentions help engines understand you’re real and referenced.",
+        "Relevant mentions put your business in context, from local events to industry publications.",
       bullets: [
         "local blogs and community shoutouts",
         "event sponsorships and listings",
@@ -267,5 +267,5 @@ export const seoOffPageContent = {
     },
   ],
   closing:
-    "off-page seo is where your reputation graph is built. depending on your package we tighten listings, design review flows, and align every off-site signal with your on-site experience.",
+    "We review where your business appears, correct conflicting information, and agree on a practical plan for listings, reviews, and relevant mentions. The details should match what customers find on your website.",
 }

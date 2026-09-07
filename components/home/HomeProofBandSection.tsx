@@ -82,11 +82,10 @@ export default function HomeProofBandSection() {
                 </div>
 
                 <p className="sr-only">
-                  Prism&apos;s first 90 day process: by day 30, establish the
-                  measurement baseline and priorities; by day 60, ship the
-                  agreed core improvements; by day 90, review source data and
-                  establish a measured improvement cadence. Exact timing depends
-                  on scope, access, and the starting point.
+                  Prism&apos;s process: establish priorities and a measurement
+                  baseline, launch the agreed work, then review the results and
+                  decide what to improve next. Scope and timing are agreed before
+                  work begins.
                 </p>
               </div>
             </div>

@@ -101,12 +101,12 @@ export default function CaseStudiesPage() {
                   case studies
                 </p>
                 <h1 className="mt-4 text-balance text-4xl font-semibold text-foreground sm:text-5xl md:text-6xl">
-                  recent client work
+                  The work behind the growth
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  One growth system for founders, doctors, and local operators:
-                  websites, SEO, reviews, ads, photography, and tracking that
-                  turn searches into booked patients, clients, and customers.
+                  Explore the websites, content, and campaigns we’ve built for
+                  businesses like yours. See the starting point, the work, and
+                  the results we can measure.
                 </p>
               </div>
             </div>
@@ -204,12 +204,12 @@ export default function CaseStudiesPage() {
         <section className="px-4 pb-16 pt-4 md:pb-20">
           <div className="container mx-auto max-w-4xl px-4 text-center md:px-6">
             <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Want results like these?
+              What could we improve for your business?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-              Prism builds websites, search visibility, reviews, ads, and
-              analytics as one connected growth system, then measures what
-              changes.
+              Start with a free review of your website and online presence.
+              We’ll help you choose a useful first project, with clear scope
+              before you commit.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
               <Button asChild className="rounded-full px-5">

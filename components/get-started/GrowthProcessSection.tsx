@@ -24,24 +24,24 @@ const ICON_COLORS = 'primary:#ffffff,secondary:#16c72e'
 export const GROWTH_PROCESS_STEPS: GrowthProcessStep[] = [
   {
     stage: '01',
-    label: 'Share your business',
+    label: 'Create your dashboard',
     icon: 'https://cdn.lordicon.com/wfjtyzqa.json',
   },
   {
     stage: '02',
-    label: 'We audit it',
+    label: 'Request a free audit',
     icon: 'https://cdn.lordicon.com/raxyqlxo.json',
   },
   {
     stage: '03',
-    label: 'Get your next move',
+    label: 'Review your next steps',
     icon: 'https://cdn.lordicon.com/rusvgrhw.json',
   },
 ]
 
 const HERO_TRUST_CHIPS: HeroTrustChip[] = [
   { icon: Sparkles, label: 'Free' },
-  { icon: Clock, label: '≈ 1 minute' },
+  { icon: Clock, label: 'Short intake' },
   { icon: UserCheck, label: 'Reviewed by a real person' },
 ]
 
@@ -56,12 +56,12 @@ export default function GrowthProcessSection() {
 
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
         <h1 className="max-w-[16ch] text-balance font-sans text-[clamp(2.3rem,5.6vw,4.25rem)] font-medium leading-[1.02] tracking-[-0.05em] text-[#F5F5F2]">
-          Three steps to your free Growth Audit.
+          A clearer place to start.
         </h1>
 
         <p className="mt-5 max-w-[34rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#A0A09A] sm:text-[1.1rem] sm:leading-8">
-          Tell us about your business in about a minute. A real person reviews
-          it and sends back your clearest next move, free.
+          Create your free Growth Dashboard, then request a free audit from
+          the Prism team. See what needs attention before choosing your next project.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">

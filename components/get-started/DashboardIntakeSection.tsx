@@ -37,8 +37,8 @@ const TRUST_SIGNALS: TrustSignal[] = [
   { icon: UserCheck, label: 'Reviewed by a real person' },
   {
     icon: Building2,
-    label: 'Built for growth-focused companies',
-    sub: 'including dental, retail, consulting, nonprofit, hospitality, and local service teams',
+    label: 'Built for small businesses',
+    sub: 'including dental practices, retailers, and local service teams',
   },
 ]
 
@@ -93,7 +93,7 @@ export default function DashboardIntakeSection() {
         <div className="space-y-8">
           <CoreSectionHeading
             title="One short intake."
-            description="About a minute. Just the essentials Prism needs to prepare your free Growth Audit, delivered in your own free Growth Dashboard."
+            description="Share your business, website, and goals to create your free Growth Dashboard. You can then request a free audit from the team."
             titleClassName="max-w-[13ch]"
           />
 
@@ -103,7 +103,7 @@ export default function DashboardIntakeSection() {
             </span>
             <span className={styles.quickIntakeText}>
               <span>Quick intake</span>
-              <span>≈ 1 minute</span>
+              <span>At your pace</span>
             </span>
           </div>
 
@@ -198,7 +198,7 @@ export default function DashboardIntakeSection() {
                   strokeWidth={1.6}
                   className="shrink-0 text-[#9eff2e]"
                 />
-                Every real business submission receives a Growth Audit.
+                Create your free dashboard, then request a free audit from the team.
               </p>
             </div>
           </div>

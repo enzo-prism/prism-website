@@ -129,7 +129,7 @@ function QueueBoard() {
               styles.pulseDot,
             )}
           />
-          Live
+          Example
         </p>
       </div>
 
@@ -266,8 +266,8 @@ export default function PrismInfinityPage() {
                     One subscription.
                   </h1>
                   <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
-                    One monthly plan for the deliverables that grow a business.
-                    Fill a queue with landing pages, ads, websites, video, and
+                    One monthly plan for your ongoing creative work. Fill a
+                    queue with landing pages, ads, websites, video, and
                     photoshoots. We ship one at a time.
                   </p>
                 </div>
@@ -386,7 +386,7 @@ export default function PrismInfinityPage() {
               <CoreSectionHeading
                 eyebrow="What you'll request"
                 title="The work owners actually need."
-                description="Prism Infinity is an infinite queue of growth deliverables, not a catalog of agency extras. Request whatever the moment calls for."
+                description="Add the pages, creative, and content your business needs to one queue. We agree on each brief and work through your priorities one at a time."
                 titleClassName="max-w-[14ch] xl:max-w-[16ch]"
               />
             </HomeReveal>
@@ -464,8 +464,8 @@ export default function PrismInfinityPage() {
                     Stop hiring a new vendor for every project.
                   </p>
                   <p className="max-w-[34rem] text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
-                    One team, one queue, one monthly rate. Pause when work
-                    slows. No contracts, no penalties, no awkward conversations.
+                    One team, one queue, one monthly rate. Keep your brand and
+                    feedback in one place as you move from project to project.
                   </p>
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
@@ -507,7 +507,7 @@ export default function PrismInfinityPage() {
                 <CoreSectionHeading
                   eyebrow="Proof"
                   title="The same team behind real results."
-                  description="Prism Infinity is the same craft and output engine that drives growth and reach for the brands we work with."
+                  description="Explore results from client websites and the audiences on Prism’s own channels. These are examples of our wider work, not a forecast for your subscription."
                 />
               </HomeReveal>
               <dl className="mt-10 grid gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
@@ -629,7 +629,7 @@ export default function PrismInfinityPage() {
               <HomeReveal>
                 <CoreSectionHeading
                   title="Keep the queue full."
-                  description="One subscription for the deliverables that grow the business. Book a 30-minute Zoom call and we'll scope it together."
+                  description="Bring your next few priorities to a 30-minute Zoom call. We will review the work, explain the queue, and scope your monthly plan."
                   titleClassName="max-w-[14ch] xl:max-w-[16ch]"
                 />
               </HomeReveal>

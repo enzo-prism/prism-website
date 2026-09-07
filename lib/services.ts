@@ -31,7 +31,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'A site that makes choosing you easy.',
     homeCta: 'Explore websites',
     description:
-      'A custom-designed, fast website with clear paths to call or book. Built with analytics from day one and foundations for Google and AI search.',
+      'A fast, custom website that explains your value and makes it easy to call or book. Search foundations and analytics help you understand how people find and use it.',
     primaryCta: WEBSITE_START_CTA,
   },
   {
@@ -39,11 +39,11 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     label: 'content',
     name: 'Content',
     href: '/content',
-    navDescription: 'Content that gets found and shared.',
-    homeTitle: 'Content that gets found and shared.',
+    navDescription: 'Give people a reason to choose you.',
+    homeTitle: 'Give people a reason to choose you.',
     homeCta: 'Explore content',
     description:
-      'We plan, produce, and publish content for your website and social channels. Set up over 3 months, then improved each month as we learn what connects.',
+      'Useful stories, photos, and videos for your website and social channels. We handle planning, production, and publishing so you can show up consistently.',
     primaryCta: BOOK_A_CALL_CTA,
   },
   {
@@ -55,7 +55,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Ads built around better leads.',
     homeCta: 'Explore ads',
     description:
-      'Campaigns across Google, Meta, TikTok, and Yelp, chosen for your audience. Track calls, inquiries, and bookings to see where your budget works hardest.',
+      'Reach potential customers on the channels that fit your audience. We build campaigns and track available call, inquiry, and booking data to guide the next improvement.',
     primaryCta: BOOK_A_CALL_CTA,
   },
 ] as const

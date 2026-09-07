@@ -74,7 +74,7 @@ describe('/get-started page', () => {
     expect(screen.getAllByText(/focus/i).length).toBeGreaterThan(0)
     expect(screen.getByText(/6 steps/i)).toBeInTheDocument()
     expect(
-      screen.getAllByText(/every real business submission receives a growth audit/i)
+      screen.getAllByText(/create your free dashboard, then request a free audit from the team/i)
         .length,
     ).toBeGreaterThan(0)
   })

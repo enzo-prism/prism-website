@@ -73,12 +73,12 @@ describe('Prism Infinity framing', () => {
       ]),
     )
     expect(DELIVERABLES.map((item) => item.title)).toEqual([
-      'Landing pages that convert',
-      'Ad creative that gets customers',
-      'Websites that rank and convert',
-      'Video that sells',
+      'Landing pages for your offers',
+      'Ad creative to test',
+      'New websites and site updates',
+      'Video edits for your story',
       'Photoshoots you own',
-      'Content that compounds',
+      'Content for your channels',
     ])
   })
 

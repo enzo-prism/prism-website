@@ -272,7 +272,7 @@ export default function HomeHeroSection() {
                         className="home-signal-dot mt-2 h-1 w-1 shrink-0 rounded-full bg-[#d8bc79]"
                       />
                       <p className="text-pretty font-sans text-[0.9rem] leading-6 text-[#cfc7ba]">
-                        Grown end to end by Prism, powered by{' '}
+                        Our own channels, built by the team behind our{' '}
                         <TrackedLink
                           href="/content"
                           label="content"

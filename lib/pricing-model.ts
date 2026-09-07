@@ -85,7 +85,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: WEBSITE_PRICE_LABEL,
     priceSubLabel: 'The PRO website, scoped to your business',
     description:
-      'An ultra-premium PRO website for serious businesses: a bespoke design system, software-grade engineering, analytics wired from day one, and foundations that support Google and AI discovery without guaranteeing placement.',
+      'A custom website with clear service pages, mobile-friendly design, inquiry forms, and analytics. Built to help customers understand your business and take the next step.',
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: 'Explore PRO websites',
@@ -102,7 +102,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: CONTENT_OS_PRICE_LABEL,
     priceSubLabel: 'Scoped to your business on a 30-min call',
     description:
-      'A system that plans, produces, and publishes content across your website and every social platform. Implemented over 3 months, then optimized every month.',
+      'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: 'Explore Content',
@@ -119,7 +119,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: DENTAL_OS_PRICE_LABEL,
     priceSubLabel: 'Scoped to your practice',
     description:
-      'The full Prism growth system, packaged for dental practices: website, SEO and AI search, Google Maps, reviews, and ads, tuned to how patients choose a practice.',
+      'Website, search, Google Maps, review support, and ads coordinated for your practice. Help patients understand your care and make it easier to call or request an appointment.',
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: 'Explore Dental OS',
@@ -136,7 +136,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceLabel: PRISM_INFINITY_PRICE_LABEL,
     priceSubLabel: 'Unlimited requests. Pause or cancel anytime.',
     description:
-      'Unlimited growth deliverables on one monthly subscription: landing pages, ad creative, websites, video, photoshoots, and content. Request as many as you need, delivered one at a time. Pause or cancel anytime.',
+      'One monthly subscription for landing pages, ad creative, websites, video, photoshoots, and content. Add unlimited requests to your queue; we work through them one at a time. Pause or cancel anytime.',
     primaryCta: BOOK_A_CALL_CTA,
     secondaryCta: {
       label: 'Explore Prism Infinity',

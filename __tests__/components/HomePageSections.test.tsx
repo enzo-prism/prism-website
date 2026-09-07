@@ -54,7 +54,7 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^prism$/i,
+        name: /^your growth team\.$/i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -66,31 +66,31 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /great companies use prism/i,
+        name: /meet the businesses we’ve helped/i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /buyers check everything before they choose\./i,
+        name: /give people a reason to choose you\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /one team\. the whole system\./i,
+        name: /your marketing, working together\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /first 90 days\./i,
+        name: /a clear plan\. real work\./i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /built for the people running the business\./i,
+        name: /run your business\. we’ll help it grow\./i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -102,13 +102,13 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /proof across markets/i,
+        name: /see what we’ve built/i,
       }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /know what to improve next\./i,
+        name: /^let’s find your next move\.$/i,
       }),
     ).toBeInTheDocument()
     expect(

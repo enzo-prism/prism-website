@@ -20,7 +20,7 @@ export default function HomeOffersSection() {
           <CoreSectionHeading
             eyebrow="What Prism does"
             title="Website. Content. Ads."
-            description="Start with what your business needs most. Build a better website, give people a reason to trust you, and reach the right customers."
+            description="Choose the work you need now: a better website, content worth sharing, or a campaign with a clear goal."
             titleClassName="max-w-[18ch]"
           />
         </HomeReveal>

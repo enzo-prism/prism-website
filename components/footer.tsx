@@ -120,7 +120,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </div>
 
             <p className="text-sm leading-7 text-pretty text-[#b8afa2]">
-              Website. Content. Ads. One growth system.
+              Websites, content, and ads that help customers find and choose your business.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">

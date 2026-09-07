@@ -4,7 +4,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'About',
-  description: 'Meet the team behind Prism and learn how we build websites, SEO, ads, and growth systems for local businesses.',
+  description: 'Meet Prism founder Enzo Sison and learn about the work behind our websites, content, and advertising for small businesses.',
   path: "/about",
 })
 

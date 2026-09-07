@@ -9,11 +9,11 @@ const sharedEndpoint =
 export const SERVICE_INTAKE_CONFIG = {
   website: {
     label: 'Website',
-    eyebrow: 'PRO website intake',
+    eyebrow: 'Website intake',
     submitLabel: 'Start my website',
     goalHeading: 'Why do you want a new website?',
     timelineHeading: 'When do you want your new website live?',
-    timelineHelper: 'This helps us scope the first version.',
+    timelineHelper: 'Share your preferred timing. We will confirm a schedule when we scope the work.',
     goalField: 'why_new_website',
     endpoint: sharedEndpoint,
     goals: [
@@ -45,7 +45,7 @@ export const SERVICE_INTAKE_CONFIG = {
     submitLabel: 'Start my content',
     goalHeading: 'What should your content do for you?',
     timelineHeading: 'When do you want to start creating?',
-    timelineHelper: 'This helps us plan your first content.',
+    timelineHelper: 'Share your preferred timing so we can plan the first content together.',
     goalField: 'content_goal',
     endpoint:
       process.env.NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT ||
@@ -79,7 +79,7 @@ export const SERVICE_INTAKE_CONFIG = {
     submitLabel: 'Start my ads',
     goalHeading: 'What should your ads help you achieve?',
     timelineHeading: 'When do you want your ads live?',
-    timelineHelper: 'This helps us plan your first campaign.',
+    timelineHelper: 'Share your preferred timing so we can scope the first campaign.',
     goalField: 'ads_goal',
     endpoint:
       process.env.NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT ||

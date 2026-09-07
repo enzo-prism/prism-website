@@ -47,12 +47,12 @@ const WHAT_YOU_GET = [
     body: 'Images, video, and clear copy built around your offer and the next step you want customers to take.',
   },
   {
-    title: 'Landing page alignment',
+    title: 'A clear page after the click',
     body: 'Send visitors to a relevant page with a clear offer and a straightforward way to call, book, or inquire.',
   },
   {
-    title: 'Full-funnel setup',
-    body: 'Search, social, remarketing, and local intent working as one system.',
+    title: 'Campaign setup and tracking',
+    body: 'Set up the selected ad accounts, audiences, and conversion events so campaign results can be reviewed.',
   },
   {
     title: 'Weekly optimization',
@@ -71,11 +71,11 @@ const BUDGET_GUARDS = [
   },
   {
     title: 'Show up when buyers are ready',
-    body: 'Bids, schedules, and pacing tuned to peak-intent windows.',
+    body: 'Review when inquiries arrive and adjust ad schedules and budget pacing to match your business hours and demand.',
   },
   {
     title: 'Right radius, right people',
-    body: 'Geo-targeting and exclusions keep spend local and high quality.',
+    body: 'Focus ads on the areas you serve and exclude locations outside your market.',
   },
   {
     title: 'Keep testing the details',
@@ -102,12 +102,12 @@ const PLATFORMS: readonly AdPlatform[] = [
   },
   {
     name: 'TikTok',
-    why: 'Native, fast-moving creative that grabs attention and converts.',
+    why: 'Short videos that introduce your offer in a format people expect in their feed.',
     logoBrands: ['tiktok'],
   },
   {
     name: 'Yelp Ads',
-    why: 'Bottom-of-funnel local buyers comparing options.',
+    why: 'Reach people comparing local businesses, services, and reviews.',
   },
 ]
 
@@ -130,7 +130,7 @@ const PROCESS_STEPS = [
   },
   {
     step: 'Report',
-    body: 'Clear results and next steps. No jargon, no fluff.',
+    body: 'Review spend, tracked inquiries, lead quality, and the next tests with you.',
   },
 ] as const
 
@@ -138,7 +138,7 @@ const OUTCOMES = [
   'Lower cost per lead through testing and tighter targeting.',
   'Higher conversion rates with better offers and landing pages.',
   'A cleaner pipeline by filtering out low-quality clicks and calls.',
-  'Full visibility into what is working so you can scale with confidence.',
+  'A clearer view of campaign spend, tracked inquiries, and gaps in measurement.',
 ] as const
 
 const HANDLED_FOR_YOU = [
@@ -169,7 +169,7 @@ const FAQ_ITEMS = [
   {
     question: 'How fast will I see results?',
     answer:
-      'Search and Yelp tend to produce leads quickly. Paid social ramps as creative tests find winners. Most clients see meaningful signal in weeks, not months.',
+      'Timing depends on your market, budget, offer, and the number of people who respond. We check delivery and tracking first, then use the available data to decide what to change. A launch date is not a promise of leads.',
   },
   {
     question: 'What budgets work best?',
@@ -184,12 +184,12 @@ const FAQ_ITEMS = [
   {
     question: 'What if I already run ads?',
     answer:
-      'Keep what works, fix the waste, and test higher-converting variations so nothing good is lost.',
+      'We review the account history, tracking, audiences, and creative before recommending changes. Existing results give us a starting point for the next tests.',
   },
   {
     question: 'Do I need a new website first?',
     answer:
-      'A conversion-ready website makes ads cheaper. If the site is the leak, we start there. See the Website service, then come back to spend.',
+      'Not necessarily. We check whether the destination page explains the offer, works on mobile, and makes it easy to contact you. If it needs work, we scope those changes before sending paid traffic.',
   },
 ] as const
 
@@ -197,7 +197,7 @@ const AUDIENCE_SEGMENTS = [
   {
     name: 'Dental and medical teams',
     description:
-      'Fill chair time with compliant campaigns, call tracking, and landing pages tuned for patients.',
+      'Explain your services with patient-focused ads, clear landing pages, and inquiry tracking.',
     href: '/why-dental-practices-love-prism',
   },
   {
@@ -209,7 +209,7 @@ const AUDIENCE_SEGMENTS = [
   {
     name: 'Consulting and professional services',
     description:
-      'Lead-gen funnels that surface expertise, nurture prospects, and protect premium positioning.',
+      'Show your expertise and give interested prospects a clear way to request a consultation.',
     href: '/why-consulting-companies-love-prism',
   },
   {
@@ -221,7 +221,7 @@ const AUDIENCE_SEGMENTS = [
   {
     name: 'Nonprofits and education',
     description:
-      'Mission-forward messaging, donor retargeting, and grant-friendly tracking that proves impact.',
+      'Promote programs and fundraising campaigns with clear messages and tracking for the actions that matter.',
     href: '/why-nonprofits-love-prism',
   },
 ] as const
@@ -312,20 +312,20 @@ export default async function AdsPage() {
             <div id="ads-founder-vsl" className="mx-auto max-w-3xl">
               <CoreSectionHeading
                 eyebrow="Hear from our founder"
-                title="How Prism runs paid demand."
-                description="Enzo on strategy, creative, offers, and the optimization loop behind Google, Meta, TikTok, and Yelp."
+                title="How Prism plans and manages ads."
+                description="Enzo explains how we choose channels, develop creative, and review campaign results."
               />
               <div className="mt-8">
                 <VideoPlayer
                   src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763165529/Untitled_xmscby.mp4"
                   poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/Untitled_xmscby.jpg"
                   title="Founder Enzo Sison on Prism Ads"
-                  caption="Enzo shares how Prism plans, builds, and optimizes Google, Meta, TikTok, and Yelp campaigns so local businesses get more calls, form fills, and store visits without wasting spend."
+                  caption="Enzo shares how Prism chooses channels, prepares creative, and reviews calls and inquiries from paid campaigns."
                   schema={{
                     id: 'https://www.design-prism.com/ads#founder-vsl',
                     name: 'Founder Enzo Sison on Prism Ads',
                     description:
-                      "Enzo Sison explains Prism's paid ads system across Google, Meta, TikTok, and Yelp: strategy, creative, offers, and nonstop optimization to drive more calls, clicks, and loyal customers.",
+                      'Enzo Sison explains how Prism plans campaigns, develops creative, and reviews results across Google, Meta, TikTok, and Yelp.',
                     thumbnailUrl:
                       'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/Untitled_xmscby.jpg',
                     uploadDate: '2025-01-24T00:00:00Z',
@@ -479,7 +479,7 @@ export default async function AdsPage() {
           <div className={coreRouteContainerClassName}>
             <CoreSectionHeading
               eyebrow="Fit"
-              title="Who we help scale with ads."
+              title="Who we build campaigns for."
               description="Local teams that want to reach more potential customers and understand what their ad spend delivers."
             />
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -598,7 +598,7 @@ export default async function AdsPage() {
               <CoreSectionHeading
                 eyebrow="From the blog"
                 title="Ads and growth notes."
-                description="Playbooks on offers, targeting, and scaling paid channels without waste."
+                description="Practical articles on offers, targeting, ad creative, and campaign measurement."
               />
               <div className="mt-10">
                 <SimpleBlogGrid posts={adsBlogPosts}>
@@ -722,7 +722,7 @@ export default async function AdsPage() {
       <ServiceSchema
         serviceId="paid-ads-service"
         name="Prism Ads"
-        description="Full-funnel paid search and social campaigns with creative, targeting, landing paths, and tracking across Google, Meta, TikTok, and Yelp."
+        description="Paid search and social campaigns with ad creative, audience targeting, landing pages, and inquiry tracking across Google, Meta, TikTok, and Yelp."
         serviceType="Digital marketing"
         areaServed="United States"
         offerDetails={{

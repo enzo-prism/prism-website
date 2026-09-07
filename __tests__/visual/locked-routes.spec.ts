@@ -90,8 +90,8 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /^prism$/i,
-    mustContain: [/a growth team for small businesses/i],
+    readyHeading: /^your growth team\.$/i,
+    mustContain: [/website\. content\. ads\. built around your business\./i],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
@@ -103,7 +103,7 @@ const lockedRoutes = [
   {
     name: 'get-started',
     path: '/get-started',
-    readyHeading: /three steps to your free growth audit\./i,
+    readyHeading: /a clearer place to start\./i,
     // The hero step icons are looping Lordicon (lottie) animations, so their
     // rendered frame is non-deterministic. Mask them to keep the locked layout
     // snapshot stable while still locking the surrounding hero structure.
@@ -194,7 +194,7 @@ test('home fit section snapshot stays stable', async ({ page }) => {
 
   const fitHeading = page.getByRole('heading', {
     level: 2,
-    name: /built for the people running the business\./i,
+    name: /run your business\. we’ll help it grow\./i,
   })
   await expect(fitHeading).toBeVisible({ timeout: 20_000 })
 
@@ -221,7 +221,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 
   const problemHeading = page.getByRole('heading', {
     level: 2,
-    name: /buyers check everything before they choose/i,
+    name: /give people a reason to choose you/i,
   })
   await expect(problemHeading).toBeVisible({ timeout: 20_000 })
 
@@ -252,7 +252,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
 
   const servicesHeading = page.getByRole('heading', {
     level: 2,
-    name: /one team\. the whole system\./i,
+    name: /your marketing, working together\./i,
   })
   await expect(servicesHeading).toBeVisible({ timeout: 20_000 })
 
@@ -282,7 +282,7 @@ test('home proof section snapshot stays stable', async ({ page }) => {
 
   const proofHeading = page.getByRole('heading', {
     level: 2,
-    name: /proof across markets/i,
+    name: /see what we’ve built/i,
   })
   await expect(proofHeading).toBeVisible({ timeout: 20_000 })
 
@@ -326,12 +326,12 @@ test('home fit and service cards stay contained across responsive breakpoints', 
 
     const sections = [
       {
-        heading: /built for the people running the business\./i,
+        heading: /run your business\. we’ll help it grow\./i,
         cardSelector: '[data-home-fit-card]',
         expectedCount: 3,
       },
       {
-        heading: /one team\. the whole system\./i,
+        heading: /your marketing, working together\./i,
         cardSelector: '[data-home-service-card]',
         expectedCount: 8,
       },
@@ -424,7 +424,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /^prism$/i,
+        name: /^your growth team\.$/i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
@@ -509,7 +509,7 @@ test('home growth ramp values stay contained across responsive breakpoints', asy
 
     const rampHeading = page.getByRole('heading', {
       level: 2,
-      name: /first 90 days\./i,
+      name: /a clear plan\. real work\./i,
     })
     await expect(rampHeading).toBeVisible({ timeout: 20_000 })
 

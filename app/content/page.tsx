@@ -28,7 +28,7 @@ const CONTENT_OS_OFFER = CANONICAL_PRICING_OFFERS.content_os
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Content',
   description:
-    'A content system that plans, produces, and publishes across your website and your social channels.',
+    'Video edits, social posts, scripts, and website content planned and published around your expertise and offers.',
   path: '/content',
   ogImage: '/prism-opengraph.png',
 })
@@ -42,12 +42,12 @@ const HERO_CHIPS = [
 const CAPABILITIES = [
   {
     title: 'Posts, scripts, and video ideas',
-    body: 'AI agents draft, edit, and schedule a steady stream of on-brand posts, scripts, and short-form video concepts built around your offers.',
+    body: 'We turn your footage, expertise, and customer questions into video edits, scripts, captions, and posts for review.',
     icon: Sparkles,
   },
   {
     title: 'Adapted for each channel',
-    body: 'We adapt and publish your content for YouTube, Instagram, TikTok, LinkedIn, and more, with formats that fit each channel.',
+    body: 'We adjust the cut, caption, and format for the channels in your plan, then publish the approved content.',
     icon: Share2,
   },
   {
@@ -66,12 +66,12 @@ const STEPS = [
   {
     label: 'Implement',
     detail: '3 months',
-    body: 'We connect your brand, channels, and offers, then build and train the agent system over the first three months.',
+    body: 'We gather your footage and brand references, connect the agreed channels, and set up how you review and approve content.',
   },
   {
-    label: 'Launch the agent system',
+    label: 'Publish approved work',
     detail: 'Go live',
-    body: 'Agents start producing, distributing, and testing content across your channels and your website.',
+    body: 'We prepare the first edits and posts, work through your feedback, and establish a publishing routine.',
   },
   {
     label: 'Review and improve',
@@ -122,24 +122,24 @@ const FAQ_ITEMS = [
       'Useful website content answers customer questions and explains your services with clear, accurate information. It gives search engines and AI assistants relevant pages to find and reference. Content works alongside technical SEO and verifiable business information; publishing alone does not guarantee rankings or citations.',
   },
   {
-    question: 'What do the content agents actually do?',
+    question: 'How much work will I need to do?',
     answer:
-      'They plan, draft, edit, schedule, and publish content across your social platforms and website, reviewed against your brand and offers. The best performers can later become ad creative on the Ads service.',
+      'Share existing footage, business updates, and your expertise, then review the drafts. Prism handles planning, editing, formatting, and publishing. We agree on who approves content and how feedback is collected at the start.',
   },
   {
     question: 'What does the 3-month implementation include?',
     answer:
-      'We connect your channels, define your brand voice and offers, build the agent system, and ship the first wave of content so the engine is live and producing by the end of the three months.',
+      'We organize your source material, define topics and brand voice, connect the agreed channels, and produce the first content. The three-month setup establishes the review and publishing routine for ongoing work.',
   },
   {
     question: 'What does the monthly optimization cover?',
     answer:
-      'Ongoing operation and optimization: the agents keep producing and distributing across your channels, and Prism tunes the system each month based on what is driving reach and revenue.',
+      'We keep planning, producing, and publishing, then review which topics and formats hold attention or prompt inquiries. Those findings guide the next content batch.',
   },
   {
     question: 'Which platforms do you cover?',
     answer:
-      'Every major social platform, including YouTube, Instagram, TikTok, and LinkedIn, plus content published directly on your own website.',
+      'We can work with YouTube, Instagram, TikTok, LinkedIn, and your website. We choose the channels and content formats with you when scoping the plan.',
   },
   {
     question: 'Can I cancel?',
@@ -223,7 +223,7 @@ export default function ContentOsPage() {
             <CoreSectionHeading
               eyebrow="What it does"
               title="From the first idea to the published post."
-              description="Prism combines AI agents and brand review to keep content moving across your channels."
+              description="You bring the expertise and source material. We turn it into finished content, collect your feedback, and handle publishing."
             />
             <div className="grid gap-4 sm:grid-cols-2">
               {CAPABILITIES.map((capability) => {
@@ -397,7 +397,7 @@ export default function ContentOsPage() {
             )}
           >
             <CoreSectionHeading
-              title="Start the content system."
+              title="Put your next content batch in motion."
               description="Give your social channels and website a consistent publishing plan. We will map the content, workflow, and scope with you."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
