@@ -99,7 +99,7 @@ export default async function Blog({
         <section className="mx-auto max-w-4xl px-5 pb-10 pt-12 sm:px-8 sm:pb-14 sm:pt-20">
           <h1 className="blog-display-title mt-4 text-balance">Blog</h1>
           <p className="blog-hero-subtitle mt-5 text-muted-foreground">
-            Clear thinking on design, technology, and growth, drawn from the work.
+            Thoughts from the front lines of engineering, design, and marketing.
           </p>
         </section>
 
