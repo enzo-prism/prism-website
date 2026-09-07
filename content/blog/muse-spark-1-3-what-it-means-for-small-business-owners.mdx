@@ -64,7 +64,39 @@ Three things in the release matter for non-technical owners:
   </figcaption>
 </figure>
 
-On benchmarks, Meta reports a 75.4 on DeepSWE v1.1, a long-horizon software engineering test spanning 113 tasks across 91 repositories — ahead of Anthropic's Claude Opus 5 and OpenAI's GPT-5.6 Sol on that test, by Meta's account. One honest caveat, flagged by independent coverage: the very best numbers come from a maximum-reasoning configuration that developers can't broadly use yet. The shipping model is still a major step forward — just read any vendor chart the way you'd read any vendor chart.
+On benchmarks, Meta reports a 75.4 on DeepSWE v1.1, a long-horizon software engineering test spanning 113 tasks across 91 repositories — up from 55.0 for version 1.2, and ahead of Anthropic's Claude Opus 5 (74.0) and OpenAI's GPT-5.6 Sol (73.0) on that test, by Meta's account. Here's their published scorecard:
+
+<figure className="my-8">
+  <img
+    src="/blog/muse-spark-1-3-benchmark-scorecard-meta.webp"
+    alt="Meta's official Muse Spark 1.3 benchmark scorecard comparing Spark 1.3, Spark 1.2, GPT-5.6 Sol, and Opus 5 across agentic, long-context, and coding evaluations, including DeepSWE v1.1 at 75.4."
+    width="2160"
+    height="1940"
+    loading="lazy"
+    className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
+  />
+  <figcaption className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+    Meta's official Muse Spark 1.3 scorecard. Source: <a href="https://research.meta.ai/blog/introducing-muse-spark-1-3">Meta: Introducing Muse Spark 1.3</a>.
+  </figcaption>
+</figure>
+
+Two honest reads from that table. First, the 1.3 column is max-reasoning while 1.2 is shown at a lower reasoning setting — so part of the gap is more compute, not just a smarter model, and independent coverage notes the max configuration isn't broadly available to developers yet. Second, the most business-relevant row on the whole chart might be AutomationBench, end-to-end business workflows — and there Opus 5 edges it out, 50.3 to 49.6. The shipping model is still a major step forward. Just read any vendor chart the way you'd read any vendor chart.
+
+The full evaluation report adds the apples-to-apples column the summary leaves out: 1.3 and 1.2 at matched xhigh reasoning. The gains hold — agentic computer use jumps from 17.9 to 26.7, long-context retrieval from 66.3 to 97.6, and terminal coding hits 89.2, best on the board:
+
+<figure className="my-8">
+  <img
+    src="/blog/muse-spark-1-3-eval-report-table.png"
+    alt="Extended results table from Meta's Muse Spark 1.3 evaluation report, adding a matched-reasoning 1.3 xhigh column across agent, long-context, and coding benchmarks."
+    width="1292"
+    height="1160"
+    loading="lazy"
+    className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
+  />
+  <figcaption className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+    Matched-reasoning comparison from Meta's evaluation report. Source: <a href="https://research.meta.ai/static/muse-spark-1-3-multimodal-evaluation-methodology">Meta: Muse Spark 1.3 evaluation methodology (PDF)</a>.
+  </figcaption>
+</figure>
 
 ## Why This Matters More to You Than to Big Companies
 
@@ -76,19 +108,6 @@ Here is the practical translation of each improvement:
 
 **Delegation gets safer.** The reason most owners don't delegate to AI is the same reason they hesitate with new hires: unreliability. A model that asks when it's unsure and confirms before acting is a model you can actually give a standing job to — "every Friday, draft next week's posts from our job photos" — instead of supervising every keystroke.
 
-<figure className="my-8">
-  <img
-    src="https://images.unsplash.com/photo-1556742393-d75f468bfcb0?q=80&w=1600&auto=format&fit=crop"
-    alt="Cafe owner in apron using a tablet behind a wooden counter"
-    width="1600"
-    height="1067"
-    loading="lazy"
-    className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
-  />
-  <figcaption className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
-    The owner stays with the customer while the system handles the busywork. Photo by <a href="https://unsplash.com/photos/barista-using-tablet-in-coffee-shop-X_bbCAYzlTs">Nathan Dumlao</a> on Unsplash.
-  </figcaption>
-</figure>
 
 **The price of ambition falls.** Because each finished task burns fewer tokens at unchanged rates, work that was previously too fiddly or expensive to automate — the long tail of "someday" projects like cleaning up your reviews, rewriting location pages, or systematizing follow-up — now pencils out.
 
@@ -104,19 +123,6 @@ If I ran a local business and had one hour, here's the play:
 
 Start with work where mistakes are cheap and visible. Graduate to the expensive stuff once the system earns it.
 
-<figure className="my-8">
-  <img
-    src="https://images.unsplash.com/photo-1556740767-414a9c4860c1?q=80&w=1600&auto=format&fit=crop"
-    alt="Customer paying at the counter of a small local shop"
-    width="1600"
-    height="1067"
-    loading="lazy"
-    className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
-  />
-  <figcaption className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
-    Start where the work is concrete and the finish line is visible. Photo by <a href="https://unsplash.com/photos/man-buying-item-in-shop-Kx3o6_m1Yv8">Blake Wisz</a> on Unsplash.
-  </figcaption>
-</figure>
 
 ## The Bottom Line
 
