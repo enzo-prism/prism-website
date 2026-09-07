@@ -40,8 +40,6 @@ export async function generateStaticParams() {
   return []
 }
 
-const WORDS_PER_MINUTE = 225
-
 const formatReadableDate = (value: string) => {
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return value
@@ -50,22 +48,6 @@ const formatReadableDate = (value: string) => {
     month: "short",
     day: "numeric",
   }).format(date)
-}
-
-const stripMarkdown = (value: string) =>
-  value
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
-    .replace(/\[[^\]]*\]\([^)]+\)/g, " ")
-    .replace(/#+\s+/g, " ")
-    .replace(/[`*_>{}/[\]().,:;]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-
-const estimateReadingMinutes = (content: string) => {
-  if (!content) return 1
-  const words = stripMarkdown(content).split(/\s+/).filter(Boolean)
-  return Math.max(1, Math.ceil(words.length / WORDS_PER_MINUTE))
 }
 
 export async function generateMetadata({
@@ -142,7 +124,6 @@ export default async function BlogPostPage({ params }: PageProps) {
       content: post.content,
     })
   const enrichedContent = injectOutboundLinks(post.content, outboundProfile)
-  const readingTimeMinutes = estimateReadingMinutes(post.content)
   const updatedDate = frontmatter.openGraph?.modifiedTime
   const publishedDate = frontmatter.openGraph?.publishedTime || frontmatter.date
   const content = await renderPost(slug, { content: enrichedContent })
@@ -156,8 +137,6 @@ export default async function BlogPostPage({ params }: PageProps) {
       date={frontmatter.date}
       publishedDate={formatReadableDate(publishedDate)}
       updatedDate={updatedDate ? formatReadableDate(updatedDate) : undefined}
-      readingTimeMinutes={readingTimeMinutes}
-      category={frontmatter.category}
       image={frontmatter.image}
       openGraph={frontmatter.openGraph}
       canonical={canonicalUrl(frontmatter.canonical || `/blog/${slug}`)}

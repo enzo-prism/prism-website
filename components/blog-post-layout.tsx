@@ -16,8 +16,6 @@ interface Props {
   date: string
   publishedDate?: string
   updatedDate?: string
-  readingTimeMinutes?: number
-  category: string
   image?: string
   openGraph?: {
     url?: string
@@ -46,8 +44,6 @@ export default function BlogPostLayout({
   date,
   publishedDate,
   updatedDate,
-  readingTimeMinutes,
-  category,
   image,
   openGraph,
   canonical,
@@ -66,7 +62,6 @@ export default function BlogPostLayout({
       day: 'numeric',
     }).format(new Date(date))
   const updatedLabel = updatedDate || undefined
-  const readingTime = `${Math.max(1, readingTimeMinutes ?? 1)} min read`
   const isEnzoAuthor = author.trim().toLowerCase() === 'enzo sison'
 
   return (
@@ -84,10 +79,7 @@ export default function BlogPostLayout({
               ← All writing
             </Link>
 
-            <p className="mt-8 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground sm:mt-10">
-              {category}
-            </p>
-            <h1 className="blog-post-title mt-4 text-balance">
+            <h1 className="blog-post-title mt-8 text-balance sm:mt-10">
               {h1Title || title}
             </h1>
             <p className="blog-post-lead mt-5">{description}</p>
@@ -111,8 +103,6 @@ export default function BlogPostLayout({
                   <span>Updated {updatedLabel}</span>
                 </>
               ) : null}
-              <span aria-hidden>·</span>
-              <span>{readingTime}</span>
             </div>
           </header>
 
