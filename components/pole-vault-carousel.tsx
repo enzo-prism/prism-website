@@ -12,36 +12,37 @@ type Slide = {
 }
 
 const slides: Slide[] = [
-  { id: "1116465370", thumb: "/white.svg", label: "san jose, ca" },
-  { id: "1116465409", thumb: "/white.svg", label: "santa barbara, ca" },
-  { id: "1116465400", thumb: "/white.svg", label: "fresno, ca" },
-  { id: "1116465387", thumb: "/white.svg", label: "manila, philippines" },
-  { id: "1116471573", thumb: "/white.svg", label: "palo alto, ca" },
+  { id: "1116465370", thumb: "/images/about/1116465370-poster.jpg", label: "san jose, ca" },
+  { id: "1116465409", thumb: "/images/about/1116465409-poster.jpg", label: "santa barbara, ca" },
+  { id: "1116465400", thumb: "/images/about/1116465400-poster.jpg", label: "fresno, ca" },
+  { id: "1116465387", thumb: "/images/about/1116465387-poster.jpg", label: "manila, philippines" },
+  { id: "1116471573", thumb: "/images/about/1116471573-poster.jpg", label: "palo alto, ca" },
   {
     id: "1116471566",
-    thumb: "/white.svg",
+    thumb: "/images/about/1116471566-poster.jpg",
     label: "new clark city, philippines",
   },
 ]
 
 export default function PoleVaultCarousel() {
   const [index, setIndex] = useState(0)
-  const touchStartX = useRef<number | null>(null)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
 
   const next = () => setIndex((i) => (i + 1) % slides.length)
   const prev = () => setIndex((i) => (i - 1 + slides.length) % slides.length)
 
   const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
   }
   const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current == null) return
-    const dx = e.changedTouches[0].clientX - touchStartX.current
-    if (Math.abs(dx) > 40) {
+    if (touchStart.current == null) return
+    const dx = e.changedTouches[0].clientX - touchStart.current.x
+    const dy = e.changedTouches[0].clientY - touchStart.current.y
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
       if (dx < 0) next()
       else prev()
     }
-    touchStartX.current = null
+    touchStart.current = null
   }
 
   const current = slides[index]
@@ -51,6 +52,7 @@ export default function PoleVaultCarousel() {
       className="relative w-full max-w-[420px] sm:max-w-[520px] mx-auto"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
+      onTouchCancel={() => { touchStart.current = null }}
     >
       <MinimalistVideoPlayer
         videoId={current.id}
@@ -100,7 +102,7 @@ export default function PoleVaultCarousel() {
           />
         ))}
       </div>
-      <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
+      <p aria-live="polite" aria-atomic="true" className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
         {current.label}
       </p>
     </div>

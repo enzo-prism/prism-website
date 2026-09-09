@@ -73,6 +73,7 @@ export default function AboutClientPage() {
                         width={640}
                         height={800}
                         className="h-auto w-full object-cover"
+                        sizes="(min-width: 1024px) 400px, (min-width: 640px) 70vw, 85vw"
                         priority
                       />
                     </div>

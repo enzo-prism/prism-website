@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import HomeReveal from "@/components/home/HomeReveal"
 import CoreImage from "./core-image"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 
@@ -222,73 +222,20 @@ const events: TimelineEvent[] = [
 ]
 
 export default function ScrollingTimeline() {
-  const eventRefs = useRef<Array<HTMLDivElement | null>>(events.map(() => null))
-  const [visibleEvents, setVisibleEvents] = useState<number[]>([events[0].id])
-
-  const createEventRef = (id: number) => {
-    return (node: HTMLDivElement | null) => {
-      const index = events.findIndex((event) => event.id === id)
-      if (index !== -1) {
-        eventRefs.current[index] = node
-      }
-    }
-  }
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id
-            if (!visibleEvents.includes(Number.parseInt(id))) {
-              setVisibleEvents((prev) => [...prev, Number.parseInt(id)])
-            }
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    events.forEach((_event, index) => {
-      const node = eventRefs.current[index]
-      if (node) {
-        observer.observe(node)
-      }
-    })
-
-    // `observer.disconnect()` instead of unobserving node-by-node: this effect
-    // re-runs on every `visibleEvents` change, and the old cleanup read
-    // `eventRefs.current` again on the way out. Any ref that had been
-    // reassigned or nulled since the observe pass was silently skipped, leaking
-    // an observation onto a detached node for the lifetime of the page.
-    // Disconnecting drops every registration this observer owns, whatever the
-    // refs look like now.
-    return () => {
-      observer.disconnect()
-    }
-  }, [events, visibleEvents])
-
   return (
     <div className="relative max-w-3xl mx-auto">
       <div className="absolute left-4 top-0 bottom-0 w-1 -translate-x-0.5 rounded-full bg-gradient-to-b from-border/70 via-border/40 to-border/15 md:left-1/2 md:translate-x-0"></div>
       <div className="space-y-16">
         {events.map((event, index) => {
-          const isVisible = visibleEvents.includes(event.id)
           return (
-            <div
+            <HomeReveal
               key={event.id}
-              id={event.id.toString()}
-              ref={createEventRef(event.id)}
               className={`relative flex flex-col md:flex-row ${
                 index % 2 === 0 ? "md:flex-row-reverse" : ""
-              } items-start transition-[opacity,transform] duration-700 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
+              } items-start`}
             >
               <div
-                className={`absolute left-4 md:left-1/2 w-10 h-10 rounded-md bg-background border border-border/60 flex items-center justify-center transform -translate-x-5 md:-translate-x-5 z-10 shadow-lg shadow-black/50 hover:scale-110 transition-transform duration-300 ${
-                  isVisible ? "animate-pulse-once" : ""
-                }`}
+                className={`absolute left-4 md:left-1/2 w-10 h-10 rounded-md bg-background border border-border/60 flex items-center justify-center transform -translate-x-5 md:-translate-x-5 z-10 shadow-lg shadow-black/50 hover:scale-110 transition-transform duration-300 motion-reduce:transition-none`}
               >
                 <PixelishIcon
                   src={event.iconSrc}
@@ -299,7 +246,7 @@ export default function ScrollingTimeline() {
                 />
               </div>
               <div className={`ml-12 md:ml-0 md:w-5/12 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}>
-                <div className="border border-border/60 bg-card/30 p-6 rounded-md shadow-none backdrop-blur-sm transition-colors duration-300 hover:bg-card/45 timeline-card">
+                <div id={event.id.toString()} className="border border-border/60 bg-card/30 p-6 rounded-md shadow-none backdrop-blur-sm transition-colors duration-300 hover:bg-card/45 timeline-card">
                   <div className="inline-flex items-center rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel mb-3">
                     {event.year}
                   </div>
@@ -315,7 +262,6 @@ export default function ScrollingTimeline() {
                         height={event.image.height}
                         className="w-full h-auto object-cover"
                         loading="lazy"
-                        crossOrigin="anonymous"
                       />
                     </div>
                   ) : event.image ? (
@@ -347,7 +293,7 @@ export default function ScrollingTimeline() {
                   )}
                 </div>
               </div>
-            </div>
+            </HomeReveal>
           )
         })}
       </div>

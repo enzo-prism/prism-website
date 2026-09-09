@@ -36,11 +36,11 @@ Each MDX file must define:
 
 Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
 
-Social previews are intentionally site-wide: every blog post advertises `public/prism-opengraph.png` through both Open Graph and Twitter metadata. Frontmatter `image`, `openGraph.images`, and `twitter.images` values do not override that policy; they can still support visible cards and article content.
+Social previews default to `public/prism-opengraph.png` for both Open Graph and Twitter. A post can explicitly opt into custom 1200×630 artwork with `socialImage` and descriptive `socialImageAlt` frontmatter. Legacy `image`, `openGraph.images`, and `twitter.images` fields do not change that default.
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
-Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` always use `/prism-opengraph.png`. The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
+Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` use `socialImage` when supplied and otherwise `/prism-opengraph.png`. The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
 
 `app/api/og/blog/[slug]/route.tsx` remains available for legacy or explicit API consumers, but it no longer controls the social metadata emitted by blog pages. It runs on Node.js, reads the same `content/blog/<slug>.mdx` source through `getPost()`, uses immutable caching, and returns 404 for unknown slugs. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
 

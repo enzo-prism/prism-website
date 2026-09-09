@@ -58,15 +58,18 @@ export async function generateMetadata({
   if (!post) notFound()
   const { frontmatter } = post
 
+  const socialImage = frontmatter.socialImage
+    ? canonicalUrl(frontmatter.socialImage)
+    : DEFAULT_OG_IMAGE
   const ogImages = [
     {
-      url: DEFAULT_OG_IMAGE,
+      url: socialImage,
       width: 1200,
       height: 630,
-      alt: DEFAULT_OG_IMAGE_ALT,
+      alt: frontmatter.socialImageAlt || DEFAULT_OG_IMAGE_ALT,
     },
   ]
-  const twitterImages = [DEFAULT_OG_IMAGE]
+  const twitterImages = ogImages
 
   const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
   const seoTitle = buildAbsoluteTitle(frontmatter.seoTitle || frontmatter.title || 'Blog post')
@@ -87,6 +90,7 @@ export async function generateMetadata({
     },
     twitter: {
       ...frontmatter.twitter,
+      card: "summary_large_image",
       title: seoTitle,
       description: seoDescription,
       images: twitterImages,

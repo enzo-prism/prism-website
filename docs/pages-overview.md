@@ -368,13 +368,14 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 ## About (`app/about/client-page.tsx`)
 
-- Hero now mirrors the `/case-studies` and `/wall-of-love` treatment using `components/ascii/AsciiHeroCard.tsx` with high-quality `fire-2` frames in `public/animations/fire-2/high`.
+- Hero uses core-route primitives with `DeferredAsciiHeroBackdrop` and `fire-2` frames; motion adapts to reduced-motion and constrained-device preferences.
 - Keep the founder headshot, timeline CTA (`ScrollToTimelineButton`), and external profile CTA in the hero; they are intentionally part of the hero content layer.
-- The Olympic journey and timeline sections remain below the hero and should keep their existing CTA flow.
+- The Olympic journey carousel uses local Vimeo poster images, deferred SDK loading, accessible playback/retry controls, and pauses offscreen. Autoplay is optional; reduced-motion and data-saving visitors start playback explicitly.
+- Timeline entries reuse `HomeReveal`, so server-rendered content remains visible without JavaScript or IntersectionObserver.
 
 ## Supporting Components
 
-- `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper used by `/about`, `/software`, and `/blog`; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
+- `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper available to editorial routes; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
 - `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, batched resilience loading with partial-failure tolerance, reduced-motion pause, intersection-aware playback).
 - `components/ascii/AsciiHeroBackdrop.tsx`: shared background-media layer used by `AsciiHeroCard` to keep hero composition and ASCII defaults consistent.
 - `lib/hero-media-policy.ts`: single policy engine used by `HeroBackgroundLoop` and `HeroLoopingVideo` for autoplay, poster fallback, and reduced-motion decisions.

@@ -11,6 +11,8 @@ import {
 
 export type BlogFrontmatter = {
   title: string
+  socialImage?: string
+  socialImageAlt?: string
   seoTitle?: string
   h1Title?: string
   author: string
@@ -309,6 +311,8 @@ export async function getPost(
 
     const frontmatter: BlogFrontmatter = {
       title: normalizedData.title,
+      socialImage: normalizedData.socialImage,
+      socialImageAlt: normalizedData.socialImageAlt,
       seoTitle: normalizedData.seoTitle,
       h1Title: normalizedData.h1Title,
       author,
