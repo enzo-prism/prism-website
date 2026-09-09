@@ -26,7 +26,7 @@ Each MDX file must define:
 | `title`                                        | ✅       | Used for metadata + card headings                         |
 | `author`                                       | optional | Byline for cards + post header (defaults to "Prism Team") |
 | `description`                                  | ✅       | Summary for cards, RSS, and SEO                           |
-| `date`                                         | ✅       | ISO string (`YYYY-MM-DD`)                                 |
+| `date`                                         | ✅       | ISO timestamp with explicit timezone, e.g. `2026-09-09T09:00:00-07:00`; date-only values can display as the previous day in Pacific time |
 | `category`                                     | ✅       | Free-form label; slug auto-generated                      |
 | `gradientClass`                                | ✅       | Tailwind gradient utilities for OG art                    |
 | `image`                                        | optional | Relative path for hero image + cards                      |

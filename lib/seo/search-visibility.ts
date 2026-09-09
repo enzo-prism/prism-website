@@ -95,6 +95,7 @@ export const NOINDEX_PREFIXES = [
 ] as const
 
 export const INDEXABLE_BLOG_SLUGS = [
+  '10-ways-dgx-spark-improve-online-business',
   '2026-belongs-to-the-founders-who-can-delegate',
   'adapting-small-business-ai-search-revolution-2025',
   'ai-ad-stack-2026-practical-guide-for-smb-founders',
