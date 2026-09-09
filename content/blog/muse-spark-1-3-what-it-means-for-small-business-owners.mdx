@@ -34,13 +34,13 @@ seoDescription: "Meta shipped Muse Spark 1.3. Here's what its agentic leap means
 
 Meta shipped Muse Spark 1.3 on September 2, and Mark Zuckerberg called it the company's biggest jump yet in coding and agentic work.
 
-If you run a small business, you are allowed to ignore most AI launch hype. This one is worth five minutes of your attention — not because of the leaderboard, but because of what it changes about the *kind* of work you can hand to AI.
+If you run a small business, you are allowed to ignore most AI launch hype. This one is worth five minutes of your attention, not because of the leaderboard, but because of what it changes about the *kind* of work you can hand to AI.
 
 The short version: AI agents just got meaningfully better at finishing multi-step jobs without supervision, while costing less per finished task. For a small team, that is the difference between "AI helps me write" and "AI runs the playbook."
 
 ## First, What Actually Shipped?
 
-Muse Spark 1.3 is Meta's newest flagship AI model — landing about a month after 1.2 and continuing a blistering release pace. You can use it today through [Muse Code](https://dev.meta.ai/), Meta's coding agent platform, and the Meta Model API. An open-weights version has been promised soon, and the model is expected to make its way into Meta's consumer products over time.
+Muse Spark 1.3 is Meta's newest flagship AI model, landing about a month after 1.2 and continuing a blistering release pace. You can use it today through [Muse Code](https://dev.meta.ai/), Meta's coding agent platform, and the Meta Model API. An open-weights version has been promised soon, and the model is expected to make its way into Meta's consumer products over time.
 
 Three things in the release matter for non-technical owners:
 
@@ -48,7 +48,7 @@ Three things in the release matter for non-technical owners:
 
 **2. It asks instead of guessing.** This is the sleeper feature. When your instructions are ambiguous, 1.3 asks clarifying questions. When it gets stuck, it asks for help instead of hallucinating an outcome. And it confirms before taking consequential actions. Anyone who has watched an AI confidently do the wrong thing at full speed understands why this matters.
 
-**3. It wastes less.** Meta reports roughly 20% fewer tool calls and 25% fewer tokens than version 1.2 on agentic tasks — at the same price ($1.25 per million input tokens, $4.25 per million output tokens). Same rates, more finished work per dollar.
+**3. It wastes less.** Meta reports roughly 20% fewer tool calls and 25% fewer tokens than version 1.2 on agentic tasks, at the same price ($1.25 per million input tokens, $4.25 per million output tokens). Same rates, more finished work per dollar.
 
 <figure className="my-8">
   <img
@@ -64,7 +64,7 @@ Three things in the release matter for non-technical owners:
   </figcaption>
 </figure>
 
-On benchmarks, Meta reports a 75.4 on DeepSWE v1.1, a long-horizon software engineering test spanning 113 tasks across 91 repositories — up from 55.0 for version 1.2, and ahead of Anthropic's Claude Opus 5 (74.0) and OpenAI's GPT-5.6 Sol (73.0) on that test, by Meta's account. Here's their published scorecard:
+On benchmarks, Meta reports a 75.4 on DeepSWE v1.1, a long-horizon software engineering test spanning 113 tasks across 91 repositories, up from 55.0 for version 1.2, and ahead of Anthropic's Claude Opus 5 (74.0) and OpenAI's GPT-5.6 Sol (73.0) on that test, by Meta's account. Here's their published scorecard:
 
 <figure className="my-8">
   <img
@@ -80,9 +80,9 @@ On benchmarks, Meta reports a 75.4 on DeepSWE v1.1, a long-horizon software engi
   </figcaption>
 </figure>
 
-Two honest reads from that table. First, the 1.3 column is max-reasoning while 1.2 is shown at a lower reasoning setting — so part of the gap is more compute, not just a smarter model, and independent coverage notes the max configuration isn't broadly available to developers yet. Second, the most business-relevant row on the whole chart might be AutomationBench, end-to-end business workflows — and there Opus 5 edges it out, 50.3 to 49.6. The shipping model is still a major step forward. Just read any vendor chart the way you'd read any vendor chart.
+Two honest reads from that table. First, the 1.3 column is max-reasoning while 1.2 is shown at a lower reasoning setting, so part of the gap is more compute, not just a smarter model, and independent coverage notes the max configuration isn't broadly available to developers yet. Second, the most business-relevant row on the whole chart might be AutomationBench (end-to-end business workflows), and there Opus 5 edges it out, 50.3 to 49.6. The shipping model is still a major step forward. Just read any vendor chart the way you'd read any vendor chart.
 
-The full evaluation report adds the apples-to-apples column the summary leaves out: 1.3 and 1.2 at matched xhigh reasoning. The gains hold — agentic computer use jumps from 17.9 to 26.7, long-context retrieval from 66.3 to 97.6, and terminal coding hits 89.2, best on the board:
+The full evaluation report adds the apples-to-apples column the summary leaves out: 1.3 and 1.2 at matched xhigh reasoning. The gains hold: agentic computer use jumps from 17.9 to 26.7, long-context retrieval from 66.3 to 97.6, and terminal coding hits 89.2, best on the board:
 
 <figure className="my-8">
   <img
@@ -104,12 +104,12 @@ Enterprises have process, headcount, and procurement cycles. They will spend eig
 
 Here is the practical translation of each improvement:
 
-**Jobs, not chats.** The old pattern was: you prompt, the AI answers, you do the work. The agentic pattern is: you describe the outcome, the AI does the work — updating ten pages, reconciling the data, drafting the follow-ups — and reports back. Every step of "finishing" that moves from your plate to the agent's is leverage a big company would hire for.
+**Jobs, not chats.** The old pattern was: you prompt, the AI answers, you do the work. The agentic pattern is: you describe the outcome, the AI does the work (updating ten pages, reconciling the data, drafting the follow-ups) and reports back. Every step of "finishing" that moves from your plate to the agent's is leverage a big company would hire for.
 
-**Delegation gets safer.** The reason most owners don't delegate to AI is the same reason they hesitate with new hires: unreliability. A model that asks when it's unsure and confirms before acting is a model you can actually give a standing job to — "every Friday, draft next week's posts from our job photos" — instead of supervising every keystroke.
+**Delegation gets safer.** The reason most owners don't delegate to AI is the same reason they hesitate with new hires: unreliability. A model that asks when it's unsure and confirms before acting is a model you can actually give a standing job to ("every Friday, draft next week's posts from our job photos") instead of supervising every keystroke.
 
 
-**The price of ambition falls.** Because each finished task burns fewer tokens at unchanged rates, work that was previously too fiddly or expensive to automate — the long tail of "someday" projects like cleaning up your reviews, rewriting location pages, or systematizing follow-up — now pencils out.
+**The price of ambition falls.** Because each finished task burns fewer tokens at unchanged rates, work that was previously too fiddly or expensive to automate (the long tail of "someday" projects like cleaning up your reviews, rewriting location pages, or systematizing follow-up) now pencils out.
 
 None of this replaces judgment. It replaces toil. The owners who win with this stuff are the ones who point it at real bottlenecks instead of novelty demos.
 
@@ -118,7 +118,7 @@ None of this replaces judgment. It replaces toil. The owners who win with this s
 If I ran a local business and had one hour, here's the play:
 
 1. **Pick one repeatable multi-step job.** Not "marketing." Something concrete with a visible finish line: responding to every review from the last 90 days, turning finished-job photos into a week of posts, or auditing every page of your site for outdated hours, prices, and offers.
-2. **Write the outcome, not the steps.** Give the agent the goal, your constraints ("match our voice," "never invent a review"), and one example of good output. Let it plan the steps — that's the part that just got better.
+2. **Write the outcome, not the steps.** Give the agent the goal, your constraints ("match our voice," "never invent a review"), and one example of good output. Let it plan the steps; that's the part that just got better.
 3. **Review the first run like a manager, not a user.** Correct it once, save the corrections as standing instructions, and run it again. The second run is usually where the magic shows up.
 
 Start with work where mistakes are cheap and visible. Graduate to the expensive stuff once the system earns it.
@@ -126,6 +126,6 @@ Start with work where mistakes are cheap and visible. Graduate to the expensive 
 
 ## The Bottom Line
 
-Every few months, the floor rises on what a small team can produce. Muse Spark 1.3 raised it again: longer tasks, fewer mistakes, lower cost per finished job. The technology is no longer the bottleneck — the bottleneck is having one clear job worth delegating and the discipline to systematize it.
+Every few months, the floor rises on what a small team can produce. Muse Spark 1.3 raised it again: longer tasks, fewer mistakes, lower cost per finished job. The technology is no longer the bottleneck; the bottleneck is having one clear job worth delegating and the discipline to systematize it.
 
 That's fixable by Monday. And if you'd rather not build the system yourself, [that's what we do](/contact).
