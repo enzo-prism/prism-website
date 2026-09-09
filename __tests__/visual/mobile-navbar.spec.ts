@@ -159,13 +159,21 @@ test('a mobile navigation link remains tappable on direct-body-header pages', as
 test('about media stays deferred and exposes full-size touch controls', async ({
   page,
 }) => {
+  const sdkRequests: string[] = []
+  page.on('request', (request) => {
+    if (request.url() === 'https://player.vimeo.com/api/player.js') {
+      sdkRequests.push(request.url())
+    }
+  })
   await page.goto('/about', { waitUntil: 'domcontentloaded' })
-  await expect(page.locator('#vimeo-player-api')).toHaveCount(0)
+  expect(sdkRequests).toHaveLength(0)
 
   await page
     .getByRole('heading', { name: 'Olympic journey.' })
     .scrollIntoViewIfNeeded()
-  await expect(page.locator('#vimeo-player-api')).toHaveCount(1)
+  // Requests are deliberately aborted above; failed scripts are now removed
+  // to allow retry. Observe the loading boundary instead of transient DOM.
+  await expect.poll(() => sdkRequests.length).toBe(1)
 
   for (const name of ['Previous', 'Next'] as const) {
     const control = page.getByRole('button', { name, exact: true })
