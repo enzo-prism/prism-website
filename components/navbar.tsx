@@ -34,7 +34,7 @@ const SERVICE_MENU_ICONS: Record<PrismServiceId, string> = {
   ads: '/pixelish/graph-chart-high.svg',
 }
 const NAV_ICONS: Record<string, string> = {
-  '/': '/pixelish/command.svg',
+  '/': '/pixelish/home.svg',
   '/websites': SERVICE_MENU_ICONS.website,
   '/content': SERVICE_MENU_ICONS.content,
   '/ads': SERVICE_MENU_ICONS.ads,

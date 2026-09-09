@@ -396,6 +396,12 @@ ivory wash. The brand pairs the triangle mark with a larger sans wordmark and
 a mono tagline from `xl`. No header CTA; the inline rail starts at `lg`.
 Keep the painted header at 73px including its bottom border.
 
+Home uses `public/pixelish/home.svg`: a front-facing house with a stepped
+roof and open doorway, derived from an image-generated concept and normalized
+to the same native 24×24 canvas, two-unit black outline, and transparent
+negative space as the adjacent Pixelish icons. Keep the shared inversion,
+opacity, and intrinsic sizing behavior so desktop and mobile stay consistent.
+
 Services opens an out-of-flow panel with icon-led rows, a short description
 for each service, and directional arrows. Pointer, keyboard, outside-click,
 and Escape dismissal must work; Escape returns focus to the trigger.
