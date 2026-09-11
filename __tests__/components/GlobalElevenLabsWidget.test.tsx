@@ -189,6 +189,7 @@ describe('GlobalElevenLabsWidget', () => {
     '/apply',
     '/ig',
     '/tiktok',
+    '/youtube',
   ])('does not mount the floating widget on %s', async (blockedPath) => {
     usePathname.mockReturnValue(blockedPath)
 

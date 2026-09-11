@@ -8,6 +8,8 @@ import BrandLogo from '@/components/brand-logo'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
 import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { SERVICE_INTAKE_PATHS } from '@/lib/service-intake'
+import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
@@ -15,10 +17,9 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them. The two offer cards sit under
- * short sans routing questions ("Doing under $1M a year?" / "Doing $1M–$10M
- * a year?") so the revenue segmentation is read before each offer. One
- * quiet, shared template keeps the focus on those actions.
+ * routes intent instead of thanking them. Three service CTAs open the
+ * existing Website, Content, and Ads intake forms. One quiet, shared template
+ * keeps the focus on those actions.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -47,84 +48,70 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
   },
 }
 
+const HUB_ACTION_HREFS: Record<PrismServiceId, string> = {
+  website: WEBSITE_START_CTA.href,
+  content: SERVICE_INTAKE_PATHS.content,
+  ads: SERVICE_INTAKE_PATHS.ads,
+}
+
+const HUB_ACTION_ICONS: Record<PrismServiceId, string> = {
+  website: '/pixelish/browser.svg',
+  content: '/pixelish/device-camera.svg',
+  ads: '/pixelish/graph-chart-high.svg',
+}
+
 // Shared premium hover language from the core CTA system: a gentle lift, a
 // warm gold-tinted glow (#d8bc79), and the site's signature easing curve.
-const actionCardBaseClassName =
-  'group flex min-h-[5rem] w-full items-center gap-4 rounded-xl border px-5 py-4 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none'
-
-const quietActionCardClassName = cn(
-  actionCardBaseClassName,
+const actionCardClassName = cn(
+  'group flex min-h-[5rem] w-full items-center gap-4 rounded-xl border px-5 py-4 transition-[transform,border-color,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-0 motion-reduce:transition-none',
   'border-white/12 bg-white/[0.03] hover:border-[#d8bc79]/35 hover:bg-white/[0.06] hover:shadow-[0_24px_48px_-30px_rgba(216,188,121,0.5)]',
 )
-
-const primaryActionCardClassName = cn(
-  actionCardBaseClassName,
-  'border-[#f5f0e8]/70 bg-[#f5f0e8] shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_20px_40px_-26px_rgba(245,240,232,0.72)] hover:border-white hover:bg-white hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_30px_60px_-26px_rgba(216,188,121,0.45),0_22px_44px_-24px_rgba(245,240,232,0.85)]',
-)
-
-type ActionTone = 'quiet' | 'primary'
 
 type ActionCardProps = {
   title: string
   detail: string
   href: string
-  tone?: ActionTone
   location: string
+  platform: SocialHubPlatform
+  service: PrismServiceId
   icon: ReactNode
-  /** Full accessible name when a visual routing question sits outside the link. */
-  ariaLabel?: string
 }
 
 function ActionCard({
   title,
   detail,
   href,
-  tone = 'quiet',
   location,
+  platform,
+  service,
   icon,
-  ariaLabel,
 }: ActionCardProps) {
   const label = title.toLowerCase()
-  const isPrimary = tone === 'primary'
 
   return (
     <Link
       href={href}
-      aria-label={ariaLabel}
       onClick={() => {
-        trackCTAClick(label, location)
+        trackCTAClick(label, location, {
+          platform,
+          service,
+          destination: href,
+        })
       }}
       data-cta-text={label}
       data-cta-location={location}
-      className={
-        isPrimary ? primaryActionCardClassName : quietActionCardClassName
-      }
+      data-cta-platform={platform}
+      data-cta-service={service}
+      className={actionCardClassName}
     >
-      <span
-        className={cn(
-          'grid h-12 w-12 shrink-0 place-items-center rounded-[10px] border',
-          isPrimary
-            ? 'border-black/10 bg-black/[0.04] text-[#050505]'
-            : 'border-white/12 bg-white/[0.04] text-[#f5f0e8]',
-        )}
-      >
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[10px] border border-white/12 bg-white/[0.04] text-[#f5f0e8]">
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <span
-          className={cn(
-            'block font-sans text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em]',
-            isPrimary ? 'text-[#050505]' : 'text-[#f5f0e8]',
-          )}
-        >
+        <span className="block font-sans text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em] text-[#f5f0e8]">
           {title}
         </span>
-        <span
-          className={cn(
-            'mt-1 block font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em]',
-            isPrimary ? 'text-[#050505]/60' : 'text-[#b8afa2]',
-          )}
-        >
+        <span className="mt-1 block font-sans text-[0.875rem] font-normal leading-[1.5] tracking-[-0.01em] text-[#b8afa2]">
           {detail}
         </span>
       </span>
@@ -133,11 +120,7 @@ function ActionCard({
         alt=""
         size={12}
         aria-hidden="true"
-        invert={!isPrimary}
-        className={cn(
-          'shrink-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 motion-reduce:transition-none',
-          isPrimary ? 'opacity-60' : 'opacity-50 group-hover:opacity-100',
-        )}
+        className="shrink-0 opacity-50 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:opacity-100 motion-reduce:transition-none"
       />
     </Link>
   )
@@ -220,55 +203,28 @@ export default function SocialLinkHub({
           </p>
 
           <nav aria-label={`${config.label} page actions`} className="mt-7">
-            <p
-              aria-hidden="true"
-              className="font-sans text-[0.8125rem] font-medium leading-[1.4] tracking-[-0.01em] text-[#f5f0e8]"
-            >
-              Doing under $1M a year?
-            </p>
-            <div className="mt-2">
-              <ActionCard
-                title="Premium Website Design"
-                detail="support visibility on ChatGPT and Google"
-                ariaLabel="Premium Website Design, for businesses under $1M a year. Support visibility on ChatGPT and Google."
-                href={WEBSITE_START_CTA.href}
-                tone="primary"
-                location={actionsLocation}
-                icon={
-                  <PixelishIcon
-                    src="/pixelish/browser.svg"
-                    alt=""
-                    size={17}
-                    aria-hidden="true"
-                    invert={false}
+            <ul className="flex flex-col gap-2">
+              {PRISM_SERVICES.map((service) => (
+                <li key={service.id}>
+                  <ActionCard
+                    title={service.name}
+                    detail={service.navDescription}
+                    href={HUB_ACTION_HREFS[service.id]}
+                    location={actionsLocation}
+                    platform={platform}
+                    service={service.id}
+                    icon={
+                      <PixelishIcon
+                        src={HUB_ACTION_ICONS[service.id]}
+                        alt=""
+                        size={17}
+                        aria-hidden="true"
+                      />
+                    }
                   />
-                }
-              />
-            </div>
-
-            <p
-              aria-hidden="true"
-              className="mt-5 font-sans text-[0.8125rem] font-medium leading-[1.4] tracking-[-0.01em] text-[#f5f0e8]"
-            >
-              Doing $1M–$10M a year?
-            </p>
-            <div className="mt-2">
-              <ActionCard
-                title="Prism Infinity"
-                detail="unlimited landing pages, ads, and websites"
-                ariaLabel="Prism Infinity, for businesses doing $1M–$10M a year. Unlimited landing pages, ads, and websites."
-                href="/prism-infinity"
-                location={actionsLocation}
-                icon={
-                  <PixelishIcon
-                    src="/pixelish/arrow-refresh.svg"
-                    alt=""
-                    size={16}
-                    aria-hidden="true"
-                  />
-                }
-              />
-            </div>
+                </li>
+              ))}
+            </ul>
           </nav>
         </main>
 

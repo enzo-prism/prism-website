@@ -329,7 +329,7 @@ Important routing note:
 - Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
-- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only Website and Prism Infinity.
+- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only Website, Content, and Ads intake.
 
 ## `/contact`
 
@@ -405,7 +405,7 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 
 ## Content and Ads service intake (2026-09-06)
 
-`/content` and `/ads` primary CTAs start `/content-intake` and `/ads-intake`, matching `/websites` → `/website-intake`. All three use `WebsiteIntakeForm` with a service prop and `lib/service-intake.ts` configuration. Each asks for goal, timing, a website/social link, and email or text contact. The last screen recaps earlier answers with an Edit answers action. Keyboard navigation, reduced motion, same-tab 24-hour draft expiry, retry handling, and the synchronous submission lock are shared. Drafts are isolated per service and cleared on confirmed success.
+`/content` and `/ads` primary CTAs start `/content-intake` and `/ads-intake`, matching `/websites` → `/website-intake`. All three use `WebsiteIntakeForm` with a service prop and `lib/service-intake.ts` configuration. Each asks for goal, timing, a website/social link, and email or text contact. The last screen recaps earlier answers with an Edit answers action. Keyboard navigation, reduced motion, same-tab 24-hour draft expiry, retry handling, and the synchronous submission lock are shared. Drafts are isolated per service and cleared on confirmed success. The `/ig`, `/tiktok`, and `/youtube` hubs start these same dedicated intake routes.
 
 Dedicated forms created in the authenticated **Prism** Formspree project:
 
