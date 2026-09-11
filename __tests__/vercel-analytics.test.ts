@@ -47,6 +47,46 @@ describe('Vercel analytics URL normalization', () => {
     })
   })
 
+  it('keeps allowlisted social-hub CTA dimensions on Vercel CTA events', () => {
+    expect(
+      buildVercelCustomEvent('cta_click', {
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+        extra_noise: 'ignore me',
+      }),
+    ).toEqual({
+      name: 'CTA Clicked',
+      properties: {
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+      },
+    })
+  })
+
+  it('drops unallowlisted social-hub CTA dimensions from Vercel CTA events', () => {
+    expect(
+      buildVercelCustomEvent('cta_click', {
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'threads',
+        service: 'infinity',
+        destination: '/prism-infinity',
+      }),
+    ).toEqual({
+      name: 'CTA Clicked',
+      properties: {
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+      },
+    })
+  })
+
   it('builds compact external link events without leaking the full destination URL', () => {
     expect(
       buildVercelCustomEvent('external_link_click', {
@@ -533,6 +573,57 @@ describe('Vercel analytics URL normalization', () => {
           site_link: 'https://example.com/private-path',
         }),
       ).toBeNull()
+    })
+
+    it('maps content and ads intake events with the same compact property contract', () => {
+      expect(
+        buildVercelCustomEvent('content_intake_form_start', {
+          form_name: 'content_intake',
+          form_location: 'content_intake_page',
+          step: 1,
+          step_id: 'why',
+          question_count: 4,
+        }),
+      ).toEqual({
+        name: 'Content Intake Form Started',
+        properties: {
+          form_name: 'content_intake',
+          form_location: 'content_intake_page',
+          step: 1,
+          step_id: 'why',
+          question_count: 4,
+        },
+      })
+
+      expect(
+        buildVercelCustomEvent('ads_intake_submit_success', {
+          form_name: 'ads_intake',
+          form_location: 'ads_intake_page',
+          elapsed_seconds: 41,
+        }),
+      ).toEqual({
+        name: 'Ads Intake Submit Succeeded',
+        properties: {
+          form_name: 'ads_intake',
+          form_location: 'ads_intake_page',
+          elapsed_seconds: 41,
+        },
+      })
+
+      expect(
+        buildVercelCustomEvent('content_intake_option_select', {
+          form_name: 'content_intake',
+          step_id: 'why',
+          option: 'build_trust',
+        }),
+      ).toEqual({
+        name: 'Content Intake Option Selected',
+        properties: {
+          form_name: 'content_intake',
+          step_id: 'why',
+          option: 'build_trust',
+        },
+      })
     })
   })
 

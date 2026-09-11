@@ -17,29 +17,41 @@ const ALLOWED_MARKETING_PARAMS = [
   'utm_content',
   'utm_term',
 ] as const
-const WEBSITE_INTAKE_FORM_NAME = 'website_intake'
-const WEBSITE_INTAKE_FORM_LOCATIONS = new Set([
+const SERVICE_INTAKE_SERVICES = ['website', 'content', 'ads'] as const
+type ServiceIntakeService = (typeof SERVICE_INTAKE_SERVICES)[number]
+const SERVICE_INTAKE_FORM_NAMES = new Set(
+  SERVICE_INTAKE_SERVICES.map((service) => `${service}_intake`),
+)
+const SERVICE_INTAKE_FORM_LOCATIONS = new Set([
   'website_intake_page',
+  'content_intake_page',
+  'ads_intake_page',
   'success_screen',
 ])
-const WEBSITE_INTAKE_STEP_IDS = new Set([
+const SERVICE_INTAKE_STEP_IDS = new Set([
   'why',
   'timeline',
   'current-site',
   'contact',
 ])
-const WEBSITE_INTAKE_OPTIONS_BY_STEP: Record<string, ReadonlySet<string>> = {
+const SERVICE_INTAKE_OPTIONS_BY_STEP: Record<string, ReadonlySet<string>> = {
   why: new Set([
     'more_customers',
     'better_design',
     'better_analytics',
+    'build_trust',
+    'grow_audience',
+    'consistent_content',
+    'more_leads',
+    'more_sales',
+    'better_return',
     'all_of_the_above',
   ]),
   timeline: new Set(['next_week', 'next_30_days', 'next_3_months']),
   'current-site': new Set(['yes', 'no']),
   contact: new Set(['email', 'text']),
 }
-const WEBSITE_INTAKE_FIELD_NAMES = new Set([
+const SERVICE_INTAKE_FIELD_NAMES = new Set([
   'why',
   'timeline',
   'has_website',
@@ -48,17 +60,45 @@ const WEBSITE_INTAKE_FIELD_NAMES = new Set([
   'email',
   'phone',
 ])
-const WEBSITE_INTAKE_SOURCES = new Set([
+const SERVICE_INTAKE_SOURCES = new Set([
   'A friend told me',
   'TikTok',
   'Instagram',
   'Google Search',
   'ChatGPT (or another AI Search)',
 ])
-const WEBSITE_INTAKE_ERROR_REASONS = new Set([
+const SERVICE_INTAKE_ERROR_REASONS = new Set([
   'network_failure',
   'non_ok_response',
   'timeout',
+])
+const SERVICE_INTAKE_ACTION_TITLES = {
+  form_view: 'Form Viewed',
+  form_start: 'Form Started',
+  step_view: 'Step Viewed',
+  step_complete: 'Step Completed',
+  option_select: 'Option Selected',
+  validation_error: 'Validation Error',
+  submit_attempt: 'Submit Attempted',
+  submit_success: 'Submit Succeeded',
+  submit_error: 'Submit Error',
+  source_select: 'Source Selected',
+  booking_click: 'Booking Clicked',
+  abandon: 'Abandoned',
+  agent_prepare: 'Agent Prepared',
+} as const
+type ServiceIntakeAction = keyof typeof SERVICE_INTAKE_ACTION_TITLES
+const SERVICE_INTAKE_SERVICE_LABELS: Record<ServiceIntakeService, string> = {
+  website: 'Website',
+  content: 'Content',
+  ads: 'Ads',
+}
+const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
+const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads'])
+const SOCIAL_HUB_DESTINATIONS = new Set([
+  '/website-intake',
+  '/content-intake',
+  '/ads-intake',
 ])
 
 function compactProperties(
@@ -92,13 +132,11 @@ function getAllowedString(value: unknown, allowed: ReadonlySet<string>) {
   return typeof value === 'string' && allowed.has(value) ? value : undefined
 }
 
-function getWebsiteIntakeFormName(value: unknown) {
-  return value === WEBSITE_INTAKE_FORM_NAME
-    ? WEBSITE_INTAKE_FORM_NAME
-    : undefined
+function getServiceIntakeFormName(value: unknown) {
+  return getAllowedString(value, SERVICE_INTAKE_FORM_NAMES)
 }
 
-function getWebsiteIntakeStep(value: unknown) {
+function getServiceIntakeStep(value: unknown) {
   return typeof value === 'number' &&
     Number.isInteger(value) &&
     value >= 1 &&
@@ -107,29 +145,176 @@ function getWebsiteIntakeStep(value: unknown) {
     : undefined
 }
 
-function getWebsiteIntakeOption(eventParams: Record<string, unknown>) {
-  const stepId = getAllowedString(eventParams.step_id, WEBSITE_INTAKE_STEP_IDS)
+function getServiceIntakeOption(eventParams: Record<string, unknown>) {
+  const stepId = getAllowedString(eventParams.step_id, SERVICE_INTAKE_STEP_IDS)
   if (!stepId) return undefined
 
   return getAllowedString(
     eventParams.option,
-    WEBSITE_INTAKE_OPTIONS_BY_STEP[stepId],
+    SERVICE_INTAKE_OPTIONS_BY_STEP[stepId],
   )
 }
 
-function getWebsiteIntakeElapsedSeconds(value: unknown) {
+function getServiceIntakeElapsedSeconds(value: unknown) {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0
     ? Math.round(value)
     : undefined
 }
 
-function getWebsiteIntakeStatus(value: unknown) {
+function getServiceIntakeStatus(value: unknown) {
   return typeof value === 'number' &&
     Number.isInteger(value) &&
     value >= 100 &&
     value <= 599
     ? value
     : undefined
+}
+
+function parseServiceIntakeEvent(eventName: string): {
+  service: ServiceIntakeService
+  action: ServiceIntakeAction
+} | null {
+  const match = /^(website|content|ads)_intake_(.+)$/.exec(eventName)
+  if (!match) return null
+
+  const service = match[1]
+  const action = match[2]
+  if (service !== 'website' && service !== 'content' && service !== 'ads') {
+    return null
+  }
+  if (!(action in SERVICE_INTAKE_ACTION_TITLES)) return null
+
+  return { service, action: action as ServiceIntakeAction }
+}
+
+function buildServiceIntakeCustomEvent(
+  eventName: string,
+  eventParams: Record<string, unknown>,
+): VercelCustomEvent | null {
+  const parsed = parseServiceIntakeEvent(eventName)
+  if (!parsed) return null
+
+  const formName = getServiceIntakeFormName(eventParams.form_name)
+  const formLocation = getAllowedString(
+    eventParams.form_location,
+    SERVICE_INTAKE_FORM_LOCATIONS,
+  )
+  const step = getServiceIntakeStep(eventParams.step)
+  const stepId = getAllowedString(eventParams.step_id, SERVICE_INTAKE_STEP_IDS)
+  const questionCount =
+    eventParams.question_count === 4 ? eventParams.question_count : undefined
+  const name = `${SERVICE_INTAKE_SERVICE_LABELS[parsed.service]} Intake ${SERVICE_INTAKE_ACTION_TITLES[parsed.action]}`
+
+  switch (parsed.action) {
+    case 'form_view':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+        }),
+      }
+    case 'form_start':
+    case 'step_view':
+    case 'step_complete':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+          step,
+          step_id: stepId,
+          question_count: questionCount,
+        }),
+      }
+    case 'option_select':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          step_id: stepId,
+          option: getServiceIntakeOption(eventParams),
+        }),
+      }
+    case 'validation_error':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          step,
+          step_id: stepId,
+          field_name: getAllowedString(
+            eventParams.field_name,
+            SERVICE_INTAKE_FIELD_NAMES,
+          ),
+        }),
+      }
+    case 'submit_attempt':
+    case 'submit_success':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+          elapsed_seconds: getServiceIntakeElapsedSeconds(
+            eventParams.elapsed_seconds,
+          ),
+        }),
+      }
+    case 'submit_error':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          reason: getAllowedString(
+            eventParams.reason,
+            SERVICE_INTAKE_ERROR_REASONS,
+          ),
+          status: getServiceIntakeStatus(eventParams.status),
+        }),
+      }
+    case 'source_select':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          source: getAllowedString(eventParams.source, SERVICE_INTAKE_SOURCES),
+        }),
+      }
+    case 'booking_click':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+        }),
+      }
+    case 'abandon':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+          funnel_step: getServiceIntakeStep(eventParams.funnel_step),
+          funnel_step_id: getAllowedString(
+            eventParams.funnel_step_id,
+            SERVICE_INTAKE_STEP_IDS,
+          ),
+        }),
+      }
+    case 'agent_prepare':
+      return {
+        name,
+        properties: compactProperties({
+          form_name: formName,
+          form_location: formLocation,
+        }),
+      }
+    default: {
+      const exhaustive: never = parsed.action
+      return exhaustive
+    }
+  }
 }
 
 /**
@@ -187,6 +372,8 @@ export function buildVercelCustomEvent(
   params?: Record<string, unknown>,
 ): VercelCustomEvent | null {
   const eventParams = params ?? {}
+  const intakeEvent = buildServiceIntakeCustomEvent(eventName, eventParams)
+  if (intakeEvent) return intakeEvent
 
   switch (eventName) {
     case 'cta_click':
@@ -201,6 +388,15 @@ export function buildVercelCustomEvent(
             typeof eventParams.cta_location === 'string'
               ? eventParams.cta_location
               : undefined,
+          platform: getAllowedString(
+            eventParams.platform,
+            SOCIAL_HUB_PLATFORMS,
+          ),
+          service: getAllowedString(eventParams.service, SOCIAL_HUB_SERVICES),
+          destination: getAllowedString(
+            eventParams.destination,
+            SOCIAL_HUB_DESTINATIONS,
+          ),
         }),
       }
     case 'form_submit':
@@ -216,180 +412,6 @@ export function buildVercelCustomEvent(
             typeof eventParams.form_location === 'string'
               ? eventParams.form_location
               : undefined,
-        }),
-      }
-    case 'website_intake_form_view':
-      return {
-        name: 'Website Intake Form Viewed',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-        }),
-      }
-    case 'website_intake_form_start':
-      return {
-        name: 'Website Intake Form Started',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
-              : undefined,
-        }),
-      }
-    case 'website_intake_step_view':
-      return {
-        name: 'Website Intake Step Viewed',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
-              : undefined,
-        }),
-      }
-    case 'website_intake_step_complete':
-      return {
-        name: 'Website Intake Step Completed',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
-              : undefined,
-        }),
-      }
-    case 'website_intake_option_select':
-      return {
-        name: 'Website Intake Option Selected',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          option: getWebsiteIntakeOption(eventParams),
-        }),
-      }
-    case 'website_intake_validation_error':
-      return {
-        name: 'Website Intake Validation Error',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          field_name: getAllowedString(
-            eventParams.field_name,
-            WEBSITE_INTAKE_FIELD_NAMES,
-          ),
-        }),
-      }
-    case 'website_intake_submit_attempt':
-      return {
-        name: 'Website Intake Submit Attempted',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          elapsed_seconds: getWebsiteIntakeElapsedSeconds(
-            eventParams.elapsed_seconds,
-          ),
-        }),
-      }
-    case 'website_intake_submit_success':
-      return {
-        name: 'Website Intake Submit Succeeded',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          elapsed_seconds: getWebsiteIntakeElapsedSeconds(
-            eventParams.elapsed_seconds,
-          ),
-        }),
-      }
-    case 'website_intake_submit_error':
-      return {
-        name: 'Website Intake Submit Error',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          reason: getAllowedString(
-            eventParams.reason,
-            WEBSITE_INTAKE_ERROR_REASONS,
-          ),
-          status: getWebsiteIntakeStatus(eventParams.status),
-        }),
-      }
-    case 'website_intake_source_select':
-      return {
-        name: 'Website Intake Source Selected',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          source: getAllowedString(eventParams.source, WEBSITE_INTAKE_SOURCES),
-        }),
-      }
-    case 'website_intake_booking_click':
-      return {
-        name: 'Website Intake Booking Clicked',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-        }),
-      }
-    case 'website_intake_abandon':
-      return {
-        name: 'Website Intake Abandoned',
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
-          ),
-          funnel_step: getWebsiteIntakeStep(eventParams.funnel_step),
-          funnel_step_id: getAllowedString(
-            eventParams.funnel_step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
         }),
       }
     case 'apply_form_view':

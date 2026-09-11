@@ -13,7 +13,7 @@ const SOCIAL_METADATA = [
 
 describe('social landing metadata', () => {
   it.each(SOCIAL_METADATA)(
-    '%s promotes only Website and Prism Infinity in metadata and schema',
+    '%s promotes Website, Content, and Ads intake in metadata and schema',
     (_platform, metadata, Page) => {
       const description = String(metadata.description)
       const openGraphDescription = String(metadata.openGraph?.description)
@@ -34,8 +34,10 @@ describe('social landing metadata', () => {
         twitterDescription,
         schema,
       ]) {
-        expect(surface).toMatch(/website design/i)
-        expect(surface).toMatch(/prism infinity/i)
+        expect(surface).toMatch(/website/i)
+        expect(surface).toMatch(/content/i)
+        expect(surface).toMatch(/\bads\b/i)
+        expect(surface).not.toMatch(/prism infinity/i)
         expect(surface).not.toMatch(/refer|referral|\$100/i)
       }
 

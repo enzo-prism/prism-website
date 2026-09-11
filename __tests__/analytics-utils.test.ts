@@ -45,6 +45,7 @@ import {
   consumePendingLeadConversion,
   setEnhancedConversionUserData,
   storePendingApplyLeadContext,
+  trackCTAClick,
   trackEvent,
   trackExternalLinkClick,
   trackFormSubmission,
@@ -70,7 +71,9 @@ function installSubtleCrypto() {
       subtle: {
         digest: async (_algorithm: string, data: BufferSource) => {
           const bytes = new Uint8Array(data as ArrayBuffer)
-          const digest = createHash('sha256').update(Buffer.from(bytes)).digest()
+          const digest = createHash('sha256')
+            .update(Buffer.from(bytes))
+            .digest()
           return new Uint8Array(digest).buffer
         },
       },
@@ -121,6 +124,41 @@ describe('analytics utilities', () => {
         ([command]) => command === 'config',
       ),
     ).toBe(false)
+  })
+
+  it('sends social-hub CTA clicks with platform, service, destination, and attribution', () => {
+    window.history.replaceState({}, '', '/ig?utm_source=instagram')
+
+    trackCTAClick('website', 'instagram landing actions', {
+      platform: 'instagram',
+      service: 'website',
+      destination: '/website-intake',
+    })
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      'event',
+      'cta_click',
+      expect.objectContaining({
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+        utm_source: 'google',
+        landing_path: '/ig',
+        first_touch_source: 'instagram',
+      }),
+    )
+    expect(trackVercel).toHaveBeenCalledWith(
+      'CTA Clicked',
+      expect.objectContaining({
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+      }),
+    )
   })
 
   it('stores and consumes pending apply lead context once', () => {
@@ -396,9 +434,9 @@ describe('analytics utilities', () => {
         ([, eventName]) => eventName === 'conversion',
       )
       expect(conversionCall?.[2]).not.toHaveProperty('transaction_id')
-      expect(JSON.stringify((window.gtag as jest.Mock).mock.calls)).not.toContain(
-        'jane.doe@example.com',
-      )
+      expect(
+        JSON.stringify((window.gtag as jest.Mock).mock.calls),
+      ).not.toContain('jane.doe@example.com')
     })
   })
 
@@ -443,14 +481,14 @@ describe('analytics utilities', () => {
     })
 
     it('fires at most once per transaction id, so a reload cannot double-count', () => {
-      expect(trackPurchase({ transaction_id: 'cs_live_dupe', value: 300 })).toBe(
-        true,
-      )
+      expect(
+        trackPurchase({ transaction_id: 'cs_live_dupe', value: 300 }),
+      ).toBe(true)
       ;(window.gtag as jest.Mock).mockClear()
 
-      expect(trackPurchase({ transaction_id: 'cs_live_dupe', value: 300 })).toBe(
-        false,
-      )
+      expect(
+        trackPurchase({ transaction_id: 'cs_live_dupe', value: 300 }),
+      ).toBe(false)
       expect(window.gtag).not.toHaveBeenCalled()
     })
 
@@ -483,9 +521,9 @@ describe('analytics utilities', () => {
       ).toBe(false)
 
       expect(window.gtag).not.toHaveBeenCalled()
-      expect(JSON.stringify((window.gtag as jest.Mock).mock.calls)).not.toContain(
-        'jane.doe@gmail.com',
-      )
+      expect(
+        JSON.stringify((window.gtag as jest.Mock).mock.calls),
+      ).not.toContain('jane.doe@gmail.com')
     })
 
     it('shortens the Ads transaction id to fit the 64-character limit', () => {
@@ -520,9 +558,9 @@ describe('analytics utilities', () => {
         item_name: 'buyer@example.com',
       })
 
-      expect(JSON.stringify((window.gtag as jest.Mock).mock.calls)).not.toContain(
-        'buyer@example.com',
-      )
+      expect(
+        JSON.stringify((window.gtag as jest.Mock).mock.calls),
+      ).not.toContain('buyer@example.com')
       const purchaseCall = (window.gtag as jest.Mock).mock.calls.find(
         ([, eventName]) => eventName === 'purchase',
       )
@@ -616,9 +654,9 @@ describe('analytics utilities', () => {
       // digests are persisted — never the raw address.
       installSubtleCrypto()
       await setEnhancedConversionUserData({ email: 'jordan@example.com' })
-      expect(window.localStorage.getItem('prism_ec_user_data_v1')).not.toContain(
-        'jordan@example.com',
-      )
+      expect(
+        window.localStorage.getItem('prism_ec_user_data_v1'),
+      ).not.toContain('jordan@example.com')
       ;(window.gtag as jest.Mock).mockClear()
 
       expect(applyStoredEnhancedConversionUserData()).toBe(true)

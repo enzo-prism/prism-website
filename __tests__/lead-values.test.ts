@@ -18,6 +18,8 @@ describe('lead values', () => {
     const emittedLeadTypes = new Set([
       'website_order',
       'website_intake',
+      'content_intake',
+      'ads_intake',
       'growth_application',
       'founder_os_application',
       'checkout_inquiry',
@@ -68,11 +70,21 @@ describe('lead values', () => {
     expect(DEFAULT_LEAD_VALUE_USD).toBeGreaterThan(0)
   })
 
-  it('ranks the self-serve order above the unclassified default', () => {
-    // The entire point of the map: a $300 purchase intent must outweigh a
-    // generic inbound lead, or Ads optimizes them identically.
-    expect(resolveLeadValue('website_order')).toBeGreaterThan(
+  it('ranks service intake leads above the unclassified default and below the retired self-serve order', () => {
+    expect(resolveLeadValue('website_intake')).toBe(180)
+    expect(resolveLeadValue('content_intake')).toBe(150)
+    expect(resolveLeadValue('ads_intake')).toBe(150)
+    expect(resolveLeadValue('content_intake')).toBeGreaterThan(
       DEFAULT_LEAD_VALUE_USD,
+    )
+    expect(resolveLeadValue('ads_intake')).toBeGreaterThan(
+      DEFAULT_LEAD_VALUE_USD,
+    )
+    expect(resolveLeadValue('website_intake')).toBeGreaterThan(
+      resolveLeadValue('content_intake'),
+    )
+    expect(resolveLeadValue('website_order')).toBeGreaterThan(
+      resolveLeadValue('website_intake'),
     )
   })
 
