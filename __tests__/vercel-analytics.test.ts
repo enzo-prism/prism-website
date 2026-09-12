@@ -638,3 +638,104 @@ describe('Vercel analytics URL normalization', () => {
     })
   })
 })
+
+describe('service intake parity', () => {
+  const stages = [
+    ['form_view', 'Form Viewed'],
+    ['form_start', 'Form Started'],
+    ['step_view', 'Step Viewed'],
+    ['step_complete', 'Step Completed'],
+    ['option_select', 'Option Selected'],
+    ['validation_error', 'Validation Error'],
+    ['submit_attempt', 'Submit Attempted'],
+    ['submit_success', 'Submit Succeeded'],
+    ['submit_error', 'Submit Error'],
+    ['source_select', 'Source Selected'],
+    ['booking_click', 'Booking Clicked'],
+    ['abandon', 'Abandoned'],
+    ['agent_prepare', 'Agent Prepared'],
+  ]
+
+  it.each(['website', 'content', 'ads'])(
+    'retains each %s funnel stage with its service identity',
+    (service) => {
+      const label = service[0].toUpperCase() + service.slice(1)
+      for (const [stage, name] of stages) {
+        const result = buildVercelCustomEvent(`${service}_intake_${stage}`, {
+          form_name: `${service}_intake`,
+          form_location: `${service}_intake_page`,
+          email: 'person@example.com',
+          phone: '9165550142',
+          site_link: 'https://private.example.com',
+        })
+        expect(result?.name).toBe(`${label} Intake ${name}`)
+        expect(result?.properties?.form_name).toBe(`${service}_intake`)
+        expect(JSON.stringify(result)).not.toMatch(
+          /person@|9165550142|private\.example/,
+        )
+      }
+    },
+  )
+
+  it.each([
+    ['website', 'better_design'],
+    ['content', 'build_trust'],
+    ['ads', 'more_leads'],
+  ])(
+    'keeps the selected %s goal and rejects other service goals',
+    (service, goal) => {
+      const event = `${service}_intake_option_select`
+      expect(
+        buildVercelCustomEvent(event, { step_id: 'why', option: goal })
+          ?.properties?.option,
+      ).toBe(goal)
+      expect(
+        buildVercelCustomEvent(event, {
+          step_id: 'why',
+          option: 'person@example.com',
+        })?.properties?.option,
+      ).toBeUndefined()
+      if (service !== 'website') {
+        expect(
+          buildVercelCustomEvent(event, {
+            step_id: 'why',
+            option: 'better_design',
+          })?.properties?.option,
+        ).toBeUndefined()
+      }
+    },
+  )
+
+  it('rejects mismatched service metadata and unsupported events', () => {
+    expect(
+      buildVercelCustomEvent('ads_intake_form_view', {
+        form_name: 'website_intake',
+        form_location: 'website_intake_page',
+      })?.properties,
+    ).toBeUndefined()
+    expect(buildVercelCustomEvent('ads_intake_unknown')).toBeNull()
+    expect(buildVercelCustomEvent('unknown_intake_form_view')).toBeNull()
+  })
+})
+
+describe('marketing URL privacy', () => {
+  it.each([
+    'person%40example.com',
+    'person%2540example.com',
+    '%2B1%20916%20555%200142',
+  ])('removes encoded personal campaign data: %s', (value) => {
+    expect(
+      normalizeVercelAnalyticsUrl(
+        `https://www.design-prism.com/?utm_source=${value}&utm_medium=email`,
+      ),
+    ).toBe('https://www.design-prism.com/?utm_medium=email')
+  })
+
+  it('removes URL credentials while preserving legitimate campaign names', () => {
+    expect(
+      normalizeVercelAnalyticsUrl(
+        'https://user:secret@www.design-prism.com/?utm_campaign=Fall%20Launch',
+      ),
+    ).toBe('https://www.design-prism.com/?utm_campaign=Fall+Launch')
+  })
+})

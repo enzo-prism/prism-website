@@ -26,6 +26,10 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
   const previousPathname = useRef<string | null>(null)
   const previousUrl = useRef<string | null>(null)
   const previousSearchParams = useRef<string | null>(null)
+  const titleRef = useRef(title)
+  useEffect(() => {
+    titleRef.current = title
+  }, [title])
 
   useEffect(() => {
     const previous = previousPathname.current
@@ -89,9 +93,10 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    const startTime = Date.now()
+    let visibleSince: number | null = document.visibilityState === 'hidden' ? null : Date.now()
+    let visibleTimeMs = 0
     const pageLocation = getCurrentPageLocation()
-    const pageTitle = getCurrentPageTitle(title, pathname)
+    const pageTitle = getCurrentPageTitle(titleRef.current, pathname)
     let scrollDepth = 0
     let engaged = false
     let reported = false
@@ -121,10 +126,11 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
 
     const trackScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight
-      const documentHeight = document.body.scrollHeight
-      const currentScrollDepth = Math.floor(
+      const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+      if (documentHeight <= 0) return
+      const currentScrollDepth = Math.max(0, Math.min(100, Math.floor(
         (scrollPosition / documentHeight) * 100,
-      )
+      )))
 
       if (currentScrollDepth > scrollDepth) {
         scrollDepth = currentScrollDepth
@@ -138,7 +144,7 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     const reportEngagement = () => {
       if (reported || !engaged) return
 
-      const timeOnPage = Math.floor((Date.now() - startTime) / 1000)
+      const timeOnPage = Math.floor(visibleTimeMs / 1000)
       if (timeOnPage < 10 && scrollDepth < 25) return
 
       reported = true
@@ -152,6 +158,27 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       })
     }
 
+    // Flush once per route visit at the first qualifying exit. A short hidden
+    // interval can resume until it qualifies; after reporting, later exits do not
+    // duplicate the event. This is visible time at that exit, not GA's native
+    // full-session engagement duration.
+    const pauseAndReport = () => {
+      if (visibleSince !== null) {
+        visibleTimeMs += Math.max(0, Date.now() - visibleSince)
+        visibleSince = null
+      }
+      reportEngagement()
+    }
+    const resume = () => {
+      if (document.visibilityState !== 'hidden' && visibleSince === null) {
+        visibleSince = Date.now()
+      }
+    }
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') pauseAndReport()
+      else resume()
+    }
+
     // Add event listeners
     window.addEventListener('scroll', trackScroll, { passive: true })
     window.addEventListener('click', handleTrackedClick)
@@ -159,17 +186,21 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     window.addEventListener('touchstart', trackEngagement)
 
     // Report engagement when user leaves page
-    window.addEventListener('beforeunload', reportEngagement)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pagehide', pauseAndReport)
+    window.addEventListener('pageshow', resume)
 
     return () => {
-      reportEngagement()
+      pauseAndReport()
       window.removeEventListener('scroll', trackScroll)
       window.removeEventListener('click', handleTrackedClick)
       window.removeEventListener('keydown', trackEngagement)
       window.removeEventListener('touchstart', trackEngagement)
-      window.removeEventListener('beforeunload', reportEngagement)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('pagehide', pauseAndReport)
+      window.removeEventListener('pageshow', resume)
     }
-  }, [pathname, title])
+  }, [pathname])
 
   return null // This component doesn't render anything
 }

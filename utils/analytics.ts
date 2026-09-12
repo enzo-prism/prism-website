@@ -192,12 +192,36 @@ function compactAnalyticsParams(params: Record<string, any>) {
   )
 }
 
+// Query values are decoded by URLSearchParams. Validate that value, not the
+// encoded URL where %40 can conceal an email address.
+function isSafeMarketingValue(value: string) {
+  let decoded = value
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const next = decodeURIComponent(decoded)
+      if (next === decoded) break
+      decoded = next
+    } catch {
+      return false
+    }
+  }
+  return (
+    decoded.trim().length > 0 &&
+    decoded.length <= 160 &&
+    !/%[0-9a-f]{2}/i.test(decoded) &&
+    !looksLikeEmail(decoded) &&
+    !looksLikePhone(decoded) &&
+    !/[\x00-\x1f\x7f]/.test(decoded) &&
+    !/https?:\/\//i.test(decoded)
+  )
+}
+
 function getSafeSearchParams(searchParams: URLSearchParams) {
   const safeParams = new URLSearchParams()
 
   for (const key of SAFE_MARKETING_PARAM_KEYS) {
     const value = searchParams.get(key)
-    if (value) safeParams.set(key, value)
+    if (value && isSafeMarketingValue(value)) safeParams.set(key, value.trim())
   }
 
   return safeParams
@@ -206,6 +230,8 @@ function getSafeSearchParams(searchParams: URLSearchParams) {
 function getSafeAnalyticsUrl(url: string, base?: string) {
   try {
     const parsed = new URL(url, base)
+    parsed.username = ''
+    parsed.password = ''
     parsed.search = getSafeSearchParams(parsed.searchParams).toString()
     parsed.hash = ''
     return parsed.toString()
@@ -284,6 +310,11 @@ function sanitizeAnalyticsParamValue(key: string, value: unknown) {
   }
 
   if (looksLikeEmail(trimmed) || looksLikePhone(trimmed)) return undefined
+  if (
+    (lowerKey.startsWith('utm_') || lowerKey.startsWith('first_touch_')) &&
+    !isSafeMarketingValue(trimmed)
+  )
+    return undefined
 
   if (SAFE_URL_PARAM_KEYS.has(lowerKey)) {
     return getSafeAnalyticsUrl(trimmed)

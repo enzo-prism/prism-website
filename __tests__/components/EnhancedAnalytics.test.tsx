@@ -37,6 +37,7 @@ describe('EnhancedAnalytics', () => {
     mockNavigationState.searchParams = new URLSearchParams()
     document.title = 'Dental practice growth system | Prism'
     window.history.replaceState({}, '', '/')
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'visible' })
   })
 
   afterEach(() => {
@@ -193,4 +194,70 @@ describe('EnhancedAnalytics', () => {
       }),
     )
   })
+  function visibility(state: 'hidden' | 'visible') {
+    Object.defineProperty(document, 'visibilityState', { configurable: true, value: state })
+    act(() => { document.dispatchEvent(new Event('visibilitychange')) })
+  }
+
+  function engagements() {
+    return mockTrackEvent.mock.calls.filter(([name]) => name === 'page_engagement')
+  }
+
+  it('excludes hidden time, resumes short visits, and reports once across exit signals', () => {
+    const { unmount } = render(<EnhancedAnalytics title="Prism" />)
+    window.dispatchEvent(new KeyboardEvent('keydown'))
+    act(() => { jest.advanceTimersByTime(5000) })
+    visibility('hidden')
+    expect(engagements()).toHaveLength(0)
+    act(() => { jest.advanceTimersByTime(120000) })
+    visibility('visible')
+    act(() => { jest.advanceTimersByTime(6000) })
+    visibility('hidden')
+    expect(engagements()).toHaveLength(1)
+    expect(engagements()[0][1].time_on_page_seconds).toBe(11)
+    window.dispatchEvent(new Event('pagehide'))
+    visibility('visible')
+    act(() => { jest.advanceTimersByTime(20000) })
+    unmount()
+    expect(engagements()).toHaveLength(1)
+  })
+
+  it('does not split a visit on title-only renders and catches mobile pagehide', () => {
+    const { rerender, unmount } = render(<EnhancedAnalytics title="Prism" />)
+    window.dispatchEvent(new KeyboardEvent('keydown'))
+    act(() => { jest.advanceTimersByTime(6000) })
+    rerender(<EnhancedAnalytics title="Settled title" />)
+    act(() => { jest.advanceTimersByTime(6000) })
+    window.dispatchEvent(new Event('pagehide'))
+    expect(engagements()).toHaveLength(1)
+    expect(engagements()[0][1].time_on_page_seconds).toBe(12)
+    unmount()
+    expect(engagements()).toHaveLength(1)
+  })
+
+  it('does not count initial background time and resumes after bfcache restoration', () => {
+    visibility('hidden')
+    const { unmount } = render(<EnhancedAnalytics title="Prism" />)
+    act(() => { jest.advanceTimersByTime(60000) })
+    visibility('visible')
+    window.dispatchEvent(new KeyboardEvent('keydown'))
+    act(() => { jest.advanceTimersByTime(4000) })
+    window.dispatchEvent(new Event('pagehide'))
+    act(() => { jest.advanceTimersByTime(60000) })
+    window.dispatchEvent(new Event('pageshow'))
+    act(() => { jest.advanceTimersByTime(7000) })
+    unmount()
+    expect(engagements()[0][1].time_on_page_seconds).toBe(11)
+  })
+
+  it('clamps engagement scroll depth despite overscroll', () => {
+    Object.defineProperty(document.body, 'scrollHeight', { configurable: true, value: 1000 })
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 2000 })
+    const { unmount } = render(<EnhancedAnalytics title="Prism" />)
+    window.dispatchEvent(new Event('scroll'))
+    unmount()
+    expect(engagements()[0][1].max_scroll_depth_percent).toBe(100)
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 })
+  })
+
 })

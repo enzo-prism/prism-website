@@ -55,7 +55,9 @@ async function fetchTag(id) {
   })
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch gtag.js for ${id}: HTTP ${response.status}`)
+    throw new Error(
+      `Failed to fetch gtag.js for ${id}: HTTP ${response.status}`,
+    )
   }
 
   return response.text()
@@ -64,7 +66,9 @@ async function fetchTag(id) {
 /** Destinations named directly inside one tag payload. */
 function parseDestinations(source) {
   const ids = new Set()
-  for (const match of source.matchAll(/"vtp_instanceDestinationId":"([^"]+)"/g)) {
+  for (const match of source.matchAll(
+    /"vtp_instanceDestinationId":"([^"]+)"/g,
+  )) {
     ids.add(match[1])
   }
   return [...ids].sort()
@@ -154,9 +158,9 @@ function parseKeyEvents(source) {
 
   for (const match of source.matchAll(pattern)) {
     const destination = match[1]
-    const names = [...match[0].matchAll(/stringValue\\":\\"([a-z0-9_]+)\\"/g)].map(
-      (m) => m[1],
-    )
+    const names = [
+      ...match[0].matchAll(/stringValue\\":\\"([a-z0-9_]+)\\"/g),
+    ].map((m) => m[1])
     const existing = byDestination[destination] ?? []
     byDestination[destination] = [...new Set([...existing, ...names])].sort()
   }
@@ -206,6 +210,16 @@ async function main() {
   const pageViewLeadCreateEvents = parsePageViewLeadCreateEvents(source)
 
   const problems = []
+
+  // Enhanced Measurement form_submit means an attempt, not server acceptance.
+  if ((keyEvents[measurementId] ?? []).includes('form_submit')) {
+    problems.push({
+      code: 'unverified_form_submit_key_event',
+      destination: measurementId,
+      message:
+        'Automatic form_submit is marked as a key event. Unmark it in GA4 Admin > Events; keep generate_lead for accepted submissions. Do not delete historical event data.',
+    })
+  }
 
   // 1. SPA double-counting.
   const historyPageViews = enhancedMeasurement.filter(
@@ -286,14 +300,17 @@ async function main() {
     for (const destination of destinations) {
       const known = allowedDestinations.has(destination)
       const chain = destinationPaths.get(destination) ?? [destination]
-      const via = chain.length > 2 ? `  via ${chain.slice(0, -1).join(' -> ')}` : ''
+      const via =
+        chain.length > 2 ? `  via ${chain.slice(0, -1).join(' -> ')}` : ''
       log(
         `  ${known ? '✓' : '✗'} ${destination}${known ? '' : '  ← unexpected'}${via}`,
       )
     }
 
     log('\nEnhanced measurement:')
-    const features = [...new Set(enhancedMeasurement.map((t) => t.feature))].sort()
+    const features = [
+      ...new Set(enhancedMeasurement.map((t) => t.feature)),
+    ].sort()
     for (const feature of features) {
       const tags = enhancedMeasurement.filter((t) => t.feature === feature)
       const history = tags.some((t) => t.historyEvents)
@@ -307,7 +324,9 @@ async function main() {
 
     log('\nCreate events that copy page_view → generate_lead:')
     if (pageViewLeadCreateEvents.length === 0) {
-      log('  (none compiled into this tag; server-side Admin rules can still exist)')
+      log(
+        '  (none compiled into this tag; server-side Admin rules can still exist)',
+      )
     } else {
       for (const rule of pageViewLeadCreateEvents) {
         log(
@@ -317,7 +336,9 @@ async function main() {
     }
 
     if (problems.length === 0) {
-      log('\n✅ Live GA4 configuration matches what the site expects.\n')
+      log(
+        '\n✅ Public tag checks passed. Retention, custom definitions, filters, product links, and server-side rules still require authenticated Admin inspection.\n',
+      )
     } else {
       log(`\n❌ ${problems.length} configuration problem(s):\n`)
       for (const problem of problems) {

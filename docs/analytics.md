@@ -117,43 +117,19 @@ load-bearing in both places.
 Checkout Session id is 66. The Ads conversion therefore drops the fixed
 `cs_live_`/`cs_test_` prefix. GA4 keeps the full id (100-char limit).
 
-## The website purchase flow (LEGACY — order form retired 2026-07-27; kept for the still-live Stripe link)
+## Legacy purchase redirect
 
-1. (Retired) Visitor completed the deleted `WebsiteOrderForm.tsx` → Formspree POST.
-2. On success: `website_order_submitted`, then hashed identifiers, then
-   `trackFormSubmission(..., { conversionMode: 'immediate' })` → GA4
-   `generate_lead` + Ads lead conversion, keyed on the `PRISM-XXXX` order
-   reference for de-duplication.
-3. Buyer clicks the Stripe Payment Link (new tab) → `website_order_begin_checkout`.
-4. Stripe redirects to `/checkout/website/thank-you?session_id={CHECKOUT_SESSION_ID}`.
-5. `PurchaseSuccessTracker` fires GA4 `purchase` + Ads purchase conversion,
-   using the Stripe session id as `transaction_id`.
+The old `/checkout/website/thank-you` page remains available for existing links,
+but no longer mounts a purchase tracker. A public `session_id` (including a
+well-formed `cs_live_` id) does not prove a paid transaction. Reporting a fixed
+$300 from it could invent revenue; `cs_test_` must never count as production
+revenue either. Re-enable purchase reporting only through verified live paid
+Stripe sessions/webhooks, using the actual paid amount/currency and durable
+transaction deduplication. Until then use Stripe as the revenue source of truth.
+The unused purchase helper and tests remain for future verified integration.
 
-Without a well-formed `session_id` the tracker deliberately does nothing —
-someone reached the URL without checking out, and firing there would invent
-revenue.
-
-**Known limitations.** Two, both worth understanding before trusting the number:
-
-1. _The session id is not proof of payment._ It arrives in the URL, so the
-   tracker only shape-checks it (`cs_live_…`/`cs_test_…`). That stops casual
-   forgery — without it, loading `?session_id=1`, `=2`, `=3` would mint
-   unlimited $300 conversions, since each distinct string defeats
-   de-duplication — but it is not verification.
-2. _Redirect-triggered means under-counting too._ A buyer who closes the tab
-   before the redirect is missed, and ad blockers suppress the hit entirely.
-
-Both are fixed by the same upgrade: a **Stripe webhook feeding the GA4
-Measurement Protocol** server-side, which reports on confirmed payment rather
-than on page arrival. That is the recommended next step if purchase volume
-justifies it.
-
-De-duplication is layered: GA4 de-duplicates `purchase` on `transaction_id`
-server-side, and Google Ads does the same for conversions. The client-side
-localStorage guard is not strictly required for those — it exists because
-Vercel Analytics has no de-duplication at all, and because it is per-browser it
-cannot catch a buyer opening the confirmation link on a second device. The
-server-side layer is what catches that.
+Enhanced-conversion hashing helpers exist, but the current production lead
+forms do not call them. Do not describe enhanced conversions as active.
 
 ## Runbook: things that live outside this repo
 
@@ -296,8 +272,7 @@ Leave the Apply `/thank-you?source=apply` `generate_lead` alone.
 
 `app/layout.tsx` grants all four consent signals by default, with no
 region scoping. That is defensible for genuinely US-only traffic, but Consent
-Mode v2 has been required for EEA/UK traffic since March 2024, so a single EEA
-visitor makes the current configuration non-compliant. The fix is a
+Mode v2 has been required for EEA/UK traffic since March 2024, so the defaults require a consent-management review for traffic from those regions. The fix is a
 region-scoped denied default ahead of the global granted one:
 
 ```js
@@ -327,3 +302,85 @@ have.
 ### Service intake funnels (2026-09-06)
 
 Website, Content, and Ads share the `${service}_intake` funnel. Events include `_form_view`, `_form_start`, `_step_view`, `_step_complete`, `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_error`, `_submit_success`, `_source_select`, `_booking_click`, `_abandon`, and `_agent_prepare`. `form_name` and `form_location` distinguish services. The existing `trackFormSubmission` emits form submission and immediate `generate_lead` only after Formspree accepts. The existing GA4 key event and Google Ads conversion wiring are reused; no new GA conversion action is required. No email, phone, business link, or free text is sent to GA. Local and preview traffic retain the existing analytics host/environment gates. WebMCP preparation is an interaction, never a conversion. Live GA ingestion and email delivery require separate readback; a mocked request is not delivery evidence.
+
+
+## Audit and measurement plan — 2026-09-12
+
+Verified authenticated property: **Prism Website**, `508295014`, account
+`371048828`, stream `12280177779`, measurement ID `G-P9VY77PRC0`, URL
+`https://www.design-prism.com`.
+
+### Verified live settings
+
+- Public tag destinations: only `G-P9VY77PRC0` and `AW-11373090310`.
+- Automatic history pageviews are absent from the compiled tag; manual route
+  pageviews remain the owner.
+- Admin custom event list is empty: the historic contact page-view-to-lead rule
+  is no longer present.
+- `generate_lead` and automatic `form_submit` are both key events. Remove the
+  key-event designation from `form_submit`; keep it as diagnostic telemetry.
+- Event retention: **2 months**; user retention: **14 months**, reset on new
+  activity enabled. Proposed event retention: **14 months**, subject to approval.
+- No custom dimensions registered. Internal Traffic exclusion is **Testing**,
+  not Active. Validate the matching rule before activating; excluded data cannot
+  be recovered.
+- No Search Console or BigQuery link configured.
+- Stream email redaction is active; query-key redaction is inactive. First-party
+  URL sanitizers now reject encoded email/phone campaign values and credentials.
+  Automatic Google events do not pass through the first-party sanitizer.
+
+### Local fixes (not deployed)
+
+- Vercel tracks all Website/Content/Ads intake stages using service-specific
+  allowlists, including agent preparation (an interaction, not a conversion).
+- Scroll milestones reset per pathname. `page_engagement` uses visible time and
+  flushes once at the first qualifying hide/pagehide/unmount. It does not measure
+  the total across later resumes; use GA native engagement metrics for totals.
+- Legacy redirect no longer emits unverified purchases.
+- Public tag audit now fails when automatic `form_submit` is a key event, and
+  no longer describes a public-tag-only pass as a complete Admin audit.
+
+### Proposed reporting definitions
+
+Create these **event-scoped** dimensions, with the parameter as the stable key:
+
+| Display name | Parameter | Purpose |
+| --- | --- | --- |
+| Form name | `form_name` | Compare service funnels |
+| Form location | `form_location` | Separate placement/success surfaces |
+| Lead type | `lead_type` | Accepted leads by flow |
+| CTA text | `cta_text` | Compare calls to action |
+| CTA location | `cta_location` | Compare placements |
+| Destination host | `destination_host` | Booking/outbound destinations |
+| Intake step | `step_id` | Step progression |
+| Abandoned step | `funnel_step_id` | Abandonment diagnostics |
+| Validation field | `field_name` | Find form friction without values |
+| Error reason | `reason` | Bounded failure categories |
+
+Create event-scoped metrics `elapsed_seconds` (seconds),
+`time_on_page_seconds` (seconds), and `max_scroll_depth_percent` (standard).
+Do not register transaction IDs, complete URLs, click IDs, or user-entered text
+as custom dimensions. Registration is prospective, not a historical backfill.
+
+### Decision report
+
+Use GA sessions/users rather than summed custom event counts as denominators.
+Report acquisition by session channel and landing page; landing-to-intake-start;
+intake view/start/step/accepted submission by service; booking **clicks** separately
+from confirmed bookings; and lead quality/revenue only from actual CRM/payment
+outcomes. Break down by device and compare equal complete date windows.
+Use Search Console clicks/impressions/CTR/position for search visibility and
+Vercel Speed Insights for field performance. Tag owned campaign links consistently
+with `utm_source`, `utm_medium`, `utm_campaign`, and placement `utm_content`;
+never put UTMs on internal links or customer identifiers in campaign values.
+
+Follow-ups requiring business/configuration choices: approved retention,
+Search Console link, qualified/closed-lead CRM integration, intentional service
+lead weights (currently Website 180 vs default Content/Ads 50, not revenue),
+confirmed-booking integration, and consent management. Current consent defaults
+are granted globally and are not evidence of visitor consent. Do not activate
+hashed customer-data sharing merely because helper code exists.
+
+References: [GA SPA measurement](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications),
+[custom definitions](https://support.google.com/analytics/answer/14240153),
+[data retention](https://support.google.com/analytics/answer/7667196).

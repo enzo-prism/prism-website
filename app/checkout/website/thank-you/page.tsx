@@ -3,11 +3,7 @@ import Link from 'next/link'
 
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import PurchaseSuccessTracker from '@/components/thank-you/PurchaseSuccessTracker'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { firstSearchParamString } from '@/lib/search-params'
-
-const ORDER_PRICE = 300
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Website order received',
@@ -18,35 +14,13 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 /**
- * Post-payment confirmation for the flat-$300 website order.
- *
- * Stripe's Payment Link redirects here with `?session_id={CHECKOUT_SESSION_ID}`
- * (link management scripts retired with the call-first move; see git history
- * for scripts/update-website-payment-link.sh). That id gives GA4 and Google
- * Ads a stable key to de-duplicate on, and PurchaseSuccessTracker shape-checks
- * it before reporting anything.
- *
- * It is NOT proof of payment — the value arrives in the URL, so only a
- * server-side session lookup or a Stripe webhook can confirm a real purchase.
- * See docs/analytics.md for that upgrade path.
+ * Legacy Stripe redirect landing page. Query strings are not payment proof.
+ * Revenue must come from a verified paid live session/webhook, never arrival
+ * at this public URL. Keep the receipt/help surface available for old links.
  */
-export default async function WebsiteOrderThankYouPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ session_id?: string | string[] }>
-}) {
-  const resolvedSearchParams = await searchParams
-  const sessionId = firstSearchParamString(resolvedSearchParams?.session_id)
-
+export default function WebsiteOrderThankYouPage() {
   return (
     <div className="flex min-h-screen flex-col bg-[#040404] font-sans text-[#f5f0e8]">
-      <PurchaseSuccessTracker
-        transactionId={sessionId}
-        value={ORDER_PRICE}
-        currency="USD"
-        itemId="website"
-        itemName="Website by Prism"
-      />
       <Navbar />
       <main className="flex flex-1 items-center justify-center px-6 py-24">
         <div className="w-full max-w-xl border border-white/10 bg-[#070707] p-8 shadow-[0_30px_90px_-60px_rgba(216,188,121,0.65)] sm:p-12">

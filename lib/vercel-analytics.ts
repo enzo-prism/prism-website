@@ -1,3 +1,5 @@
+import { SERVICE_INTAKE_CONFIG, type IntakeService } from './service-intake'
+
 export type VercelAnalyticsEvent = {
   type: 'pageview' | 'event'
   url: string
@@ -17,11 +19,6 @@ const ALLOWED_MARKETING_PARAMS = [
   'utm_content',
   'utm_term',
 ] as const
-const WEBSITE_INTAKE_FORM_NAME = 'website_intake'
-const WEBSITE_INTAKE_FORM_LOCATIONS = new Set([
-  'website_intake_page',
-  'success_screen',
-])
 const WEBSITE_INTAKE_STEP_IDS = new Set([
   'why',
   'timeline',
@@ -29,12 +26,6 @@ const WEBSITE_INTAKE_STEP_IDS = new Set([
   'contact',
 ])
 const WEBSITE_INTAKE_OPTIONS_BY_STEP: Record<string, ReadonlySet<string>> = {
-  why: new Set([
-    'more_customers',
-    'better_design',
-    'better_analytics',
-    'all_of_the_above',
-  ]),
   timeline: new Set(['next_week', 'next_30_days', 'next_3_months']),
   'current-site': new Set(['yes', 'no']),
   contact: new Set(['email', 'text']),
@@ -92,10 +83,8 @@ function getAllowedString(value: unknown, allowed: ReadonlySet<string>) {
   return typeof value === 'string' && allowed.has(value) ? value : undefined
 }
 
-function getWebsiteIntakeFormName(value: unknown) {
-  return value === WEBSITE_INTAKE_FORM_NAME
-    ? WEBSITE_INTAKE_FORM_NAME
-    : undefined
+function getWebsiteIntakeFormName(value: unknown, service: IntakeService) {
+  return value === `${service}_intake` ? `${service}_intake` : undefined
 }
 
 function getWebsiteIntakeStep(value: unknown) {
@@ -107,13 +96,18 @@ function getWebsiteIntakeStep(value: unknown) {
     : undefined
 }
 
-function getWebsiteIntakeOption(eventParams: Record<string, unknown>) {
+function getWebsiteIntakeOption(
+  eventParams: Record<string, unknown>,
+  service: IntakeService,
+) {
   const stepId = getAllowedString(eventParams.step_id, WEBSITE_INTAKE_STEP_IDS)
   if (!stepId) return undefined
 
   return getAllowedString(
     eventParams.option,
-    WEBSITE_INTAKE_OPTIONS_BY_STEP[stepId],
+    stepId === 'why'
+      ? new Set(SERVICE_INTAKE_CONFIG[service].goals.map((goal) => goal.value))
+      : WEBSITE_INTAKE_OPTIONS_BY_STEP[stepId],
   )
 }
 
@@ -132,9 +126,33 @@ function getWebsiteIntakeStatus(value: unknown) {
     : undefined
 }
 
-/**
- * Preserve UTM params for campaign filtering while removing everything else.
- */
+// URLSearchParams decodes once; decode nested escapes before checking so an
+// encoded email or phone cannot bypass the same policy on either URL path.
+function safeMarketingValue(value: string | null): string | undefined {
+  if (!value) return undefined
+  let decoded = value.trim()
+  for (let i = 0; i < 3; i++) {
+    try {
+      const next = decodeURIComponent(decoded)
+      if (next === decoded) break
+      decoded = next
+    } catch {
+      break
+    }
+  }
+  if (!decoded || decoded.length > 160 || /%[0-9a-f]{2}/i.test(decoded))
+    return undefined
+  if (/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(decoded)) return undefined
+  if (
+    decoded.replace(/\D/g, '').length >= 10 &&
+    /(?:\+?\d[\d\s().-]{8,}\d)/.test(decoded)
+  )
+    return undefined
+  if (/https?:\/\//i.test(decoded)) return undefined
+  return decoded
+}
+
+/** Preserve safe campaign parameters while removing other query data. */
 export function normalizeVercelAnalyticsUrl(
   url: string,
   baseUrl = FALLBACK_ANALYTICS_ORIGIN,
@@ -144,10 +162,12 @@ export function normalizeVercelAnalyticsUrl(
     const safeParams = new URLSearchParams()
 
     for (const key of ALLOWED_MARKETING_PARAMS) {
-      const value = parsed.searchParams.get(key)
+      const value = safeMarketingValue(parsed.searchParams.get(key))
       if (value) safeParams.set(key, value)
     }
 
+    parsed.username = ''
+    parsed.password = ''
     parsed.search = safeParams.toString()
     parsed.hash = ''
     return parsed.toString()
@@ -158,7 +178,7 @@ export function normalizeVercelAnalyticsUrl(
     const safeParams = new URLSearchParams()
 
     for (const key of ALLOWED_MARKETING_PARAMS) {
-      const value = parsedSearch.get(key)
+      const value = safeMarketingValue(parsedSearch.get(key))
       if (value) safeParams.set(key, value)
     }
 
@@ -188,7 +208,17 @@ export function buildVercelCustomEvent(
 ): VercelCustomEvent | null {
   const eventParams = params ?? {}
 
-  switch (eventName) {
+  // Reuse the Website schema while keeping each service's event identity and
+  // its own goal allowlist. Unknown event names remain unsupported.
+  const intakeMatch = /^(website|content|ads)_intake_/.exec(eventName)
+  const service = (intakeMatch?.[1] ?? 'website') as IntakeService
+  const serviceLabel = SERVICE_INTAKE_CONFIG[service].label
+  const intakeLocations = new Set([`${service}_intake_page`, 'success_screen'])
+  const normalizedEventName = intakeMatch
+    ? eventName.replace(/^(website|content|ads)_/, 'website_')
+    : eventName
+
+  switch (normalizedEventName) {
     case 'cta_click':
       return {
         name: 'CTA Clicked',
@@ -220,23 +250,23 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_form_view':
       return {
-        name: 'Website Intake Form Viewed',
+        name: `${serviceLabel} Intake Form Viewed`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
         }),
       }
     case 'website_intake_form_start':
       return {
-        name: 'Website Intake Form Started',
+        name: `${serviceLabel} Intake Form Started`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           step: getWebsiteIntakeStep(eventParams.step),
           step_id: getAllowedString(
@@ -251,12 +281,12 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_step_view':
       return {
-        name: 'Website Intake Step Viewed',
+        name: `${serviceLabel} Intake Step Viewed`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           step: getWebsiteIntakeStep(eventParams.step),
           step_id: getAllowedString(
@@ -271,12 +301,12 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_step_complete':
       return {
-        name: 'Website Intake Step Completed',
+        name: `${serviceLabel} Intake Step Completed`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           step: getWebsiteIntakeStep(eventParams.step),
           step_id: getAllowedString(
@@ -291,21 +321,21 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_option_select':
       return {
-        name: 'Website Intake Option Selected',
+        name: `${serviceLabel} Intake Option Selected`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           step_id: getAllowedString(
             eventParams.step_id,
             WEBSITE_INTAKE_STEP_IDS,
           ),
-          option: getWebsiteIntakeOption(eventParams),
+          option: getWebsiteIntakeOption(eventParams, service),
         }),
       }
     case 'website_intake_validation_error':
       return {
-        name: 'Website Intake Validation Error',
+        name: `${serviceLabel} Intake Validation Error`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           step: getWebsiteIntakeStep(eventParams.step),
           step_id: getAllowedString(
             eventParams.step_id,
@@ -319,12 +349,12 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_submit_attempt':
       return {
-        name: 'Website Intake Submit Attempted',
+        name: `${serviceLabel} Intake Submit Attempted`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           elapsed_seconds: getWebsiteIntakeElapsedSeconds(
             eventParams.elapsed_seconds,
@@ -333,12 +363,12 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_submit_success':
       return {
-        name: 'Website Intake Submit Succeeded',
+        name: `${serviceLabel} Intake Submit Succeeded`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           elapsed_seconds: getWebsiteIntakeElapsedSeconds(
             eventParams.elapsed_seconds,
@@ -347,9 +377,9 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_submit_error':
       return {
-        name: 'Website Intake Submit Error',
+        name: `${serviceLabel} Intake Submit Error`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           reason: getAllowedString(
             eventParams.reason,
             WEBSITE_INTAKE_ERROR_REASONS,
@@ -359,31 +389,42 @@ export function buildVercelCustomEvent(
       }
     case 'website_intake_source_select':
       return {
-        name: 'Website Intake Source Selected',
+        name: `${serviceLabel} Intake Source Selected`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           source: getAllowedString(eventParams.source, WEBSITE_INTAKE_SOURCES),
         }),
       }
     case 'website_intake_booking_click':
       return {
-        name: 'Website Intake Booking Clicked',
+        name: `${serviceLabel} Intake Booking Clicked`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
+          ),
+        }),
+      }
+    case 'website_intake_agent_prepare':
+      return {
+        name: `${serviceLabel} Intake Agent Prepared`,
+        properties: compactProperties({
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
+          form_location: getAllowedString(
+            eventParams.form_location,
+            intakeLocations,
           ),
         }),
       }
     case 'website_intake_abandon':
       return {
-        name: 'Website Intake Abandoned',
+        name: `${serviceLabel} Intake Abandoned`,
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name),
+          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
           form_location: getAllowedString(
             eventParams.form_location,
-            WEBSITE_INTAKE_FORM_LOCATIONS,
+            intakeLocations,
           ),
           funnel_step: getWebsiteIntakeStep(eventParams.funnel_step),
           funnel_step_id: getAllowedString(
