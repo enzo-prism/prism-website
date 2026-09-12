@@ -45,6 +45,7 @@ import {
   consumePendingLeadConversion,
   setEnhancedConversionUserData,
   storePendingApplyLeadContext,
+  trackCTAClick,
   trackEvent,
   trackExternalLinkClick,
   trackFormSubmission,
@@ -154,6 +155,41 @@ describe('analytics utilities', () => {
         ([command]) => command === 'config',
       ),
     ).toBe(false)
+  })
+
+  it('sends social-hub CTA clicks with platform, service, destination, and attribution', () => {
+    window.history.replaceState({}, '', '/ig?utm_source=instagram')
+
+    trackCTAClick('website', 'instagram landing actions', {
+      platform: 'instagram',
+      service: 'website',
+      destination: '/website-intake',
+    })
+
+    expect(window.gtag).toHaveBeenCalledWith(
+      'event',
+      'cta_click',
+      expect.objectContaining({
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+        utm_source: 'google',
+        landing_path: '/ig',
+        first_touch_source: 'instagram',
+      }),
+    )
+    expect(trackVercel).toHaveBeenCalledWith(
+      'CTA Clicked',
+      expect.objectContaining({
+        cta_text: 'website',
+        cta_location: 'instagram landing actions',
+        platform: 'instagram',
+        service: 'website',
+        destination: '/website-intake',
+      }),
+    )
   })
 
   it('stores and consumes pending apply lead context once', () => {

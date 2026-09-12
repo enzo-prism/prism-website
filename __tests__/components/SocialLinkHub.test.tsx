@@ -2,6 +2,8 @@ import type React from 'react'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import SocialLinkHub from '@/components/social-link-hub'
+import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { SERVICE_INTAKE_PATHS } from '@/lib/service-intake'
 
 const trackCTAClick = jest.fn()
 const trackExternalLinkClick = jest.fn()
@@ -90,12 +92,33 @@ jest.mock('@/utils/analytics', () => ({
     trackExternalLinkClick(...args),
 }))
 
+const HUB_ACTIONS = [
+  {
+    name: /website/i,
+    href: WEBSITE_START_CTA.href,
+    ctaText: 'website',
+    service: 'website',
+  },
+  {
+    name: /content/i,
+    href: SERVICE_INTAKE_PATHS.content,
+    ctaText: 'content',
+    service: 'content',
+  },
+  {
+    name: /ads/i,
+    href: SERVICE_INTAKE_PATHS.ads,
+    ctaText: 'ads',
+    service: 'ads',
+  },
+] as const
+
 describe('SocialLinkHub', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it('frames the page around business growth with exactly two offer actions', () => {
+  it('frames the page around business growth with exactly three service actions', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
@@ -117,7 +140,7 @@ describe('SocialLinkHub', () => {
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
     })
-    expect(within(nav).getAllByRole('link')).toHaveLength(2)
+    expect(within(nav).getAllByRole('link')).toHaveLength(3)
     expect(
       within(nav).queryByRole('link', { name: /refer a friend/i }),
     ).not.toBeInTheDocument()
@@ -136,60 +159,70 @@ describe('SocialLinkHub', () => {
     expect(
       screen.queryByText(/everything prism, unlimited/i),
     ).not.toBeInTheDocument()
+    expect(screen.queryByText(/prism infinity/i)).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/premium website design/i),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/doing under \$1m a year/i),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText(/doing \$1m/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/start free/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/prism on youtube/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/wall of love/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/thanks for supporting/i)).not.toBeInTheDocument()
   })
 
-  it('routes both actions to their canonical destinations with tracked internal clicks', () => {
+  it('routes each service CTA to its canonical intake with platform and service tracking', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
-    const orderLink = screen.getByRole('link', {
-      name: /premium website design/i,
-    })
-    expect(orderLink).toHaveAttribute('href', '/website-intake')
-    expect(orderLink).not.toHaveAttribute('target')
-    expect(orderLink).toHaveAttribute('data-cta-text', 'premium website design')
-    expect(orderLink).toHaveAttribute(
-      'data-cta-location',
-      'tiktok landing actions',
-    )
+    for (const action of HUB_ACTIONS) {
+      const link = screen.getByRole('link', { name: action.name })
+      expect(link).toHaveAttribute('href', action.href)
+      expect(link).not.toHaveAttribute('target')
+      expect(link).toHaveAttribute('data-cta-text', action.ctaText)
+      expect(link).toHaveAttribute(
+        'data-cta-location',
+        'tiktok landing actions',
+      )
+      expect(link).toHaveAttribute('data-cta-platform', 'tiktok')
+      expect(link).toHaveAttribute('data-cta-service', action.service)
 
-    fireEvent.click(orderLink)
-    expect(trackCTAClick).toHaveBeenCalledWith(
-      'premium website design',
-      'tiktok landing actions',
-    )
+      fireEvent.click(link)
+      expect(trackCTAClick).toHaveBeenCalledWith(
+        action.ctaText,
+        'tiktok landing actions',
+        {
+          platform: 'tiktok',
+          service: action.service,
+          destination: action.href,
+        },
+      )
+    }
+
+    expect(trackCTAClick).toHaveBeenCalledTimes(3)
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
-
-    const infinityLink = screen.getByRole('link', { name: /prism infinity/i })
-    expect(infinityLink).toHaveAttribute('href', '/prism-infinity')
-    expect(infinityLink).toHaveAttribute('data-cta-text', 'prism infinity')
-
-    fireEvent.click(infinityLink)
-    expect(trackCTAClick).toHaveBeenCalledWith(
-      'prism infinity',
-      'tiktok landing actions',
-    )
-    expect(trackCTAClick).toHaveBeenCalledTimes(2)
   })
 
   it('keeps canonical pricing language without referral copy', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
-    // Call-first offers never show exact public pricing. The detail line is
-    // sentence copy rendered mixed-case (no uppercase transform).
     expect(
-      screen.getByText('support visibility on ChatGPT and Google'),
+      screen.getByText('A site that makes choosing you easy.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Give people a reason to choose you.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Ads built around better leads.'),
     ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$300/)).not.toBeInTheDocument()
     expect(screen.queryByText(/refer/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/you get \$100/i)).not.toBeInTheDocument()
-    // Never the retired "/mo" shorthand.
     expect(screen.queryByText(/\/mo\b/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/book a free demo/i)).not.toBeInTheDocument()
   })
 
   it('keeps the header home link and tracked profile link', () => {
@@ -219,7 +252,7 @@ describe('SocialLinkHub', () => {
     )
   })
 
-  it('keeps every platform free of audience and view stats while sharing two actions', () => {
+  it('keeps every platform free of audience and view stats while sharing three service actions', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
@@ -228,11 +261,20 @@ describe('SocialLinkHub', () => {
     ).toBeInTheDocument()
     expect(screen.queryByText(/followers/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/public posts/i)).not.toBeInTheDocument()
+
+    const instagramNav = screen.getByRole('navigation', {
+      name: /instagram page actions/i,
+    })
+    expect(within(instagramNav).getAllByRole('link')).toHaveLength(3)
     expect(
-      within(
-        screen.getByRole('navigation', { name: /instagram page actions/i }),
-      ).getAllByRole('link'),
-    ).toHaveLength(2)
+      within(instagramNav).getByRole('link', { name: /^website\b/i }),
+    ).toHaveAttribute('href', '/website-intake')
+    expect(
+      within(instagramNav).getByRole('link', { name: /^content\b/i }),
+    ).toHaveAttribute('href', '/content-intake')
+    expect(
+      within(instagramNav).getByRole('link', { name: /^ads\b/i }),
+    ).toHaveAttribute('href', '/ads-intake')
     unmount()
 
     render(<SocialLinkHub platform="youtube" />)
@@ -247,39 +289,21 @@ describe('SocialLinkHub', () => {
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,
     })
-    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(2)
+    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
     expect(
-      within(youtubeNav).getByRole('link', { name: /premium website design/i }),
+      within(youtubeNav).getByRole('link', { name: /^website\b/i }),
     ).toHaveAttribute('href', '/website-intake')
     expect(
-      within(youtubeNav).getByRole('link', { name: /prism infinity/i }),
-    ).toHaveAttribute('href', '/prism-infinity')
+      within(youtubeNav).getByRole('link', { name: /^content\b/i }),
+    ).toHaveAttribute('href', '/content-intake')
+    expect(
+      within(youtubeNav).getByRole('link', { name: /^ads\b/i }),
+    ).toHaveAttribute('href', '/ads-intake')
     expect(
       within(youtubeNav).queryByRole('link', { name: /refer a friend/i }),
     ).not.toBeInTheDocument()
-  })
-
-  it('segments the offer cards by founder revenue with routing questions', () => {
-    render(<SocialLinkHub platform="instagram" />)
-
-    // Visual routing questions sit above the two offer cards; the cards carry
-    // the same segmentation in their aria-labels so AT users hear it once.
-    expect(screen.getByText('Doing under $1M a year?')).toBeInTheDocument()
-    expect(screen.getByText('Doing $1M–$10M a year?')).toBeInTheDocument()
     expect(
-      screen.getByRole('link', {
-        name: /premium website design, for businesses under \$1m a year/i,
-      }),
-    ).toHaveAttribute('href', '/website-intake')
-    expect(
-      screen.getByRole('link', {
-        name: /prism infinity, for businesses doing \$1m–\$10m a year/i,
-      }),
-    ).toHaveAttribute('href', '/prism-infinity')
-    // Revenue bands are routing copy, not public pricing; the Infinity detail
-    // stays price-free and avoids the retired "Everything Prism, unlimited".
-    expect(
-      screen.getByText(/unlimited landing pages, ads, and websites/i),
-    ).toBeInTheDocument()
+      within(youtubeNav).queryByRole('link', { name: /prism infinity/i }),
+    ).not.toBeInTheDocument()
   })
 })

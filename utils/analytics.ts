@@ -1066,15 +1066,30 @@ export function trackPageView(
   })
 }
 
+export type CTAClickContext = {
+  /** Public service id when the CTA opens a Website, Content, or Ads path. */
+  service?: string
+  /** Social hub platform when the CTA is on /ig, /tiktok, or /youtube. */
+  platform?: string
+  /** Internal destination path, when known and already sanitized by the caller. */
+  destination?: string
+}
+
 /**
  * Track a CTA button click with enhanced tracking
  * @param ctaText The text of the CTA
  * @param location The location of the CTA on the page
+ * @param context Optional service/platform/destination dimensions
  */
-export function trackCTAClick(ctaText: string, location: string) {
+export function trackCTAClick(
+  ctaText: string,
+  location: string,
+  context: CTAClickContext = {},
+) {
   trackEvent('cta_click', {
     cta_text: ctaText,
     cta_location: location,
+    ...context,
   })
 
   // Add breadcrumb for user journey tracking
@@ -1082,6 +1097,7 @@ export function trackCTAClick(ctaText: string, location: string) {
     addBreadcrumb(`CTA clicked: ${ctaText}`, 'user', 'info', {
       ctaText,
       location,
+      ...context,
       url: typeof window !== 'undefined' ? window.location.href : undefined,
     })
   }

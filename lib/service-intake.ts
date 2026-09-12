@@ -2,6 +2,13 @@ export type IntakeService = 'website' | 'content' | 'ads'
 
 export type IntakeGoal = { value: string; label: string; icon: string }
 
+/** Canonical noindex intake routes for the three public services. */
+export const SERVICE_INTAKE_PATHS = {
+  website: '/website-intake',
+  content: '/content-intake',
+  ads: '/ads-intake',
+} as const satisfies Record<IntakeService, `/${string}`>
+
 const sharedEndpoint =
   process.env.NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT ||
   'https://formspree.io/f/xrpzlkrd'
@@ -13,7 +20,8 @@ export const SERVICE_INTAKE_CONFIG = {
     submitLabel: 'Start my website',
     goalHeading: 'Why do you want a new website?',
     timelineHeading: 'When do you want your new website live?',
-    timelineHelper: 'Share your preferred timing. We will confirm a schedule when we scope the work.',
+    timelineHelper:
+      'Share your preferred timing. We will confirm a schedule when we scope the work.',
     goalField: 'why_new_website',
     endpoint: sharedEndpoint,
     goals: [
@@ -45,7 +53,8 @@ export const SERVICE_INTAKE_CONFIG = {
     submitLabel: 'Start my content',
     goalHeading: 'What should your content do for you?',
     timelineHeading: 'When do you want to start creating?',
-    timelineHelper: 'Share your preferred timing so we can plan the first content together.',
+    timelineHelper:
+      'Share your preferred timing so we can plan the first content together.',
     goalField: 'content_goal',
     endpoint:
       process.env.NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT ||
@@ -79,7 +88,8 @@ export const SERVICE_INTAKE_CONFIG = {
     submitLabel: 'Start my ads',
     goalHeading: 'What should your ads help you achieve?',
     timelineHeading: 'When do you want your ads live?',
-    timelineHelper: 'Share your preferred timing so we can scope the first campaign.',
+    timelineHelper:
+      'Share your preferred timing so we can scope the first campaign.',
     goalField: 'ads_goal',
     endpoint:
       process.env.NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT ||

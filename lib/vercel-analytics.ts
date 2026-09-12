@@ -52,6 +52,14 @@ const WEBSITE_INTAKE_ERROR_REASONS = new Set([
   'timeout',
 ])
 
+const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
+const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads'])
+const SOCIAL_HUB_DESTINATIONS = new Set([
+  '/website-intake',
+  '/content-intake',
+  '/ads-intake',
+])
+
 function compactProperties(
   properties: Record<string, AllowedVercelPropertyValue>,
 ): Record<string, AllowedVercelPropertyValue> | undefined {
@@ -231,6 +239,15 @@ export function buildVercelCustomEvent(
             typeof eventParams.cta_location === 'string'
               ? eventParams.cta_location
               : undefined,
+          platform: getAllowedString(
+            eventParams.platform,
+            SOCIAL_HUB_PLATFORMS,
+          ),
+          service: getAllowedString(eventParams.service, SOCIAL_HUB_SERVICES),
+          destination: getAllowedString(
+            eventParams.destination,
+            SOCIAL_HUB_DESTINATIONS,
+          ),
         }),
       }
     case 'form_submit':

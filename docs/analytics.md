@@ -301,7 +301,20 @@ have.
 
 ### Service intake funnels (2026-09-06)
 
-Website, Content, and Ads share the `${service}_intake` funnel. Events include `_form_view`, `_form_start`, `_step_view`, `_step_complete`, `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_error`, `_submit_success`, `_source_select`, `_booking_click`, `_abandon`, and `_agent_prepare`. `form_name` and `form_location` distinguish services. The existing `trackFormSubmission` emits form submission and immediate `generate_lead` only after Formspree accepts. The existing GA4 key event and Google Ads conversion wiring are reused; no new GA conversion action is required. No email, phone, business link, or free text is sent to GA. Local and preview traffic retain the existing analytics host/environment gates. WebMCP preparation is an interaction, never a conversion. Live GA ingestion and email delivery require separate readback; a mocked request is not delivery evidence.
+Website, Content, and Ads share the `${service}_intake` funnel. Events include `_form_view`, `_form_start`, `_step_view`, `_step_complete`, `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_error`, `_submit_success`, `_source_select`, `_booking_click`, `_abandon`, and `_agent_prepare`. `form_name` and `form_location` distinguish services. The existing `trackFormSubmission` emits form submission and immediate `generate_lead` only after Formspree accepts. Lead values live in `lib/lead-values.ts`: `website_intake` (180), `content_intake` (150), `ads_intake` (150). The existing GA4 key event and Google Ads conversion wiring are reused; no new GA conversion action is required. No email, phone, business link, or free text is sent to GA. Local and preview traffic retain the existing analytics host/environment gates. WebMCP preparation is an interaction, never a conversion. Live GA ingestion and email delivery require separate readback; a mocked request is not delivery evidence. Vercel custom events map all three services (`Website Intake …`, `Content Intake …`, `Ads Intake …`) through `lib/vercel-analytics.ts`.
+
+### Social link-in-bio hubs (`/ig`, `/tiktok`, `/youtube`)
+
+The shared hub (`components/social-link-hub.tsx`) is a noindex converter. Each of the three CTAs fires `cta_click` with:
+
+- `cta_text`: `website` | `content` | `ads`
+- `cta_location`: `{platform} landing actions` (`instagram landing actions`, `tiktok landing actions`, `youtube landing actions`)
+- `platform`: `instagram` | `tiktok` | `youtube`
+- `service`: `website` | `content` | `ads`
+- `destination`: `/website-intake` | `/content-intake` | `/ads-intake`
+
+The header profile link stays on `trackExternalLinkClick` with location `{platform} landing header`. Opening a CTA is a same-origin navigation to the existing intake form (`WebsiteIntakeForm`). That form already emits `${service}_intake_form_view`, `_form_start`, `_submit_success`, and `form_submit_success` / `generate_lead`. First-touch UTMs and `landing_path` (for example `/ig`) persist through `lib/marketing-attribution.ts` and are attached to later events and Formspree payloads; hub links should not append `utm_*` themselves.
+
 
 
 ## Audit and measurement plan — 2026-09-12
@@ -376,7 +389,7 @@ never put UTMs on internal links or customer identifiers in campaign values.
 
 Follow-ups requiring business/configuration choices: approved retention,
 Search Console link, qualified/closed-lead CRM integration, intentional service
-lead weights (currently Website 180 vs default Content/Ads 50, not revenue),
+lead weights (Website 180 and Content/Ads 150 as configured upstream, not revenue),
 confirmed-booking integration, and consent management. Current consent defaults
 are granted globally and are not evidence of visitor consent. Do not activate
 hashed customer-data sharing merely because helper code exists.

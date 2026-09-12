@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { SERVICE_INTAKE_PATHS } from '@/lib/service-intake'
 
 const read = (relativePath: string) =>
   fs.readFileSync(path.join(process.cwd(), relativePath), 'utf8')
@@ -11,6 +12,12 @@ describe('website CTA map', () => {
     expect(WEBSITE_START_CTA).toEqual({
       label: 'Start my website',
       href: '/website-intake',
+    })
+    expect(SERVICE_INTAKE_PATHS.website).toBe(WEBSITE_START_CTA.href)
+    expect(SERVICE_INTAKE_PATHS).toEqual({
+      website: '/website-intake',
+      content: '/content-intake',
+      ads: '/ads-intake',
     })
   })
 
