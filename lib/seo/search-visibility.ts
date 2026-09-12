@@ -69,6 +69,8 @@ export const NOINDEX_ROUTES = [
   '/replit',
   '/scholarship',
   '/secret-pearl/privacy',
+  '/pole-vault-os/privacy',
+  '/pole-vault-os/support',
   '/seo/off-page',
   '/seo/on-page',
   '/smb',

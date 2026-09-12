@@ -122,3 +122,7 @@ Spot-check robots tags on both sides of the search policy:
 4. Push to a branch or push/merge `main` when the user explicitly asks for production.
 5. Watch GitHub Actions and verify the live domain after the production run succeeds.
 6. If Vercel fails, rerun the failing build locally and compare logs before changing deploy setup.
+
+## Pole Vault OS App Store pages
+
+`/pole-vault-os/privacy` and `/pole-vault-os/support` are public, login-free app-specific pages for App Store metadata and in-app Settings links. Both follow the existing app-policy layout and are noindex utility routes through `lib/seo/search-visibility.ts`. Their app privacy statements are separate from website analytics covered by `/privacy-policy`. Keep descriptions of optional Apple Weather/location, local storage, exports, backup limits, and empty-journal restore consistent with the shipped iOS app. Verify both canonical URLs return HTTP 200 with the correct app-specific body after deployment.
