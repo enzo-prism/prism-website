@@ -56,19 +56,36 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className={coreRouteSectionClassName}>
+          {/*
+            Phones and tablets read heading → form → context so the form is
+            reachable without scrolling past the capacity panel and steps.
+            From lg the context column sits beside the form.
+          */}
           <div
-            className={`${coreRouteContainerClassName} grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16`}
+            className={`${coreRouteContainerClassName} grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-10`}
           >
-            <div className="flex flex-col gap-8">
+            <div className="lg:col-start-1 lg:row-start-1">
               <CoreSectionHeading
                 eyebrow="Waitlist"
                 title="Prism is at capacity."
-                description="We are working hard to free up space so more companies can use Prism to grow, as fast as we can. Join the waitlist and we will reach out when we can take on your team."
+                description="Join the waitlist below. When space frees up we review applications and reach out to the teams we can take on."
                 as="h1"
                 variant="hero"
                 titleClassName="max-w-[12ch]"
               />
+            </div>
 
+            <div
+              id="waitlist-form"
+              className="lg:col-start-2 lg:row-start-1 lg:row-span-2"
+            >
+              <WaitlistForm
+                key={initialFocus.join(',')}
+                initialFocus={initialFocus}
+              />
+            </div>
+
+            <div className="flex flex-col gap-8 lg:col-start-1 lg:row-start-2">
               <CapacityNotice variant="panel" />
 
               <ol className="grid gap-5 border-t border-white/10 pt-6">
@@ -88,13 +105,6 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
                   </li>
                 ))}
               </ol>
-            </div>
-
-            <div id="waitlist-form">
-              <WaitlistForm
-                key={initialFocus.join(',')}
-                initialFocus={initialFocus}
-              />
             </div>
           </div>
         </section>

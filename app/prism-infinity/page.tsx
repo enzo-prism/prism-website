@@ -133,21 +133,21 @@ function QueueBoard() {
       </div>
 
       <ul className="mt-4 space-y-3">
-        <li className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3">
+        <li className="flex min-w-0 items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3">
           <Check
             aria-hidden="true"
             className="h-4 w-4 shrink-0 text-[#7d766a]"
           />
-          <span className="flex-1 truncate text-sm text-[#8f877b] line-through decoration-white/20">
+          <span className="min-w-0 flex-1 truncate text-sm text-[#8f877b] line-through decoration-white/20">
             {QUEUE_BOARD.delivered}
           </span>
-          <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
+          <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
             Delivered
           </span>
         </li>
 
-        <li className="rounded-xl border border-[#d8bc79]/30 bg-[#d8bc79]/[0.06] px-4 py-3">
-          <div className="flex items-center gap-3">
+        <li className="min-w-0 rounded-xl border border-[#d8bc79]/30 bg-[#d8bc79]/[0.06] px-4 py-3">
+          <div className="flex min-w-0 items-center gap-3">
             <span
               aria-hidden="true"
               className={cn(
@@ -155,10 +155,10 @@ function QueueBoard() {
                 styles.pulseDot,
               )}
             />
-            <span className="flex-1 truncate text-sm font-medium text-[#f5f0e8]">
+            <span className="min-w-0 flex-1 truncate text-sm font-medium text-[#f5f0e8]">
               {QUEUE_BOARD.active}
             </span>
-            <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#d8bc79]">
+            <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#d8bc79]">
               In progress
             </span>
           </div>
@@ -173,15 +173,15 @@ function QueueBoard() {
         {QUEUE_BOARD.queued.map((title, index) => (
           <li
             key={title}
-            className="flex items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3"
+            className="flex min-w-0 items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3"
           >
-            <span className="font-mono text-[0.62rem] text-[#7d766a]">
+            <span className="shrink-0 font-mono text-[0.62rem] text-[#7d766a]">
               {String(index + 2).padStart(2, '0')}
             </span>
-            <span className="flex-1 truncate text-sm text-[#b8afa2]">
+            <span className="min-w-0 flex-1 truncate text-sm text-[#b8afa2]">
               {title}
             </span>
-            <span className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
+            <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
               Queued
             </span>
           </li>

@@ -44,10 +44,10 @@ export type PricingOffer = {
 // waitlist (WAITLIST_CTA in lib/waitlist.ts); scope is agreed together once we
 // reach out. Do not reintroduce public dollar amounts anywhere. (Internal
 // analytics values live in lib/lead-values.ts and are not public pricing.)
-export const WEBSITE_PRICE_LABEL = 'Custom scope · waitlist'
-export const CONTENT_OS_PRICE_LABEL = 'Custom scope · waitlist'
+export const WEBSITE_PRICE_LABEL = 'Scoped from the waitlist'
+export const CONTENT_OS_PRICE_LABEL = 'Scoped from the waitlist'
 export const DENTAL_OS_PRICE_LABEL = 'Built around your practice'
-export const PRISM_INFINITY_PRICE_LABEL = 'Custom scope · waitlist'
+export const PRISM_INFINITY_PRICE_LABEL = 'Scoped from the waitlist'
 
 /** Service-specific waitlist entry points (prefill the focus checkboxes). */
 export const WEBSITE_WAITLIST_CTA = {
