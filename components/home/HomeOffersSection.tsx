@@ -125,6 +125,7 @@ export default function HomeOffersSection() {
             label={WAITLIST_CTA.label.toLowerCase()}
             location="homepage offers · waitlist"
             variant="primary"
+            className="shrink-0 whitespace-nowrap"
           >
             {WAITLIST_CTA.label}
           </CoreActionLink>

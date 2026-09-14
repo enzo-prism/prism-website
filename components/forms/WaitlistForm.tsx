@@ -97,7 +97,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { getError, handleBlur, handleSubmit, isSubmitting } =
+  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } =
     useFormValidation({
       onValidSubmit: async (form) => {
         setSubmitError(null)
@@ -200,6 +200,31 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     handleBlur(event)
   }
 
+  // Clear an error as soon as the field becomes valid. If errors only cleared
+  // on blur, the message under the field would collapse at the moment the
+  // visitor taps the next control, shifting it under their finger and eating
+  // the tap on touch devices.
+  const handleValidatedInput = (event: FormEvent<ValidFieldElement>) => {
+    const field = event.currentTarget
+    syncFieldValidity(field)
+    handleInput(event)
+    if (
+      (LINK_FIELD_NAMES as readonly string[]).includes(field.name) &&
+      field.name !== 'link_website' &&
+      formRef.current
+    ) {
+      const websiteField = formRef.current.elements.namedItem('link_website')
+      if (websiteField instanceof HTMLInputElement) {
+        syncFieldValidity(websiteField)
+        handleInput({
+          ...event,
+          currentTarget: websiteField,
+          target: websiteField,
+        } as FormEvent<ValidFieldElement>)
+      }
+    }
+  }
+
   const handleWaitlistSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const fields = Array.from(event.currentTarget.elements).filter(
       isFieldElement,
@@ -266,6 +291,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('first_name'))}
               aria-describedby={getDescribedBy('first_name')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-first_name-error"
@@ -286,6 +312,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('last_name'))}
               aria-describedby={getDescribedBy('last_name')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-last_name-error"
@@ -311,6 +338,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('email'))}
               aria-describedby={getDescribedBy('email')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError id="waitlist-email-error" error={getError('email')} />
           </div>
@@ -360,6 +388,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('link_website'))}
               aria-describedby={getDescribedBy('link_website')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-link_website-error"
@@ -380,6 +409,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                 placeholder="https://instagram.com/yourbrand"
                 className={fieldClassName}
                 onBlur={handleValidatedBlur}
+                onInput={handleValidatedInput}
               />
             </div>
             <div className="space-y-3">
@@ -395,6 +425,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                 placeholder="https://"
                 className={fieldClassName}
                 onBlur={handleValidatedBlur}
+                onInput={handleValidatedInput}
               />
             </div>
           </div>
@@ -414,6 +445,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
             aria-invalid={Boolean(getError('goals'))}
             aria-describedby={getDescribedBy('goals')}
             onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
           />
           <FieldError id="waitlist-goals-error" error={getError('goals')} />
         </div>
@@ -435,6 +467,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('start_timing'))}
               aria-describedby={getDescribedBy('start_timing')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             >
               <option value="" disabled>
                 Choose a timeframe

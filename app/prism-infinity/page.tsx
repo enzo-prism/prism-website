@@ -115,8 +115,8 @@ function InfinityGlyph({ className }: { className?: string }) {
 
 function QueueBoard() {
   return (
-    <div className="rounded-[1.4rem] border border-white/12 bg-[#070707] p-5 sm:p-6">
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
+    <div className="min-w-0 rounded-[1.4rem] border border-white/12 bg-[#070707] p-5 sm:p-6">
+      <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
         <p className="font-mono text-[0.66rem] font-medium uppercase tracking-[0.24em] text-[#8f877b]">
           Your request board
         </p>
@@ -331,7 +331,7 @@ export default function PrismInfinityPage() {
                 titleClassName="max-w-[16ch] xl:max-w-[18ch]"
               />
             </HomeReveal>
-            <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start">
+            <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start">
               <ol className="grid gap-4">
                 {HOW_IT_WORKS.map((step, index) => (
                   <li key={step.label}>
