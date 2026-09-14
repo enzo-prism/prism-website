@@ -81,11 +81,26 @@ jobs:
       - name: Test
         run: pnpm test
 
+      # `npx vercel` resolves the latest CLI. A release published minutes earlier
+      # can still be missing dependency tarballs on the registry (npm 404 on
+      # 2026-09-14 for @vercel/redwood), so retry before failing the deploy.
       - name: Vercel Pull (Production)
-        run: npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+        run: |
+          for attempt in 1 2 3; do
+            npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN" && exit 0
+            echo "vercel pull failed (attempt $attempt); retrying in 60s"
+            sleep 60
+          done
+          exit 1
 
       - name: Verify pricing consistency
         run: pnpm verify:pricing-consistency
 
       - name: Deploy to Production
-        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+        run: |
+          for attempt in 1 2 3; do
+            npx vercel deploy --prod --yes --token "$VERCEL_TOKEN" && exit 0
+            echo "vercel deploy failed (attempt $attempt); retrying in 60s"
+            sleep 60
+          done
+          exit 1
