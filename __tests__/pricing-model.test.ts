@@ -21,9 +21,9 @@ const ALL_OFFER_IDS = [
 
 describe("pricing model", () => {
   it("exports canonical display labels with no public dollar amounts", () => {
-    expect(WEBSITE_PRICE_LABEL).toBe("Custom scope · waitlist")
-    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom scope · waitlist")
-    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom scope · waitlist")
+    expect(WEBSITE_PRICE_LABEL).toBe("Scoped from the waitlist")
+    expect(CONTENT_OS_PRICE_LABEL).toBe("Scoped from the waitlist")
+    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Scoped from the waitlist")
     expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
   })
 

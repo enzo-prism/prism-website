@@ -3,7 +3,7 @@
 import type { FocusEvent, FormEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -25,6 +25,7 @@ import { FormspreeOpsFields } from './FormspreeOpsFields'
 
 const FORM_LOCATION = 'waitlist_page'
 const LINK_FIELD_NAMES = ['link_website', 'link_social', 'link_other'] as const
+const FOCUS_FIELD_NAME = 'focus[]'
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type ValidFieldElement =
@@ -47,6 +48,10 @@ function hasAnyLink(form: HTMLFormElement) {
   })
 }
 
+function countSelectedFocus(form: HTMLFormElement) {
+  return new FormData(form).getAll(FOCUS_FIELD_NAME).length
+}
+
 function FieldError({ error, id }: { error: string; id: string }) {
   if (!error) return null
 
@@ -62,12 +67,14 @@ function FieldError({ error, id }: { error: string; id: string }) {
 }
 
 const fieldClassName =
-  'min-h-14 border-white/12 bg-black/40 px-4 text-[1rem] text-[#f5f0e8] placeholder:text-[#6e6e68] focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/30 focus-visible:ring-offset-0'
+  'min-h-14 border-white/12 bg-black/40 px-4 text-[1rem] text-[#f5f0e8] placeholder:text-[#6e6e68] aria-invalid:border-[#d8bc79]/70 focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/55 focus-visible:ring-offset-0'
 const labelClassName =
-  'font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#8f877b]'
-const optionalClassName = 'text-[#6e6e68] normal-case tracking-[0.04em]'
+  'font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#8f877b] sm:tracking-[0.2em]'
+const optionalClassName = 'text-[#8f877b] normal-case tracking-[0.04em]'
 const groupHeadingClassName =
-  'font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#8f877b]'
+  'text-pretty font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[#8f877b] sm:tracking-[0.2em]'
+const textareaClassName =
+  'min-h-[120px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#f5f0e8] placeholder:text-[#6e6e68] aria-invalid:border-[#d8bc79]/70 focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/55 focus-visible:ring-offset-0'
 
 type WaitlistFormProps = {
   /** Pre-selected focus from `?focus=` so service pages can hand off intent. */
@@ -79,9 +86,6 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   const formRef = useRef<HTMLFormElement>(null)
   const hasStartedRef = useRef(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [selectedFocus, setSelectedFocus] = useState<WaitlistFocus[]>(
-    () => initialFocus,
-  )
 
   useEffect(() => {
     trackEvent('waitlist_form_view', {
@@ -93,7 +97,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { getError, handleBlur, handleSubmit, isSubmitting } =
+  const { getError, handleBlur, handleInput, handleSubmit, isSubmitting } =
     useFormValidation({
       onValidSubmit: async (form) => {
         setSubmitError(null)
@@ -135,7 +139,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         trackEvent('waitlist_submit_success', {
           form_name: WAITLIST_FORM_NAME,
           form_location: FORM_LOCATION,
-          focus_count: selectedFocus.length,
+          focus_count: countSelectedFocus(form),
         })
         // Pending mode: /waitlist/thank-you mounts LeadSuccessTracker, which
         // consumes this context and fires generate_lead once.
@@ -196,6 +200,31 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     handleBlur(event)
   }
 
+  // Clear an error as soon as the field becomes valid. If errors only cleared
+  // on blur, the message under the field would collapse at the moment the
+  // visitor taps the next control, shifting it under their finger and eating
+  // the tap on touch devices.
+  const handleValidatedInput = (event: FormEvent<ValidFieldElement>) => {
+    const field = event.currentTarget
+    syncFieldValidity(field)
+    handleInput(event)
+    if (
+      (LINK_FIELD_NAMES as readonly string[]).includes(field.name) &&
+      field.name !== 'link_website' &&
+      formRef.current
+    ) {
+      const websiteField = formRef.current.elements.namedItem('link_website')
+      if (websiteField instanceof HTMLInputElement) {
+        syncFieldValidity(websiteField)
+        handleInput({
+          ...event,
+          currentTarget: websiteField,
+          target: websiteField,
+        } as FormEvent<ValidFieldElement>)
+      }
+    }
+  }
+
   const handleWaitlistSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const fields = Array.from(event.currentTarget.elements).filter(
       isFieldElement,
@@ -213,15 +242,6 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     }
 
     await handleSubmit(event)
-  }
-
-  const toggleFocus = (value: WaitlistFocus) => {
-    markStarted()
-    setSelectedFocus((current) =>
-      current.includes(value)
-        ? current.filter((item) => item !== value)
-        : [...current, value],
-    )
   }
 
   const getDescribedBy = (name: string) =>
@@ -251,6 +271,10 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         aria-hidden="true"
       />
 
+      <p className="mb-6 font-mono text-[0.68rem] leading-5 text-[#8f877b]">
+        All fields are required unless marked optional.
+      </p>
+
       <div className="grid gap-6">
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="space-y-3">
@@ -267,6 +291,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('first_name'))}
               aria-describedby={getDescribedBy('first_name')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-first_name-error"
@@ -287,6 +312,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('last_name'))}
               aria-describedby={getDescribedBy('last_name')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-last_name-error"
@@ -312,6 +338,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('email'))}
               aria-describedby={getDescribedBy('email')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError id="waitlist-email-error" error={getError('email')} />
           </div>
@@ -332,11 +359,20 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           </div>
         </div>
 
-        <fieldset className="grid gap-4 border-t border-white/10 pt-6">
-          <legend className={cn(groupHeadingClassName, 'mb-4')}>
-            Relevant links{' '}
-            <span className={optionalClassName}>(at least one)</span>
+        <fieldset
+          className="grid gap-4 border-t border-white/10 pt-6"
+          aria-describedby="waitlist-links-hint"
+        >
+          <legend className={cn(groupHeadingClassName, 'mb-2')}>
+            Relevant links
           </legend>
+          <p
+            id="waitlist-links-hint"
+            className="mb-2 text-pretty font-sans text-[0.9rem] leading-6 text-[#b8afa2]"
+          >
+            Share at least one link so we can see your work. A website, a
+            social profile, or anything else that shows what you do.
+          </p>
           <div className="space-y-3">
             <Label htmlFor="waitlist-link-website" className={labelClassName}>
               Company website
@@ -352,6 +388,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('link_website'))}
               aria-describedby={getDescribedBy('link_website')}
               onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
             />
             <FieldError
               id="waitlist-link_website-error"
@@ -368,9 +405,11 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                 name="link_social"
                 type="url"
                 inputMode="url"
+                autoComplete="url"
                 placeholder="https://instagram.com/yourbrand"
                 className={fieldClassName}
                 onBlur={handleValidatedBlur}
+                onInput={handleValidatedInput}
               />
             </div>
             <div className="space-y-3">
@@ -382,9 +421,11 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                 name="link_other"
                 type="url"
                 inputMode="url"
+                autoComplete="url"
                 placeholder="https://"
                 className={fieldClassName}
                 onBlur={handleValidatedBlur}
+                onInput={handleValidatedInput}
               />
             </div>
           </div>
@@ -400,10 +441,11 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
             required
             rows={4}
             placeholder="What do you want Prism to help your company achieve?"
-            className="min-h-[120px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#f5f0e8] placeholder:text-[#6e6e68] focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/30 focus-visible:ring-offset-0"
+            className={textareaClassName}
             aria-invalid={Boolean(getError('goals'))}
             aria-describedby={getDescribedBy('goals')}
             onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
           />
           <FieldError id="waitlist-goals-error" error={getError('goals')} />
         </div>
@@ -412,28 +454,35 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           <Label htmlFor="waitlist-start-timing" className={labelClassName}>
             When are you looking to get started?
           </Label>
-          <select
-            id="waitlist-start-timing"
-            name="start_timing"
-            required
-            defaultValue=""
-            className={cn(
-              'flex w-full appearance-none rounded-none border font-mono focus-visible:outline-hidden focus-visible:ring-2',
-              fieldClassName,
-            )}
-            aria-invalid={Boolean(getError('start_timing'))}
-            aria-describedby={getDescribedBy('start_timing')}
-            onBlur={handleValidatedBlur}
-          >
-            <option value="" disabled>
-              Choose a timeframe
-            </option>
-            {WAITLIST_TIMING_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+          <div className="relative">
+            <select
+              id="waitlist-start-timing"
+              name="start_timing"
+              required
+              defaultValue=""
+              className={cn(
+                'flex w-full appearance-none rounded-none border pr-12 font-mono focus-visible:outline-hidden focus-visible:ring-2',
+                fieldClassName,
+              )}
+              aria-invalid={Boolean(getError('start_timing'))}
+              aria-describedby={getDescribedBy('start_timing')}
+              onBlur={handleValidatedBlur}
+            onInput={handleValidatedInput}
+            >
+              <option value="" disabled>
+                Choose a timeframe
               </option>
-            ))}
-          </select>
+              {WAITLIST_TIMING_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8f877b]"
+            />
+          </div>
           <FieldError
             id="waitlist-start_timing-error"
             error={getError('start_timing')}
@@ -446,30 +495,25 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
             <span className={optionalClassName}>(pick any)</span>
           </legend>
           <div className="grid gap-3 sm:grid-cols-3">
-            {WAITLIST_FOCUS_OPTIONS.map((option) => {
-              const checked = selectedFocus.includes(option.value)
-              return (
-                <label
-                  key={option.value}
-                  className={cn(
-                    'flex min-h-14 cursor-pointer items-center gap-3 border px-4 py-3 font-sans text-[1rem] text-[#f5f0e8] transition-colors duration-200 motion-reduce:transition-none',
-                    checked
-                      ? 'border-[#d8bc79]/60 bg-[#d8bc79]/10'
-                      : 'border-white/12 bg-black/40 hover:border-white/30',
-                  )}
-                >
-                  <input
-                    type="checkbox"
-                    name="focus[]"
-                    value={option.value}
-                    checked={checked}
-                    onChange={() => toggleFocus(option.value)}
-                    className="h-5 w-5 shrink-0 accent-[#d8bc79]"
-                  />
-                  <span>{option.label}</span>
-                </label>
-              )
-            })}
+            {WAITLIST_FOCUS_OPTIONS.map((option) => (
+              // Uncontrolled on purpose: a controlled checkbox dropped the first
+              // tap when the previous field's blur re-render landed in the same
+              // event turn on touch devices. The label styles itself via :has().
+              <label
+                key={option.value}
+                className="flex min-h-14 cursor-pointer items-center gap-3 border border-white/12 bg-black/40 px-4 py-3 font-sans text-[1rem] text-[#f5f0e8] transition-colors duration-200 hover:border-white/30 has-[:checked]:border-[#d8bc79]/60 has-[:checked]:bg-[#d8bc79]/10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#d8bc79]/55 motion-reduce:transition-none"
+              >
+                <input
+                  type="checkbox"
+                  name={FOCUS_FIELD_NAME}
+                  value={option.value}
+                  defaultChecked={initialFocus.includes(option.value)}
+                  onChange={markStarted}
+                  className="h-5 w-5 shrink-0 accent-[#d8bc79] focus-visible:outline-hidden"
+                />
+                <span>{option.label}</span>
+              </label>
+            ))}
           </div>
           <div className="space-y-3">
             <Label htmlFor="waitlist-focus-other" className={labelClassName}>
@@ -490,7 +534,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex min-h-14 w-full items-center justify-center gap-2 border border-[#d8bc79]/60 bg-[#d8bc79]/12 px-6 font-mono text-[0.8rem] uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors duration-200 hover:bg-[#d8bc79]/20 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/40 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none"
+          className="inline-flex min-h-14 w-full items-center justify-center gap-2 whitespace-nowrap border border-[#d8bc79]/60 bg-[#d8bc79]/12 px-4 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-[#f5f0e8] transition-colors duration-200 hover:bg-[#d8bc79]/20 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/55 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none sm:px-6 sm:text-[0.8rem] sm:tracking-[0.18em]"
         >
           {isSubmitting ? 'Saving your spot…' : 'Join the waitlist'}
           <ArrowUpRight aria-hidden="true" className="h-4 w-4" />

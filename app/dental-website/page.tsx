@@ -556,7 +556,7 @@ export default function DentalWebsitePage() {
                 explore how prism helps dentists win more patients with ads, listings, and automated follow-up built on
                 top of your website.
               </p>
-              <Button asChild className="w-full rounded-full bg-white text-neutral-900 hover:bg-neutral-100">
+              <Button asChild className="h-auto min-h-11 w-full whitespace-normal rounded-full bg-white px-5 py-3 text-center text-neutral-900 hover:bg-neutral-100">
                 <Link href="/why-dental-practices-love-prism">
                   see why dental practices love prism
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden />

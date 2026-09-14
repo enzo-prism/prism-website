@@ -49,17 +49,17 @@ export default function PricingHero() {
               {heroSignals.map((offer) => (
                 <div
                   key={offer.offerId}
-                  className="flex items-start justify-between gap-5 border-b border-white/10 pb-4 last:border-b-0 last:pb-0"
+                  className="flex flex-col gap-2 border-b border-white/10 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:justify-between sm:gap-5"
                 >
-                  <div>
+                  <div className="min-w-0">
                     <p className="font-sans text-[1rem] leading-7 text-[#f5f0e8]">
                       {offer.name}
                     </p>
-                    <p className="mt-1 max-w-[24rem] font-sans text-[0.92rem] leading-6 text-[#8f877b]">
+                    <p className="mt-1 max-w-[24rem] text-pretty font-sans text-[0.92rem] leading-6 text-[#8f877b]">
                       {heroDescriptions[offer.offerId as keyof typeof heroDescriptions]}
                     </p>
                   </div>
-                  <p className="shrink-0 pt-1 text-right font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#b8afa2]">
+                  <p className="text-pretty font-mono text-[0.72rem] uppercase tracking-[0.2em] text-[#b8afa2] sm:shrink-0 sm:pt-1 sm:text-right">
                     {offer.priceLabel}
                   </p>
                 </div>

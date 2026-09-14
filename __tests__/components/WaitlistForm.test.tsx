@@ -122,6 +122,25 @@ describe('WaitlistForm', () => {
     expect(trackFormSubmission).not.toHaveBeenCalled()
   })
 
+  it('clears a field error as soon as the visitor fixes it, without waiting for blur', async () => {
+    render(<WaitlistForm />)
+
+    fireEvent.submit(screen.getByRole('button', { name: /join the waitlist/i }).closest('form')!)
+    expect(await screen.findByText(/enter your first name/i)).toBeInTheDocument()
+    expect(screen.getByText(/add at least one link/i)).toBeInTheDocument()
+
+    fireEvent.input(screen.getByLabelText(/first name/i), {
+      target: { value: 'Jordan' },
+    })
+    expect(screen.queryByText(/enter your first name/i)).not.toBeInTheDocument()
+
+    // Typing a social link satisfies the shared link rule on the website field.
+    fireEvent.input(screen.getByLabelText(/social media/i), {
+      target: { value: 'https://instagram.com/example' },
+    })
+    expect(screen.queryByText(/add at least one link/i)).not.toBeInTheDocument()
+  })
+
   it('accepts a social link as the only link', async () => {
     fetchSpy.mockResolvedValue(createMockResponse(true))
     render(<WaitlistForm />)
