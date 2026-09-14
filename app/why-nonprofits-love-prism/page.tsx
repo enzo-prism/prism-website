@@ -174,7 +174,7 @@ export default function NonprofitsPage() {
                     talk to prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     variant="outline"
@@ -469,7 +469,7 @@ export default function NonprofitsPage() {
                     talk to prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     variant="outline"

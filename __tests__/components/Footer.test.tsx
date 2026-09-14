@@ -35,8 +35,12 @@ describe('Footer', () => {
       screen.queryByRole('link', { name: /book call/i }),
     ).not.toBeInTheDocument()
     expect(
-      screen.getByRole('link', { name: /start my website/i }),
-    ).toHaveAttribute('href', '/website-intake')
+      screen.getByRole('link', { name: /join the waitlist/i }),
+    ).toHaveAttribute('href', '/waitlist')
+    expect(
+      screen.queryByRole('link', { name: /start my website/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.getByText(/prism is at capacity right now/i)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
       'href',
       '/pricing',
@@ -44,12 +48,19 @@ describe('Footer', () => {
     expect(screen.queryByText(/book a 30-min call/i)).not.toBeInTheDocument()
   })
 
-  it('keeps the dual CTA grammar pointing at the conversion paths', () => {
+  it('routes every conversion path to the waitlist and keeps support reachable', () => {
     render(<Footer />)
 
     expect(
-      screen.getByRole('link', { name: /get started free/i }),
-    ).toHaveAttribute('href', '/get-started')
+      screen.queryByRole('link', { name: /get started free/i }),
+    ).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /^contact$/i })).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /support@design-prism\.com/i }),
+    ).toHaveAttribute('href', 'mailto:support@design-prism.com')
+    expect(
+      screen.getByRole('link', { name: /refer a friend/i }),
+    ).toHaveAttribute('href', '/refer')
   })
 
   it('renders the brand lockup and copyright line', () => {

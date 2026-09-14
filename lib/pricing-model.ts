@@ -1,4 +1,4 @@
-import { BOOKING_URL } from './booking'
+import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from './waitlist'
 
 export type PricingOfferId =
   | 'website'
@@ -39,35 +39,33 @@ export type PricingOffer = {
   }
 }
 
-// POLICY (2026-07-27, revised same day): NO offer shows public exact pricing.
-// Every offer — including the PRO Website — is scoped on a 30-minute Zoom
-// call booked through BOOK_A_CALL_CTA below. Do not reintroduce public dollar
-// amounts anywhere. (Internal analytics values live in lib/lead-values.ts and
-// are not public pricing.)
-export const WEBSITE_PRICE_LABEL = 'Custom, scoped on a call'
-export const CONTENT_OS_PRICE_LABEL = 'Custom, scoped on a call'
+// POLICY (2026-07-27, waitlist revision 2026-09-14): NO offer shows public
+// exact pricing. Prism is at capacity, so every offer's primary action is the
+// waitlist (WAITLIST_CTA in lib/waitlist.ts); scope is agreed together once we
+// reach out. Do not reintroduce public dollar amounts anywhere. (Internal
+// analytics values live in lib/lead-values.ts and are not public pricing.)
+export const WEBSITE_PRICE_LABEL = 'Custom scope · waitlist'
+export const CONTENT_OS_PRICE_LABEL = 'Custom scope · waitlist'
 export const DENTAL_OS_PRICE_LABEL = 'Built around your practice'
-export const PRISM_INFINITY_PRICE_LABEL = 'Custom, scoped on a call'
+export const PRISM_INFINITY_PRICE_LABEL = 'Custom scope · waitlist'
 
-/**
- * The single booking CTA for every offer that is scoped on a call.
- * BOOKING_URL is Enzo's 30-minute Notion Calendar Zoom link.
- */
-export const BOOK_A_CALL_CTA = {
-  label: 'Book a Free Demo',
-  href: BOOKING_URL,
+/** Service-specific waitlist entry points (prefill the focus checkboxes). */
+export const WEBSITE_WAITLIST_CTA = {
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_FOCUS_HREFS.website,
 } as const
 
-/**
- * Website-offer start path. `/websites` remains the indexable marketing page.
- * This CTA always opens the focused four-question intake.
- */
-export const WEBSITE_START_CTA = {
-  label: 'Start my website',
-  href: '/website-intake',
+export const CONTENT_WAITLIST_CTA = {
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_FOCUS_HREFS.content,
 } as const
 
-export const PRICING_PRIMARY_CTA = BOOK_A_CALL_CTA
+export const ADS_WAITLIST_CTA = {
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_FOCUS_HREFS.ads,
+} as const
+
+export const PRICING_PRIMARY_CTA = WAITLIST_CTA
 
 export const PRICING_SECONDARY_CTA = {
   label: 'Compare all offers',
@@ -86,7 +84,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceSubLabel: 'The PRO website, scoped to your business',
     description:
       'A custom website with clear service pages, mobile-friendly design, inquiry forms, and analytics. Built to help customers understand your business and take the next step.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: WEBSITE_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore PRO websites',
       href: '/websites',
@@ -100,10 +98,10 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: CONTENT_OS_PRICE_LABEL,
-    priceSubLabel: 'Scoped to your business on a 30-min call',
+    priceSubLabel: 'Scoped to your business when space opens',
     description:
       'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: CONTENT_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore Content',
       href: '/content',
@@ -120,7 +118,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceSubLabel: 'Scoped to your practice',
     description:
       'Website, search, Google Maps, review support, and ads coordinated for your practice. Help patients understand your care and make it easier to call or request an appointment.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore Dental OS',
       href: '/dental-os',
@@ -137,7 +135,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     priceSubLabel: 'Unlimited requests. Pause or cancel anytime.',
     description:
       'One monthly subscription for landing pages, ad creative, websites, video, photoshoots, and content. Add unlimited requests to your queue; we work through them one at a time. Pause or cancel anytime.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore Prism Infinity',
       href: '/prism-infinity',

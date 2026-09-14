@@ -10,7 +10,7 @@ import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
 const BlogCTAButton = dynamic(() => import("./BlogCTAButton"), {
   loading: () => (
     <Link
-      href="/free-analysis"
+      href="/waitlist"
       className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-neutral-800"
       data-cta-text={FREE_AUDIT_CTA_TEXT}
       data-cta-location="blog page"

@@ -54,7 +54,7 @@ describe('Vercel analytics URL normalization', () => {
         cta_location: 'instagram landing actions',
         platform: 'instagram',
         service: 'website',
-        destination: '/website-intake',
+        destination: '/waitlist?focus=website',
         extra_noise: 'ignore me',
       }),
     ).toEqual({
@@ -64,7 +64,7 @@ describe('Vercel analytics URL normalization', () => {
         cta_location: 'instagram landing actions',
         platform: 'instagram',
         service: 'website',
-        destination: '/website-intake',
+        destination: '/waitlist?focus=website',
       },
     })
   })
@@ -315,315 +315,98 @@ describe('Vercel analytics URL normalization', () => {
     ).toBeNull()
   })
 
-  describe('the website intake funnel', () => {
-    it.each([
-      [
-        'website_intake_form_view',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
+  describe('the waitlist funnel', () => {
+    it('maps waitlist form view/start with allowlisted dimensions', () => {
+      expect(
+        buildVercelCustomEvent('waitlist_form_view', {
+          form_name: 'waitlist',
+          form_location: 'waitlist_page',
+          prefilled_focus: 'website',
+        }),
+      ).toEqual({
+        name: 'Waitlist Form Viewed',
+        properties: {
+          form_name: 'waitlist',
+          form_location: 'waitlist_page',
+          prefilled_focus: 'website',
         },
-        {
-          name: 'Website Intake Form Viewed',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-          },
-        },
-      ],
-      [
-        'website_intake_form_start',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          step: 1,
-          step_id: 'why',
-          question_count: 4,
-        },
-        {
-          name: 'Website Intake Form Started',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            step: 1,
-            step_id: 'why',
-            question_count: 4,
-          },
-        },
-      ],
-      [
-        'website_intake_step_view',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          step: 2,
-          step_id: 'timeline',
-          question_count: 4,
-        },
-        {
-          name: 'Website Intake Step Viewed',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            step: 2,
-            step_id: 'timeline',
-            question_count: 4,
-          },
-        },
-      ],
-      [
-        'website_intake_step_complete',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          step: 3,
-          step_id: 'current-site',
-          question_count: 4,
-        },
-        {
-          name: 'Website Intake Step Completed',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            step: 3,
-            step_id: 'current-site',
-            question_count: 4,
-          },
-        },
-      ],
-      [
-        'website_intake_option_select',
-        {
-          form_name: 'website_intake',
-          step_id: 'why',
-          option: 'better_analytics',
-        },
-        {
-          name: 'Website Intake Option Selected',
-          properties: {
-            form_name: 'website_intake',
-            step_id: 'why',
-            option: 'better_analytics',
-          },
-        },
-      ],
-      [
-        'website_intake_validation_error',
-        {
-          form_name: 'website_intake',
-          step: 4,
-          step_id: 'contact',
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_form_start', {
+          form_name: 'waitlist',
+          form_location: 'somewhere_else',
+        }),
+      ).toEqual({
+        name: 'Waitlist Form Started',
+        properties: { form_name: 'waitlist' },
+      })
+    })
+
+    it('maps waitlist validation, attempt, success, and error events', () => {
+      expect(
+        buildVercelCustomEvent('waitlist_validation_error', {
+          form_name: 'waitlist',
           field_name: 'email',
+          invalid_count: 2,
+        }),
+      ).toEqual({
+        name: 'Waitlist Validation Error',
+        properties: { form_name: 'waitlist', field_name: 'email', invalid_count: 2 },
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_submit_attempt', {
+          form_name: 'waitlist',
+          form_location: 'waitlist_page',
+        }),
+      ).toEqual({
+        name: 'Waitlist Submit Attempted',
+        properties: { form_name: 'waitlist', form_location: 'waitlist_page' },
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_submit_success', {
+          form_name: 'waitlist',
+          form_location: 'waitlist_page',
+          focus_count: 2,
+        }),
+      ).toEqual({
+        name: 'Waitlist Submit Succeeded',
+        properties: {
+          form_name: 'waitlist',
+          form_location: 'waitlist_page',
+          focus_count: 2,
         },
-        {
-          name: 'Website Intake Validation Error',
-          properties: {
-            form_name: 'website_intake',
-            step: 4,
-            step_id: 'contact',
-            field_name: 'email',
-          },
-        },
-      ],
-      [
-        'website_intake_submit_attempt',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          elapsed_seconds: 37,
-        },
-        {
-          name: 'Website Intake Submit Attempted',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            elapsed_seconds: 37,
-          },
-        },
-      ],
-      [
-        'website_intake_submit_success',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          elapsed_seconds: 38,
-        },
-        {
-          name: 'Website Intake Submit Succeeded',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            elapsed_seconds: 38,
-          },
-        },
-      ],
-      [
-        'website_intake_submit_error',
-        {
-          form_name: 'website_intake',
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_submit_error', {
+          form_name: 'waitlist',
           reason: 'non_ok_response',
-          status: 429,
-        },
-        {
-          name: 'Website Intake Submit Error',
-          properties: {
-            form_name: 'website_intake',
-            reason: 'non_ok_response',
-            status: 429,
-          },
-        },
-      ],
-      [
-        'website_intake_source_select',
-        { form_name: 'website_intake', source: 'Google Search' },
-        {
-          name: 'Website Intake Source Selected',
-          properties: {
-            form_name: 'website_intake',
-            source: 'Google Search',
-          },
-        },
-      ],
-      [
-        'website_intake_booking_click',
-        {
-          form_name: 'website_intake',
-          form_location: 'success_screen',
-        },
-        {
-          name: 'Website Intake Booking Clicked',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'success_screen',
-          },
-        },
-      ],
-      [
-        'website_intake_abandon',
-        {
-          form_name: 'website_intake',
-          form_location: 'website_intake_page',
-          funnel_step: 3,
-          funnel_step_id: 'current-site',
-        },
-        {
-          name: 'Website Intake Abandoned',
-          properties: {
-            form_name: 'website_intake',
-            form_location: 'website_intake_page',
-            funnel_step: 3,
-            funnel_step_id: 'current-site',
-          },
-        },
-      ],
-    ])('maps %s into a compact Vercel event', (eventName, params, expected) => {
-      expect(buildVercelCustomEvent(eventName, params)).toEqual(expected)
-    })
-
-    it('drops PII, arbitrary values, and invalid identifiers from mapped events', () => {
-      expect(
-        buildVercelCustomEvent('website_intake_option_select', {
-          form_name: 'website_intake',
-          step_id: 'contact',
-          option: 'person@example.com',
-          email: 'person@example.com',
-          phone: '+1 310 555 0123',
-          site_link: 'https://example.com/private-path',
-          message: 'private project details',
+          status: 500,
+          email: 'leak@example.com',
         }),
       ).toEqual({
-        name: 'Website Intake Option Selected',
-        properties: {
-          form_name: 'website_intake',
-          step_id: 'contact',
-        },
-      })
-
-      expect(
-        buildVercelCustomEvent('website_intake_submit_error', {
-          form_name: 'person@example.com',
-          reason: 'person@example.com',
-          status: 999,
-        }),
-      ).toEqual({
-        name: 'Website Intake Submit Error',
-        properties: undefined,
+        name: 'Waitlist Submit Error',
+        properties: { form_name: 'waitlist', reason: 'non_ok_response', status: 500 },
       })
     })
 
-    it('maps the allowlisted timeout submission error category', () => {
+    it('drops unknown waitlist field names and reasons', () => {
       expect(
-        buildVercelCustomEvent('website_intake_submit_error', {
-          form_name: 'website_intake',
-          reason: 'timeout',
+        buildVercelCustomEvent('waitlist_validation_error', {
+          form_name: 'waitlist',
+          field_name: 'goals_text_with_pii',
         }),
       ).toEqual({
-        name: 'Website Intake Submit Error',
-        properties: {
-          form_name: 'website_intake',
-          reason: 'timeout',
-        },
+        name: 'Waitlist Validation Error',
+        properties: { form_name: 'waitlist' },
       })
     })
 
-    it('intentionally leaves unapproved website intake events unmapped', () => {
+    it('no longer maps the retired intake funnel events', () => {
       expect(
-        buildVercelCustomEvent('website_intake_draft_saved', {
-          email: 'person@example.com',
-          site_link: 'https://example.com/private-path',
+        buildVercelCustomEvent('website_intake_form_view', {
+          form_name: 'website_intake',
         }),
       ).toBeNull()
-    })
-
-    it('maps content and ads intake events with the same compact property contract', () => {
-      expect(
-        buildVercelCustomEvent('content_intake_form_start', {
-          form_name: 'content_intake',
-          form_location: 'content_intake_page',
-          step: 1,
-          step_id: 'why',
-          question_count: 4,
-        }),
-      ).toEqual({
-        name: 'Content Intake Form Started',
-        properties: {
-          form_name: 'content_intake',
-          form_location: 'content_intake_page',
-          step: 1,
-          step_id: 'why',
-          question_count: 4,
-        },
-      })
-
-      expect(
-        buildVercelCustomEvent('ads_intake_submit_success', {
-          form_name: 'ads_intake',
-          form_location: 'ads_intake_page',
-          elapsed_seconds: 41,
-        }),
-      ).toEqual({
-        name: 'Ads Intake Submit Succeeded',
-        properties: {
-          form_name: 'ads_intake',
-          form_location: 'ads_intake_page',
-          elapsed_seconds: 41,
-        },
-      })
-
-      expect(
-        buildVercelCustomEvent('content_intake_option_select', {
-          form_name: 'content_intake',
-          step_id: 'why',
-          option: 'build_trust',
-        }),
-      ).toEqual({
-        name: 'Content Intake Option Selected',
-        properties: {
-          form_name: 'content_intake',
-          step_id: 'why',
-          option: 'build_trust',
-        },
-      })
     })
   })
 
@@ -727,85 +510,6 @@ describe('Vercel analytics URL normalization', () => {
         }),
       ).toBeNull()
     })
-  })
-})
-
-describe('service intake parity', () => {
-  const stages = [
-    ['form_view', 'Form Viewed'],
-    ['form_start', 'Form Started'],
-    ['step_view', 'Step Viewed'],
-    ['step_complete', 'Step Completed'],
-    ['option_select', 'Option Selected'],
-    ['validation_error', 'Validation Error'],
-    ['submit_attempt', 'Submit Attempted'],
-    ['submit_success', 'Submit Succeeded'],
-    ['submit_error', 'Submit Error'],
-    ['source_select', 'Source Selected'],
-    ['booking_click', 'Booking Clicked'],
-    ['abandon', 'Abandoned'],
-    ['agent_prepare', 'Agent Prepared'],
-  ]
-
-  it.each(['website', 'content', 'ads'])(
-    'retains each %s funnel stage with its service identity',
-    (service) => {
-      const label = service[0].toUpperCase() + service.slice(1)
-      for (const [stage, name] of stages) {
-        const result = buildVercelCustomEvent(`${service}_intake_${stage}`, {
-          form_name: `${service}_intake`,
-          form_location: `${service}_intake_page`,
-          email: 'person@example.com',
-          phone: '9165550142',
-          site_link: 'https://private.example.com',
-        })
-        expect(result?.name).toBe(`${label} Intake ${name}`)
-        expect(result?.properties?.form_name).toBe(`${service}_intake`)
-        expect(JSON.stringify(result)).not.toMatch(
-          /person@|9165550142|private\.example/,
-        )
-      }
-    },
-  )
-
-  it.each([
-    ['website', 'better_design'],
-    ['content', 'build_trust'],
-    ['ads', 'more_leads'],
-  ])(
-    'keeps the selected %s goal and rejects other service goals',
-    (service, goal) => {
-      const event = `${service}_intake_option_select`
-      expect(
-        buildVercelCustomEvent(event, { step_id: 'why', option: goal })
-          ?.properties?.option,
-      ).toBe(goal)
-      expect(
-        buildVercelCustomEvent(event, {
-          step_id: 'why',
-          option: 'person@example.com',
-        })?.properties?.option,
-      ).toBeUndefined()
-      if (service !== 'website') {
-        expect(
-          buildVercelCustomEvent(event, {
-            step_id: 'why',
-            option: 'better_design',
-          })?.properties?.option,
-        ).toBeUndefined()
-      }
-    },
-  )
-
-  it('rejects mismatched service metadata and unsupported events', () => {
-    expect(
-      buildVercelCustomEvent('ads_intake_form_view', {
-        form_name: 'website_intake',
-        form_location: 'website_intake_page',
-      })?.properties,
-    ).toBeUndefined()
-    expect(buildVercelCustomEvent('ads_intake_unknown')).toBeNull()
-    expect(buildVercelCustomEvent('unknown_intake_form_view')).toBeNull()
   })
 })
 

@@ -74,7 +74,7 @@ export default function SMBClientPage() {
               animate={{ y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
             >
-              <Link href="/free-analysis">
+              <Link href="/waitlist">
                 <Button className="rounded-full px-8 py-6 text-base lowercase">
                   {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -172,7 +172,7 @@ export default function SMBClientPage() {
                 design, software, and data, implemented and measured with you.
               </p>
               <div className="mt-6">
-                <Link href="/free-analysis">
+                <Link href="/waitlist">
                   <Button
                     variant="secondary"
                     className="rounded-full px-8 py-6 text-base lowercase"

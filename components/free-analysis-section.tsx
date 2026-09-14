@@ -50,7 +50,7 @@ export default function FreeAnalysisSection() {
                 variant="inverted"
                 className="w-full rounded-full px-8 py-3 text-base font-semibold text-neutral-950"
               >
-                <Link href="/free-analysis">Claim Your Free Analysis</Link>
+                <Link href="/waitlist">Claim Your Free Analysis</Link>
               </Button>
               <p className="mt-3 text-xs text-white/60">We’ll respond within one business day.</p>
             </div>

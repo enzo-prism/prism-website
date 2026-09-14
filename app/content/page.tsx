@@ -17,7 +17,8 @@ import {
   coreRouteSplitLayoutClassName,
 } from '@/components/core-route/CoreRoutePrimitives'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { BOOK_A_CALL_CTA, CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
+import { CANONICAL_PRICING_OFFERS, CONTENT_WAITLIST_CTA } from '@/lib/pricing-model'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
@@ -114,7 +115,7 @@ const FAQ_ITEMS = [
   {
     question: 'What is Prism Content OS?',
     answer:
-      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Scope is agreed on a 30-minute call.',
+      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Prism is at capacity, so scope is agreed when we reach out from the waitlist.',
   },
   {
     question: 'How does website content support SEO and AI discovery?',
@@ -149,7 +150,7 @@ const FAQ_ITEMS = [
   {
     question: 'How much does the content system cost?',
     answer:
-      'Pricing is scoped to your business. Book a 30-minute Zoom call and we will map your channels, goals, and the right system together. You leave the call with a clear plan and a clear price.',
+      'Pricing is scoped to your business. Prism is at capacity right now, so join the waitlist; when we reach out we map your channels, goals, and the right system together and you leave with a clear plan and a clear price.',
   },
 ] as const
 
@@ -188,18 +189,20 @@ export default function ContentOsPage() {
                   <span className="font-medium text-[#f5f0e8]">
                     Implemented over 3 months
                   </span>
-                  {', '}then optimized every month. Scoped to your business on a
-                  30-minute call.
+                  {', '}then optimized every month. Scoped to your business
+                  when we reach out.
                 </p>
 
-                <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <CapacityNotice className="mt-8 max-w-[40rem]" />
+
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href="/content-intake"
+                    href={CONTENT_WAITLIST_CTA.href}
                     variant="heroPrimary"
-                    label="start my content"
+                    label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
                     location="content hero"
                   >
-                    Start my content
+                    {CONTENT_WAITLIST_CTA.label}
                   </CoreActionLink>
                 </div>
 
@@ -347,21 +350,19 @@ export default function ContentOsPage() {
                     </span>
                   </p>
                   <p className="text-[1rem] leading-7 text-[#8f877b]">
-                    Book a 30-minute Zoom call and we&apos;ll scope the system
-                    and the investment together.
+                    Join the waitlist and, when space frees up, we&apos;ll scope
+                    the system and the investment together.
                   </p>
                 </div>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:flex-col lg:items-stretch">
                 <CoreActionLink
-                  href={BOOK_A_CALL_CTA.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={CONTENT_WAITLIST_CTA.href}
                   variant="heroPrimary"
-                  label="book a free demo"
+                  label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
                   location="content pricing"
                 >
-                  {BOOK_A_CALL_CTA.label}
+                  {CONTENT_WAITLIST_CTA.label}
                 </CoreActionLink>
               </div>
             </div>
@@ -398,16 +399,16 @@ export default function ContentOsPage() {
           >
             <CoreSectionHeading
               title="Put your next content batch in motion."
-              description="Give your social channels and website a consistent publishing plan. We will map the content, workflow, and scope with you."
+              description="Prism is at capacity right now. Join the waitlist and we will map the content, workflow, and scope with you when we reach out."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href="/content-intake"
+                href={CONTENT_WAITLIST_CTA.href}
                 variant="heroPrimary"
-                label="start my content"
+                label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
                 location="content final"
               >
-                Start my content
+                {CONTENT_WAITLIST_CTA.label}
               </CoreActionLink>
             </div>
           </div>
@@ -423,7 +424,7 @@ export default function ContentOsPage() {
         areaServed="United States"
         offerDetails={{
           name: CONTENT_OS_OFFER.name,
-          description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Scoped on a 30-minute call.`,
+          description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Prism is at capacity; scope is agreed when we reach out from the waitlist.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

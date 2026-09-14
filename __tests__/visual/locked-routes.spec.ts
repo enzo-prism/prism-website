@@ -91,40 +91,50 @@ const lockedRoutes = [
     name: 'home',
     path: '/',
     readyHeading: /^your growth team\.$/i,
-    mustContain: [/website\. content\. ads\. built around your business\./i],
+    mustContain: [
+      /website\. content\. ads\. built around your business\./i,
+      /prism is at capacity right now\./i,
+      /join the waitlist/i,
+    ],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },
   {
     name: 'pricing',
     path: '/pricing',
     readyHeading: /a clearer way to invest in growth\./i,
-    mustContain: [/scoped on a call/i],
+    mustContain: [/prism is at capacity right now\./i, /join the waitlist/i],
   },
   {
-    name: 'get-started',
-    path: '/get-started',
-    readyHeading: /a clearer place to start\./i,
-    // The hero step icons are looping Lordicon (lottie) animations, so their
-    // rendered frame is non-deterministic. Mask them to keep the locked layout
-    // snapshot stable while still locking the surrounding hero structure.
-    mask: ['lord-icon'],
+    name: 'waitlist',
+    path: '/waitlist',
+    readyHeading: /^prism is at capacity\.$/i,
+    mustContain: [
+      /we are working hard to free up space/i,
+      /join the waitlist/i,
+      /relevant links/i,
+      /when are you looking to get started\?/i,
+    ],
   },
 ] as const
 
 // Screenshot comparisons alone cannot protect copy on these dark routes: a
 // full pricing-page redesign moves only ~4% of pixels, under the 5%
 // maxDiffPixelRatio needed for macOS<->Linux font drift. These text guards
-// catch what pixel tolerance absorbs: retired public pricing reappearing or
-// call-first copy disappearing. Mirrors lib/pricing-consistency.ts policy.
+// catch what pixel tolerance absorbs: retired public pricing reappearing,
+// waitlist copy disappearing, or the retired booking/intake CTAs coming back.
+// Mirrors lib/pricing-consistency.ts policy.
 const retiredPricingTokens = [
   /\$1,000 one-time/i,
   /\$1,000(?:\/| per )month/i,
   /\$2,000(?:\/| per )month/i,
   /\$5,000\b/,
+  /book a free demo/i,
+  /start my website/i,
+  /scoped on a 30-min(?:ute)? (?:zoom )?call/i,
 ] as const
 
 for (const route of lockedRoutes) {
-  test(`${route.name} copy stays call-first (no retired pricing)`, async ({
+  test(`${route.name} copy stays waitlist-first (no retired pricing)`, async ({
     page,
   }, testInfo) => {
     test.skip(
@@ -173,14 +183,8 @@ for (const route of lockedRoutes) {
     await expectLockedRouteSnapshotSurface(page)
     await page.waitForTimeout(750)
 
-    const mask =
-      'mask' in route && route.mask
-        ? route.mask.map((selector) => page.locator(selector))
-        : undefined
-
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
       timeout: 15_000,
-      ...(mask ? { mask } : {}),
     })
   })
 }
@@ -431,7 +435,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /get a pro website/i }),
+      hero.getByRole('link', { name: /join the waitlist/i }),
     ).toBeVisible({
       timeout: 20_000,
     })
@@ -447,7 +451,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/websites"]',
+        'a[href="/waitlist"]',
       )
       const secondaryCta = hero.querySelector<HTMLAnchorElement>(
         'a[href="/wall-of-love"]',

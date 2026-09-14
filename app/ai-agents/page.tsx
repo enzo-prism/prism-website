@@ -169,7 +169,7 @@ export default function AIAgentsPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/get-started"
+                  href="/waitlist"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
                   {FREE_AUDIT_CTA_TEXT}
@@ -353,7 +353,7 @@ export default function AIAgentsPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/get-started"
+                  href="/waitlist"
                   className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
                 >
                   {FREE_AUDIT_CTA_TEXT}

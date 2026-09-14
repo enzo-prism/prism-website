@@ -13,7 +13,7 @@ interface ProofCTAsProps {
 export default function ProofCTAs({ location, className = "" }: ProofCTAsProps) {
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
-      <Link href="/get-started">
+      <Link href="/waitlist">
         <Button
           className="rounded-full px-6 py-3 text-base lowercase"
           onClick={() => trackCTAClick(FREE_AUDIT_CTA_TEXT, location)}

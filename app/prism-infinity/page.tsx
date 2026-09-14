@@ -32,18 +32,17 @@ import {
 } from '@/components/prism-infinity/infinity-content'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import {
-  BOOK_A_CALL_CTA,
-  PRISM_INFINITY_PRICE_LABEL,
-} from '@/lib/pricing-model'
+import { PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
+import { WAITLIST_CTA } from '@/lib/waitlist'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
 import styles from './prism-infinity.module.css'
 
-const SUBSCRIBE_HREF = BOOK_A_CALL_CTA.href
-const SUBSCRIBE_LABEL = BOOK_A_CALL_CTA.label
+const SUBSCRIBE_HREF = WAITLIST_CTA.href
+const SUBSCRIBE_LABEL = WAITLIST_CTA.label
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Prism Infinity',
@@ -304,13 +303,12 @@ export default function PrismInfinityPage() {
               </div>
 
               <div className="relative z-10 border-t border-white/12 px-6 py-6 sm:px-10 lg:px-12">
+                <CapacityNotice className="mb-5 max-w-[40rem]" />
                 <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label="join the waitlist"
                     location="prism-infinity hero"
                   >
                     {SUBSCRIBE_LABEL}
@@ -469,10 +467,8 @@ export default function PrismInfinityPage() {
                   </p>
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     variant="primary"
-                    label="book a free demo"
+                    label="join the waitlist"
                     location="prism-infinity owner reasons"
                   >
                     Ask us how it works
@@ -567,16 +563,15 @@ export default function PrismInfinityPage() {
                 </p>
                 <p className="mt-5 max-w-md text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
                   Unlimited landing pages, ad creative, websites, video, and
-                  photoshoots. Pause or cancel anytime. Book a 30-minute Zoom
-                  call and we&apos;ll scope your subscription together.
+                  photoshoots. Pause or cancel anytime. Prism is at capacity, so
+                  join the waitlist and we&apos;ll scope your subscription together
+                  when we reach out.
                 </p>
                 <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label="join the waitlist"
                     location="prism-infinity pricing recap"
                   >
                     {SUBSCRIBE_LABEL}
@@ -629,7 +624,7 @@ export default function PrismInfinityPage() {
               <HomeReveal>
                 <CoreSectionHeading
                   title="Keep the queue full."
-                  description="Bring your next few priorities to a 30-minute Zoom call. We will review the work, explain the queue, and scope your monthly plan."
+                  description="Prism is at capacity right now. Join the waitlist with your next few priorities and, when we reach out, we will review the work, explain the queue, and scope your monthly plan."
                   titleClassName="max-w-[14ch] xl:max-w-[16ch]"
                 />
               </HomeReveal>
@@ -637,10 +632,8 @@ export default function PrismInfinityPage() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
                   <CoreActionLink
                     href={SUBSCRIBE_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label="join the waitlist"
                     location="prism-infinity final cta"
                   >
                     {SUBSCRIBE_LABEL}
@@ -662,7 +655,7 @@ export default function PrismInfinityPage() {
         offerDetails={{
           name: 'Prism Infinity',
           description:
-            'Unlimited growth deliverables across landing pages, ad creative, websites, video, photoshoots, and content on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Scoped on a 30-minute call.',
+            'Unlimited growth deliverables across landing pages, ad creative, websites, video, photoshoots, and content on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Prism is at capacity; scope is agreed when we reach out from the waitlist.',
           businessFunction: 'http://purl.org/goodrelations/v1#Sell',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

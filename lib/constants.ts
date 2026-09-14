@@ -89,7 +89,10 @@ export const LOGO_SIZES = {
   small: { width: 40, height: 40 },
 } as const 
 
-export const FREE_AUDIT_CTA_TEXT = "Get a free growth audit"
+// Waitlist funnel (2026-09-14): Prism is at capacity. The legacy export name
+// is kept because ~30 long-tail surfaces import it; every one of them now
+// reads "Join the waitlist" and lands on /waitlist via route redirects.
+export const FREE_AUDIT_CTA_TEXT = "Join the waitlist"
 
 export type NavItem = { label: string; href: string }
 

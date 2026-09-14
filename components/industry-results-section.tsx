@@ -178,7 +178,7 @@ export default function IndustryResultsSection() {
               }
               asChild
             >
-              <a href="/free-analysis">
+              <a href="/waitlist">
                 {FREE_AUDIT_CTA_TEXT} <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>

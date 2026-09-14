@@ -60,13 +60,14 @@ describe('elevenlabs link configuration', () => {
     delete window.__PRISM_DISABLE_ELEVENLABS_WIDGET__
   })
 
-  it('limits the public floating widget to pricing and contact pages', () => {
+  it('limits the public floating widget to the pricing page', () => {
     expect(shouldRenderPublicElevenLabsWidget('/pricing')).toBe(true)
-    expect(shouldRenderPublicElevenLabsWidget('/contact')).toBe(true)
     expect(shouldRenderPublicElevenLabsWidget('/pricing/')).toBe(true)
-    expect(shouldRenderPublicElevenLabsWidget('/contact?source=footer')).toBe(
+    expect(shouldRenderPublicElevenLabsWidget('/pricing?source=footer')).toBe(
       true,
     )
+    expect(shouldRenderPublicElevenLabsWidget('/contact')).toBe(false)
+    expect(shouldRenderPublicElevenLabsWidget('/waitlist')).toBe(false)
 
     expect(shouldRenderPublicElevenLabsWidget('/')).toBe(false)
     expect(shouldRenderPublicElevenLabsWidget('/about')).toBe(false)

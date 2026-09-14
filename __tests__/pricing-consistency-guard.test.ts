@@ -24,10 +24,10 @@ describe('pricing consistency guard', () => {
     )
   })
 
-  it('requires the current call-first pricing snippets', () => {
+  it('requires the current waitlist pricing snippets', () => {
     const violations = collectPricingConsistencyViolations(
       'lib/pricing-model.ts',
-      'BOOK_A_CALL_CTA. Book a Free Demo. NO offer shows public exact pricing.',
+      'WAITLIST_CTA. Prism is at capacity. NO offer shows public exact pricing.',
     )
 
     expect(violations).toEqual([])
@@ -48,13 +48,26 @@ describe('pricing consistency guard', () => {
     )
   })
 
-  it('allows the call-first PRO website copy on /websites and flags any $ price', () => {
+  it('allows the waitlist PRO website copy on /websites and flags any $ price', () => {
     expect(
       collectPricingConsistencyViolations(
         'app/websites/page.tsx',
-        'Prism PRO website. BOOK_A_CALL_CTA. Support discovery on Google and in AI.',
+        'Prism PRO website. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI.',
       ),
     ).toEqual([])
+
+    expect(
+      collectPricingConsistencyViolations(
+        'app/websites/page.tsx',
+        'Prism PRO website. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI. <a href="/website-intake">Start my website</a> BOOK_A_CALL_CTA',
+      ).map((violation) => violation.label),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('BOOK_A_CALL_CTA'),
+        expect.stringContaining('Start my website'),
+        expect.stringContaining('retired service intake route'),
+      ]),
+    )
 
     const violations = collectPricingConsistencyViolations(
       'app/websites/page.tsx',

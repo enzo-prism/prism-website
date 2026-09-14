@@ -20,7 +20,7 @@ export const metadata: Metadata = buildRouteMetadata({
 
 const primaryCta = {
   label: "Get a free analysis",
-  href: "/free-analysis",
+  href: "/waitlist",
 } as const
 
 const secondaryCta = {

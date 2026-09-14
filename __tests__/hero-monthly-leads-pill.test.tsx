@@ -19,11 +19,11 @@ jest.mock('next/link', () => ({
 }))
 
 describe('HeroMonthlyLeadsPill', () => {
-  it('renders a link to /get-started with monthly stat copy', () => {
+  it('renders a link to /waitlist with monthly stat copy', () => {
     render(<HeroMonthlyLeadsPill />)
 
     const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('href', '/get-started')
+    expect(link).toHaveAttribute('href', '/waitlist')
 
     const latest = HOME_HERO_MONTHLY_LEADS_STATS[0]
     expect(latest).toBeTruthy()

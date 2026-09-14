@@ -126,7 +126,7 @@ export default function SeoOnPagePage() {
             rank higher in google
           </Link>
           <Link
-            href="/get-started"
+            href="/waitlist"
             className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
           >
             talk with prism

@@ -16,6 +16,7 @@ describe('lead values', () => {
     // every one of those entries was dead and the real leads silently took
     // the fallback. Keys must match the `lead_type` values in components/.
     const emittedLeadTypes = new Set([
+      'waitlist',
       'website_order',
       'website_intake',
       'content_intake',

@@ -8,7 +8,6 @@ const DEFAULT_MARKDOWN_LINK_ALLOWED_HOSTS = [
 const ENABLED_ENV_VALUES = new Set(['1', 'true', 'yes', 'on'])
 export const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATHS = [
   '/pricing',
-  '/contact',
 ] as const
 const PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATH_SET = new Set<string>(
   PUBLIC_ELEVENLABS_WIDGET_ALLOWED_PATHS,

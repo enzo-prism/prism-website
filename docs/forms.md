@@ -2,6 +2,54 @@
 
 Prism handles every marketing form through Formspree plus client-side redirects. Use this doc any time you add a new form.
 
+> **Waitlist funnel (2026-09-14).** Prism is at capacity. The only live sales form is `/waitlist` (see [Waitlist](#waitlist)). The intake, Growth Dashboard, contact, free-analysis, AEO, book-a-shoot, and AI brief flows documented further down are **retired**: their routes 308-redirect to `/waitlist` and their form components are deleted. Those sections remain as historical field contracts for the Formspree archives.
+
+## Waitlist
+
+`components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads`, which pre-checks the matching focus box (`parseWaitlistFocus` in `lib/waitlist.ts`).
+
+- Required payload fields:
+  - `first_name`, `last_name`
+  - `email`
+  - at least one of `link_website`, `link_social`, `link_other` (enforced with `setCustomValidity` on `link_website`; the message is "Add at least one link: website, social, or other")
+  - `goals` (textarea)
+  - `start_timing` (select: `asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`)
+- Optional payload fields:
+  - `phone`
+  - `focus[]` (checkboxes `website`, `content`, `ads`; any number)
+  - `focus_other` (free text)
+- Hidden metadata contract:
+  - `_subject` = `New Prism waitlist application`
+  - `form_name` = `waitlist`
+  - `_gotcha` (honeypot)
+  - `<FormspreeOpsFields formKey="waitlist">` (site, form_key, environment, `_codex_test`, page_path, referrer, `utm_*`)
+  - `syncFormAttributionFields(form)` from `lib/marketing-attribution.ts` before the POST, so `landing_path`, first-touch UTMs, click ids, `submission_path`, `device_type`, and `timestamp` travel with the submission (for example `landing_path=/ig`)
+- DOM analytics contract: `<form id="waitlist" name="waitlist">`
+- Endpoint strategy:
+  1. `NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT`
+  2. Fallback `https://formspree.io/f/xjkjbpdb` (the existing Contact form, which notifies `enzo@design-prism.com`). Create a dedicated **Waitlist** form in the Prism Formspree project, set the env var in Vercel Production + Preview, and redeploy.
+- Success flow:
+  - `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
+  - On `response.ok`: `trackEvent('waitlist_submit_success')`, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` (pending mode), then `router.push('/waitlist/thank-you')`. The thank-you route is noindex and mounts `LeadSuccessTracker`, which fires `generate_lead` once (`lib/lead-values.ts` `waitlist: 120`).
+  - On failure: inline `role="alert"` error, `waitlist_submit_error` with `reason` (`non_ok_response` | `network_failure`) and `status`, visitor stays on the form.
+- Analytics: `waitlist_form_view` (with `prefilled_focus`), `waitlist_form_start` (first focus or checkbox toggle, once), `waitlist_validation_error` (`field_name`, `invalid_count`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`), `waitlist_submit_error`. No names, emails, phones, URLs, or free text are sent to GA or Vercel.
+- Capacity copy lives in `CAPACITY_MESSAGE` (`lib/waitlist.ts`) and renders through `components/waitlist/CapacityNotice.tsx` (`inline` on heroes, `panel` above the form). Do not paste the capacity text into pages.
+- Tests: `pnpm exec jest __tests__/components/WaitlistForm.test.tsx __tests__/website-cta-map.test.ts __tests__/pricing-model.test.ts`.
+
+## Retired flows (308 → `/waitlist`)
+
+| Route | Former form | Formspree form | Notes |
+| --- | --- | --- | --- |
+| `/website-intake`, `/content-intake`, `/ads-intake` | `WebsiteIntakeForm` (+ `use-intake-webmcp`) | `xrpzlkrd`, `mwlkrezj`, `mnpqgaya` | Redirect keeps the service as `?focus=` |
+| `/get-started`, `/apply` | `GetStartedForm` | `mreroojo` / dashboard intake | `/thank-you?source=apply` stays as a noindex landing target |
+| `/contact` | `ContactForm` | `xjkjbpdb` | Now the waitlist fallback endpoint |
+| `/free-analysis`, `/analysis-thank-you` | `FreeAnalysisForm` | — | |
+| `/aeo`, `/aeo-thank-you` | `AeoAssessmentForm` | `xldarokj` | |
+| `/book-a-shoot` (+ thank-you) | `BookAShootForm` | `xjkjkggn` | Dental photography pages still link `/book-a-shoot`; the redirect handles it |
+| `/ai` | AI website brief | `xzdpoyer` | |
+
+Do not delete the historical Formspree forms until their submissions are archived.
+
 ## Shared hook
 
 `hooks/use-form-validation.ts` centralizes HTML5 validation and submission. It blocks repeat submissions synchronously while the first request is pending. Pass an `onValidSubmit` callback to run custom code (e.g., `fetch(form.action)` and `router.push('/thank-you')`).
@@ -22,19 +70,13 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 
 ## Existing forms
 
-- `components/forms/FreeAnalysisForm.tsx`
-- `components/forms/ContactForm.tsx`
-- `components/forms/GetStartedForm.tsx` (`/apply`)
-- `components/forms/WebsiteIntakeForm.tsx` (`/website-intake`)
+- `components/forms/WaitlistForm.tsx` (`/waitlist`; the only live sales form)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content`.
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
-- `components/forms/AeoAssessmentForm.tsx`
-- `app/book-a-shoot/BookAShootForm.tsx`
 - `app/scholarship/ScholarshipPageClient.tsx`
 - `app/models/client-page.tsx`
-- `app/ai/prism-ai-client.tsx`
 - `app/designs/wine-country-root-canal/client-page.tsx` (client design vote)
 
 `GET` and `POST /api/store-email` are retired. Both return `410 Gone` with `Cache-Control: no-store` and do not parse, retain, or log email addresses. Use the supported Formspree or dashboard intake flows instead.
@@ -57,7 +99,9 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
    - `conversionMode: "immediate"` for confirmed success states that stay on-page.
    - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.
 
-## Prism Growth Dashboard flow: `/get-started` + `/apply`
+## Retired: Prism Growth Dashboard flow: `/get-started` + `/apply`
+
+> **Retired 2026-09-14.** Both routes 308-redirect to `/waitlist`; the page and form files are deleted. Historical contract below.
 
 `app/get-started/page.tsx` is now the free Growth Dashboard entry page for growth-focused businesses. The actual dashboard intake form lives on `app/apply/page.tsx` and is powered by `components/forms/GetStartedForm.tsx`.
 
@@ -130,7 +174,9 @@ The `/apply` route should feel like a focused Growth Dashboard mode, not another
   - `trackLeadConversion(...)` on the apply thank-you view after the pending application context is consumed
 - Do not include user-entered names, emails, URLs, free-text notes, or unique per-event timestamps in GA params.
 
-## `/website-intake`: focused PRO website lead funnel
+## Retired: `/website-intake` focused PRO website lead funnel
+
+> **Retired 2026-09-14.** Redirects to `/waitlist?focus=website`; `WebsiteIntakeForm` is deleted. Historical contract below.
 
 `components/forms/WebsiteIntakeForm.tsx` is the one-question-per-screen intake
 for the Website offer. `/websites` remains the indexable marketing page; its
@@ -213,15 +259,15 @@ pnpm exec jest __tests__/components/WebsiteIntakeForm.test.tsx --runInBand
 pnpm verify:pricing-consistency
 ```
 
-## `/websites`: marketing page + intake handoff
+## `/websites`: marketing page + waitlist handoff
 
 The `/websites` PRO website page has **no on-page form**. The old fullscreen
 order dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
 Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero and final
-CTAs now say "Start my website" and route to `/website-intake`. A secondary
-`BOOK_A_CALL_CTA` remains on the final section for visitors who want to skip
-the form. The noindex `/checkout/website/thank-you` route remains only as the
-landing target for the legacy live Stripe link.
+CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` → `/waitlist?focus=website`)
+and the hero carries the shared `CapacityNotice`. There is no booking CTA. The
+noindex `/checkout/website/thank-you` route remains only as the landing target
+for the legacy live Stripe link.
 
 ## Retired flow: `/founder-os/apply` + Founder OS application
 
@@ -256,7 +302,9 @@ landing target for the legacy live Stripe link.
   - Do not include user-entered names, emails, URLs, or free-text answers in analytics params.
 - Both `/founder-os` and `/founder-os/apply` now 301-redirect to `/content` and are no longer indexable.
 
-## New flow: `/aeo` + free AEO assessment
+## Retired: `/aeo` + free AEO assessment
+
+> **Retired 2026-09-14.** `/aeo` 308-redirects to `/waitlist`; the form and thank-you route are deleted. Historical contract below.
 
 `components/forms/AeoAssessmentForm.tsx` handles the free AEO assessment capture and is embedded on `app/aeo/page.tsx`.
 
@@ -329,9 +377,11 @@ Important routing note:
 - Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
-- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only Website, Content, and Ads intake.
+- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only the Website, Content, and Ads waitlist CTAs. The page intro carries the shared capacity line; the referral program is not a sales CTA and keeps working while Prism is at capacity.
 
-## `/contact`
+## Retired: `/contact`
+
+> **Retired 2026-09-14.** `/contact` 308-redirects to `/waitlist`; `ContactForm` is deleted. Its Formspree form `xjkjbpdb` is the waitlist fallback endpoint. Footer support is `mailto:support@design-prism.com`. Historical contract below.
 
 `components/forms/ContactForm.tsx` is the general inbound form on
 `app/contact/page.tsx`.
@@ -360,7 +410,9 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 
 ## Other tracked submission surfaces
 
-### `/book-a-shoot`
+### Retired: `/book-a-shoot`
+
+> **Retired 2026-09-14.** 308-redirects to `/waitlist`. Historical contract below.
 
 - Endpoint: `https://formspree.io/f/xjkjkggn`
 - DOM analytics contract: `<form id="book_a_shoot" name="book_a_shoot">`
@@ -384,7 +436,9 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - Validation: name, city/state, preferred contact method, and the conditional email or mobile field must pass the shared `useFormValidation` flow before submission. Mobile numbers use a US phone pattern; errors focus the first invalid control and are announced.
 - Analytics: `trackFormSubmission("model_application", "models_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
 
-### `/ai`
+### Retired: `/ai`
+
+> **Retired 2026-09-14.** 308-redirects to `/waitlist`. Historical contract below.
 
 - Endpoint: `https://formspree.io/f/xzdpoyer`
 - The three-step utility form submits a website brief, company, email, mobile number, and standard Formspree/attribution metadata.
@@ -403,7 +457,9 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - **Need different CTAs on thank-you pages?** Update the respective route page; no other files depend on that markup.
 
 
-## Content and Ads service intake (2026-09-06)
+## Retired: Content and Ads service intake (2026-09-06)
+
+> **Retired 2026-09-14.** `/content-intake` and `/ads-intake` 308-redirect to `/waitlist?focus=content|ads`. Historical notes below.
 
 `/content` and `/ads` primary CTAs start `/content-intake` and `/ads-intake`, matching `/websites` → `/website-intake`. All three use `WebsiteIntakeForm` with a service prop and `lib/service-intake.ts` configuration. Each asks for goal, timing, a website/social link, and email or text contact. The last screen recaps earlier answers with an Edit answers action. Keyboard navigation, reduced motion, same-tab 24-hour draft expiry, retry handling, and the synchronous submission lock are shared. Drafts are isolated per service and cleared on confirmed success. The `/ig`, `/tiktok`, and `/youtube` hubs start these same dedicated intake routes.
 
@@ -417,7 +473,9 @@ Dedicated forms created in the authenticated **Prism** Formspree project:
 
 Content and Ads use their dedicated endpoint by default, with optional `NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT` and `NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT` overrides. They do not depend on new Vercel environment variables. Payloads carry `service`, `goal`, service-specific `content_goal` or `ads_goal`, `${service}_intake` form name/key, the existing ops/UTM metadata, and service-specific email subjects. No real lead submission is required during automated tests; mock the Formspree response to avoid sending notifications and polluting GA.
 
-## WebMCP service form tools
+## Retired: WebMCP service form tools
+
+> **Retired 2026-09-14** with the intake routes. `hooks/use-intake-webmcp.ts` is deleted and the intake headers were removed from `next.config.mjs`. Historical notes below.
 
 `hooks/use-intake-webmcp.ts` registers one native browser tool on each mounted intake page: `prepare_website_intake`, `prepare_content_intake`, or `prepare_ads_intake`. This is browser WebMCP, not the repository's development MCP servers or a remote HTTP MCP endpoint. The imperative API is intentional: earlier wizard inputs are unmounted, so declarative form discovery would expose an incomplete schema.
 

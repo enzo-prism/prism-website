@@ -1,15 +1,16 @@
 import {
-  BOOK_A_CALL_CTA,
+  ADS_WAITLIST_CTA,
   CANONICAL_PRICING_OFFERS,
   CONTENT_OS_PRICE_LABEL,
+  CONTENT_WAITLIST_CTA,
   DENTAL_OS_PRICE_LABEL,
   PRICING_OFFER_ORDER,
   PRICING_PRIMARY_CTA,
   PRISM_INFINITY_PRICE_LABEL,
   WEBSITE_PRICE_LABEL,
-  WEBSITE_START_CTA,
+  WEBSITE_WAITLIST_CTA,
 } from "@/lib/pricing-model"
-import { BOOKING_URL } from "@/lib/booking"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 const ALL_OFFER_IDS = [
   "website",
@@ -20,13 +21,13 @@ const ALL_OFFER_IDS = [
 
 describe("pricing model", () => {
   it("exports canonical display labels with no public dollar amounts", () => {
-    expect(WEBSITE_PRICE_LABEL).toBe("Custom, scoped on a call")
-    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom, scoped on a call")
-    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom, scoped on a call")
+    expect(WEBSITE_PRICE_LABEL).toBe("Custom scope · waitlist")
+    expect(CONTENT_OS_PRICE_LABEL).toBe("Custom scope · waitlist")
+    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Custom scope · waitlist")
     expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
   })
 
-  it("keeps every offer call-first: no public price on any offer", () => {
+  it("keeps every offer price-free: no public price on any offer", () => {
     for (const offerId of ALL_OFFER_IDS) {
       const offer = CANONICAL_PRICING_OFFERS[offerId]
       expect(offer.priceKind).toBe("custom")
@@ -47,32 +48,35 @@ describe("pricing model", () => {
     ])
   })
 
-  it("points every primary CTA at the 30-min booking link", () => {
-    expect(BOOK_A_CALL_CTA).toMatchObject({
-      label: "Book a Free Demo",
-      href: BOOKING_URL,
-    })
-    expect(BOOKING_URL).toMatch(/^https:\/\/calendar\.notion\.so\//)
+  it("points every primary CTA at the waitlist, never an external booking link", () => {
+    expect(WAITLIST_CTA).toEqual({ label: "Join the waitlist", href: "/waitlist" })
+    expect(PRICING_PRIMARY_CTA).toEqual(WAITLIST_CTA)
+
     for (const offerId of ALL_OFFER_IDS) {
-      expect(CANONICAL_PRICING_OFFERS[offerId].primaryCta).toEqual(
-        BOOK_A_CALL_CTA,
-      )
+      const { primaryCta } = CANONICAL_PRICING_OFFERS[offerId]
+      expect(primaryCta.label).toBe("Join the waitlist")
+      expect(primaryCta.href).toMatch(/^\/waitlist(\?focus=(website|content|ads))?$/)
     }
-    expect(PRICING_PRIMARY_CTA).toEqual(BOOK_A_CALL_CTA)
+
+    expect(CANONICAL_PRICING_OFFERS.website.primaryCta).toEqual(
+      WEBSITE_WAITLIST_CTA,
+    )
+    expect(CANONICAL_PRICING_OFFERS.content_os.primaryCta).toEqual(
+      CONTENT_WAITLIST_CTA,
+    )
   })
 
-  it("keeps the website start CTA on the focused intake", () => {
-    expect(WEBSITE_START_CTA).toEqual({
-      label: "Start my website",
-      href: "/website-intake",
-    })
+  it("prefills the service focus on the service waitlist CTAs", () => {
+    expect(WEBSITE_WAITLIST_CTA.href).toBe("/waitlist?focus=website")
+    expect(CONTENT_WAITLIST_CTA.href).toBe("/waitlist?focus=content")
+    expect(ADS_WAITLIST_CTA.href).toBe("/waitlist?focus=ads")
   })
 
   it("keeps an internal explore link for every offer page", () => {
     expect(CANONICAL_PRICING_OFFERS.website.secondaryCta?.href).toBe(
       "/websites",
     )
-      expect(CANONICAL_PRICING_OFFERS.content_os.secondaryCta?.href).toBe(
+    expect(CANONICAL_PRICING_OFFERS.content_os.secondaryCta?.href).toBe(
       "/content",
     )
     expect(CANONICAL_PRICING_OFFERS.dental_os.secondaryCta?.href).toBe(

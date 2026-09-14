@@ -140,7 +140,7 @@ export default function FAQPage() {
                   Email us
                 </a>
                 <a
-                  href="/get-started"
+                  href="/waitlist"
                   className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/16 bg-white/[0.03] px-6 font-sans text-[0.95rem] font-medium text-[#f5f0e8] transition-colors hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   {FREE_AUDIT_CTA_TEXT}

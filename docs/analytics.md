@@ -299,7 +299,13 @@ have.
   including that exactly one `page_view` fires per navigation.
 
 
-### Service intake funnels (2026-09-06)
+### Waitlist funnel (2026-09-14)
+
+Prism is at capacity, so `/waitlist` is the only live sales form. `WaitlistForm` emits `waitlist_form_view` (`prefilled_focus`), `waitlist_form_start` (once, on first focus or checkbox toggle), `waitlist_validation_error` (`field_name` from a bounded allowlist, `invalid_count`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`), and `waitlist_submit_error` (`reason` `non_ok_response` | `network_failure`, `status`). After Formspree accepts, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` emits `form_submit_success` and stores a pending lead; `/waitlist/thank-you` mounts `LeadSuccessTracker`, which fires `generate_lead` (and the Google Ads lead conversion) once with `lib/lead-values.ts` `waitlist: 120`. Every "Join the waitlist" CTA fires `cta_click` through `TrackedLink`/`CoreActionLink` with `cta_text: "join the waitlist"` and a `cta_location` such as `homepage hero`, `homepage offers · Website`, `homepage final cta`, `pricing hero`, `pricing offers · Content OS`, `pricing final cta`, `websites hero`, `content final`, `ads hero`, `dental-os footer cta`, `prism-infinity hero`, or `footer`. Vercel custom events map the six waitlist events (`Waitlist Form Viewed` … `Waitlist Submit Error`) in `lib/vercel-analytics.ts` and allowlist `/waitlist` plus the `?focus=` variants as hub destinations. No names, emails, phones, URLs, or free text reach GA or Vercel.
+
+Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because their routes 308-redirect to `/waitlist`; their Vercel mappings for intake were removed. Historical notes follow.
+
+### Retired: Service intake funnels (2026-09-06)
 
 Website, Content, and Ads share the `${service}_intake` funnel. Events include `_form_view`, `_form_start`, `_step_view`, `_step_complete`, `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_error`, `_submit_success`, `_source_select`, `_booking_click`, `_abandon`, and `_agent_prepare`. `form_name` and `form_location` distinguish services. The existing `trackFormSubmission` emits form submission and immediate `generate_lead` only after Formspree accepts. Lead values live in `lib/lead-values.ts`: `website_intake` (180), `content_intake` (150), `ads_intake` (150). The existing GA4 key event and Google Ads conversion wiring are reused; no new GA conversion action is required. No email, phone, business link, or free text is sent to GA. Local and preview traffic retain the existing analytics host/environment gates. WebMCP preparation is an interaction, never a conversion. Live GA ingestion and email delivery require separate readback; a mocked request is not delivery evidence. Vercel custom events map all three services (`Website Intake …`, `Content Intake …`, `Ads Intake …`) through `lib/vercel-analytics.ts`.
 
@@ -311,9 +317,9 @@ The shared hub (`components/social-link-hub.tsx`) is a noindex converter. Each o
 - `cta_location`: `{platform} landing actions` (`instagram landing actions`, `tiktok landing actions`, `youtube landing actions`)
 - `platform`: `instagram` | `tiktok` | `youtube`
 - `service`: `website` | `content` | `ads`
-- `destination`: `/website-intake` | `/content-intake` | `/ads-intake`
+- `destination`: `/waitlist` (the link is `/waitlist?focus=<service>`; the PII sanitizer strips query strings from `destination`, so `service` carries the focus)
 
-The header profile link stays on `trackExternalLinkClick` with location `{platform} landing header`. Opening a CTA is a same-origin navigation to the existing intake form (`WebsiteIntakeForm`). That form already emits `${service}_intake_form_view`, `_form_start`, `_submit_success`, and `form_submit_success` / `generate_lead`. First-touch UTMs and `landing_path` (for example `/ig`) persist through `lib/marketing-attribution.ts` and are attached to later events and Formspree payloads; hub links should not append `utm_*` themselves.
+The header profile link stays on `trackExternalLinkClick` with location `{platform} landing header`. Opening a CTA is a same-origin navigation to `/waitlist` with the focus pre-checked. `WaitlistForm` then emits `waitlist_form_view`, `_form_start`, `_submit_success`, and `form_submit_success` / `generate_lead` (on `/waitlist/thank-you`). First-touch UTMs and `landing_path` (for example `/ig`) persist through `lib/marketing-attribution.ts` and are attached to later events and Formspree payloads; hub links should not append `utm_*` themselves.
 
 
 

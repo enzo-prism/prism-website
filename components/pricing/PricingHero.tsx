@@ -10,6 +10,7 @@ import {
   PRICING_PRIMARY_CTA,
   PRICING_SECONDARY_CTA,
 } from '@/lib/pricing-model'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 
 const heroSignals = [
   CANONICAL_PRICING_OFFERS.website,
@@ -37,7 +38,7 @@ export default function PricingHero() {
             <CoreSectionHeading
               eyebrow="Pricing"
               title="A clearer way to invest in growth."
-              description="Start with a website, build a consistent content presence, or bring your marketing together with Dental OS or Prism Infinity. We’ll match the work to your priorities, with each project scoped on a call."
+              description="Start with a website, build a consistent content presence, or bring your marketing together with Dental OS or Prism Infinity. Prism is at capacity right now, so every offer starts on the waitlist and is scoped with you when space opens."
               as="h1"
               variant="hero"
               titleClassName="max-w-[9ch]"
@@ -67,11 +68,12 @@ export default function PricingHero() {
           </div>
 
           <div className="relative z-10 border-t border-white/12 px-6 py-6 sm:px-10 lg:px-12">
+            <CapacityNotice className="mb-5 max-w-[40rem]" />
             <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
               <CoreActionLink
                 href={PRICING_PRIMARY_CTA.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                label={PRICING_PRIMARY_CTA.label.toLowerCase()}
+                location="pricing hero"
                 variant="heroPrimary"
               >
                 {PRICING_PRIMARY_CTA.label}

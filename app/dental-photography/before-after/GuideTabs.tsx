@@ -535,7 +535,7 @@ export default function GuideTabs() {
                     </p>
                   </div>
                   <Button asChild size="lg" variant="secondary" className="rounded-full bg-white px-8 py-3 text-base text-neutral-900">
-                    <Link href="/get-started">
+                    <Link href="/waitlist">
                       plug into prism
                       <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                     </Link>

@@ -163,7 +163,7 @@ export default function CommunityFoundersPage() {
                 Prism helps community founders grow faster by handling the systems, design, and data so you can stay focused on your people.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button size="lg" className="group rounded-full px-7 py-3 text-base">
                     {FREE_AUDIT_CTA_TEXT}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -437,7 +437,7 @@ export default function CommunityFoundersPage() {
                     Talk to Prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     variant="outline"

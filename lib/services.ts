@@ -1,4 +1,8 @@
-import { BOOK_A_CALL_CTA, WEBSITE_START_CTA } from '@/lib/pricing-model'
+import {
+  ADS_WAITLIST_CTA,
+  CONTENT_WAITLIST_CTA,
+  WEBSITE_WAITLIST_CTA,
+} from '@/lib/pricing-model'
 
 export type PrismServiceId = 'website' | 'content' | 'ads'
 
@@ -20,6 +24,8 @@ export type PrismService = {
 /**
  * Public service framing: Prism helps with three things.
  * Packaged offers (Dental OS, Infinity) stay on /pricing, not in the header.
+ * Every primary CTA is the waitlist (Prism is at capacity); the focus param
+ * pre-selects the service on /waitlist.
  */
 export const PRISM_SERVICES: readonly PrismService[] = [
   {
@@ -32,7 +38,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeCta: 'Explore websites',
     description:
       'A fast, custom website that explains your value and makes it easy to call or book. Search foundations and analytics help you understand how people find and use it.',
-    primaryCta: WEBSITE_START_CTA,
+    primaryCta: WEBSITE_WAITLIST_CTA,
   },
   {
     id: 'content',
@@ -44,7 +50,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeCta: 'Explore content',
     description:
       'Useful stories, photos, and videos for your website and social channels. We handle planning, production, and publishing so you can show up consistently.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: CONTENT_WAITLIST_CTA,
   },
   {
     id: 'ads',
@@ -56,7 +62,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeCta: 'Explore ads',
     description:
       'Reach potential customers on the channels that fit your audience. We build campaigns and track available call, inquiry, and booking data to guide the next improvement.',
-    primaryCta: BOOK_A_CALL_CTA,
+    primaryCta: ADS_WAITLIST_CTA,
   },
 ] as const
 

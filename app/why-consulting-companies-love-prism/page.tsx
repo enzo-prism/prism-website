@@ -164,7 +164,7 @@ export default function ConsultingCompaniesPage() {
                 Prism helps consulting firms stand out online, capture more qualified leads, and turn insights into measurable growth, while you focus on serving clients.
               </p>
               <div className="mt-10 flex justify-center">
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button size="lg" className="group rounded-full px-8 py-3 text-base">
                     {FREE_AUDIT_CTA_TEXT}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -452,7 +452,7 @@ export default function ConsultingCompaniesPage() {
                     talk to prism
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     variant="outline"

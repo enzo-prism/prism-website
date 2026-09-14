@@ -124,8 +124,12 @@ describe('HomeHeroSection', () => {
     expect(systemStrip.querySelectorAll('li')).toHaveLength(7)
 
     expect(
-      screen.getByRole('link', { name: /get a pro website/i }),
-    ).toHaveAttribute('href', '/websites')
+      screen.getByRole('link', { name: /join the waitlist/i }),
+    ).toHaveAttribute('href', '/waitlist')
+    expect(screen.getByText(/prism is at capacity right now\./i)).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /get a pro website/i }),
+    ).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: /wall of love/i })).toHaveAttribute(
       'href',
       '/wall-of-love',

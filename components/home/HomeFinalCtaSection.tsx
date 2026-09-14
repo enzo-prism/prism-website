@@ -41,8 +41,8 @@ export default function HomeFinalCtaSection() {
 
               <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center">
                 <CoreActionLink
-                  href="/get-started"
-                  label="start free growth audit"
+                  href="/waitlist"
+                  label="join the waitlist"
                   location="homepage final cta"
                   variant="heroPrimary"
                 >

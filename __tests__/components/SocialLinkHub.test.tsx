@@ -2,8 +2,7 @@ import type React from 'react'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import SocialLinkHub from '@/components/social-link-hub'
-import { WEBSITE_START_CTA } from '@/lib/pricing-model'
-import { SERVICE_INTAKE_PATHS } from '@/lib/service-intake'
+import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const trackCTAClick = jest.fn()
 const trackExternalLinkClick = jest.fn()
@@ -95,19 +94,19 @@ jest.mock('@/utils/analytics', () => ({
 const HUB_ACTIONS = [
   {
     name: /website/i,
-    href: WEBSITE_START_CTA.href,
+    href: WAITLIST_FOCUS_HREFS.website,
     ctaText: 'website',
     service: 'website',
   },
   {
     name: /content/i,
-    href: SERVICE_INTAKE_PATHS.content,
+    href: WAITLIST_FOCUS_HREFS.content,
     ctaText: 'content',
     service: 'content',
   },
   {
     name: /ads/i,
-    href: SERVICE_INTAKE_PATHS.ads,
+    href: WAITLIST_FOCUS_HREFS.ads,
     ctaText: 'ads',
     service: 'ads',
   },
@@ -130,6 +129,9 @@ describe('SocialLinkHub', () => {
       screen.getByText(
         /we implement the strategies and tactics we post about/i,
       ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/prism is at capacity right now\./i),
     ).toBeInTheDocument()
 
     // Keep the hub focused on routing rather than social or revenue proof.
@@ -173,7 +175,7 @@ describe('SocialLinkHub', () => {
     expect(screen.queryByText(/thanks for supporting/i)).not.toBeInTheDocument()
   })
 
-  it('routes each service CTA to its canonical intake with platform and service tracking', () => {
+  it('routes each service CTA to the focused waitlist with platform and service tracking', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     for (const action of HUB_ACTIONS) {
@@ -268,13 +270,13 @@ describe('SocialLinkHub', () => {
     expect(within(instagramNav).getAllByRole('link')).toHaveLength(3)
     expect(
       within(instagramNav).getByRole('link', { name: /^website\b/i }),
-    ).toHaveAttribute('href', '/website-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=website')
     expect(
       within(instagramNav).getByRole('link', { name: /^content\b/i }),
-    ).toHaveAttribute('href', '/content-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=content')
     expect(
       within(instagramNav).getByRole('link', { name: /^ads\b/i }),
-    ).toHaveAttribute('href', '/ads-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=ads')
     unmount()
 
     render(<SocialLinkHub platform="youtube" />)
@@ -292,13 +294,13 @@ describe('SocialLinkHub', () => {
     expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
     expect(
       within(youtubeNav).getByRole('link', { name: /^website\b/i }),
-    ).toHaveAttribute('href', '/website-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=website')
     expect(
       within(youtubeNav).getByRole('link', { name: /^content\b/i }),
-    ).toHaveAttribute('href', '/content-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=content')
     expect(
       within(youtubeNav).getByRole('link', { name: /^ads\b/i }),
-    ).toHaveAttribute('href', '/ads-intake')
+    ).toHaveAttribute('href', '/waitlist?focus=ads')
     expect(
       within(youtubeNav).queryByRole('link', { name: /refer a friend/i }),
     ).not.toBeInTheDocument()

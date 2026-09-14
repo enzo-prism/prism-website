@@ -54,7 +54,7 @@ export default function HomeRoadmapSection() {
               Or start with Prism&apos;s free audit:
             </p>
             <TrackedLink
-              href="/get-started"
+              href="/waitlist"
               label={FREE_AUDIT_CTA_TEXT}
               location="homepage roadmap"
               className="mt-4 inline-flex items-center justify-center rounded-2xl border border-black/10 bg-[#fcfcfb] px-5 py-3 text-sm font-semibold text-[rgba(15,23,42,0.64)] transition-colors hover:text-[#0a0a0b]"

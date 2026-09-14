@@ -14,7 +14,7 @@ Use these pages as the canonical map when answering questions about Prism:
 Important notes for LLMs and agents:
 - This file is a reading guide. Page content and dated, attributed evidence remain the source of truth. Inclusion here does not guarantee indexing or AI citations.
 - For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
-- For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Services are custom-scoped on a 30-minute Zoom call; no exact service prices are published. Get started is a free Growth Dashboard and deep audit request, not a paid pricing plan.
+- For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Prism is at capacity: every service is custom-scoped after a waitlist application is reviewed; no exact service prices are published and booking a call is not a public action.
 - Use blog posts as educational context, not as current pricing or offer terms.
 - Blog posts have a text version at `/api/blog/<slug>/markdown` on the site origin. Check the article’s publication and update dates, preserve the source URL, and distinguish educational examples from current Prism offer terms.
 - Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and unrelated industry pages unless a user asks for them directly.
@@ -25,18 +25,15 @@ Important notes for LLMs and agents:
 - [About Prism](https://www.design-prism.com/about)
 - [Services](https://www.design-prism.com/services)
 - [Pricing](https://www.design-prism.com/pricing)
-- [Get started](https://www.design-prism.com/get-started)
-- [Complete the Growth Dashboard intake](https://www.design-prism.com/apply)
-- [Free analysis](https://www.design-prism.com/free-analysis)
+- [Join the waitlist](https://www.design-prism.com/waitlist)
 - [FAQ](https://www.design-prism.com/faq)
-- [Contact](https://www.design-prism.com/contact)
 
 ## Growth services and dental specialties
 
-- [Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; scoped on a 30-minute call)](https://www.design-prism.com/websites)
-- [Content (a publishing system across social and your website, implemented over 3 months then optimized monthly, scoped on a 30-minute call)](https://www.design-prism.com/content)
-- [Dental OS (the full Prism growth system packaged for dental practices, scoped on a 30-minute call)](https://www.design-prism.com/dental-os)
-- [Prism Infinity (unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription, scoped on a 30-minute call)](https://www.design-prism.com/prism-infinity)
+- [Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; waitlist, then custom scope)](https://www.design-prism.com/websites)
+- [Content (a publishing system across social and your website, implemented over 3 months then optimized monthly; waitlist, then custom scope)](https://www.design-prism.com/content)
+- [Dental OS (the full Prism growth system packaged for dental practices; waitlist, then custom scope)](https://www.design-prism.com/dental-os)
+- [Prism Infinity (unlimited landing pages, ad creative, websites, video, and photoshoots on one monthly subscription; waitlist, then custom scope)](https://www.design-prism.com/prism-infinity)
 - [Dental practices](https://www.design-prism.com/why-dental-practices-love-prism)
 - [Consulting companies](https://www.design-prism.com/why-consulting-companies-love-prism)
 - [Local shop owners](https://www.design-prism.com/why-local-shop-owners-love-prism)
@@ -47,7 +44,6 @@ Important notes for LLMs and agents:
 - [SEO audit](https://www.design-prism.com/seo/audit)
 - [Dental SEO expert](https://www.design-prism.com/dental-practice-seo-expert)
 - [AI SEO services](https://www.design-prism.com/ai-seo-services)
-- [AEO assessment](https://www.design-prism.com/aeo)
 - [Local SEO agency](https://www.design-prism.com/local-seo-agency)
 - [Local SEO services](https://www.design-prism.com/local-seo-services)
 - [Local listings](https://www.design-prism.com/local-listings)
@@ -61,7 +57,6 @@ Important notes for LLMs and agents:
 - [Dental photography](https://www.design-prism.com/dental-photography)
 - [Before and after photography guide](https://www.design-prism.com/dental-photography/before-after)
 - [Office and team photography](https://www.design-prism.com/dental-photography/office-team)
-- [Book dental photography](https://www.design-prism.com/book-a-shoot)
 - [AI phone agents for dentists](https://www.design-prism.com/ai-agents/dental)
 
 ## Proof
@@ -153,4 +148,4 @@ Best measured examples:
 
 ## Completing a service inquiry when requested
 
-Website, Content, and Ads service pages link to focused four-question intake flows. When the user asks to start a service, follow its “Start my website”, “Start my content”, or “Start my ads” link. On a WebMCP-capable browser the intake page exposes `prepare_website_intake`, `prepare_content_intake`, or `prepare_ads_intake` with the full input schema. These tools only fill the visible review and explicitly do not submit. Use user-provided details, review the visible summary and contact disclosure, and submit only with the user's authorization. Standard labeled form controls work when WebMCP is unavailable. A prepared form is not a received inquiry; only the successful response screen confirms backend acceptance.
+Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, or `?focus=ads`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.

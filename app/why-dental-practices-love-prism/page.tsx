@@ -40,8 +40,8 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const CTA_PRIMARY_LABEL = FREE_AUDIT_CTA_TEXT
 const CTA_SECONDARY_LABEL = 'Start your audit'
-const CTA_PRIMARY_HREF = '/get-started'
-const CTA_SECONDARY_HREF = '/get-started'
+const CTA_PRIMARY_HREF = '/waitlist'
+const CTA_SECONDARY_HREF = '/waitlist'
 
 const heroWhatYouGet = [
   'Dental practice website that explains services and drives calls.',

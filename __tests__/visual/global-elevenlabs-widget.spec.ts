@@ -276,11 +276,11 @@ test('Homepage requires consent while non-assistant public routes stay widget-fr
       }),
     )
 
-  await page.goto('/get-started', { waitUntil: 'domcontentloaded' })
+  await page.goto('/waitlist', { waitUntil: 'domcontentloaded' })
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /three steps to your free growth audit\./i,
+      name: /^prism is at capacity\.$/i,
     }),
   ).toBeVisible({
     timeout: 20_000,

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import TrackedLink from '@/components/tracked-link'
-import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 type FooterItem = {
   href: string
@@ -40,7 +40,6 @@ const footerColumns: FooterColumn[] = [
       { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Refer a friend ($100)', href: '/refer' },
-      { label: 'Contact', href: '/contact' },
     ],
   },
 ]
@@ -89,7 +88,7 @@ const socialLinks: SocialLink[] = [
 const legalLinks: FooterItem[] = [
   { label: 'privacy', href: '/privacy-policy' },
   { label: 'terms', href: '/terms-of-service' },
-  { label: 'contact', href: '/contact' },
+  { label: 'support@design-prism.com', href: 'mailto:support@design-prism.com' },
 ]
 
 // Shared visible-focus ring; per-link offset is appended at the call site.
@@ -122,29 +121,19 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             <p className="text-sm leading-7 text-pretty text-[#b8afa2]">
               Websites, content, and ads that help customers find and choose your business.
             </p>
+            <p className="text-sm leading-7 text-pretty text-[#8f877b]">
+              Prism is at capacity right now. Join the waitlist and we will reach
+              out as space frees up.
+            </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
               <TrackedLink
-                href={WEBSITE_START_CTA.href}
-                label={WEBSITE_START_CTA.label}
+                href={WAITLIST_CTA.href}
+                label={WAITLIST_CTA.label}
                 location="footer"
                 className={`group inline-flex min-h-11 w-full items-center justify-between gap-3 border-b border-[#f5f0e8] pb-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white focus-visible:ring-offset-4 sm:w-auto sm:justify-start ${focusRing}`}
               >
-                {WEBSITE_START_CTA.label}
-                <span
-                  aria-hidden="true"
-                  className="text-[#8f877b] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#f5f0e8]"
-                >
-                  →
-                </span>
-              </TrackedLink>
-              <TrackedLink
-                href="/get-started"
-                label="Get started free"
-                location="footer"
-                className={`group inline-flex min-h-11 w-full items-center justify-between gap-3 border-b border-white/30 pb-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#b8afa2] transition-colors hover:border-[#f5f0e8] hover:text-[#f5f0e8] focus-visible:ring-offset-4 sm:w-auto sm:justify-start ${focusRing}`}
-              >
-                Get started free
+                {WAITLIST_CTA.label}
                 <span
                   aria-hidden="true"
                   className="text-[#8f877b] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#f5f0e8]"

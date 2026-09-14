@@ -7,19 +7,18 @@ import type { ReactNode } from 'react'
 import BrandLogo from '@/components/brand-logo'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
-import { WEBSITE_START_CTA } from '@/lib/pricing-model'
-import { SERVICE_INTAKE_PATHS } from '@/lib/service-intake'
 import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
+import { CAPACITY_MESSAGE, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
 /**
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them. Three service CTAs open the
- * existing Website, Content, and Ads intake forms. One quiet, shared template
- * keeps the focus on those actions.
+ * routes intent instead of thanking them. Prism is at capacity, so the three
+ * service CTAs open the waitlist with that service pre-selected. One quiet,
+ * shared template keeps the focus on those actions.
  */
 
 export type SocialHubPlatform = 'tiktok' | 'instagram' | 'youtube'
@@ -48,11 +47,7 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
   },
 }
 
-const HUB_ACTION_HREFS: Record<PrismServiceId, string> = {
-  website: WEBSITE_START_CTA.href,
-  content: SERVICE_INTAKE_PATHS.content,
-  ads: SERVICE_INTAKE_PATHS.ads,
-}
+const HUB_ACTION_HREFS: Record<PrismServiceId, string> = WAITLIST_FOCUS_HREFS
 
 const HUB_ACTION_ICONS: Record<PrismServiceId, string> = {
   website: '/pixelish/browser.svg',
@@ -200,6 +195,18 @@ export default function SocialLinkHub({
           <p className="mt-4 max-w-[40ch] text-pretty font-sans text-[1rem] font-normal leading-[1.6] tracking-[-0.01em] text-[#cfc7ba]">
             We implement the strategies and tactics we post about to level up
             your business.
+          </p>
+
+          <p
+            role="status"
+            data-capacity-notice="hub"
+            className="mt-4 max-w-[40ch] text-pretty font-sans text-[0.9375rem] font-normal leading-[1.55] tracking-[-0.01em] text-[#b8afa2]"
+          >
+            <span className="font-medium text-[#f5f0e8]">
+              {CAPACITY_MESSAGE.headline}
+            </span>{' '}
+            Join the waitlist for the service you want and we will reach out as
+            space frees up.
           </p>
 
           <nav aria-label={`${config.label} page actions`} className="mt-7">

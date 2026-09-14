@@ -32,8 +32,7 @@ describe("sitemap", () => {
     expect(urls).toEqual(expect.arrayContaining([
       "https://www.design-prism.com",
       "https://www.design-prism.com/services",
-      "https://www.design-prism.com/aeo",
-      "https://www.design-prism.com/apply",
+      "https://www.design-prism.com/waitlist",
       "https://www.design-prism.com/websites",
       "https://www.design-prism.com/ads",
       "https://www.design-prism.com/local-listings",
@@ -69,6 +68,9 @@ describe("sitemap", () => {
     expect(urls.some((url) => url.includes("/library/"))).toBe(false)
     expect(urls.some((url) => url.startsWith("https://www.design-prism.com/podcast/"))).toBe(false)
     expect(urls.some((url) => url.endsWith("/aeo-thank-you"))).toBe(false)
+    expect(urls.some((url) => url.endsWith("/waitlist/thank-you"))).toBe(false)
+    expect(urls).not.toContain("https://www.design-prism.com/get-started")
+    expect(urls).not.toContain("https://www.design-prism.com/contact")
     const excludedUrls = [
       "https://www.design-prism.com/ai",
       "https://www.design-prism.com/pricing-dental",

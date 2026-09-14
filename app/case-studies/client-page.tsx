@@ -214,7 +214,7 @@ export default function CaseStudiesPage() {
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
-                  href="/get-started"
+                  href="/waitlist"
                   label="Start a free growth audit from case studies hub"
                   location="case studies hub footer"
                 >

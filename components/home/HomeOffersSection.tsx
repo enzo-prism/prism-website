@@ -8,7 +8,7 @@ import {
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import styles from './HomeOffersSection.module.css'
 import HomeReveal from '@/components/home/HomeReveal'
-import { WEBSITE_START_CTA } from '@/lib/pricing-model'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 import { PRISM_SERVICES } from '@/lib/services'
 import { cn } from '@/lib/utils'
 
@@ -28,8 +28,7 @@ export default function HomeOffersSection() {
         <div className="mt-12 grid gap-4 sm:gap-5 lg:grid-cols-3">
           {PRISM_SERVICES.map((service, index) => {
             const isLead = service.id === 'website'
-            const primaryCta =
-              service.id === 'website' ? WEBSITE_START_CTA : service.primaryCta
+            const primaryCta = service.primaryCta
 
             return (
               <HomeReveal
@@ -119,15 +118,15 @@ export default function HomeOffersSection() {
             >
               See packaged offers
             </CoreActionLink>
-            . Start with a free audit if you need help deciding.
+            . Not sure which fits? Join the waitlist and tell us your goals.
           </p>
           <CoreActionLink
-            href="/get-started"
-            label="get started free"
-            location="homepage offers · start free"
+            href={WAITLIST_CTA.href}
+            label={WAITLIST_CTA.label.toLowerCase()}
+            location="homepage offers · waitlist"
             variant="primary"
           >
-            Get started free
+            {WAITLIST_CTA.label}
           </CoreActionLink>
         </div>
       </div>

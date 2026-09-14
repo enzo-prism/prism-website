@@ -168,7 +168,7 @@ export const MDXComponents = {
     title, 
     description, 
     buttonText,
-    href = "/get-started" 
+    href = "/waitlist" 
   }: { 
     title: string; 
     description: string; 
@@ -179,7 +179,7 @@ export const MDXComponents = {
       <h3 className="text-xl font-bold mb-2">{title}</h3>
       <p className="text-neutral-600 dark:text-neutral-400 mb-6">{description}</p>
       <CTAButton href={href}>
-        {href?.startsWith("/get-started") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
+        {href?.startsWith("/waitlist") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
       </CTAButton>
     </div>
   ),

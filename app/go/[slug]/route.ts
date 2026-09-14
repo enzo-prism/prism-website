@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ slug: s
   const link = getCampaignLink(slug)
 
   if (!link) {
-    const fallback = new URL("/get-started", req.nextUrl.origin)
+    const fallback = new URL("/waitlist", req.nextUrl.origin)
     fallback.searchParams.set("utm_source", "shortlink")
     fallback.searchParams.set("utm_medium", "redirect")
     fallback.searchParams.set("utm_campaign", "unknown_slug")

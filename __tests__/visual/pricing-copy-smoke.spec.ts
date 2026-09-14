@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test"
 
 const keyPages = [
   "/pricing",
-  "/get-started",
+  "/waitlist",
   "/faq",
   "/services",
   "/websites",

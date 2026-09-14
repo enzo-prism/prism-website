@@ -82,7 +82,7 @@ export default function GetStartedCTA({
               }`}
             >
               <Link
-                href="/free-analysis"
+                href="/waitlist"
                 onClick={() => trackCTAClick(ctaText, analyticsLabel)}
                 className="group"
               >

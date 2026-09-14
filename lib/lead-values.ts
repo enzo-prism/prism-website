@@ -26,9 +26,15 @@ export const LEAD_VALUE_USD_BY_TYPE: Record<string, number> = {
   // See docs/analytics.md.
   website_order: 300, // canonical $300 flat website build
 
-  // High-intent service intake: scoped on a call after four questions.
+  // Waitlist application (2026-09-14): the only live sales funnel while Prism
+  // is at capacity. Full contact + links + goals + timing, but no commitment
+  // and a delayed follow-up, so it sits between the retired intake forms and
+  // a general contact question.
+  waitlist: 120,
+
+  // Retired service intake forms (kept for historical events).
   website_intake: 180,
-  content_intake: 150, // same funnel as website; slightly below the flagship PRO site
+  content_intake: 150,
   ads_intake: 150,
 
   // Consultative inbound: real intent, but several conversations from revenue.

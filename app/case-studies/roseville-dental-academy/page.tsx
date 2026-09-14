@@ -304,7 +304,7 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
                   className="rounded-full px-5"
                 >
                   <TrackedLink
-                    href="/get-started"
+                    href="/waitlist"
                     label="Start a free growth audit from Roseville case study"
                     location="Roseville Dental Academy case study hero"
                   >
@@ -524,7 +524,7 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
             <div className="mt-7 flex justify-center">
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
-                  href="/get-started"
+                  href="/waitlist"
                   label="Start a free growth audit from Roseville case study footer"
                   location="Roseville Dental Academy case study footer"
                 >
