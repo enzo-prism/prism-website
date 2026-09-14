@@ -28,8 +28,7 @@ describe('llms.txt', () => {
     expect(urls).toEqual(
       expect.arrayContaining([
         'https://www.design-prism.com/pricing',
-        'https://www.design-prism.com/free-analysis',
-        'https://www.design-prism.com/contact',
+        'https://www.design-prism.com/waitlist',
         'https://www.design-prism.com/websites',
         'https://www.design-prism.com/seo',
         'https://www.design-prism.com/seo/audit',

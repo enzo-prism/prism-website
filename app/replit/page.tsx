@@ -126,7 +126,7 @@ export default async function ReplitPage() {
                   variant="inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href="/get-started">
+                  <Link href="/waitlist">
                     <span className="inline-flex items-center gap-2">
                       <PixelishIcon
                         src={pixelishForEmoji('🚀').src}
@@ -229,7 +229,7 @@ export default async function ReplitPage() {
                 variant="inverted"
                 className="mt-4 h-auto w-full rounded-full px-8 py-4 text-base font-semibold sm:w-auto"
               >
-                <Link href="/get-started" className="lowercase">
+                <Link href="/waitlist" className="lowercase">
                   get started with prism{' '}
                   <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
@@ -440,7 +440,7 @@ export default async function ReplitPage() {
                 variant="inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   get a website built by prism{' '}
                   <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>

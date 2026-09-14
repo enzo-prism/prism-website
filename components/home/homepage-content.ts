@@ -156,7 +156,7 @@ export const HOMEPAGE_HERO = {
     headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} stories from founders, doctors, and business owners`,
     linkLabel: 'See results',
   },
-  primaryCta: { label: 'Get a PRO website', href: '/websites' },
+  primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
   secondaryCta: { label: 'Wall of Love', href: '/wall-of-love' },
 } as const
 
@@ -566,23 +566,23 @@ export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
 
 export const HOMEPAGE_HOW_IT_WORKS = {
   title: 'How it works',
-  ctaLabel: 'Start your free growth audit',
+  ctaLabel: 'Join the waitlist',
 } as const
 
 export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
-    title: 'Tell us about your business',
-    description: 'Share your website, goals, and what you want to improve.',
+    title: 'Join the waitlist',
+    description: 'Share your links, goals, and when you want to start.',
   },
   {
-    title: 'We review what customers see',
+    title: 'We review applications',
     description:
-      'Our team looks at your website, search presence, reviews, and available tracking.',
+      'As space frees up, our team reviews the waitlist and looks for a strong fit.',
   },
   {
-    title: 'Choose your next move',
+    title: 'We reach out',
     description:
-      'Get practical recommendations. Decide whether to tackle them yourself or scope the work with Prism.',
+      'When we can take on your team, we email you to scope the work together.',
   },
 ] as const
 
@@ -758,11 +758,11 @@ export const HOMEPAGE_FIT = {
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  title: 'Let’s find your next move.',
+  title: 'Prism is at capacity. Save your spot.',
   description:
-    'Show us your business. We’ll review what customers see and suggest the improvements worth making first.',
-  primaryCtaLabel: 'Start my free growth audit',
-  supportLine: 'Reviewed by our team. No obligation.',
+    'We are working to free up space as fast as we can. Join the waitlist, tell us your goals, and we will reach out when we can take on your team.',
+  primaryCtaLabel: 'Join the waitlist',
+  supportLine: 'Reviewed by our team as space opens. No obligation.',
 } as const
 
 export const HOMEPAGE_STATS = [

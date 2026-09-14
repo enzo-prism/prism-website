@@ -16,13 +16,22 @@ export const PRICING_STRICT_FILES = [
   'lib/pricing-model.ts',
   'app/faq/page.tsx',
   'app/services/page.tsx',
-  'app/get-started/page.tsx',
   'app/websites/page.tsx',
   'app/ads/page.tsx',
   'app/chatgpt-ads/page.tsx',
   'app/seo/page.tsx',
   'app/local-listings/page.tsx',
   'components/footer.tsx',
+  'components/social-link-hub.tsx',
+  'components/home/HomeOffersSection.tsx',
+  'components/home/HomeHeroSection.tsx',
+  'app/content/page.tsx',
+  'app/dental-os/page.tsx',
+  'app/prism-infinity/page.tsx',
+  'app/dental-website/page.tsx',
+  'app/waitlist/page.tsx',
+  'lib/services.ts',
+  'lib/waitlist.ts',
   'app/sitemap.ts',
   'next.config.mjs',
 ] as const
@@ -90,8 +99,8 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
   { label: '$1,000/mo legacy dental price', pattern: /\$1,000\/mo\b/i },
   { label: 'from $1,500/mo wording', pattern: /from \$1,500\/mo/i },
   // 2026-07-27 call-first repositioning: NO offer shows public exact pricing.
-  // Every offer — including the PRO Website — is scoped on a 30-minute Zoom
-  // call (BOOK_A_CALL_CTA in lib/pricing-model.ts).
+  // 2026-09-14 waitlist revision: every offer's primary action is WAITLIST_CTA
+  // (lib/waitlist.ts); scope is agreed once Prism reaches out.
   {
     label: '$5,000 retired public Content OS setup price',
     pattern: /\$5,000\b/,
@@ -126,16 +135,39 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     'PRICING_PRIMARY_CTA',
   ],
   'lib/pricing-model.ts': [
-    'BOOK_A_CALL_CTA',
-    'Book a Free Demo',
-    'NO offer shows public exact pricing',
+    'WAITLIST_CTA',
+    'NO offer shows public',
+    'Prism is at capacity',
+  ],
+  'lib/waitlist.ts': [
+    "label: 'Join the waitlist'",
+    'Prism is at capacity right now.',
   ],
   'app/websites/page.tsx': [
     'Prism PRO website',
-    'BOOK_A_CALL_CTA',
+    'WEBSITE_WAITLIST_CTA',
     'Support discovery on Google and in AI.',
   ],
+  'components/social-link-hub.tsx': ['WAITLIST_FOCUS_HREFS'],
+  'components/footer.tsx': ['WAITLIST_CTA'],
 }
+
+/**
+ * Waitlist funnel (2026-09-14): booking a call is no longer a public primary
+ * action. These tokens must not reappear on pricing-sensitive surfaces.
+ */
+export const RETIRED_CTA_TOKEN_RULES: PricingTokenRule[] = [
+  { label: 'BOOK_A_CALL_CTA retired booking constant', pattern: /BOOK_A_CALL_CTA/ },
+  { label: 'WEBSITE_START_CTA retired intake constant', pattern: /WEBSITE_START_CTA/ },
+  { label: 'Book a Free Demo retired public CTA label', pattern: /Book a Free Demo/i },
+  { label: 'Start my website retired public CTA label', pattern: /Start my website/i },
+  {
+    // Redirect *sources* in next.config.mjs may name the old routes; links and
+    // redirect destinations may not.
+    label: 'retired service intake route used as a destination',
+    pattern: /(?:href|destination)\s*[=:]\s*[{"'`]+\/(website|content|ads)-intake\b/,
+  },
+]
 
 export function collectPricingConsistencyViolations(
   filePath: string,
@@ -150,8 +182,12 @@ export function collectPricingConsistencyViolations(
     ? contextChecks.every((pattern) => pattern.test(content))
     : false
 
+  const tokenRules = isStrictFile
+    ? [...LEGACY_PRICING_TOKEN_RULES, ...RETIRED_CTA_TOKEN_RULES]
+    : LEGACY_PRICING_TOKEN_RULES
+
   if (isStrictFile || contextChecks) {
-    for (const rule of LEGACY_PRICING_TOKEN_RULES) {
+    for (const rule of tokenRules) {
       const regex = new RegExp(
         rule.pattern.source,
         rule.pattern.flags.includes('g')

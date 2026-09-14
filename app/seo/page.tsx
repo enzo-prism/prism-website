@@ -361,10 +361,10 @@ export default async function SeoPage() {
                 seo audit service
               </Link>
               <Link
-                href="/free-analysis"
+                href="/waitlist"
                 className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
               >
-                free analysis
+                join the waitlist
               </Link>
             </div>
           </div>
@@ -483,12 +483,12 @@ export default async function SeoPage() {
               >
                 ai seo services
               </Link>
-              , get a quick diagnostic with{" "}
+              , join the{" "}
               <Link
-                href="/aeo"
+                href="/waitlist"
                 className="font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4"
               >
-                free aeo assessment
+                waitlist
               </Link>
               , or if you’re looking for the best-fit package, see{" "}
               <Link
@@ -598,7 +598,7 @@ export default async function SeoPage() {
         <p className="text-sm text-muted-foreground">
           Start with an <Link className="underline underline-offset-4" href="/seo/audit">SEO audit</Link>,
           explore <Link className="underline underline-offset-4" href="/ai-seo-services">AI SEO services</Link>,
-          or request a <Link className="underline underline-offset-4" href="/aeo">free AEO assessment</Link>.
+          or <Link className="underline underline-offset-4" href="/waitlist">join the waitlist</Link>.
         </p>
       </SeoSection>
       <FAQSchema questions={[...seoQuestions]} />

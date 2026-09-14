@@ -1,4 +1,4 @@
-import { SERVICE_INTAKE_CONFIG, type IntakeService } from './service-intake'
+import { WAITLIST_FOCUS_HREFS, WAITLIST_PATH } from './waitlist'
 
 export type VercelAnalyticsEvent = {
   type: 'pageview' | 'event'
@@ -19,45 +19,22 @@ const ALLOWED_MARKETING_PARAMS = [
   'utm_content',
   'utm_term',
 ] as const
-const WEBSITE_INTAKE_STEP_IDS = new Set([
-  'why',
-  'timeline',
-  'current-site',
-  'contact',
-])
-const WEBSITE_INTAKE_OPTIONS_BY_STEP: Record<string, ReadonlySet<string>> = {
-  timeline: new Set(['next_week', 'next_30_days', 'next_3_months']),
-  'current-site': new Set(['yes', 'no']),
-  contact: new Set(['email', 'text']),
-}
-const WEBSITE_INTAKE_FIELD_NAMES = new Set([
-  'why',
-  'timeline',
-  'has_website',
-  'site_link',
-  'contact_method',
+const WAITLIST_FORM_LOCATIONS = new Set(['waitlist_page'])
+const WAITLIST_ERROR_REASONS = new Set(['network_failure', 'non_ok_response'])
+const WAITLIST_FIELD_NAMES = new Set([
+  'first_name',
+  'last_name',
   'email',
-  'phone',
-])
-const WEBSITE_INTAKE_SOURCES = new Set([
-  'A friend told me',
-  'TikTok',
-  'Instagram',
-  'Google Search',
-  'ChatGPT (or another AI Search)',
-])
-const WEBSITE_INTAKE_ERROR_REASONS = new Set([
-  'network_failure',
-  'non_ok_response',
-  'timeout',
+  'link_website',
+  'goals',
+  'start_timing',
 ])
 
 const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
 const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads'])
 const SOCIAL_HUB_DESTINATIONS = new Set([
-  '/website-intake',
-  '/content-intake',
-  '/ads-intake',
+  WAITLIST_PATH,
+  ...Object.values(WAITLIST_FOCUS_HREFS),
 ])
 
 function compactProperties(
@@ -91,41 +68,20 @@ function getAllowedString(value: unknown, allowed: ReadonlySet<string>) {
   return typeof value === 'string' && allowed.has(value) ? value : undefined
 }
 
-function getWebsiteIntakeFormName(value: unknown, service: IntakeService) {
-  return value === `${service}_intake` ? `${service}_intake` : undefined
+function getWaitlistFormName(value: unknown) {
+  return value === 'waitlist' ? 'waitlist' : undefined
 }
 
-function getWebsiteIntakeStep(value: unknown) {
+function getBoundedCount(value: unknown, max: number) {
   return typeof value === 'number' &&
     Number.isInteger(value) &&
-    value >= 1 &&
-    value <= 4
+    value >= 0 &&
+    value <= max
     ? value
     : undefined
 }
 
-function getWebsiteIntakeOption(
-  eventParams: Record<string, unknown>,
-  service: IntakeService,
-) {
-  const stepId = getAllowedString(eventParams.step_id, WEBSITE_INTAKE_STEP_IDS)
-  if (!stepId) return undefined
-
-  return getAllowedString(
-    eventParams.option,
-    stepId === 'why'
-      ? new Set(SERVICE_INTAKE_CONFIG[service].goals.map((goal) => goal.value))
-      : WEBSITE_INTAKE_OPTIONS_BY_STEP[stepId],
-  )
-}
-
-function getWebsiteIntakeElapsedSeconds(value: unknown) {
-  return typeof value === 'number' && Number.isFinite(value) && value >= 0
-    ? Math.round(value)
-    : undefined
-}
-
-function getWebsiteIntakeStatus(value: unknown) {
+function getHttpStatus(value: unknown) {
   return typeof value === 'number' &&
     Number.isInteger(value) &&
     value >= 100 &&
@@ -216,17 +172,7 @@ export function buildVercelCustomEvent(
 ): VercelCustomEvent | null {
   const eventParams = params ?? {}
 
-  // Reuse the Website schema while keeping each service's event identity and
-  // its own goal allowlist. Unknown event names remain unsupported.
-  const intakeMatch = /^(website|content|ads)_intake_/.exec(eventName)
-  const service = (intakeMatch?.[1] ?? 'website') as IntakeService
-  const serviceLabel = SERVICE_INTAKE_CONFIG[service].label
-  const intakeLocations = new Set([`${service}_intake_page`, 'success_screen'])
-  const normalizedEventName = intakeMatch
-    ? eventName.replace(/^(website|content|ads)_/, 'website_')
-    : eventName
-
-  switch (normalizedEventName) {
+  switch (eventName) {
     case 'cta_click':
       return {
         name: 'CTA Clicked',
@@ -265,189 +211,74 @@ export function buildVercelCustomEvent(
               : undefined,
         }),
       }
-    case 'website_intake_form_view':
+    case 'waitlist_form_view':
       return {
-        name: `${serviceLabel} Intake Form Viewed`,
+        name: 'Waitlist Form Viewed',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
+          form_name: getWaitlistFormName(eventParams.form_name),
           form_location: getAllowedString(
             eventParams.form_location,
-            intakeLocations,
+            WAITLIST_FORM_LOCATIONS,
           ),
-        }),
-      }
-    case 'website_intake_form_start':
-      return {
-        name: `${serviceLabel} Intake Form Started`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            intakeLocations,
-          ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
+          prefilled_focus:
+            typeof eventParams.prefilled_focus === 'string'
+              ? eventParams.prefilled_focus
               : undefined,
         }),
       }
-    case 'website_intake_step_view':
+    case 'waitlist_form_start':
       return {
-        name: `${serviceLabel} Intake Step Viewed`,
+        name: 'Waitlist Form Started',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
+          form_name: getWaitlistFormName(eventParams.form_name),
           form_location: getAllowedString(
             eventParams.form_location,
-            intakeLocations,
+            WAITLIST_FORM_LOCATIONS,
           ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
-              : undefined,
         }),
       }
-    case 'website_intake_step_complete':
+    case 'waitlist_validation_error':
       return {
-        name: `${serviceLabel} Intake Step Completed`,
+        name: 'Waitlist Validation Error',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            intakeLocations,
-          ),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          question_count:
-            eventParams.question_count === 4
-              ? eventParams.question_count
-              : undefined,
-        }),
-      }
-    case 'website_intake_option_select':
-      return {
-        name: `${serviceLabel} Intake Option Selected`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
-          option: getWebsiteIntakeOption(eventParams, service),
-        }),
-      }
-    case 'website_intake_validation_error':
-      return {
-        name: `${serviceLabel} Intake Validation Error`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          step: getWebsiteIntakeStep(eventParams.step),
-          step_id: getAllowedString(
-            eventParams.step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
+          form_name: getWaitlistFormName(eventParams.form_name),
           field_name: getAllowedString(
             eventParams.field_name,
-            WEBSITE_INTAKE_FIELD_NAMES,
+            WAITLIST_FIELD_NAMES,
           ),
+          invalid_count: getBoundedCount(eventParams.invalid_count, 20),
         }),
       }
-    case 'website_intake_submit_attempt':
+    case 'waitlist_submit_attempt':
       return {
-        name: `${serviceLabel} Intake Submit Attempted`,
+        name: 'Waitlist Submit Attempted',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
+          form_name: getWaitlistFormName(eventParams.form_name),
           form_location: getAllowedString(
             eventParams.form_location,
-            intakeLocations,
-          ),
-          elapsed_seconds: getWebsiteIntakeElapsedSeconds(
-            eventParams.elapsed_seconds,
+            WAITLIST_FORM_LOCATIONS,
           ),
         }),
       }
-    case 'website_intake_submit_success':
+    case 'waitlist_submit_success':
       return {
-        name: `${serviceLabel} Intake Submit Succeeded`,
+        name: 'Waitlist Submit Succeeded',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
+          form_name: getWaitlistFormName(eventParams.form_name),
           form_location: getAllowedString(
             eventParams.form_location,
-            intakeLocations,
+            WAITLIST_FORM_LOCATIONS,
           ),
-          elapsed_seconds: getWebsiteIntakeElapsedSeconds(
-            eventParams.elapsed_seconds,
-          ),
+          focus_count: getBoundedCount(eventParams.focus_count, 3),
         }),
       }
-    case 'website_intake_submit_error':
+    case 'waitlist_submit_error':
       return {
-        name: `${serviceLabel} Intake Submit Error`,
+        name: 'Waitlist Submit Error',
         properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          reason: getAllowedString(
-            eventParams.reason,
-            WEBSITE_INTAKE_ERROR_REASONS,
-          ),
-          status: getWebsiteIntakeStatus(eventParams.status),
-        }),
-      }
-    case 'website_intake_source_select':
-      return {
-        name: `${serviceLabel} Intake Source Selected`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          source: getAllowedString(eventParams.source, WEBSITE_INTAKE_SOURCES),
-        }),
-      }
-    case 'website_intake_booking_click':
-      return {
-        name: `${serviceLabel} Intake Booking Clicked`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            intakeLocations,
-          ),
-        }),
-      }
-    case 'website_intake_agent_prepare':
-      return {
-        name: `${serviceLabel} Intake Agent Prepared`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            intakeLocations,
-          ),
-        }),
-      }
-    case 'website_intake_abandon':
-      return {
-        name: `${serviceLabel} Intake Abandoned`,
-        properties: compactProperties({
-          form_name: getWebsiteIntakeFormName(eventParams.form_name, service),
-          form_location: getAllowedString(
-            eventParams.form_location,
-            intakeLocations,
-          ),
-          funnel_step: getWebsiteIntakeStep(eventParams.funnel_step),
-          funnel_step_id: getAllowedString(
-            eventParams.funnel_step_id,
-            WEBSITE_INTAKE_STEP_IDS,
-          ),
+          form_name: getWaitlistFormName(eventParams.form_name),
+          reason: getAllowedString(eventParams.reason, WAITLIST_ERROR_REASONS),
+          status: getHttpStatus(eventParams.status),
         }),
       }
     case 'apply_form_view':

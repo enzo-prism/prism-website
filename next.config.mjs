@@ -63,16 +63,6 @@ images: {
     // assets must ship under a new filename (e.g. planet-lite-2026.mp4) so the
     // long-lived cache below can never serve stale content.
     return [
-      ...['/website-intake', '/content-intake', '/ads-intake'].map((source) => ({
-        source,
-        headers: [
-          { key: 'Origin-Agent-Cluster', value: '?1' },
-          { key: 'Permissions-Policy', value: 'tools=(self)' },
-          ...(process.env.WEBMCP_ORIGIN_TRIAL_TOKEN
-            ? [{ key: 'Origin-Trial', value: process.env.WEBMCP_ORIGIN_TRIAL_TOKEN }]
-            : []),
-        ],
-      })),
       {
         source: '/animations/:path*',
         headers: [
@@ -109,6 +99,18 @@ images: {
   },
   async redirects() {
     return [
+      // Waitlist funnel (2026-09-14): Prism is at capacity. Every retired lead
+      // funnel lands on the one waitlist. Service intakes keep their focus.
+      { source: '/website-intake', destination: '/waitlist?focus=website', permanent: true },
+      { source: '/content-intake', destination: '/waitlist?focus=content', permanent: true },
+      { source: '/ads-intake', destination: '/waitlist?focus=ads', permanent: true },
+      { source: '/get-started', destination: '/waitlist', permanent: true },
+      { source: '/apply', destination: '/waitlist', permanent: true },
+      { source: '/free-analysis', destination: '/waitlist', permanent: true },
+      { source: '/contact', destination: '/waitlist', permanent: true },
+      { source: '/aeo', destination: '/waitlist', permanent: true },
+      { source: '/book-a-shoot', destination: '/waitlist', permanent: true },
+      { source: '/ai', destination: '/waitlist', permanent: true },
       // Content is the public service page. Content OS remains the packaged
       // offer name on /pricing. Founder OS stays retired.
       { source: '/content-os', destination: '/content', permanent: true },
@@ -168,7 +170,7 @@ images: {
       { source: '/dr-ahmed-mataria-dental-care-innovation', destination: '/case-studies', permanent: true },
       { source: '/elevating-dental-compliance-will-gilmore', destination: '/case-studies', permanent: true },
       { source: '/michael-njo-resilience-mentorship-dentistry', destination: '/case-studies', permanent: true },
-      { source: '/hello', destination: '/get-started', permanent: true },
+      { source: '/hello', destination: '/waitlist', permanent: true },
       { source: '/mind', destination: '/blog', permanent: true },
       { source: '/old-home', destination: '/', permanent: true },
       { source: '/pod-3-katie-lee', destination: '/podcast', permanent: true },

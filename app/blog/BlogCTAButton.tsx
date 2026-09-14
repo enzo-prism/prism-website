@@ -40,7 +40,7 @@ export default function BlogCTAButton() {
   }
 
   return (
-    <Link href="/free-analysis">
+    <Link href="/waitlist">
       <motion.button
         ref={ref}
         className="relative inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white overflow-hidden group"

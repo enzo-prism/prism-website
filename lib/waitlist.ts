@@ -1,0 +1,90 @@
+/**
+ * Waitlist funnel (2026-09-14): Prism is at capacity, so every public sales
+ * CTA and every lead form routes to one waitlist. Booking a call is no longer
+ * a public primary action. Referral (/refer) and non-sales forms stay as-is.
+ */
+
+export const WAITLIST_PATH = '/waitlist'
+export const WAITLIST_THANK_YOU_PATH = '/waitlist/thank-you'
+
+export const WAITLIST_CTA = {
+  label: 'Join the waitlist',
+  href: WAITLIST_PATH,
+} as const
+
+export const WAITLIST_FORM_NAME = 'waitlist'
+export const WAITLIST_FORM_SUBJECT = 'New Prism waitlist application'
+
+/**
+ * Formspree endpoint. Until Enzo creates a dedicated "Waitlist" form in the
+ * Prism Formspree project and sets NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT in
+ * Vercel (Production + Preview), submissions fall back to the existing Contact
+ * form (xjkjbpdb, notifies enzo@design-prism.com). The `_subject` above keeps
+ * waitlist entries distinguishable in that inbox.
+ */
+export const WAITLIST_FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT ||
+  'https://formspree.io/f/xjkjbpdb'
+
+export const CAPACITY_MESSAGE = {
+  eyebrow: 'At capacity',
+  headline: 'Prism is at capacity right now.',
+  body: 'We are working hard to free up space so more companies can use Prism to grow, as fast as we can.',
+  action:
+    'In the meantime, join the waitlist. When space frees up we review applications and reach out to the teams we want to work with.',
+} as const
+
+export const WAITLIST_FOCUS_OPTIONS = [
+  { value: 'website', label: 'Website' },
+  { value: 'content', label: 'Content' },
+  { value: 'ads', label: 'Ads' },
+] as const
+
+export type WaitlistFocus = (typeof WAITLIST_FOCUS_OPTIONS)[number]['value']
+
+export const WAITLIST_FOCUS_VALUES: readonly WaitlistFocus[] =
+  WAITLIST_FOCUS_OPTIONS.map((option) => option.value)
+
+export function isWaitlistFocus(value: unknown): value is WaitlistFocus {
+  return (
+    typeof value === 'string' &&
+    (WAITLIST_FOCUS_VALUES as readonly string[]).includes(value)
+  )
+}
+
+/** Parse `?focus=website,content` (or repeated params) into known values. */
+export function parseWaitlistFocus(
+  raw: string | string[] | null | undefined,
+): WaitlistFocus[] {
+  if (!raw) return []
+  const parts = (Array.isArray(raw) ? raw : [raw]).flatMap((value) =>
+    value.split(','),
+  )
+  const seen = new Set<WaitlistFocus>()
+  for (const part of parts) {
+    const normalized = part.trim().toLowerCase()
+    if (isWaitlistFocus(normalized)) seen.add(normalized)
+  }
+  return Array.from(seen)
+}
+
+/** Waitlist href with an optional service pre-selection. */
+export function getWaitlistHref(focus?: WaitlistFocus): string {
+  return focus ? `${WAITLIST_PATH}?focus=${focus}` : WAITLIST_PATH
+}
+
+export const WAITLIST_FOCUS_HREFS: Record<WaitlistFocus, string> = {
+  website: getWaitlistHref('website'),
+  content: getWaitlistHref('content'),
+  ads: getWaitlistHref('ads'),
+}
+
+export const WAITLIST_TIMING_OPTIONS = [
+  { value: 'asap', label: 'As soon as possible' },
+  { value: '1_3_months', label: 'In 1–3 months' },
+  { value: '3_6_months', label: 'In 3–6 months' },
+  { value: '6_plus_months', label: 'In 6+ months' },
+  { value: 'exploring', label: 'Just exploring' },
+] as const
+
+export type WaitlistTiming = (typeof WAITLIST_TIMING_OPTIONS)[number]['value']

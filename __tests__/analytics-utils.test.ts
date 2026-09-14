@@ -163,8 +163,11 @@ describe('analytics utilities', () => {
     trackCTAClick('website', 'instagram landing actions', {
       platform: 'instagram',
       service: 'website',
-      destination: '/website-intake',
+      destination: '/waitlist?focus=website',
     })
+
+    // The sanitizer strips query strings from `destination`; `service`
+    // already carries the focus, so the path alone is what ships.
 
     expect(window.gtag).toHaveBeenCalledWith(
       'event',
@@ -174,7 +177,7 @@ describe('analytics utilities', () => {
         cta_location: 'instagram landing actions',
         platform: 'instagram',
         service: 'website',
-        destination: '/website-intake',
+        destination: '/waitlist',
         utm_source: 'google',
         landing_path: '/ig',
         first_touch_source: 'instagram',
@@ -187,7 +190,7 @@ describe('analytics utilities', () => {
         cta_location: 'instagram landing actions',
         platform: 'instagram',
         service: 'website',
-        destination: '/website-intake',
+        destination: '/waitlist',
       }),
     )
   })

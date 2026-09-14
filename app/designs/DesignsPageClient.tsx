@@ -443,7 +443,7 @@ export default function DesignsPageClient() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <Link
-                href="/get-started"
+                href="/waitlist"
                 className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
                 <span className="text-lg font-semibold">get started</span>

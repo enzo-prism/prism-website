@@ -1,10 +1,4 @@
 jest.mock('server-only', () => ({}), { virtual: true })
-jest.mock('@/app/ai/prism-ai-client', () => ({
-  __esModule: true,
-  default: function MockPrismAiClient() {
-    return null
-  },
-}))
 jest.mock('@/app/models/client-page', () => ({
   __esModule: true,
   default: function MockModelsPageClient() {
@@ -22,7 +16,6 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import sitemap from '@/app/sitemap'
-import { metadata as aiMetadata } from '@/app/ai/page'
 import { metadata as aiAgentsMetadata } from '@/app/ai-agents/page'
 import { metadata as hottestContentMetadata } from '@/app/hottest-content/page'
 import { metadata as igMetadata } from '@/app/ig/page'
@@ -41,7 +34,6 @@ const NOINDEX_ROBOTS = { index: false, follow: false }
 describe('SEO indexability guards', () => {
   it('keeps community and utility routes out of the index', () => {
     const routeMetadata = [
-      aiMetadata,
       aiAgentsMetadata,
       hottestContentMetadata,
       igMetadata,
@@ -74,6 +66,16 @@ describe('SEO indexability guards', () => {
       '/pricing-dental',
       '/founder-os',
       '/founder-os/apply',
+      '/ai',
+      '/aeo',
+      '/apply',
+      '/book-a-shoot',
+      '/contact',
+      '/free-analysis',
+      '/get-started',
+      '/website-intake',
+      '/content-intake',
+      '/ads-intake',
       '/checkout/launch',
       '/checkout/grow',
       '/checkout/scale',
@@ -110,6 +112,7 @@ describe('SEO indexability guards', () => {
       'https://www.design-prism.com/software',
       'https://www.design-prism.com/tiktok',
       'https://www.design-prism.com/website-intake',
+      'https://www.design-prism.com/waitlist/thank-you',
       'https://www.design-prism.com/youtube',
     ]
 
@@ -120,6 +123,8 @@ describe('SEO indexability guards', () => {
 
   it('keeps the shared search policy growth-first with dental specialty routes', () => {
     expect(isRouteIndexable('/chatgpt-ads')).toBe(true)
+    expect(isRouteIndexable('/waitlist')).toBe(true)
+    expect(isRouteIndexable('/waitlist/thank-you')).toBe(false)
     expect(isRouteIndexable('/dental-website')).toBe(true)
     expect(isRouteIndexable('/dental-practice-seo-expert')).toBe(true)
     expect(isRouteIndexable('/ai-agents/dental')).toBe(true)

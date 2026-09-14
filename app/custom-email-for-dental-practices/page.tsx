@@ -180,7 +180,7 @@ export default function CustomEmailDentalPage() {
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     variant="outline"
@@ -474,7 +474,7 @@ export default function CustomEmailDentalPage() {
                 so your practice can focus on care.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     className="group rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90"

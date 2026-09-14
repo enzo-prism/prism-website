@@ -22,7 +22,9 @@ import SimpleBlogGrid from '@/components/simple-blog-grid'
 import SimpleBlogPostCard from '@/components/simple-blog-post-card'
 import VideoPlayer from '@/components/video-player'
 import { getAllPosts } from '@/lib/mdx-data'
+import { ADS_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import { cn } from '@/lib/utils'
 
 const CANONICAL_URL = 'https://www.design-prism.com/ads'
@@ -159,7 +161,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does Prism’s Ads service include?',
     answer:
-      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. We review the audience, channels, and starting budget with you before scoping the work on a 30-minute call.',
+      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. Prism is at capacity, so campaigns start on the waitlist; when we reach out we review the audience, channels, and starting budget with you before scoping the work.',
   },
   {
     question: 'What is the difference between paid ads and SEO?',
@@ -174,7 +176,7 @@ const FAQ_ITEMS = [
   {
     question: 'What budgets work best?',
     answer:
-      'We recommend a starting budget by channel and market size. Spend scales only when performance proves it can sustain. Pricing for the work itself is scoped on a 30-minute call.',
+      'We recommend a starting budget by channel and market size. Spend scales only when performance proves it can sustain. Pricing for the work itself is scoped when we reach out from the waitlist.',
   },
   {
     question: 'Can you use my existing accounts?',
@@ -279,14 +281,15 @@ export default async function AdsPage() {
                   description="Reach potential customers on Google, Meta, TikTok, and Yelp. We connect ad creative, landing pages, and tracking so you can see which campaigns bring useful leads."
                   titleClassName="max-w-[16ch]"
                 />
-                <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <CapacityNotice className="mt-8 max-w-[40rem]" />
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href="/ads-intake"
+                    href={ADS_WAITLIST_CTA.href}
                     variant="heroPrimary"
-                    label="start my ads"
+                    label={ADS_WAITLIST_CTA.label.toLowerCase()}
                     location="ads hero"
                   >
-                    Start my ads
+                    {ADS_WAITLIST_CTA.label}
                   </CoreActionLink>
                   <CoreActionLink
                     href="#platforms"
@@ -693,25 +696,17 @@ export default async function AdsPage() {
           >
             <CoreSectionHeading
               title="Ready to reach better customers?"
-              description="We will map your audience, channels, and starting budget, with a clear plan for measuring results."
+              description="Prism is at capacity right now. Join the waitlist and, when we reach out, we will map your audience, channels, and starting budget with a clear plan for measuring results."
               titleClassName="max-w-[16ch]"
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
-                href="/ads-intake"
+                href={ADS_WAITLIST_CTA.href}
                 variant="heroPrimary"
-                label="start my ads"
+                label={ADS_WAITLIST_CTA.label.toLowerCase()}
                 location="ads final"
               >
-                Start my ads
-              </CoreActionLink>
-              <CoreActionLink
-                href="/free-analysis"
-                variant="heroSecondary"
-                label="get a free growth audit"
-                location="ads final"
-              >
-                Get a free growth audit
+                {ADS_WAITLIST_CTA.label}
               </CoreActionLink>
             </div>
           </div>

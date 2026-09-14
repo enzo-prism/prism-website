@@ -12,7 +12,7 @@ import DentalClientsSection from "@/components/dental-clients-section"
 import VideoCarousel from "@/components/video-carousel"
 import HeroLoopingVideo from "@/components/HeroLoopingVideo"
 import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
-import { BOOK_A_CALL_CTA, WEBSITE_START_CTA } from "@/lib/pricing-model"
+import { WEBSITE_WAITLIST_CTA } from "@/lib/pricing-model"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const lovePoints = [
@@ -190,10 +190,13 @@ export default function DentalWebsitePage() {
                   prism builds modern dental practice websites that earn trust quickly, rank for local intent, and turn visits into booked
                   appointments. every launch includes a stress-free transfer from your previous provider.
                 </p>
+                <p className="mt-4 max-w-2xl text-sm text-neutral-300 md:text-base">
+                  prism is at capacity right now. join the waitlist and we will reach out as space frees up.
+                </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
                   <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                    <Link href={WEBSITE_START_CTA.href}>
-                      {WEBSITE_START_CTA.label}
+                    <Link href={WEBSITE_WAITLIST_CTA.href}>
+                      {WEBSITE_WAITLIST_CTA.label}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -466,8 +469,8 @@ export default function DentalWebsitePage() {
               </ul>
               <div className="pt-2">
                 <Button asChild className="rounded-full px-6">
-                  <Link href={WEBSITE_START_CTA.href}>
-                    {WEBSITE_START_CTA.label}
+                  <Link href={WEBSITE_WAITLIST_CTA.href}>
+                    {WEBSITE_WAITLIST_CTA.label}
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                   </Link>
                 </Button>
@@ -674,22 +677,12 @@ export default function DentalWebsitePage() {
             <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              Tell Prism what the practice needs. The focused intake takes about a minute, or book a 30-minute scoping call.
+              Prism is at capacity right now. Join the waitlist, tell us what the practice needs, and we will reach out to scope the build when space frees up.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link href={WEBSITE_START_CTA.href}>
-                  {WEBSITE_START_CTA.label}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link
-                  href={BOOK_A_CALL_CTA.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {BOOK_A_CALL_CTA.label}
+                <Link href={WEBSITE_WAITLIST_CTA.href}>
+                  {WEBSITE_WAITLIST_CTA.label}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -715,7 +708,7 @@ export default function DentalWebsitePage() {
         offerDetails={{
           name: "Dental practice website design",
           description:
-            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Scoped on a 30-minute call.",
+            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is at capacity; scope is agreed when we reach out from the waitlist.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",

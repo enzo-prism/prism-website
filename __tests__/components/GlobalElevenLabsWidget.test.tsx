@@ -126,7 +126,7 @@ describe('GlobalElevenLabsWidget', () => {
     process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED = originalWidgetDisabled
   })
 
-  it.each(['/pricing', '/contact'])(
+  it.each(['/pricing', '/pricing/'])(
     'renders the floating widget closed by default on %s',
     async (eligiblePath) => {
       usePathname.mockReturnValue(eligiblePath)
@@ -156,7 +156,7 @@ describe('GlobalElevenLabsWidget', () => {
 
   it('does not mount the floating widget when WebGL is unavailable', async () => {
     mockWidgetWebGL(false)
-    usePathname.mockReturnValue('/contact')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -169,7 +169,7 @@ describe('GlobalElevenLabsWidget', () => {
 
   it('does not mount the floating widget when only WebGL 1 is available', async () => {
     mockWidgetWebGL(false, true)
-    usePathname.mockReturnValue('/contact')
+    usePathname.mockReturnValue('/pricing')
 
     render(<GlobalElevenLabsWidget />)
 
@@ -183,6 +183,8 @@ describe('GlobalElevenLabsWidget', () => {
   it.each([
     '/',
     '/about',
+    '/contact',
+    '/waitlist',
     '/get-started',
     '/services',
     '/blog/how-to-choose-local-seo-agency',

@@ -141,7 +141,7 @@ export default function SocialAccountLandingPage({
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <CoreActionLink
-                    href="/get-started"
+                    href="/waitlist"
                     variant="heroPrimary"
                     label={`${platform} landing free audit`}
                     location={`${platform.toLowerCase()}_landing_hero`}
@@ -270,7 +270,7 @@ export default function SocialAccountLandingPage({
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  <CoreActionLink href="/get-started" variant="heroPrimary">
+                  <CoreActionLink href="/waitlist" variant="heroPrimary">
                     {FREE_AUDIT_CTA_TEXT}
                   </CoreActionLink>
                   <CoreActionLink href="/case-studies" variant="heroSecondary">

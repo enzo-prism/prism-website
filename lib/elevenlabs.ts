@@ -3,7 +3,7 @@
 // widget embed path so the public integration can stay aligned with the official stock widget docs.
 import { getPublicElevenLabsMarkdownLinkAllowedHosts } from '@/lib/elevenlabs-widget'
 
-const DEFAULT_PUBLIC_BOOKING_URL = '/get-started#book-call'
+const DEFAULT_PUBLIC_BOOKING_URL = '/waitlist'
 
 export {
   getPublicElevenLabsAgentId,

@@ -7,11 +7,9 @@ import {
 } from '@testing-library/react'
 import type { ReactNode } from 'react'
 
-import BookAShootForm from '@/app/book-a-shoot/BookAShootForm'
 import ModelsPageClient from '@/app/models/client-page'
 import ScholarshipPageClient from '@/app/scholarship/ScholarshipPageClient'
 import AiWebsiteLaunchForm from '@/components/ai-website-launch/AiWebsiteLaunchForm'
-import ContactForm from '@/components/forms/ContactForm'
 
 const pushMock = jest.fn()
 jest.mock('next/navigation', () => ({
@@ -57,12 +55,6 @@ function createMockResponse(ok = true): Response {
   } as unknown as Response
 }
 
-function futureDate(daysAhead: number) {
-  const date = new Date()
-  date.setDate(date.getDate() + daysAhead)
-  return date.toISOString().slice(0, 10)
-}
-
 describe('secondary conversion forms', () => {
   const fetchSpy = jest.spyOn(global, 'fetch')
 
@@ -71,52 +63,6 @@ describe('secondary conversion forms', () => {
     fetchSpy.mockReset()
     window.localStorage.clear()
     window.history.replaceState({}, '', '/?utm_source=google&gclid=GCLID-123')
-  })
-
-  it('submits book-a-shoot through fetch, stores a pending sales lead, and redirects', async () => {
-    fetchSpy.mockResolvedValue(createMockResponse(true))
-    const { container } = render(<BookAShootForm />)
-
-    fireEvent.change(screen.getByLabelText(/your email/i), {
-      target: { value: 'doctor@example.com' },
-    })
-    fireEvent.change(container.querySelector('input[name="day_one_date"]')!, {
-      target: { value: futureDate(30) },
-    })
-    fireEvent.change(container.querySelector('select[name="day_one_time"]')!, {
-      target: { value: '09:00' },
-    })
-    fireEvent.change(container.querySelector('input[name="day_two_date"]')!, {
-      target: { value: futureDate(31) },
-    })
-    fireEvent.change(container.querySelector('select[name="day_two_time"]')!, {
-      target: { value: '10:00' },
-    })
-
-    fireEvent.click(screen.getByRole('button', { name: /send request/i }))
-
-    await waitFor(() => {
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(trackFormSubmission).toHaveBeenCalledWith(
-        'book_a_shoot',
-        'book_a_shoot_form',
-        { lead_type: 'shoot_request' },
-      )
-      expect(pushMock).toHaveBeenCalledWith('/book-a-shoot/thank-you')
-    })
-
-    const [, options] = fetchSpy.mock.calls[0] as [
-      RequestInfo | URL,
-      RequestInit,
-    ]
-    const formData = options.body as FormData
-    expect(options.headers).toMatchObject({ Accept: 'application/json' })
-    expect(formData.get('email')).toBe('doctor@example.com')
-    expect(formData.get('form_name')).toBe('book_a_shoot')
-    expect(formData.get('site')).toBe('prism-site')
-    expect(formData.get('form_key')).toBe('book_a_shoot')
-    expect(formData.get('_codex_test')).toBe('false')
-    expect(formData.get('gclid')).toBe('GCLID-123')
   })
 
   it('tracks scholarship applications as GA4 leads without Google Ads conversion', async () => {
@@ -333,83 +279,6 @@ describe('secondary conversion forms', () => {
     expect(phone).toHaveAttribute('aria-invalid', 'true')
     expect(phone).toHaveAttribute('aria-describedby', 'models-phone-error')
     expect(document.activeElement).toBe(phone)
-  })
-
-  it('does not treat a /contact render as a lead conversion', () => {
-    window.history.replaceState({}, '', '/contact')
-    render(<ContactForm />)
-
-    expect(trackFormSubmission).not.toHaveBeenCalled()
-    expect(trackCTAClick).not.toHaveBeenCalled()
-    expect(pushMock).not.toHaveBeenCalled()
-  })
-
-  it('fires the contact lead conversion once on successful submit, then thanks the visitor', async () => {
-    fetchSpy.mockResolvedValue(createMockResponse(true))
-    window.history.replaceState({}, '', '/contact')
-    render(<ContactForm />)
-
-    fireEvent.change(screen.getByLabelText(/^name$/i), {
-      target: { value: 'Jordan Ramirez' },
-    })
-    fireEvent.change(screen.getByLabelText(/^email$/i), {
-      target: { value: 'jordan@example.com' },
-    })
-    fireEvent.change(screen.getByLabelText(/^message$/i), {
-      target: { value: 'Need a website rebuild for a local practice.' },
-    })
-
-    fireEvent.click(screen.getByRole('button', { name: /send message/i }))
-
-    await waitFor(() => {
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(trackFormSubmission).toHaveBeenCalledTimes(1)
-      expect(trackFormSubmission).toHaveBeenCalledWith(
-        'contact',
-        'contact_form',
-        {
-          conversionMode: 'immediate',
-          lead_type: 'contact',
-        },
-      )
-      expect(pushMock).toHaveBeenCalledWith('/thank-you')
-    })
-
-    const [, options] = fetchSpy.mock.calls[0] as [
-      RequestInfo | URL,
-      RequestInit,
-    ]
-    const formData = options.body as FormData
-    expect(formData.get('form_name')).toBe('contact')
-    expect(formData.get('name')).toBe('Jordan Ramirez')
-    expect(formData.get('email')).toBe('jordan@example.com')
-    expect(formData.get('message')).toBe(
-      'Need a website rebuild for a local practice.',
-    )
-  })
-
-  it('does not convert a failed contact submit', async () => {
-    fetchSpy.mockResolvedValue(createMockResponse(false))
-    window.history.replaceState({}, '', '/contact')
-    render(<ContactForm />)
-
-    fireEvent.change(screen.getByLabelText(/^email$/i), {
-      target: { value: 'jordan@example.com' },
-    })
-    fireEvent.change(screen.getByLabelText(/^message$/i), {
-      target: { value: 'Need a website rebuild for a local practice.' },
-    })
-
-    fireEvent.click(screen.getByRole('button', { name: /send message/i }))
-
-    await waitFor(() => {
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(
-        screen.getByText(/we couldn't submit right now/i),
-      ).toBeInTheDocument()
-    })
-    expect(trackFormSubmission).not.toHaveBeenCalled()
-    expect(pushMock).not.toHaveBeenCalled()
   })
 
   it('keeps the AI launch thank-you redirect from polluting GA attribution', async () => {

@@ -139,14 +139,14 @@ describe('HomeElevenLabsAgentSection', () => {
     expect(elevenLabsWidgetScriptMock).not.toHaveBeenCalled()
   })
 
-  it('keeps the get-started fallback on mobile without checking WebGL', () => {
+  it('keeps the waitlist fallback on mobile without checking WebGL', () => {
     useViewportEligibilityMock.mockReturnValue(false)
 
     render(<HomeElevenLabsAgentSection />)
 
-    expect(screen.getByRole('link', { name: 'Get started' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Join the waitlist' })).toHaveAttribute(
       'href',
-      '/get-started',
+      '/waitlist',
     )
     expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
     expect(useWebGLEligibilityMock).toHaveBeenLastCalledWith(false)
@@ -162,7 +162,7 @@ describe('HomeElevenLabsAgentSection', () => {
     render(<HomeElevenLabsAgentSection />)
 
     expect(
-      screen.getByRole('link', { name: 'Get started' }),
+      screen.getByRole('link', { name: 'Join the waitlist' }),
     ).toBeInTheDocument()
     expect(elevenLabsWidgetScriptMock).not.toHaveBeenCalled()
     expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
@@ -180,7 +180,7 @@ describe('HomeElevenLabsAgentSection', () => {
     })
 
     expect(
-      screen.getByRole('link', { name: 'Get started' }),
+      screen.getByRole('link', { name: 'Join the waitlist' }),
     ).toBeInTheDocument()
     expect(elevenLabsWidgetMock).not.toHaveBeenCalled()
   })

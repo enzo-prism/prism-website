@@ -43,7 +43,7 @@ describe('SEO answers', () => {
     expect(document.querySelector('#seo-questions')?.textContent).toContain(
       'Neither guarantees a ranking or an AI citation',
     )
-    for (const href of ['/seo/audit', '/ai-seo-services', '/aeo']) {
+    for (const href of ['/seo/audit', '/ai-seo-services', '/waitlist']) {
       expect(
         document.querySelector(`#seo-questions a[href="${href}"]`),
       ).not.toBeNull()

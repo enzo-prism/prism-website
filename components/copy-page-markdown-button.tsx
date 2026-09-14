@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { trackCTAClick } from "@/utils/analytics"
 
 const BLOG_POST_PATH_PATTERN = /^\/blog\/[^/]+$/
-const MARKDOWN_BUTTON_HIDDEN_PATHS = new Set(["/get-started"])
+const MARKDOWN_BUTTON_HIDDEN_PATHS = new Set(["/waitlist"])
 
 async function copyTextToClipboard(text: string) {
   if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {

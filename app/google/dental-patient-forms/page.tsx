@@ -1152,7 +1152,7 @@ export default function GoogleDentalPatientFormsGuide() {
                 variant="inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   Talk to Prism <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>

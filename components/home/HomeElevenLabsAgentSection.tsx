@@ -201,13 +201,13 @@ export default function HomeElevenLabsAgentSection() {
                     the clearest next step.
                   </p>
                   <CoreActionLink
-                    href="/get-started"
-                    label="get a free growth audit"
+                    href="/waitlist"
+                    label="join the waitlist"
                     location="homepage prism guide fallback"
                     variant="secondary"
                     className="mt-7"
                   >
-                    Get started
+                    Join the waitlist
                   </CoreActionLink>
                 </div>
               )}

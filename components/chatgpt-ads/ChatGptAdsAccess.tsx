@@ -12,7 +12,7 @@ import {
   serializeInviteSession,
   type ChatGptAdsInvite,
 } from '@/lib/chatgpt-ads'
-import { BOOK_A_CALL_CTA } from '@/lib/pricing-model'
+import { BOOKING_URL } from '@/lib/booking'
 import { trackEvent } from '@/utils/analytics'
 
 const cardClass =
@@ -175,7 +175,7 @@ export default function ChatGptAdsAccess({
         </div>
         <div className="mt-6">
           <TrackedAnchor
-            href={BOOK_A_CALL_CTA.href}
+            href={BOOKING_URL}
             label="Book your setup call"
             location="chatgpt_ads_unlocked"
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary bg-clip-padding px-6 text-sm font-medium text-primary-foreground transition-all select-none hover:bg-primary/85 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px sm:w-auto [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"

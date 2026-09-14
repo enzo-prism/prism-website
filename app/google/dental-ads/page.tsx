@@ -23,7 +23,7 @@ import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const GET_FREE_AUDIT_HREF = '/get-started'
+const GET_FREE_AUDIT_HREF = '/waitlist'
 const CONTACT_HREF = '/contact'
 const STRUCTURE_SECTION_ID = 'structure'
 const POLICY_SECTION_ID = 'policy'
@@ -691,7 +691,7 @@ export default function GoogleDentalAdsPage() {
               size="lg"
               className="mt-10 h-auto rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white"
             >
-              <Link href="/get-started">
+              <Link href="/waitlist">
                 Get started with Prism{' '}
                 <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
               </Link>

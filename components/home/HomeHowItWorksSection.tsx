@@ -35,8 +35,8 @@ export default function HomeHowItWorksSection() {
             />
 
             <CoreActionLink
-              href="/get-started"
-              label="get a free growth audit"
+              href="/waitlist"
+              label="join the waitlist"
               location="homepage how it works"
               className="text-[0.72rem] tracking-[0.12em] sm:text-sm sm:tracking-[0.18em]"
             >

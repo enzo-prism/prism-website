@@ -18,10 +18,11 @@ import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import {
-  BOOK_A_CALL_CTA,
   CANONICAL_PRICING_OFFERS,
   DENTAL_OS_PRICE_LABEL,
 } from '@/lib/pricing-model'
+import { WAITLIST_CTA } from '@/lib/waitlist'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import { cn } from '@/lib/utils'
 
 const CANONICAL_URL = 'https://www.design-prism.com/dental-os'
@@ -173,7 +174,7 @@ const DENTAL_CLIENTS = [
 const PROCESS = [
   {
     label: 'Scope',
-    body: 'We map the practice, market, and goals on a call, then scope the system around what will actually move calls and bookings. No fixed package.',
+    body: 'Join the waitlist. When space frees up we reach out, map the practice, market, and goals, then scope the system around what will actually move calls and bookings. No fixed package.',
   },
   {
     label: 'Build',
@@ -194,7 +195,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does pricing work?',
     answer:
-      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. We scope it on a call and price around what will move calls and bookings. Book a call to get a number for your practice.',
+      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. Prism is at capacity right now, so join the waitlist; when we reach out we scope it with you and price around what will move calls and bookings.',
   },
   {
     question: 'How long until it is live?',
@@ -236,16 +237,15 @@ export default function DentalOsPage() {
                   titleClassName="max-w-[18ch]"
                   description="Bring your website, search presence, reviews, and ads under one plan. We help patients understand your care and make it easier for your team to receive their inquiries."
                 />
-                <div className="mt-9 flex flex-col gap-5 sm:flex-row sm:items-center">
+                <CapacityNotice className="mt-8 max-w-[40rem]" />
+                <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
                   <CoreActionLink
-                    href={BOOK_A_CALL_CTA.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={WAITLIST_CTA.href}
                     variant="heroPrimary"
-                    label="book a free demo"
+                    label={WAITLIST_CTA.label.toLowerCase()}
                     location="dental-os hero"
                   >
-                    {BOOK_A_CALL_CTA.label}
+                    {WAITLIST_CTA.label}
                   </CoreActionLink>
                   <CoreActionLink
                     href="#proof"
@@ -453,7 +453,7 @@ export default function DentalOsPage() {
         {/* FAQ */}
         <section className={coreRouteSectionCompactClassName}>
           <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading eyebrow="FAQ" title="Before you book a call." />
+            <CoreSectionHeading eyebrow="FAQ" title="Before you join the waitlist." />
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {FAQ_ITEMS.map((item) => (
                 <details key={item.question} className="group py-6">
@@ -483,19 +483,17 @@ export default function DentalOsPage() {
             >
               <CoreSectionHeading
                 eyebrow="Get started"
-                title="Book a dental growth call."
-                description="Tell us about your practice and goals. We’ll scope Dental OS around what will move calls and bookings, and give you a real number to decide on."
+                title="Join the waitlist for Dental OS."
+                description="Prism is at capacity right now. Tell us about your practice and goals; when space frees up we’ll scope Dental OS around what will move calls and bookings, and give you a real number to decide on."
               />
               <div className="flex shrink-0 flex-col gap-5 sm:flex-row sm:items-center">
                 <CoreActionLink
-                  href={BOOK_A_CALL_CTA.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={WAITLIST_CTA.href}
                   variant="heroPrimary"
-                  label="book a free demo"
+                  label={WAITLIST_CTA.label.toLowerCase()}
                   location="dental-os footer cta"
                 >
-                  Book a dental growth call
+                  {WAITLIST_CTA.label}
                 </CoreActionLink>
                 <CoreActionLink
                   href="/case-studies"

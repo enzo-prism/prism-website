@@ -24,7 +24,7 @@ export const metadata: Metadata = buildRouteMetadata({
 
 const primaryCta = {
   label: FREE_AUDIT_CTA_TEXT,
-  href: '/free-analysis',
+  href: '/waitlist',
 } as const
 
 const secondaryCta = {
@@ -191,12 +191,12 @@ export default function AiSeoServicesPage() {
                 >
                   seo overview
                 </Link>
-                . for a fast diagnosis before choosing a plan, check{' '}
+                . prism is at capacity right now, so{' '}
                 <Link
-                  href="/aeo"
+                  href="/waitlist"
                   className="font-semibold text-neutral-900 underline underline-offset-4"
                 >
-                  free aeo assessment
+                  join the waitlist
                 </Link>
                 . need a baseline first?{' '}
                 <Link

@@ -105,14 +105,14 @@ export default function WallOfLoveClientPage() {
               </p>
 
               <div className="mt-8">
-                <Link href="/get-started">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     className="rounded-md px-6"
                     onClick={() =>
                       trackCTAClick(
                         'wall_of_love_become_client_cta',
-                        '/get-started',
+                        '/waitlist',
                       )
                     }
                   >

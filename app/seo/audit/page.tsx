@@ -145,8 +145,8 @@ const hero = {
   title: "seo audit service that finds what blocks rankings",
   subtitle:
     "prism audits technical health, on-page intent, internal links, schema, and trust signals so you know exactly what to fix first and what will compound.",
-  primaryCta: { label: "talk to prism", href: "/contact" },
-  secondaryCta: { label: "get a free analysis", href: "/free-analysis" },
+  primaryCta: { label: "join the waitlist", href: "/waitlist" },
+  secondaryCta: { label: "see the seo overview", href: "/seo" },
 }
 
 export default function SeoAuditServicePage() {
@@ -190,11 +190,11 @@ export default function SeoAuditServicePage() {
           ))}
         </div>
         <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
-          want a fast snapshot first? start with the{" "}
-          <Link href="/free-analysis" className="font-semibold text-neutral-900 underline underline-offset-4">
-            free analysis
-          </Link>
-          .
+          prism is at capacity right now.{" "}
+          <Link href="/waitlist" className="font-semibold text-neutral-900 underline underline-offset-4">
+            join the waitlist
+          </Link>{" "}
+          and we will reach out as space frees up.
         </div>
       </SeoSection>
 

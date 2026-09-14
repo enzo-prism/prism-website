@@ -138,7 +138,7 @@ export default function AboutClientPage() {
             />
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
-              <CoreActionLink href="/get-started">Get started</CoreActionLink>
+              <CoreActionLink href="/waitlist">Get started</CoreActionLink>
               <CoreActionLink href="/case-studies" variant="secondary">
                 Case studies
               </CoreActionLink>

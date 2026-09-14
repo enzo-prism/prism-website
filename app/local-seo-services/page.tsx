@@ -195,7 +195,7 @@ export default function LocalSeoServicesPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/free-analysis">
+                <Link href="/waitlist">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -369,7 +369,7 @@ export default function LocalSeoServicesPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/free-analysis">
+                <Link href="/waitlist">
                   {FREE_AUDIT_CTA_TEXT}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>

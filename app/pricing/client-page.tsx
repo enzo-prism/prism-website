@@ -24,17 +24,17 @@ import { cn } from '@/lib/utils'
 const growthPathSteps = [
   {
     stage: '01',
-    title: 'Book a 30-min call',
-    price: '30 minutes',
+    title: 'Join the waitlist',
+    price: 'About two minutes',
     description:
-      'Tell us about your business, what needs work, and what you want to achieve on a 30-minute Zoom call.',
+      'Share your links, goals, and when you want to start. Prism is at capacity, so this is how every engagement begins right now.',
   },
   {
     stage: '02',
-    title: 'Agree on the scope',
+    title: 'We review and reach out',
     price: 'Clear scope and price',
     description:
-      'We recommend a starting point and confirm what is included, what it costs, and how the work will run before you commit.',
+      'As space frees up we review applications, reach out to the teams we can take on, and confirm what is included, what it costs, and how the work will run before you commit.',
   },
   {
     stage: '03',
@@ -53,16 +53,13 @@ const pricingSnapshot = PRICING_OFFER_ORDER.map((offerId) => {
     item: offer.name,
     price: offer.priceLabel,
     role: offer.description,
-    // Rows navigate to the offer page; the booking CTA lives on the offer
-    // cards below. Website's primary CTA is its own page, others' primary CTA
-    // is the external booking link, so prefer the internal secondary link.
-    href: offer.primaryCta.href.startsWith('/')
-      ? offer.primaryCta.href
-      : (offer.secondaryCta?.href ?? offer.primaryCta.href),
+    // Rows navigate to the offer page; the waitlist CTA lives on the offer
+    // cards below.
+    href: offer.secondaryCta?.href ?? offer.primaryCta.href,
   }
 })
 
-// The ongoing, recurring systems — all scoped on a 30-minute call.
+// The ongoing, recurring systems — all scoped together once we reach out.
 // (Identifier kept for the pricing-consistency required-snippet guard.)
 const partnerLevels = [
   {
@@ -73,13 +70,13 @@ const partnerLevels = [
   },
   {
     title: 'Content OS',
-    price: 'Scoped on a call',
+    price: 'Scoped from the waitlist',
     description:
       'A plan for consistent content across your website and selected social channels. We handle production, publishing, and ongoing improvements.',
   },
   {
     title: 'Prism Infinity',
-    price: 'Scoped on a call',
+    price: 'Scoped from the waitlist',
     description:
       'Ongoing landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime.',
   },
@@ -114,7 +111,7 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Start with a 30-minute Zoom call to discuss your goals and the right offer. We confirm the scope, price, and next steps before work begins.',
+      'Prism is at capacity right now, so every engagement starts on the waitlist. When space frees up we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
   },
   {
     question: 'What does the PRO website include?',
@@ -129,17 +126,17 @@ const faqs = [
   {
     question: 'How does Content OS pricing work?',
     answer:
-      'Pricing reflects the content, channels, and production your business needs. Book a 30-minute Zoom call to discuss the setup and ongoing work.',
+      'Pricing reflects the content, channels, and production your business needs. Join the waitlist and we will scope the setup and ongoing work together when we reach out.',
   },
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Book a 30-minute call to scope your plan.',
+      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Join the waitlist and we will scope your plan when space opens.',
   },
   {
     question: 'How is Dental OS priced?',
     answer:
-      'Dental OS brings together your practice website, search visibility, Google Maps, reviews, and ads. We scope the work around your practice goals on a 30-minute Zoom call.',
+      'Dental OS brings together your practice website, search visibility, Google Maps, reviews, and ads. We scope the work around your practice goals once we reach out from the waitlist.',
   },
 ] as const
 
@@ -189,7 +186,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="The offers"
               title="Pick how you want to grow."
-              description="Use a free 30-minute Zoom call to discuss your goals. We will recommend a starting point and confirm scope and pricing before work begins."
+              description="Prism is at capacity. Join the waitlist for the offer that fits and we will recommend a starting point and confirm scope and pricing when we reach out."
             />
           </div>
 
@@ -225,16 +222,6 @@ export default function PricingPageClient() {
                   <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
                     <CoreActionLink
                       href={offer.primaryCta.href}
-                      target={
-                        offer.primaryCta.href.startsWith('/')
-                          ? undefined
-                          : '_blank'
-                      }
-                      rel={
-                        offer.primaryCta.href.startsWith('/')
-                          ? undefined
-                          : 'noopener noreferrer'
-                      }
                       label={offer.primaryCta.label.toLowerCase()}
                       location={`pricing offers · ${offer.name}`}
                       variant="primary"
@@ -265,7 +252,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="How an engagement starts"
               title="Map it, scope it, then build it."
-              description="Start with a 30-minute Zoom call. Agree on the scope and price, then give us the go-ahead to build."
+              description="Join the waitlist. When we reach out, agree on the scope and price, then give us the go-ahead to build."
               titleClassName="max-w-[14ch]"
             />
           </div>
@@ -373,7 +360,7 @@ export default function PricingPageClient() {
         >
           <CoreSectionHeading
             title="Let’s find the right starting point."
-            description="Bring your goals and questions to a 30-minute call. We can help you choose a focused project or ongoing support."
+            description="Prism is at capacity right now. Join the waitlist with your goals and questions, and we will help you choose a focused project or ongoing support when space opens."
             titleClassName="max-w-[14ch]"
           />
 
@@ -400,8 +387,8 @@ export default function PricingPageClient() {
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
             <CoreActionLink
               href={PRICING_PRIMARY_CTA.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              label={PRICING_PRIMARY_CTA.label.toLowerCase()}
+              location="pricing final cta"
               variant="heroPrimary"
             >
               {PRICING_PRIMARY_CTA.label}
@@ -414,7 +401,7 @@ export default function PricingPageClient() {
             </CoreActionLink>
           </div>
           <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-            scoped on a 30-min call &middot; built to the Prism standard
+            waitlist first &middot; built to the Prism standard
             &middot; scope and price confirmed before work begins
           </p>
         </div>

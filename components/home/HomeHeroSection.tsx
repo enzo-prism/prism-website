@@ -7,6 +7,7 @@ import {
 } from '@/components/core-route/CoreRoutePrimitives'
 import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
+import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import TrackedAnchor from '@/components/tracked-anchor'
 import TrackedLink from '@/components/tracked-link'
@@ -122,12 +123,19 @@ export default function HomeHeroSection() {
               </p>
 
               <div
-                className="home-hero-rise mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
+                className="home-hero-rise mt-8 max-w-[40rem]"
+                style={heroRiseDelay(340)}
+              >
+                <CapacityNotice />
+              </div>
+
+              <div
+                className="home-hero-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
                 style={heroRiseDelay(380)}
               >
                 <CoreActionLink
                   href={HOMEPAGE_HERO.primaryCta.href}
-                  label="get a pro website"
+                  label="join the waitlist"
                   location="homepage hero"
                   variant="heroPrimary"
                 >

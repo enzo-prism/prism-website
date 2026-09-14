@@ -108,12 +108,27 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /^let’s find your next move\.$/i,
+        name: /^prism is at capacity\. save your spot\.$/i,
       }),
     ).toBeInTheDocument()
+    const waitlistLinks = screen.getAllByRole('link', {
+      name: /join the waitlist/i,
+    })
+    expect(waitlistLinks.length).toBeGreaterThanOrEqual(4)
     expect(
-      screen.getByRole('link', { name: /start my website/i }),
-    ).toHaveAttribute('href', '/website-intake')
+      waitlistLinks.some((link) => link.getAttribute('href') === '/waitlist'),
+    ).toBe(true)
+    expect(
+      waitlistLinks.some(
+        (link) => link.getAttribute('href') === '/waitlist?focus=website',
+      ),
+    ).toBe(true)
+    expect(
+      screen.queryByRole('link', { name: /start my website/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /book a free demo/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('renders icon-backed problem blocks and buyer check pills', () => {

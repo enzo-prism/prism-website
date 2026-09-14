@@ -63,7 +63,7 @@ export default function HottestContentPage() {
                 <Link href="/wall-of-love">wall of love</Link>
               </Button>
               <Button variant="secondary" className="rounded-full lowercase" asChild>
-                <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
+                <Link href="/waitlist">{FREE_AUDIT_CTA_TEXT}</Link>
               </Button>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function HottestContentPage() {
 
           <div className="mt-16 text-center">
             <Button variant="outline" className="rounded-full lowercase" asChild>
-              <Link href="/get-started">{FREE_AUDIT_CTA_TEXT}</Link>
+              <Link href="/waitlist">{FREE_AUDIT_CTA_TEXT}</Link>
             </Button>
           </div>
         </div>
