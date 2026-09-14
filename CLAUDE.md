@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js App Router marketing website for Prism's business growth systems. Public chrome frames three services — Website (`/websites`), Content (`/content`), and Ads (`/ads`) — from `lib/services.ts`. `/pricing` still compares four packaged offers — the ultra-premium PRO Website, Content OS, Dental OS, and Prism Infinity — ALL call-first with no public exact pricing, each scoped on a 30-minute Zoom call booked via `BOOK_A_CALL_CTA` (`lib/booking.ts` Notion Calendar link). Modeled canonically in `lib/pricing-model.ts`, plus a kept free `/get-started` on-ramp in the footer and homepage callout (not the header). Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, pricing, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
+Next.js App Router marketing website for Prism's business growth systems. **Prism is at capacity (2026-09-14): every public sales CTA and lead form is the waitlist at `/waitlist` (`lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `components/waitlist/CapacityNotice.tsx`); booking a call is not a public action and the old intake/get-started/contact/free-analysis routes 308-redirect to the waitlist.** Public chrome frames three services — Website (`/websites`), Content (`/content`), and Ads (`/ads`) — from `lib/services.ts`. `/pricing` still compares four packaged offers — the ultra-premium PRO Website, Content OS, Dental OS, and Prism Infinity — ALL call-first with no public exact pricing, each scoped on a 30-minute Zoom call booked via `BOOK_A_CALL_CTA` (`lib/booking.ts` Notion Calendar link). Modeled canonically in `lib/pricing-model.ts`, plus a kept free `/get-started` on-ramp in the footer and homepage callout (not the header). Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, pricing, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
 
 ## Essential Commands
 
@@ -60,6 +60,7 @@ pnpm git:cleanup      # Clean stale branches
 | Analytics + conversions | `docs/analytics.md`, `utils/analytics.ts`, `lib/lead-values.ts` |
 | Search visibility | `lib/seo/search-visibility.ts` |
 | Canonical pricing | `lib/pricing-model.ts` |
+| Waitlist funnel | `lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `app/waitlist/page.tsx` |
 | Public ElevenLabs widget | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
 | Case study template | `components/case-study-minimal.tsx`, `components/case-studies/CaseStudyVisualHero.tsx`, `lib/case-study-data.ts` |

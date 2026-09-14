@@ -329,7 +329,7 @@ test.describe("interactive contrast", () => {
         : ["default", "hover", "focus"]
 
     await expectReadableStates(
-      page.getByRole("link", { name: /get my free growth audit/i }).first(),
+      page.getByRole("link", { name: /join the waitlist/i }).first(),
       4.5,
       interactiveStates,
     )
@@ -364,7 +364,7 @@ test.describe("interactive contrast", () => {
   test("application entry and form CTAs stay readable", async ({
     page,
   }) => {
-    await page.goto("/get-started", { waitUntil: "domcontentloaded" })
+    await page.goto("/waitlist", { waitUntil: "domcontentloaded" })
     await page.waitForTimeout(300)
     const viewport = page.viewportSize()
     const interactiveStates: Array<"default" | "hover" | "focus"> =
@@ -373,25 +373,20 @@ test.describe("interactive contrast", () => {
         : ["default", "hover", "focus"]
 
     await expectReadableStates(
-      page.getByRole("link", { name: /start my free growth audit/i }).first(),
+      page.getByRole("link", { name: /join the waitlist/i }).first(),
       4.5,
       interactiveStates,
     )
-
-    await page.goto("/apply", { waitUntil: "domcontentloaded" })
-    await page.waitForTimeout(300)
 
     await expectReadableStates(
-      page.getByRole("button", { name: /continue/i }).first(),
+      page.getByRole("button", { name: /join the waitlist/i }).first(),
       4.5,
       interactiveStates,
     )
 
-    // Focus-selection chips are the first interactive step of the Growth
-    // Dashboard intake; check both unselected and selected treatments.
-    const focusOption = page.getByRole("checkbox", {
-      name: /more qualified leads/i,
-    })
+    // Focus checkboxes on the waitlist form; check both unselected and
+    // selected treatments.
+    const focusOption = page.getByRole("checkbox", { name: /content/i })
     await expectReadableStates(focusOption, 4.5, interactiveStates)
     await focusOption.click()
     await expectReadableStates(focusOption, 4.5, ["default"])
