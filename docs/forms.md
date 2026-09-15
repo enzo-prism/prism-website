@@ -10,7 +10,7 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 **Stepped flow (2026-09-15).** The page is a single narrow column: one headline ("Join the waitlist"), one context line ("Prism is at capacity. We review applications as space opens."), then the form. The form is one client island with five screens from `WAITLIST_STEPS` in `lib/waitlist.ts`, each a `fieldset` with an `sr-only` legend, a lucide icon, and a slim "Step x of 5" progress row:
 
-1. `focus` — Website / Content / Ads icon cards (multi-select, optional) + "Something else" text. Prefilled from `?focus=`.
+1. `focus` — Website / Content / Ads icon cards (multi-select, optional; kept optional so the first tap-only step never blocks). Prefilled from `?focus=`. No free-text "something else" field (removed 2026-09-15).
 2. `timing` — five radio cards (`asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`); required.
 3. `about` — first name, last name, email (required), phone (optional).
 4. `links` — website, social profile, anything else; at least one required (custom validity on `link_website`).
@@ -29,7 +29,6 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
 - Optional payload fields:
   - `phone`
   - `focus[]` (checkboxes `website`, `content`, `ads`; any number)
-  - `focus_other` (free text)
 - Hidden metadata contract:
   - `_subject` = `New Prism waitlist application`
   - `form_name` = `waitlist`

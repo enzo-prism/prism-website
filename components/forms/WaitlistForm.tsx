@@ -59,7 +59,6 @@ type ValidFieldElement =
 
 type WaitlistAnswers = {
   focus: WaitlistFocus[]
-  focus_other: string
   start_timing: WaitlistTiming | ''
   first_name: string
   last_name: string
@@ -73,7 +72,6 @@ type WaitlistAnswers = {
 
 const EMPTY_ANSWERS: WaitlistAnswers = {
   focus: [],
-  focus_other: '',
   start_timing: '',
   first_name: '',
   last_name: '',
@@ -586,20 +584,6 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               </label>
             )
           })}
-          <div className="mt-2 space-y-2">
-            <Label htmlFor="waitlist-focus-other" className={labelClassName}>
-              Something else{' '}
-              <span className={optionalClassName}>(optional)</span>
-            </Label>
-            <Input
-              id="waitlist-focus-other"
-              name="focus_other"
-              value={answers.focus_other}
-              onChange={(event) => update('focus_other', event.target.value)}
-              placeholder="Photography, SEO, reviews…"
-              className={fieldClassName}
-            />
-          </div>
         </fieldset>
       )
       break

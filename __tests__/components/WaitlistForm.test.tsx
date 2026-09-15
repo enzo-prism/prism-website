@@ -186,9 +186,6 @@ describe('WaitlistForm (stepped flow)', () => {
     render(<WaitlistForm initialFocus={['website']} />)
 
     fireEvent.click(screen.getByRole('checkbox', { name: /ads/i }))
-    fireEvent.change(screen.getByLabelText(/something else/i), {
-      target: { value: 'Photography' },
-    })
     await completeToGoals()
 
     fireEvent.change(screen.getByLabelText(/your goals/i), {
@@ -212,7 +209,8 @@ describe('WaitlistForm (stepped flow)', () => {
     expect(formData.get('goals')).toMatch(/qualified inquiries/)
     expect(formData.get('start_timing')).toBe('1_3_months')
     expect(formData.getAll('focus[]')).toEqual(['website', 'ads'])
-    expect(formData.get('focus_other')).toBe('Photography')
+    expect(formData.has('focus_other')).toBe(false)
+    expect(screen.queryByLabelText(/something else/i)).not.toBeInTheDocument()
     expect(formData.get('form_name')).toBe('waitlist')
     expect(formData.get('form_key')).toBe('waitlist')
     expect(formData.get('site')).toBe('prism-site')
