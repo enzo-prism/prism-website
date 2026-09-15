@@ -6,7 +6,19 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 ## Waitlist
 
-`components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads`, which pre-checks the matching focus box (`parseWaitlistFocus` in `lib/waitlist.ts`).
+`components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads`, which pre-checks the matching focus card (`parseWaitlistFocus` in `lib/waitlist.ts`).
+
+**Stepped flow (2026-09-15).** The page is a single narrow column: one headline ("Join the waitlist"), one context line ("Prism is at capacity. We review applications as space opens."), then the form. The form is one client island with five screens from `WAITLIST_STEPS` in `lib/waitlist.ts`, each a `fieldset` with an `sr-only` legend, a lucide icon, and a slim "Step x of 5" progress row:
+
+1. `focus` — Website / Content / Ads icon cards (multi-select, optional; kept optional so the first tap-only step never blocks). Prefilled from `?focus=`. No free-text "something else" field (removed 2026-09-15).
+2. `timing` — five radio cards (`asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`); required.
+3. `about` — first name, last name, email (required), phone (optional).
+4. `links` — website, social profile, anything else; at least one required (custom validity on `link_website`).
+5. `goals` — one textarea (required) plus a one-line summary of earlier answers with an Edit link back to step 1, then **Join the waitlist**.
+
+There is no separate review screen: each step is validated before advancing, the last step shows the compact summary, and a review page for five short answers added a screen without adding confidence. Enter advances non-final steps (the form `onSubmit` intercepts), Back never loses answers, the first control of each step receives focus after a transition, and an `aria-live` region announces "Step x of 5. <title>". Transitions are opacity/transform only and disabled under `prefers-reduced-motion`. Answers and the current step persist in same-tab `sessionStorage` (`prism_waitlist_draft_v1`, 24h) so a refresh resumes; a fresh `?focus=` wins over a stored focus. The draft is cleared on confirmed success.
+
+Submission builds one `FormData` from the hidden ops fields on the form plus the in-memory answers (`focus[]` appended per value) and `appendAttributionToFormData`, then posts once to Formspree from the last step.
 
 - Required payload fields:
   - `first_name`, `last_name`
@@ -17,7 +29,6 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 - Optional payload fields:
   - `phone`
   - `focus[]` (checkboxes `website`, `content`, `ads`; any number)
-  - `focus_other` (free text)
 - Hidden metadata contract:
   - `_subject` = `New Prism waitlist application`
   - `form_name` = `waitlist`
@@ -32,8 +43,8 @@ Prism handles every marketing form through Formspree plus client-side redirects.
   - `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
   - On `response.ok`: `trackEvent('waitlist_submit_success')`, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` (pending mode), then `router.push('/waitlist/thank-you')`. The thank-you route is noindex and mounts `LeadSuccessTracker`, which fires `generate_lead` once (`lib/lead-values.ts` `waitlist: 120`).
   - On failure: inline `role="alert"` error, `waitlist_submit_error` with `reason` (`non_ok_response` | `network_failure`) and `status`, visitor stays on the form.
-- Analytics: `waitlist_form_view` (with `prefilled_focus`), `waitlist_form_start` (first focus or checkbox toggle, once), `waitlist_validation_error` (`field_name`, `invalid_count`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`), `waitlist_submit_error`. No names, emails, phones, URLs, or free text are sent to GA or Vercel.
-- Capacity copy lives in `CAPACITY_MESSAGE` (`lib/waitlist.ts`) and renders through `components/waitlist/CapacityNotice.tsx` (`inline` on heroes, `panel` above the form). Do not paste the capacity text into pages.
+- Analytics: `waitlist_form_view` (`prefilled_focus`, `resumed_step` when a draft is restored), `waitlist_form_start` (first interaction, once; carries `step`/`step_name`), `waitlist_step_view` and `waitlist_step_complete` (`step` 1–5, `step_name` = `focus|timing|about|links|goals`), `waitlist_validation_error` (`step`, `step_name`, `field_name`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`), `waitlist_submit_error`. No names, emails, phones, URLs, or free text are sent to GA or Vercel.
+- Capacity copy lives in `CAPACITY_MESSAGE` (`lib/waitlist.ts`) and renders through `components/waitlist/CapacityNotice.tsx` on heroes and hubs. `/waitlist` itself carries only the one-line context sentence; the "what happens next" explanation lives on `/waitlist/thank-you` as three icon rows.
 - Tests: `pnpm exec jest __tests__/components/WaitlistForm.test.tsx __tests__/website-cta-map.test.ts __tests__/pricing-model.test.ts`.
 
 ## Retired flows (308 → `/waitlist`)

@@ -1,14 +1,10 @@
 import type { Metadata } from 'next'
+import { CheckCircle2, ClipboardCheck, type LucideIcon, Mail } from 'lucide-react'
 
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
-import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainerClassName,
-  coreRouteSectionClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
+import TrackedLink from '@/components/tracked-link'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_THANK_YOU_PATH } from '@/lib/waitlist'
 
@@ -20,78 +16,85 @@ export const metadata: Metadata = buildRouteMetadata({
   index: false,
 })
 
-const NEXT_STEPS = [
-  {
-    label: '01',
-    title: 'Application received',
-    body: 'Your details are saved. Nothing else is needed from you right now.',
-  },
-  {
-    label: '02',
-    title: 'We review as space opens',
-    body: 'When capacity frees up, the team reviews the waitlist and looks for a strong fit.',
-  },
-  {
-    label: '03',
-    title: 'We reach out by email',
-    body: 'If we can take on your team, we email you to scope the work together.',
-  },
-] as const
+const NEXT_STEPS: ReadonlyArray<{ icon: LucideIcon; title: string; body: string }> =
+  [
+    {
+      icon: CheckCircle2,
+      title: 'Application received',
+      body: 'Nothing else is needed from you right now.',
+    },
+    {
+      icon: ClipboardCheck,
+      title: 'We review as space opens',
+      body: 'The team reads every application and looks for a strong fit.',
+    },
+    {
+      icon: Mail,
+      title: 'We reach out by email',
+      body: 'If we can take on your team, we email you to scope the work together.',
+    },
+  ]
 
 export default function WaitlistThankYouPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent font-sans text-[#f5f0e8]">
+    <div className="flex min-h-dvh flex-col bg-transparent font-sans text-[#f5f0e8]">
       <Navbar />
-      <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className={coreRouteSectionClassName}>
-          <div className={`${coreRouteContainerClassName} max-w-3xl`}>
-            <CoreSectionHeading
-              eyebrow="Waitlist"
-              title="You are on the list."
-              description="Thanks for applying. We are working to free up space as fast as we can, and we will reach out when we can take on your team."
-              as="h1"
-              variant="hero"
-              titleClassName="max-w-[12ch]"
-            />
+      <main
+        className="container-px-safe flex flex-1 flex-col pb-[max(4rem,env(safe-area-inset-bottom))] pt-10 sm:pt-16"
+        id="main-content"
+        tabIndex={-1}
+      >
+        <div className="mx-auto w-full max-w-xl">
+          <header className="flex flex-col gap-3">
+            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
+              Waitlist
+            </p>
+            <h1 className="text-balance font-sans text-[clamp(2.05rem,7vw,3rem)] font-medium leading-[1] tracking-[-0.045em] text-[#f5f0e8]">
+              You are on the list.
+            </h1>
+            <p className="text-pretty font-sans text-[1rem] leading-7 text-[#b8afa2]">
+              Thanks for applying. Here is what happens next.
+            </p>
+          </header>
 
-            <ol className="mt-10 grid gap-5 border-t border-white/10 pt-6">
-              {NEXT_STEPS.map((step) => (
-                <li key={step.label} className="flex gap-4">
-                  <span className="font-mono text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#7d766a]">
-                    {step.label}
+          <ol className="mt-10 grid gap-3 sm:mt-12">
+            {NEXT_STEPS.map((step) => {
+              const Icon = step.icon
+              return (
+                <li
+                  key={step.title}
+                  className="flex items-start gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-4 py-4"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-white/12 bg-white/[0.04] text-[#d8bc79]"
+                  >
+                    <Icon className="h-5 w-5" strokeWidth={1.75} />
                   </span>
-                  <div>
-                    <p className="font-sans text-[1.05rem] font-medium leading-7 text-[#f5f0e8]">
+                  <div className="min-w-0">
+                    <p className="font-sans text-[1.02rem] font-medium leading-6 text-[#f5f0e8]">
                       {step.title}
                     </p>
-                    <p className="mt-1 text-pretty font-sans text-[0.96rem] leading-7 text-[#b8afa2]">
+                    <p className="mt-1 text-pretty font-sans text-[0.92rem] leading-6 text-[#b8afa2]">
                       {step.body}
                     </p>
                   </div>
                 </li>
-              ))}
-            </ol>
+              )
+            })}
+          </ol>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-              <CoreActionLink
-                href="/case-studies"
-                label="see client results"
-                location="waitlist thank you"
-                variant="heroSecondary"
-              >
-                See client results
-              </CoreActionLink>
-              <CoreActionLink
-                href="/"
-                label="back to home"
-                location="waitlist thank you"
-                variant="heroSecondary"
-              >
-                Back to home
-              </CoreActionLink>
-            </div>
-          </div>
-        </section>
+          <p className="mt-10 font-sans text-[0.95rem] text-[#8f877b]">
+            <TrackedLink
+              href="/"
+              label="back to home"
+              location="waitlist thank you"
+              className="inline-flex min-h-11 items-center text-[#b8afa2] underline decoration-white/25 underline-offset-4 transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
+            >
+              Back to home
+            </TrackedLink>
+          </p>
+        </div>
       </main>
       <Footer />
       <LeadSuccessTracker />

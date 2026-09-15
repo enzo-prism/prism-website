@@ -280,7 +280,7 @@ test('Homepage requires consent while non-assistant public routes stay widget-fr
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /^prism is at capacity\.$/i,
+      name: /^join the waitlist$/i,
     }),
   ).toBeVisible({
     timeout: 20_000,

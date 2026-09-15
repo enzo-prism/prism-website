@@ -1,4 +1,8 @@
-import { WAITLIST_FOCUS_HREFS, WAITLIST_PATH } from './waitlist'
+import {
+  WAITLIST_FOCUS_HREFS,
+  WAITLIST_PATH,
+  WAITLIST_STEP_IDS,
+} from './waitlist'
 
 export type VercelAnalyticsEvent = {
   type: 'pageview' | 'event'
@@ -29,6 +33,17 @@ const WAITLIST_FIELD_NAMES = new Set([
   'goals',
   'start_timing',
 ])
+const WAITLIST_STEP_NAMES = new Set<string>(WAITLIST_STEP_IDS)
+const WAITLIST_STEP_COUNT = WAITLIST_STEP_IDS.length
+
+function getWaitlistStep(value: unknown) {
+  return typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 1 &&
+    value <= WAITLIST_STEP_COUNT
+    ? value
+    : undefined
+}
 
 const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
 const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads'])
@@ -235,6 +250,21 @@ export function buildVercelCustomEvent(
             eventParams.form_location,
             WAITLIST_FORM_LOCATIONS,
           ),
+          step: getWaitlistStep(eventParams.step),
+          step_name: getAllowedString(eventParams.step_name, WAITLIST_STEP_NAMES),
+        }),
+      }
+    case 'waitlist_step_view':
+    case 'waitlist_step_complete':
+      return {
+        name:
+          eventName === 'waitlist_step_view'
+            ? 'Waitlist Step Viewed'
+            : 'Waitlist Step Completed',
+        properties: compactProperties({
+          form_name: getWaitlistFormName(eventParams.form_name),
+          step: getWaitlistStep(eventParams.step),
+          step_name: getAllowedString(eventParams.step_name, WAITLIST_STEP_NAMES),
         }),
       }
     case 'waitlist_validation_error':
@@ -242,6 +272,8 @@ export function buildVercelCustomEvent(
         name: 'Waitlist Validation Error',
         properties: compactProperties({
           form_name: getWaitlistFormName(eventParams.form_name),
+          step: getWaitlistStep(eventParams.step),
+          step_name: getAllowedString(eventParams.step_name, WAITLIST_STEP_NAMES),
           field_name: getAllowedString(
             eventParams.field_name,
             WAITLIST_FIELD_NAMES,

@@ -434,6 +434,8 @@ export type EventType =
   // Waitlist funnel (2026-09-14): the single live sales form at /waitlist.
   | 'waitlist_form_view'
   | 'waitlist_form_start'
+  | 'waitlist_step_view'
+  | 'waitlist_step_complete'
   | 'waitlist_validation_error'
   | 'waitlist_submit_attempt'
   | 'waitlist_submit_success'
