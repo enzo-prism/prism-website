@@ -372,23 +372,20 @@ test.describe("interactive contrast", () => {
         ? ["default", "focus"]
         : ["default", "hover", "focus"]
 
+    // Step 1 of the stepped flow: the Continue button and a focus card
+    // (the checkbox itself is visually hidden; its label card carries the
+    // readable state), unselected then selected.
     await expectReadableStates(
-      page.getByRole("link", { name: /join the waitlist/i }).first(),
+      page.getByRole("button", { name: /continue/i }).first(),
       4.5,
       interactiveStates,
     )
 
-    await expectReadableStates(
-      page.getByRole("button", { name: /join the waitlist/i }).first(),
-      4.5,
-      interactiveStates,
-    )
-
-    // Focus checkboxes on the waitlist form; check both unselected and
-    // selected treatments.
-    const focusOption = page.getByRole("checkbox", { name: /content/i })
-    await expectReadableStates(focusOption, 4.5, interactiveStates)
-    await focusOption.click()
-    await expectReadableStates(focusOption, 4.5, ["default"])
+    const focusCard = page
+      .locator("label", { has: page.getByRole("checkbox", { name: /content/i }) })
+      .first()
+    await expectReadableStates(focusCard, 4.5, interactiveStates)
+    await focusCard.click()
+    await expectReadableStates(focusCard, 4.5, ["default"])
   })
 })

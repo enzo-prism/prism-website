@@ -389,6 +389,29 @@ describe('Vercel analytics URL normalization', () => {
       })
     })
 
+    it('maps per-step view and completion events with bounded step data', () => {
+      expect(
+        buildVercelCustomEvent('waitlist_step_view', {
+          form_name: 'waitlist',
+          step: 2,
+          step_name: 'timing',
+        }),
+      ).toEqual({
+        name: 'Waitlist Step Viewed',
+        properties: { form_name: 'waitlist', step: 2, step_name: 'timing' },
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_step_complete', {
+          form_name: 'waitlist',
+          step: 9,
+          step_name: 'not_a_step',
+        }),
+      ).toEqual({
+        name: 'Waitlist Step Completed',
+        properties: { form_name: 'waitlist' },
+      })
+    })
+
     it('drops unknown waitlist field names and reasons', () => {
       expect(
         buildVercelCustomEvent('waitlist_validation_error', {

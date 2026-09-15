@@ -88,3 +88,25 @@ export const WAITLIST_TIMING_OPTIONS = [
 ] as const
 
 export type WaitlistTiming = (typeof WAITLIST_TIMING_OPTIONS)[number]['value']
+
+/**
+ * Stepped flow (2026-09-15). One question group per screen, validated before
+ * advancing, single Formspree submit on the last step. Order is intentional:
+ * the two tap-only steps come first so the visitor commits before typing.
+ */
+export const WAITLIST_STEPS = [
+  { id: 'focus', title: 'What should Prism focus on?' },
+  { id: 'timing', title: 'When do you want to start?' },
+  { id: 'about', title: 'How do we reach you?' },
+  { id: 'links', title: 'Where can we see your work?' },
+  { id: 'goals', title: 'What do you want to achieve?' },
+] as const
+
+export type WaitlistStepId = (typeof WAITLIST_STEPS)[number]['id']
+
+export const WAITLIST_STEP_IDS: readonly WaitlistStepId[] = WAITLIST_STEPS.map(
+  (step) => step.id,
+)
+
+export const WAITLIST_DRAFT_STORAGE_KEY = 'prism_waitlist_draft_v1'
+export const WAITLIST_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
