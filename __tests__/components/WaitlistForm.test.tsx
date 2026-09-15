@@ -276,7 +276,7 @@ describe('WaitlistForm (stepped flow)', () => {
     )
   })
 
-  it('restores a same-tab draft on reload', async () => {
+  it('restores a same-tab draft on reload and reports exactly one step view, for the restored step', async () => {
     const { unmount } = render(<WaitlistForm />)
     await advance()
     fireEvent.click(screen.getByRole('radio', { name: /just exploring/i }))
@@ -285,6 +285,7 @@ describe('WaitlistForm (stepped flow)', () => {
       target: { value: 'Jordan' },
     })
     unmount()
+    trackEvent.mockClear()
 
     render(<WaitlistForm />)
     expectStep(3)
@@ -293,5 +294,31 @@ describe('WaitlistForm (stepped flow)', () => {
       'waitlist_form_view',
       expect.objectContaining({ resumed_step: 3 }),
     )
+
+    const stepViews = trackEvent.mock.calls.filter(
+      ([name]) => name === 'waitlist_step_view',
+    )
+    expect(stepViews).toHaveLength(1)
+    expect(stepViews[0][1]).toMatchObject({ step: 3, step_name: 'about' })
+    expect(trackEvent).not.toHaveBeenCalledWith(
+      'waitlist_step_view',
+      expect.objectContaining({ step: 1 }),
+    )
+  })
+
+  it('clears the shared link error when a sibling link field is filled', async () => {
+    render(<WaitlistForm />)
+    await completeToGoals({ link: false })
+    expect(await screen.findByText(/add at least one link/i)).toBeInTheDocument()
+
+    fireEvent.input(screen.getByLabelText(/anything else/i), {
+      target: { value: 'https://dribbble.com/example' },
+    })
+
+    expect(screen.queryByText(/add at least one link/i)).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/^website$/i)).not.toHaveAttribute('aria-invalid', 'true')
+
+    await advance()
+    expect(stepHeading()).toMatch(/what do you want to achieve\?/i)
   })
 })

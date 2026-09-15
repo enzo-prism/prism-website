@@ -269,6 +269,9 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   // aria-live announcement below is derived from stepIndex, so it updates on
   // the same render as the step change.
   useEffect(() => {
+    // Wait for the draft restore above so a mid-flow refresh reports the step
+    // that actually rendered, not a phantom view of step 1.
+    if (!hydrated) return
     if (!viewedStepsRef.current.has(stepIndex)) {
       viewedStepsRef.current.add(stepIndex)
       trackStep('waitlist_step_view', stepIndex)
@@ -290,7 +293,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       '[data-step-focus]',
     )
     target?.focus({ preventScroll: true })
-  }, [stepIndex, step.title, trackStep])
+  }, [hydrated, stepIndex, step.title, trackStep])
 
   useEffect(() => {
     if (!hydrated) return
@@ -409,10 +412,15 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           else if (!EMAIL_PATTERN.test(value)) message = 'Check the email format'
           break
         case 'link_website': {
-          const hasLink = LINK_FIELD_NAMES.some((name) =>
-            answers[name].trim().length > 0,
-          )
-          if (!hasLink && !value) message = 'Add at least one link'
+          // Read the live inputs: the field being typed into has not landed
+          // in state yet when this runs from its own input event.
+          const hasLink = LINK_FIELD_NAMES.some((name) => {
+            const input = formRef.current?.elements.namedItem(name)
+            const liveValue =
+              input instanceof HTMLInputElement ? input.value : answers[name]
+            return liveValue.trim().length > 0
+          })
+          if (!hasLink) message = 'Add at least one link'
           break
         }
         case 'goals':
@@ -501,8 +509,26 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   }
 
   const handleValidatedInput = (event: FormEvent<ValidFieldElement>) => {
-    syncFieldValidity(event.currentTarget)
+    const field = event.currentTarget
+    syncFieldValidity(field)
     handleInput(event)
+    // The shared "at least one link" rule lives on link_website; typing in
+    // either sibling must re-run it so the error clears as soon as any link
+    // exists.
+    if (
+      (LINK_FIELD_NAMES as readonly string[]).includes(field.name) &&
+      field.name !== 'link_website'
+    ) {
+      const websiteField = formRef.current?.elements.namedItem('link_website')
+      if (websiteField instanceof HTMLInputElement) {
+        syncFieldValidity(websiteField)
+        handleInput({
+          ...event,
+          currentTarget: websiteField,
+          target: websiteField,
+        } as FormEvent<ValidFieldElement>)
+      }
+    }
   }
 
   const describedBy = (name: string) =>
