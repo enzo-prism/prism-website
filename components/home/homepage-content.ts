@@ -577,7 +577,7 @@ export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
   {
     title: 'We review applications',
     description:
-      'As space frees up, our team reviews the waitlist and looks for a strong fit.',
+      'For each monthly intake, our team reviews the waitlist and looks for a strong fit.',
   },
   {
     title: 'We reach out',
@@ -758,11 +758,17 @@ export const HOMEPAGE_FIT = {
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
-  title: 'Prism is at capacity. Save your spot.',
+  /**
+   * Title, split around the live intake-month token rendered by
+   * `<WaitlistIntakeMonth />`: "Prism is fully booked. Save your October
+   * spot."
+   */
+  titleLead: 'Prism is fully booked. Save your',
+  titleTail: 'spot.',
   description:
-    'We are working to free up space as fast as we can. Join the waitlist, tell us your goals, and we will reach out when we can take on your team.',
+    'We open new spots every month. Join the waitlist, tell us your goals, and we will reach out when we can take on your team.',
   primaryCtaLabel: 'Join the waitlist',
-  supportLine: 'Reviewed by our team as space opens. No obligation.',
+  supportLine: 'Reviewed by our team for each monthly intake. No obligation.',
 } as const
 
 export const HOMEPAGE_STATS = [

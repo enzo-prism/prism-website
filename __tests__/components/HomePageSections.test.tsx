@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import ClientPage from '@/app/client-page'
+import { getWaitlistIntakeMonth } from '@/lib/waitlist'
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -108,7 +109,10 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: /^prism is at capacity\. save your spot\.$/i,
+        name: new RegExp(
+          `^prism is fully booked\\. save your ${getWaitlistIntakeMonth().month} spot\\.$`,
+          'i',
+        ),
       }),
     ).toBeInTheDocument()
     const waitlistLinks = screen.getAllByRole('link', {

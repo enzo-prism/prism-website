@@ -190,11 +190,11 @@ export default function SeoAuditServicePage() {
           ))}
         </div>
         <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
-          prism is at capacity right now.{" "}
+          prism is fully booked right now.{" "}
           <Link href="/waitlist" className="font-semibold text-neutral-900 underline underline-offset-4">
             join the waitlist
           </Link>{" "}
-          and we will reach out as space frees up.
+          and get first pick of new spots as they open.
         </div>
       </SeoSection>
 

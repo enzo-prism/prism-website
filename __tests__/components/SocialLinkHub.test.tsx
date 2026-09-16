@@ -2,7 +2,7 @@ import type React from 'react'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import SocialLinkHub from '@/components/social-link-hub'
-import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
+import { getWaitlistIntakeMonth, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const trackCTAClick = jest.fn()
 const trackExternalLinkClick = jest.fn()
@@ -131,8 +131,15 @@ describe('SocialLinkHub', () => {
       ),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/prism is at capacity right now\./i),
+      screen.getByText(/prism is fully booked right now\./i),
     ).toBeInTheDocument()
+    expect(
+      screen
+        .getByText(/join the waitlist for the service you want\./i)
+        .closest('[data-capacity-notice="hub"]'),
+    ).toHaveTextContent(
+      `Our next intake starts in ${getWaitlistIntakeMonth().month}.`,
+    )
 
     // Keep the hub focused on routing rather than social or revenue proof.
     expect(screen.queryByText(/followers/i)).not.toBeInTheDocument()

@@ -1,39 +1,48 @@
 import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
 import { CheckCircle2, ClipboardCheck, type LucideIcon, Mail } from 'lucide-react'
 
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
 import TrackedLink from '@/components/tracked-link'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_THANK_YOU_PATH } from '@/lib/waitlist'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'You are on the waitlist',
   description:
-    'Your Prism waitlist application is in. We review applications as capacity frees up and reach out by email.',
+    'Your Prism waitlist application is in. We review every application for the next intake and reach out by email.',
   path: WAITLIST_THANK_YOU_PATH,
   index: false,
 })
 
-const NEXT_STEPS: ReadonlyArray<{ icon: LucideIcon; title: string; body: string }> =
-  [
-    {
-      icon: CheckCircle2,
-      title: 'Application received',
-      body: 'Nothing else is needed from you right now.',
-    },
-    {
-      icon: ClipboardCheck,
-      title: 'We review as space opens',
-      body: 'The team reads every application and looks for a strong fit.',
-    },
-    {
-      icon: Mail,
-      title: 'We reach out by email',
-      body: 'If we can take on your team, we email you to scope the work together.',
-    },
-  ]
+const NEXT_STEPS: ReadonlyArray<{
+  icon: LucideIcon
+  title: ReactNode
+  body: string
+}> = [
+  {
+    icon: CheckCircle2,
+    title: 'Application received',
+    body: 'Nothing else is needed from you right now.',
+  },
+  {
+    icon: ClipboardCheck,
+    title: (
+      <>
+        In line for the <WaitlistIntakeMonth /> intake
+      </>
+    ),
+    body: 'We review every application and reach out to the teams we accept.',
+  },
+  {
+    icon: Mail,
+    title: 'We reach out by email',
+    body: 'If we can take on your team, we email you to scope the work together.',
+  },
+]
 
 export default function WaitlistThankYouPage() {
   return (
@@ -58,11 +67,11 @@ export default function WaitlistThankYouPage() {
           </header>
 
           <ol className="mt-10 grid gap-3 sm:mt-12">
-            {NEXT_STEPS.map((step) => {
+            {NEXT_STEPS.map((step, index) => {
               const Icon = step.icon
               return (
                 <li
-                  key={step.title}
+                  key={`waitlist-next-step-${index}`}
                   className="flex items-start gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-4 py-4"
                 >
                   <span

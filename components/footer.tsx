@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import TrackedLink from '@/components/tracked-link'
-import { WAITLIST_CTA } from '@/lib/waitlist'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
+import { CAPACITY_MESSAGE, WAITLIST_CTA } from '@/lib/waitlist'
 
 type FooterItem = {
   href: string
@@ -122,8 +123,8 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
               Websites, content, and ads that help customers find and choose your business.
             </p>
             <p className="text-sm leading-7 text-pretty text-[#8f877b]">
-              Prism is at capacity right now. Join the waitlist and we will reach
-              out as space frees up.
+              {CAPACITY_MESSAGE.headline} {CAPACITY_MESSAGE.intakeLead}{' '}
+              <WaitlistIntakeMonth />.
             </p>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">

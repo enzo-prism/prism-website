@@ -21,7 +21,13 @@ const config: Config = {
   },
   transformIgnorePatterns: ['/node_modules/(?!(next-mdx-remote)/)'],
   modulePathIgnorePatterns: ['<rootDir>/.claude/'],
-  testPathIgnorePatterns: ['<rootDir>/__tests__/visual/', '<rootDir>/.claude/'],
+  testPathIgnorePatterns: [
+    '<rootDir>/__tests__/visual/',
+    '<rootDir>/.claude/',
+    // Nested scratch worktrees resolve `@/` to this tree, so their suites can
+    // never test their own code. Never collect them in a parent run.
+    '<rootDir>/.worktrees/',
+  ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   // The heavy form suites (WebsiteOrderForm, GetStartedForm) exceed the 5s
   // default under full-suite parallel load on memory-constrained machines.

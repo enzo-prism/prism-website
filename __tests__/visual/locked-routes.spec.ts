@@ -19,6 +19,40 @@ async function disableElevenLabsWidget(page: Page) {
   })
 }
 
+/**
+ * The intake month renders from the visitor's clock, so without a freeze the
+ * locked screenshots would drift every month ("October" becomes "November").
+ * This shifts `new Date()` / `Date.now()` to a fixed mid-September instant
+ * (intake: October) while leaving timers and animation frames on real time.
+ * The instant sits mid-month so every timezone still reads September.
+ */
+async function freezeIntakeMonth(page: Page) {
+  await page.addInitScript(() => {
+    const RealDate = Date
+    const frozenTime = new RealDate('2026-09-16T12:00:00-07:00').getTime()
+    const shift = frozenTime - RealDate.now()
+
+    class ShiftedDate extends RealDate {
+      constructor(...args: Array<never>) {
+        if (args.length === 0) {
+          super(RealDate.now() + shift)
+        } else {
+          // @ts-expect-error - constructor overloads are caller-side only.
+          super(...args)
+        }
+      }
+
+      static now() {
+        return RealDate.now() + shift
+      }
+    }
+    ShiftedDate.parse = RealDate.parse.bind(RealDate)
+    ShiftedDate.UTC = RealDate.UTC.bind(RealDate)
+
+    window.Date = ShiftedDate as unknown as DateConstructor
+  })
+}
+
 async function stabilizePage(page: Page) {
   await page.addStyleTag({
     content: `
@@ -93,7 +127,8 @@ const lockedRoutes = [
     readyHeading: /^your growth team\.$/i,
     mustContain: [
       /website\. content\. ads\. built around your business\./i,
-      /prism is at capacity right now\./i,
+      /prism is fully booked right now\./i,
+      /join the waitlist to work with us in [a-z]+\./i,
       /join the waitlist/i,
     ],
   },
@@ -102,14 +137,18 @@ const lockedRoutes = [
     name: 'pricing',
     path: '/pricing',
     readyHeading: /a clearer way to invest in growth\./i,
-    mustContain: [/prism is at capacity right now\./i, /join the waitlist/i],
+    mustContain: [
+      /prism is fully booked right now\./i,
+      /join the waitlist to work with us in [a-z]+\./i,
+    ],
   },
   {
     name: 'waitlist',
     path: '/waitlist',
     readyHeading: /^join the waitlist$/i,
     mustContain: [
-      /prism is at capacity\. we review applications as space opens\./i,
+      /prism is fully booked\. join the waitlist to work with us in [a-z]+\./i,
+      /see why clients love prism/i,
       /step 1 of 5/i,
       /what should prism focus on\?/i,
     ],
@@ -142,6 +181,7 @@ for (const route of lockedRoutes) {
     )
 
     await disableElevenLabsWidget(page)
+    await freezeIntakeMonth(page)
     await page.goto(route.path, { waitUntil: 'domcontentloaded' })
     await expect(
       page.getByRole('heading', { level: 1, name: route.readyHeading }),
@@ -169,6 +209,7 @@ for (const route of lockedRoutes) {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await seedDeterministicRandom(page)
     await disableElevenLabsWidget(page)
+    await freezeIntakeMonth(page)
     await page.goto(route.path, { waitUntil: 'domcontentloaded' })
     await page.waitForTimeout(250)
 
@@ -192,6 +233,7 @@ test('home fit section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
@@ -219,6 +261,7 @@ test('home problem section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
@@ -250,6 +293,7 @@ test('home services section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
@@ -280,6 +324,7 @@ test('home proof section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
@@ -315,6 +360,7 @@ test('home fit and service cards stay contained across responsive breakpoints', 
   )
 
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
 
   const breakpoints = [
     { width: 1150, height: 1100 },
@@ -496,6 +542,7 @@ test('home growth ramp values stay contained across responsive breakpoints', asy
   )
 
   await disableElevenLabsWidget(page)
+  await freezeIntakeMonth(page)
 
   const breakpoints = [
     { width: 1440, height: 960 },

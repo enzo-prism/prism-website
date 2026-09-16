@@ -563,7 +563,7 @@ export default function PrismInfinityPage() {
                 </p>
                 <p className="mt-5 max-w-md text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
                   Unlimited landing pages, ad creative, websites, video, and
-                  photoshoots. Pause or cancel anytime. Prism is at capacity, so
+                  photoshoots. Pause or cancel anytime. Prism is fully booked, so
                   join the waitlist and we&apos;ll scope your subscription together
                   when we reach out.
                 </p>
@@ -624,7 +624,7 @@ export default function PrismInfinityPage() {
               <HomeReveal>
                 <CoreSectionHeading
                   title="Keep the queue full."
-                  description="Prism is at capacity right now. Join the waitlist with your next few priorities and, when we reach out, we will review the work, explain the queue, and scope your monthly plan."
+                  description="Prism is fully booked right now. Join the waitlist with your next few priorities and, when we reach out, we will review the work, explain the queue, and scope your monthly plan."
                   titleClassName="max-w-[14ch] xl:max-w-[16ch]"
                 />
               </HomeReveal>
@@ -655,7 +655,7 @@ export default function PrismInfinityPage() {
         offerDetails={{
           name: 'Prism Infinity',
           description:
-            'Unlimited growth deliverables across landing pages, ad creative, websites, video, photoshoots, and content on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Prism is at capacity; scope is agreed when we reach out from the waitlist.',
+            'Unlimited growth deliverables across landing pages, ad creative, websites, video, photoshoots, and content on one monthly subscription. Unlimited requests, delivered one at a time. Pause or cancel anytime. Prism is fully booked; scope is agreed when we reach out from the waitlist.',
           businessFunction: 'http://purl.org/goodrelations/v1#Sell',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

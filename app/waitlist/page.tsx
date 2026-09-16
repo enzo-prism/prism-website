@@ -4,12 +4,20 @@ import WaitlistForm from '@/components/forms/WaitlistForm'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { WebPageSchema } from '@/components/schema-markup'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
+import WaitlistProofStrip from '@/components/waitlist/WaitlistProofStrip'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { parseWaitlistFocus, WAITLIST_PATH } from '@/lib/waitlist'
+import {
+  CAPACITY_MESSAGE,
+  parseWaitlistFocus,
+  WAITLIST_PATH,
+} from '@/lib/waitlist'
 
 const PAGE_TITLE = 'Join the Prism waitlist'
+// Metadata is static, so the month stays relative here ("next month"). The
+// rendered page below names the live intake month instead.
 const PAGE_DESCRIPTION =
-  'Prism is at capacity. Join the waitlist and we will review your application and reach out as space frees up for websites, content, and ads.'
+  'Prism is fully booked. Join the waitlist to work with us next month. We review every application for websites, content, and ads.'
 const CANONICAL_URL = `https://www.design-prism.com${WAITLIST_PATH}`
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -49,9 +57,12 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
               Join the waitlist
             </h1>
             <p className="text-pretty font-sans text-[1rem] leading-7 text-[#b8afa2]">
-              Prism is at capacity. We review applications as space opens.
+              Prism is fully booked. {CAPACITY_MESSAGE.intakeLead}{' '}
+              <WaitlistIntakeMonth />.
             </p>
           </header>
+
+          <WaitlistProofStrip />
 
           <div className="mt-10 sm:mt-12">
             <WaitlistForm

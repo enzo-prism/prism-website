@@ -115,7 +115,7 @@ const FAQ_ITEMS = [
   {
     question: 'What is Prism Content OS?',
     answer:
-      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Prism is at capacity, so scope is agreed when we reach out from the waitlist.',
+      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Prism is fully booked, so scope is agreed when we reach out from the waitlist.',
   },
   {
     question: 'How does website content support SEO and AI discovery?',
@@ -150,7 +150,7 @@ const FAQ_ITEMS = [
   {
     question: 'How much does the content system cost?',
     answer:
-      'Pricing is scoped to your business. Prism is at capacity right now, so join the waitlist; when we reach out we map your channels, goals, and the right system together and you leave with a clear plan and a clear price.',
+      'Pricing is scoped to your business. Prism is fully booked right now, so join the waitlist; when we reach out we map your channels, goals, and the right system together and you leave with a clear plan and a clear price.',
   },
 ] as const
 
@@ -350,7 +350,7 @@ export default function ContentOsPage() {
                     </span>
                   </p>
                   <p className="text-[1rem] leading-7 text-[#8f877b]">
-                    Join the waitlist and, when space frees up, we&apos;ll scope
+                    Join the waitlist and, when your intake opens, we&apos;ll scope
                     the system and the investment together.
                   </p>
                 </div>
@@ -399,7 +399,7 @@ export default function ContentOsPage() {
           >
             <CoreSectionHeading
               title="Put your next content batch in motion."
-              description="Prism is at capacity right now. Join the waitlist and we will map the content, workflow, and scope with you when we reach out."
+              description="Prism is fully booked right now. Join the waitlist and we will map the content, workflow, and scope with you when we reach out."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
@@ -424,7 +424,7 @@ export default function ContentOsPage() {
         areaServed="United States"
         offerDetails={{
           name: CONTENT_OS_OFFER.name,
-          description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Prism is at capacity; scope is agreed when we reach out from the waitlist.`,
+          description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Prism is fully booked; scope is agreed when we reach out from the waitlist.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: CANONICAL_URL,

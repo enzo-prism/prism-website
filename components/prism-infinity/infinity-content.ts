@@ -135,6 +135,6 @@ export const FAQ_ITEMS = [
   {
     question: 'How much does Prism Infinity cost?',
     answer:
-      'One flat monthly subscription, scoped to your business. Prism is at capacity right now, so join the waitlist; when we reach out we size the plan together and you know exactly what it costs and what you get.',
+      'One flat monthly subscription, scoped to your business. Prism is fully booked right now, so join the waitlist; when we reach out we size the plan together and you know exactly what it costs and what you get.',
   },
 ] as const

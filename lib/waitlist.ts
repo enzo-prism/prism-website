@@ -26,12 +26,65 @@ export const WAITLIST_FORM_ENDPOINT =
   process.env.NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT ||
   'https://formspree.io/f/xjkjbpdb'
 
+/**
+ * Monthly intake framing (2026-09-16): Prism is fully booked, and new work
+ * starts in monthly intakes. The waitlist is the line for the NEXT intake,
+ * so the month below always resolves from the visitor's clock, never from a
+ * hardcoded string. Surfaces that cannot render the live token (metadata,
+ * tertiary one-liners) use timeless phrasing like "next month" or "each
+ * monthly intake" instead.
+ */
+const WAITLIST_INTAKE_MONTH_NAMES = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const
+
+export type WaitlistIntakeMonth = {
+  /** Full month name of the next intake, e.g. "October". */
+  month: (typeof WAITLIST_INTAKE_MONTH_NAMES)[number]
+  /** Calendar year the next intake falls in (rolls over in December). */
+  year: number
+}
+
+/**
+ * Resolve the next monthly intake from a date (default: now). December
+ * correctly rolls over to January of the following year.
+ */
+export function getWaitlistIntakeMonth(
+  fromDate: Date = new Date(),
+): WaitlistIntakeMonth {
+  const next = new Date(fromDate.getFullYear(), fromDate.getMonth() + 1, 1)
+  return {
+    month: WAITLIST_INTAKE_MONTH_NAMES[next.getMonth()],
+    year: next.getFullYear(),
+  }
+}
+
 export const CAPACITY_MESSAGE = {
-  eyebrow: 'At capacity',
-  headline: 'Prism is at capacity right now.',
-  body: 'We are working hard to free up space so more companies can use Prism to grow, as fast as we can.',
-  action:
-    'In the meantime, join the waitlist. When space frees up we review applications and reach out to the teams we want to work with.',
+  eyebrow: 'In high demand',
+  headline: 'Prism is fully booked right now.',
+  /**
+   * Intake sentence, split around the live month token rendered by
+   * `<WaitlistIntakeMonth />`: `${intakeLead} October.`
+   */
+  intakeLead: 'Join the waitlist to work with us in',
+  /** Second intake sentence for the full panel variant. Timeless. */
+  intakeTail: 'Spots open every month, and waitlist members get first pick.',
+  /**
+   * Alternate intake sentence for surfaces that already said "waitlist":
+   * `${nextIntakeLead} October.`
+   */
+  nextIntakeLead: 'Our next intake starts in',
 } as const
 
 export const WAITLIST_FOCUS_OPTIONS = [

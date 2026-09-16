@@ -191,7 +191,7 @@ export default function DentalWebsitePage() {
                   appointments. every launch includes a stress-free transfer from your previous provider.
                 </p>
                 <p className="mt-4 max-w-2xl text-sm text-neutral-300 md:text-base">
-                  prism is at capacity right now. join the waitlist and we will reach out as space frees up.
+                  prism is fully booked right now. join the waitlist and get first pick of new spots as they open.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
                   <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
@@ -677,7 +677,7 @@ export default function DentalWebsitePage() {
             <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
             <p className="mt-4 text-base text-neutral-600">
-              Prism is at capacity right now. Join the waitlist, tell us what the practice needs, and we will reach out to scope the build when space frees up.
+              Prism is fully booked right now. Join the waitlist, tell us what the practice needs, and we will reach out to scope the build when your intake opens.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
@@ -708,7 +708,7 @@ export default function DentalWebsitePage() {
         offerDetails={{
           name: "Dental practice website design",
           description:
-            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is at capacity; scope is agreed when we reach out from the waitlist.",
+            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is fully booked; scope is agreed when we reach out from the waitlist.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",

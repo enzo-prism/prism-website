@@ -82,7 +82,7 @@ const SEARCH_SURFACES = [
 const PROCESS_STEPS = [
   {
     label: 'Join the waitlist',
-    body: 'Share your links and goals. Prism is at capacity, so we review applications as space frees up and reach out to scope your build with a clear plan and a clear price.',
+    body: 'Share your links and goals. Prism is fully booked, so we review waitlist applications for each monthly intake and reach out to scope your build with a clear plan and a clear price.',
   },
   {
     label: 'Design & build',
@@ -107,7 +107,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does pricing work?',
     answer:
-      'Prism is at capacity right now, so every website starts on the waitlist. When we reach out, we scope the pages, features, and support you need and agree on the scope and price before work begins.',
+      'Prism is fully booked right now, so every website starts on the waitlist. When we reach out, we scope the pages, features, and support you need and agree on the scope and price before work begins.',
   },
   {
     question: 'How do you support visibility in AI assistants?',
@@ -431,7 +431,7 @@ export default function WebsitesPage() {
             <CoreSectionHeading
               eyebrow="How it works"
               title="It starts on the waitlist."
-              description="Prism is at capacity. Join the waitlist and, when we reach out, you leave the scoping conversation with a clear plan and a clear price."
+              description="Prism is fully booked. Join the waitlist and, when we reach out, you leave the scoping conversation with a clear plan and a clear price."
             />
             <ol className="mt-10 grid gap-4 md:grid-cols-4">
               {PROCESS_STEPS.map((step, index) => (
@@ -484,7 +484,7 @@ export default function WebsitesPage() {
           >
             <CoreSectionHeading
               title="Build a website you can grow with."
-              description="Prism is at capacity right now. Join the waitlist with your links and goals, and we will reach out to scope the build when space frees up."
+              description="Prism is fully booked right now. Join the waitlist with your links and goals, and we will reach out to scope the build when your intake opens."
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <CoreActionLink
@@ -504,7 +504,7 @@ export default function WebsitesPage() {
       <ServiceSchema
         serviceId="pro-website"
         name="Prism PRO website"
-        description="Custom website design and development with service pages, inquiry forms, analytics, and search foundations. Prism is at capacity; scope and price are agreed when we reach out from the waitlist."
+        description="Custom website design and development with service pages, inquiry forms, analytics, and search foundations. Prism is fully booked; scope and price are agreed when we reach out from the waitlist."
         serviceType="Website design and development"
         areaServed="United States"
         offerDetails={{

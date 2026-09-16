@@ -191,7 +191,7 @@ export default function AiSeoServicesPage() {
                 >
                   seo overview
                 </Link>
-                . prism is at capacity right now, so{' '}
+                . prism is fully booked right now, so{' '}
                 <Link
                   href="/waitlist"
                   className="font-semibold text-neutral-900 underline underline-offset-4"

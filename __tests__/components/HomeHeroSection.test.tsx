@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import HomeHeroSection from '@/components/home/HomeHeroSection'
+import { getWaitlistIntakeMonth } from '@/lib/waitlist'
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -126,7 +127,16 @@ describe('HomeHeroSection', () => {
     expect(
       screen.getByRole('link', { name: /join the waitlist/i }),
     ).toHaveAttribute('href', '/waitlist')
-    expect(screen.getByText(/prism is at capacity right now\./i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/prism is fully booked right now\./i),
+    ).toBeInTheDocument()
+    expect(
+      screen
+        .getByText(/join the waitlist to work with us in/i)
+        .closest('[data-capacity-notice="inline"]'),
+    ).toHaveTextContent(
+      `Join the waitlist to work with us in ${getWaitlistIntakeMonth().month}.`,
+    )
     expect(
       screen.queryByRole('link', { name: /get a pro website/i }),
     ).not.toBeInTheDocument()

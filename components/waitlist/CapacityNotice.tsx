@@ -1,3 +1,4 @@
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { CAPACITY_MESSAGE } from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
 
@@ -12,7 +13,9 @@ type CapacityNoticeProps = {
 
 /**
  * The one shared capacity notice. Copy lives in `lib/waitlist.ts` so every
- * surface says the same thing; never paste this text into a page.
+ * surface says the same thing; never paste this text into a page. The intake
+ * month is a live token (`<WaitlistIntakeMonth />`) so it always names the
+ * true next month on every route, static or not.
  */
 export default function CapacityNotice({
   variant = 'inline',
@@ -35,10 +38,10 @@ export default function CapacityNotice({
           {CAPACITY_MESSAGE.headline}
         </p>
         <p className="mt-3 text-pretty font-sans text-[1rem] leading-7 text-[#b8afa2]">
-          {CAPACITY_MESSAGE.body}
+          {CAPACITY_MESSAGE.intakeLead} <WaitlistIntakeMonth />.
         </p>
         <p className="mt-2 text-pretty font-sans text-[1rem] leading-7 text-[#b8afa2]">
-          {CAPACITY_MESSAGE.action}
+          {CAPACITY_MESSAGE.intakeTail}
         </p>
       </div>
     )
@@ -61,7 +64,7 @@ export default function CapacityNotice({
         <span className="font-medium text-[#f5f0e8]">
           {CAPACITY_MESSAGE.headline}
         </span>{' '}
-        {CAPACITY_MESSAGE.body}
+        {CAPACITY_MESSAGE.intakeLead} <WaitlistIntakeMonth />.
       </p>
     </div>
   )

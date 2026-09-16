@@ -9,6 +9,7 @@ import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { LOGO_CONFIG } from '@/lib/constants'
 import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { CAPACITY_MESSAGE, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
 
@@ -16,7 +17,7 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm — they just watched Prism's content — so the page
- * routes intent instead of thanking them. Prism is at capacity, so the three
+ * routes intent instead of thanking them. Prism is fully booked, so the three
  * service CTAs open the waitlist with that service pre-selected. One quiet,
  * shared template keeps the focus on those actions.
  */
@@ -205,8 +206,8 @@ export default function SocialLinkHub({
             <span className="font-medium text-[#f5f0e8]">
               {CAPACITY_MESSAGE.headline}
             </span>{' '}
-            Join the waitlist for the service you want and we will reach out as
-            space frees up.
+            Join the waitlist for the service you want.{' '}
+            {CAPACITY_MESSAGE.nextIntakeLead} <WaitlistIntakeMonth />.
           </p>
 
           <nav aria-label={`${config.label} page actions`} className="mt-7">

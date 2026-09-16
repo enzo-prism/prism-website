@@ -25,9 +25,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { useFormValidation } from '@/hooks/use-form-validation'
 import { appendAttributionToFormData } from '@/lib/marketing-attribution'
 import {
+  CAPACITY_MESSAGE,
   WAITLIST_DRAFT_STORAGE_KEY,
   WAITLIST_DRAFT_TTL_MS,
   WAITLIST_FOCUS_OPTIONS,
@@ -908,9 +910,16 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           >
             <StepIcon className="h-5 w-5" strokeWidth={1.75} />
           </span>
-          <h2 className="text-balance font-sans text-[clamp(1.5rem,5.5vw,1.9rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[#f5f0e8]">
-            {step.title}
-          </h2>
+          <div className="min-w-0">
+            <h2 className="text-balance font-sans text-[clamp(1.5rem,5.5vw,1.9rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[#f5f0e8]">
+              {step.title}
+            </h2>
+            {stepId === 'timing' ? (
+              <p className="mt-2 text-pretty font-sans text-[0.95rem] leading-6 text-[#b8afa2]">
+                {CAPACITY_MESSAGE.nextIntakeLead} <WaitlistIntakeMonth />.
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="mt-6 sm:mt-8">{stepBody}</div>

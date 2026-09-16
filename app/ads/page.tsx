@@ -161,7 +161,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does Prism’s Ads service include?',
     answer:
-      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. Prism is at capacity, so campaigns start on the waitlist; when we reach out we review the audience, channels, and starting budget with you before scoping the work.',
+      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. Prism is fully booked, so campaigns start on the waitlist; when we reach out we review the audience, channels, and starting budget with you before scoping the work.',
   },
   {
     question: 'What is the difference between paid ads and SEO?',
@@ -696,7 +696,7 @@ export default async function AdsPage() {
           >
             <CoreSectionHeading
               title="Ready to reach better customers?"
-              description="Prism is at capacity right now. Join the waitlist and, when we reach out, we will map your audience, channels, and starting budget with a clear plan for measuring results."
+              description="Prism is fully booked right now. Join the waitlist and, when we reach out, we will map your audience, channels, and starting budget with a clear plan for measuring results."
               titleClassName="max-w-[16ch]"
             />
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">

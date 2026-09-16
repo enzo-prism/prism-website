@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import Footer from '@/components/footer'
+import { getWaitlistIntakeMonth } from '@/lib/waitlist'
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -40,7 +41,14 @@ describe('Footer', () => {
     expect(
       screen.queryByRole('link', { name: /start my website/i }),
     ).not.toBeInTheDocument()
-    expect(screen.getByText(/prism is at capacity right now/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/prism is fully booked right now/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/join the waitlist to work with us in/i),
+    ).toHaveTextContent(
+      `Join the waitlist to work with us in ${getWaitlistIntakeMonth().month}.`,
+    )
     expect(screen.getByRole('link', { name: /^pricing$/i })).toHaveAttribute(
       'href',
       '/pricing',

@@ -8,6 +8,7 @@ import {
   HOMEPAGE_FINAL_CTA,
 } from '@/components/home/homepage-content'
 import HomeReveal from '@/components/home/HomeReveal'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 
 export default function HomeFinalCtaSection() {
   return (
@@ -31,7 +32,8 @@ export default function HomeFinalCtaSection() {
               <CoreSectionHeading
                 title={
                   <span className="block text-[clamp(2.1rem,5.4vw,4.3rem)] leading-[0.98] tracking-[-0.055em]">
-                    {HOMEPAGE_FINAL_CTA.title}
+                    {HOMEPAGE_FINAL_CTA.titleLead}{' '}
+                    <WaitlistIntakeMonth /> {HOMEPAGE_FINAL_CTA.titleTail}
                   </span>
                 }
                 description={HOMEPAGE_FINAL_CTA.description}

@@ -27,14 +27,14 @@ const growthPathSteps = [
     title: 'Join the waitlist',
     price: 'About two minutes',
     description:
-      'Share your links, goals, and when you want to start. Prism is at capacity, so this is how every engagement begins right now.',
+      'Share your links, goals, and when you want to start. Prism is fully booked, so this is how every engagement begins right now.',
   },
   {
     stage: '02',
     title: 'We review and reach out',
     price: 'Clear scope and price',
     description:
-      'As space frees up we review applications, reach out to the teams we can take on, and confirm what is included, what it costs, and how the work will run before you commit.',
+      'For each monthly intake we review applications, reach out to the teams we can take on, and confirm what is included, what it costs, and how the work will run before you commit.',
   },
   {
     stage: '03',
@@ -111,7 +111,7 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Prism is at capacity right now, so every engagement starts on the waitlist. When space frees up we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
+      'Prism is fully booked right now, so every engagement starts on the waitlist. For each monthly intake we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
   },
   {
     question: 'What does the PRO website include?',
@@ -131,7 +131,7 @@ const faqs = [
   {
     question: 'What is Prism Infinity?',
     answer:
-      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Join the waitlist and we will scope your plan when space opens.',
+      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Join the waitlist and we will scope your plan when your intake opens.',
   },
   {
     question: 'How is Dental OS priced?',
@@ -186,7 +186,7 @@ export default function PricingPageClient() {
             <CoreSectionHeading
               eyebrow="The offers"
               title="Pick how you want to grow."
-              description="Prism is at capacity. Join the waitlist for the offer that fits and we will recommend a starting point and confirm scope and pricing when we reach out."
+              description="Prism is fully booked. Join the waitlist for the offer that fits and we will recommend a starting point and confirm scope and pricing when we reach out."
             />
           </div>
 
@@ -360,7 +360,7 @@ export default function PricingPageClient() {
         >
           <CoreSectionHeading
             title="Let’s find the right starting point."
-            description="Prism is at capacity right now. Join the waitlist with your goals and questions, and we will help you choose a focused project or ongoing support when space opens."
+            description="Prism is fully booked right now. Join the waitlist with your goals and questions, and we will help you choose a focused project or ongoing support when your intake opens."
             titleClassName="max-w-[14ch]"
           />
 

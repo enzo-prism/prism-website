@@ -1,7 +1,10 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import WaitlistForm from '@/components/forms/WaitlistForm'
-import { WAITLIST_DRAFT_STORAGE_KEY } from '@/lib/waitlist'
+import {
+  getWaitlistIntakeMonth,
+  WAITLIST_DRAFT_STORAGE_KEY,
+} from '@/lib/waitlist'
 
 const pushMock = jest.fn()
 jest.mock('next/navigation', () => ({
@@ -132,6 +135,29 @@ describe('WaitlistForm (stepped flow)', () => {
       'waitlist_step_complete',
       expect.objectContaining({ step: 2 }),
     )
+  })
+
+  it('names the live intake month on the timing step only', async () => {
+    render(<WaitlistForm />)
+    const intakeMonth = getWaitlistIntakeMonth().month
+
+    expect(
+      screen.queryByText(/our next intake starts in/i),
+    ).not.toBeInTheDocument()
+
+    await advance()
+    expectStep(2)
+    expect(stepHeading()).toMatch(/when do you want to start\?/i)
+    expect(screen.getByText(/our next intake starts in/i)).toHaveTextContent(
+      `Our next intake starts in ${intakeMonth}.`,
+    )
+
+    fireEvent.click(screen.getByRole('radio', { name: /as soon as possible/i }))
+    await advance()
+    expectStep(3)
+    expect(
+      screen.queryByText(/our next intake starts in/i),
+    ).not.toBeInTheDocument()
   })
 
   it('validates the contact step inline and clears errors as the visitor types', async () => {

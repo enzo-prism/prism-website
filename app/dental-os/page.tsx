@@ -174,7 +174,7 @@ const DENTAL_CLIENTS = [
 const PROCESS = [
   {
     label: 'Scope',
-    body: 'Join the waitlist. When space frees up we reach out, map the practice, market, and goals, then scope the system around what will actually move calls and bookings. No fixed package.',
+    body: 'Join the waitlist. When your intake opens we reach out, map the practice, market, and goals, then scope the system around what will actually move calls and bookings. No fixed package.',
   },
   {
     label: 'Build',
@@ -195,7 +195,7 @@ const FAQ_ITEMS = [
   {
     question: 'How does pricing work?',
     answer:
-      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. Prism is at capacity right now, so join the waitlist; when we reach out we scope it with you and price around what will move calls and bookings.',
+      'Dental OS is scoped to each practice (your locations, services, and goals), so there is no fixed package price. Prism is fully booked right now, so join the waitlist; when we reach out we scope it with you and price around what will move calls and bookings.',
   },
   {
     question: 'How long until it is live?',
@@ -484,7 +484,7 @@ export default function DentalOsPage() {
               <CoreSectionHeading
                 eyebrow="Get started"
                 title="Join the waitlist for Dental OS."
-                description="Prism is at capacity right now. Tell us about your practice and goals; when space frees up we’ll scope Dental OS around what will move calls and bookings, and give you a real number to decide on."
+                description="Prism is fully booked right now. Tell us about your practice and goals; when your intake opens we’ll scope Dental OS around what will move calls and bookings, and give you a real number to decide on."
               />
               <div className="flex shrink-0 flex-col gap-5 sm:flex-row sm:items-center">
                 <CoreActionLink

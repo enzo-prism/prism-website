@@ -98,7 +98,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: CONTENT_OS_PRICE_LABEL,
-    priceSubLabel: 'Scoped to your business when space opens',
+    priceSubLabel: 'Scoped to your business when your intake opens',
     description:
       'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
     primaryCta: CONTENT_WAITLIST_CTA,
