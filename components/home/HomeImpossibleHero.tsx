@@ -1,11 +1,13 @@
 import styles from '@/components/home/HomeImpossibleHero.module.css'
+import HomeScrollCue from '@/components/home/HomeScrollCue'
 import { cn } from '@/lib/utils'
 
 /**
  * Purely visual brand hero: a white beam refracting through the Prism into
  * a spectrum, with the "Impossible is temporary." tagline. Server-rendered
- * with CSS-only choreography (see the module for the timeline), so it ships
- * zero client JS. The page's document h1 stays in HomeHeroSection below.
+ * with CSS-only choreography (see the module for the timeline); the scene
+ * itself ships zero client JS and only the scroll cue is a client island.
+ * The page's document h1 stays in HomeHeroSection below.
  */
 
 type Point = { x: number; y: number }
@@ -63,6 +65,7 @@ const SPECTRUM_CLIP_POINTS = `${EXIT_TOP.x},${EXIT_TOP.y} ${EXIT_BOTTOM.x},${EXI
 export default function HomeImpossibleHero() {
   return (
     <section
+      id="home-impossible-hero"
       aria-label="Impossible is temporary"
       data-testid="home-impossible-hero"
       className={cn(
@@ -278,18 +281,7 @@ export default function HomeImpossibleHero() {
           Unlock your potential with Prism
         </p>
 
-        <div
-          className={cn(
-            'relative z-10 mt-8 flex items-center gap-2.5 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]/80 sm:mt-10',
-            styles.cue,
-          )}
-        >
-          <span
-            aria-hidden="true"
-            className="home-signal-dot h-1.5 w-1.5 rounded-full bg-[#d8bc79]"
-          />
-          scroll
-        </div>
+        <HomeScrollCue />
       </div>
 
       {/* Film grain over the full hero, beneath the text layer. */}

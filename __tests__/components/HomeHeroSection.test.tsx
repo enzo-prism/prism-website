@@ -28,16 +28,24 @@ jest.mock('next/link', () => ({
 jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
   __esModule: true,
   default: function MockDeferredAsciiHeroBackdrop({
+    animationName,
     className,
     focusScrimClassName,
     forceAutoplay,
+    frameCount,
+    maskClassName,
+    posterSrc,
     quality,
     scrimClassName,
     zoom,
   }: {
+    animationName?: string
     className?: string
     focusScrimClassName?: string
     forceAutoplay?: boolean
+    frameCount?: number
+    maskClassName?: string
+    posterSrc?: string
     quality?: string
     scrimClassName?: string
     zoom?: number
@@ -45,9 +53,13 @@ jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
     return (
       <div
         data-testid="home-hero-ascii-backdrop"
+        data-animation-name={animationName}
         data-class-name={className}
         data-focus-scrim-class-name={focusScrimClassName}
         data-force-autoplay={forceAutoplay ? 'true' : 'false'}
+        data-frame-count={frameCount}
+        data-mask-class-name={maskClassName}
+        data-poster-src={posterSrc}
         data-quality={quality}
         data-scrim-class-name={scrimClassName}
         data-zoom={zoom}
@@ -63,7 +75,13 @@ describe('HomeHeroSection', () => {
     const heroBackdrop = screen.getByTestId('home-hero-ascii-backdrop')
 
     expect(heroBackdrop).toBeInTheDocument()
-    expect(heroBackdrop).toHaveAttribute('data-quality', 'high')
+    expect(heroBackdrop).toHaveAttribute('data-animation-name', 'wizard')
+    expect(heroBackdrop).toHaveAttribute('data-frame-count', '91')
+    expect(heroBackdrop).toHaveAttribute(
+      'data-poster-src',
+      '/animations/wizard/poster.svg',
+    )
+    expect(heroBackdrop).toHaveAttribute('data-quality', 'medium')
     expect(heroBackdrop).toHaveAttribute('data-force-autoplay', 'false')
     expect(heroBackdrop).toHaveAttribute('data-zoom', '0.84')
     expect(heroBackdrop.getAttribute('data-class-name')).toContain(
@@ -77,6 +95,15 @@ describe('HomeHeroSection', () => {
     )
     expect(heroBackdrop.getAttribute('data-focus-scrim-class-name')).toContain(
       'ellipse_at_24%_48%',
+    )
+    // The left-fade mask must ride on maskClassName: the same utilities in
+    // className lose the cascade to the default center mask, which hides the
+    // loop behind the copy zone.
+    expect(heroBackdrop.getAttribute('data-mask-class-name')).toContain(
+      'linear-gradient(90deg,transparent_0%,black_16%,black_100%)',
+    )
+    expect(heroBackdrop.getAttribute('data-class-name')).not.toContain(
+      'mask-image',
     )
 
     expect(

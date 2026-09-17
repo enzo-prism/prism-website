@@ -161,6 +161,7 @@ const TECH_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
   Webflow: { brand: 'webflow' },
   'Meta Business Suite': { brand: 'meta' },
   'Meta Pixel': { brand: 'meta' },
+  'Yelp for Business': { brand: 'yelp' },
 }
 
 const SERVICE_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
@@ -544,6 +545,12 @@ export function CaseStudyWorkHighlights({
       ? getTechLogo(selectedItem.name)
       : getServiceLogo(selectedItem.name)
     : undefined
+  const selectedIconElement = selectedItem ? (
+    <SelectedIcon
+      className="size-4 shrink-0"
+      style={{ color: selectedIconColor }}
+    />
+  ) : null
 
   if (!profile.services.length && !profile.techStack.length) {
     return null
@@ -582,13 +589,11 @@ export function CaseStudyWorkHighlights({
                         theme={selectedLogo.dialogTheme ?? selectedLogo.theme}
                         decorative
                         className="max-h-4 max-w-4"
+                        fallback={selectedIconElement}
                       />
                     </span>
                   ) : (
-                    <SelectedIcon
-                      className="size-4 shrink-0"
-                      style={{ color: selectedIconColor }}
-                    />
+                    selectedIconElement
                   )}
                   <span className="font-medium text-foreground/85">
                     What it is
@@ -710,6 +715,12 @@ export function CaseStudyWorkHighlights({
                                 theme={techLogo.theme}
                                 decorative
                                 className="max-h-4 max-w-4"
+                                fallback={
+                                  <TechIcon
+                                    className="size-4 shrink-0"
+                                    style={{ color: techColor }}
+                                  />
+                                }
                               />
                             </span>
                           ) : (

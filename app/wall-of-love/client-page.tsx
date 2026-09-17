@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { trackCTAClick } from '@/utils/analytics'
-import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import {
   formatSocialHandle,
@@ -21,8 +21,7 @@ type FeedItem =
   | { kind: 'quote'; data: Quote }
   | { kind: 'takeaway'; data: Takeaway }
 
-const PLANET_VIDEO_SRC = '/ascii/motion/wall-of-love/planet-lite-2026.mp4'
-const PLANET_POSTER_SRC = '/ascii/static/wall-of-love/planet.png'
+const MAIL_POSTER_SRC = '/animations/mail/poster.svg'
 
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -44,82 +43,98 @@ export default function WallOfLoveClientPage() {
   )
 
   const [feed, setFeed] = useState<FeedItem[]>(combinedFeed)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const reviewCount = combinedFeed.length
 
   useEffect(() => {
     setFeed(shuffleArray(combinedFeed))
   }, [combinedFeed])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setPrefersReducedMotion(event.matches)
-    }
-
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
   // minimal vertical list – no carousels, observers, or shuffling
 
   return (
     <>
-      <section className="px-4 py-10 md:py-14">
+      <section id="wall-of-love-hero" className="px-4 py-10 md:py-14">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
           <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
-            <HeroBackgroundLoop
-              videoSrc={PLANET_VIDEO_SRC}
-              posterSrc={PLANET_POSTER_SRC}
-              posterAlt="ASCII planet animation preview"
-              posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-88 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
-              videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-82 sm:object-cover sm:object-[center_80%] sm:opacity-100 sm:[image-rendering:pixelated]"
-              posterUnoptimized
-              playbackPolicy={prefersReducedMotion ? 'forcePoster' : 'auto'}
-            />
+            <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="flex flex-col justify-center px-6 py-12 sm:px-10 md:px-12 lg:py-16">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
+                  Wall of Love / Incoming
+                </p>
+                <h1 className="mt-4 text-balance text-4xl font-semibold text-foreground sm:text-5xl">
+                  Love letters, still arriving.
+                </h1>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+                  Prism shares content for world-class founders and athletes.
+                  This is what they send back.
+                </p>
 
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/75 to-background/90"
-            />
-
-            <div className="relative z-10 mx-auto flex min-h-[320px] max-w-4xl flex-col items-center justify-center px-6 py-14 text-center sm:min-h-[360px] md:px-10 md:py-20">
-              <h1 className="text-balance text-4xl font-semibold text-foreground sm:text-5xl md:text-6xl">
-                Wall of Love
-              </h1>
-              <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                Prism shares content for world-class founders and athletes
-              </p>
-
-              <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-semibold text-foreground sm:text-sm">
-                <span>Instagram: {SOCIAL_PROOF.instagram.audience}</span>
-                <span className="hidden text-muted-foreground sm:inline">
-                  •
-                </span>
-                <span>TikTok: {SOCIAL_PROOF.tiktok.audience}</span>
-                <span className="hidden text-muted-foreground sm:inline">
-                  •
-                </span>
-                <span>YouTube: {SOCIAL_PROOF.youtube.audience}</span>
-              </p>
-
-              <div className="mt-8">
-                <Link href="/waitlist">
-                  <Button
-                    size="lg"
-                    className="rounded-md px-6"
-                    onClick={() =>
-                      trackCTAClick(
-                        'wall_of_love_become_client_cta',
-                        '/waitlist',
-                      )
-                    }
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <Link href="/waitlist">
+                    <Button
+                      size="lg"
+                      className="rounded-md px-6"
+                      onClick={() =>
+                        trackCTAClick(
+                          'wall_of_love_become_client_cta',
+                          '/waitlist',
+                        )
+                      }
+                    >
+                      Become a Client <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <a
+                    href="#testimonials-feed"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground/25"
                   >
-                    Become a Client <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
+                    Read the letters
+                    <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
               </div>
+
+              <div className="relative order-first min-h-[200px] overflow-hidden border-b border-border/60 lg:order-last lg:min-h-[380px] lg:border-b-0 lg:border-l">
+                <DeferredAsciiHeroBackdrop
+                  animationName="mail"
+                  frameCount={56}
+                  fps={18}
+                  quality="medium"
+                  renderMode="canvas"
+                  fit="contain"
+                  zoom={1}
+                  maskClassName=""
+                  ariaLabel="ASCII mail animation in the Wall of Love flight lane"
+                  posterSrc={MAIL_POSTER_SRC}
+                  posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-90 [image-rendering:pixelated]"
+                  scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/30"
+                  focusScrimClassName=""
+                />
+                <p
+                  aria-hidden="true"
+                  className="absolute bottom-3 left-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground"
+                >
+                  Incoming / {reviewCount.toLocaleString()} voices
+                </p>
+              </div>
+            </div>
+
+            <div className="border-t border-border/60 px-6 py-4 sm:px-10 md:px-12">
+              <p className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                <span>
+                  Instagram {SOCIAL_PROOF.instagram.audience}{' '}
+                  {SOCIAL_PROOF.instagram.audienceLabel}
+                </span>
+                <span aria-hidden="true">/</span>
+                <span>
+                  TikTok {SOCIAL_PROOF.tiktok.audience}{' '}
+                  {SOCIAL_PROOF.tiktok.audienceLabel}
+                </span>
+                <span aria-hidden="true">/</span>
+                <span>
+                  YouTube {SOCIAL_PROOF.youtube.audience}{' '}
+                  {SOCIAL_PROOF.youtube.audienceLabel}
+                </span>
+              </p>
             </div>
           </div>
         </div>

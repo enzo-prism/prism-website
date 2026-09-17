@@ -36,7 +36,7 @@ Quick reference for the pages we edit most often.
 - The legacy per-slug `app/case-studies/<slug>/client-page.tsx` files are no longer imported by their `page.tsx` siblings; every non-Roseville detail route renders through the shared minimal template. Treat the client-page files as archival until they are removed in a dedicated cleanup pass.
 - The shared curve/data generator remains in `lib/case-study-impact-graph.ts` for any future return of the interactive founder-impact graph.
 - The `/case-studies` card grid reads optional `clientLogo` URLs from `lib/case-study-data.ts`; cards render logos when provided and fall back to text-only cards when absent.
-- The `/case-studies` list hero uses a looping Cloudinary background in `app/case-studies/client-page.tsx` (`CASE_STUDIES_HERO_VIDEO` + `CASE_STUDIES_HERO_POSTER`) with a readability gradient and current video opacity `40%`.
+- The `/case-studies` hub hero is the "Ledger + orbit well" split in `app/case-studies/client-page.tsx`: solid left copy column (data-derived mono ledger, pixel eyebrow, kept H1/sub, quiet `Browse the studies` link to `#case-studies-list`) plus a clipped right planet well (300-frame `planet` ASCII loop, `public/animations/planet/medium`, canvas render, `cover`, ghost `<pre>` underlay, left-edge mask, `poster.svg` fallback). The Cloudinary ocean video hero is retired; the footer conversion block stays byte-identical.
 - The `/case-studies` hub renders the study list first, then the measured-results band, then the proof-stats block, so the studies sit as high as possible. Keep that order when editing `app/case-studies/client-page.tsx`.
 - Mobile safety: the `/case-studies` hero keeps a poster fallback on touch devices and now uses `components/HeroBackgroundLoop.tsx` with `lib/hero-media-policy.ts` so autoplay `<video>` is never mounted when policy denies inline autoplay.
 - Global mobile safety pattern for decorative hero loops: prefer `components/HeroBackgroundLoop.tsx` or `components/HeroLoopingVideo.tsx` and `resolveHeroPlaybackPolicy(...)` so all autoplay decisions remain centralized and debuggable via `onPlaybackStateChange`.
@@ -96,11 +96,13 @@ Quick reference for the pages we edit most often.
 - The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) has been removed.
 - Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website acquisition page.
 - Copy voice (2026-07-28): formal, premium register with **no em dashes** anywhere in the page copy (the pillar index separators use interpuncts, `01 · Design`). Keep new copy in that voice.
+- The hero is the "Build log" split: copy rail left (H1 `Your website, engineered live.`, waitlist primary, `#work` secondary) plus a terminal-framed panel (`prism -- build` chrome, 78-frame `computer` ASCII loop, decorative status lines) with a GSC proof strip and a `READ BY` tech-ledger footer below. The Visibility `SEARCH_SURFACES` pills carry inline tech icons from `components/tech-stack-icons.tsx`.
 
 ## Content (`app/content/page.tsx`)
 
 - Public service page for **Content**: a publishing system that plans, produces, and publishes across every social platform and the website — implemented over 3 months, then optimized every month. **No public price**: Prism is at capacity, so every CTA is `CONTENT_WAITLIST_CTA` (`/waitlist?focus=content`) and the hero shows the `CapacityNotice`. Ads is a sibling service at `/ads`, not the hero claim.
 - This route replaced `/content-os`. `/content-os`, `/founder-os`, and `/founder-os/apply` 301-redirect here. It is indexable, in `public/llms.txt`, and in the sitemap, and carries `ServiceSchema` plus FAQ structured data (the Offer node is price-free by policy).
+- The hero is "The Hearth" split: copy rail left (H1 `Your expertise. Catching fire.`, waitlist primary, unchanged chips and implementation line) plus a bordered fire panel right (94-frame `fire-2` ASCII loop, `cover`, ember bed anchored low, `LOOP 094 FR` caption) with a `PLAN . PRODUCE . PUBLISH . REPEAT` system strip below.
 
 ## Ads (`app/ads/page.tsx`)
 
@@ -155,7 +157,7 @@ Quick reference for the pages we edit most often.
 - Blog index layout includes breadcrumbs, the animated hero card, filters, post grid, signup, and the final CTA section.
 - `getAllPosts()` returns the curated/indexable post set by default, so the visible blog index, RSS, latest-post API, related posts, and sitemap stay dental/local-growth focused.
 - Off-theme posts remain live by direct URL with `noindex, follow`; do not assume every file in `content/blog` should appear on the public blog index.
-- The hero now uses `components/ascii/AsciiHeroCard.tsx` with the high-quality `hands` ASCII frames in `public/animations/hands/high`.
+- The hero is a minimal static header (title + lede, no ASCII layer). The `hands` frames in `public/animations/hands/high` are currently unused; do not reintroduce the old `AsciiHeroCard` hero unless product asks.
 - For performance reliability, keep the default batch strategy in place and confirm partial-frame fallback behavior in tests when changing sequence size or source reliability assumptions.
 
 ## Podcast (`app/podcast/page.tsx`)
@@ -270,10 +272,10 @@ Quick reference for the pages we edit most often.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
 
-- Hero now mirrors the `/case-studies` cinematic style (single rounded container, looping background media, centered foreground copy + CTA). The heart-icon "testimonials" badge above the H1 was removed (2026-07-29) to simplify the hero; do not reintroduce it.
-- Hero media uses `public/ascii/motion/wall-of-love/planet-lite.mp4` with reduced-motion/error fallback poster `public/ascii/static/wall-of-love/planet.png`; current crop/visibility tuning is `object-[center_80%]` with `opacity-100`.
-- Route-level policy now passes autoplay decisions to `components/HeroBackgroundLoop.tsx` via policy input instead of branching on route logic.
-- Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/get-started")`) and keep the testimonials feed anchored at `#testimonials-feed`.
+- Hero is the "Incoming" split editorial (left copy rail, right flight-lane panel, mono system strip): kicker `Wall of Love / Incoming`, H1 `Love letters, still arriving.`, primary CTA plus a `Read the letters` text link to `#testimonials-feed`. The heart-icon "testimonials" badge above the H1 was removed (2026-07-29) to simplify the hero; do not reintroduce it.
+- Hero media is the 56-frame `mail` ASCII loop (`public/animations/mail/medium`, canvas render, `contain`, no focus mask) via `DeferredAsciiHeroBackdrop` with `posterSrc` set to `public/animations/mail/poster.svg`, so reduced-motion, constrained-device, and no-JS visitors still see the mail poster. The retired planet media (`planet-lite.mp4`, `planet-lite-2026.mp4`, `planet.png`, `sales-agent-source.mp4`) is deleted; do not reintroduce it.
+- Autoplay, reduced-motion, and constrained-device decisions come from the shared ASCII backdrop policy (`lib/ascii-backdrop-policy.ts`); do not branch on route logic.
+- Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/waitlist")`) and keep the testimonials feed anchored at `#testimonials-feed`.
 - Social proof copy in the hero reads from `lib/proof-metrics.ts`; do not hard-code a second snapshot here.
 
 ## Prism Library (`app/library/page.tsx`)
@@ -353,7 +355,7 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 ## Ads (`app/ads/page.tsx`)
 
 - Same layout pattern as Local Listings: hero, benefits, platforms, audience grid, then the ads-focused founder VSL.
-- The hero uses the page-specific `components/animated/AdsHeroIllustration.tsx` instead of the shared `ServiceIllustration` set so the hover motion and geometry can stay tailored to `/ads` without affecting other routes that still use the generic ads icon.
+- The hero is the "Launch rail" split: copy left (H1 `Launch campaigns that bring qualified inquiries.`, waitlist primary, `#platforms` secondary) plus a bordered right rail with the 120-frame `rocket` ASCII loop (`public/animations/rocket/high`, canvas render, `contain`) over a mono launch manifest (STATUS / STAGES icon rows / GUIDANCE / TELEMETRY). `components/animated/AdsHeroIllustration.tsx` is unmounted legacy; do not reintroduce it. Hero copy makes zero metric claims.
 - `VideoPlayer` is imported directly in `app/ads/page.tsx`; keep schema metadata up to date (id, upload date, duration) when swapping clips so Google’s video rich results stay accurate.
 - Cross-links to the invite-only `/chatgpt-ads` program from the platforms section.
 
@@ -393,8 +395,12 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 ## Supporting Components
 
 - `components/ascii/AsciiHeroCard.tsx`: shared cinematic hero wrapper available to editorial routes; mobile readability now intentionally matches `/wall-of-love` via lower small-screen animation opacity plus layered gradient/radial overlays.
-- `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, batched resilience loading with partial-failure tolerance, reduced-motion pause, intersection-aware playback).
+- `components/ascii/AsciiAnimation.tsx`: high-quality ASCII frame player (quality fallback, batched resilience loading with partial-failure tolerance, reduced-motion pause, intersection-aware playback). Color sources (`color-ascii-v2` meta.json + packed-12 `.bin` frames, e.g. `public/animations/wizard/medium/`) are auto-detected and always render on canvas with per-glyph palette colors; the packed-12 decoder lives in `lib/ascii-color.ts`.
+- `public/animations/wizard/`: 91-frame color wizard loop (`medium/frame_00001.bin`…`frame_00091.bin` + `meta.json`, 60×44 @ 15fps) with a static `poster.svg` rendered from frame 1. Regenerate the poster with `node scripts/generate-wizard-poster.mjs` after re-exporting frames. Pass `posterSrc` to `DeferredAsciiHeroBackdrop` so reduced-motion, constrained-device, and no-JS visitors get the server-rendered poster instead of the player.
 - `components/ascii/AsciiHeroBackdrop.tsx`: shared background-media layer used by `AsciiHeroCard` to keep hero composition and ASCII defaults consistent.
+- `public/animations/` tiers: `planet/medium` (300 `.txt` frames, case-studies hero) + `ghost.txt` bright-frame underlay, `rocket` low/medium/high (120 each, ads hero), `computer` + `fire-2` + `mail` low/medium/high (78/94/56 each, websites/content/wall-of-love heroes). Every animation ships a `poster.svg` fallback (regenerate text posters with `node scripts/generate-ascii-poster.mjs`, the wizard poster with `node scripts/generate-wizard-poster.mjs`). Text tiers ship no `meta.json`; only the color `wizard` source has one. Re-run `pnpm ascii:bundle` after adding or editing frames.
+- `components/tech-stack-icons.tsx`: shared `ADS_STAGE_ICONS` (5) + `WEBSITE_SURFACE_ICONS` (7) maps resolving through the `BrandLogo` registry with Lucide fallbacks (Yelp burst with `Store` fallback). `components/home/HomeScrollCue.tsx` is the one client island in the Impossible hero scene.
+- `components/brand-logo.tsx`: `BrandLogo` attempts the logo file first and renders its `fallback` node on load error. `yelp` (`public/logos/svgl/yelp.svg`, Simple Icons CC0) backs the `Yelp for Business` tech tile in `CaseStudyWorkHighlights`, which falls back to the Lucide `Store` icon.
 - `lib/hero-media-policy.ts`: single policy engine used by `HeroBackgroundLoop` and `HeroLoopingVideo` for autoplay, poster fallback, and reduced-motion decisions.
 - `components/reveal-on-scroll.tsx`: lightweight framer-motion wrapper used across marketing sections.
 - `components/forms/*`: shared form components noted in [forms.md](./forms.md).

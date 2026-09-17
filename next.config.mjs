@@ -60,7 +60,7 @@ images: {
 },
   async headers() {
     // Decorative media under /public is effectively content-versioned: changed
-    // assets must ship under a new filename (e.g. planet-lite-2026.mp4) so the
+    // assets must ship under a new filename (e.g. hero-loop-2026.mp4) so the
     // long-lived cache below can never serve stale content.
     return [
       {

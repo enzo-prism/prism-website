@@ -3,6 +3,10 @@
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useState } from 'react'
 
+import {
+  ASCII_HERO_BACKDROP_FOCUS_SCRIM_CLASSNAME,
+  ASCII_HERO_BACKDROP_SCRIM_CLASSNAME,
+} from '@/components/ascii/AsciiHeroBackdrop'
 import { resolveAsciiBackdropProfile } from '@/lib/ascii-backdrop-policy'
 
 type PerformanceAwareNavigator = Navigator & {
@@ -35,6 +39,7 @@ type DeferredAsciiHeroBackdropProps = {
   textSize?: string
   ariaLabel?: string
   className?: string
+  maskClassName?: string
   scrimClassName?: string
   focusScrimClassName?: string
   fit?: 'contain' | 'cover'
@@ -46,6 +51,13 @@ type DeferredAsciiHeroBackdropProps = {
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
   renderMode?: 'dom' | 'canvas'
+  /**
+   * Static poster (e.g. `/animations/wizard/poster.svg`) shown instead of the
+   * player for reduced-motion, constrained-device, and no-JS visitors. The
+   * fallback is server-rendered, so it paints before hydration and without JS.
+   */
+  posterSrc?: string
+  posterClassName?: string
 }
 
 function scheduleBackdropLoad(callback: () => void) {
@@ -209,7 +221,39 @@ export default function DeferredAsciiHeroBackdrop(
   }, [profile.shouldRender])
 
   if (!shouldRender || !profile.shouldRender) {
-    return null
+    if (!props.posterSrc) {
+      return null
+    }
+    // The poster is a still frame of the live treatment, so it carries the
+    // same scrim stack (an unscrimmed still reads far louder than the loop).
+    const posterScrimClassName =
+      props.scrimClassName ?? ASCII_HERO_BACKDROP_SCRIM_CLASSNAME
+    const posterFocusScrimClassName =
+      props.focusScrimClassName ?? ASCII_HERO_BACKDROP_FOCUS_SCRIM_CLASSNAME
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ contain: 'paint' }}
+      >
+        <img
+          src={props.posterSrc}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className={
+            props.posterClassName ??
+            'absolute inset-0 h-full w-full object-cover'
+          }
+        />
+        {posterScrimClassName ? (
+          <div aria-hidden="true" className={posterScrimClassName} />
+        ) : null}
+        {posterFocusScrimClassName ? (
+          <div aria-hidden="true" className={posterFocusScrimClassName} />
+        ) : null}
+      </div>
+    )
   }
 
   // The ASCII backdrop is purely decorative. Wrap it in an aria-hidden layer

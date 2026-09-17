@@ -1,13 +1,13 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import {
   CollectionPageSchema,
   ItemListSchema,
@@ -63,10 +63,16 @@ const caseStudyListItems = orderedCaseStudies.map((study) => ({
   metric: study.structured?.results?.[0],
 }))
 
-const CASE_STUDIES_HERO_VIDEO =
-  'https://res.cloudinary.com/dhqpqfw6w/video/upload/w_1280,q_auto,vc_auto/v1771353172/ocean-ascii-hq_lbqose.mp4'
-const CASE_STUDIES_HERO_POSTER =
-  'https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1771353245/Screenshot_2026-02-17_at_10.33.32_AM_lsxdpz.webp'
+const PLANET_POSTER_SRC = '/animations/planet/poster.svg'
+
+// Bright-phase planet frame parked under the loop at low opacity so the disc
+// never fully vanishes during the crescent phase. Read once at render time;
+// identical to public/animations/planet/medium/frame_00001.txt (pinned by
+// __tests__/ascii-posters.test.ts).
+const PLANET_GHOST_FRAME = readFileSync(
+  path.join(process.cwd(), 'public', 'animations', 'planet', 'ghost.txt'),
+  'utf8',
+)
 
 export default function CaseStudiesPage() {
   return (
@@ -81,37 +87,66 @@ export default function CaseStudiesPage() {
             ]}
           />
         </div>
-        <section className="px-4 py-10 md:py-14">
+        <section id="case-studies-hero" className="px-4 py-10 md:py-14">
           <div className="container mx-auto px-4 md:px-6">
             <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
-              <HeroBackgroundLoop
-                videoSrc={CASE_STUDIES_HERO_VIDEO}
-                posterSrc={CASE_STUDIES_HERO_POSTER}
-                posterAlt="ASCII ocean animation preview"
-                posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-52 sm:object-cover sm:opacity-45"
-                videoClassName="pointer-events-none absolute inset-0 h-full w-full object-contain object-center opacity-46 sm:object-cover sm:opacity-40"
-                posterUnoptimized
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-b from-background/55 via-background/75 to-background/90"
-              />
-              <div className="relative z-10 mx-auto flex min-h-[300px] max-w-4xl flex-col items-center justify-center px-6 py-14 text-center sm:min-h-[360px] md:px-10 md:py-20">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
-                  case studies
-                </p>
-                <h1 className="mt-4 text-balance text-4xl font-semibold text-foreground sm:text-5xl md:text-6xl">
-                  The work behind the growth
-                </h1>
-                <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  Explore the websites, content, and campaigns we’ve built for
-                  businesses like yours. See the starting point, the work, and
-                  the results we can measure.
-                </p>
+              <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+                <div className="flex flex-col justify-center px-6 py-12 sm:px-10 md:px-12 lg:py-16">
+                  <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+                    {CASE_STUDIES.length} client stories ·{' '}
+                    {measuredCaseStudyCount} measured result sets · Google
+                    Search Console verified
+                  </p>
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.32em] text-muted-foreground font-pixel">
+                    case studies
+                  </p>
+                  <h1 className="mt-4 text-balance text-4xl font-semibold text-foreground sm:text-5xl">
+                    The work behind the growth
+                  </h1>
+                  <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+                    Explore the websites, content, and campaigns we&apos;ve
+                    built for businesses like yours. See the starting point,
+                    the work, and the results we can measure.
+                  </p>
+                  <a
+                    href="#case-studies-list"
+                    className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground/25"
+                  >
+                    Browse the studies
+                    <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
+
+                <div className="relative order-first min-h-[220px] overflow-hidden border-b border-border/60 lg:order-last lg:min-h-[380px] lg:border-b-0 lg:border-l">
+                  <div className="absolute inset-0 md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_30%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_30%)]">
+                    <pre
+                      aria-hidden="true"
+                      data-ghost-frame=""
+                      className="absolute inset-0 flex items-center justify-center overflow-hidden font-mono text-[4px] leading-none opacity-10 sm:text-[5px]"
+                    >
+                      {PLANET_GHOST_FRAME}
+                    </pre>
+                    <DeferredAsciiHeroBackdrop
+                      animationName="planet"
+                      frameCount={300}
+                      fps={18}
+                      quality="medium"
+                      renderMode="canvas"
+                      fit="cover"
+                      zoom={1.1}
+                      maskClassName=""
+                      ariaLabel="ASCII planet animation in the case studies orbit well"
+                      posterSrc={PLANET_POSTER_SRC}
+                      posterClassName="absolute inset-0 h-full w-full object-cover object-center opacity-90 [image-rendering:pixelated]"
+                      scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/30"
+                      focusScrimClassName=""
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mt-10 md:mt-12">
+            <div id="case-studies-list" className="mt-10 scroll-mt-24 md:mt-12">
               <CaseStudiesList studies={caseStudyListItems} />
             </div>
 

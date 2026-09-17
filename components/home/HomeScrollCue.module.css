@@ -1,0 +1,65 @@
+/*
+ * HomeScrollCue — the quiet scroll cue under the Impossible hero tagline.
+ *
+ * Motion contract (same as the scene module): the BASE styles below are the
+ * finished still frame. Bob, scroll-driven tone, and the dismiss transition
+ * live behind `prefers-reduced-motion: no-preference`, so reduced-motion,
+ * no-JS, and animation-disabled snapshots all see the complete static cue.
+ * Transforms and opacity only.
+ *
+ * Structure: the row (anchor) owns layout + the 2.9s entrance from
+ * HomeImpossibleHero.module.css; the inner `.motion` span owns color, bob,
+ * and dismiss. Separate elements keep the entrance fill from fighting the
+ * dismiss transition.
+ */
+
+.row {
+  /* Layout classes come from the component; this hook scopes hover. */
+}
+
+.motion {
+  color: rgb(143 135 123 / 0.8);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.row:hover .motion {
+  color: #c1b9ac;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .motion {
+    animation: cue-bob 2.4s ease-in-out infinite;
+    color: color-mix(
+      in srgb,
+      rgb(143 135 123 / 0.8) calc((1 - var(--cue-tone, 0)) * 100%),
+      #f5f0e8 calc(var(--cue-tone, 0) * 100%)
+    );
+    transition:
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .motion[data-cue-dismissed='true'] {
+    animation: none;
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion[data-cue-dismissed='true'] {
+    opacity: 0;
+  }
+}
+
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+}

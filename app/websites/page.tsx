@@ -5,8 +5,13 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
 import { ServiceSiblings } from '@/components/services/ServiceSiblings'
+import {
+  TechStackIcon,
+  WEBSITE_SURFACE_ICONS,
+} from '@/components/tech-stack-icons'
 import {
   CoreActionLink,
   CoreSectionHeading,
@@ -179,6 +184,18 @@ function SectionKicker({ children }: { children: ReactNode }) {
   )
 }
 
+const COMPUTER_POSTER_SRC = '/animations/computer/poster.svg'
+
+const TERMINAL_STATUS_LINES = [
+  'prism build --site complete',
+  'analytics wired in',
+  'search foundations ready',
+] as const
+
+function surfaceIconFor(label: string) {
+  return WEBSITE_SURFACE_ICONS.find((icon) => icon.label === label)
+}
+
 export default function WebsitesPage() {
   const featuredProjects = websiteProjects.slice(0, 8)
 
@@ -188,52 +205,134 @@ export default function WebsitesPage() {
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <section className="border-b border-white/12 px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24">
           <div className="mx-auto max-w-6xl">
-            <div className="mx-auto max-w-4xl text-center">
-              <SectionKicker>The PRO website</SectionKicker>
-              <h1 className="mx-auto mt-6 max-w-[16ch] text-balance text-[clamp(2.65rem,7.5vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
-                A better website. A clearer next step.
-              </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                Custom design, fast pages, and clear paths from a first visit to
-                an inquiry. Built with analytics and search foundations that
-                help Google and AI systems understand your business.
-              </p>
+            <div className="grid items-center gap-10 lg:grid-cols-2">
+              <div>
+                <SectionKicker>The PRO website</SectionKicker>
+                <h1 className="mt-6 max-w-[14ch] text-balance text-[clamp(2.65rem,7.5vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
+                  Your website, engineered live.
+                </h1>
+                <p className="mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
+                  Custom design, fast pages, and clear paths from a first
+                  visit to an inquiry. Analytics and search foundations are
+                  wired in from day one.
+                </p>
 
-              <CapacityNotice className="mx-auto mt-8 max-w-2xl text-left" />
+                <CapacityNotice className="mt-8 max-w-2xl" />
 
-              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <CoreActionLink
-                  href={WEBSITE_WAITLIST_CTA.href}
-                  variant="heroPrimary"
-                  label={WEBSITE_WAITLIST_CTA.label.toLowerCase()}
-                  location="websites hero"
-                >
-                  {WEBSITE_WAITLIST_CTA.label}
-                </CoreActionLink>
-                <CoreActionLink
-                  href="#work"
-                  variant="heroSecondary"
-                  label="see website proof"
-                  location="websites hero"
-                >
-                  See the work
-                </CoreActionLink>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <CoreActionLink
+                    href={WEBSITE_WAITLIST_CTA.href}
+                    variant="heroPrimary"
+                    label={WEBSITE_WAITLIST_CTA.label.toLowerCase()}
+                    location="websites hero"
+                  >
+                    {WEBSITE_WAITLIST_CTA.label}
+                  </CoreActionLink>
+                  <CoreActionLink
+                    href="#work"
+                    variant="heroSecondary"
+                    label="see website proof"
+                    location="websites hero"
+                  >
+                    See the work
+                  </CoreActionLink>
+                </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-                {[
-                  'Design systems',
-                  'Search foundations',
-                  'Analytics wired in',
-                  'Google + AI search',
-                ].map((item) => (
+              <div className="overflow-hidden rounded-2xl border border-white/12 bg-[#070707]">
+                <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
                   <span
-                    key={item}
-                    className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
+                    aria-hidden="true"
+                    className="flex gap-1.5"
                   >
-                    {item}
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
                   </span>
+                  <p className="ml-2 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[#8f877b]">
+                    prism -- build
+                  </p>
+                </div>
+                <div className="relative min-h-[280px] overflow-hidden sm:min-h-[320px]">
+                  <DeferredAsciiHeroBackdrop
+                    animationName="computer"
+                    frameCount={78}
+                    fps={14}
+                    quality="medium"
+                    renderMode="canvas"
+                    fit="cover"
+                    zoom={1.05}
+                    maskClassName=""
+                    ariaLabel="ASCII computer animation in the website build terminal"
+                    posterSrc={COMPUTER_POSTER_SRC}
+                    posterClassName="absolute inset-0 h-full w-full object-cover object-center opacity-90 [image-rendering:pixelated]"
+                    scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
+                    focusScrimClassName=""
+                  />
+                </div>
+                <ul
+                  aria-hidden="true"
+                  className="space-y-1.5 border-t border-white/10 px-4 py-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]"
+                >
+                  {TERMINAL_STATUS_LINES.map((line) => (
+                    <li key={line} className="flex items-center gap-2">
+                      <span className="text-[#d8bc79]">›</span>
+                      {line}
+                      <span className="ml-auto text-[#d8bc79]">✓</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-14 border-t border-white/10 pt-8">
+              <ul className="grid gap-6 sm:grid-cols-3">
+                {PROOF_POINTS.map((proof) => (
+                  <li key={proof.label}>
+                    <Link
+                      href={proof.href}
+                      className="group block focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
+                    >
+                      <p className="font-sans text-[2rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
+                        {proof.value}
+                      </p>
+                      <p className="mt-2 text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
+                        {proof.label}
+                      </p>
+                    </Link>
+                  </li>
                 ))}
+              </ul>
+              <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
+                Source: Google Search Console
+              </p>
+              <div className="mt-6 border-t border-white/10 py-4">
+                <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
+                  <span
+                    aria-hidden="true"
+                    className="home-signal-dot h-1 w-1 rounded-full bg-[#d8bc79]"
+                  />
+                  Live · Read by
+                </p>
+                <ul
+                  aria-label="Search and answer surfaces"
+                  className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2"
+                >
+                  {WEBSITE_SURFACE_ICONS.map((icon, index) => (
+                    <li
+                      key={icon.label}
+                      className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#c9c1b6]"
+                    >
+                      {index > 0 ? (
+                        <span aria-hidden="true" className="mr-2 text-[#5f594f]">
+                          ·
+                        </span>
+                      ) : null}
+                      <TechStackIcon spec={icon} className="h-3.5 w-3.5" />
+                      {icon.label}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -332,14 +431,20 @@ export default function WebsitesPage() {
                 description="We organize service pages, location details, and business information so search engines and AI assistants can understand what you do. Useful answers and accurate details support discovery; rankings and recommendations are never guaranteed."
               />
               <div className="flex flex-wrap gap-2">
-                {SEARCH_SURFACES.map((surface) => (
-                  <span
-                    key={surface}
-                    className="inline-flex min-h-9 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
-                  >
-                    {surface}
-                  </span>
-                ))}
+                {SEARCH_SURFACES.map((surface) => {
+                  const icon = surfaceIconFor(surface)
+                  return (
+                    <span
+                      key={surface}
+                      className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
+                    >
+                      {icon ? (
+                        <TechStackIcon spec={icon} className="h-3.5 w-3.5" />
+                      ) : null}
+                      {surface}
+                    </span>
+                  )
+                })}
               </div>
             </div>
 

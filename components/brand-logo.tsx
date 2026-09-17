@@ -1,4 +1,6 @@
-import type { ImgHTMLAttributes, ReactNode } from 'react'
+'use client'
+
+import { useState, type ImgHTMLAttributes, type ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -142,6 +144,10 @@ export const BRAND_LOGOS = {
     label: 'Webflow',
     mark: '/logos/svgl/webflow.svg',
   },
+  yelp: {
+    label: 'Yelp',
+    mark: '/logos/svgl/yelp.svg',
+  },
   youtube: {
     label: 'YouTube',
     mark: '/logos/svgl/youtube.svg',
@@ -209,12 +215,18 @@ export function BrandLogo({
   height,
   loading = 'lazy',
   decoding = 'async',
+  onError,
   ...props
 }: BrandLogoProps) {
   const logo = BRAND_LOGOS[brand]
   const src = getBrandLogoSource({ brand, variant, theme })
+  // Attempt-then-fallback: try the logo file first; if it fails to load
+  // (missing asset, blocked request), render the fallback node instead.
+  // The failed src is tracked so a brand/theme change re-attempts the load.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null)
+  const failed = failedSrc !== null && failedSrc === src
 
-  if (!src) return fallback
+  if (!src || failed) return fallback
 
   const alt = decorative ? '' : (label ?? logo.label)
 
@@ -229,6 +241,10 @@ export function BrandLogo({
       decoding={decoding}
       aria-hidden={decorative ? true : props['aria-hidden']}
       className={cn('shrink-0 object-contain', className)}
+      onError={(event) => {
+        setFailedSrc(src)
+        onError?.(event)
+      }}
     />
   )
 }

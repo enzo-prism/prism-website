@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
 import Link from 'next/link'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
+import {
+  ADS_STAGE_ICONS,
+  TechStackIcon,
+  type TechStackIconSpec,
+} from '@/components/tech-stack-icons'
 import {
   CoreActionLink,
   CoreSectionHeading,
@@ -37,7 +42,24 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const HERO_CHIPS = ['Google', 'Meta', 'TikTok', 'Yelp', 'ChatGPT Ads'] as const
+const ROCKET_POSTER_SRC = '/animations/rocket/poster.svg'
+
+// The five launch-rail STAGES rows. Icons resolve through the shared tech
+// stack map; statuses stay descriptive (no metric claims in the hero).
+const ADS_STAGE_STATUSES = [
+  'Active',
+  'Active',
+  'Active',
+  'Queued',
+  'Invite',
+] as const
+
+const ADS_STAGES: ReadonlyArray<
+  TechStackIconSpec & { status: (typeof ADS_STAGE_STATUSES)[number] }
+> = ADS_STAGE_ICONS.map((icon, index) => ({
+  ...icon,
+  status: ADS_STAGE_STATUSES[index],
+}))
 
 const WHAT_YOU_GET = [
   {
@@ -110,6 +132,7 @@ const PLATFORMS: readonly AdPlatform[] = [
   {
     name: 'Yelp Ads',
     why: 'Reach people comparing local businesses, services, and reviews.',
+    logoBrands: ['yelp'],
   },
 ]
 
@@ -228,14 +251,6 @@ const AUDIENCE_SEGMENTS = [
   },
 ] as const
 
-function HeroChip({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex min-h-9 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[#c9c1b6]">
-      {children}
-    </span>
-  )
-}
-
 export default async function AdsPage() {
   const allPosts = (await getAllPosts()) ?? []
   const adsBlogPosts = allPosts
@@ -272,38 +287,107 @@ export default async function AdsPage() {
                 'px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20',
               )}
             >
-              <div className="max-w-3xl">
-                <CoreSectionHeading
-                  as="h1"
-                  variant="hero"
-                  eyebrow="Ads"
-                  title="Turn attention into qualified inquiries."
-                  description="Reach potential customers on Google, Meta, TikTok, and Yelp. We connect ad creative, landing pages, and tracking so you can see which campaigns bring useful leads."
-                  titleClassName="max-w-[16ch]"
-                />
-                <CapacityNotice className="mt-8 max-w-[40rem]" />
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <CoreActionLink
-                    href={ADS_WAITLIST_CTA.href}
-                    variant="heroPrimary"
-                    label={ADS_WAITLIST_CTA.label.toLowerCase()}
-                    location="ads hero"
-                  >
-                    {ADS_WAITLIST_CTA.label}
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href="#platforms"
-                    variant="heroSecondary"
-                    label="see platforms"
-                    location="ads hero"
-                  >
-                    See the platforms
-                  </CoreActionLink>
+              <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+                <div>
+                  <CoreSectionHeading
+                    as="h1"
+                    variant="hero"
+                    eyebrow="Ads"
+                    title="Launch campaigns that bring qualified inquiries."
+                    description="Google, Meta, TikTok, and Yelp ads with creative, landing pages, and tracking. Aimed at the calls, inquiries, and appointments you want."
+                    titleClassName="max-w-[16ch]"
+                  />
+                  <CapacityNotice className="mt-8 max-w-[40rem]" />
+                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <CoreActionLink
+                      href={ADS_WAITLIST_CTA.href}
+                      variant="heroPrimary"
+                      label={ADS_WAITLIST_CTA.label.toLowerCase()}
+                      location="ads hero"
+                    >
+                      {ADS_WAITLIST_CTA.label}
+                    </CoreActionLink>
+                    <CoreActionLink
+                      href="#platforms"
+                      variant="heroSecondary"
+                      label="see platforms"
+                      location="ads hero"
+                    >
+                      See the platforms
+                    </CoreActionLink>
+                  </div>
                 </div>
-                <div className="mt-9 flex flex-wrap gap-2">
-                  {HERO_CHIPS.map((chip) => (
-                    <HeroChip key={chip}>{chip}</HeroChip>
-                  ))}
+
+                <div className="overflow-hidden rounded-2xl border border-white/12 bg-white/[0.03]">
+                  <div className="relative h-60 overflow-hidden sm:h-72 lg:h-80">
+                    <DeferredAsciiHeroBackdrop
+                      animationName="rocket"
+                      frameCount={120}
+                      fps={18}
+                      quality="high"
+                      renderMode="canvas"
+                      fit="contain"
+                      maskClassName=""
+                      ariaLabel="ASCII rocket animation in the ads launch rail"
+                      posterSrc={ROCKET_POSTER_SRC}
+                      posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-90 [image-rendering:pixelated]"
+                      scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
+                      focusScrimClassName=""
+                    />
+                  </div>
+                  <div className="border-t border-white/10 px-4 py-4 sm:px-5">
+                    <p className="flex items-center justify-between gap-4 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                      Launch manifest
+                      <span className="inline-flex items-center gap-1.5 text-[#d8bc79]">
+                        <span
+                          aria-hidden="true"
+                          className="h-1.5 w-1.5 rounded-full bg-[#d8bc79]"
+                        />
+                        Ready
+                      </span>
+                    </p>
+                    <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                      Stages
+                    </p>
+                    <ul
+                      aria-label="Ad platforms"
+                      className="mt-1 divide-y divide-white/10"
+                    >
+                      {ADS_STAGES.map((stage) => (
+                        <li
+                          key={stage.label}
+                          className="flex min-h-11 items-center gap-3 px-1 py-3"
+                        >
+                          <TechStackIcon
+                            spec={stage}
+                            className="h-4 w-4 opacity-90"
+                          />
+                          <span className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]">
+                            {stage.label}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="mx-1 flex-1 border-b border-dotted border-white/10"
+                          />
+                          <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#8f877b]">
+                            {stage.status}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <dl className="mt-2 space-y-1.5 border-t border-white/10 pt-3 font-mono text-[0.65rem] uppercase tracking-[0.18em]">
+                      <div className="flex items-center justify-between gap-4">
+                        <dt className="text-[#8f877b]">Guidance</dt>
+                        <dd className="text-[#c9c1b6]">Weekly optimization</dd>
+                      </div>
+                      <div className="flex items-center justify-between gap-4">
+                        <dt className="text-[#8f877b]">Telemetry</dt>
+                        <dd className="text-[#c9c1b6]">
+                          Call + inquiry tracking
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>

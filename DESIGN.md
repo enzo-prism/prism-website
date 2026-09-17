@@ -336,7 +336,10 @@ the Prism triangle into a six-band spectrum, with the single line
 "Impossible is temporary.", a mono support line ("Unlock your potential
 with Prism"), and a quiet scroll cue. Rules for this surface:
 
-- It is CSS-only motion (server component, zero client JS). Keep it that way.
+- The scene is CSS-only motion in a server component; keep it that way. The
+  scroll cue is the one client island (`components/home/HomeScrollCue.tsx`):
+  a quiet anchor to `#homepage-hero` with a rAF-throttled scroll tone shift
+  and IntersectionObserver dismiss, both inert under reduced motion.
 - The spectrum colors (`#e23b2e #ee7a22 #f2c230 #5fa345 #3e6db5 #6c4e9e`)
   are a scoped brand moment for this scene only — they are not page accents
   and must not leak into other sections.

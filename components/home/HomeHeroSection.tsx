@@ -26,15 +26,17 @@ export default function HomeHeroSection() {
       <div className={coreRouteContainerClassName}>
         <div className={coreRouteHeroFrameClassName}>
           <DeferredAsciiHeroBackdrop
-            animationName="wave"
-            frameCount={300}
-            fps={18}
-            quality="high"
+            animationName="wizard"
+            frameCount={91}
+            fps={15}
+            quality="medium"
             renderMode="canvas"
-            textSize="text-[2.3px] sm:text-[2.8px] md:text-[3.2px]"
-            ariaLabel="Wave ASCII animation behind the homepage hero"
+            ariaLabel="Wizard ASCII animation behind the homepage hero"
+            posterSrc="/animations/wizard/poster.svg"
+            posterClassName="absolute inset-0 h-full w-full origin-center object-cover opacity-[0.72] [image-rendering:pixelated] sm:opacity-[0.88] md:opacity-100 md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] scale-[0.84]"
             zoom={0.84}
-            className="!opacity-[0.72] drop-shadow-[0_0_18px_rgba(245,240,232,0.22)] sm:!opacity-[0.88] md:!opacity-100 md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)]"
+            maskClassName="md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)]"
+            className="!opacity-[0.72] drop-shadow-[0_0_18px_rgba(245,240,232,0.22)] sm:!opacity-[0.88] md:!opacity-100"
             scrimClassName="absolute inset-0 bg-gradient-to-b from-background/28 via-background/42 to-background/68 sm:from-background/20 sm:via-background/34 sm:to-background/58 md:from-background/12 md:via-background/24 md:to-background/48"
             focusScrimClassName="absolute inset-0 bg-[radial-gradient(ellipse_at_24%_48%,hsl(var(--background)/0.92)_0%,hsl(var(--background)/0.76)_32%,hsl(var(--background)/0.28)_56%,hsl(var(--background)/0)_80%)] sm:bg-[radial-gradient(ellipse_at_22%_48%,hsl(var(--background)/0.86)_0%,hsl(var(--background)/0.66)_34%,hsl(var(--background)/0.2)_58%,hsl(var(--background)/0)_82%)] md:bg-[radial-gradient(ellipse_at_24%_48%,hsl(var(--background)/0.78)_0%,hsl(var(--background)/0.52)_34%,hsl(var(--background)/0.12)_58%,hsl(var(--background)/0)_82%)]"
           />

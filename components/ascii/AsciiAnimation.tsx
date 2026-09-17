@@ -9,6 +9,13 @@ import {
   useState,
 } from "react"
 
+import {
+  colorFrameFileName,
+  decodePacked12Frame,
+  isColorAsciiMeta,
+  type ColorAsciiMeta,
+} from "@/lib/ascii-color"
+
 class AnimationManager {
   private _animation: number | null = null
   private callback: () => void
@@ -145,16 +152,29 @@ function normalizeSingleFrame(frame: string): string {
   return cropFrameToBounds(lines, bounds)
 }
 
+type FrameSourceFormat = "text" | "color"
+
+type ResolvedFrameSource = {
+  baseUrl: string
+  isFlat: boolean
+  format: FrameSourceFormat
+  meta?: ColorAsciiMeta
+}
+
 /**
  * Resolves the base URL for frame files by probing quality subfolders
  * and falling back to a flat folder structure.
- * Returns { baseUrl, isFlat } or null if nothing was found.
+ * Returns { baseUrl, isFlat, format, meta } or null if nothing was found.
+ *
+ * Color animations ship a meta.json (color-ascii-v2, packed-12 .bin frames);
+ * it is probed after the .txt probe so existing monochrome sources resolve
+ * with zero extra requests and the text fetch order is unchanged.
  */
 async function resolveFrameSource(
   frameFolder: string,
   quality: Quality,
   firstFrameFile: string,
-): Promise<{ baseUrl: string; isFlat: boolean } | null> {
+): Promise<ResolvedFrameSource | null> {
   const fallbackQualities = FALLBACK_ORDER[quality]
 
   for (const candidate of fallbackQualities) {
@@ -167,7 +187,24 @@ async function resolveFrameSource(
             `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
           )
         }
-        return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false }
+        return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "text" }
+      }
+    } catch {
+      // continue to the color probe
+    }
+
+    try {
+      const metaResponse = await fetch(`/${frameFolder}/${candidate}/meta.json`)
+      if (metaResponse.ok) {
+        const meta: unknown = await metaResponse.json()
+        if (isColorAsciiMeta(meta)) {
+          if (candidate !== quality) {
+            console.warn(
+              `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
+            )
+          }
+          return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "color", meta }
+        }
       }
     } catch {
       // continue to next candidate
@@ -181,7 +218,7 @@ async function resolveFrameSource(
       console.warn(
         `ASCIIAnimation: no quality subfolders found in "${frameFolder}", using flat folder structure`,
       )
-      return { baseUrl: `/${frameFolder}`, isFlat: true }
+      return { baseUrl: `/${frameFolder}`, isFlat: true, format: "text" }
     }
   } catch {
     // no legacy frames either
@@ -223,11 +260,14 @@ export interface ASCIIAnimationProps {
    * "canvas" renders frames into a <canvas> instead of a <pre> text node.
    * Canvas is NOT an LCP candidate, so decorative hero backdrops stop stealing
    * Largest Contentful Paint from the real hero headline. Default "dom".
+   * Color (packed-12 .bin) sources always render via canvas because the
+   * <pre> path cannot do per-cell palette colors.
    */
   renderMode?: "dom" | "canvas"
 }
 
 type LoadedFramesStore = Array<string[] | null>
+type LoadedColorFramesStore = Array<Uint8Array | null>
 
 export default function ASCIIAnimation({
   frames: providedFrames,
@@ -267,12 +307,22 @@ export default function ASCIIAnimation({
   const framesRef = useRef<string[]>([])
   const loadedFrameLines = useRef<LoadedFramesStore>([])
   const fullLoadTriggered = useRef(false)
-  const resolvedSource = useRef<{ baseUrl: string; isFlat: boolean } | null>(null)
+  const resolvedSource = useRef<ResolvedFrameSource | null>(null)
+  // Color (packed-12 .bin) sources keep raw frame buffers plus their meta;
+  // `frames` holds one placeholder string per loaded color frame so the
+  // shared length/loop logic works for both formats.
+  const [isColor, setIsColor] = useState(false)
+  const colorMetaRef = useRef<ColorAsciiMeta | null>(null)
+  const colorFramesRef = useRef<Uint8Array[]>([])
+  const loadedColorFrames = useRef<LoadedColorFramesStore>([])
   const isInViewRef = useRef(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const resolvedColorRef = useRef<string>("")
   const renderModeRef = useRef<"dom" | "canvas">(renderMode)
   const drawFrameRef = useRef<((frameStr: string) => void) | null>(null)
+  const drawColorFrameRef = useRef<
+    ((meta: ColorAsciiMeta, buffer: Uint8Array) => void) | null
+  >(null)
 
   // Keep framesRef synced with React state.
   useEffect(() => {
@@ -322,16 +372,84 @@ export default function ASCIIAnimation({
     }
   }, [])
 
+  // Color frames are drawn per-glyph with palette colors. Canvas is the only
+  // render path for color sources (the <pre> path cannot do per-cell color),
+  // so `renderMode` is forced to canvas once a color source is detected.
+  const drawColorFrameToCanvas = useCallback(
+    (meta: ColorAsciiMeta, buffer: Uint8Array) => {
+      const canvas = canvasRef.current
+      if (!canvas || buffer.length === 0) return
+      const ch = 10
+      const probe = canvas.getContext("2d")
+      if (!probe) return
+      probe.font = `${ch}px ui-monospace, SFMono-Regular, Menlo, monospace`
+      const cw = Math.max(1, Math.ceil(probe.measureText("M").width))
+      const cssW = Math.max(1, meta.width * cw)
+      const cssH = Math.max(1, meta.height * ch)
+      const dpr = Math.min(
+        typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1,
+        2,
+      )
+      if (
+        canvas.dataset.cssw !== String(cssW) ||
+        canvas.dataset.cssh !== String(cssH)
+      ) {
+        canvas.style.width = `${cssW}px`
+        canvas.style.height = `${cssH}px`
+        canvas.width = Math.ceil(cssW * dpr)
+        canvas.height = Math.ceil(cssH * dpr)
+        canvas.dataset.cssw = String(cssW)
+        canvas.dataset.cssh = String(cssH)
+      }
+      const ctx = canvas.getContext("2d")
+      if (!ctx) return
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.clearRect(0, 0, cssW, cssH)
+      ctx.font = `${ch}px ui-monospace, SFMono-Regular, Menlo, monospace`
+      ctx.textBaseline = "top"
+      const frame = decodePacked12Frame(meta, buffer)
+      for (let i = 0; i < frame.glyphs.length; i++) {
+        const char = meta.charset[frame.glyphs[i]] ?? " "
+        if (char === " ") continue
+        ctx.fillStyle = meta.palette[frame.colors[i]] ?? "#fff"
+        ctx.fillText(
+          char,
+          (i % meta.width) * cw,
+          Math.floor(i / meta.width) * ch,
+        )
+      }
+    },
+    [],
+  )
+
+  const effectiveRenderMode = isColor ? "canvas" : renderMode
+
   // Keep refs the rAF callback reads in sync (the AnimationManager is memoized
   // on [fps], so it cannot close over the latest renderMode / draw fn directly).
   useEffect(() => {
-    renderModeRef.current = renderMode
+    renderModeRef.current = effectiveRenderMode
     drawFrameRef.current = drawFrameToCanvas
-  }, [renderMode, drawFrameToCanvas])
+    drawColorFrameRef.current = drawColorFrameToCanvas
+  }, [effectiveRenderMode, drawFrameToCanvas, drawColorFrameToCanvas])
 
   const animationManager = useMemo(
     () =>
       new AnimationManager(() => {
+        const colorMeta = colorMetaRef.current
+        const colorFrames = colorFramesRef.current
+        if (colorMeta && colorFrames.length >= 2) {
+          const nextFrame = (currentFrameRef.current + 1) % colorFrames.length
+          currentFrameRef.current = nextFrame
+          drawColorFrameRef.current?.(colorMeta, colorFrames[nextFrame])
+          if (canvasRef.current) {
+            canvasRef.current.dataset.currentFrame = String(nextFrame)
+          }
+          if (frameCounterRef.current) {
+            frameCounterRef.current.textContent = `Frame: ${nextFrame + 1}/${colorFrames.length}`
+          }
+          return
+        }
+
         const allFrames = framesRef.current
         if (allFrames.length < 2) return
 
@@ -340,6 +458,9 @@ export default function ASCIIAnimation({
 
         if (renderModeRef.current === "canvas") {
           drawFrameRef.current?.(allFrames[nextFrame])
+          if (canvasRef.current) {
+            canvasRef.current.dataset.currentFrame = String(nextFrame)
+          }
         } else if (preRef.current) {
           preRef.current.textContent = allFrames[nextFrame]
           preRef.current.dataset.currentFrame = String(nextFrame)
@@ -359,6 +480,24 @@ export default function ASCIIAnimation({
       ),
     [frameCount],
   )
+
+  const colorFrameFiles = useMemo(
+    () => Array.from({ length: frameCount }, (_, i) => colorFrameFileName(i)),
+    [frameCount],
+  )
+
+  const syncColorFrames = useCallback(() => {
+    const buffers = loadedColorFrames.current
+      .filter((buffer): buffer is Uint8Array => buffer !== null)
+    colorFramesRef.current = buffers
+    setFrames((previous) => {
+      if (previous.length === buffers.length) return previous
+      return buffers.map(() => "")
+    })
+    if (buffers.length > 0 && currentFrameRef.current >= buffers.length) {
+      currentFrameRef.current = 0
+    }
+  }, [])
 
   const rebuildRenderableFrames = useCallback(() => {
     const rawFrames = loadedFrameLines.current
@@ -407,6 +546,17 @@ export default function ASCIIAnimation({
     [],
   )
 
+  const fetchColorFrame = useCallback(
+    async (baseUrl: string, filename: string): Promise<Uint8Array> => {
+      const response = await fetch(`${baseUrl}/${filename}`)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${filename}: ${response.status}`)
+      }
+      return new Uint8Array(await response.arrayBuffer())
+    },
+    [],
+  )
+
   const loadBundledFrames = useCallback(async (baseUrl: string): Promise<boolean> => {
     try {
       const response = await fetch(`${baseUrl}/frames.json`)
@@ -440,12 +590,15 @@ export default function ASCIIAnimation({
       return
     }
 
-    if (bundledFrames && (await loadBundledFrames(source.baseUrl))) {
+    const isColorSource = source.format === "color"
+    // frames.json bundles are text-only; color sources always stream .bin files.
+    if (!isColorSource && bundledFrames && (await loadBundledFrames(source.baseUrl))) {
       setIsLoading(false)
       return
     }
 
-    const totalFrames = frameFiles.length
+    const files = isColorSource ? colorFrameFiles : frameFiles
+    const totalFrames = files.length
     const candidateIndices = Array.from(
       { length: Math.max(0, totalFrames - 1) },
       (_, i) => i + 1,
@@ -467,6 +620,16 @@ export default function ASCIIAnimation({
 
         const batchResults = await Promise.allSettled(
           batch.map((frameIndex) => {
+            if (isColorSource) {
+              const cached = loadedColorFrames.current[frameIndex]
+              if (cached) {
+                return Promise.resolve({ index: frameIndex, buffer: cached })
+              }
+              return fetchColorFrame(source.baseUrl, files[frameIndex]).then(
+                (buffer) => ({ index: frameIndex, buffer }),
+              )
+            }
+
             if (loadedFrameLines.current[frameIndex]) {
               const cachedFrame = loadedFrameLines.current[frameIndex]
               if (!cachedFrame) {
@@ -479,14 +642,17 @@ export default function ASCIIAnimation({
               })
             }
 
-            return fetchFrameLines(source.baseUrl, frameFiles[frameIndex]).then((lines) => ({
+            return fetchFrameLines(source.baseUrl, files[frameIndex]).then((lines) => ({
               index: frameIndex,
               lines,
             }))
           }),
         )
 
-        const chunkLoaded: Array<{ index: number; lines: string[] }> = []
+        const chunkLoaded: Array<
+          | { index: number; lines: string[]; buffer?: undefined }
+          | { index: number; buffer: Uint8Array; lines?: undefined }
+        > = []
         batchResults.forEach((result, batchIdx) => {
           const index = batch[batchIdx]
           if (result.status === "rejected") {
@@ -500,17 +666,25 @@ export default function ASCIIAnimation({
           }
 
           const loaded = result.value
-          chunkLoaded.push(loaded)
+          chunkLoaded.push(loaded as (typeof chunkLoaded)[number])
         })
 
         if (chunkLoaded.length === 0) {
           continue
         }
 
-        chunkLoaded.forEach(({ index, lines }) => {
-          loadedFrameLines.current[index] = lines
+        chunkLoaded.forEach((loaded) => {
+          if (loaded.buffer) {
+            loadedColorFrames.current[loaded.index] = loaded.buffer
+          } else if (loaded.lines) {
+            loadedFrameLines.current[loaded.index] = loaded.lines
+          }
         })
-        rebuildRenderableFrames()
+        if (isColorSource) {
+          syncColorFrames()
+        } else {
+          rebuildRenderableFrames()
+        }
       }
     }
 
@@ -539,11 +713,14 @@ export default function ASCIIAnimation({
     bundledFrames,
     continueOnFrameError,
     frameFiles,
+    colorFrameFiles,
+    fetchColorFrame,
     fetchFrameLines,
     loadBundledFrames,
     loadStrategy,
     maxConcurrentFetches,
     rebuildRenderableFrames,
+    syncColorFrames,
     batchSize,
   ])
 
@@ -552,6 +729,10 @@ export default function ASCIIAnimation({
     fullLoadTriggered.current = false
     resolvedSource.current = null
     loadedFrameLines.current = []
+    loadedColorFrames.current = []
+    colorFramesRef.current = []
+    colorMetaRef.current = null
+    setIsColor(false)
     setScaled(false)
     setIsLoading(true)
     currentFrameRef.current = 0
@@ -575,6 +756,28 @@ export default function ASCIIAnimation({
       }
 
       resolvedSource.current = source
+
+      if (source.format === "color" && source.meta) {
+        colorMetaRef.current = source.meta
+        loadedColorFrames.current = Array(frameCount).fill(null)
+        setIsColor(true)
+        try {
+          const buffer = await fetchColorFrame(source.baseUrl, colorFrameFiles[0])
+          loadedColorFrames.current[0] = buffer
+          syncColorFrames()
+          currentFrameRef.current = 0
+        } catch (error) {
+          console.error("Failed to load preview frame:", error)
+        }
+
+        if (!lazy) {
+          await loadRemainingFrames()
+        } else {
+          setIsLoading(false)
+        }
+        return
+      }
+
       loadedFrameLines.current = Array(frameCount).fill(null)
 
       try {
@@ -627,6 +830,8 @@ export default function ASCIIAnimation({
 
     loadPreview()
   }, [
+    colorFrameFiles,
+    fetchColorFrame,
     fetchFrameLines,
     forceAutoplay,
     frameCount,
@@ -637,6 +842,7 @@ export default function ASCIIAnimation({
     providedFrames,
     quality,
     rebuildRenderableFrames,
+    syncColorFrames,
   ])
 
   // IntersectionObserver: triggers lazy load + controls playback
@@ -789,7 +995,12 @@ export default function ASCIIAnimation({
 
     // In canvas mode, resolve the inherited foreground color once and paint the
     // first frame so the canvas has a natural size for the scale math below.
-    if (renderMode === "canvas" && canvasRef.current) {
+    // Color sources always render via canvas (see effectiveRenderMode).
+    const colorMeta = colorMetaRef.current
+    const colorBuffer = colorFramesRef.current[currentFrameRef.current]
+    if (colorMeta && colorBuffer && canvasRef.current) {
+      drawColorFrameToCanvas(colorMeta, colorBuffer)
+    } else if (effectiveRenderMode === "canvas" && canvasRef.current) {
       if (!resolvedColorRef.current) {
         resolvedColorRef.current = getComputedStyle(canvasRef.current).color
       }
@@ -829,7 +1040,7 @@ export default function ASCIIAnimation({
     return () => {
       resizeObserver.disconnect()
     }
-  }, [frames, fit, zoom, scaled, renderMode, drawFrameToCanvas])
+  }, [frames, fit, zoom, scaled, effectiveRenderMode, drawColorFrameToCanvas, drawFrameToCanvas])
 
   if (isLoading && frames.length === 0) {
     return (
@@ -880,10 +1091,11 @@ export default function ASCIIAnimation({
           Frame: {currentFrameRef.current + 1}/{frames.length}
         </div>
       )}
-      {renderMode === "canvas" ? (
+      {effectiveRenderMode === "canvas" ? (
         <canvas
           ref={canvasRef}
           aria-hidden="true"
+          data-current-frame={currentFrameRef.current}
           className="origin-center"
           style={{
             transform: `translateY(${offsetY}%) scale(${scale})`,

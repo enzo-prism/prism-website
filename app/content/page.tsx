@@ -4,6 +4,7 @@ import { Globe, Megaphone, Share2, Sparkles } from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
+import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
 import { ServiceSiblings } from '@/components/services/ServiceSiblings'
 import {
@@ -39,6 +40,8 @@ const HERO_CHIPS = [
   'Your website',
   '3-month implementation',
 ] as const
+
+const FIRE_POSTER_SRC = '/animations/fire-2/poster.svg'
 
 const CAPABILITIES = [
   {
@@ -175,43 +178,80 @@ export default function ContentOsPage() {
                 'px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20',
               )}
             >
-              <div className="max-w-3xl">
-                <CoreSectionHeading
-                  as="h1"
-                  variant="hero"
-                  eyebrow="Content"
-                  title="Your expertise. Published consistently."
-                  description="Turn your ideas and offers into posts, scripts, and website content. We handle planning, production, and publishing across your social channels and site."
-                  titleClassName="max-w-[20ch]"
-                />
+              <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+                <div>
+                  <CoreSectionHeading
+                    as="h1"
+                    variant="hero"
+                    eyebrow="Content"
+                    title="Your expertise. Catching fire."
+                    description="Turn your ideas and offers into posts, scripts, and website content. We handle planning, production, and publishing across your social channels and site."
+                    titleClassName="max-w-[20ch]"
+                  />
 
-                <p className="mt-8 text-[1.02rem] leading-7 text-[#b8afa2]">
-                  <span className="font-medium text-[#f5f0e8]">
-                    Implemented over 3 months
-                  </span>
-                  {', '}then optimized every month. Scoped to your business
-                  when we reach out.
-                </p>
+                  <p className="mt-8 text-[1.02rem] leading-7 text-[#b8afa2]">
+                    <span className="font-medium text-[#f5f0e8]">
+                      Implemented over 3 months
+                    </span>
+                    {', '}then optimized every month. Scoped to your business
+                    when we reach out.
+                  </p>
 
-                <CapacityNotice className="mt-8 max-w-[40rem]" />
+                  <CapacityNotice className="mt-8 max-w-[40rem]" />
 
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <CoreActionLink
-                    href={CONTENT_WAITLIST_CTA.href}
-                    variant="heroPrimary"
-                    label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
-                    location="content hero"
-                  >
-                    {CONTENT_WAITLIST_CTA.label}
-                  </CoreActionLink>
+                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <CoreActionLink
+                      href={CONTENT_WAITLIST_CTA.href}
+                      variant="heroPrimary"
+                      label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
+                      location="content hero"
+                    >
+                      {CONTENT_WAITLIST_CTA.label}
+                    </CoreActionLink>
+                  </div>
+
+                  <div className="mt-9 flex flex-wrap gap-2">
+                    {HERO_CHIPS.map((chip) => (
+                      <HeroChip key={chip}>{chip}</HeroChip>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="mt-9 flex flex-wrap gap-2">
-                  {HERO_CHIPS.map((chip) => (
-                    <HeroChip key={chip}>{chip}</HeroChip>
-                  ))}
+                <div className="rounded-[1.75rem] border border-white/12 bg-black/35 p-3 sm:p-4">
+                  <div className="relative min-h-[300px] overflow-hidden rounded-[1.3rem] border border-white/12 bg-white/5 sm:min-h-[360px]">
+                    <DeferredAsciiHeroBackdrop
+                      animationName="fire-2"
+                      frameCount={94}
+                      fps={16}
+                      quality="medium"
+                      renderMode="canvas"
+                      fit="cover"
+                      zoom={1.1}
+                      offsetY={6}
+                      maskClassName=""
+                      ariaLabel="ASCII fire animation in the content hearth panel"
+                      posterSrc={FIRE_POSTER_SRC}
+                      posterClassName="absolute inset-0 h-full w-full object-cover object-center opacity-90 [image-rendering:pixelated]"
+                      scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
+                      focusScrimClassName=""
+                    />
+                  </div>
+                  <p
+                    aria-hidden="true"
+                    className="px-2 pb-1 pt-3 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]"
+                  >
+                    Loop 094 fr . Plan / Produce / Publish
+                  </p>
                 </div>
               </div>
+
+              <p className="mt-10 flex items-center gap-2 border-t border-white/10 pt-5 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
+                <span
+                  aria-hidden="true"
+                  className="home-signal-dot h-1 w-1 rounded-full bg-[#d8bc79]"
+                />
+                Plan . Produce . Publish . Repeat
+              </p>
             </div>
           </div>
         </section>

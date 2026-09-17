@@ -37,4 +37,22 @@ describe('CaseStudyWorkHighlights', () => {
       dialog.querySelector('img[src="/logos/svgl/vercel-light.svg"]'),
     ).toBeInTheDocument()
   })
+
+  it('attempts the yelp logo, then falls back to the store icon on error', () => {
+    render(<CaseStudyWorkHighlights caseStudySlug="mataria-dental-group" />)
+
+    openTechStackTab()
+
+    const yelpButton = screen.getByRole('button', { name: 'Yelp for Business' })
+    const logo = yelpButton.querySelector('img[src="/logos/svgl/yelp.svg"]')
+    expect(logo).toBeInTheDocument()
+    expect(yelpButton.querySelector('svg')).not.toBeInTheDocument()
+
+    fireEvent.error(logo as Element)
+
+    expect(
+      yelpButton.querySelector('img[src="/logos/svgl/yelp.svg"]'),
+    ).not.toBeInTheDocument()
+    expect(yelpButton.querySelector('svg')).toBeInTheDocument()
+  })
 })
