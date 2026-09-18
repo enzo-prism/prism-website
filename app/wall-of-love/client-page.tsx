@@ -57,39 +57,29 @@ export default function WallOfLoveClientPage() {
           <div className="relative isolate overflow-hidden rounded-3xl border border-border/60 bg-card/50 shadow-[0_30px_90px_-50px_rgba(0,0,0,0.7)]">
             <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
               <div className="flex flex-col justify-center px-6 py-12 sm:px-10 md:px-12 lg:py-16">
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                  Wall of Love / Incoming
-                </p>
-                <h1 className="mt-4 text-balance text-4xl font-semibold text-foreground sm:text-5xl">
-                  Love letters, still arriving.
+                <h1 className="text-balance text-4xl font-semibold text-foreground sm:text-5xl">
+                  Wall of Love
                 </h1>
                 <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
                   Prism shares content for world-class founders and athletes.
                   This is what they send back.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="mt-8 flex">
                   <Link href="/waitlist">
                     <Button
                       size="lg"
                       className="rounded-md px-6"
                       onClick={() =>
                         trackCTAClick(
-                          'wall_of_love_become_client_cta',
+                          'wall_of_love_waitlist_cta',
                           '/waitlist',
                         )
                       }
                     >
-                      Become a Client <ArrowRight className="ml-2 h-4 w-4" />
+                      Prism Waitlist <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                  <a
-                    href="#testimonials-feed"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground/25"
-                  >
-                    Read the letters
-                    <span aria-hidden="true">↓</span>
-                  </a>
                 </div>
               </div>
 
@@ -110,12 +100,6 @@ export default function WallOfLoveClientPage() {
                   scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
                   focusScrimClassName=""
                 />
-                <p
-                  aria-hidden="true"
-                  className="absolute bottom-3 left-4 z-10 rounded-full bg-background/70 backdrop-blur-sm px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground"
-                >
-                  Incoming / {reviewCount.toLocaleString()} voices
-                </p>
               </div>
             </div>
 

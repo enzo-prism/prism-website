@@ -272,10 +272,10 @@ Quick reference for the pages we edit most often.
 
 ## Wall Of Love (`app/wall-of-love/client-page.tsx`)
 
-- Hero is the "Incoming" split editorial (left copy rail, right flight-lane panel, mono system strip): kicker `Wall of Love / Incoming`, H1 `Love letters, still arriving.`, primary CTA plus a `Read the letters` text link to `#testimonials-feed`. The heart-icon "testimonials" badge above the H1 was removed (2026-07-29) to simplify the hero; do not reintroduce it.
-- Hero media is the 56-frame `mail` ASCII loop (`public/animations/mail/medium`, canvas render, `contain`, no focus mask) via `DeferredAsciiHeroBackdrop` with `posterSrc` set to `public/animations/mail/poster.svg`, so reduced-motion, constrained-device, and no-JS visitors still see the mail poster. The retired planet media (`planet-lite.mp4`, `planet-lite-2026.mp4`, `planet.png`, `sales-agent-source.mp4`) is deleted; do not reintroduce it.
+- Hero is a simplified split editorial (left copy rail, right flight-lane panel, mono system strip): single H1 `Wall of Love`, one-line subcopy, and one `Prism Waitlist` CTA to `/waitlist`. No kicker, no panel caption, no secondary link; the heart-icon "testimonials" badge above the H1 was removed (2026-07-29) to simplify the hero, do not reintroduce it.
+- Hero media is the 60-frame `heart` ASCII loop (`public/animations/heart/medium`, canvas render, `contain`, no focus mask) via `DeferredAsciiHeroBackdrop` with `posterSrc` set to `public/animations/heart/poster.svg`, so reduced-motion, constrained-device, and no-JS visitors still see the heart poster. The retired planet media (`planet-lite.mp4`, `planet-lite-2026.mp4`, `planet.png`, `sales-agent-source.mp4`) is deleted; do not reintroduce it.
 - Autoplay, reduced-motion, and constrained-device decisions come from the shared ASCII backdrop policy (`lib/ascii-backdrop-policy.ts`); do not branch on route logic.
-- Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_become_client_cta", "/waitlist")`) and keep the testimonials feed anchored at `#testimonials-feed`.
+- Keep CTA tracking on the primary button (`trackCTAClick("wall_of_love_waitlist_cta", "/waitlist")`) and keep the testimonials feed anchored at `#testimonials-feed`.
 - Social proof copy in the hero reads from `lib/proof-metrics.ts`; do not hard-code a second snapshot here.
 
 ## Prism Library (`app/library/page.tsx`)

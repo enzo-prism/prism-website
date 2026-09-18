@@ -33,18 +33,23 @@ function heroScope(container: HTMLElement) {
   )
 }
 
-describe('WallOfLoveClientPage incoming hero', () => {
-  it('renders the incoming copy and heart poster fallback', () => {
+describe('WallOfLoveClientPage hero', () => {
+  it('renders a single Wall of Love H1 and the heart poster fallback', () => {
     const { container } = render(<WallOfLoveClientPage />)
     const hero = heroScope(container)
 
     expect(
       hero.getByRole('heading', {
         level: 1,
-        name: 'Love letters, still arriving.',
+        name: 'Wall of Love',
       }),
     ).toBeInTheDocument()
-    expect(hero.getByText('Wall of Love / Incoming')).toBeInTheDocument()
+    expect(
+      hero.queryByText('Wall of Love / Incoming'),
+    ).not.toBeInTheDocument()
+    expect(
+      hero.queryByText('Love letters, still arriving.'),
+    ).not.toBeInTheDocument()
 
     const poster = container.querySelector(
       'img[src="/animations/heart/poster.svg"]',
@@ -53,28 +58,24 @@ describe('WallOfLoveClientPage incoming hero', () => {
     expect(poster).toHaveAttribute('aria-hidden', 'true')
   })
 
-  it('keeps the Become a Client CTA with tracking', () => {
+  it('keeps a single Prism Waitlist CTA with tracking', () => {
     const { container } = render(<WallOfLoveClientPage />)
     const hero = heroScope(container)
 
-    const cta = hero.getByRole('link', { name: /Become a Client/ })
+    const cta = hero.getByRole('link', { name: /Prism Waitlist/ })
     expect(cta).toHaveAttribute('href', '/waitlist')
 
-    const button = within(cta).getByRole('button', { name: /Become a Client/ })
+    const button = within(cta).getByRole('button', { name: /Prism Waitlist/ })
     fireEvent.click(button)
     expect(trackCTAClick).toHaveBeenCalledWith(
-      'wall_of_love_become_client_cta',
+      'wall_of_love_waitlist_cta',
       '/waitlist',
     )
-  })
 
-  it('links the secondary action to the testimonials feed', () => {
-    const { container } = render(<WallOfLoveClientPage />)
-    const hero = heroScope(container)
-
-    const secondary = hero.getByRole('link', { name: /Read the letters/ })
-    expect(secondary).toHaveAttribute('href', '#testimonials-feed')
-    expect(document.getElementById('testimonials-feed')).toBeInTheDocument()
+    expect(
+      hero.queryByRole('link', { name: /Read the letters/ }),
+    ).not.toBeInTheDocument()
+    expect(hero.getAllByRole('link')).toHaveLength(1)
   })
 
   it('reads the system strip from the shared proof snapshot', () => {
@@ -94,7 +95,9 @@ describe('WallOfLoveClientPage incoming hero', () => {
         )
       }),
     ).toBeInTheDocument()
-    expect(screen.queryByText('Wall of Love', { selector: 'h1' })).not.toBeInTheDocument()
+    expect(
+      screen.queryByText(/Incoming \/ .* voices/),
+    ).not.toBeInTheDocument()
   })
 
   it('keeps hero copy free of em dashes', () => {
