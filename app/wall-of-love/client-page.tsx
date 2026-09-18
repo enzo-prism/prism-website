@@ -21,7 +21,7 @@ type FeedItem =
   | { kind: 'quote'; data: Quote }
   | { kind: 'takeaway'; data: Takeaway }
 
-const HANDS_POSTER_SRC = '/animations/hands/poster.svg'
+const HEART_POSTER_SRC = '/animations/heart/poster.svg'
 
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -95,8 +95,8 @@ export default function WallOfLoveClientPage() {
 
               <div className="relative order-first min-h-[260px] overflow-hidden border-b border-border/60 md:min-h-[300px] lg:order-last lg:min-h-[380px] lg:border-b-0 lg:border-l">
                 <DeferredAsciiHeroBackdrop
-                  animationName="hands"
-                  frameCount={152}
+                  animationName="heart"
+                  frameCount={60}
                   fps={15}
                   quality="medium"
                   renderMode="canvas"
@@ -104,8 +104,8 @@ export default function WallOfLoveClientPage() {
                   zoom={1.05}
                   offsetY={-3}
                   maskClassName=""
-                  ariaLabel="ASCII hands animation in the Wall of Love flight lane"
-                  posterSrc={HANDS_POSTER_SRC}
+                  ariaLabel="ASCII heart animation in the Wall of Love flight lane"
+                  posterSrc={HEART_POSTER_SRC}
                   posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-90 [image-rendering:pixelated]"
                   scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
                   focusScrimClassName=""
