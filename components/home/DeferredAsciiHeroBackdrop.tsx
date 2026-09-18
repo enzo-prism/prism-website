@@ -241,6 +241,7 @@ export default function DeferredAsciiHeroBackdrop(
           alt=""
           aria-hidden="true"
           draggable={false}
+          decoding="async"
           className={
             props.posterClassName ??
             'absolute inset-0 h-full w-full object-cover'

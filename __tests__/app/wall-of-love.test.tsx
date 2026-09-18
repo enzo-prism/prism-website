@@ -34,7 +34,7 @@ function heroScope(container: HTMLElement) {
 }
 
 describe('WallOfLoveClientPage incoming hero', () => {
-  it('renders the incoming copy and mail poster fallback', () => {
+  it('renders the incoming copy and hands poster fallback', () => {
     const { container } = render(<WallOfLoveClientPage />)
     const hero = heroScope(container)
 
@@ -47,7 +47,7 @@ describe('WallOfLoveClientPage incoming hero', () => {
     expect(hero.getByText('Wall of Love / Incoming')).toBeInTheDocument()
 
     const poster = container.querySelector(
-      'img[src="/animations/mail/poster.svg"]',
+      'img[src="/animations/hands/poster.svg"]',
     )
     expect(poster).toBeInTheDocument()
     expect(poster).toHaveAttribute('aria-hidden', 'true')

@@ -23,6 +23,7 @@ const FILL = '#f5f0e8'
 // animation, tier, 1-based frame number, poster label
 const MANIFEST = [
   ['mail', 'medium', 28, 'Mail'],
+  ['hands', 'medium', 76, 'Hands'],
   ['computer', 'medium', 40, 'Computer'],
   ['fire-2', 'medium', 47, 'Fire'],
   ['rocket', 'low', 1, 'Rocket'],

@@ -55,7 +55,7 @@ test.describe('Hero animation loops', () => {
     await waitForAsciiLoop(page, '#case-studies-hero')
   })
 
-  test('wall of love ASCII mail loop advances', async ({ page }) => {
+  test('wall of love ASCII hands loop advances', async ({ page }) => {
     await page.goto('/wall-of-love', { waitUntil: 'domcontentloaded' })
     await waitForAsciiLoop(page, '#wall-of-love-hero')
   })

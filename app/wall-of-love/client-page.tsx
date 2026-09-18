@@ -21,7 +21,7 @@ type FeedItem =
   | { kind: 'quote'; data: Quote }
   | { kind: 'takeaway'; data: Takeaway }
 
-const MAIL_POSTER_SRC = '/animations/mail/poster.svg'
+const HANDS_POSTER_SRC = '/animations/hands/poster.svg'
 
 // Generic Fisher–Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -93,25 +93,26 @@ export default function WallOfLoveClientPage() {
                 </div>
               </div>
 
-              <div className="relative order-first min-h-[200px] overflow-hidden border-b border-border/60 lg:order-last lg:min-h-[380px] lg:border-b-0 lg:border-l">
+              <div className="relative order-first min-h-[260px] overflow-hidden border-b border-border/60 md:min-h-[300px] lg:order-last lg:min-h-[380px] lg:border-b-0 lg:border-l">
                 <DeferredAsciiHeroBackdrop
-                  animationName="mail"
-                  frameCount={56}
-                  fps={18}
+                  animationName="hands"
+                  frameCount={152}
+                  fps={15}
                   quality="medium"
                   renderMode="canvas"
                   fit="contain"
-                  zoom={1}
+                  zoom={1.05}
+                  offsetY={-3}
                   maskClassName=""
-                  ariaLabel="ASCII mail animation in the Wall of Love flight lane"
-                  posterSrc={MAIL_POSTER_SRC}
+                  ariaLabel="ASCII hands animation in the Wall of Love flight lane"
+                  posterSrc={HANDS_POSTER_SRC}
                   posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-90 [image-rendering:pixelated]"
-                  scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/30"
+                  scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
                   focusScrimClassName=""
                 />
                 <p
                   aria-hidden="true"
-                  className="absolute bottom-3 left-4 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground"
+                  className="absolute bottom-3 left-4 z-10 rounded-full bg-background/70 backdrop-blur-sm px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground"
                 >
                   Incoming / {reviewCount.toLocaleString()} voices
                 </p>
@@ -124,12 +125,16 @@ export default function WallOfLoveClientPage() {
                   Instagram {SOCIAL_PROOF.instagram.audience}{' '}
                   {SOCIAL_PROOF.instagram.audienceLabel}
                 </span>
-                <span aria-hidden="true">/</span>
+                <span aria-hidden="true" className="hidden lg:inline">
+                  /
+                </span>
                 <span>
                   TikTok {SOCIAL_PROOF.tiktok.audience}{' '}
                   {SOCIAL_PROOF.tiktok.audienceLabel}
                 </span>
-                <span aria-hidden="true">/</span>
+                <span aria-hidden="true" className="hidden lg:inline">
+                  /
+                </span>
                 <span>
                   YouTube {SOCIAL_PROOF.youtube.audience}{' '}
                   {SOCIAL_PROOF.youtube.audienceLabel}
