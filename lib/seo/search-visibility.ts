@@ -108,6 +108,7 @@ export const INDEXABLE_BLOG_SLUGS = [
   'ai-effortlessly-welcome-more-patients-dental-practice',
   'ai-rip-eyes-out-dental-software',
   'ai-search-for-dental-practice',
+  'build-ai-business-system-you-own',
   'business-visibility-chatgpt',
   'claude-code-to-figma-why-this-changes-how-we-build',
   'claude-opus-4-8-what-it-means-for-small-business-owners',

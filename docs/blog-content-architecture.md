@@ -34,7 +34,7 @@ Each MDX file must define:
 | `searchVisibility`                             | optional | `"index"` or `"noindex"` override; most posts should rely on the curated allowlist |
 | `h1Title`, `openGraph`, `twitter`, `canonical` | optional | Overrides for layout + social metadata                     |
 
-Blog cards and post hero sections render the frontmatter `image` when available. If `image` is omitted or invalid, they fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`).
+The current blog index and article layout are text-first: the article does not render a hero image from frontmatter. Place explanatory artwork inline in the MDX with `<figure>`, an `<img>` carrying descriptive alt text, explicit width/height, `loading="lazy"`, and `decoding="async"`, and a `<figcaption>`. Store optimized assets under `public/images/blog/<topic>/`. The globally registered `<YouTubeVideoEmbed videoId="..." title="..." />` needs no import and can be the final body element for a video-led article. For a complete example, see `content/blog/build-ai-business-system-you-own.mdx`. Legacy image consumers still use the shared featured-image fallback.
 
 Social previews default to `public/prism-opengraph.png` for both Open Graph and Twitter. A post can explicitly opt into custom 1200×630 artwork with `socialImage` and descriptive `socialImageAlt` frontmatter. Legacy `image`, `openGraph.images`, and `twitter.images` fields do not change that default.
 
