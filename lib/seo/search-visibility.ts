@@ -5,6 +5,7 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/about',
   '/pricing',
   '/waitlist',
+  '/scholarships',
   '/faq',
   '/services',
   '/websites',
