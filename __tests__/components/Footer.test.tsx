@@ -30,7 +30,9 @@ describe('Footer', () => {
     render(<Footer />)
 
     expect(
-      screen.getByText(/websites, content, and ads that help customers find and choose your business\./i),
+      screen.getByText(
+        /websites, content, and ads that help customers find and choose your business\./i,
+      ),
     ).toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: /book call/i }),
@@ -62,13 +64,18 @@ describe('Footer', () => {
     expect(
       screen.queryByRole('link', { name: /get started free/i }),
     ).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: /^contact$/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: /^contact$/i }),
+    ).not.toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: /support@design-prism\.com/i }),
     ).toHaveAttribute('href', 'mailto:support@design-prism.com')
     expect(
       screen.getByRole('link', { name: /refer a friend/i }),
     ).toHaveAttribute('href', '/refer')
+    expect(
+      screen.getByRole('link', { name: /^scholarships$/i }),
+    ).toHaveAttribute('href', '/scholarships')
   })
 
   it('renders the brand lockup and copyright line', () => {

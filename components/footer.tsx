@@ -39,6 +39,7 @@ const footerColumns: FooterColumn[] = [
       { label: 'Dental OS', href: '/dental-os' },
       { label: 'Prism Infinity', href: '/prism-infinity' },
       { label: 'Blog', href: '/blog' },
+      { label: 'Scholarships', href: '/scholarships' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Refer a friend ($100)', href: '/refer' },
     ],

@@ -33,6 +33,7 @@ describe("sitemap", () => {
       "https://www.design-prism.com",
       "https://www.design-prism.com/services",
       "https://www.design-prism.com/waitlist",
+      "https://www.design-prism.com/scholarships",
       "https://www.design-prism.com/websites",
       "https://www.design-prism.com/ads",
       "https://www.design-prism.com/local-listings",

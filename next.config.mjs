@@ -99,6 +99,7 @@ images: {
   },
   async redirects() {
     return [
+      { source: '/scholarship', destination: '/scholarships', permanent: true },
       // Waitlist funnel (2026-09-14): Prism is at capacity. Every retired lead
       // funnel lands on the one waitlist. Service intakes keep their focus.
       { source: '/website-intake', destination: '/waitlist?focus=website', permanent: true },

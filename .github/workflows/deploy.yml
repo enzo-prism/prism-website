@@ -37,6 +37,9 @@ jobs:
       - name: Mobile navbar regression (Chromium + WebKit)
         run: PLAYWRIGHT_PORT=3330 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.mobile-navbar.config.ts
 
+      - name: Scholarships and office hours regression (Chromium + WebKit)
+        run: pnpm exec playwright test -c playwright.scholarships.config.ts
+
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest

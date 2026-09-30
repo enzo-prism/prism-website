@@ -9,7 +9,7 @@ Quick reference for the pages we edit most often.
 - `components/waitlist/CapacityNotice.tsx` is the one shared capacity notice (`inline` on the homepage hero, pricing hero, service/dental heroes; `panel` on `/waitlist`). The social hubs render the same `CAPACITY_MESSAGE.headline` in their own typography. Never paste the capacity copy into a page.
 - Booking a Zoom call is no longer a public action. `BOOK_A_CALL_CTA` and `WEBSITE_START_CTA` are gone; `BOOKING_URL` remains only for the invite-gated `/chatgpt-ads` partner unlock and the legacy post-payment `/thanks` page.
 - Retired routes that 308-redirect to `/waitlist`: `/website-intake`, `/content-intake`, `/ads-intake`, `/get-started`, `/apply`, `/free-analysis`, `/contact`, `/aeo`, `/book-a-shoot`, `/ai`. Their page and form files are deleted; long-tail pages that still hard-code those hrefs land on the waitlist.
-- `/refer`, `/scholarship`, `/models`, and the design-vote form are not sales CTAs and keep working.
+- `/refer`, `/scholarships`, `/models`, and the design-vote form are not sales CTAs and keep working.
 - Locked visual spec: `/waitlist` replaces `/get-started` in `__tests__/visual/locked-routes.spec.ts`; its guards require the context line, "Step 1 of 5", and the first step title, and the copy guards on `/` and `/pricing` require "Prism is at capacity right now." + "Join the waitlist" while forbidding "Book a Free Demo" and "Start my website".
 
 ## Growth-First Search Visibility
@@ -436,3 +436,7 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 - Core marketing routes use plain, concrete language about deliverables, customer benefits, the review process, and the next step. Homepage lead: “Your growth team.” / “Website. Content. Ads. Built around your business.”
 - Service pages, pricing, FAQs, contact, intake messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
 - Preserve dated case-study evidence, testimonials, canonical offer/CTA rules, form payloads, analytics identifiers, and navigation destinations when editing copy.
+
+## Scholarships and office hours (`/scholarships`, 2026-09-30)
+
+An indexable, server-rendered support hub in the Prism black system, linked in the Company footer. `/scholarship` redirects here. Three sections: quarterly scholarship applications (first selection December 31, 2026), Sunday group office hours with Enzo (10–11 a.m. Pacific), and curated articles/videos. First-time attendees apply; approved attendees unlock a signed browser session using a server-verified code and choose one of six future Sundays. Program dates advance per request. Application review, approval-code distribution, and joining details remain manual. See `docs/forms.md` for endpoints, operational setup, approval security, and submission semantics.

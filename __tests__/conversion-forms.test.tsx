@@ -8,7 +8,7 @@ import {
 import type { ReactNode } from 'react'
 
 import ModelsPageClient from '@/app/models/client-page'
-import ScholarshipPageClient from '@/app/scholarship/ScholarshipPageClient'
+import ProgramApplicationForm from '@/components/scholarships/ProgramApplicationForm'
 import AiWebsiteLaunchForm from '@/components/ai-website-launch/AiWebsiteLaunchForm'
 
 const pushMock = jest.fn()
@@ -67,7 +67,7 @@ describe('secondary conversion forms', () => {
 
   it('tracks scholarship applications as GA4 leads without Google Ads conversion', async () => {
     fetchSpy.mockResolvedValue(createMockResponse(true))
-    render(<ScholarshipPageClient />)
+    render(<ProgramApplicationForm program="scholarship" />)
 
     fireEvent.change(screen.getByLabelText(/first name/i), {
       target: { value: 'Alex' },
@@ -78,16 +78,24 @@ describe('secondary conversion forms', () => {
     fireEvent.change(screen.getByLabelText(/^email$/i), {
       target: { value: 'alex@example.com' },
     })
-    fireEvent.change(screen.getByLabelText(/how did you first hear/i), {
-      target: { value: 'search' },
+    fireEvent.change(screen.getByLabelText(/project or business name/i), {
+      target: { value: 'Rivera Services' },
     })
-    fireEvent.change(screen.getByLabelText(/tell us about the website/i), {
+    fireEvent.change(screen.getByLabelText(/how could Prism help/i), {
+      target: { value: 'A clear website to launch the project.' },
+    })
+    fireEvent.change(screen.getByLabelText(/why is a scholarship/i), {
+      target: { value: 'We are starting without funding.' },
+    })
+    fireEvent.change(screen.getByLabelText(/what are you building/i), {
       target: {
         value: 'I am building a service business website for local customers.',
       },
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /apply for a scholarship/i }),
+    )
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
@@ -110,7 +118,7 @@ describe('secondary conversion forms', () => {
     expect(formData.get('first_name')).toBe('Alex')
     expect(formData.get('last_name')).toBe('Rivera')
     expect(formData.get('email')).toBe('alex@example.com')
-    expect(formData.get('heard_about')).toBe('search')
+    expect(formData.get('projectName')).toBe('Rivera Services')
     expect(formData.get('project_description')).toBe(
       'I am building a service business website for local customers.',
     )
@@ -123,9 +131,11 @@ describe('secondary conversion forms', () => {
   })
 
   it('blocks incomplete and invalid scholarship applications and focuses the first error', () => {
-    render(<ScholarshipPageClient />)
+    render(<ProgramApplicationForm program="scholarship" />)
 
-    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /apply for a scholarship/i }),
+    )
 
     const firstName = screen.getByLabelText(/first name/i)
     expect(fetchSpy).not.toHaveBeenCalled()
@@ -146,16 +156,24 @@ describe('secondary conversion forms', () => {
     fireEvent.change(screen.getByLabelText(/^email$/i), {
       target: { value: 'not-an-email' },
     })
-    fireEvent.change(screen.getByLabelText(/how did you first hear/i), {
-      target: { value: 'search' },
+    fireEvent.change(screen.getByLabelText(/project or business name/i), {
+      target: { value: 'Rivera Services' },
     })
-    fireEvent.change(screen.getByLabelText(/tell us about the website/i), {
+    fireEvent.change(screen.getByLabelText(/how could Prism help/i), {
+      target: { value: 'A clear website to launch the project.' },
+    })
+    fireEvent.change(screen.getByLabelText(/why is a scholarship/i), {
+      target: { value: 'We are starting without funding.' },
+    })
+    fireEvent.change(screen.getByLabelText(/what are you building/i), {
       target: {
         value: 'I am building a service business website for local customers.',
       },
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /submit application/i }))
+    fireEvent.click(
+      screen.getByRole('button', { name: /apply for a scholarship/i }),
+    )
 
     const email = screen.getByLabelText(/^email$/i)
     expect(fetchSpy).not.toHaveBeenCalled()

@@ -59,7 +59,8 @@
     "audit:ga4": "node scripts/audit-ga4-config.mjs",
     "canonical:check": "npx ts-node scripts/verify-canonical.ts",
     "validate:blog-links": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/validate-blog-links.ts",
-    "verify:pricing-consistency": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/verify-pricing-consistency.ts"
+    "verify:pricing-consistency": "npx ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/verify-pricing-consistency.ts",
+    "test:scholarships": "NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm build && pnpm exec playwright test -c playwright.scholarships.config.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

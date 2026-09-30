@@ -86,7 +86,7 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content`.
 - `components/forms/ScalingRoadmapForm.tsx`
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
-- `app/scholarship/ScholarshipPageClient.tsx`
+- `components/scholarships/ProgramApplicationForm.tsx`
 - `app/models/client-page.tsx`
 - `app/designs/wine-country-root-canal/client-page.tsx` (client design vote)
 
@@ -431,13 +431,27 @@ These routes are noindex/no-follow and **not** blocked in `robots.txt` so search
 - Scheduling contract: both preferred windows have explicit date/time labels, use `booking_timezone=America/Los_Angeles`, and display Pacific Time to the user. Dates must be later than today, and the second date/time pair must differ from the first.
 - Analytics: `trackFormSubmission("book_a_shoot", "book_a_shoot_form", { lead_type: "shoot_request" })`; the thank-you page mounts `LeadSuccessTracker` and emits `generate_lead` once.
 
-### `/scholarship`
+### `/scholarships`: quarterly support and Sunday office hours
 
-- Endpoint: `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` or `https://formspree.io/f/mwpwwjek`
-- DOM analytics contract: `<form id="scholarship_application" name="scholarship_application">`
-- Success flow: client-side `fetch` with inline success copy.
-- Validation: first name, last name, email, referral source, and project description must pass the shared `useFormValidation` flow before the Formspree payload is built. Errors focus the first invalid control and are linked with `aria-describedby`.
-- Analytics: `trackFormSubmission("scholarship_application", "scholarship_form", { conversionMode: "immediate", sendGoogleAdsConversion: false })`.
+- Canonical hub: `/scholarships`; `/scholarship` permanently redirects. This is a non-sales program, separate from the paid-service waitlist. Server rendering is dynamic so dates advance without a deployment; the visible quarter/date spans also refresh in long-lived browser tabs.
+- `lib/scholarships.ts` selects the current calendar business quarter in Pacific Time, with the first round Q4 2026. One recipient is selected at quarter end; the support is scoped around their project. No invented award amount, countdown, or application count.
+- Scholarship form: `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT` or existing `https://formspree.io/f/mwpwwjek`. Required first name, last name, email, project name, project description, support needed, and financial need; optional project link. `scholarship_round` tags the round. Old provider field aliases remain for downstream compatibility.
+- Office-hours application: `NEXT_PUBLIC_OFFICE_HOURS_APPLICATION_ENDPOINT` or existing Contact Formspree `https://formspree.io/f/xjkjbpdb`. Required first name, last name, email, and what the applicant wants to cover. Submission is an application, not approval or a reservation.
+- Both client forms use `useFormValidation`, operational/attribution metadata, a honeypot, direct JSON-accepting Formspree POST, inline receipt only after accepted response, preserved answers on failure, and no Google Ads conversion. No freeform or contact details are sent to analytics.
+- Office hours are free group sessions with Enzo, every Sunday 10–11 a.m. America/Los_Angeles. The browser shows six future Sundays; the server validates the date again and excludes a session once its 10 a.m. start arrives. DST changes preserve the Pacific wall-clock time.
+
+#### Approving and registering office-hours attendees
+
+1. Review applications in Formspree. Email approved attendees the configured approval code. Application review and the approval email are manual; this implementation does not send external email or create meetings.
+2. Set `OFFICE_HOURS_ACCESS_CODE` (8–128 characters) and `OFFICE_HOURS_SESSION_SECRET` (random, at least 32 characters) in the deployment environment. Never use a `NEXT_PUBLIC_` name. Generate a secret with `node -e "process.stdout.write(require('node:crypto').randomBytes(32).toString('hex'))"`. Returning registration fails closed until both are configured; applications still work.
+3. `POST /api/office-hours/access` checks the code on the server and sets a signed, expiring, HttpOnly, SameSite=Strict cookie scoped to `/api/office-hours`. Production cookies are Secure. GET restores approval; DELETE removes it. Approval lasts 30 days. Code or secret rotation revokes existing sessions. The shared code grants program access; it does not prove an individual's identity.
+4. Approved attendees provide name/email and choose a future Sunday; updated questions are optional. `POST /api/office-hours/register` rejects missing/forged/expired approval, cross-origin mutations, oversized bodies, invalid contact information, and past/non-offered sessions. It forwards the selected date, Pacific timezone, and UTC start/end to `OFFICE_HOURS_REGISTRATION_ENDPOINT`, or the Contact Formspree fallback. Only HTTPS Formspree form URLs are accepted. The server attaches `registrationIssuedAt` and `registrationSignature` to the provider record. The signature covers the contact and selected date; a public Formspree POST containing `approvedAttendee: yes` alone is not proof of approval.
+5. Verify incoming registration records before treating them as approved. Export a flat JSON object with `firstName`, `lastName`, `email`, `sessionDate`, `registrationIssuedAt`, and `registrationSignature`; with the signing secret loaded into your environment, run `pnpm exec ts-node --compiler-options '{"module":"CommonJS"}' scripts/verify-office-hours-registration.ts /path/to/record.json`. It prints only `valid` or `invalid`. Check the contact against your approved attendee list before sharing joining details. Signatures prove server provenance, not duplicate-free calendar capacity. Preserve the previous signing secret securely if historical records must be checked after secret rotation.
+6. Successful registration means the provider accepted the registration. The UI confirms receipt for that date. Send the joining details separately. There is no calendar capacity service or guaranteed automatic confirmation email; do not claim one.
+
+Code attempts and registration attempts have bounded process-local throttles. This is basic abuse protection, not a distributed serverless quota. No attendee PII is stored in localStorage or the approval cookie. If individualized revocation or automated invitations become necessary, add a persistent identity/registration service rather than treating the shared code as account authentication.
+
+Learning resources use source-authored articles and verified Prism YouTube links, plus channel links for Instagram/TikTok. They render as ordinary links and load no social embed runtimes.
 
 ### `/models`
 
