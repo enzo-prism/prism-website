@@ -1,0 +1,213 @@
+.graphic {
+  --graphic-ink: var(--scholarship-ink, var(--foreground));
+  --graphic-gold: var(--scholarship-accent, #d8bc79);
+  --graphic-muted: var(--scholarship-muted, var(--muted-foreground));
+  --graphic-surface: var(--scholarship-surface, var(--background));
+  width: 100%;
+  pointer-events: none;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.opportunity {
+  aspect-ratio: 1.25;
+}
+.quarter {
+  aspect-ratio: 15 / 8;
+}
+.officeHours {
+  aspect-ratio: 1.54;
+}
+
+.structure,
+.structureLine,
+.registrationMarks {
+  stroke: var(--graphic-ink);
+  stroke-width: 1;
+  opacity: 0.12;
+}
+
+.registrationMarks {
+  opacity: 0.3;
+}
+.stepSurface {
+  fill: var(--graphic-ink);
+  opacity: 0.04;
+}
+.stairLine {
+  stroke: var(--graphic-ink);
+  stroke-width: 1.5;
+  opacity: 0.65;
+}
+.inkLine {
+  stroke: var(--graphic-ink);
+  stroke-width: 1.7;
+}
+.goldLine {
+  stroke: var(--graphic-gold);
+  stroke-width: 1.7;
+}
+.mutedLine {
+  stroke: var(--graphic-muted);
+  stroke-width: 1.2;
+  opacity: 0.6;
+}
+.connector {
+  stroke: var(--graphic-gold);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+.goldFill {
+  fill: var(--graphic-gold);
+}
+.mutedFill {
+  fill: var(--graphic-muted);
+  opacity: 0.45;
+}
+.surfaceFill {
+  fill: var(--graphic-surface);
+}
+.goldWash {
+  fill: var(--graphic-gold);
+  opacity: 0.06;
+}
+.crestFill {
+  fill: var(--graphic-gold);
+  opacity: 0.08;
+}
+.crestAura {
+  stroke: var(--graphic-gold);
+  stroke-width: 1;
+  opacity: 0.15;
+}
+.orbit {
+  stroke: var(--graphic-ink);
+  stroke-width: 1;
+  opacity: 0.1;
+}
+.goldArc {
+  stroke: var(--graphic-gold);
+  stroke-width: 4;
+}
+.trail {
+  stroke: var(--graphic-gold);
+  stroke-width: 2;
+  opacity: 0.9;
+}
+.heroTrail {
+  stroke-dasharray: 12 88;
+  stroke-dashoffset: -76;
+}
+.quarterTrail {
+  stroke-dasharray: 4 96;
+  stroke-dashoffset: -80;
+  opacity: 0.5;
+}
+.officeTrail {
+  stroke-dasharray: 14 86;
+  stroke-dashoffset: -52;
+  opacity: 0.5;
+}
+.node,
+.pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.quarterLabel,
+.dayLabel {
+  fill: var(--graphic-muted);
+  font-family: var(--font-mono), monospace;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+}
+.quarterLabel {
+  font-size: 22px;
+}
+.activeQuarter .quarterLabel,
+.sundayLabel {
+  fill: var(--graphic-gold);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trail {
+    animation: tracePath 9s linear infinite;
+    animation-play-state: var(--scholarship-play-state, paused);
+  }
+  .quarterTrail {
+    animation-duration: 12s;
+  }
+  .officeTrail {
+    animation-duration: 11s;
+  }
+  .pulse,
+  .chatSignal,
+  .crestAura {
+    animation: quietSignal 6s ease-in-out infinite;
+    animation-play-state: var(--scholarship-play-state, paused);
+  }
+  .chatSignal {
+    animation-delay: 1.5s;
+  }
+  .crestAura {
+    animation-delay: 3s;
+  }
+  .node {
+    animation: settle 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-play-state: var(--scholarship-play-state, paused);
+  }
+  .websiteNode {
+    animation-delay: 0.12s;
+  }
+  .chatNode {
+    animation-delay: 0.24s;
+  }
+  .awardNode {
+    animation-delay: 0.36s;
+  }
+}
+
+@keyframes tracePath {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes quietSignal {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .graphic *,
+  .graphic {
+    animation: none !important;
+    transition: none !important;
+  }
+}

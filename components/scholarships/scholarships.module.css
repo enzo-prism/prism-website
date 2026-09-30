@@ -1,0 +1,288 @@
+.motionRoot {
+  --scholarship-accent: #d8bc79;
+  --scholarship-play-state: paused;
+}
+.hero {
+  position: relative;
+}
+.heroLayout {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+.heroVisual {
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background: var(--background);
+  overflow: hidden;
+}
+.sceneTop,
+.sceneBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.sceneTop {
+  border-bottom: 1px solid var(--border);
+}
+.sceneBottom {
+  border-top: 1px solid var(--border);
+}
+.signal {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--scholarship-accent);
+  display: inline-block;
+  margin-right: 8px;
+}
+.motionToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  background: var(--background);
+}
+.motionToggle[hidden] {
+  display: none;
+}
+.motionToggle:hover {
+  color: var(--foreground);
+  border-color: var(--foreground);
+}
+.motionToggle:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+}
+.toggleSymbol {
+  font-size: 12px;
+  width: 12px;
+}
+.utility {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+  min-height: 44px;
+}
+.paths {
+  display: grid;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.path {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 0;
+  position: relative;
+}
+.path + .path {
+  border-top: 1px solid var(--border);
+}
+.iconTile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.pathTitle {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.pathMeta {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+.arrow {
+  margin-left: auto;
+  color: var(--muted-foreground);
+}
+.path:focus-visible,
+.resource:focus-visible,
+.channel:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+.path:hover .pathTitle {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.quarterScene {
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.panelIcon {
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+.officeVisual {
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  overflow: hidden;
+}
+.resource {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.thumbnail {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.thumbnail img {
+  object-fit: cover;
+}
+.play {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.articleVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 31px,
+      var(--border) 32px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 31px,
+      var(--border) 32px
+    );
+}
+.articleVisual img {
+  width: 64px;
+  height: 64px;
+}
+.resourceMeta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.channel {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 640px) {
+  .paths {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .path {
+    padding: 24px 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .path:first-child {
+    padding-left: 0;
+  }
+  .path + .path {
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+  .path .arrow {
+    align-self: center;
+  }
+}
+@media (min-width: 1024px) {
+  .heroLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .iconTile,
+  .thumbnail img,
+  .arrow {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .path:hover .iconTile,
+  .path:focus-visible .iconTile {
+    transform: translateY(-4px);
+  }
+  .path:hover .arrow {
+    transform: translateX(4px);
+  }
+  .resource:hover .thumbnail img {
+    transform: scale(1.035);
+  }
+}
+.motionRoot[data-motion-paused='true'] .iconTile,
+.motionRoot[data-motion-paused='true'] .thumbnail img,
+.motionRoot[data-motion-paused='true'] .arrow {
+  transition: none;
+  transform: none;
+}
+
+/* Keep the motion utility in the hero's upper margin, outside its composition. */
+.utility {
+  position: absolute;
+  top: 24px;
+  right: max(24px, calc((100% - 1152px) / 2));
+  min-height: 0;
+  margin-bottom: 0;
+}
+.heroVisual {
+  background-image: radial-gradient(
+    ellipse at 80% 22%,
+    color-mix(in srgb, var(--scholarship-accent) 8%, transparent),
+    transparent 60%
+  );
+}

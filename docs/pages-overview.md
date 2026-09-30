@@ -440,3 +440,7 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 ## Scholarships and office hours (`/scholarships`, 2026-09-30)
 
 An indexable, server-rendered support hub in the Prism black system, linked in the Company footer. `/scholarship` redirects here. Three sections: quarterly scholarship applications (first selection December 31, 2026), Sunday group office hours with Enzo (10–11 a.m. Pacific), and curated articles/videos. First-time attendees apply; approved attendees unlock a signed browser session using a server-verified code and choose one of six future Sundays. Program dates advance per request. Application review, approval-code distribution, and joining details remain manual. See `docs/forms.md` for endpoints, operational setup, approval security, and submission semantics.
+
+### Scholarships visual treatment
+
+The support page uses server-rendered decorative SVG scenes for opportunity, quarterly selection, and Sunday office hours. A small client motion shell supplies a global pause control, live reduced-motion preference, background-tab pause, and per-scene viewport pause. Learning resources display verified YouTube thumbnails and available article artwork using Next image optimization; no remote video/social embeds load on the page. Forms and approval behavior remain as described above.

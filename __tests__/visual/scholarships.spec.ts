@@ -339,6 +339,16 @@ test('reduced motion and no-JavaScript visitors retain useful program informatio
   ).toBeVisible()
   await expect(page.locator('main')).toContainText(getScholarshipRound().label)
   await expect(page.locator('main')).toContainText(/Sunday/)
+  await expect(
+    page.getByRole('form', { name: 'Scholarship application' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('form', { name: 'Office hours application' }),
+  ).toBeVisible()
+  expect(
+    await page.locator('#learn a[href^="/blog/"]').count(),
+  ).toBeGreaterThanOrEqual(3)
+  expect(await page.locator('#learn a[href]').count()).toBeGreaterThanOrEqual(6)
   await expect(page.locator('a[href^="mailto:"]').first()).toBeVisible()
   expect(
     await page.evaluate(
@@ -437,4 +447,159 @@ test('returning signup preserves answers on failure and only confirms accepted r
     sessionId,
   })
   await expect(booking).toContainText(label)
+})
+
+async function activeCssAnimations(page: Page) {
+  return page
+    .locator('main')
+    .evaluate(
+      (main) =>
+        main
+          .getAnimations({ subtree: true })
+          .filter(
+            (animation) =>
+              animation instanceof CSSAnimation &&
+              animation.playState === 'running',
+          ).length,
+    )
+}
+
+test('reduced-motion visitors get a static page and all program actions', async ({
+  page,
+}) => {
+  await openScholarships(page)
+  await expect.poll(() => activeCssAnimations(page)).toBe(0)
+  await expect(
+    page.getByRole('button', { name: 'Pause motion', exact: true }),
+  ).not.toBeVisible()
+  await expect(
+    page.getByRole('form', { name: 'Scholarship application' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('form', { name: 'Office hours application' }),
+  ).toBeVisible()
+  await page.locator('a[href="#approved-office-hours"]').first().click()
+  await expect(page.getByLabel('Approval code', { exact: true })).toBeVisible()
+  await expect.poll(() => activeCssAnimations(page)).toBe(0)
+})
+
+test('visitors can pause animated graphics and resume them without losing page actions', async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await openScholarships(page)
+  const pause = page.getByRole('button', { name: 'Pause motion', exact: true })
+  await expect(pause).toBeVisible()
+  const heroScene = page.locator('[data-scholarship-scene]').first()
+  await heroScene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
+  const outputDir = process.env.PRISM_SCHOLARSHIPS_AUDIT_OUTPUT
+  if (outputDir) {
+    await mkdir(outputDir, { recursive: true })
+    await page.screenshot({
+      path: path.join(
+        outputDir,
+        `scholarships-${testInfo.project.name}-motion.png`,
+      ),
+      fullPage: false,
+    })
+  }
+  await pause.click()
+  const resume = page.getByRole('button', {
+    name: 'Resume motion',
+    exact: true,
+  })
+  await expect(resume).toHaveAttribute('aria-pressed', 'true')
+  // Keep the graphic visible so offscreen suspension cannot mask a broken pause.
+  await heroScene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBe(0)
+  await expect(
+    page.locator('a[href="#scholarship-application"]').first(),
+  ).toBeVisible()
+  await resume.click()
+  await expect(pause).toHaveAttribute('aria-pressed', 'false')
+  await heroScene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
+})
+
+test('decorative graphics stop when offscreen and resume when visitors return', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await openScholarships(page)
+  const scene = page.locator('[data-scholarship-scene]').first()
+  await scene.scrollIntoViewIfNeeded()
+  const runningSceneAnimations = () =>
+    scene.evaluate(
+      (element) =>
+        element
+          .getAnimations({ subtree: true })
+          .filter(
+            (animation) =>
+              animation instanceof CSSAnimation &&
+              animation.playState === 'running',
+          ).length,
+    )
+  await expect.poll(runningSceneAnimations).toBeGreaterThan(0)
+  await page
+    .locator('#learn')
+    .evaluate((element) => element.scrollIntoView({ block: 'start' }))
+  await expect.poll(runningSceneAnimations).toBe(0)
+  await scene.scrollIntoViewIfNeeded()
+  await expect.poll(runningSceneAnimations).toBeGreaterThan(0)
+})
+
+test('changing the OS motion preference updates an already opened page', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await openScholarships(page)
+  const scene = page.locator('[data-scholarship-scene]').first()
+  await scene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
+
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect.poll(() => activeCssAnimations(page)).toBe(0)
+  await expect(
+    page.getByRole('button', { name: 'Pause motion', exact: true }),
+  ).not.toBeVisible()
+  await expect(
+    page.getByRole('form', { name: 'Scholarship application' }),
+  ).toBeVisible()
+
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await expect(
+    page.getByRole('button', { name: 'Pause motion', exact: true }),
+  ).toBeVisible()
+  await scene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
+})
+
+test('background-tab visibility suspends graphics and foreground visibility restores them', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await openScholarships(page)
+  const scene = page.locator('[data-scholarship-scene]').first()
+  await scene.scrollIntoViewIfNeeded()
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
+
+  // Headless engines do not consistently occlude tabs on bringToFront. Emulate
+  // the browser's public visibility contract, then inspect real animation state.
+  const emulateVisibility = (hidden: boolean) =>
+    page.evaluate((isHidden) => {
+      Object.defineProperty(document, 'hidden', {
+        configurable: true,
+        get: () => isHidden,
+      })
+      Object.defineProperty(document, 'visibilityState', {
+        configurable: true,
+        get: () => (isHidden ? 'hidden' : 'visible'),
+      })
+      document.dispatchEvent(new Event('visibilitychange'))
+    }, hidden)
+  await emulateVisibility(true)
+  await expect.poll(() => activeCssAnimations(page)).toBe(0)
+  await emulateVisibility(false)
+  await expect.poll(() => activeCssAnimations(page)).toBeGreaterThan(0)
 })

@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react'
+import ScholarshipQuarterScene from '@/components/scholarships/ScholarshipQuarterScene'
 import ScholarshipRoundText from '@/components/scholarships/ScholarshipRoundText'
 import { getScholarshipRound } from '@/lib/scholarships'
 
@@ -28,5 +29,22 @@ describe('visible scholarship dates in a long-lived tab', () => {
     jest.setSystemTime(new Date('2027-04-01T00:00:00-07:00'))
     act(() => window.dispatchEvent(new Event('focus')))
     expect(screen.getByText('Q2 2027')).toBeInTheDocument()
+  })
+  it('moves the illustrated selection highlight with the visible quarter at midnight', () => {
+    jest.setSystemTime(new Date('2027-01-01T07:59:30Z'))
+    render(<ScholarshipQuarterScene initialRound={getScholarshipRound()} />)
+    expect(
+      screen.getByText('Q4').closest('g')?.querySelector('circle'),
+    ).not.toBeNull()
+    expect(
+      screen.getByText('Q1').closest('g')?.querySelector('circle'),
+    ).toBeNull()
+    act(() => jest.advanceTimersByTime(60_000))
+    expect(
+      screen.getByText('Q1').closest('g')?.querySelector('circle'),
+    ).not.toBeNull()
+    expect(
+      screen.getByText('Q4').closest('g')?.querySelector('circle'),
+    ).toBeNull()
   })
 })

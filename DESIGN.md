@@ -427,6 +427,26 @@ Use the existing palette and 64px spacing scale for the icon tile. Copy states
 what is delivered and how customers can act, without guaranteeing growth,
 rankings, attribution completeness, or zero wasted ad spend.
 
+### Scholarships support scenes
+
+The Scholarships route extends the same black, warm ivory, Pixelish system
+with three original architectural SVG scenes: an idea climbing toward a Prism
+crest, a four-quarter selection rail, and a Sunday calendar with a one-hour dial.
+Small gold light paths connect support milestones; gold stays a signal within
+the illustration rather than a CTA color. Static frames carry the meaning.
+
+Keep the hero asymmetric, place the quarterly scene beside its application,
+and pair the calendar with the office-hours explanation. Application panels
+stay quiet. Learning previews use real article artwork and verified video
+thumbnails with Pixelish reading, playback, and channel icons.
+
+CSS motion is decorative, starts after hydration, and pauses offscreen or in a
+background tab. A visible Pause motion control stops all three scenes and
+resource hover movement. Reduced-motion visitors see finished frames with no
+CSS animation and no unnecessary pause control. Changes in the OS preference
+must take effect immediately. No WebGL, canvas, animation library, or remote
+video embed is needed for these scenes. All content stays readable without JS.
+
 ### Social proof
 
 Proof should stay subtle and integrated. Small inline proof beats loud testimonial clutter unless the page specifically needs a stronger proof section.
