@@ -23,7 +23,7 @@ import { CaseStudySchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { CASE_STUDIES, getCaseStudyMetric } from '@/lib/case-study-data'
+import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
@@ -46,9 +46,6 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: WEBSITE_SCREENSHOTS.og,
 })
 
-const searchClicks = getCaseStudyMetric(SLUG)
-const searchImpressions = getCaseStudyMetric(SLUG, 1)
-
 const statCards = [
   {
     label: 'Platform move',
@@ -61,14 +58,14 @@ const statCards = [
     detail: 'Search, behavior, and custom conversion visibility.',
   },
   {
-    label: 'Latest Google clicks',
-    value: searchClicks.value,
-    detail: `${searchClicks.sourceName} · ${searchClicks.dateRange}.`,
+    label: 'Admissions',
+    value: 'Clear program paths',
+    detail: 'Program information and student inquiry forms in one place.',
   },
   {
-    label: 'Latest search impressions',
-    value: searchImpressions.value,
-    detail: `${searchImpressions.sourceName} · ${searchImpressions.dateRange}.`,
+    label: 'Student support',
+    value: 'AI assistant',
+    detail: 'ElevenLabs support integrated into the admissions experience.',
   },
 ]
 

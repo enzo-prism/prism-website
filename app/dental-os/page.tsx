@@ -91,8 +91,6 @@ const DENTAL_DIFFERENCE = [
 // value is verified against Google Search Console — do not edit without the
 // source. Gold proof treatment is sanctioned for this band only.
 const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
-const wongMonthlyImpressions = getCaseStudyMetric('dr-christopher-wong', 1)
-const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
 
 const PROOF_METRICS = [
   {
@@ -101,20 +99,6 @@ const PROOF_METRICS = [
     label: wongImpressions.label,
     source: `${wongImpressions.sourceName} · ${wongImpressions.dateRange}`,
     href: '/case-studies/dr-christopher-wong',
-  },
-  {
-    client: 'Dr. Christopher Wong',
-    value: wongMonthlyImpressions.value,
-    label: wongMonthlyImpressions.label,
-    source: `${wongMonthlyImpressions.sourceName} · ${wongMonthlyImpressions.dateRange}`,
-    href: '/case-studies/dr-christopher-wong',
-  },
-  {
-    client: 'Roseville Dental Academy',
-    value: rosevilleClicks.value,
-    label: rosevilleClicks.label,
-    source: `${rosevilleClicks.sourceName} · ${rosevilleClicks.dateRange}`,
-    href: '/case-studies/roseville-dental-academy',
   },
 ] as const
 
@@ -347,7 +331,7 @@ export default function DentalOsPage() {
                 <CoreSectionHeading
                   eyebrow="Proof"
                   title="Dental is our deepest proof."
-                  description="Real, source-attributed results from Prism dental clients. Every number is verified against Google Search Console."
+                  description="Selected, source-attributed search growth from a Prism dental client, verified against Google Search Console."
                 />
                 <CoreActionLink
                   href="/case-studies"
@@ -359,7 +343,7 @@ export default function DentalOsPage() {
                 </CoreActionLink>
               </div>
 
-              <div className="mt-10 grid gap-4 md:grid-cols-3">
+              <div className="mt-10 grid max-w-2xl gap-4">
                 {PROOF_METRICS.map((metric) => (
                   <Link
                     key={`${metric.client}-${metric.value}`}

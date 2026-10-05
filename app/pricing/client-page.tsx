@@ -85,21 +85,9 @@ const partnerLevels = [
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
 // Console). Used as quantified proof beside the primary pricing CTA — keep in
 // sync with the source; do not invent metrics.
-const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
-const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
 const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
 
 const CTA_PROOF_POINTS = [
-  {
-    value: saorsaClicks.value,
-    label: `${saorsaClicks.label} (Saorsa Growth Partners)`,
-    href: '/case-studies/saorsa-growth-partners',
-  },
-  {
-    value: rosevilleClicks.value,
-    label: `${rosevilleClicks.label} (Roseville Dental Academy)`,
-    href: '/case-studies/roseville-dental-academy',
-  },
   {
     value: wongImpressions.value,
     label: `${wongImpressions.label} (Dr. Christopher Wong)`,
@@ -364,7 +352,7 @@ export default function PricingPageClient() {
             titleClassName="max-w-[14ch]"
           />
 
-          <div className="mt-10 grid gap-px overflow-hidden border border-white/12 bg-white/10 sm:grid-cols-3">
+          <div className="mt-10 grid max-w-2xl gap-px overflow-hidden border border-white/12 bg-white/10">
             {CTA_PROOF_POINTS.map((proof) => (
               <Link
                 key={proof.label}

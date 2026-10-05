@@ -128,7 +128,7 @@ export default function CaseStudyVisualHero({
 
   return (
     <section className="border-b border-border/60 px-4 py-12 md:py-20">
-      <div className="container mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-6">
+      <div className="container mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-6">
         <div className="space-y-7">
           {badge ? (
             <Badge

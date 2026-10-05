@@ -97,11 +97,8 @@ const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
 const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
   HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
 
-const OLYMPIC_SEARCH_METRIC = getCaseStudyMetric('olympic-bootworks')
-const SAORSA_SEARCH_METRIC = getCaseStudyMetric('saorsa-growth-partners')
 const BELIZE_SEARCH_METRIC = getCaseStudyMetric('belize-kids-foundation')
 const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
-const ROSEVILLE_SEARCH_METRIC = getCaseStudyMetric('roseville-dental-academy')
 
 export const HOMEPAGE_HERO = {
   title: 'Your growth team.',
@@ -171,11 +168,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/olympic-bootworks',
       contextLabel: 'Retail + e-bike catalog',
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
-      metric: {
-        value: OLYMPIC_SEARCH_METRIC.value,
-        label: OLYMPIC_SEARCH_METRIC.label,
-        source: OLYMPIC_SEARCH_METRIC.sourceName ?? 'Google Search Console',
-      },
     },
     {
       company: 'Saorsa Growth Partners',
@@ -183,11 +175,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/saorsa-growth-partners',
       contextLabel: 'Consulting',
       image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
-      metric: {
-        value: SAORSA_SEARCH_METRIC.value,
-        label: SAORSA_SEARCH_METRIC.label,
-        source: SAORSA_SEARCH_METRIC.sourceName ?? 'Google Search Console',
-      },
     },
     {
       company: 'Belize Kids',
@@ -254,11 +241,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/roseville-dental-academy',
       contextLabel: 'Education + analytics',
       image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
-      metric: {
-        value: ROSEVILLE_SEARCH_METRIC.value,
-        label: ROSEVILLE_SEARCH_METRIC.label,
-        source: ROSEVILLE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
-      },
     },
     {
       company: 'Coast Periodontics',

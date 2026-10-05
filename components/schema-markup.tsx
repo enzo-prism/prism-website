@@ -200,9 +200,6 @@ export function CaseStudySchema({
 
 export function GlobalSchemaGraph() {
   const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
-  const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
-  const rosevilleImpressions = getCaseStudyMetric('roseville-dental-academy', 1)
-  const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -248,7 +245,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/roseville-dental-academy#article',
         name: 'Roseville Dental Academy case study',
         url: 'https://www.design-prism.com/case-studies/roseville-dental-academy',
-        abstract: `${rosevilleClicks.value} ${rosevilleClicks.label} and ${rosevilleImpressions.value} ${rosevilleImpressions.label}.`,
+        abstract: 'A modern admissions platform with clearer program paths, student inquiry forms, analytics, and AI assistant support.',
       },
       {
         '@type': 'Article',
@@ -256,7 +253,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/saorsa-growth-partners#article',
         name: 'Saorsa Growth Partners case study',
         url: 'https://www.design-prism.com/case-studies/saorsa-growth-partners',
-        abstract: `${saorsaClicks.value} ${saorsaClicks.label}.`,
+        abstract: 'A focused advisory website with concise offers, clear inquiry paths, and search and analytics instrumentation.',
       },
     ],
     url: 'https://www.design-prism.com',

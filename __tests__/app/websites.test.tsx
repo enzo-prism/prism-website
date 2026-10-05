@@ -101,19 +101,17 @@ describe('WebsitesPage build-log hero', () => {
     const { container } = render(<WebsitesPage />)
     const hero = heroScope(container)
 
-    const saorsa = getCaseStudyMetric('saorsa-growth-partners')
-    const roseville = getCaseStudyMetric('roseville-dental-academy')
     const wong = getCaseStudyMetric('dr-christopher-wong')
 
-    for (const metric of [saorsa, roseville, wong]) {
+    for (const metric of [wong]) {
       expect(hero.getByText(metric.value)).toBeInTheDocument()
     }
     expect(
-      hero.getByText(`${saorsa.label} for Saorsa Growth Partners`),
+      hero.getByText(`${wong.label} for Dr. Christopher Wong`),
     ).toBeInTheDocument()
     expect(
-      hero.getByRole('link', { name: new RegExp(saorsa.value.replace(/[.+]/g, '\\$&')) }),
-    ).toHaveAttribute('href', '/case-studies/saorsa-growth-partners')
+      hero.getByRole('link', { name: new RegExp(wong.value.replace(/[.+]/g, '\\$&')) }),
+    ).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
     expect(hero.getByText('Source: Google Search Console')).toBeInTheDocument()
   })
 
