@@ -10,6 +10,7 @@ import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
 import { HOME_NAV_ITEM, PROOF_NAV_ITEMS } from '@/lib/constants'
 import type { NavItem } from '@/lib/constants'
 import { PRISM_SERVICES, isServicePath } from '@/lib/services'
+import { PRISM_PRODUCTS } from '@/lib/products'
 import type { PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
@@ -26,7 +27,7 @@ type BreadcrumbItem = {
 type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
-const SERVICES_MENU_ID = 'services-menu'
+type DropdownId = 'services' | 'products'
 
 const SERVICE_MENU_ICONS: Record<PrismServiceId, string> = {
   website: '/pixelish/browser.svg',
@@ -34,6 +35,8 @@ const SERVICE_MENU_ICONS: Record<PrismServiceId, string> = {
   ads: '/pixelish/graph-chart-high.svg',
 }
 const NAV_ICONS: Record<string, string> = {
+  'https://midas-ai.dev': '/pixelish/command.svg',
+  'https://zread.dev': '/pixelish/device-tablet.svg',
   '/': '/pixelish/home.svg',
   '/websites': SERVICE_MENU_ICONS.website,
   '/content': SERVICE_MENU_ICONS.content,
@@ -129,7 +132,8 @@ function NavbarLinks({
     <>
       {items.map((item, index) => {
         const active = isNavItemActive(pathname, item.href)
-        const service = PRISM_SERVICES.find((entry) => entry.href === item.href)
+        const service = PRISM_SERVICES.find((entry) => entry.href === item.href) ??
+          PRISM_PRODUCTS.find((entry) => entry.href === item.href)
 
         return (
           <Link
@@ -182,19 +186,28 @@ function NavbarLinks({
   )
 }
 
-function ServicesDropdown({
+function DesktopDropdown({
   pathname,
   onNavigate,
+  kind,
+  open,
+  setOpen,
 }: {
   pathname: string | null
   onNavigate: (label: string, href: string) => void
+  kind: DropdownId
+  open: boolean
+  setOpen: (open: boolean) => void
 }) {
-  const [open, setOpen] = useState(false)
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const triggerRef = useRef<HTMLButtonElement | null>(null)
   const closeTimer = useRef<number | null>(null)
   const openedByHoverRef = useRef(false)
-  const serviceActive = isServicePath(pathname)
+  const serviceActive = kind === 'services' && isServicePath(pathname)
+  const menuId = `${kind}-menu`
+  const items = kind === 'services'
+    ? PRISM_SERVICES.map((service) => ({ ...service, icon: SERVICE_MENU_ICONS[service.id] }))
+    : PRISM_PRODUCTS.map((product) => ({ ...product, label: product.name, icon: NAV_ICONS[product.href] }))
 
   const clearCloseTimer = () => {
     if (closeTimer.current) {
@@ -207,10 +220,6 @@ function ServicesDropdown({
     clearCloseTimer()
     closeTimer.current = window.setTimeout(() => setOpen(false), 120)
   }
-
-  useEffect(() => {
-    setOpen(false)
-  }, [pathname])
 
   useEffect(() => {
     if (!open) return
@@ -232,7 +241,7 @@ function ServicesDropdown({
       document.removeEventListener('mousedown', handlePointer)
       document.removeEventListener('keydown', handleKey)
     }
-  }, [open])
+  }, [open, setOpen])
 
   useEffect(() => () => clearCloseTimer(), [])
 
@@ -258,7 +267,7 @@ function ServicesDropdown({
         type="button"
         aria-expanded={open}
         aria-haspopup="true"
-        aria-controls={SERVICES_MENU_ID}
+        aria-controls={menuId}
         className={getNavItemClasses(serviceActive || open, 'desktop')}
         onClick={() => {
           clearCloseTimer()
@@ -266,18 +275,18 @@ function ServicesDropdown({
             openedByHoverRef.current = false
             setOpen(true)
           } else {
-            setOpen((value) => !value)
+            setOpen(!open)
           }
         }}
       >
         <PixelishIcon
-          src="/pixelish/browser.svg"
+          src={kind === 'services' ? '/pixelish/browser.svg' : '/pixelish/command.svg'}
           alt=""
           aria-hidden="true"
           size={14}
           className="opacity-60"
         />
-        services
+        {kind}
         <span
           aria-hidden="true"
           className={cn(
@@ -290,22 +299,25 @@ function ServicesDropdown({
       </button>
       {open ? (
         <div
-          id={SERVICES_MENU_ID}
+          id={menuId}
           className="absolute left-0 top-[calc(100%+1rem)] z-[60] w-80 rounded-xl border border-white/12 bg-black p-2 shadow-2xl motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both]"
         >
           <p className="px-4 pb-3 pt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#8f877b]">
-            Three ways to move forward
+            {kind === 'services' ? 'Three ways to move forward' : 'Built by Prism. Free for everyone.'}
           </p>
-          {PRISM_SERVICES.map((service) => {
+          {items.map((service) => {
             const active = isNavItemActive(pathname, service.href)
-            const serviceIcon = SERVICE_MENU_ICONS[service.id]
+            const serviceIcon = service.icon
             return (
               <Link
                 key={service.href}
                 href={service.href}
                 aria-label={service.label}
                 aria-current={active ? 'page' : undefined}
-                onClick={() => onNavigate(service.label, service.href)}
+                onClick={() => {
+                  setOpen(false)
+                  onNavigate(service.label, service.href)
+                }}
                 className={cn(
                   'group/row flex items-center gap-3 rounded-lg px-4 py-4 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30',
                   active
@@ -372,6 +384,18 @@ function MobileNavGroups({
         </div>
       </div>
       <div className="border-t border-white/14 py-2">
+        <p className={MOBILE_EYEBROW_CLASSES}>Products</p>
+        <div className="flex flex-col gap-1">
+          <NavbarLinks
+            items={PRISM_PRODUCTS.map(({ name, href }) => ({ label: name, href }))}
+            pathname={pathname}
+            variant="mobile"
+            onNavigate={onNavigate}
+            startIndex={4}
+          />
+        </div>
+      </div>
+      <div className="border-t border-white/14 py-2">
         <p className={MOBILE_EYEBROW_CLASSES}>Proof</p>
         <div className="flex flex-col gap-1">
           <NavbarLinks
@@ -379,7 +403,7 @@ function MobileNavGroups({
             pathname={pathname}
             variant="mobile"
             onNavigate={onNavigate}
-            startIndex={4}
+            startIndex={6}
           />
         </div>
       </div>
@@ -394,11 +418,13 @@ export default function Navbar() {
   const menuButtonRef = useRef<HTMLButtonElement | null>(null)
   const restoreFocusAfterCloseRef = useRef(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<DropdownId | null>(null)
   const isHome = pathname === '/'
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
 
   useEffect(() => {
     setIsMobileMenuOpen(false)
+    setOpenDropdown(null)
   }, [pathname])
 
   useEffect(() => {
@@ -602,10 +628,16 @@ export default function Navbar() {
                   variant="desktop"
                   onNavigate={handleNavigate}
                 />
-                <ServicesDropdown
-                  pathname={pathname}
-                  onNavigate={handleNavigate}
-                />
+                {(['services', 'products'] as const).map((kind) => (
+                  <DesktopDropdown
+                    key={kind}
+                    kind={kind}
+                    pathname={pathname}
+                    onNavigate={handleNavigate}
+                    open={openDropdown === kind}
+                    setOpen={(open) => setOpenDropdown((current) => open ? kind : current === kind ? null : current)}
+                  />
+                ))}
                 <span
                   aria-hidden="true"
                   className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"

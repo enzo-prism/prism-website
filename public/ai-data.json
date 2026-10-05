@@ -33,6 +33,10 @@
       "pricing": "Custom, scoped on a 30-minute call"
     }
   ],
+  "products": [
+    {"name": "Midas", "url": "https://midas-ai.dev", "description": "AI usage, estimated value, and remaining limits in your Mac menu bar.", "free": true, "open_source": true},
+    {"name": "zRead", "url": "https://zread.dev", "description": "Read selected text aloud with Mac Voice or your own ElevenLabs voices.", "free": true, "open_source": true}
+  ],
   "verified_proof": {
     "connected_client_traffic": {
       "new_users": 5310,

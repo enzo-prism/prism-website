@@ -2,10 +2,12 @@ import Link from 'next/link'
 import TrackedLink from '@/components/tracked-link'
 import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { CAPACITY_MESSAGE, WAITLIST_CTA } from '@/lib/waitlist'
+import { PRISM_PRODUCTS } from '@/lib/products'
 
 type FooterItem = {
   href: string
   label: string
+  external?: boolean
 }
 
 type FooterColumn = {
@@ -22,6 +24,14 @@ const footerColumns: FooterColumn[] = [
       { label: 'Ads', href: '/ads' },
       { label: 'All services', href: '/services' },
     ],
+  },
+  {
+    heading: 'Products',
+    links: PRISM_PRODUCTS.map((product) => ({
+      label: product.name,
+      href: product.href,
+      external: true,
+    })),
   },
   {
     heading: 'Proof',
@@ -109,7 +119,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
         {/* Top region: brand block + link columns */}
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           {/* Brand block */}
-          <div className="max-w-md space-y-6">
+          <div className="max-w-md space-y-6 lg:max-w-xs">
             <div className="space-y-2">
               <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#f5f0e8]">
                 prism
@@ -145,10 +155,10 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </div>
           </div>
 
-          {/* Link columns: 1 col on phones, 3 cols from 480px up, beside the brand on lg */}
+          {/* Compact pairs on phones, four columns beside the brand on desktop. */}
           <nav
             aria-label="Footer"
-            className="grid grid-cols-1 gap-x-8 gap-y-10 border-t border-white/10 pt-10 min-[480px]:grid-cols-3 lg:gap-x-12 lg:border-t-0 lg:pt-0"
+            className="grid grid-cols-2 gap-x-8 gap-y-10 border-t border-white/10 pt-10 sm:grid-cols-4 lg:flex-1 lg:border-t-0 lg:pt-0"
           >
             {footerColumns.map((column) => (
               <div key={column.heading} className="space-y-3.5">
@@ -161,6 +171,8 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                       <Link
                         href={item.href}
                         prefetch={false}
+                        target={item.external ? '_blank' : undefined}
+                        rel={item.external ? 'noopener noreferrer' : undefined}
                         className={`inline-flex min-h-11 items-center rounded-sm text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
                       >
                         {item.label}

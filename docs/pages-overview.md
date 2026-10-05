@@ -436,3 +436,9 @@ Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 - Core marketing routes use plain, concrete language about deliverables, customer benefits, the review process, and the next step. Homepage lead: “Your growth team.” / “Website. Content. Ads. Built around your business.”
 - Service pages, pricing, FAQs, contact, intake messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
 - Preserve dated case-study evidence, testimonials, canonical offer/CTA rules, form payloads, analytics identifiers, and navigation destinations when editing copy.
+
+## Prism Products
+
+`lib/products.ts` is the shared catalog for Midas (https://midas-ai.dev) and zRead (https://zread.dev), free open-source tools originally built for Prism’s internal workflow. Desktop navigation has a Products dropdown alongside Services; the mobile menu and footer each have a Products group. The homepage `#products` section appears after service offers and before the final CTA. Product links go directly to their own websites and do not enter the service waitlist.
+
+Midas summarizes AI usage, estimated value, and remaining limits in the Mac menu bar. zRead reads selected text aloud with Mac Voice or the user’s ElevenLabs voices. Public product sites were checked October 4, 2026. Open-source positioning is supplied by the Prism owner; no new version, performance, or pricing claims are inferred.

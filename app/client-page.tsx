@@ -10,6 +10,7 @@ import HomeElevenLabsAgentSection from '@/components/home/HomeElevenLabsAgentSec
 import HomeImpossibleHero from '@/components/home/HomeImpossibleHero'
 import HomeOffersSection from '@/components/home/HomeOffersSection'
 import HomeProblemSection from '@/components/home/HomeProblemSection'
+import HomeProductsSection from '@/components/home/HomeProductsSection'
 import HomeProofBandSection from '@/components/home/HomeProofBandSection'
 import HomeProofSection from '@/components/home/HomeProofSection'
 import HomeServicesSection from '@/components/home/HomeServicesSection'
@@ -31,6 +32,7 @@ export default function ClientPage() {
         <HomeHowItWorksSection />
         <HomeProofSection />
         <HomeOffersSection />
+        <HomeProductsSection />
         <HomeFinalCtaSection />
       </main>
       <Footer />
