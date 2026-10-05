@@ -59,4 +59,28 @@ Combined subscriptions/followers: 73,465, conservatively displayed as **73K+**. 
 - Roseville's custom cards now derive canonical results rather than duplicate values.
 - Homepage shows the traffic month and TikTok follower date. Machine-readable `public/ai-data.json` and `public/llms.txt` carry the same values/windows.
 - `pnpm seo:ai-report` defaults to Prism Website GA4 property 508295014, with optional `GA4_PROPERTY_ID` override. Retrieval failures now stop the script instead of being represented as no traffic. Local gog authentication was unavailable; live GA4 evidence used the authenticated connector.
-- Vercel Analytics is a separate visitor/session model; its dashboard data was used in the accompanying analysis and is not added to GA4 or used to replace these client-traffic claims.
+- Vercel Analytics uses a separate visitor/pageview model; its dashboard data was used in the accompanying analysis and is not added to GA4 or used to replace these client-traffic claims.
+
+
+## Prism website performance and measurement follow-up
+
+These are Prism's own website results, separate from the 16-client portfolio headline:
+
+- GA4 property **508295014**, production hostnames, September 6–October 3 versus August 9–September 5: **414 vs 604 users, 461 vs 684 sessions, 828 vs 1,123 views**. Sessions declined 32.6%; Direct accounted for 180 of the 223-session net decline. The old property 383270357 returned no rows for this period.
+- GSC `sc-domain:design-prism.com`, Web (text), September 5–October 2 versus August 8–September 4: **20 vs 26 clicks, 2,123 vs 2,360 impressions**, average position 11 vs 14.7. Its window ends one day before the GA4/Vercel window.
+- Vercel Production, September 6–October 3 Pacific: **531 visitors, 933 pageviews**, with dashboard-displayed declines of 30% and 33%. The connector returned 404; the authenticated dashboard supplied these values. An API error must never become a zero-traffic claim.
+- GA4 recorded **0 vs 20 key events**. The last `generate_lead` was September 5, and the public sales funnel changed to an at-capacity waitlist on September 14. Review accepted form submissions and waitlist completion instrumentation before interpreting this as a decline in actual business leads. Analytics events alone do not prove accepted leads.
+- GSC reported 58 indexed URLs and 478 not indexed, including 376 crawled/not indexed, 40 discovered/not indexed, 36 noindex, 15 not found, 8 redirects, 2 alternate canonicals, and 1 duplicate without a selected canonical. Reconcile with the intentional search-visibility policy before changing indexability.
+
+## Validation and release
+
+The refresh is tracked in [PR #194](https://github.com/enzo-prism/prism-website/pull/194). The reviewed implementation passed:
+
+- 107 Jest suites / 542 tests.
+- 23 locked visual checks, with 7 intentional skips and unchanged screenshot baselines.
+- Typecheck and pricing consistency checks.
+- Lint with zero errors; 71 existing warnings remained, while touched files were clean.
+- Independent metric arithmetic, source-window, and duplicate-copy review.
+- GitHub PR CI and both Vercel preview deployments; the hosted preview was read back in Chrome.
+
+Production publication was explicitly authorized on October 4, 2026. Merge through `main` and use the existing `Deploy to Vercel` workflow, including its blocking UI-lock and mobile-navbar checks. Completion requires a successful production run plus live-domain readback of the homepage, changed case studies, `ai-data.json`, and `llms.txt`; preview success alone is not production verification.
