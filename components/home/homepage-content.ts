@@ -123,8 +123,8 @@ export const HOMEPAGE_HERO = {
       items: [
         {
           value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
-          unit: '/month',
-          label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites`,
+          unit: '',
+          label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites · ${CONNECTED_CLIENT_TRAFFIC.month}`,
         },
         {
           value: SOCIAL_PROOF.combinedAudience,
@@ -132,9 +132,9 @@ export const HOMEPAGE_HERO = {
           label: 'followers across our channels',
         },
         {
-          value: SOCIAL_PROOF.tiktok.activity,
+          value: SOCIAL_PROOF.tiktok.audience,
           unit: '',
-          label: 'TikTok views in the last 60 days',
+          label: `TikTok followers · through ${SOCIAL_PROOF.tiktok.audienceAsOf}`,
         },
       ],
     },
@@ -837,7 +837,7 @@ export const HOMEPAGE_CONTENT_PROOF = {
 
 export const HOMEPAGE_SEARCH_PROOF = {
   src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp',
-  alt: 'Google Search Console growth for Olympic Bootworks',
+  alt: 'Historical Google Search Console snapshot for Olympic Bootworks',
   width: 498,
   height: 667,
   eyebrow: 'search visibility',
@@ -847,7 +847,7 @@ export const HOMEPAGE_SEARCH_PROOF = {
 export const HOMEPAGE_SEARCH_CONSOLE_SLIDES = [
   {
     src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp',
-    alt: 'Google Search Console growth for Olympic Bootworks',
+    alt: 'Historical Google Search Console snapshot for Olympic Bootworks',
     width: 498,
     height: 667,
   },

@@ -123,9 +123,11 @@ describe('HomeHeroSection', () => {
     ).toBeInTheDocument()
 
     const stats = screen.getByTestId('home-hero-stats')
-    expect(stats).toHaveTextContent('16,882')
+    expect(stats).toHaveTextContent('5,310')
     expect(stats).toHaveTextContent('73K+')
-    expect(stats).toHaveTextContent('1.2M')
+    expect(stats).toHaveTextContent('11.7K')
+    expect(stats).toHaveTextContent('September 2026')
+    expect(stats).not.toHaveTextContent('last 60 days')
     expect(stats).not.toHaveTextContent('$100,000')
     expect(stats).toHaveTextContent(/youtube/i)
     expect(stats).toHaveTextContent(/instagram/i)

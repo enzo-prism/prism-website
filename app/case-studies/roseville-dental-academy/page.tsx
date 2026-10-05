@@ -23,7 +23,7 @@ import { CaseStudySchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { CASE_STUDIES } from '@/lib/case-study-data'
+import { CASE_STUDIES, getCaseStudyMetric } from '@/lib/case-study-data'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
@@ -46,6 +46,9 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: WEBSITE_SCREENSHOTS.og,
 })
 
+const searchClicks = getCaseStudyMetric(SLUG)
+const searchImpressions = getCaseStudyMetric(SLUG, 1)
+
 const statCards = [
   {
     label: 'Platform move',
@@ -59,13 +62,13 @@ const statCards = [
   },
   {
     label: 'Latest Google clicks',
-    value: '701',
-    detail: 'Google Search Console · July 2026.',
+    value: searchClicks.value,
+    detail: `${searchClicks.sourceName} · ${searchClicks.dateRange}.`,
   },
   {
     label: 'Latest search impressions',
-    value: '17.5K',
-    detail: 'Google Search Console · July 2026.',
+    value: searchImpressions.value,
+    detail: `${searchImpressions.sourceName} · ${searchImpressions.dateRange}.`,
   },
 ]
 

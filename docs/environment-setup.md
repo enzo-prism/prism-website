@@ -91,3 +91,7 @@ curl -sS https://api.us.elevenlabs.io/v1/convai/agents/agent_4701kkcyc4efefkv5x4
 ### Retired service intake and WebMCP (2026-09-14)
 
 `/website-intake`, `/content-intake`, and `/ads-intake` 308-redirect to `/waitlist?focus=…`. `NEXT_PUBLIC_CONTENT_INTAKE_FORM_ENDPOINT`, `NEXT_PUBLIC_ADS_INTAKE_FORM_ENDPOINT`, `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT`, and `WEBMCP_ORIGIN_TRIAL_TOKEN` are no longer read by the codebase; remove them from Vercel at your convenience.
+
+### Analytics report property
+
+The operator-only `GA4_PROPERTY_ID` override selects the numeric property for `pnpm seo:ai-report` (default `508295014`, Prism Website in Prism Alpha). It does not change browser tracking and is not required by production. Export it in the shell when running the report.

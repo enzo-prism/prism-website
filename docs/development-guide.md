@@ -149,7 +149,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 ### AI visibility loop (GEO)
 
-- `pnpm seo:ai-report [days]` (default 90) prints AI answer-engine referrals (ChatGPT, Perplexity, Claude, Gemini, Copilot) from the Prism GA4 property plus the Search Console clicks/impressions trend and top queries. It requires the locally authenticated `gog` CLI and is an operator tool, not CI.
+- `pnpm seo:ai-report [days]` (default 90) prints AI answer-engine referrals (ChatGPT, Perplexity, Claude, Gemini, Copilot) from the Prism GA4 property plus the Search Console clicks/impressions trend and top queries. It defaults to the verified Prism Website property `508295014` (Prism Alpha); set `GA4_PROPERTY_ID` to override the reporting property. It requires the locally authenticated `gog` CLI and is an operator tool, not CI. Retrieval errors stop the report instead of being reported as zero traffic.
 - Quarterly cadence: run the report, refresh the top indexable pillar posts (update facts, dates, FAQs, and `modifiedTime`), promote any strong noindexed posts into `INDEXABLE_BLOG_SLUGS`, and prune posts that no longer earn impressions.
 - Case-study `structured.results` metrics must stay verifiable against the named source (usually each client's Search Console). When refreshing them, bump `dateModified` and keep value/label/detail consistent with what the source shows.
 - Keep the canonical one-sentence Prism definition synchronized across `public/llms.txt`, the `GlobalSchemaGraph` Organization `description`, and the about page so engines see one consistent entity.

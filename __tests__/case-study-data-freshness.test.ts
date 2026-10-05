@@ -20,7 +20,7 @@ const getStudy = (slug: string) => {
 }
 
 describe('case study data freshness', () => {
-  it('keeps the Aug 28 Search Console and GA4 windows exact', () => {
+  it('keeps the October 4 verified Search Console and GA4 windows exact', () => {
     const wong = getStudy('dr-christopher-wong')
     const olympic = getStudy('olympic-bootworks')
     const belize = getStudy('belize-kids-foundation')
@@ -28,54 +28,54 @@ describe('case study data freshness', () => {
     const saorsa = getStudy('saorsa-growth-partners')
 
     expect(wong.structured?.results?.[0]).toMatchObject({
-      value: '+160%',
-      dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+      value: '+49%',
+      dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
       detail:
-        'Google Search Console: 8,704 impressions grew to 22,660 in the latest complete 90-day year-over-year window.',
+        'Google Search Console: 14,411 impressions grew to 21,426 in the latest complete 90-day year-over-year window.',
     })
     expect(wong.structured?.story?.result).toContain(
-      'Google Search impressions rose 160% year over year',
+      'Google Search impressions rose 49% year over year',
     )
 
     expect(olympic.structured?.results).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          value: '+8%',
-          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+          value: '−43%',
+          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
           detail:
-            'Google Search Console: 9,373 impressions grew to 10,129 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 14,129 impressions declined to 8,040 in the latest complete 90-day year-over-year window.',
         }),
         expect.objectContaining({
-          value: '10.7k',
-          dateRange: 'May 31-Aug 28, 2026',
+          value: '2,554',
+          dateRange: 'Jul 6-Oct 3, 2026',
           detail:
-            'GA4: 10,709 sessions and 10,151 new users from May 31-Aug 28, 2026.',
+            'GA4: 2,554 sessions and 2,255 new users from Jul 6-Oct 3, 2026; production hostnames only.',
         }),
       ]),
     )
 
     expect(belize.structured?.results?.[0]).toMatchObject({
-      value: '+121%',
-      dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+      value: '+60%',
+      dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
       detail:
-        'Google Search Console: 1,313 impressions grew to 2,903 in the latest complete 90-day year-over-year window.',
+        'Google Search Console: 1,555 impressions grew to 2,490 in the latest complete 90-day year-over-year window.',
     })
 
     expect(roseville.structured?.results).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ value: '701', dateRange: 'July 2026' }),
-        expect.objectContaining({ value: '17.5k', dateRange: 'July 2026' }),
+        expect.objectContaining({ value: '704', dateRange: 'September 2026' }),
+        expect.objectContaining({ value: '24.1k', dateRange: 'September 2026' }),
       ]),
     )
     expect(saorsa.structured?.results).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ value: '1.9×', dateRange: 'Jan-Jul 2026' }),
-        expect.objectContaining({ value: '+114%', dateRange: 'Jan-Jul 2026' }),
+        expect.objectContaining({ value: '2.4×', dateRange: 'Jan-Sep 2026' }),
+        expect.objectContaining({ value: '+179%', dateRange: 'Jan-Sep 2026' }),
       ]),
     )
 
     for (const study of [wong, olympic, belize, roseville, saorsa]) {
-      expect(study.structured?.dateModified).toBe('2026-08-30T00:00:00.000Z')
+      expect(study.structured?.dateModified).toBe('2026-10-04T00:00:00.000Z')
     }
   })
 
@@ -91,7 +91,7 @@ describe('case study data freshness', () => {
       label: canonical.label,
       source: canonical.sourceName,
     })
-    expect(metric?.value).toBe('701')
+    expect(metric?.value).toBe('704')
     expect(JSON.stringify(HOMEPAGE_CLIENT_WINS)).not.toContain('593')
   })
 
