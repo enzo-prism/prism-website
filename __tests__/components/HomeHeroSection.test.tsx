@@ -132,6 +132,9 @@ describe('HomeHeroSection', () => {
     expect(stats).toHaveTextContent(/youtube/i)
     expect(stats).toHaveTextContent(/instagram/i)
     expect(stats).toHaveTextContent(/tiktok/i)
+    expect(stats).toHaveTextContent('421.3K')
+    expect(stats).toHaveTextContent(/likes/i)
+    expect(stats).not.toHaveTextContent('1,100')
 
     expect(screen.getByTestId('home-hero-social-proof')).toHaveTextContent(
       /20\+ stories from founders, doctors, and business owners/i,

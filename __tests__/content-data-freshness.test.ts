@@ -81,7 +81,7 @@ describe('public content data freshness', () => {
       publicData.verified_proof.social.instagram.posts.toLocaleString('en-US'),
     ).toBe(SOCIAL_PROOF.instagram.activity)
     expect(
-      publicData.verified_proof.social.tiktok.videos.toLocaleString('en-US'),
+      publicData.verified_proof.social.tiktok.likes,
     ).toBe(SOCIAL_PROOF.tiktok.activity)
     expect(publicData.verified_proof.social.tiktok).not.toHaveProperty(
       'views_last_60_days',

@@ -92,3 +92,7 @@ Public case studies select only clearly favorable, verified proof with its sourc
 The October 4 editorial follow-up retains Wong +49% and Belize +60% year-over-year impressions. It removes Wong +2.8%, all Olympic metrics, Roseville raw counts, and Saorsa small-base comparisons from case-study cards, narratives, related marketing copy, and AI summaries. Existing favorable client review ratings remain reputation evidence, not results attributed to Prism.
 
 The full case-study mobile check also exposed a long-domain overflow on PTI. The shared visual hero now constrains its mobile grid to one flexible column. Existing Prism tokens and component styles are preserved; no design tokens were added.
+
+## TikTok homepage activity update
+
+At the account owner’s request, the TikTok secondary homepage stat now shows **421.3K likes** instead of 1,100 videos. The rounded current profile count was supplied by the owner on October 4, 2026; it is not represented as an exact API count. Follower data and the combined audience total are unchanged. Shared proof data and the AI-readable snapshot use the same likes label and value.
