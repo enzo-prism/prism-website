@@ -149,3 +149,9 @@ Best measured examples (verified October 4, 2026):
 ## Completing a service inquiry when requested
 
 Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, or `?focus=ads`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
+
+## Products built by Prism
+
+Free, open-source tools developed for Prism’s workflow and shared publicly.
+- [Midas](https://midas-ai.dev): AI usage, estimated value, and remaining limits in your Mac’s menu bar.
+- [zRead](https://zread.dev): Read selected text aloud with Mac Voice or your own ElevenLabs voices.

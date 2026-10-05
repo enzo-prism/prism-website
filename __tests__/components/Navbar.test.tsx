@@ -309,6 +309,42 @@ describe('Navbar', () => {
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
   })
 
+  it('opens Products with external destinations and closes Services when switching', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    const services = screen.getByRole('button', { name: /services/i })
+    const products = screen.getByRole('button', { name: /products/i })
+    fireEvent.click(services)
+    fireEvent.click(products)
+    expect(services).toHaveAttribute('aria-expanded', 'false')
+    expect(products).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('link', { name: /^midas$/i })).toHaveAttribute('href', 'https://midas-ai.dev')
+    expect(screen.getByRole('link', { name: /^zread$/i })).toHaveAttribute('href', 'https://zread.dev')
+    screen.getByRole('link', { name: /^midas$/i }).focus()
+    fireEvent.keyDown(document, { key: 'Escape' })
+    expect(products).toHaveFocus()
+    expect(products).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(products)
+    fireEvent.mouseDown(document.body)
+    expect(products).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('dismisses Products after navigation and closes the mobile sheet for product links', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    const products = screen.getByRole('button', { name: /products/i })
+    fireEvent.click(products)
+    fireEvent.click(screen.getByRole('link', { name: /^midas$/i }))
+    expect(products).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+    const mobile = screen.getByRole('navigation', { name: 'Mobile' })
+    expect(within(mobile).getByText('Products')).toBeInTheDocument()
+    const zread = within(mobile).getByRole('link', { name: /^zread$/i })
+    expect(zread.querySelector('.font-sans')?.textContent).toBeTruthy()
+    fireEvent.click(zread)
+    expect(screen.queryByRole('navigation', { name: 'Mobile' })).not.toBeInTheDocument()
+  })
+
   it('keeps mobile service descriptions visible without changing link names', () => {
     mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
@@ -432,7 +468,7 @@ describe('Navbar', () => {
     }
   })
 
-  it('groups the mobile sheet as home, services, then proof', () => {
+  it('groups the mobile sheet as home, services, products, then proof', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
@@ -442,7 +478,7 @@ describe('Navbar', () => {
     expect(panel).toBeInTheDocument()
 
     const groups = panel?.querySelectorAll(':scope nav > div > div')
-    expect(groups).toHaveLength(3)
+    expect(groups).toHaveLength(4)
     expect(groups?.[1]?.className).toContain('border-t')
     expect(groups?.[2]?.className).toContain('border-t')
     expect(
@@ -466,18 +502,18 @@ describe('Navbar', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      within(groups?.[2] as HTMLElement).getByRole('link', {
+      within(groups?.[3] as HTMLElement).getByRole('link', {
         name: /^case studies$/i,
       }),
     ).toBeInTheDocument()
     expect(
-      within(groups?.[2] as HTMLElement).getByRole('link', {
+      within(groups?.[3] as HTMLElement).getByRole('link', {
         name: /^wall of love$/i,
       }),
     ).toBeInTheDocument()
   })
 
-  it('keeps all six items one tap away in the mobile panel', () => {
+  it('keeps all eight items one tap away in the mobile panel', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
@@ -491,6 +527,8 @@ describe('Navbar', () => {
       [/^website$/i, '/websites'],
       [/^content$/i, '/content'],
       [/^ads$/i, '/ads'],
+      [/^midas$/i, 'https://midas-ai.dev'],
+      [/^zread$/i, 'https://zread.dev'],
       [/^case studies$/i, '/case-studies'],
       [/^wall of love$/i, '/wall-of-love'],
     ] as const) {

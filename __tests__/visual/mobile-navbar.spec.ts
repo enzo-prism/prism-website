@@ -55,8 +55,11 @@ async function expectOpenMenuGeometry(page: Page) {
   expect(result?.horizontalOverflow).toBeLessThanOrEqual(1)
   expect(result?.bodyOverflow).toBe('hidden')
   expect(result?.htmlOverflow).toBe('hidden')
+  for (const [name, href] of [['Midas', 'https://midas-ai.dev'], ['zRead', 'https://zread.dev']]) {
+    await expect(page.locator('#mobile-site-nav').getByRole('link', { name: new RegExp(name) })).toHaveAttribute('href', href)
+  }
   await expect(page.locator('#mobile-site-nav').getByRole('link')).toHaveCount(
-    6,
+    8,
   )
 }
 

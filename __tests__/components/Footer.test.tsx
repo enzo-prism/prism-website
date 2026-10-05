@@ -26,6 +26,21 @@ jest.mock('next/link', () => ({
 }))
 
 describe('Footer', () => {
+  it('links directly to both free Prism products in new tabs', () => {
+    render(<Footer />)
+
+    expect(screen.getByText('Products')).toBeInTheDocument()
+    for (const [name, href] of [
+      ['Midas', 'https://midas-ai.dev'],
+      ['zRead', 'https://zread.dev'],
+    ]) {
+      const link = screen.getByRole('link', { name })
+      expect(link).toHaveAttribute('href', href)
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    }
+  })
+
   it('uses the homepage footer treatment by default', () => {
     render(<Footer />)
 
