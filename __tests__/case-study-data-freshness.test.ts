@@ -4,7 +4,7 @@ import {
   HOMEPAGE_GROWTH_RAMP,
   HOMEPAGE_HERO,
 } from '@/components/home/homepage-content'
-import { CASE_STUDIES, getCaseStudyMetric } from '@/lib/case-study-data'
+import { CASE_STUDIES } from '@/lib/case-study-data'
 import { CASE_STUDY_NAV_ITEMS } from '@/lib/case-study-nav-data'
 import { CLIENTS } from '@/lib/clients'
 import { websiteProjects } from '@/lib/website-projects'
@@ -37,22 +37,7 @@ describe('case study data freshness', () => {
       'Google Search impressions rose 49% year over year',
     )
 
-    expect(olympic.structured?.results).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          value: '−43%',
-          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
-          detail:
-            'Google Search Console: 14,129 impressions declined to 8,040 in the latest complete 90-day year-over-year window.',
-        }),
-        expect.objectContaining({
-          value: '2,554',
-          dateRange: 'Jul 6-Oct 3, 2026',
-          detail:
-            'GA4: 2,554 sessions and 2,255 new users from Jul 6-Oct 3, 2026; production hostnames only.',
-        }),
-      ]),
-    )
+    expect(olympic.structured?.results).toBeUndefined()
 
     expect(belize.structured?.results?.[0]).toMatchObject({
       value: '+60%',
@@ -61,38 +46,30 @@ describe('case study data freshness', () => {
         'Google Search Console: 1,555 impressions grew to 2,490 in the latest complete 90-day year-over-year window.',
     })
 
-    expect(roseville.structured?.results).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ value: '704', dateRange: 'September 2026' }),
-        expect.objectContaining({ value: '24.1k', dateRange: 'September 2026' }),
-      ]),
-    )
-    expect(saorsa.structured?.results).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ value: '2.4×', dateRange: 'Jan-Sep 2026' }),
-        expect.objectContaining({ value: '+179%', dateRange: 'Jan-Sep 2026' }),
-      ]),
-    )
+    expect(roseville.structured?.results).toBeUndefined()
+    expect(saorsa.structured?.results).toBeUndefined()
+    expect(wong.structured?.results).toHaveLength(1)
 
     for (const study of [wong, olympic, belize, roseville, saorsa]) {
       expect(study.structured?.dateModified).toBe('2026-10-04T00:00:00.000Z')
     }
   })
 
-  it('derives the Roseville homepage result from canonical case data', () => {
-    const canonical = getCaseStudyMetric('roseville-dental-academy')
-    const slide = HOMEPAGE_CLIENT_WINS.slides.find(
-      (item) => item.href === '/case-studies/roseville-dental-academy',
-    )
-    const metric = slide && 'metric' in slide ? slide.metric : undefined
-
-    expect(metric).toEqual({
-      value: canonical.value,
-      label: canonical.label,
-      source: canonical.sourceName,
-    })
-    expect(metric?.value).toBe('704')
-    expect(JSON.stringify(HOMEPAGE_CLIENT_WINS)).not.toContain('593')
+  it('uses factual context when a case has no strong numerical proof', () => {
+    for (const slug of ['olympic-bootworks', 'roseville-dental-academy', 'saorsa-growth-partners']) {
+      const slide = HOMEPAGE_CLIENT_WINS.slides.find(
+        (item) => item.href === `/case-studies/${slug}`,
+      )
+      expect(slide).toBeDefined()
+      expect(slide && 'metric' in slide ? slide.metric : undefined).toBeUndefined()
+    }
+    for (const study of CASE_STUDIES) {
+      for (const metric of study.structured?.results ?? []) {
+        expect(metric.value).not.toMatch(/^[−-]/)
+        expect(metric.sourceName).toBeTruthy()
+        expect(metric.dateRange).toBeTruthy()
+      }
+    }
   })
 
   it('keeps current client identities, locations, and positioning', () => {

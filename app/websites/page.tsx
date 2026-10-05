@@ -154,21 +154,9 @@ const PROOF_BUILDS = [
 
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
 // Console). Keep in sync with the source; do not invent metrics.
-const saorsaClicks = getCaseStudyMetric('saorsa-growth-partners')
-const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
 const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
 
 const PROOF_POINTS = [
-  {
-    value: saorsaClicks.value,
-    label: `${saorsaClicks.label} for Saorsa Growth Partners`,
-    href: '/case-studies/saorsa-growth-partners',
-  },
-  {
-    value: rosevilleClicks.value,
-    label: `${rosevilleClicks.label} for Roseville Dental Academy`,
-    href: '/case-studies/roseville-dental-academy',
-  },
   {
     value: wongImpressions.value,
     label: `${wongImpressions.label} for Dr. Christopher Wong`,
@@ -286,7 +274,7 @@ export default function WebsitesPage() {
             </div>
 
             <div className="mt-14 border-t border-white/10 pt-8">
-              <ul className="grid gap-6 sm:grid-cols-3">
+              <ul className="grid max-w-2xl gap-6">
                 {PROOF_POINTS.map((proof) => (
                   <li key={proof.label}>
                     <Link

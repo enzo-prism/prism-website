@@ -48,7 +48,10 @@ export function buildCloudinaryVideoPoster(videoUrl: string) {
 /**
  * A dated, source-attributed metric for a case study. Only publish values
  * verified against the named source (e.g. Google Search Console) — these
- * render publicly and feed search/AI citations.
+ * render publicly and feed search/AI citations. Publish only clearly favorable,
+ * context-supported proof. Omit declines, marginal gains, and ambiguous raw
+ * counts; use delivered-work narratives when no strong metric qualifies.
+ * Keep the complete analytics record in verification docs, not this selection.
  */
 export type CaseStudyResultMetric = {
   value: string
@@ -135,14 +138,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
           detail:
             'Google Search Console: 14,411 impressions grew to 21,426 in the latest complete 90-day year-over-year window.',
         },
-        {
-          value: '+2.8%',
-          label: 'September Google Search impressions, year over year',
-          sourceName: 'Google Search Console',
-          dateRange: 'September 2025 vs September 2026',
-          detail:
-            'Google Search Console: 6,114 impressions in September 2025 grew to 6,287 in September 2026.',
-        },
       ],
       story: {
         situation:
@@ -224,32 +219,13 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         'The business escaped website + email technical debt and moved to owned infrastructure.',
         'The Fantic catalog now routes high-consideration purchases into direct guidance from the shop.',
       ],
-      results: [
-        {
-          value: '−43%',
-          label:
-            'Google Search impressions in the latest 90 days, year over year',
-          sourceName: 'Google Search Console',
-          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
-          detail:
-            'Google Search Console: 14,129 impressions declined to 8,040 in the latest complete 90-day year-over-year window.',
-        },
-        {
-          value: '2,554',
-          label: 'GA4 sessions in the latest complete 90 days',
-          sourceName: 'GA4',
-          dateRange: 'Jul 6-Oct 3, 2026',
-          detail:
-            'GA4: 2,554 sessions and 2,255 new users from Jul 6-Oct 3, 2026; production hostnames only.',
-        },
-      ],
       story: {
         situation:
           'Olympic Bootworks had the hard part: a legendary bootfitting reputation, Olympians in the fitting room, and customers who drive hours. Online it had a basic Squarespace page, weak local discovery, and no clear way for riders to compare high-consideration Fantic e-bikes before contacting the shop.',
         approach:
           'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, integrated the Fantic e-bike catalog at Olympic Bootworks with visible current pricing and direct email and test-ride inquiry paths, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
-          'The website became a measurable retail and operations asset instead of a brochure: Google Search recorded 8,040 impressions and 455 clicks from July 5-October 2, 2026, down from 14,129 impressions and 604 clicks a year earlier, GA4 recorded 2,554 sessions from July 6-October 3, 2026, and riders gained a clear path from model and price research to a direct shop inquiry.',
+          'Riders can compare Fantic models and current pricing, request a test ride, and contact the shop directly. Olympic Bootworks now owns an integrated retail website and email infrastructure, with analytics in place to guide future improvements.',
       },
       focus: 'Integrated retail catalog + growth platform',
       scope:
@@ -374,22 +350,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
       datePublished: '2026-05-22T00:00:00.000Z',
       dateModified: '2026-10-04T00:00:00.000Z',
-      results: [
-        {
-          value: '704',
-          label: 'Google clicks in the latest complete month',
-          sourceName: 'Google Search Console',
-          dateRange: 'September 2026',
-          detail: 'Google Search Console: 704 clicks in September 2026.',
-        },
-        {
-          value: '24.1k',
-          label: 'Google Search impressions in the latest complete month',
-          sourceName: 'Google Search Console',
-          dateRange: 'September 2026',
-          detail: 'Google Search Console: 24,110 impressions in September 2026.',
-        },
-      ],
       outcomes: [
         'Roseville Dental Academy moved from a limited stock-site setup to a Vercel-hosted production site that can be iterated like real software.',
         'The new admissions surface connects GA4, custom conversion events, Search Console, Hotjar, Formspree, and AI assistant support into one measurement-ready system.',
@@ -776,31 +736,13 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     segments: ['consulting'],
     structured: {
       dateModified: '2026-10-04T00:00:00.000Z',
-      results: [
-        {
-          value: '2.4×',
-          label: 'monthly Google clicks from January to September',
-          sourceName: 'Google Search Console',
-          dateRange: 'Jan-Sep 2026',
-          detail:
-            'Google Search Console: 10 clicks (Jan 2026) → 24 (Sep 2026).',
-        },
-        {
-          value: '+179%',
-          label: 'Google Search impressions from January to September',
-          sourceName: 'Google Search Console',
-          dateRange: 'Jan-Sep 2026',
-          detail:
-            'Google Search Console: 505 impressions (Jan 2026) → 1,411 (Sep 2026).',
-        },
-      ],
       story: {
         situation:
           'Saorsa Growth Partners is a focused advisory firm whose pipeline depends on credibility and the right inquiries, not volume. The firm needed clarity, trust, and lead capture, and it needed them fast.',
         approach:
           'Prism shipped fast-loading pages, concise offers, and inquiry paths designed to surface the right work, with search and analytics instrumentation in place from launch.',
         result:
-          'Between January and September, monthly Google clicks grew 2.4× and impressions grew 179% (Google Search Console, Jan–Sep 2026). That is a measured visibility ramp for a brand-new presence.',
+          'Saorsa now has a focused digital presence with clear offers, credible positioning, and direct inquiry paths, supported by search and analytics instrumentation.',
       },
     },
   },

@@ -56,7 +56,7 @@ Combined subscriptions/followers: 73,465, conservatively displayed as **73K+**. 
 ## Synchronization and reporting
 
 - Canonical shared proof: `lib/proof-metrics.ts`; case-study results: `lib/case-study-data.ts`.
-- Roseville's custom cards now derive canonical results rather than duplicate values.
+- Roseville's custom cards describe delivered admissions capabilities; its source measurements remain in this audit.
 - Homepage shows the traffic month and TikTok follower date. Machine-readable `public/ai-data.json` and `public/llms.txt` carry the same values/windows.
 - `pnpm seo:ai-report` defaults to Prism Website GA4 property 508295014, with optional `GA4_PROPERTY_ID` override. Retrieval failures now stop the script instead of being represented as no traffic. Local gog authentication was unavailable; live GA4 evidence used the authenticated connector.
 - Vercel Analytics uses a separate visitor/pageview model; its dashboard data was used in the accompanying analysis and is not added to GA4 or used to replace these client-traffic claims.
@@ -84,3 +84,9 @@ The refresh is tracked in [PR #194](https://github.com/enzo-prism/prism-website/
 - GitHub PR CI and both Vercel preview deployments; the hosted preview was read back in Chrome.
 
 Production publication was explicitly authorized on October 4, 2026. Merge through `main` and use the existing `Deploy to Vercel` workflow, including its blocking UI-lock and mobile-navbar checks. Completion requires a successful production run plus live-domain readback of the homepage, changed case studies, `ai-data.json`, and `llms.txt`; preview success alone is not production verification.
+
+## Case-study editorial policy
+
+Public case studies select only clearly favorable, verified proof with its source and full comparison window. They are portfolio highlights, not comprehensive analytics reports. Declines, marginal gains, small-base multipliers, and raw counts without a meaningful benchmark are omitted rather than reframed as growth. When no strong metric qualifies, describe the delivered capabilities without implying measured growth. Retain the full source findings above for operational review.
+
+The October 4 editorial follow-up retains Wong +49% and Belize +60% year-over-year impressions. It removes Wong +2.8%, all Olympic metrics, Roseville raw counts, and Saorsa small-base comparisons from case-study cards, narratives, related marketing copy, and AI summaries. Existing favorable client review ratings remain reputation evidence, not results attributed to Prism.
