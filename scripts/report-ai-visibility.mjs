@@ -15,7 +15,11 @@
 
 import { execFileSync } from "node:child_process"
 
-const GA4_PROPERTY = "properties/383270357" // Prism GA4
+const propertyId = (process.env.GA4_PROPERTY_ID || "508295014").replace(/^properties\//, "")
+if (!/^\d+$/.test(propertyId)) {
+  throw new Error("GA4_PROPERTY_ID must be a numeric GA4 property ID")
+}
+const GA4_PROPERTY = `properties/${propertyId}` // Prism Website, Prism Alpha
 const GSC_SITE = "sc-domain:design-prism.com"
 const AI_SOURCE_PATTERN =
   /chatgpt|openai|perplexity|claude|anthropic|gemini|copilot|you\.com|phind|poe\.com|meta\.ai/i
@@ -27,7 +31,7 @@ function gog(args) {
     return execFileSync("gog", args, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] })
   } catch (error) {
     console.error(`gog ${args[0]} failed:`, error.stderr?.toString() || error.message)
-    return ""
+    throw new Error(`Unable to fetch ${args[0]} data; no statistics were inferred`, { cause: error })
   }
 }
 
@@ -52,6 +56,8 @@ const ga = gog([
   "sessionSource",
   "--metrics",
   "sessions,totalUsers",
+  "--max",
+  "250000",
   "-p",
 ])
 

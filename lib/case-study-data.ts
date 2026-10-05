@@ -117,7 +117,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/dr-wong-polaroids.png',
       heroVideoId: 'HrksJeYb02Q',
       datePublished: '2025-01-15T00:00:00.000Z',
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-10-04T00:00:00.000Z',
       outcomes: [
         'The M&A transition was supported by a clear, story-driven online presence rather than leaving patients to guess what happened.',
         'The practice now runs on a modern dental website with strong SEO foundations and clean UX.',
@@ -127,21 +127,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       results: [
         {
-          value: '+160%',
+          value: '+49%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
           detail:
-            'Google Search Console: 8,704 impressions grew to 22,660 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 14,411 impressions grew to 21,426 in the latest complete 90-day year-over-year window.',
         },
         {
-          value: '4.3×',
-          label: 'July Google Search impressions, year over year',
+          value: '+2.8%',
+          label: 'September Google Search impressions, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'July 2025 vs July 2026',
+          dateRange: 'September 2025 vs September 2026',
           detail:
-            'Google Search Console: 1,703 impressions in July 2025 grew to 7,335 in July 2026.',
+            'Google Search Console: 6,114 impressions in September 2025 grew to 6,287 in September 2026.',
         },
       ],
       story: {
@@ -150,7 +150,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism rebuilt the patient-facing brand and digital operations: a modern website with clear ownership messaging, strong SEO foundations, aligned local listings and review profiles, and AI-optimized Google campaigns, all reporting into one rhythm.',
         result:
-          'Patients gained a clearer digital handoff, acquisition shifted from passive word-of-mouth to measured active channels, and Google Search impressions rose 160% year over year in the latest complete 90-day window.',
+          'Patients gained a clearer digital handoff, acquisition shifted from passive word-of-mouth to measured active channels, and Google Search impressions rose 49% year over year in the latest complete 90-day window.',
       },
       focus: 'Dental M&A handoff',
       scope: 'Website, SEO, ads, AI stack',
@@ -216,9 +216,9 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage: 'https://www.design-prism.com/olympic-bootworks.png',
       heroVideoId: 'Cgi7CZHMYQ0',
       datePublished: '2025-02-15T00:00:00.000Z',
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-10-04T00:00:00.000Z',
       outcomes: [
-        'Traffic, search impressions, and online engagement compounded over time.',
+        'The site connects retail discovery, current product information, and direct inquiries in one measurable platform.',
         'Olympic Bootworks went from “great store, weak website” to one integrated retail platform for its brand, services, and Fantic e-bikes.',
         'Shoppers can compare the current Fantic lineup and visible pricing, then ask the shop about sizing, availability, test rides, pickup, or shipping.',
         'The business escaped website + email technical debt and moved to owned infrastructure.',
@@ -226,21 +226,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       ],
       results: [
         {
-          value: '+8%',
+          value: '−43%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
           detail:
-            'Google Search Console: 9,373 impressions grew to 10,129 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 14,129 impressions declined to 8,040 in the latest complete 90-day year-over-year window.',
         },
         {
-          value: '10.7k',
+          value: '2,554',
           label: 'GA4 sessions in the latest complete 90 days',
           sourceName: 'GA4',
-          dateRange: 'May 31-Aug 28, 2026',
+          dateRange: 'Jul 6-Oct 3, 2026',
           detail:
-            'GA4: 10,709 sessions and 10,151 new users from May 31-Aug 28, 2026.',
+            'GA4: 2,554 sessions and 2,255 new users from Jul 6-Oct 3, 2026; production hostnames only.',
         },
       ],
       story: {
@@ -249,7 +249,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism rebuilt the legacy site into a modern, mobile-first brand and services experience, integrated the Fantic e-bike catalog at Olympic Bootworks with visible current pricing and direct email and test-ride inquiry paths, and moved the shop onto an owned Google Workspace and email stack with clean DNS.',
         result:
-          'The website became a measurable retail and operations asset instead of a brochure: Google Search impressions rose 8% year over year in the latest complete 90-day window, GA4 recorded 10,709 sessions, and riders gained a clear path from model and price research to a direct shop inquiry.',
+          'The website became a measurable retail and operations asset instead of a brochure: Google Search recorded 8,040 impressions and 455 clicks from July 5-October 2, 2026, down from 14,129 impressions and 604 clicks a year earlier, GA4 recorded 2,554 sessions from July 6-October 3, 2026, and riders gained a clear path from model and price research to a direct shop inquiry.',
       },
       focus: 'Integrated retail catalog + growth platform',
       scope:
@@ -373,21 +373,21 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
       heroImage:
         'https://www.design-prism.com/case-studies/roseville-dental-academy-og.jpg',
       datePublished: '2026-05-22T00:00:00.000Z',
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-10-04T00:00:00.000Z',
       results: [
         {
-          value: '701',
+          value: '704',
           label: 'Google clicks in the latest complete month',
           sourceName: 'Google Search Console',
-          dateRange: 'July 2026',
-          detail: 'Google Search Console: 701 clicks in July 2026.',
+          dateRange: 'September 2026',
+          detail: 'Google Search Console: 704 clicks in September 2026.',
         },
         {
-          value: '17.5k',
+          value: '24.1k',
           label: 'Google Search impressions in the latest complete month',
           sourceName: 'Google Search Console',
-          dateRange: 'July 2026',
-          detail: 'Google Search Console: 17,506 impressions in July 2026.',
+          dateRange: 'September 2026',
+          detail: 'Google Search Console: 24,110 impressions in September 2026.',
         },
       ],
       outcomes: [
@@ -579,16 +579,16 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'belize-kids-foundation',
     segments: ['nonprofit'],
     structured: {
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-10-04T00:00:00.000Z',
       results: [
         {
-          value: '+121%',
+          value: '+60%',
           label:
             'Google Search impressions in the latest 90 days, year over year',
           sourceName: 'Google Search Console',
-          dateRange: 'May 31-Aug 28, 2025 vs May 31-Aug 28, 2026',
+          dateRange: 'Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026',
           detail:
-            'Google Search Console: 1,313 impressions grew to 2,903 in the latest complete 90-day year-over-year window.',
+            'Google Search Console: 1,555 impressions grew to 2,490 in the latest complete 90-day year-over-year window.',
         },
       ],
       story: {
@@ -597,7 +597,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism built a warm, vivid identity inspired by the Belize landscape, program storytelling that makes impact tangible, multiple giving pathways with clear impact statements, search architecture for donors actively looking for meaningful causes, and analytics across the donation funnel.',
         result:
-          'Giving now feels immediate and concrete instead of abstract, and Google Search impressions rose 121% year over year in the latest complete 90-day window, reaching donors beyond the founder’s personal network.',
+          'Giving now feels immediate and concrete instead of abstract, and Google Search impressions rose 60% year over year in the latest complete 90-day window, reaching donors beyond the founder’s personal network.',
       },
     },
   },
@@ -775,23 +775,23 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'saorsa-growth-partners',
     segments: ['consulting'],
     structured: {
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-10-04T00:00:00.000Z',
       results: [
         {
-          value: '1.9×',
-          label: 'monthly Google clicks in seven months',
+          value: '2.4×',
+          label: 'monthly Google clicks from January to September',
           sourceName: 'Google Search Console',
-          dateRange: 'Jan-Jul 2026',
+          dateRange: 'Jan-Sep 2026',
           detail:
-            'Google Search Console: 10 clicks (Jan 2026) → 19 (Jul 2026).',
+            'Google Search Console: 10 clicks (Jan 2026) → 24 (Sep 2026).',
         },
         {
-          value: '+114%',
-          label: 'Google Search impressions in seven months',
+          value: '+179%',
+          label: 'Google Search impressions from January to September',
           sourceName: 'Google Search Console',
-          dateRange: 'Jan-Jul 2026',
+          dateRange: 'Jan-Sep 2026',
           detail:
-            'Google Search Console: 505 impressions (Jan 2026) → 1,080 (Jul 2026).',
+            'Google Search Console: 505 impressions (Jan 2026) → 1,411 (Sep 2026).',
         },
       ],
       story: {
@@ -800,7 +800,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
         approach:
           'Prism shipped fast-loading pages, concise offers, and inquiry paths designed to surface the right work, with search and analytics instrumentation in place from launch.',
         result:
-          'Within seven months, monthly Google clicks grew 1.9× and impressions grew 114% (Google Search Console, Jan–Jul 2026). That is a measured visibility ramp for a brand-new presence.',
+          'Between January and September, monthly Google clicks grew 2.4× and impressions grew 179% (Google Search Console, Jan–Sep 2026). That is a measured visibility ramp for a brand-new presence.',
       },
     },
   },

@@ -91,7 +91,7 @@ const DENTAL_DIFFERENCE = [
 // value is verified against Google Search Console — do not edit without the
 // source. Gold proof treatment is sanctioned for this band only.
 const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
-const wongJulyImpressions = getCaseStudyMetric('dr-christopher-wong', 1)
+const wongMonthlyImpressions = getCaseStudyMetric('dr-christopher-wong', 1)
 const rosevilleClicks = getCaseStudyMetric('roseville-dental-academy')
 
 const PROOF_METRICS = [
@@ -104,9 +104,9 @@ const PROOF_METRICS = [
   },
   {
     client: 'Dr. Christopher Wong',
-    value: wongJulyImpressions.value,
-    label: wongJulyImpressions.label,
-    source: `${wongJulyImpressions.sourceName} · ${wongJulyImpressions.dateRange}`,
+    value: wongMonthlyImpressions.value,
+    label: wongMonthlyImpressions.label,
+    source: `${wongMonthlyImpressions.sourceName} · ${wongMonthlyImpressions.dateRange}`,
     href: '/case-studies/dr-christopher-wong',
   },
   {

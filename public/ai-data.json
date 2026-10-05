@@ -35,63 +35,73 @@
   ],
   "verified_proof": {
     "connected_client_traffic": {
-      "new_users": 16882,
-      "connected_sites": 17,
-      "period": "July 2026",
-      "source": "GA4, production hostnames only"
+      "new_users": 5310,
+      "connected_sites": 16,
+      "period": "September 2026",
+      "source": "GA4, production apex/www hostnames only",
+      "methodology": "Sum of per-property new users across the 16 named sites in docs/data-verification-2026-10-04.md; not cross-site deduplicated. New cohort, not comparable with the historical 17-site claim."
     },
     "social": {
       "youtube": {
         "subscribers": "24.7K",
         "views": "5.8M",
-        "source": "Public YouTube profile"
+        "source": "YouTube Studio, verified October 4, 2026",
+        "subscribers_exact": 24718,
+        "lifetime_views_exact": 5839447,
+        "views_through": "2026-10-03",
+        "methodology": "Lifetime channel views since June 5, 2013, including legacy gaming content and public/private/unlisted/deleted videos; not agency campaign views or current reach."
       },
       "instagram": {
         "followers": "37K",
-        "posts": 644,
-        "source": "Public Instagram profile"
+        "posts": 645,
+        "source": "Ayrshare Instagram account analytics, verified October 4, 2026",
+        "followers_exact": 37019
       },
       "tiktok": {
-        "followers": "11.4K",
-        "views_last_60_days": "1.2M",
-        "source": "Public profile verified August 30, 2026; authenticated analytics verified August 21, 2026"
+        "followers": "11.7K",
+        "followers_exact": 11728,
+        "followers_through": "2026-10-03",
+        "videos": 1100,
+        "source": "Ayrshare TikTok account analytics, verified October 4, 2026"
       },
-      "combined_audience": "73K+"
+      "combined_audience": "73K+",
+      "combined_audience_exact": 73465,
+      "combined_audience_methodology": "Sum of channel subscriptions/followers; not deduplicated people."
     }
   },
   "case_studies": [
     {
       "client": "Dr. Christopher B. Wong",
-      "result": "+160% Google Search impressions year over year in the latest 90 days",
-      "period": "May 31-August 28, 2025 vs 2026",
+      "result": "+49% Google Search impressions over the stated 90-day window, year over year; +2.8% September Google Search impressions, year over year",
+      "period": "Google Search Console: Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026; Google Search Console: September 2025 vs September 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/dr-christopher-wong"
     },
     {
       "client": "Olympic Bootworks",
-      "result": "+8% Google Search impressions year over year in the latest 90 days; 10,709 GA4 sessions",
-      "period": "GSC: May 31-August 28, 2025 vs 2026; GA4: May 31-August 28, 2026",
+      "result": "−43% Google Search impressions over the stated 90-day window, year over year; 2,554 GA4 sessions over the stated 90-day window",
+      "period": "Google Search Console: Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026; GA4: Jul 6-Oct 3, 2026",
       "sources": ["Google Search Console", "Google Analytics 4"],
       "url": "https://www.design-prism.com/case-studies/olympic-bootworks"
     },
     {
       "client": "Roseville Dental Academy",
-      "result": "701 Google clicks and 17.5K Google Search impressions",
-      "period": "July 2026",
+      "result": "704 Google clicks in September 2026; 24.1k Google Search impressions in September 2026",
+      "period": "Google Search Console: September 2026; Google Search Console: September 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/roseville-dental-academy"
     },
     {
       "client": "Saorsa Growth Partners",
-      "result": "1.9x monthly Google clicks and +114% Google Search impressions",
-      "period": "January-July 2026",
+      "result": "2.4× monthly Google clicks from January to September; +179% Google Search impressions from January to September",
+      "period": "Google Search Console: Jan-Sep 2026; Google Search Console: Jan-Sep 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/saorsa-growth-partners"
     },
     {
       "client": "Belize Kids",
-      "result": "+121% Google Search impressions year over year in the latest 90 days",
-      "period": "May 31-August 28, 2025 vs 2026",
+      "result": "+60% Google Search impressions over the stated 90-day window, year over year",
+      "period": "Google Search Console: Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026",
       "source": "Google Search Console",
       "url": "https://www.design-prism.com/case-studies/belize-kids-foundation"
     }
@@ -102,5 +112,5 @@
     "case_studies_url": "https://www.design-prism.com/case-studies",
     "wall_of_love_url": "https://www.design-prism.com/wall-of-love"
   },
-  "last_verified": "2026-08-30"
+  "last_verified": "2026-10-04"
 }
