@@ -16,16 +16,17 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
   - `pnpm design:lint`
   - `pnpm design:sync`
   - or the combined `pnpm design:check`
-- For `/get-started`, `/apply`, or public assistant-surface changes, run:
-  - `pnpm exec jest __tests__/app/get-started.test.tsx __tests__/app/apply.test.tsx __tests__/components/GetStartedForm.test.tsx __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
+- For `/waitlist` changes, run `pnpm exec jest __tests__/components/WaitlistForm.test.tsx __tests__/website-cta-map.test.ts __tests__/pricing-model.test.ts`.
+- For public assistant-surface changes, run:
+  - `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
   - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
 - For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
-- Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, `/pricing`, or `/get-started` (screenshot-locked routes).
+- Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, `/pricing`, or `/waitlist` (screenshot-locked routes).
 - `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. The CI job is a blocking deploy gate (with CI-only retries); local UI work should run it whenever locked routes are affected. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
 - Run `pnpm test:home-scroll:mobile` when changing homepage hero CTAs, fixed-header sizing, anchor behavior, or the `/` section order. This Codex-optimized guard checks the “See the system” CTA on compact, baseline, and large phone viewports in Chromium and WebKit, then asserts the `#how-it-works` section lands at the exact header-aware offset for direct hash loads, fresh CTA clicks, and same-hash re-clicks.
-- For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/get-started` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
+- For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/get-started` on Chromium, Firefox, and WebKit using both desktop and mobile profiles; the `/get-started` entry is stale (it 308s to `/waitlist`) and should be swapped in `scripts/performance-smoke.mjs`.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm test:visual:animations` when you change the looping hero motion on `/`, `/case-studies`, or `/wall-of-love`. It verifies the real loops advance on Chromium, Firefox, and WebKit across desktop plus mobile emulation.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
@@ -35,7 +36,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 ### Homepage refresh checklist
 
 - The homepage first viewport is one integrated dark composition: shared site navbar, copy-led hero card, and a subtle ASCII motion layer behind the text instead of a route-only overlay header treatment.
-- The homepage structure is intentionally ultra-minimal: hero, mixed client Cover Flow deck, compact proof band, buyer decision problem, Found/Trusted/Chosen system, service labels, short process, compact proof, and final audit CTA. Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
+- The homepage structure is intentionally ultra-minimal; see `docs/pages-overview.md#homepage-appclient-pagetsx` for the current section order (it now includes `HomeProductsSection` before the final waitlist CTA). Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
 - `components/home/HomeAiToolsSection.tsx` is no longer part of the homepage story. If AI/tool proof comes back, it should be a tiny supporting proof detail instead of a logo matrix or explanatory section.
 - AI tool logos remain vendored from SVGL into `public/logos/ai-tools/` for any future proof detail or deeper page that needs them; they are not an active homepage requirement.
 - OpenClaw, Grok, and Cursor use supplied custom SVGs in the same folder and should be treated as local brand assets if that proof returns.
@@ -49,7 +50,7 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
 - The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
 - The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` renders the stock floating widget only on non-mobile `/pricing` and `/contact`; focused routes remain widget-free. The homepage separately owns one inline, feature-flagged guide after `HomeFitSection`. It must present the AI/recording notice and capture affirmative acceptance before loading the vendor script or custom element; mobile and unsupported-WebGL browsers receive a first-party fallback. With no saved preference, the floating launcher should stay closed by default.
+- `components/global-elevenlabs-widget.tsx` renders the stock floating widget only on non-mobile `/pricing`; every other route, including `/waitlist`, remains widget-free. The homepage separately owns one inline, feature-flagged guide after `HomeFitSection`. It must present the AI/recording notice and capture affirmative acceptance before loading the vendor script or custom element; mobile and unsupported-WebGL browsers receive a first-party fallback. With no saved preference, the floating launcher should stay closed by default.
 - The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
 - `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
 - `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED` is default-off in code, explicitly enabled in production, and independently controls the homepage inline guide. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` is the global debug/test kill switch and overrides both inline and floating surfaces.
@@ -61,16 +62,16 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
 - The fastest runtime sanity checks are:
   - homepage: no vendor script or widget on first load; with the homepage flag enabled, the inline widget may mount only after desktop/WebGL checks, near-viewport activation, and affirmative acceptance
-  - `/get-started`, `/apply`, `/ig`, `/tiktok`, blog posts, and other non-assistant routes: no public ElevenLabs script or widget should mount
-  - non-mobile `/pricing` and `/contact`: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
-  - mobile `/pricing` and `/contact`: no public ElevenLabs script or floating widget should mount
+  - `/waitlist`, `/ig`, `/tiktok`, blog posts, and other non-assistant routes: no public ElevenLabs script or widget should mount
+  - non-mobile `/pricing`: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
+  - mobile `/pricing`: no public ElevenLabs script or floating widget should mount
   - default first-load behavior: widget should mount collapsed unless the user has already saved an explicit preference
 - The stock widget does not expose a documented "full-screen page-blocking modal" mode. Treat the visible widget surface as the layering boundary we control today; if product wants a true viewport scrim that blocks all underlying content, that is a migration conversation to ElevenLabs' official SDK/UI layer rather than a Shadow DOM styling patch.
 
 ### Retired custom sales-chat note
 
 - The old custom `SalesChat` client, `/api/chat`, `/api/sales-chat/*`, and related orchestration helpers are no longer part of the supported Prism website stack.
-- The supported assistant experience uses the stock ElevenLabs widget in two forms: floating on eligible `/pricing` and `/contact` pages, and consent-gated inline on the homepage.
+- The supported assistant experience uses the stock ElevenLabs widget in two forms: floating on eligible `/pricing` pages, and consent-gated inline on the homepage.
 - If product ever needs a custom assistant again, treat it as a fresh implementation with new docs, tests, and contracts instead of assuming the pre-2026 deterministic chat backend still exists.
 
 ## Styling Pipeline
@@ -84,29 +85,18 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 
 ## Formspree Integration
 
-Marketing forms live under `components/forms/` (Contact, Free Analysis, Get Started / `/apply`, Website Intake, AEO, Referral). Most share the `useFormValidation` hook; the multi-step Website Intake owns equivalent step validation and an immediate ref-based submission lock because its progression model is bespoke. The noindex `/ai` utility form in `app/ai/prism-ai-client.tsx` also submits directly to Formspree using the same client-side `fetch` pattern. Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival/reference; active pricing-intent traffic is now routed to `/pricing`. The retired `/websites` order dialog is gone; website leads now use `/website-intake`.
+Live forms live under `components/forms/`: `WaitlistForm` (the only sales form), `ReferralForm`, plus the scholarship, models, and design-vote forms in their routes. The Contact, Free Analysis, Get Started / `/apply`, Website/Content/Ads Intake, AEO, book-a-shoot, and `/ai` forms were deleted on 2026-09-14 (routes 308 to `/waitlist`). Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival reference only.
 
 Key details:
 
-- Forms post to Formspree via `fetch` with `Accept: application/json`. On success we push the user to `/thank-you` or `/analysis-thank-you` so our custom screens always render.
-- Free Analysis and AEO currently share the same physical Formspree endpoint but must keep distinct ops identities: `form_key=free_analysis` versus `form_key=aeo_assessment`.
+- Forms post to Formspree via `fetch` with `Accept: application/json`. On success the waitlist pushes to `/waitlist/thank-you`; other forms show inline success.
 - Use the `_subject` hidden field for inbox filtering and `_gotcha` as the honeypot.
 - When adding a new Formspree endpoint, import `useFormValidation({ onValidSubmit })` and only navigate after the request returns `response.ok`.
-- `/get-started` is now the free Growth Dashboard entry page, while `/apply` is the focused question-by-question dashboard intake form. Keep the copy and thank-you flow explicit that a review follows a real business submission, while the later Deep Growth Audit or sprint path is optional and selective.
-- `/website-intake` is the focused PRO website lead funnel. It posts to the dedicated Prism **Website Intake** Formspree form (`xrpzlkrd`) and stays on-page after success; see [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
-
-### AEO assessment landing regression tests
-
-- The AEO funnel adds a dedicated endpoint and dedicated thank-you route:
-  - `/aeo` page form submit target: `"/aeo-thank-you"`
-  - `AeoAssessmentForm` payload fields: `email`, `website`, `_subject`, `_redirect`, `form_name`, `_gotcha`
-- Run this focused command before merging any AEO landing or form edits:
-  - `pnpm exec jest __tests__/aeo-form.test.tsx __tests__/aeo-pages.test.tsx __tests__/aeo-discoverability.test.tsx __tests__/sitemap.test.ts`
-- If conversion tracking changed (`trackCTAClick`/`trackFormSubmission` args), also verify with any available analytics smoke test you run locally.
+- Field contracts live in [`docs/forms.md`](forms.md).
 
 ## Thank-You Screens
 
-Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/`. Keep them minimal and truthful to the originating flow. The shared `/thank-you` page now emphasizes receipt + review rather than automatically promising a meeting, and the `/apply` flow uses `?source=apply` so the thank-you screen can render the stricter application-specific expectation setting.
+The live confirmation route is `app/waitlist/thank-you/`. `app/thank-you/` remains as a legacy landing target (with its `?source=apply` state) and must stay minimal and truthful. `app/analysis-thank-you/` is deleted.
 
 ## SEO Hygiene
 
@@ -130,7 +120,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - `public/llms.txt` is not a Google ranking input, but it should still mirror canonical search surfaces. Keep it limited to canonical, indexable Prism URLs and avoid noindex routes, redirects, or off-site detours unless there is a deliberate reason.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
-- Keep the indexable set intentionally narrow and growth-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the growth system story: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, the Growth Dashboard funnel, or a deliberate specialty cluster.
+- Keep the indexable set intentionally narrow and growth-first. `lib/seo/search-visibility.ts` is the source of truth for search visibility; new routes should default to noindex unless they support the growth system story: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, the waitlist, or a deliberate specialty cluster.
 - Broad Prism surfaces such as apps, software, Replit/OpenAI guides, podcast/library pages, careers, scholarships, unrelated industry pages, and social/community utilities should stay usable for direct visitors but out of the sitemap and public LLM map unless product direction explicitly changes.
 - Blog posts are curated for search with `INDEXABLE_BLOG_SLUGS` and optional `searchVisibility` frontmatter. New posts are not indexable by default; add them to the curated growth/local/dental allowlist only when they strengthen Prism's authority.
 - `/blog` filter/search views (`/blog?category=...`, `/blog?q=...`) are set to **noindex, follow** via `X-Robots-Tag` in `proxy.ts` so query-param URLs don’t pollute the index.
@@ -164,25 +154,20 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - GA4 event payloads are sanitized in `utils/analytics.ts`. `page_location` keeps only safe UTM parameters and drops hashes; Formspree submissions still receive full attribution fields from `lib/marketing-attribution.ts` so lead records can retain click IDs without sending them to GA4.
 - Marketing attribution is persisted client-side in `lib/marketing-attribution.ts` and injected into form submissions at submit time, so Formspree lead records retain first-touch source context alongside the thank-you page conversion flow. Direct entries should still persist `landing_path`; only set source/medium/campaign fields when real campaign parameters are present.
 - Internal thank-you redirects must not add `utm_*` parameters. Use a non-campaign marker such as `source=...` when a thank-you route needs to vary copy or behavior; `utm_*` is reserved for real external campaign traffic.
-- `/ig`, `/tiktok`, and `/youtube` rely on `components/social-link-hub.tsx` for shared CTA/outbound-link tracking. Keep the header profile link on `trackExternalLinkClick`, and keep exactly three internal action cards on `trackCTAClick`: Website (`WEBSITE_START_CTA` → `/website-intake`), Content (`/content-intake`), and Ads (`/ads-intake`). Each click must send `platform`, `service`, and `destination` plus location `{platform} landing actions`. Preserve the `{platform} landing header|actions` locations so inbound social traffic keeps a full click trail. Referral and Prism Infinity are intentionally absent from these focused link-in-bio routes. See `docs/pages-overview.md` for the hub's copy and typography rules (sans mixed-case body; mono-caps only for the wordmark and footer).
-- Lead conversion tracking is centralized in `utils/analytics.ts`: `trackFormSubmission(...)` stores a pending lead by default, and `components/thank-you/LeadSuccessTracker.tsx` consumes it once on the relevant thank-you route before emitting GA4 `generate_lead` plus the Google Ads lead conversion. Use `conversionMode: "immediate"` for confirmed success states that stay on-page (`/website-intake`) and for `/contact`, which navigates to `/thank-you` for copy but must fire `generate_lead` once on the form route so `page_path` stays `/contact`. Contact must not also store a pending lead. Apply still fires `generate_lead` on `/thank-you?source=apply` via `ApplySuccessTracker`. Never fire `generate_lead` on `/contact` page load, form render, or `form_start`. If GA4 Admin has a Create event that copies `/contact` `page_view` → `generate_lead`, delete it — that is the page-view leak, not first-party code.
+- `/ig`, `/tiktok`, and `/youtube` rely on `components/social-link-hub.tsx` for shared CTA/outbound-link tracking. Keep the header profile link on `trackExternalLinkClick`, and keep exactly three internal action cards on `trackCTAClick`: Website, Content, and Ads, each linking `WAITLIST_FOCUS_HREFS[service]` (`/waitlist?focus=…`). Each click must send `platform`, `service`, and `destination` plus location `{platform} landing actions`. Preserve the `{platform} landing header|actions` locations so inbound social traffic keeps a full click trail. Referral and Prism Infinity are intentionally absent from these focused link-in-bio routes. See `docs/pages-overview.md` for the hub's copy and typography rules (sans mixed-case body; mono-caps only for the wordmark and footer).
+- Lead conversion tracking is centralized in `utils/analytics.ts`: `trackFormSubmission(...)` stores a pending lead by default, and `components/thank-you/LeadSuccessTracker.tsx` consumes it once on the relevant thank-you route before emitting GA4 `generate_lead` plus the Google Ads lead conversion. The waitlist uses the default pending mode (consumed on `/waitlist/thank-you`). Use `conversionMode: "immediate"` for confirmed success states that stay on-page. Never fire `generate_lead` on page load, form render, or `form_start`. (The retired `/contact` page-view leak runbook is in `docs/analytics.md`.)
 - Google Ads conversion sends should remain limited to true sales/business leads. Secondary lead-like forms such as scholarship applications, model applications, and newsletter/community signups can emit GA4 `generate_lead`, but must pass `sendGoogleAdsConversion: false`.
 - `book_call_click` measures booking intent on calendar/demo/kickoff links and should not replace `generate_lead`. Treat it as a supporting event unless Prism explicitly marks it as a secondary key event in GA4.
 - GA4 enhanced measurement form reporting depends on the real DOM `<form id="...">` / `name="..."` attributes, not just hidden `form_name` inputs. Every marketing form should expose both so GA can populate `form_id` and `form_name` consistently in automatic `form_start` / `form_submit` events.
-- The `/apply` funnel now uses a layered event model:
-  - automatic GA4 enhanced measurement: `form_start`, `form_submit`
-  - custom funnel detail: `apply_form_view`, `apply_form_start`, `apply_question_view`, `apply_question_complete`, `apply_validation_error`, `apply_review_view`, `apply_submit_attempt`, `apply_step_1_complete`, `apply_step_2_complete`, `apply_submit`, `apply_submit_success`, `apply_error`, `apply_success`
-  - canonical lead conversion: `generate_lead` on the `/thank-you?source=apply` success state
-- Keep `apply_submit` and `apply_submit_success` success-only. Use `apply_submit_attempt` for clicks that reach the network request, and `apply_error` for failed Formspree responses. This keeps GA funnels from counting failed posts as applications.
-- Apply-funnel custom params should stay low-cardinality and non-PII: `form_name`, `form_location`, `step`, `step_id`, `question_count`, `service_count`, `budget`, `timeline`, `primary_goal`, `has_website`, `elapsed_seconds`, `field_name`, and `error_type`. Do not send user-entered names, emails, URLs, free-text notes, or per-event timestamps into GA.
+- The waitlist funnel's event model (`waitlist_*` events, `generate_lead` on `/waitlist/thank-you`) is documented in `docs/forms.md#waitlist` and `docs/analytics.md`. The retired `apply_*` events no longer fire.
 - Do not add route-level inline Google Ads conversion `<Script>` snippets for form thank-you pages. Use `LeadSuccessTracker` so direct visits do not falsely count as conversions.
-- Apply thank-you tracking should only emit `apply_success` / `generate_lead` when a pending application context is consumed. A direct or refreshed thank-you page view should remain a normal `page_view`.
+- Thank-you tracking should only emit `generate_lead` when a pending lead context is consumed. A direct or refreshed thank-you page view should remain a normal `page_view`.
 - When building a new landing page with a Formspree form, call `trackFormSubmission(...)` only after the Formspree response succeeds, then navigate to a thank-you route that mounts `LeadSuccessTracker`.
 - GA4 property follow-up after code changes:
   - Keep Enhanced Measurement enabled for useful automatic events, but turn off the Page views advanced setting for "Page changes based on browser history events" while Prism uses manual SPA pageviews. Leaving both on creates duplicate route-change `page_view` events.
   - Mark `generate_lead` as the primary key event for lead flows.
   - Optionally mark `book_call_click` as a secondary key event if booking intent should be reported separately from completed leads.
-  - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_name`, `form_location`, `lead_type`, `step_id`, `budget`, `timeline`, `primary_goal`, `has_website`, `service_count`, `field_name`, `error_type`, and `destination_host`.
+  - Register custom dimensions for whichever non-PII lead parameters you want in standard reports, such as `form_name`, `form_location`, `lead_type`, `step`, `step_name`, `field_name`, `reason`, and `destination_host`.
   - Do not register high-cardinality custom dimensions for URLs, timestamps, user IDs, raw form text, names, emails, phone numbers, or click IDs.
   - Keep GA4 enhanced measurement form interactions enabled so the automatic `form_start` / `form_submit` events continue to complement the custom funnel events.
 
@@ -225,23 +210,14 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the shared dark-system hero in `components/pricing/PricingHero.tsx`.
-- Keep canonical pricing copy aligned with `lib/pricing-model.ts`, which models the **four packaged offers on `/pricing`** — the PRO Website, Content OS, Dental OS, and Prism Infinity — ALL scoped on a **30-minute Zoom call** booked through `BOOK_A_CALL_CTA` (`BOOKING_URL` in `lib/booking.ts`). Public chrome frames three services (Website, Content, Ads) from `lib/services.ts`; Dental OS and Infinity are not top-nav items. NO offer shows public exact pricing; never reintroduce public dollar amounts (`$300`, `$100/month`, `$5,000`, `$1,000/month`, `$2,000/month` are forbidden tokens). `/pricing` compares all four; `/get-started` keeps the free Growth Dashboard / free-audit on-ramp. The old five-tier ladder (`$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is retired. Always spell `/month` (never `/mo`), and run `pnpm verify:pricing-consistency` (`lib/pricing-consistency.ts`) on any pricing copy change.
+- Keep canonical pricing copy aligned with `lib/pricing-model.ts`, which models the **four packaged offers on `/pricing`**: the PRO Website, Content OS, Dental OS, and Prism Infinity. No offer shows a public price; every primary CTA is a waitlist CTA (`PRICING_PRIMARY_CTA = WAITLIST_CTA`). Public chrome frames three services (Website, Content, Ads) from `lib/services.ts`; Dental OS and Infinity are not top-nav items. Never reintroduce public dollar amounts (`$300`, `$100/month`, `$5,000`, `$1,000/month`, `$2,000/month` are forbidden tokens). Always spell `/month` (never `/mo`), and run `pnpm verify:pricing-consistency` (`lib/pricing-consistency.ts`) on any pricing copy change.
 - Structured data here should emit the four-offer schema and point to `https://www.design-prism.com/pricing`.
-- Pricing, about, homepage, and `/get-started` now share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
-- Every primary offer CTA is `BOOK_A_CALL_CTA` (`PRICING_PRIMARY_CTA` aliases it). Self-serve checkout is retired; `lib/payment-links.ts` was deleted.
-
-## Free Analysis & Contact Pages
-
-- `/free-analysis` and `/contact` are intentionally minimal form routes.
-- `/contact` should not include demo-booking or calendar CTAs; keep it to the contact form, expectations, and direct email.
-- Copy updates happen directly in `app/free-analysis/page.tsx` and `app/contact/page.tsx`.
-- Both pages reuse the shared forms mentioned above, so field changes only need to happen once.
+- Pricing, about, and the homepage share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
+- History: the 2026-07-27 call-first model (`BOOK_A_CALL_CTA`) and the earlier self-serve checkout (`lib/payment-links.ts`) are retired.
 
 ## CTA Routing
 
-Any CTA labeled “free audit” or “free growth audit” should point to `/get-started`. Keep `/free-analysis` links only for surfaces that explicitly need that legacy analysis form.
-
-Any CTA that points to `/get-started` should describe the Growth Audit / Growth Dashboard path, not a demo, booking, strategy call, or practice-only audit. Use `FREE_AUDIT_CTA_TEXT` for general route-level CTAs when possible; compact shared chrome can keep the documented `Free audit` label.
+Every sales CTA points to `/waitlist` (or `/waitlist?focus=website|content|ads` via `WAITLIST_FOCUS_HREFS` when the context is one service). `FREE_AUDIT_CTA_TEXT` in `lib/constants.ts` now reads "Join the waitlist". Do not add links to the retired `/get-started`, `/free-analysis`, `/contact`, or intake routes; they only exist as redirects.
 
 ## Typography & Casing
 
@@ -267,9 +243,9 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 
 - `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
 - The current chrome language is minimal black surfaces, white/off-white type, and restrained tactile hover/focus states. Subtle transforms/glow are okay on the logo mark when they respect reduced motion and do not change layout width; keep nav text hover states stable and readable.
-- Primary nav labels live in `lib/constants.ts` and `lib/services.ts`: Home, a Services dropdown (website / content / ads), then case studies and wall of love. Contact, pricing, Dental OS, and Infinity are footer/`/pricing` only. The Services menu is out of flow so it never rewrites `--prism-header-height`. The mobile sheet is home | services | proof (plain labels, no nested dropdown, no index prefixes). `/pricing` and `/get-started` are intentionally NOT in the top nav. When you add or remove an item, verify the desktop rail still fits at the `lg` (1024px) takeover width, the mobile sheet, locked route snapshots, and a representative case study detail page.
-- The footer leads with two funnel CTAs via `TrackedLink`: `Start my website` (`/website-intake`) and `Get started free` (`/get-started`), plus a `Refer a friend — $100` link to `/refer` in the Company column. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
+- Primary nav data lives in `lib/services.ts` and `lib/products.ts`: Home, a Services dropdown (website / content / ads), a Products dropdown (Midas, zRead), then case studies and wall of love. Pricing, Dental OS, and Infinity are footer/`/pricing` only. The dropdown panels are out of flow so they never rewrite `--prism-header-height`. The mobile sheet is home | services | products | proof (8 links, no nested dropdown, no index prefixes). `/pricing` is intentionally NOT in the top nav. When you add or remove an item, verify the desktop rail still fits at the `lg` (1024px) takeover width, the mobile sheet, locked route snapshots, and a representative case study detail page.
+- The footer leads with one CTA, `Join the waitlist` (`WAITLIST_CTA` via `TrackedLink`), under a short capacity line, plus a `Refer a friend ($100)` link to `/refer` in the Company column. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
 
 ## Deployment
 
-Merges to `main` publish through the GitHub `Deploy to Vercel` workflow. Vercel Git auto-deploy is disabled for `main` in `vercel.json` so production has a single source of truth. If you need a preview, use `vercel deploy --yes` or open a PR and use the Vercel preview deployment URL. Preview links should be public for review; verify with `curl -I -L <preview-url>` and confirm a direct `HTTP 200` response instead of Vercel SSO.
+Merges to `main` publish through the GitHub `Deploy to Vercel` workflow. Vercel Git auto-deploy is disabled for `main` in `vercel.json` so production has a single source of truth. The "Protect main history" ruleset blocks force-pushes and deletion of `main`. If you need a preview, use `vercel deploy --yes` or open a PR and use the Vercel preview deployment URL. Preview links should be public for review; verify with `curl -I -L <preview-url>` and confirm a direct `HTTP 200` response instead of Vercel SSO.

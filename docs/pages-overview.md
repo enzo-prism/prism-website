@@ -5,18 +5,18 @@ Quick reference for the pages we edit most often.
 ## Waitlist (`app/waitlist/page.tsx`) — the funnel while Prism is at capacity (2026-09-14)
 
 - Prism is at capacity. Every public sales CTA (header-adjacent chrome, footer, homepage hero/offers/final CTA, `/pricing`, `/websites`, `/content`, `/ads`, `/dental-os`, `/prism-infinity`, `/dental-website`, blog CTAs, long-tail SEO/why-* pages via `FREE_AUDIT_CTA_TEXT`, and the `/ig` `/tiktok` `/youtube` hubs) says **Join the waitlist** and lands on `/waitlist`. Service surfaces use `/waitlist?focus=website|content|ads` to pre-check the focus boxes. Constants live in `lib/waitlist.ts` (`WAITLIST_CTA`, `WAITLIST_FOCUS_HREFS`, `CAPACITY_MESSAGE`); `lib/pricing-model.ts` re-exports `WEBSITE_WAITLIST_CTA`, `CONTENT_WAITLIST_CTA`, `ADS_WAITLIST_CTA`, and `PRICING_PRIMARY_CTA = WAITLIST_CTA`.
-- The page is indexable (sitemap + `llms.txt`), uses core-route chrome (navbar + footer), and is deliberately minimal (2026-09-15): one centered `max-w-xl` column with the headline "Join the waitlist", the line "Prism is at capacity. We review applications as space opens.", and the five-step `WaitlistForm` (focus → timing → about → links → goals, lucide icons, "Step x of 5" progress, Back/Continue, single submit on the last step; see `docs/forms.md#waitlist`). No two-column marketing layout and no paragraphs. `/waitlist/thank-you` is noindex, mounts `LeadSuccessTracker`, and shows three icon rows (received → we review as space opens → we reach out by email) plus one quiet "Back to home" link. Both routes use `min-h-dvh` and safe-area padding.
+- The page is indexable (sitemap + `llms.txt`), uses core-route chrome (navbar + footer), and is deliberately minimal (2026-09-15): one centered `max-w-xl` column with the headline "Join the waitlist", the line "Prism is fully booked. Join the waitlist to work with us in <next month>." (month from `WaitlistIntakeMonth`), the `WaitlistProofStrip` ("See why clients love Prism"), and the five-step `WaitlistForm` (focus → timing → about → links → goals, lucide icons, "Step x of 5" progress, Back/Continue, single submit on the last step; see `docs/forms.md#waitlist`). No two-column marketing layout and no paragraphs. `/waitlist/thank-you` is noindex, mounts `LeadSuccessTracker`, and shows three icon rows (received → we review as space opens → we reach out by email) plus one quiet "Back to home" link. Both routes use `min-h-dvh` and safe-area padding.
 - `components/waitlist/CapacityNotice.tsx` is the one shared capacity notice (`inline` on the homepage hero, pricing hero, service/dental heroes; `panel` on `/waitlist`). The social hubs render the same `CAPACITY_MESSAGE.headline` in their own typography. Never paste the capacity copy into a page.
-- Booking a Zoom call is no longer a public action. `BOOK_A_CALL_CTA` and `WEBSITE_START_CTA` are gone; `BOOKING_URL` remains only for the invite-gated `/chatgpt-ads` partner unlock and the legacy post-payment `/thanks` page.
-- Retired routes that 308-redirect to `/waitlist`: `/website-intake`, `/content-intake`, `/ads-intake`, `/get-started`, `/apply`, `/free-analysis`, `/contact`, `/aeo`, `/book-a-shoot`, `/ai`. Their page and form files are deleted; long-tail pages that still hard-code those hrefs land on the waitlist.
+- Booking a Zoom call is no longer a public action. `BOOK_A_CALL_CTA` and `WEBSITE_START_CTA` are gone; `BOOKING_URL` remains only for the invite-gated `/chatgpt-ads` partner unlock, the legacy `/thanks` page, and the legacy `/checkout/{launch,grow,scale}/thank-you` pages.
+- Retired routes that 308-redirect to `/waitlist`: `/website-intake`, `/content-intake`, `/ads-intake` (keeping `?focus=`), `/get-started`, `/apply`, `/free-analysis`, `/contact`, `/contact-us`, `/hours`, `/hello`, `/aeo`, `/book-a-shoot`, `/ai`. Their page and form files are deleted. Internal links point straight at `/waitlist` (#198); the redirects catch old external links.
 - `/refer`, `/scholarship`, `/models`, and the design-vote form are not sales CTAs and keep working.
-- Locked visual spec: `/waitlist` replaces `/get-started` in `__tests__/visual/locked-routes.spec.ts`; its guards require the context line, "Step 1 of 5", and the first step title, and the copy guards on `/` and `/pricing` require "Prism is at capacity right now." + "Join the waitlist" while forbidding "Book a Free Demo" and "Start my website".
+- Locked visual spec: `/waitlist` replaces `/get-started` in `__tests__/visual/locked-routes.spec.ts`; its guards require the context line, "See why clients love Prism", "Step 1 of 5", and the first step title. The copy guards on `/` and `/pricing` require "Prism is fully booked right now." + "Join the waitlist to work with us in <month>." while every locked route forbids retired prices, "Book a Free Demo", "Start my website", and "scoped on a 30-minute call".
 
 ## Growth-First Search Visibility
 
 - `lib/seo/search-visibility.ts` is the source of truth for which routes and blog posts are indexable.
 - The four `/why-*` verticals (consulting, local shops, nonprofits, community founders) plus `/why-dental-practices-love-prism` are indexable because `/ads` and `/local-listings` link them. Keep them in `public/llms.txt` and the sitemap.
-- Prism's public search/LLM footprint should read as business growth systems: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, and the Growth Dashboard to Light Audit funnel.
+- Prism's public search/LLM footprint should read as business growth systems: websites, SEO/AI search, reviews, ads, tracking, content, proof, pricing, and the waitlist.
 - Broad pages can stay live for direct users, but they should remain noindex and out of `app/sitemap.ts` / `public/llms.txt` unless they become part of the growth-system story or a deliberate specialty cluster.
 - All case study detail pages remain indexable because they are unique proof. Dental case studies should stay prominent, but non-dental case studies should also support the broader growth story.
 
@@ -25,8 +25,8 @@ Quick reference for the pages we edit most often.
 - Individual case study pages live under `app/case-studies/<slug>/`. Most render through the shared minimal template in `components/case-study-minimal.tsx`; selected high-priority proof pages can ship a custom long-form route when the story materially supports the growth-system search surface.
 - `app/case-studies/roseville-dental-academy/page.tsx` is a custom dental-education proof page for the GoDaddy-to-Vercel admissions-system rebuild, covering analytics, Search Console, Hotjar, Formspree, ElevenLabs AI, Meta attribution, Figma, and the Codex-assisted implementation loop. It is the visual reference point for the shared minimal template.
 - `app/case-studies/waikiki-dental/page.tsx` (live site, Roseville CA) and `app/case-studies/sacramento-dental-medicine/page.tsx` (live site, Antelope CA) are minimal-template dental studies with prose-only outcomes: neither project has client-approved measured results yet, so neither ships `structured.results`. Do not backfill numbers without a named, dated source. Both entries sit at the top of `websiteProjects` in `lib/website-projects.ts` and in `CASE_STUDY_NAV_ITEMS` in `lib/case-study-nav-data.ts`; the nav-data sync test fails if either registry drifts.
-- The shared minimal template composes, in order: a Roseville-style visual hero (`components/case-studies/CaseStudyVisualHero.tsx`, which renders a desktop browser frame plus an overlapping mobile frame), a snapshot stats row (`CaseStudySnapshotStats.tsx`), an optional measured-results band (`CaseStudyResultsBand.tsx`, driven by `structured.results`), an optional explainer video section, an outcomes grid (`CaseStudyOutcomesGrid.tsx`, driven by `structured.outcomes`), `CaseStudyWorkHighlights`, and a final audit CTA.
-- Case-study CTAs that route into `/get-started` should use growth-first language from `FREE_AUDIT_CTA_TEXT` or equivalent `Growth Audit` wording. Do not narrow the main funnel to `Practice Audit`, even on dental proof pages.
+- The shared minimal template composes, in order: a Roseville-style visual hero (`components/case-studies/CaseStudyVisualHero.tsx`, which renders a desktop browser frame plus an overlapping mobile frame), a snapshot stats row (`CaseStudySnapshotStats.tsx`), an optional measured-results band (`CaseStudyResultsBand.tsx`, driven by `structured.results`), an optional explainer video section, an outcomes grid (`CaseStudyOutcomesGrid.tsx`, driven by `structured.outcomes`), `CaseStudyWorkHighlights`, and a final CTA.
+- Case-study CTAs route to `/waitlist` (`FREE_AUDIT_CTA_TEXT` now reads "Join the waitlist"). Do not narrow the main funnel to `Practice Audit`, even on dental proof pages.
 - `structured.results` metrics are dated and source-attributed (usually the client's Google Search Console) and must stay verifiable — they also feed the case-study schema description and the measured-results band on the `/case-studies` hub. Only publish numbers checked against the named source, and bump `dateModified` when they change.
 - Hero screenshots resolve from the slug convention `public/case-studies/<slug>-home-desktop.jpg` and `<slug>-home-mobile.jpg`. The template uses `fs.existsSync` at render time; if either file is missing the page falls back gracefully to a text-only hero so partial coverage never breaks the route.
 - Regenerate or refresh screenshots with `node scripts/capture-case-study-screenshots.mjs [slug ...]`. The script is Playwright-based and captures desktop (1440×900) plus mobile (390×844) JPEGs from each `websiteUrl` in `lib/case-study-data.ts`. Existing files are skipped unless you pass `--force`. `--mobile-only` / `--desktop-only` limit the run. Mobile captures dismiss first-party consent sheets, hide chat widgets (including ElevenLabs), and apply per-site scroll so the branded hero fills the homepage Cover Flow crop. Pass slugs as args to target a subset; omit them to capture every case study (`--force` includes Roseville; without `--force` Roseville is still skipped because it already has assets).
@@ -45,20 +45,20 @@ Quick reference for the pages we edit most often.
 ## Pricing (`app/pricing/client-page.tsx`)
 
 - `/pricing` is the single canonical pricing URL and now compares Prism's **four packaged offers**, all sourced from `CANONICAL_PRICING_OFFERS` / `PRICING_OFFER_ORDER` in `lib/pricing-model.ts`. Public chrome still frames three services (Website, Content, Ads); Dental OS and Infinity are packaged here and are not top-nav items.
-  - **Website** — the ultra-premium PRO website; scoped on a 30-minute call (`/websites`).
-  - **Content OS** — implemented over 3 months, then optimized monthly; scoped on a 30-minute call. Public service page: `/content` (`/content-os` 301s there).
-  - **Dental OS** — custom-priced, scoped on a 30-minute call (`/dental-os`).
-  - **Prism Infinity** — unlimited services on one monthly subscription; scoped on a 30-minute call (`/prism-infinity`).
+  - **Website** — the ultra-premium PRO website (`/websites`).
+  - **Content OS** — implemented over 3 months, then optimized monthly. Public service page: `/content` (`/content-os` 301s there).
+  - **Dental OS** — custom-priced per practice (`/dental-os`).
+  - **Prism Infinity** — unlimited services on one monthly subscription (`/prism-infinity`).
+  - No public prices; scope is agreed after a waitlist application.
 - Main UI sections live in `app/pricing/client-page.tsx`; the hero lives in `components/pricing/PricingHero.tsx` ("A clearer way to invest in growth.").
-- `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage, `/about`, and `/get-started`.
-- Section order is intentional: hero, "Choose the support your business needs." snapshot, per-offer cards, the call-first engagement steps (the `growthPathSteps` array: book a 30-min call → agree on the scope → we build), ongoing-system levels (the `partnerLevels` array), FAQ (call-first pricing, the PRO website, care, Content OS, Prism Infinity, Dental OS), and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model. The `partnerLevels` Content OS description is hand-written copy that must stay in the same voice as `CANONICAL_PRICING_OFFERS.content_os.description` ("Video edits, scripts, social posts, and website content…") — the consistency guard checks tokens, not descriptions, so keep them in sync manually.
+- `/pricing` uses the shared dark core-route system from `components/core-route/CoreRoutePrimitives.tsx`, so section headings and CTAs stay aligned with the homepage and `/about`.
+- Section order is intentional: hero, "Choose the support your business needs." snapshot, per-offer cards, the engagement steps (the `growthPathSteps` array), ongoing-system levels (the `partnerLevels` array), FAQ, and final CTA. The `growthPathSteps`/`pricingSnapshot`/`partnerLevels` variable names were retained (and are still required by `lib/pricing-consistency.ts`) even though their content is now the four-offer model. The `partnerLevels` Content OS description is hand-written copy that must stay in the same voice as `CANONICAL_PRICING_OFFERS.content_os.description` ("Video edits, scripts, social posts, and website content…") — the consistency guard checks tokens, not descriptions, so keep them in sync manually.
 - Every primary CTA is "Join the waitlist" (`PRICING_PRIMARY_CTA` = `WAITLIST_CTA`; Website and Content OS cards carry `?focus=`); the hero shows the shared `CapacityNotice`; each offer card keeps an internal explore link as its secondary CTA. The `growthPathSteps` now read join the waitlist → we review and reach out → we build.
-- The retired five-tier ladder (free Growth Dashboard pricing, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) is no longer shown here; `/get-started` now redirects to `/waitlist`.
+- History: the five-tier ladder (free Growth Dashboard, `$500` Deep Growth Audit, `$3,500` Growth Sprint, `$1,500/month` Growth Partner) and the 2026-07-27 call-first model are retired.
 
 ## Checkout (`app/checkout/*/page.tsx`)
 
-- Legacy checkout routes (`/checkout/launch`, `/checkout/grow`, `/checkout/scale`) now permanently redirect to `/pricing`.
-- Keep these legacy files as archival only; do not link to these routes from active pages.
+- Legacy checkout routes (`/checkout/launch`, `/checkout/grow`, `/checkout/scale`) permanently redirect to `/pricing`. Only their noindex `thank-you` children remain (`app/checkout/{launch,grow,scale,website}/thank-you`) for old payment-link redirects; the first three still link `BOOKING_URL`, and `/checkout/website/thank-you` no longer mounts a purchase tracker. Do not link to these routes from active pages.
 
 ## Legacy Pricing Routes (Redirected)
 
@@ -80,18 +80,17 @@ Quick reference for the pages we edit most often.
   - `/tiktok`
   - `/refer`
   - `/hottest-content`
-  - `/ai`
   - `/models`
   - `/secret-pearl/privacy`
 - These routes should keep `robots: { index: false, follow: false }` and stay excluded from `app/sitemap.ts`.
 - `/secret-pearl/privacy` is the public App Store privacy policy for Secret Pearl. Keep it factual, accessible without authentication, explicit about local journal storage and optional Apple services, and linked from the shipped app and App Store Connect metadata.
 - Do not use these as canonical acquisition pages for SEO campaigns. Point search-facing users toward durable commercial surfaces like `/services`, `/websites`, `/ads`, `/local-listings`, `/pricing`, `/ai-seo-services`, and `/seo`.
 - `/ig`, `/tiktok`, and `/youtube` are link-in-bio hubs with no global floating assistant. Their shared page (`components/social-link-hub.tsx`) is a single dark, mobile-first column with deliberately minimal copy: the shared headline "Grow your business with Prism", one supporting line ("We implement the strategies and tactics we post about to level up your business."), a short capacity line ("Prism is at capacity right now." + join-the-waitlist sentence, `data-capacity-notice="hub"`), then exactly three service CTAs — **Website**, **Content**, and **Ads** — each opening `/waitlist?focus=<service>` (`WAITLIST_FOCUS_HREFS`). Do not restore Prism Infinity, revenue-band routing questions ("Doing under $1M a year?" / "Doing $1M–$10M a year?"), or "Premium Website Design" on these routes. Keep the area between the supporting line and actions empty: follower, subscriber, view, post, reach, and revenue stats are intentionally absent. Referral is also intentionally absent. Typography: everything that reads as language — the profile handle, supporting line, and card detail lines — is Geist Sans mixed-case at body sizes (14–16px, `#b8afa2`/`#cfc7ba` on dark); tiny uppercase Geist Mono survives only as the header "prism" wordmark and the footer "© prism". Do not reintroduce 10px uppercase mono for sentence copy on these pages. Keep the previously retired cards (case studies, Content OS, Start free, platform cross-links, referral, Infinity, and Marble) out of the social funnel. Keep copy minimal; do not reintroduce proof strips, ranked credit lists, product screenshot showcases, gratitude framing, or extra sections.
-- These social routes should keep explicit CTA tracking on the action cards and the header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome. Action-card `cta_click` events include `platform` (`instagram` / `tiktok` / `youtube`), `service` (`website` / `content` / `ads`), `destination` (the waitlist path; the analytics sanitizer strips the `?focus=` query, so `service` carries the focus), and location strings `{platform} landing actions`. The header uses `{platform} landing header`. Attribution already stored from the hub landing (`landing_path`, UTMs) travels with the client-side intake navigation via `lib/marketing-attribution.ts`; do not invent a second UTM-forwarding scheme on the links.
+- These social routes should keep explicit CTA tracking on the action cards and the header profile link so inbound social traffic is measurable in GA4/Vercel without adding extra UI chrome. Action-card `cta_click` events include `platform` (`instagram` / `tiktok` / `youtube`), `service` (`website` / `content` / `ads`), `destination` (the waitlist path; the analytics sanitizer strips the `?focus=` query, so `service` carries the focus), and location strings `{platform} landing actions`. The header uses `{platform} landing header`. Attribution already stored from the hub landing (`landing_path`, UTMs) travels with the client-side waitlist navigation via `lib/marketing-attribution.ts`; do not invent a second UTM-forwarding scheme on the links.
 
 ## Websites (`app/websites/page.tsx`)
 
-- Active offer page for the **Website** product: the ultra-premium **PRO website** for serious businesses — a bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI assistants (ChatGPT, Gemini, Claude, Perplexity). No public price and no on-page order form. The hero carries the shared `CapacityNotice`; primary hero and final CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` → `/waitlist?focus=website`). There is no booking CTA. Page sections: hero + proof-build gallery, Design/Engineering/Analytics pillars, "Rank on Google. Get cited by AI." visibility section with measured Search Console results, `#work` project grid, call-first process, FAQ, final intake + booking CTAs. Price-free `ServiceSchema` + `FAQSchema`.
+- Active offer page for the **Website** product: the ultra-premium **PRO website** for serious businesses — a bespoke design system, software-grade engineering, and analytics wired from day one, structured to rank on Google and get cited by AI assistants (ChatGPT, Gemini, Claude, Perplexity). No public price and no on-page order form. The hero carries the shared `CapacityNotice`; primary hero and final CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` → `/waitlist?focus=website`). There is no booking CTA. Page sections: hero + proof-build gallery, Design/Engineering/Analytics pillars, "Rank on Google. Get cited by AI." visibility section with measured Search Console results, `#work` project grid, process, FAQ, and a final waitlist CTA. Price-free `ServiceSchema` + `FAQSchema`.
 - The old launcher → fullscreen dialog → Stripe pay flow is retired (components deleted); `/checkout/website/thank-you` stays noindex as the legacy Stripe-link landing target.
 - The old model is retired: this is **not** review-first / selective / "no card collected", and there is no dynamic price estimator. `WebsiteBuildEstimatorForm.tsx` (the old estimator) has been removed.
 - Keep the page indexable, in `public/llms.txt`, and in the sitemap as Prism's canonical website acquisition page.
@@ -115,7 +114,7 @@ Quick reference for the pages we edit most often.
 
 ## Dental OS (`app/dental-os/page.tsx`)
 
-- The **Dental OS** offer: the full Prism growth system (website, SEO and AI search, Google Maps, reviews, and ads) packaged for dental practices, **custom-priced** and scoped on a 30-minute call.
+- The **Dental OS** offer: the full Prism growth system (website, SEO and AI search, Google Maps, reviews, and ads) packaged for dental practices, **custom-priced** with no public price.
 - Indexable, in `public/llms.txt`, in the sitemap, and carries `ServiceSchema` plus FAQ structured data. Pricing is scoped per practice rather than a fixed number; the offer's primary CTAs use `WAITLIST_CTA` and the hero shows the `CapacityNotice`.
 
 ## Prism Infinity (`app/prism-infinity/page.tsx`)
@@ -174,62 +173,16 @@ Quick reference for the pages we edit most often.
 - Includes `ServiceSchema` plus FAQ structured data (via `FAQSchema`) and cross-links into the dental SEO and ads funnels.
 - Aliases in `next.config.mjs` (redirect to `/dental-website`): `/dentist-website-design`, `/dental-website-design`, `/dental-clinic-website-design`.
 
-## Free Analysis (retired → `/waitlist`)
+## Retired routes (→ `/waitlist`, 2026-09-14)
 
-- `/free-analysis` 308-redirects to `/waitlist`; the page and `FreeAnalysisForm` are deleted.
-
-## Get Started (retired → `/waitlist`)
-
-> **Retired 2026-09-14.** `/get-started` 308-redirects to `/waitlist`; the page and `components/get-started/*` are deleted. Historical notes below.
-
-- `/get-started` is the free Growth Audit entry page for growth-focused businesses, built from `components/get-started/GrowthProcessSection.tsx` plus the in-page handoff panel that points into `/apply`.
-- After the repositioning to the four packaged offers on `/pricing`, `/get-started` is **intentionally kept as the free on-ramp** (free Growth Dashboard + request a free deep audit from the team). It stays surfaced in the footer ("Get started free") and a callout under the homepage offers section, even though the rest of the pricing ladder it used to anchor is retired. It is **not** in the header nav.
-- The hero is conversion-first: headline, one-line value statement, trust chips (free / ≈1 minute / reviewed by a real person), and the primary "Start my free growth audit" CTA must all land in the first viewport on mobile. The three-step Lordicon row (`Share your business`, `We audit it`, `Get your next move`) sits compact below the CTA — do not let it push the CTA back below the fold.
-- User-facing copy on this funnel explains the sequence: create a free Growth Dashboard, request a free audit, then review next steps. CTA tracking labels intentionally keep the legacy `create free growth dashboard` value for GA continuity.
-- It remains the one intentional accent surface within the core route family: same dark shell, shared CTA grammar, and shared section-heading logic, but with terminal framing and neon status accents.
-- `/get-started` intentionally does not mount the stock ElevenLabs floating widget; the Growth Dashboard handoff should stay focused and route into `/apply`.
-- The page no longer mounts the custom `SalesChat` client or depends on any legacy route-level assistant gating.
-- The CTA handoff remains anchored at `#book-call` for compatibility with existing CTA destinations elsewhere in the site, even though the live copy now frames that section as Growth Dashboard handoff rather than a scheduled call.
-- Keep the page copy explicit that the team audit is requested after dashboard creation; do not promise automatic audit delivery or an unconfirmed response deadline.
-- The old custom sales-chat backend and supporting UI files have been removed from the supported stack. If Prism ever needs a bespoke assistant again, treat that as a fresh implementation rather than an existing route to toggle back on.
-
-## Website intake (retired → `/waitlist?focus=website`)
-
-> **Retired 2026-09-14.** Historical notes below.
-
-- `/website-intake` is the focused one-question-per-screen PRO website lead funnel. It is noindex and excluded from sitemap/LLM maps.
-- The page uses the same focused chrome as `/apply`: minimal header (Prism home + Exit back to `/websites`), no footer, and no ElevenLabs widget.
-- `components/forms/WebsiteIntakeForm.tsx` asks why, timeline, current site/link, and preferred contact. Why and timeline auto-advance after a tap. Progress saves in `sessionStorage` for the current tab.
-- Successful submits stay on-page and offer an optional 30-minute Zoom booking CTA. Formspree uses `NEXT_PUBLIC_WEBSITE_INTAKE_FORM_ENDPOINT` or the dedicated **Website Intake** endpoint `https://formspree.io/f/xrpzlkrd`; operational details are in [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
-- Warm social traffic from `/tiktok`, `/ig`, and `/youtube` routes the Website card here. Content and Ads cards on those hubs open `/content-intake` and `/ads-intake` instead.
-
-## Apply (retired → `/waitlist`)
-
-> **Retired 2026-09-14.** Historical notes below.
-
-- `/apply` is the focused question-by-question Growth Dashboard intake and is the real form surface for the Growth Dashboard to Light Audit funnel.
-- The page intentionally removes the full navbar, footer, marketing sidebar, and floating ElevenLabs widget so the user sees one decision at a time after they start.
-- `components/forms/GetStartedForm.tsx` renders the compressed intake: focus, link, optional current-offer fit context (with an explicit "Skip for now" action), business, contact, and review/submit. The fit choices match the canonical offer lineup rather than the retired budget ladder. The step footer is sticky at the viewport bottom on mobile so Back/Skip/Continue stay reachable on long steps.
-- `GetStartedForm` posts to Formspree with the growth-application payload (`service_focus`, `service_interest[]`, `focus_labels`, `has_website`, `review_link`, `primary_goal`, `budget`, `timeline`, `company`, `full_name`, `email`, `additional_context`, `_subject`, `_redirect`, `form_name`, `_gotcha`) and redirects to `/thank-you?source=apply` on success.
-- The form supports edit actions on review rows, same-tab/current-device draft restore via `sessionStorage`, and keyboard-first progression. The helper copy explicitly says that no email resume link is sent. Enter advances validated non-review steps, arrow shortcuts move forward/back when they do not override text editing or native radio behavior, and desktop focus is restored to the next step's primary control.
-- Keep the field names, Formspree endpoint behavior, analytics event names, and redirect behavior unchanged even though the visible copy now says Growth Dashboard, Growth Audit, or review.
-- The flow intentionally does not embed a calendar. Review is guaranteed after a real business submission; the strategy session is selective.
-
-## Contact (retired → `/waitlist`)
-
-> **Retired 2026-09-14.** `/contact` 308-redirects to `/waitlist`; `ContactForm` is deleted; the footer exposes `support@design-prism.com` instead. Historical notes below.
-
-- Deliberately minimal (2026-07-29 redesign): a dark core-route hero ("Talk to Prism." + a short invitation to share the project and desired timing), the `ContactForm` card, and one "Prefer email?" line with `support@design-prism.com`. The old `What to Expect` checklist and Silicon Valley blurb stay retired; do not reintroduce them.
-- Do not add demo-booking or calendar CTAs here; the footer and primary free-audit path should route to `/get-started`.
-- Uses `ContactForm` for all validation/submission logic (short labels: Name, Email, Phone (optional), Message).
-- Analytics: `generate_lead` fires once after a successful Formspree submit (`conversionMode: "immediate"`), not on page view or form render. `/thank-you` after contact is confirmation copy only; Apply still owns `/thank-you?source=apply` `generate_lead`.
+`/free-analysis`, `/get-started`, `/apply`, `/website-intake` (and Content/Ads intakes), `/contact`, `/aeo`, `/book-a-shoot`, and `/ai` 308-redirect to `/waitlist`; their pages, forms (`FreeAnalysisForm`, `GetStartedForm`, `WebsiteIntakeForm`, `ContactForm`, `AeoAssessmentForm`, `BookAShootForm`), and `components/get-started/*` are deleted. Historical field contracts are summarized in [`forms.md`](./forms.md#retired-flows-308--waitlist); full detail lives in git history.
 
 ## Shared Chrome (`components/navbar.tsx`, `components/footer.tsx`)
 
-- Header nav labels live in `lib/constants.ts` and `lib/services.ts`. The public nav is Home, a Services dropdown (website / content / ads), then case studies and wall of love. Each Services menu row pairs a gold lucide icon tile (Globe / PenLine / Megaphone, mapped by service id in `components/navbar.tsx`) with the label and description; keep the icon mapping in the navbar so `lib/services.ts` stays import-clean. Contact, pricing, Dental OS, and Infinity stay in the footer and on `/pricing`. No CTA button in the header. Desktop links are quiet rounded pills (active `white/[0.08]` wash). The Services menu is an out-of-flow absolute panel so it never rewrites `--prism-header-height`. The rail takes over from the menu button at `lg` (1024px); the logo tagline shows only from `xl`. The mobile sheet portals to `document.body` and is pinned under the chrome as home | services | proof (no nested dropdown, no index prefixes, eyebrows over Services/Proof): 56px rounded card rows with trailing arrows (44px compact rows on short/landscape viewports). It stays out of flow so `--prism-header-height` does not jump, locks scroll on both `html` and `body`, marks only content outside the header `inert` while preserving prior state, and animates in with staggered links. Portaling keeps iOS from treating the sticky/fixed header as the sheet's containing block. `pnpm test:mobile-navbar` covers the interaction in mobile Chromium and WebKit. The footer Services column links Website, Content, and Ads; Company carries Dental OS, Prism Infinity, and `Refer a friend ($100)` (`/refer`).
+- Header nav data lives in `lib/services.ts` and `lib/products.ts` (icons are mapped in `components/navbar.tsx` so the data files stay import-clean). The public nav is Home, a Services dropdown (website / content / ads), a Products dropdown (Midas → `https://midas-ai.dev`, zRead → `https://zread.dev`), then case studies and wall of love. Pricing, Dental OS, and Infinity stay in the footer and on `/pricing`. No CTA button in the header. Desktop links are quiet rounded pills (active `white/[0.08]` wash). The dropdown panels are out-of-flow absolute panels so they never rewrite `--prism-header-height`. The rail takes over from the menu button at `lg` (1024px); the logo tagline shows only from `xl`. The mobile sheet portals to `document.body` and is pinned under the chrome as home | services | products | proof (eyebrows over each group, 8 links, no nested dropdown): 56px rounded card rows with trailing arrows (44px compact rows on short/landscape viewports). It stays out of flow so `--prism-header-height` does not jump, locks scroll on both `html` and `body`, marks only content outside the header `inert` while preserving prior state, and animates in with staggered links. Portaling keeps iOS from treating the sticky/fixed header as the sheet's containing block. `pnpm test:mobile-navbar` covers the interaction in mobile Chromium and WebKit; `__tests__/visual/products.spec.ts` covers the Products dropdown and footer. The footer has Services (Website, Content, Ads, All services), Products, Proof, and Company (About, Pricing, Dental OS, Prism Infinity, Blog, FAQ, `Refer a friend ($100)`) columns.
 - The top-left logo links to `/`, tracks `trackNavigation('logo', '/')`, and has a small hover/focus treatment on the logo mark and wordmark. Keep it tactile but stable: no text reflow, no new route-specific header variants, and respect reduced-motion utilities for transforms.
 - The footer was overhauled to a responsive column grid with monochrome icon socials, and leads with one CTA: `Join the waitlist` (`WAITLIST_CTA`, `TrackedLink` with `location="footer"`) under a short capacity line. Company drops Contact; the legal row links `support@design-prism.com`.
-- Do not reintroduce a footer "Book call" button or contact-page demo calendar without changing the funnel docs first.
+- Do not reintroduce a footer "Book call" button or a demo calendar without changing the funnel docs first.
 
 ## AI Agents for Dentists (`app/ai-agents/dental/page.tsx`)
 
@@ -245,10 +198,10 @@ Quick reference for the pages we edit most often.
 
 ## Homepage (`app/client-page.tsx`)
 
-- September 2026 refresh: homepage and shared service summaries use concrete deliverables and plain-language next steps. Offer cards add Pixelish service icons with a reduced-motion-safe hover/focus light pass. Shared navigation uses an icon-led capsule rail, descriptive Services panel, and labeled mobile menu while preserving the current routes and booking flows.
+- September 2026 refresh: homepage and shared service summaries use concrete deliverables and plain-language next steps. Offer cards add Pixelish service icons with a reduced-motion-safe hover/focus light pass. Shared navigation uses an icon-led capsule rail, descriptive Services and Products panels, and a labeled mobile menu.
 - Home navigation uses `/pixelish/home.svg`, an image-generated house concept normalized to the existing 24×24 Pixelish grid. The shared `NAV_ICONS` mapping supplies both desktop and mobile; its decorative icon retains the existing Home label, route, active state, and analytics.
 
-- `app/client-page.tsx` is a section composer for the growth homepage. Current order: hero, mixed client Cover Flow deck (proof), buyer-checks problem section, bento system grid, first-90-days band with process milestones, audience fit cards, short process, compact proof grid, `HomeOffersSection` ("Website. Content. Ads."), then the final free-audit CTA.
+- `app/client-page.tsx` is a section composer for the growth homepage. Current order (component names): `HomeImpossibleHero`, `HomeHeroSection`, `HomeDentistWinsSection` (client Cover Flow), `HomeProblemSection`, `HomeServicesSection`, `HomeProofBandSection`, `HomeFitSection`, `HomeElevenLabsAgentSection`, `HomeHowItWorksSection`, `HomeProofSection`, `HomeOffersSection` ("Website. Content. Ads."), `HomeProductsSection` (`#products`), then `HomeFinalCtaSection` (waitlist).
 - The homepage hero is built from `components/home/HomeHeroSection.tsx`; copy comes from `components/home/homepage-content.ts`. The H1 is "Your growth team." with the supporting line "Website. Content. Ads. Built around your business."; do not reintroduce unverified ranking claims such as "#1". Its proof block reads from `lib/proof-metrics.ts`, the canonical snapshot for cross-site proof. The October 4, 2026 snapshot shows 5,310 GA4 new users across 16 measured client sites in September 2026 and 73K+ combined channel subscriptions/followers. Social details are 24.7K YouTube subscribers / 5.8M lifetime views, 37K Instagram followers / 645 posts, and 11.7K TikTok followers / 1,100 videos. The homepage shows measurement dates; the TikTok follower snapshot is through October 3. The client cohort is newly documented and not comparable with the old 17-site snapshot. See `docs/data-verification-2026-10-04.md` for membership, source windows and coverage limitations. Do not claim cross-site deduplicated people or sum unrelated view periods.
 - The "Website. Content. Ads." offers section (`components/home/HomeOffersSection.tsx`) renders the three public services from `lib/services.ts`. Every card's primary CTA is that service's waitlist CTA (`/waitlist?focus=…`). Packaged offers (Dental OS, Infinity) point at `/pricing`. The section ends with a waitlist callout → `/waitlist`.
 - Homepage motion runs through small client islands: `components/home/HomeReveal.tsx` (scroll reveal that never hides content for no-JS or reduced-motion visitors), `components/home/HomeCountUp.tsx` (renders the 90-day process labels accessibly and only animates values that contain numbers), and `components/home/HomeSystemGrid.tsx` (pointer-tracked spotlight bento cards).
@@ -263,8 +216,8 @@ Quick reference for the pages we edit most often.
 - Accessibility: `role=group` + `aria-roledescription=carousel`, a polite live region announcing the active client, per-slide `aria-roledescription=slide` with only the active slide exposed to AT (neighbours are decorative pointer-reorder affordances), a labelled dot **button group** (not a dishonest tablist) with 44px-tall hit areas, 44px prev/next arrows as the WCAG-equivalent precise control, roving tabindex (only the active cover is focusable), and a flat scroll-snap fallback under `prefers-reduced-motion`.
 - Case studies should appear as compact proof cards with the client name and a tiny outcome label. Include dental proof prominently, but mix in retail, consulting, education, hospitality, nonprofit, and founder-led proof where relevant.
 - The homepage intentionally omits the long FAQ and managed-AI logo matrix so the primary offer stays easy to scan. Audience fit is covered by the compact three-card `HomeFitSection` (founders, local/specialty practices, owner-operators) plus a single honest not-a-fit line.
-- The homepage, `/about`, `/pricing`, and `/get-started` now share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
-- The shared floating ElevenLabs launcher mounts only on non-mobile `/pricing` via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`. The homepage separately owns one bounded Prism Guide through `components/home/HomeElevenLabsAgentSection.tsx`, placed after `HomeFitSection` and before `HomeHowItWorksSection`. Its feature flag is default-off in code and explicitly enabled in production; it stays first-party until the visitor accepts the AI/recording notice and never loads the vendor runtime on mobile or without WebGL 2. Focused routes such as `/get-started` and `/apply` remain widget-free.
+- The homepage, `/about`, `/pricing`, and `/waitlist` share the same minimal black navbar/footer plus the same core-route section heading and CTA language (`components/navbar.tsx`, `components/footer.tsx`, `components/core-route/CoreRoutePrimitives.tsx`) so the primary marketing routes read as one brand system.
+- The shared floating ElevenLabs launcher mounts only on non-mobile `/pricing` via `components/global-elevenlabs-widget.tsx` in `components/runtime-client-shell.tsx`. The homepage separately owns one bounded Prism Guide through `components/home/HomeElevenLabsAgentSection.tsx`, placed after `HomeFitSection` and before `HomeHowItWorksSection`. Its feature flag is default-off in code and explicitly enabled in production; it stays first-party until the visitor accepts the AI/recording notice and never loads the vendor runtime on mobile or without WebGL 2. `/waitlist` and every other route remain widget-free.
 - Without a saved user preference, the public widget should stay collapsed by default on eligible pages.
 - The global floating widget should always win the layer stack in its visible region when it is mounted. If site chrome starts painting over it, debug the host z-index in `components/global-elevenlabs-widget.tsx` / `components/elevenlabs/ElevenLabsWidget.tsx` before changing page-level layout.
 - The compact first-90-days band sits after the system grid as the "what to expect" beat. Keep it to truthful process milestones (baseline and priorities, core improvements shipped, then a measurement cadence), not fabricated outcome percentages or guaranteed lead ranges.
@@ -290,29 +243,28 @@ Quick reference for the pages we edit most often.
 
 ## Thank-you routes
 
-- `app/thank-you/page.tsx`
-- `app/analysis-thank-you/page.tsx`
+- `app/waitlist/thank-you/page.tsx` (live; `LeadSuccessTracker`)
+- `app/thank-you/page.tsx` (legacy landing target; still supports `?source=apply` via `ApplySuccessTracker` and a leftover `?source=website-build` variant, which must not promise a payment link)
+- `app/pricing/thank-you/page.tsx` (noindex leftover; must not mention the retired growth sprint)
 
-Each uses card-based layouts: confirmation message + CTA + follow-up details. The shared `/thank-you` route supports `?source=apply` and a leftover `?source=website-build` variant; live `/website-intake` stays on-page after submit. Website-build copy must not promise a payment link. `/pricing/thank-you` is noindex and must not mention the retired growth sprint.
+`/analysis-thank-you`, `/aeo-thank-you`, and `/book-a-shoot/thank-you` are deleted.
 
 - These routes are noindex/no-follow and should remain crawlable (don’t block them in `robots.txt`) so search engines can read the meta noindex directive.
 
-## AI Website Launch (`app/ai-website-launch/client-page.tsx`)
+## AI Website Launch (retired)
 
-- This legacy route now permanently redirects to `/pricing`.
-- Keep legacy code only for historical reference; do not route active marketing traffic here.
-- If we ever relaunch this as an active offer page, update the canonical pricing policy first and document the rollout.
+- `/ai-website-launch` permanently redirects to `/pricing`; the route directory is gone and only the archival `components/ai-website-launch/AiWebsiteLaunchForm.tsx` remains.
 
 ## Dental Photography surfaces
 
-- `app/dental-photography/page.tsx` – hub hero, overview cards, and CTA stack. Buttons should always point to `/dental-photography/office-team`, `/dental-photography/before-after`, and `/book-a-shoot`.
-- `app/dental-photography/office-team/page.tsx` – bookable service page. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`, which handles the mobile progress bar and optional “visit website” CTA (set via the `website` field on each item). Keep the proof CTA pointing to `/dental-photography/before-after` and the primary buttons to `/book-a-shoot`.
+- `app/dental-photography/page.tsx` – hub hero, overview cards, and CTA stack. Buttons point to `/dental-photography/office-team`, `/dental-photography/before-after`, and the content waitlist (`WAITLIST_FOCUS_HREFS.content`; `/book-a-shoot` is retired).
+- `app/dental-photography/office-team/page.tsx` – bookable service page. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`, which handles the mobile progress bar and optional “visit website” CTA (set via the `website` field on each item). Keep the proof CTA pointing to `/dental-photography/before-after` and the primary buttons to `WAITLIST_FOCUS_HREFS.content`.
 - `app/dental-photography/before-after/page.tsx` – DIY capture guide. Preserve the “jump to the protocol” anchor and the CTA block that links back to `/dental-photography/office-team` so visitors can graduate into the full service.
 
 ## Why Dental Practices Love Prism (`app/why-dental-practices-love-prism/page.tsx`)
 
-- Long-form trust page covering The Prism Method, case studies, and embedded interview videos. CTA buttons point to `/get-started` and `/contact`.
-- Includes two dedicated dental-photography sections: the dark “On-site storytelling” block (linking to `/dental-photography/office-team` + `/book-a-shoot`, using the `dentalPhotographyHighlights` array) and the light “Before & after mastery” block (linking to `/dental-photography/before-after` + `/dental-photography/office-team`, using `beforeAfterGuideHighlights`). Update the respective highlight arrays when editing those bullets so layout components stay in sync.
+- Long-form trust page covering The Prism Method, case studies, and embedded interview videos. CTA buttons point to the waitlist (`WAITLIST_FOCUS_HREFS.content`).
+- Includes two dedicated dental-photography sections: the dark “On-site storytelling” block (linking to `/dental-photography/office-team`, using the `dentalPhotographyHighlights` array) and the light “Before & after mastery” block (linking to `/dental-photography/before-after` + `/dental-photography/office-team`, using `beforeAfterGuideHighlights`). Update the respective highlight arrays when editing those bullets so layout components stay in sync.
 - Keep both sections intact so this page keeps funneling visitors toward the photography hub and DIY guide without duplicating copy in multiple files.
 
 ## SEO for Dentists (`app/dental-practice-seo-expert/page.tsx`)
@@ -331,7 +283,7 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 - SEO audit service landing page targeting “seo audit service” intent.
 - Uses `SeoHero` + `SeoSection` blocks with `ServiceSchema`, `HowToSchema`, and FAQ structured data.
-- Cross-links into `/seo` and `/free-analysis` to separate the full audit from the free snapshot.
+- Cross-links into `/seo`; its CTAs go to `/waitlist`.
 
 ## Local Listings (`app/local-listings/page.tsx`)
 
@@ -364,7 +316,7 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 - Invite-only landing page for Prism’s managed ChatGPT ads program. Public copy follows OpenAI’s published principles (independent answers, private conversations, clearly labeled sponsored placements); booking is gated behind a partner invite code.
 - Visual surface is OpenAI-informed (warm off-white, hairline rules, pill CTAs) while the Prism navbar/footer stay black. Built on the shadcn/ui radix-vega grammar via a page-scoped semantic token remap in `components/chatgpt-ads/chatgpt-ads.module.css`. The page alternates an editorial hero, near-black trust band, intent rail, contained process panel, quiet invite frame, and native `<details>` FAQ. Scoped in `DESIGN.md`.
 - Access gate: `components/chatgpt-ads/ChatGptAdsAccess.tsx` posts to `/api/chatgpt-ads/unlock`. Valid codes live in `lib/chatgpt-ads-invites.ts` (not the client bundle). Example partner code: `michael` for Dr. Michael Njo.
-- After unlock, the page reveals Prism’s 30-minute Notion booking CTA (`BOOK_A_CALL_CTA`).
+- After unlock, the page reveals a "Book your setup call" CTA to `BOOKING_URL` (`lib/booking.ts`). This is the only live public booking link.
 - Indexable. Keep it in `lib/seo/search-visibility.ts` and `public/llms.txt`. Like every route, it uses the site-wide `public/prism-opengraph.png` social image.
 - Not in the main nav or footer. Share the URL, or `/chatgpt-ads?code=michael`.
 
@@ -408,33 +360,10 @@ Each uses card-based layouts: confirmation message + CTA + follow-up details. Th
 
 Keeping these files tidy makes copy refreshes and landing-page experiments fast.
 
-## AEO Assessment Landing Page (retired → `/waitlist`)
-
-> **Retired 2026-09-14.** `/aeo` 308-redirects to `/waitlist`; the form and `/aeo-thank-you` are deleted. `/seo` and `/ai-seo-services` now link to the waitlist. Historical notes below.
-
-- Added page route `/aeo` with dedicated lead capture and an outlined AEO framework (`content`, `technical`, `authority`, `measurement`) plus FAQs.
-- Form route wiring uses `components/forms/AeoAssessmentForm.tsx` (`email` + `website`, Formspree POST, dedicated `_redirect` target `/aeo-thank-you`).
-- Thank-you route is `/aeo-thank-you` and is excluded from search via the shared policy in `lib/seo/search-visibility.ts`.
-- Discoverability touchpoints added:
-  - inline link from `/ai-seo-services`
-  - inline link from `/seo`
-- SEO/schema notes:
-  - `buildRouteMetadata` is used for canonical and OG metadata.
-  - `ServiceSchema` + `HowToSchema` + `FAQSchema` are present on `/aeo` for structured visibility.
-- Maintenance contract (Codex):
-  - Files to touch when changing the funnel:
-    - `app/aeo/page.tsx` (hero + framework + evidence + FAQ + schema)
-    - `components/forms/AeoAssessmentForm.tsx` (form fields, hidden metadata, endpoint, tracking)
-    - `app/aeo-thank-you/page.tsx` (conversion messaging + `LeadSuccessTracker`)
-    - `components/forms/AeoAssessmentForm.tsx` + `app/sitemap.ts` when URL/thank-you behavior changes
-  - Keep canonical output stable for `/aeo` (`buildRouteMetadata`) and keep `/aeo-thank-you` noindex.
-  - Keep the thank-you route out of the sitemap via `lib/seo/search-visibility.ts`.
-  - Preserve discoverability links (`/ai-seo-services`, `/seo`) so this funnel remains in the AEO/SEO path.
-
 ## September 2026 copy refresh
 
 - Core marketing routes use plain, concrete language about deliverables, customer benefits, the review process, and the next step. Homepage lead: “Your growth team.” / “Website. Content. Ads. Built around your business.”
-- Service pages, pricing, FAQs, contact, intake messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
+- Service pages, pricing, FAQs, waitlist messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
 - Preserve dated case-study evidence, testimonials, canonical offer/CTA rules, form payloads, analytics identifiers, and navigation destinations when editing copy.
 
 ## Prism Products

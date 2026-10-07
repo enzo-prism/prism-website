@@ -8,7 +8,7 @@ outside this repo.
 | Surface               | What it is                                                          | Where it is wired                        |
 | --------------------- | ------------------------------------------------------------------- | ---------------------------------------- |
 | GA4                   | Property `G-P9VY77PRC0` (override: `NEXT_PUBLIC_GA_MEASUREMENT_ID`) | `app/layout.tsx` head scripts            |
-| Google Ads            | Account `AW-11373090310`, lead + purchase conversion actions        | `lib/constants.ts`, `utils/analytics.ts` |
+| Google Ads            | Account `AW-11373090310`, lead conversion action (purchase is legacy/inert) | `lib/constants.ts`, `utils/analytics.ts` |
 | Vercel Web Analytics  | Pageviews + custom events                                           | `components/vercel-analytics.tsx`        |
 | Vercel Speed Insights | Core Web Vitals                                                     | `app/layout.tsx`                         |
 | Hotjar                | Session replay, loaded on first interaction                         | `app/layout.tsx`                         |
@@ -52,52 +52,33 @@ The sanitizer drops emails, phone numbers, raw URLs, and anything in
 **Leads.** `trackFormSubmission` → `trackLeadConversion` → GA4 `generate_lead`
 plus a Google Ads conversion. Two modes:
 
-- `pending` (default) stores context in sessionStorage; the `/thank-you` route
-  mounts `LeadSuccessTracker`, which consumes it and fires. Use when the form
-  navigates on success **and** the conversion should be attributed to the
-  thank-you page (Apply is the remaining first-party case).
+- `pending` (default) stores context in sessionStorage; the thank-you route
+  mounts `LeadSuccessTracker`, which consumes it and fires. The waitlist is the
+  live first-party case (`/waitlist/thank-you`). Legacy `/thank-you?source=apply`
+  keeps `ApplySuccessTracker`, but nothing posts to it anymore.
 - `immediate` fires inline on confirmed submit. Use when the form shows an
-  in-page success screen (`/website-intake`, dedicated Formspree form
-  `xrpzlkrd`) **or** when the conversion must keep `page_path` on the form
-  route. `/contact` is the latter: it still navigates to `/thank-you` for
-  copy, but fires `generate_lead` once on successful Formspree POST so the
-  event's `page_path` is `/contact`. It must not also store a pending lead,
-  or `LeadSuccessTracker` on `/thank-you` would double-count. Apply
-  `generate_lead` on `/thank-you?source=apply` is unchanged
-  (`ApplySuccessTracker`). See
-  [`docs/forms.md`](forms.md#formspree-dashboard-configuration).
+  in-page success screen. Historical users were the retired `/website-intake`
+  and `/contact` forms (both now 308 to `/waitlist`).
 
-**`/contact` page-view leak (fixed in code 2026-08-31; admin follow-up).**
-First-party code never called `generate_lead` on `/contact` page load or
-form render. `ContactForm` only called `trackFormSubmission` after a
-successful POST (historically in `pending` mode), `app/contact/page.tsx`
-has no conversion call, and `EnhancedAnalytics` only sends `page_view`.
-Last-30-day equality of `/contact` `generate_lead` = `page_view` = starred
-key events (with `form_submit_success` / `form_start` at 1) is therefore a
-**GA4 Admin "Create event"** (or a migrated Universal Analytics destination
-goal) that copies `page_view` → `generate_lead` when `page_path` is
-`/contact`. Those rules run server-side after the hit arrives; they do not
-appear as `gtag('event', 'generate_lead')` in this repo.
-
-Delete that create-event in GA4 Admin → Events → Create event (and any
-Google tag event-creation analogue that matches `/contact` page views).
-Until it is gone, every `/contact` page view still inflates the starred
-key event, and a real submit would count twice (page-view copy + first-party
-submit). Do not mark `page_view` itself as a key event on `/contact`.
+**`/contact` page-view leak (historical).** `/contact` `generate_lead` once equalled
+`/contact` `page_view` because of a GA4 Admin "Create event" rule, not
+first-party code. The 2026-09-12 audit found the Admin custom event list empty,
+and `/contact` now 308s to `/waitlist`. Never mark `page_view` itself as a key
+event.
 
 **Lead values.** `lib/lead-values.ts` maps `lead_type` to an expected USD value
-so Smart Bidding can weigh a $300 order against a free-audit request. Before it
+so Smart Bidding can weigh lead types against each other (the live one is `waitlist: 120`; `website_order: 300` and the intake/application values are kept for historical events). Before it
 existed, every conversion was sent with `value: 1` — telling Ads that a
 newsletter signup and a paid order were worth exactly the same. The numbers are
 relative weights, not revenue reporting; re-tune them as close-rate data
 accrues.
 
-**Purchases.** `trackPurchase` fires GA4 `purchase` (with `items`) and, when
+**Purchases (legacy, inert).** Nothing calls `trackPurchase` today; `components/thank-you/PurchaseSuccessTracker.tsx` is unused (see [Legacy purchase redirect](#legacy-purchase-redirect)). When it was wired, `trackPurchase` fired GA4 `purchase` (with `items`) and, when
 `NEXT_PUBLIC_GOOGLE_ADS_PURCHASE_LABEL` is set, a separate Ads purchase
 conversion. It is idempotent per `transaction_id` via localStorage, so a
 reloaded or re-opened confirmation URL cannot double-count.
 
-**Enhanced conversions.** `setEnhancedConversionUserData` normalizes and
+**Enhanced conversions (helpers only, not active).** `setEnhancedConversionUserData` normalizes and
 SHA-256-hashes the buyer's email (and phone, when confidently normalizable to
 E.164) and hands the digests to gtag as `user_data`. Raw values never leave the
 browser, are never logged, and never pass through `trackEvent`. Requires
@@ -205,7 +186,7 @@ campaigns (Wong-DDS, Family First) out of that account, so it is load-bearing.
 parsed only our own tag payload and reported two destinations while the browser
 was really sending to four.
 
-### 3. Point the live Stripe link at the confirmation page
+### 3. Point the live Stripe link at the confirmation page (LEGACY)
 
 Legacy: the site is now call-first, `lib/payment-links.ts` is gone, and the
 Stripe link-management scripts (`update-website-payment-link.sh`,
@@ -213,7 +194,9 @@ Stripe link-management scripts (`update-website-payment-link.sh`,
 from git history if an old payment link ever needs its redirect updated. The
 existing live link already points at `/checkout/website/thank-you`.
 
-### 4. Exclude `buy.stripe.com` as a referral
+### 4. Exclude `buy.stripe.com` as a referral (LEGACY, low priority)
+
+Only matters if purchase tracking is re-enabled; the site no longer sends anyone to Stripe.
 
 GA4 Admin → **Data collection and modification** → Data streams → (web stream)
 → Configure tag settings → **Show all** (the setting is hidden by default) →
@@ -228,7 +211,9 @@ the sale gets credited to Stripe rather than the campaign that earned it, and
 plausible — a genuinely new session does start, sourced to Stripe. Do this at
 the same time as step 3, since the redirect is what creates the exposure.
 
-### 5. Create the Google Ads purchase conversion action
+### 5. Create the Google Ads purchase conversion action (LEGACY, skip)
+
+Skip while purchase tracking is inert: `NEXT_PUBLIC_GOOGLE_ADS_PURCHASE_LABEL` has no effect because nothing fires a purchase. Original steps:
 
 Google Ads → Goals → Conversions → New conversion action → Website → category
 **Purchase**. Copy the conversion label (the part after the `/`) into
@@ -237,7 +222,9 @@ redeploy. While there, enable **enhanced conversions for web** on the
 conversion action and accept the customer data terms, so the hashed identifiers
 the site already sends are actually used.
 
-### 6. Decide how the lead and purchase actions interact
+### 6. Decide how the lead and purchase actions interact (LEGACY, skip)
+
+Only relevant if purchase tracking returns with the `$300` order. Original notes:
 
 Once step 5 is live, one $300 buyer fires **two** conversion actions: the lead
 at submit ($300) and the purchase at payment ($300). If both are marked
@@ -257,16 +244,14 @@ conversions in the trailing 30 days before it behaves well. Also re-tune values
 **rarely and in one batch**: each change can re-trigger the bid strategy's
 learning period, which takes up to about two weeks to settle.
 
-### 7. Delete the `/contact` page_view → `generate_lead` Create event
+### 7. Delete the `/contact` page_view → `generate_lead` Create event (verified gone 2026-09-12)
 
 GA4 Admin → Events → Create event. Remove any rule whose destination event
 is `generate_lead` and whose condition is `page_view` (or `page_location` /
 `page_path` contains `/contact`). Also check Google tag → Event settings
 for a compiled analogue. That rule is what made `/contact` `generate_lead`
 equal `/contact` `page_view` and inflated the starred key event. First-party
-code now fires `generate_lead` only after a successful contact submit.
-
-Leave the Apply `/thank-you?source=apply` `generate_lead` alone.
+code never fired it on page view, and `/contact` itself now redirects to `/waitlist`. Re-check only if the starred key event count spikes again.
 
 ### 8. Open question — Consent Mode defaults for EEA visitors
 
@@ -293,7 +278,7 @@ have.
 ## Verifying a change
 
 - `pnpm test -- analytics` — unit coverage for the analytics module, the Vercel
-  event mappings, lead values, and the purchase tracker.
+  event mappings, lead values, and the (unused) purchase helper.
 - `pnpm audit:ga4` — live GA4 admin configuration.
 - GA4 **DebugView** with the GA Debugger extension — confirms real hits,
   including that exactly one `page_view` fires per navigation.
@@ -303,11 +288,11 @@ have.
 
 Prism is at capacity, so `/waitlist` is the only live sales form. `WaitlistForm` is a five-step flow (`focus`, `timing`, `about`, `links`, `goals`) and emits `waitlist_form_view` (`prefilled_focus`, `resumed_step` when a same-tab draft is restored), `waitlist_form_start` (once, on the first interaction; `step`, `step_name`), `waitlist_step_view` (once per step per page load) and `waitlist_step_complete` (on Continue, and on the final submit) with `step` 1–5 and `step_name`, so drop-off per step is `step_view` minus `step_complete` for each `step_name`. Validation failures emit `waitlist_validation_error` (`step`, `step_name`, `field_name` from a bounded allowlist). Then `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`), and `waitlist_submit_error` (`reason` `non_ok_response` | `network_failure`, `status`). After Formspree accepts, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` emits `form_submit_success` and stores a pending lead; `/waitlist/thank-you` mounts `LeadSuccessTracker`, which fires `generate_lead` (and the Google Ads lead conversion) once with `lib/lead-values.ts` `waitlist: 120`. Every "Join the waitlist" CTA fires `cta_click` through `TrackedLink`/`CoreActionLink` with `cta_text: "join the waitlist"` and a `cta_location` such as `homepage hero`, `homepage offers · Website`, `homepage final cta`, `pricing hero`, `pricing offers · Content OS`, `pricing final cta`, `websites hero`, `content final`, `ads hero`, `dental-os footer cta`, `prism-infinity hero`, or `footer`. Vercel custom events map the eight waitlist events (`Waitlist Form Viewed`, `Waitlist Form Started`, `Waitlist Step Viewed`, `Waitlist Step Completed`, `Waitlist Validation Error`, `Waitlist Submit Attempted`, `Waitlist Submit Succeeded`, `Waitlist Submit Error`) in `lib/vercel-analytics.ts`, bound `step` to 1–5 and `step_name` to the known ids, and allowlist `/waitlist` plus the `?focus=` variants as hub destinations. No names, emails, phones, URLs, or free text reach GA or Vercel.
 
-Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because their routes 308-redirect to `/waitlist`; their Vercel mappings for intake were removed. Historical notes follow.
+Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because their routes 308-redirect to `/waitlist`.
 
-### Retired: Service intake funnels (2026-09-06)
+### Retired: Service intake funnels (2026-09-06 to 2026-09-14)
 
-Website, Content, and Ads share the `${service}_intake` funnel. Events include `_form_view`, `_form_start`, `_step_view`, `_step_complete`, `_option_select`, `_validation_error`, `_submit_attempt`, `_submit_error`, `_submit_success`, `_source_select`, `_booking_click`, `_abandon`, and `_agent_prepare`. `form_name` and `form_location` distinguish services. The existing `trackFormSubmission` emits form submission and immediate `generate_lead` only after Formspree accepts. Lead values live in `lib/lead-values.ts`: `website_intake` (180), `content_intake` (150), `ads_intake` (150). The existing GA4 key event and Google Ads conversion wiring are reused; no new GA conversion action is required. No email, phone, business link, or free text is sent to GA. Local and preview traffic retain the existing analytics host/environment gates. WebMCP preparation is an interaction, never a conversion. Live GA ingestion and email delivery require separate readback; a mocked request is not delivery evidence. Vercel custom events map all three services (`Website Intake …`, `Content Intake …`, `Ads Intake …`) through `lib/vercel-analytics.ts`.
+The `${service}_intake_*` events and their Vercel mappings are gone with the intake routes. Their `lead-values.ts` entries (`website_intake` 180, `content_intake` 150, `ads_intake` 150) stay for historical events.
 
 ### Social link-in-bio hubs (`/ig`, `/tiktok`, `/youtube`)
 
@@ -348,10 +333,10 @@ Verified authenticated property: **Prism Website**, `508295014`, account
   URL sanitizers now reject encoded email/phone campaign values and credentials.
   Automatic Google events do not pass through the first-party sanitizer.
 
-### Local fixes (not deployed)
+### Local fixes at audit time (since deployed or superseded)
 
-- Vercel tracks all Website/Content/Ads intake stages using service-specific
-  allowlists, including agent preparation (an interaction, not a conversion).
+- Vercel tracked all Website/Content/Ads intake stages (since retired with the
+  intake routes on 2026-09-14; the waitlist mappings replaced them).
 - Scroll milestones reset per pathname. `page_engagement` uses visible time and
   flushes once at the first qualifying hide/pagehide/unmount. It does not measure
   the total across later resumes; use GA native engagement metrics for totals.

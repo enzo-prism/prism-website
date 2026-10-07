@@ -1,8 +1,8 @@
 # Redirect Report
 
-> **Historical report (March 2026).** Pricing has since moved to the four productized
-> offers modeled in `lib/pricing-model.ts` (Website `$300` flat, Content OS, Dental OS,
-> Prism Infinity) — see README/AGENTS. The redirect tables below remain accurate; the
+> **Historical report (March 2026).** Pricing has since moved to the four packaged
+> offers modeled in `lib/pricing-model.ts` (Website, Content OS, Dental OS, Prism
+> Infinity; no public prices, waitlist-only since 2026-09-14) — see README/AGENTS. The redirect tables below remain accurate; the
 > pricing-policy notes and validation steps reflect the retired ladder and are kept
 > only as a record of that migration.
 

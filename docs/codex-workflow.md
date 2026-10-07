@@ -57,7 +57,7 @@ When a task touches the live assistant surface, start with the current ownership
 
 - `lib/elevenlabs-widget.ts` – canonical live public widget config (route allowlist, public agent id, markdown-link host allowlist, public kill switch)
 - `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing` and `/contact`; every other public route and all mobile viewports are excluded from this global launcher
+- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing`; every other public route and all mobile viewports are excluded from this global launcher
 - `components/home/HomeElevenLabsAgentSection.tsx` – independently flagged homepage inline guide with near-viewport loading, desktop/WebGL checks, and a required affirmative-consent gate
 - `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
 - `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
@@ -66,7 +66,7 @@ Rules that will save you time:
 
 - Treat the stock widget as an opinionated vendor surface. Prefer documented attributes and host-level wrapper styles only.
 - Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
-- Public-page invariant: when mounted on `/pricing` or `/contact`, the floating widget host must stay above the site chrome in the visible widget region.
+- Public-page invariant: when mounted on `/pricing`, the floating widget host must stay above the site chrome in the visible widget region.
 - Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
 - Consent invariant: the homepage vendor script and widget must not load until the visitor accepts the immediately preceding AI/recording notice.
 - Default-state invariant: without a saved preference, the launcher should mount collapsed.
@@ -95,14 +95,13 @@ Why this matters:
 
 ## 2. Dental photography surfaces
 
-We now have four tightly coupled routes – keep their navigation in sync.
+Three tightly coupled routes – keep their navigation in sync. `/book-a-shoot` is retired (308 → `/waitlist`); booking-style CTAs now use `WAITLIST_FOCUS_HREFS.content`.
 
 | Route                              | Purpose                                                         | Key links                                                                                                                                                                                                                                                                                                                                                                         |
 | ---------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/dental-photography`              | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs can reference `/book-a-shoot` when relevant.                                                                                                                                                                                                                       |
-| `/dental-photography/office-team`  | Bookable service showcasing recent shoots + Apple Maps proof.   | All primary CTAs go to `/book-a-shoot`. Apple Maps block links to `/local-listings`. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`; update the `recentShoots` data + optional `website` URL there so the “visit website” / progress bar behave. Keep the dark proof section linking to `/dental-photography/before-after`. |
+| `/dental-photography`              | Hub with background video hero, summary cards, and cross-links. | Buttons must point to `/dental-photography/office-team` and `/dental-photography/before-after`; secondary CTAs use the content waitlist.                                                                                                                                                                                                                       |
+| `/dental-photography/office-team`  | Bookable service showcasing recent shoots + Apple Maps proof.   | All primary CTAs go to the content waitlist (`WAITLIST_FOCUS_HREFS.content`). Apple Maps block links to `/local-listings`. The recent-shoots slider now lives in `app/dental-photography/office-team/recent-shoots-section.tsx`; update the `recentShoots` data + optional `website` URL there so the “visit website” / progress bar behave. Keep the dark proof section linking to `/dental-photography/before-after`. |
 | `/dental-photography/before-after` | DIY equipment + workflow guide (no booking).                    | Keep “jump to the protocol” anchor and the CTA that routes to `/dental-photography/office-team` so visitors can move from the guide to the done-for-you service.                                                                                                                                                                                                                  |
-| `/book-a-shoot`                    | Formspree capture for shoot scheduling.                         | Links back to the other pages so visitors can revisit context.                                                                                                                                                                                                                                                                                                                    |
 
 When adding new sections:
 
@@ -186,11 +185,9 @@ Keep captions optional; if omitted, remove the text block so cards stay compact.
 - **Card padding** – stick with `p-5` on cards and add `space-y-2` for headings/text so they breathe on smaller screens.
 - **Apple Maps / proof sections** – use `flex-col lg:flex-row` so the proof image stacks below the copy on mobile.
 
-## 6. Booking form conventions
+## 6. Booking form conventions (retired)
 
-- **Endpoint** – `https://formspree.io/f/xjkjkggn`. Submit through `app/book-a-shoot/BookAShootForm.tsx` with client-side `fetch`, `Accept: application/json`, attribution fields, and the `/book-a-shoot/thank-you` conversion screen.
-- **Fields** – Always collect email, at least two date fields, and the preferred one‑hour window (`<select>`). Optional notes field lives at the bottom.
-- **Copy** – Reinforce when someone should use the office-team booking form vs. the DIY guide.
+`/book-a-shoot` and `BookAShootForm` (Formspree `xjkjkggn`) were deleted on 2026-09-14; shoot requests come through `/waitlist?focus=content`.
 
 ## 7. Quick checklist for future changes
 
