@@ -158,11 +158,11 @@ The safest mental model is **black shell + warm ivory type + selective mono meta
 
 ### Growth-first Black System
 
-For the homepage and `/get-started`, Prism should feel like a premium operating system for business growth: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, chosen**, and concrete growth terms such as founders, owners, operators, qualified demand, search visibility, proof, AI discovery, tracking, and conversion paths.
+For the homepage and `/waitlist`, Prism should feel like a premium operating system for business growth: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, chosen**, and concrete growth terms such as founders, owners, operators, qualified demand, search visibility, proof, AI discovery, tracking, and conversion paths.
 
-Keep the design dark and restrained. Do not pivot these pages into loud agency gradients, generic SaaS gloss, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, buyer-decision logic, and confident CTAs around the free Growth Dashboard / Growth Audit path.
+Keep the design dark and restrained. Do not pivot these pages into loud agency gradients, generic SaaS gloss, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, buyer-decision logic, and confident CTAs around the waitlist (`Join the waitlist`).
 
-Dental remains one of Prism's strongest proof verticals, but the main homepage and get-started flow should make it clear that Prism also helps other serious businesses grow. Use dental proof as evidence inside a broader growth story, not as the only audience definition.
+Dental remains one of Prism's strongest proof verticals, but the main homepage and waitlist flow should make it clear that Prism also helps other serious businesses grow. Use dental proof as evidence inside a broader growth story, not as the only audience definition.
 
 Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the growth offer obvious in seconds.
 
@@ -183,7 +183,7 @@ This contract is repo-wide, but it is most important for the public marketing sy
 - `/`
 - `/about`
 - `/pricing`
-- `/get-started`
+- `/waitlist`
 - shared chrome like the navbar and footer
 
 Other routes can diverge when the content format truly requires it, but they should still feel related. Do not casually create a new visual language for a single page.

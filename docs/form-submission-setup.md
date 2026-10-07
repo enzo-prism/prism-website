@@ -9,7 +9,7 @@ Prism's active marketing forms use:
 - Formspree endpoints
 - the shared `useFormValidation` hook
 - client-side `fetch`
-- redirects to `/thank-you` or `/analysis-thank-you`
+- a redirect to a thank-you route (`/waitlist/thank-you` for the live waitlist)
 
 If you are working on the normal site experience, use these docs instead:
 
@@ -19,8 +19,7 @@ If you are working on the normal site experience, use these docs instead:
 
 ## What changed
 
-- `/get-started` is now the free Growth Dashboard entry page, and `/apply` is the dedicated Formspree-backed dashboard intake route.
-- `/website-intake` is the focused PRO website lead funnel and uses the dedicated Prism **Website Intake** Formspree form (`xrpzlkrd`); see [`docs/forms.md`](./forms.md#formspree-dashboard-configuration).
+- Since 2026-09-14 `/waitlist` (`components/forms/WaitlistForm.tsx`) is the only live sales form. `/get-started`, `/apply`, `/website-intake`, and the other retired lead routes 308-redirect there; see [`docs/forms.md`](./forms.md#waitlist).
 - Supabase is no longer part of the supported website setup.
 - The legacy `/api/prism-leads` route has been removed. Current marketing capture is client-side Formspree only.
 

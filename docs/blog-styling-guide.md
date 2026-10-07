@@ -75,8 +75,8 @@ This is an informational callout box.
 <BlogCTA 
   title="Ready to improve your business?" 
   description="Let us help you grow"
-  buttonText="Get Started"
-  href="/get-started"
+  buttonText="Join the waitlist"
+  href="/waitlist"
 />
 
 <SectionBreak label="Next up" />

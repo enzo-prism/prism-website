@@ -2,7 +2,14 @@
 
 Keep Prism's Next.js builds predictable by following this checklist whenever you touch UI code or ship to Vercel.
 
-Production is intentionally single-path: GitHub Actions publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration. The locked-route screenshot job is a blocking gate ahead of the deploy job (with CI-only retries for the occasional mobile navigation timeout); typecheck, pricing verification, and deploy also block.
+Production is intentionally single-path: GitHub Actions publishes with `vercel deploy --prod --yes`. `vercel.json` disables Vercel Git auto-deploy on `main` so production does not get duplicate deploys from both GitHub Actions and the Vercel Git integration. The `UI Lock Screenshots` job (locked routes, then the mobile navbar spec) is a blocking gate ahead of the deploy job (with CI-only retries for the occasional mobile navigation timeout); typecheck, lint, tests, pricing verification, and deploy also block.
+
+## Repository protection
+
+- Ruleset **"Protect main history"** (active, no bypass actors) targets the default branch and blocks non-fast-forward pushes and branch deletion. Direct pushes to `main` are still allowed, so never rely on force-push to fix history; revert instead.
+- Secret scanning and push protection are enabled; a push containing a detected secret is rejected. Remove the secret from history rather than bypassing.
+- Dependabot alerts and Dependabot security updates are enabled (there is no `.github/dependabot.yml`, so only security PRs are opened). Review those PRs through the normal CI path.
+- Baseline security headers are set for every route in `next.config.mjs` `headers()` (`nosniff`, `Referrer-Policy`, `X-Frame-Options: SAMEORIGIN`, a CSP with `frame-ancestors`/`base-uri`/`object-src`, and a `Permissions-Policy`). The policy intentionally leaves `microphone` available for the ElevenLabs widget.
 
 ## Required toolchain
 
@@ -10,7 +17,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - **pnpm** 10.x via `corepack enable`
 - **macOS/Linux shell** – scripts rely on POSIX utilities and may fail on Windows CMD
 
-`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline aligns Next.js packages on 16.2.11 and Sentry packages on 10.68.0, removes the unused `node-notifier` dependency, and pins patched transitive versions through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
+`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline (2026-10-07, #198) aligns Next.js packages (`next`, `eslint-config-next`, `@next/*`) on 16.3.8 and Sentry packages on 10.68.0, removes the unused `node-notifier` dependency, and pins patched transitive versions (sharp, js-yaml, postcss, fast-uri, brace-expansion, nanoid, source-map-js, and others) through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
 
 ## Local build flow
 
@@ -18,11 +25,11 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 2. `pnpm lint` – catch ESLint/Tailwind issues early.
 3. `pnpm typecheck` – required before shipping.
 4. `pnpm test` – recommended before touching shared components or hooks.
-5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, `/get-started`, the navbar, the footer, or homepage offers. Update snapshots with `pnpm test:visual:locked:update` before merging to `main`.
+5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, `/waitlist`, the navbar, the footer, or homepage offers/products. Update snapshots with `pnpm test:visual:locked:update` before merging to `main`.
 6. `pnpm test:mobile-navbar` – required when touching header chrome or the mobile sheet.
 7. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
 8. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
-9. `pnpm audit --prod` – required after dependency or lockfile changes; production dependencies must report zero known vulnerabilities.
+9. `pnpm audit --prod` – required after dependency or lockfile changes. As of #198 one moderate advisory remains (`sprintf-js`, no fix published); do not add new ones.
 10. `pnpm build` – mirrors the production bundle.
 11. `pnpm test:visual` – optional wider visual sweep when you touched other routes.
 
@@ -63,9 +70,9 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - Public chrome frames three services (Website, Content, Ads). `/pricing` compares the four packaged offers — ALL call-first, no public exact price on any offer, every primary CTA = `BOOK_A_CALL_CTA` — sourced from `lib/pricing-model.ts`
-  - `/websites` publishes the ultra-premium PRO website offer (booking-only, no form, no price), and `/get-started` keeps the free Growth Dashboard / free-audit on-ramp in the footer and homepage callout (not the header)
-  - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces (all-call-first policy), as is retired fixed-plan language such as `Website Overhaul` — `pnpm verify:pricing-consistency` enforces this
+  - Public chrome frames three services (Website, Content, Ads) plus Products. `/pricing` compares the four packaged offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
+  - `/websites` publishes the PRO website offer (no form, no price, waitlist CTAs); `/waitlist` is the only live sales form
+  - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces, as are retired fixed-plan language such as `Website Overhaul` and the retired `BOOK_A_CALL_CTA` / `WEBSITE_START_CTA` constants — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content`; other legacy pricing routes resolve to `/pricing`
   - `/ads` ships a price-free offer schema pointing at `/ads`; `/seo` and `/local-listings` ship price-free offer schemas pointing at `/pricing`; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
@@ -74,7 +81,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - Search-surface sign-off when growth-first visibility changed:
   - sitemap stays in the expected narrow range and excludes noindex routes
   - `public/llms.txt` includes only canonical growth, specialty, proof, and curated learning URLs
-  - representative broad/utility pages such as `/apps`, `/software`, `/openai`, `/ai`, and `/ai-agents` are noindex
+  - representative broad/utility pages such as `/apps`, `/software`, `/openai`, and `/ai-agents` are noindex (`/ai` now redirects to `/waitlist`)
   - representative growth and dental pages such as `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
 
 ## CI parity notes
@@ -97,12 +104,12 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check the public service pages `/websites`, `/content`, and `/ads`, plus header chrome (Home, Services dropdown, Case studies, Wall of love).
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Home, Services dropdown, Products dropdown, Case studies, Wall of love), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 
 - Indexable: `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
-- Noindex: `/apps`, `/software`, `/openai`, `/ai`, `/ai-agents`, off-theme blog posts
+- Noindex: `/apps`, `/software`, `/openai`, `/ai-agents`, off-theme blog posts
 
 `robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing the `/api/blog/` markdown endpoint.
 
@@ -119,7 +126,7 @@ Spot-check robots tags on both sides of the search policy:
 1. Rebase on `main` and resolve conflicts.
 2. Run the local build flow above.
 3. Skim the diff for accidental typography/casing regressions.
-4. Push to a branch or push/merge `main` when the user explicitly asks for production.
+4. Push to a branch or push/merge `main` when the user explicitly asks for production. Never force-push `main` (the ruleset rejects it).
 5. Watch GitHub Actions and verify the live domain after the production run succeeds.
 6. If Vercel fails, rerun the failing build locally and compare logs before changing deploy setup.
 
