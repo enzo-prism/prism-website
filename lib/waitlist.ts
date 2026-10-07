@@ -16,15 +16,14 @@ export const WAITLIST_FORM_NAME = 'waitlist'
 export const WAITLIST_FORM_SUBJECT = 'New Prism waitlist application'
 
 /**
- * Formspree endpoint. Until Enzo creates a dedicated "Waitlist" form in the
- * Prism Formspree project and sets NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT in
- * Vercel (Production + Preview), submissions fall back to the existing Contact
- * form (xjkjbpdb, notifies enzo@design-prism.com). The `_subject` above keeps
- * waitlist entries distinguishable in that inbox.
+ * Formspree endpoint: the dedicated "Prism Waitlist" form (xvkzkqqp, Prism
+ * project, notifies enzo@design-prism.com), created 2026-10-07. Before that,
+ * waitlist entries shared the Contact form (xjkjbpdb). The env var can still
+ * override it; Formspree endpoints are public and end up in the client bundle.
  */
 export const WAITLIST_FORM_ENDPOINT =
   process.env.NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT ||
-  'https://formspree.io/f/xjkjbpdb'
+  'https://formspree.io/f/xvkzkqqp'
 
 /**
  * Monthly intake framing (2026-09-16): Prism is fully booked, and new work
