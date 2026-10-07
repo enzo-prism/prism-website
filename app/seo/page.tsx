@@ -24,7 +24,7 @@ export const metadata: Metadata = buildRouteMetadata({
 const seoQuestions = [
   {
     question: "What does Prism’s SEO service include?",
-    answer: "Prism’s SEO work combines technical cleanup, service-page content, internal links, local listings, reviews, and authority building. We assess the current site and competition, then scope the priorities on a 30-minute call. The work connects search visibility to calls, inquiries, and other useful conversions.",
+    answer: "Prism’s SEO work combines technical cleanup, service-page content, internal links, local listings, reviews, and authority building. We assess the current site and competition, then scope the priorities with you. The work connects search visibility to calls, inquiries, and other useful conversions.",
   },
   {
     question: "What is the difference between SEO and AEO?",

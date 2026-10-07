@@ -98,6 +98,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        {/* Paint the dark canvas before the stylesheets arrive, so slow mobile
+          connections show black instead of a white flash (matches .dark
+          --background). Element-level specificity, so route surfaces like
+          html[data-route-surface='chatgpt-ads'] still win. */}
+        <style>{`html{background-color:oklch(0.09 0 0);color-scheme:dark}`}</style>
         {IS_ANALYTICS_ENABLED && (
           <>
             {/* Google tag (gtag.js) */}

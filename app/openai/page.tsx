@@ -7,6 +7,7 @@ import Footer from '@/components/footer'
 import ServiceIllustration from '@/components/animated/ServiceIllustration'
 import { WebPageSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const openAiStack = [
   {
@@ -304,10 +305,10 @@ export default function OpenAIPage() {
             </div>
             <div className="mt-12 flex justify-center">
               <Link
-                href="/contact"
+                href={WAITLIST_CTA.href}
                 className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
               >
-                request an ai strategy session
+                join the waitlist
               </Link>
             </div>
           </div>

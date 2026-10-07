@@ -1,7 +1,7 @@
 import { BlogPostErrorBoundary } from '@/components/blog-error-boundary'
 import BlogScrollProgress from '@/components/blog/BlogScrollProgress'
 import Navbar from '@/components/navbar'
-import { BlogPostSchema, HowToSchema } from '@/components/schema-markup'
+import { BlogPostSchema, BreadcrumbSchema, HowToSchema } from '@/components/schema-markup'
 import { canonicalUrl } from '@/lib/canonical'
 import { toAbsoluteUrl } from '@/lib/url'
 import Link from 'next/link'
@@ -121,6 +121,13 @@ export default function BlogPostLayout({
         </article>
       </main>
 
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: canonicalUrl('/') },
+          { name: 'Blog', url: canonicalUrl('/blog') },
+          { name: title, url: postUrl },
+        ]}
+      />
       <BlogPostSchema
         title={title}
         description={description}

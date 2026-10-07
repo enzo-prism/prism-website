@@ -447,18 +447,18 @@ export default function ConsultingCompaniesPage() {
                 Let’s sharpen your digital presence so you can focus on delivering results, not managing tech.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
+                <Link href="/waitlist">
                   <Button size="lg" className="rounded-full px-8 py-3 text-base">
-                    talk to prism
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    {FREE_AUDIT_CTA_TEXT}
+                    see case studies
                   </Button>
                 </Link>
               </div>

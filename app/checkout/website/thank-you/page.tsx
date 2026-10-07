@@ -60,12 +60,12 @@ export default function WebsiteOrderThankYouPage() {
             >
               Back to home
             </Link>
-            <Link
-              href="/contact"
+            <a
+              href="mailto:support@design-prism.com"
               className="inline-flex min-h-12 flex-1 items-center justify-center border border-white/14 bg-white/[0.02] px-5 font-mono text-[0.76rem] uppercase tracking-[0.18em] text-[#b8afa2] transition-colors duration-200 hover:border-white/28 hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 motion-reduce:transition-none"
             >
               Ask a question
-            </Link>
+            </a>
           </div>
         </div>
       </main>

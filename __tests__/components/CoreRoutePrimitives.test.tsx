@@ -67,18 +67,18 @@ describe('CoreActionLink', () => {
   it('routes tracked actions through the tracked link boundary', () => {
     render(
       <CoreActionLink
-        href="/get-started"
-        label="get free growth audit"
+        href="/waitlist"
+        label="join the waitlist"
         location="pricing hero"
         variant="secondary"
       >
-        Get a free growth audit
+        Join the waitlist
       </CoreActionLink>,
     )
 
-    const link = screen.getByRole('link', { name: /get a free growth audit/i })
-    expect(link).toHaveAttribute('href', '/get-started')
-    expect(link).toHaveAttribute('data-cta-label', 'get free growth audit')
+    const link = screen.getByRole('link', { name: /join the waitlist/i })
+    expect(link).toHaveAttribute('href', '/waitlist')
+    expect(link).toHaveAttribute('data-cta-label', 'join the waitlist')
     expect(link).toHaveAttribute('data-cta-location', 'pricing hero')
     expect(link.className).toContain('rounded-full')
   })

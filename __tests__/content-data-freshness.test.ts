@@ -72,6 +72,13 @@ describe('public content data freshness', () => {
       SOCIAL_PROOF.combinedAudience,
     )
     expect(publicData.proof_inventory.community_voices).toBe(242)
+    expect(publicData.proof_inventory.published_case_studies).toBe(
+      CASE_STUDIES.length,
+    )
+    expect(publicData.company).not.toHaveProperty('booking')
+    expect(publicData.company.waitlist).toBe(
+      'https://www.design-prism.com/waitlist',
+    )
     expect(publicData.verified_proof.connected_client_traffic).toMatchObject({
       new_users: CONNECTED_CLIENT_TRAFFIC.newUsers,
       connected_sites: CONNECTED_CLIENT_TRAFFIC.connectedSites,

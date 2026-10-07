@@ -68,7 +68,7 @@ Prism is a business growth systems website. **As of 2026-09-14 Prism is at capac
 
 SEO and answer-engine maintenance (September 2026):
 
-- Preserve authored meta descriptions; the shared rules trim at sentence, clause, or word boundaries within the existing 96-character brand budget. Generic title-derived copy is a fallback for missing prose, not long prose. The inventory generator imports these same rules to prevent audit/runtime drift.
+- Preserve authored meta descriptions; the shared rules trim at sentence, clause, or word boundaries within the 155-character budget (raised from 96 on 2026-10-07, which cut most authored descriptions mid-sentence). Generic title-derived copy is a fallback for missing prose, not long prose. The inventory generator imports these same rules to prevent audit/runtime drift.
 - Blog sitemap `lastmod` uses authored `openGraph.modifiedTime` when present, otherwise publication date. Invalid dates are omitted; never synthesize freshness from build time.
 - `/seo`, `/content`, and `/ads` provide visible service-scope answers. Each FAQ schema uses the same question/answer array as its page. Keep answers factual and avoid promises of rankings or AI citations.
 - `llms.txt` is a curated navigation aid with canonical Markdown links and dated proof. It is not a requirement or guarantee for AI-search inclusion. Keep the free audit/assessment distinct from paid, call-scoped services.

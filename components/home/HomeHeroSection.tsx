@@ -31,6 +31,7 @@ export default function HomeHeroSection() {
             fps={15}
             quality="medium"
             renderMode="canvas"
+            sourceFormat="color"
             ariaLabel="Wizard ASCII animation behind the homepage hero"
             posterSrc="/animations/wizard/poster.svg"
             posterClassName="absolute inset-0 h-full w-full origin-center object-cover opacity-[0.72] [image-rendering:pixelated] sm:opacity-[0.88] md:opacity-100 md:[-webkit-mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] md:[mask-image:linear-gradient(90deg,transparent_0%,black_16%,black_100%)] scale-[0.84]"

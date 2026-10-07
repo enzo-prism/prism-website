@@ -32,7 +32,7 @@ const DEFAULT_NEXT_STEPS = [
   {
     label: '03',
     title: 'Next step is selective',
-    body: 'If there is a fit, Prism will reach out with the right next step, including a strategy conversation when it makes sense.',
+    body: 'If there is a fit, Prism will reach out with the right next step.',
   },
 ] as const
 
@@ -68,7 +68,7 @@ const WEBSITE_BUILD_NEXT_STEPS = [
   {
     label: '03',
     title: 'We reach out',
-    body: 'If the project is a fit, Prism replies within two business days with next steps or a 30-minute scoping call.',
+    body: 'If the project is a fit, Prism replies within two business days with next steps.',
   },
 ] as const
 

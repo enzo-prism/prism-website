@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowRight, Camera } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 
 type ShootShot = {
@@ -72,8 +73,8 @@ function ShootCarouselCard({ shoot }: { shoot: Shoot }) {
             </Button>
           ) : null}
           <Button asChild variant="outline" className="w-full rounded-full px-6 py-2 text-sm lowercase sm:w-auto">
-            <Link href="/book-a-shoot">
-              book something like this
+            <Link href={WAITLIST_FOCUS_HREFS.content}>
+              join the waitlist
               <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
             </Link>
           </Button>

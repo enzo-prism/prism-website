@@ -1,3 +1,5 @@
+import { WAITLIST_CTA } from "@/lib/waitlist"
+
 export type CampaignLink = {
   slug: string
   destination: string
@@ -67,7 +69,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "email-signature": {
     slug: "email-signature",
-    destination: "/get-started",
+    destination: WAITLIST_CTA.href,
     utmSource: "email",
     utmMedium: "email",
     utmCampaign: "email_signature",
@@ -76,7 +78,7 @@ export const CAMPAIGN_LINKS: Record<string, CampaignLink> = {
   },
   "partner-referral": {
     slug: "partner-referral",
-    destination: "/get-started",
+    destination: WAITLIST_CTA.href,
     utmSource: "partner",
     utmMedium: "referral",
     utmCampaign: "partner_referral",

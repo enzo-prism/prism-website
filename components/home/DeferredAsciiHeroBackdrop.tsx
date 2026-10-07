@@ -51,6 +51,7 @@ type DeferredAsciiHeroBackdropProps = {
   continueOnFrameError?: boolean
   forceAutoplay?: boolean
   renderMode?: 'dom' | 'canvas'
+  sourceFormat?: 'text' | 'color'
   /**
    * Static poster (e.g. `/animations/wizard/poster.svg`) shown instead of the
    * player for reduced-motion, constrained-device, and no-JS visitors. The

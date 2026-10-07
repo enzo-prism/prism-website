@@ -31,6 +31,7 @@ import ScrollToTop from '@/components/scroll-to-top'
 import { WebPageSchema } from '@/components/schema-markup'
 import { Button } from '@/components/ui/button'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const GOOGLE_WORKSPACE_LINK =
   'https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO'
@@ -735,8 +736,8 @@ export default function GoogleDentalPatientFormsGuide() {
                   variant="inverted"
                   className="h-auto rounded-full px-8 py-4 text-base font-semibold"
                 >
-                  <Link href="/contact">
-                    Request a secure intake setup{' '}
+                  <Link href={WAITLIST_CTA.href}>
+                    {WAITLIST_CTA.label}{' '}
                     <ArrowRight className="h-5 w-5" aria-hidden />
                   </Link>
                 </Button>
@@ -1152,8 +1153,8 @@ export default function GoogleDentalPatientFormsGuide() {
                 variant="inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href="/waitlist">
-                  Talk to Prism <ArrowRight className="h-5 w-5" aria-hidden />
+                <Link href={WAITLIST_CTA.href}>
+                  {WAITLIST_CTA.label} <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
               <Button
@@ -1162,10 +1163,10 @@ export default function GoogleDentalPatientFormsGuide() {
                 variant="outline-inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href="/contact">
+                <a href="mailto:support@design-prism.com">
                   Ask a HIPAA Question{' '}
                   <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
+                </a>
               </Button>
             </div>
           </div>

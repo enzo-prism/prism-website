@@ -8,29 +8,30 @@
     "founder": "Enzo Sison",
     "website": "https://www.design-prism.com",
     "email": "support@design-prism.com",
-    "booking": "https://calendar.notion.so/meet/enzosison/oj1fm4o2p",
+    "waitlist": "https://www.design-prism.com/waitlist",
+    "availability": "Prism is at capacity. New work starts in monthly intakes: join the waitlist, Prism reviews applications, and reaches out by email to the teams it can take on. Booking a call is not a public action.",
     "areas_served": ["United States", "Canada", "Global"]
   },
   "offers": [
     {
       "name": "PRO Website",
       "url": "https://www.design-prism.com/websites",
-      "pricing": "Custom, scoped on a 30-minute call"
+      "pricing": "Custom, scoped after a waitlist application is reviewed"
     },
     {
       "name": "Content OS",
       "url": "https://www.design-prism.com/content",
-      "pricing": "Custom, scoped on a 30-minute call"
+      "pricing": "Custom, scoped after a waitlist application is reviewed"
     },
     {
       "name": "Dental OS",
       "url": "https://www.design-prism.com/dental-os",
-      "pricing": "Custom, scoped on a 30-minute call"
+      "pricing": "Custom, scoped after a waitlist application is reviewed"
     },
     {
       "name": "Prism Infinity",
       "url": "https://www.design-prism.com/prism-infinity",
-      "pricing": "Custom, scoped on a 30-minute call"
+      "pricing": "Custom, scoped after a waitlist application is reviewed"
     }
   ],
   "products": [
@@ -105,7 +106,7 @@
     }
   ],
   "proof_inventory": {
-    "published_case_studies": 22,
+    "published_case_studies": 24,
     "community_voices": 242,
     "case_studies_url": "https://www.design-prism.com/case-studies",
     "wall_of_love_url": "https://www.design-prism.com/wall-of-love"

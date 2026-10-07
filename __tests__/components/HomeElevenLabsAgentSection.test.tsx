@@ -84,7 +84,7 @@ describe('HomeElevenLabsAgentSection', () => {
       screen.queryByTestId('home-elevenlabs-widget'),
     ).not.toBeInTheDocument()
     expect(
-      screen.getByText('Start with a free Growth Audit.'),
+      screen.getByText('Start with the waitlist.'),
     ).toBeInTheDocument()
 
     act(() => {

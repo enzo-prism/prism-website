@@ -112,7 +112,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 
 - Route-level metadata should use `buildRouteMetadata` from `lib/seo/metadata.ts` so titles, descriptions, canonical URLs, Open Graph, Twitter, and robots directives stay consistent.
 - Titles use one `| Prism` suffix unless the title already starts with the brand, such as `Prism Infinity`; descriptions are normalized with shared rules in `lib/seo/rules.ts`.
-- Metadata should stay clean, descriptive, and minimal. The shared internal budgets trim page titles to 48 characters and meta descriptions to 96 characters across route, blog, and library pages; these are editorial guardrails, not limits published by Google.
+- Metadata should stay clean, descriptive, and minimal. The shared internal budgets trim page titles to 48 characters and meta descriptions to 155 characters across route, blog, and library pages; these are editorial guardrails, not limits published by Google.
 - Authored descriptions that already fit the compact budget are preserved. Longer copy keeps a complete opening sentence when possible; otherwise the helper creates a short title-led overview instead of publishing a clipped fragment.
 - Shared normalization preserves common search terms and product nouns (`SEO`, `AI`, `Google Maps`, `ChatGPT`, `TikTok`, etc.) and keeps useful brand descriptors like `Case Study`, `Podcast`, and `Careers` instead of stripping them out.
 - Default metadata workflow for static routes:
@@ -126,7 +126,7 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
   - Keep blog overrides aligned with the visible article promise; do not write clickbait search titles that diverge from the actual post.
 - Use `seo/inventory.csv` as the source of truth for final rendered snippets. Review `final_title` and `meta_description`, not just the source `titleStem` or frontmatter strings.
 - `app/sitemap.ts` should emit only canonical, indexable URLs plus verifiable `lastModified` values. Google ignores sitemap `priority` and `changefreq`, so don't spend time tuning or adding them.
-- `app/robots.ts` should stay minimal: use it to manage crawl access (for example, keep `/api/og/` crawlable while blocking the rest of `/api/`), and rely on page-level `noindex` for URLs that should stay out of Search.
+- `app/robots.ts` should stay minimal: use it to manage crawl access (for example, keep `/api/blog/` crawlable while blocking the rest of `/api/`), and rely on page-level `noindex` for URLs that should stay out of Search.
 - `public/llms.txt` is not a Google ranking input, but it should still mirror canonical search surfaces. Keep it limited to canonical, indexable Prism URLs and avoid noindex routes, redirects, or off-site detours unless there is a deliberate reason.
 - Use absolute canonicals (`https://www.design-prism.com/...`) for every indexable route.
 - Noindex routes should remain crawlable (meta `robots`), but **must be excluded** from the sitemap via `app/sitemap.ts`.
@@ -134,10 +134,9 @@ Custom confirmation routes live in `app/thank-you/` and `app/analysis-thank-you/
 - Broad Prism surfaces such as apps, software, Replit/OpenAI guides, podcast/library pages, careers, scholarships, unrelated industry pages, and social/community utilities should stay usable for direct visitors but out of the sitemap and public LLM map unless product direction explicitly changes.
 - Blog posts are curated for search with `INDEXABLE_BLOG_SLUGS` and optional `searchVisibility` frontmatter. New posts are not indexable by default; add them to the curated growth/local/dental allowlist only when they strengthen Prism's authority.
 - `/blog` filter/search views (`/blog?category=...`, `/blog?q=...`) are set to **noindex, follow** via `X-Robots-Tag` in `proxy.ts` so query-param URLs don’t pollute the index.
-- If a blog post `image` frontmatter uses an absolute Prism URL (e.g. `https://www.design-prism.com/...`), we normalize it for Next/Image. Prefer relative paths like `/api/og/...` or `/blog/...` for consistency.
+- If a blog post `image` frontmatter uses an absolute Prism URL (e.g. `https://www.design-prism.com/...`), we normalize it for Next/Image. Prefer relative paths like `/blog/...` for consistency.
 - Blog cards and post hero images now validate frontmatter `image` values at read time. If the file is missing, uses an invalid sentinel (`null`/`undefined`/empty), or points to a raster extension whose asset is actually SVG markup, posts now fall back to the shared default featured image (`https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770786137/Prism_rgeypo.png`) instead of rendering a broken image.
 - Blog posts can define `seoTitle` and `seoDescription` in frontmatter for manual snippet control; if omitted, metadata falls back to `title`/`description` with shared normalization.
-- Keep `/api/og/` **allowed** in `app/robots.ts` if we use OG endpoints in metadata or structured data.
 - Prefer the shared JSON-LD helpers in `components/schema-markup.tsx` (`WebPageSchema`, `CollectionPageSchema`, `ItemListSchema`, `ServiceSchema`, `FAQSchema`, etc.).
 - Any JSON-LD script, including custom schemas, must pass data through `serializeJsonLd`. Do not inject raw `JSON.stringify(...)` output when values can come from content or external data.
 - Every indexable page must render a visible `<h1>` that matches the primary search intent.

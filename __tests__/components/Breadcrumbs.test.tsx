@@ -103,4 +103,23 @@ describe('Breadcrumbs', () => {
       'text-current',
     )
   })
+
+  it('omits BreadcrumbList JSON-LD for placeholder trails', () => {
+    // Suspense fallbacks (app/blog/[slug]/loading.tsx) are baked into the
+    // static HTML; their "loading…" trail must never reach structured data.
+    const { container } = render(
+      <Breadcrumbs
+        items={[
+          { name: 'blog', url: '/blog' },
+          { name: 'loading…', url: '#' },
+        ]}
+        includeSchema={false}
+      />,
+    )
+
+    expect(screen.getByRole('navigation', { name: 'Breadcrumb' })).toBeInTheDocument()
+    expect(
+      container.querySelector('script[type="application/ld+json"]'),
+    ).toBeNull()
+  })
 })

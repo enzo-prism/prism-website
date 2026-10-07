@@ -6,11 +6,12 @@ import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 import LeadSuccessTracker from "@/components/thank-you/LeadSuccessTracker"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Pricing reviewed: next steps',
   description:
-    'Explore your next step with Prism: share your project or start with a free Growth Dashboard.',
+    'Explore your next step with Prism: join the waitlist for the next monthly intake.',
   path: "/pricing/thank-you",
   index: false,
   ogImage: "/prism-opengraph.png",
@@ -32,7 +33,7 @@ export default function PricingThankYouPage() {
               thanks for reviewing pricing
             </h1>
             <p className="text-base text-neutral-600 sm:text-lg">
-              Ready to explore a project? Start with a free Growth Dashboard and request an audit from the team.
+              Ready to explore a project? Join the waitlist. Our team reviews applications for each monthly intake.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
@@ -40,7 +41,7 @@ export default function PricingThankYouPage() {
               <Link href="/">Return to homepage</Link>
             </Button>
             <Button asChild variant="ghost" size="lg" className="rounded-full px-8">
-              <Link href="/waitlist">Get started free</Link>
+              <Link href={WAITLIST_CTA.href}>{WAITLIST_CTA.label}</Link>
             </Button>
           </div>
         </div>

@@ -11,6 +11,7 @@ import { WebPageSchema } from '@/components/schema-markup'
 import { Button } from '@/components/ui/button'
 import RecentShootsSection from './recent-shoots-section'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const PAGE_TITLE = 'Dental office and team photography'
 const PAGE_DESCRIPTION =
@@ -152,8 +153,8 @@ export default function OfficeTeamPhotographyPage() {
                   size="lg"
                   className="w-full rounded-full px-8 py-3 text-base lowercase transition hover:scale-105 sm:w-auto"
                 >
-                  <Link href="/book-a-shoot">
-                    book a shoot
+                  <Link href={WAITLIST_FOCUS_HREFS.content}>
+                    join the waitlist
                     <Calendar className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>

@@ -305,7 +305,7 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
                 >
                   <TrackedLink
                     href="/waitlist"
-                    label="Start a free growth audit from Roseville case study"
+                    label="Join the waitlist from Roseville case study"
                     location="Roseville Dental Academy case study hero"
                   >
                     <span className="inline-flex items-center gap-2">
@@ -525,7 +525,7 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
                   href="/waitlist"
-                  label="Start a free growth audit from Roseville case study footer"
+                  label="Join the waitlist from Roseville case study footer"
                   location="Roseville Dental Academy case study footer"
                 >
                   <span className="inline-flex items-center gap-2">

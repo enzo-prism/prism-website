@@ -174,40 +174,46 @@ async function resolveFrameSource(
   frameFolder: string,
   quality: Quality,
   firstFrameFile: string,
+  formatHint?: FrameSourceFormat,
 ): Promise<ResolvedFrameSource | null> {
   const fallbackQualities = FALLBACK_ORDER[quality]
 
   for (const candidate of fallbackQualities) {
-    try {
-      const probeUrl = `/${frameFolder}/${candidate}/${firstFrameFile}`
-      const probeResponse = await fetch(probeUrl)
-      if (probeResponse.ok) {
-        if (candidate !== quality) {
-          console.warn(
-            `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
-          )
-        }
-        return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "text" }
-      }
-    } catch {
-      // continue to the color probe
-    }
-
-    try {
-      const metaResponse = await fetch(`/${frameFolder}/${candidate}/meta.json`)
-      if (metaResponse.ok) {
-        const meta: unknown = await metaResponse.json()
-        if (isColorAsciiMeta(meta)) {
+    // A known color source skips the .txt probe, which would always 404.
+    if (formatHint !== "color") {
+      try {
+        const probeUrl = `/${frameFolder}/${candidate}/${firstFrameFile}`
+        const probeResponse = await fetch(probeUrl)
+        if (probeResponse.ok) {
           if (candidate !== quality) {
             console.warn(
               `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
             )
           }
-          return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "color", meta }
+          return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "text" }
         }
+      } catch {
+        // continue to the color probe
       }
-    } catch {
-      // continue to next candidate
+    }
+
+    if (formatHint !== "text") {
+      try {
+        const metaResponse = await fetch(`/${frameFolder}/${candidate}/meta.json`)
+        if (metaResponse.ok) {
+          const meta: unknown = await metaResponse.json()
+          if (isColorAsciiMeta(meta)) {
+            if (candidate !== quality) {
+              console.warn(
+                `ASCIIAnimation: quality "${quality}" not found in "${frameFolder}", falling back to "${candidate}"`,
+              )
+            }
+            return { baseUrl: `/${frameFolder}/${candidate}`, isFlat: false, format: "color", meta }
+          }
+        }
+      } catch {
+        // continue to next candidate
+      }
     }
   }
 
@@ -264,6 +270,11 @@ export interface ASCIIAnimationProps {
    * <pre> path cannot do per-cell palette colors.
    */
   renderMode?: "dom" | "canvas"
+  /**
+   * Skip format probing when the source format is known: "color" avoids a
+   * guaranteed-404 .txt request, "text" avoids the meta.json probe.
+   */
+  sourceFormat?: FrameSourceFormat
 }
 
 type LoadedFramesStore = Array<string[] | null>
@@ -293,6 +304,7 @@ export default function ASCIIAnimation({
   respectReducedMotion = true,
   bundledFrames = false,
   renderMode = "dom",
+  sourceFormat,
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -746,7 +758,7 @@ export default function ASCIIAnimation({
         return
       }
 
-      const source = await resolveFrameSource(frameFolder, quality, frameFiles[0])
+      const source = await resolveFrameSource(frameFolder, quality, frameFiles[0], sourceFormat)
       if (!source) {
         console.error(
           `ASCIIAnimation: could not find frames in any quality folder or flat structure for "${frameFolder}"`,
@@ -842,6 +854,7 @@ export default function ASCIIAnimation({
     providedFrames,
     quality,
     rebuildRenderableFrames,
+    sourceFormat,
     syncColorFrames,
   ])
 

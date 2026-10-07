@@ -39,10 +39,10 @@ export const PRICING_STRICT_FILES = [
 export const PRICING_CONTEXT_RULES: Record<string, RegExp[]> = {
   'app/refer/page.tsx': [/referral payout/i, /not service pricing/i],
   // Editorial market-rate comparisons (e.g. "$5,000–$25,000 agency range") are
-  // allowed as long as the Prism section stays call-first.
+  // allowed as long as the Prism section stays waitlist-first.
   'content/blog/dental-website-cost-guide-2026.mdx': [
     /What Prism charges/i,
-    /scoped on a 30-minute call/i,
+    /once a waitlist application is reviewed/i,
   ],
   'app/google/dental-ads/page.tsx': [
     /ad fee examples/i,

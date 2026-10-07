@@ -5,8 +5,9 @@ export const TITLE_MIN_LENGTH = 10
 // Compact brand standard; Google does not publish a fixed title limit.
 export const TITLE_MAX_LENGTH = 48
 export const DESCRIPTION_MIN_LENGTH = 24
-// Keep snippets to one short, plain-language thought.
-export const DESCRIPTION_MAX_LENGTH = 96
+// Room for one complete, plain-language thought. 96 cut most authored
+// descriptions mid-sentence; ~155 matches what search results display.
+export const DESCRIPTION_MAX_LENGTH = 155
 
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 export const DEFAULT_OG_IMAGE_ALT = "Prism logo on a black background"

@@ -10,6 +10,7 @@ import { ServiceSchema } from "@/components/schema-markup"
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Facebook ads for dentists',
@@ -19,13 +20,13 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 const primaryCta = {
-  label: "Get a free analysis",
-  href: "/waitlist",
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_FOCUS_HREFS.ads,
 } as const
 
 const secondaryCta = {
-  label: "Talk to Prism",
-  href: "/contact",
+  label: "See case studies",
+  href: "/case-studies",
 } as const
 
 const whatConverts = [
@@ -379,7 +380,7 @@ export default function FacebookAdsForDentistsPage() {
               want booked consults from facebook this quarter?
             </h2>
             <p className="mt-4 text-base text-white/80 sm:text-lg">
-              get a free analysis and a clear plan for offer, creative, lead capture, and tracking.
+              join the waitlist. when we can take on your practice, we map a clear plan for offer, creative, lead capture, and tracking.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full bg-white px-8 text-neutral-900 hover:bg-neutral-200">
