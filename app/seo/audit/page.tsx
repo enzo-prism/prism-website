@@ -6,6 +6,7 @@ import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'SEO audit',
@@ -134,9 +135,9 @@ const faqItems = [
       "At minimum: Google Search Console, Google Analytics (or GA4), and basic CMS access so we can verify technical findings.",
   },
   {
-    question: "Is this different from a free analysis?",
+    question: "How do I start an SEO audit?",
     answer:
-      "Yes. The free analysis is a quick snapshot. The SEO audit service is a deep crawl, intent review, and prioritized plan you can execute immediately.",
+      "Join the waitlist. Prism reviews applications for each monthly intake. The SEO audit service itself is a deep crawl, intent review, and prioritized plan you can execute immediately.",
   },
 ]
 
@@ -214,10 +215,10 @@ export default function SeoAuditServicePage() {
         </div>
         <div className="mt-10 flex flex-wrap gap-3">
           <Link
-            href="/contact"
+            href={WAITLIST_CTA.href}
             className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
           >
-            talk to prism
+            {WAITLIST_CTA.label}
           </Link>
           <Link
             href="/seo"

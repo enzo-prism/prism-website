@@ -328,9 +328,9 @@ export default function GuideTabs() {
             <div className="rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-center">
               <p className="text-base font-medium text-neutral-800">
                 The {content.label.toLowerCase()} tier breakdown is in progress. Need it now?{" "}
-                <Link href="/contact" className="text-neutral-900 underline decoration-neutral-300 underline-offset-4">
-                  Ping the Prism team
-                </Link>{" "}
+                <a href="mailto:support@design-prism.com" className="text-neutral-900 underline decoration-neutral-300 underline-offset-4">
+                  Email the Prism team
+                </a>{" "}
                 and we&apos;ll prioritize the build.
               </p>
             </div>

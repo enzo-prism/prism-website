@@ -21,6 +21,7 @@ import { WebPageSchema } from '@/components/schema-markup'
 import { Button } from '@/components/ui/button'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const proofPoints = [
   {
@@ -247,8 +248,8 @@ export default function DentalPhotographyPage() {
                       variant="ghost"
                       className="mt-3 w-full rounded-full px-6 py-3 text-sm lowercase text-neutral-900"
                     >
-                      <Link href="/book-a-shoot">
-                        ready to book?
+                      <Link href={WAITLIST_FOCUS_HREFS.content}>
+                        join the waitlist
                         <Calendar className="ml-2 h-4 w-4" aria-hidden />
                       </Link>
                     </Button>
@@ -380,8 +381,8 @@ export default function DentalPhotographyPage() {
                 size="lg"
                 className="rounded-full px-8 py-3 text-base lowercase"
               >
-                <Link href="/book-a-shoot">
-                  book office + team
+                <Link href={WAITLIST_FOCUS_HREFS.content}>
+                  join the waitlist
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

@@ -242,15 +242,15 @@ export default function CaseStudiesPage() {
               What could we improve for your business?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-              Start with a free review of your website and online presence.
-              We’ll help you choose a useful first project, with clear scope
-              before you commit.
+              Join the waitlist and share your website and goals. When we can
+              take on your team, we’ll help you choose a useful first project,
+              with clear scope before you commit.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
                   href="/waitlist"
-                  label="Start a free growth audit from case studies hub"
+                  label="Join the waitlist from case studies hub"
                   location="case studies hub footer"
                 >
                   <span className="inline-flex items-center gap-2">

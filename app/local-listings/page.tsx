@@ -656,7 +656,7 @@ export default async function LocalListingsPage() {
                 size="lg"
                 className="rounded-full px-8"
               >
-                <Link href="/contact">Talk to a strategist</Link>
+                <Link href="/case-studies">See case studies</Link>
               </Button>
               <Button
                 asChild

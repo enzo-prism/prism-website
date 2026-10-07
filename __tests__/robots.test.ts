@@ -1,7 +1,7 @@
 import robots from '@/app/robots'
 
 describe('robots', () => {
-  it('allows /api/og/ and the LLM markdown endpoint while disallowing other /api/ routes', () => {
+  it('allows the LLM markdown endpoint while disallowing other /api/ routes', () => {
     const result = robots()
     expect(result.rules).toBeTruthy()
 
@@ -9,7 +9,7 @@ describe('robots', () => {
     const wildcard = rules.find((rule) => rule.userAgent === '*')
     expect(wildcard).toMatchObject({
       userAgent: '*',
-      allow: ['/api/og/', '/api/blog/'],
+      allow: ['/api/blog/'],
       disallow: ['/api/'],
     })
     expect(result.sitemap).toBe('https://www.design-prism.com/sitemap.xml')

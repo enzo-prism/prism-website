@@ -116,7 +116,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
             homeMobileAlt={`Mobile view of the ${caseStudy.client} site`}
             primaryCta={{
               href: '/waitlist',
-              label: `Start a free growth audit from ${slug} case study`,
+              label: `Join the waitlist from ${slug} case study`,
               text: FREE_AUDIT_CTA_TEXT,
             }}
           />
@@ -267,7 +267,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
               <Button asChild className="rounded-full px-5">
                 <TrackedLink
                   href="/waitlist"
-                  label={`Start a free growth audit from ${slug} case study footer`}
+                  label={`Join the waitlist from ${slug} case study footer`}
                   location={`${trackedLocation} footer`}
                 >
                   <span className="inline-flex items-center gap-2">

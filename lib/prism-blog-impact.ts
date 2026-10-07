@@ -1,3 +1,5 @@
+import { WAITLIST_CTA } from "@/lib/waitlist"
+
 export type PrismImpactLinkKind = "internal" | "external"
 
 export type PrismImpactLink = {
@@ -189,10 +191,10 @@ const DEFAULT_IMPACT: Omit<PrismImpactConfig, "title"> = {
       reason: "High-leverage growth services for AI-era acquisition.",
     },
     {
-      label: "Get your AI-ready growth roadmap",
-      href: "/get-started",
+      label: WAITLIST_CTA.label,
+      href: WAITLIST_CTA.href,
       kind: "internal",
-      reason: "Start with a focused implementation plan and outcomes.",
+      reason: "Prism reviews the waitlist for each monthly intake.",
     },
     {
       label: "AI SEO services",
@@ -249,23 +251,23 @@ const AI_IMPACT: PrismImpactConfig = {
   ],
   serviceLinks: [
     {
-      label: "AI programs",
-      href: "/ai",
+      label: "AI agents",
+      href: "/ai-agents",
       kind: "internal",
-      reason: "Practical AI workflows for teams and operators.",
+      reason: "AI phone agents for call routing, scheduling, and after-hours workflows.",
     },
     {
       label: "Prism pricing",
       href: "/pricing",
       kind: "internal",
       reason:
-        "Review the canonical Growth Dashboard, audit, sprint, and ongoing partner path.",
+        "Compare the Website, Content OS, Dental OS, and Prism Infinity offers.",
     },
     {
-      label: "Book a growth implementation call",
-      href: "/get-started",
+      label: WAITLIST_CTA.label,
+      href: WAITLIST_CTA.href,
       kind: "internal",
-      reason: "Convert the post’s ideas into a prioritized action plan.",
+      reason: "Bring the post’s ideas to Prism in an upcoming monthly intake.",
     },
   ],
   referenceLinks: dedupeLinks([...AI_REFERENCE_LINKS, ...SEO_REFERENCE_LINKS]),
@@ -295,8 +297,8 @@ const DENTISTRY_IMPACT: PrismImpactConfig = {
       reason: "Industry-specific search and review strategy for practices.",
     },
     {
-      label: "Get started for your clinic",
-      href: "/get-started",
+      label: WAITLIST_CTA.label,
+      href: WAITLIST_CTA.href,
       kind: "internal",
       reason: "Prioritize the highest impact pages and funnel upgrades.",
     },
@@ -386,17 +388,17 @@ const DARK_FACTORY_OVERRIDE: PrismImpactConfig = {
       href: "/pricing",
       kind: "internal",
       reason:
-        "Review the canonical Growth Dashboard, audit, sprint, and ongoing partner path.",
+        "Compare the Website, Content OS, Dental OS, and Prism Infinity offers.",
     },
     {
-      label: "AI and automation services",
-      href: "/ai",
+      label: "AI agents",
+      href: "/ai-agents",
       kind: "internal",
       reason: "Scale implementation across search, marketing, and operations.",
     },
     {
-      label: "Get started with Prism",
-      href: "/get-started",
+      label: WAITLIST_CTA.label,
+      href: WAITLIST_CTA.href,
       kind: "internal",
       reason: "Define your first specs and first measurable outcomes.",
     },

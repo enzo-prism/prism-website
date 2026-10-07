@@ -432,18 +432,18 @@ export default function CommunityFoundersPage() {
                 We’ll handle the tech and design. You focus on your members.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
+                <Link href="/waitlist">
                   <Button size="lg" className="rounded-full px-8 py-3 text-base">
-                    Talk to Prism
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    {FREE_AUDIT_CTA_TEXT}
+                    See case studies
                   </Button>
                 </Link>
               </div>

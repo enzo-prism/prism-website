@@ -14,7 +14,7 @@ import {
 describe("SEO metadata rules", () => {
   it("uses compact site-wide metadata budgets", () => {
     expect(TITLE_MAX_LENGTH).toBe(48)
-    expect(DESCRIPTION_MAX_LENGTH).toBe(96)
+    expect(DESCRIPTION_MAX_LENGTH).toBe(155)
   })
 
   it("normalizes title stems by removing trailing brand suffix variants", () => {

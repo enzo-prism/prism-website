@@ -807,7 +807,7 @@ export default async function AdsPage() {
         offerDetails={{
           name: 'Prism Ads',
           description:
-            'Paid ads across Google, Meta, TikTok, and Yelp with creative, targeting, landing paths, and tracking. Scoped on a 30-minute call.',
+            'Paid ads across Google, Meta, TikTok, and Yelp with creative, targeting, landing paths, and tracking.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/ads',

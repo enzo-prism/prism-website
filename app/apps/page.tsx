@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'App development & product portfolio',
@@ -176,7 +177,7 @@ export default function AppsPage() {
             <h2 className="text-2xl sm:text-3xl font-light text-neutral-900 mb-6">
               ready to build?
             </h2>
-            <Link href="/get-started?service=app-development">
+            <Link href={WAITLIST_CTA.href}>
               <Button
                 size="lg"
                 className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-none px-8 py-3 text-sm font-light transition-[transform,background-color,color] duration-200 hover:scale-[1.02]"

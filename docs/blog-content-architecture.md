@@ -42,7 +42,7 @@ Social previews default to `public/prism-opengraph.png` for both Open Graph and 
 
 Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` use `socialImage` when supplied and otherwise `/prism-opengraph.png`. The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
 
-`app/api/og/blog/[slug]/route.tsx` remains available for legacy or explicit API consumers, but it no longer controls the social metadata emitted by blog pages. It runs on Node.js, reads the same `content/blog/<slug>.mdx` source through `getPost()`, uses immutable caching, and returns 404 for unknown slugs. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
+The old `app/api/og/blog/[slug]` image route was deleted on 2026-10-07: no page referenced it, and it exposed `next/og` `ImageResponse` publicly. Legacy `openGraph.images` entries pointing at `/api/og/blog/...` in post frontmatter are ignored (blog metadata always overrides them). `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
 
 `components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads. The site-wide page markdown control lives in `components/copy-page-markdown-button.tsx` and is hidden on blog posts so this source-level copy remains the primary blog behavior.
 

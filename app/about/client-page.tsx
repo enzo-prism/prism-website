@@ -16,6 +16,7 @@ import PoleVaultCarousel from '@/components/pole-vault-carousel'
 import { BreadcrumbSchema, PersonSchema } from '@/components/schema-markup'
 import ScrollingTimeline from '@/components/scrolling-timeline'
 import { cn } from '@/lib/utils'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 export default function AboutClientPage() {
   return (
@@ -132,13 +133,15 @@ export default function AboutClientPage() {
           >
             <CoreSectionHeading
               title="What would you like to build?"
-              description="Tell us about your business and what you want to improve. Start with a free growth audit, or explore our work."
+              description="Tell us about your business and what you want to improve. Join the waitlist, or explore our work."
               titleClassName="max-w-[10ch]"
               descriptionClassName="max-w-[24rem]"
             />
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-8">
-              <CoreActionLink href="/waitlist">Get started</CoreActionLink>
+              <CoreActionLink href={WAITLIST_CTA.href}>
+                {WAITLIST_CTA.label}
+              </CoreActionLink>
               <CoreActionLink href="/case-studies" variant="secondary">
                 Case studies
               </CoreActionLink>

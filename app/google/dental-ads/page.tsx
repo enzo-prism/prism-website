@@ -10,7 +10,6 @@ import {
   Layers,
   ShieldCheck,
   Target,
-  Video,
 } from 'lucide-react'
 
 import Footer from '@/components/footer'
@@ -22,9 +21,9 @@ import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
-const GET_FREE_AUDIT_HREF = '/waitlist'
-const CONTACT_HREF = '/contact'
+const GET_FREE_AUDIT_HREF = WAITLIST_FOCUS_HREFS.ads
 const STRUCTURE_SECTION_ID = 'structure'
 const POLICY_SECTION_ID = 'policy'
 const LSA_SECTION_ID = 'lsa'
@@ -299,7 +298,7 @@ export default function GoogleDentalAdsPage() {
                   <Link href="/dental-practice-seo-expert">see dental seo</Link>
                 </Button>
                 <Button asChild className="rounded-full px-8">
-                  <Link href={CONTACT_HREF}>talk to prism</Link>
+                  <Link href={GET_FREE_AUDIT_HREF}>join the waitlist</Link>
                 </Button>
               </div>
             </div>
@@ -691,8 +690,8 @@ export default function GoogleDentalAdsPage() {
               size="lg"
               className="mt-10 h-auto rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white"
             >
-              <Link href="/waitlist">
-                Get started with Prism{' '}
+              <Link href={GET_FREE_AUDIT_HREF}>
+                {WAITLIST_CTA.label}{' '}
                 <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
               </Link>
             </Button>
@@ -734,8 +733,8 @@ export default function GoogleDentalAdsPage() {
                 size="lg"
                 className="h-auto w-full rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white sm:w-auto"
               >
-                <Link href={CONTACT_HREF}>
-                  Talk to an Expert{' '}
+                <Link href={GET_FREE_AUDIT_HREF}>
+                  {WAITLIST_CTA.label}{' '}
                   <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
@@ -750,9 +749,10 @@ export default function GoogleDentalAdsPage() {
             </h2>
             <p className="max-w-2xl text-base text-white/80 sm:text-lg">
               If you want a clearer path from search intent to calls and
-              appointment requests, Prism can help. We’ll audit your existing
-              setup, identify measurement and spend gaps, and recommend the next
-              campaign changes. Results vary by market and budget.
+              appointment requests, join the waitlist. When we can take on your
+              practice, we’ll audit your existing setup, identify measurement and
+              spend gaps, and recommend the next campaign changes. Results vary
+              by market and budget.
             </p>
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
               <Button
@@ -772,9 +772,9 @@ export default function GoogleDentalAdsPage() {
                 variant="outline-inverted"
                 className="h-auto rounded-full px-8 py-4 text-base font-semibold"
               >
-                <Link href={CONTACT_HREF}>
-                  Book a 30-Minute Zoom Meeting{' '}
-                  <Video className="h-5 w-5" aria-hidden />
+                <Link href="/case-studies">
+                  See case studies{' '}
+                  <ArrowRight className="h-5 w-5" aria-hidden />
                 </Link>
               </Button>
             </div>

@@ -9,6 +9,7 @@ import ScrollToTop from '@/components/scroll-to-top'
 import SiteRebuildDynamicSteps from '@/components/site-rebuild-dynamic-steps'
 import { WebPageSchema } from '@/components/schema-markup'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const guideSections = [
   { id: 'overview', label: 'Overview', iconSrc: '/pixelish/lens-plus.svg' },
@@ -187,10 +188,10 @@ mkdir site-rebuild && cd site-rebuild`}
                       explore more openai systems
                     </Link>
                     <Link
-                      href="/contact"
+                      href={WAITLIST_CTA.href}
                       className="inline-flex items-center justify-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
                     >
-                      request implementation help
+                      join the waitlist
                     </Link>
                   </div>
                 </div>

@@ -64,6 +64,25 @@ images: {
     // long-lived cache below can never serve stale content.
     return [
       {
+        // Baseline security headers. Permissions-Policy only switches off
+        // features the site never uses; microphone stays available for the
+        // ElevenLabs voice widget, and autoplay/fullscreen for video embeds.
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self'; base-uri 'self'; object-src 'none'",
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+          },
+        ],
+      },
+      {
         source: '/animations/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
@@ -206,8 +225,8 @@ images: {
       // arriving on these from off-site citations (directory listings, an old
       // Google Business Profile link, stale backlinks). Send them somewhere
       // useful instead of a dead end.
-      { source: '/contact-us', destination: '/contact', permanent: true },
-      { source: '/hours', destination: '/contact', permanent: true },
+      { source: '/contact-us', destination: '/waitlist', permanent: true },
+      { source: '/hours', destination: '/waitlist', permanent: true },
       { source: '/chatgptads', destination: '/chatgpt-ads', permanent: true },
       { source: '/openai-ads', destination: '/chatgpt-ads', permanent: true },
       { source: '/chat-gpt-ads', destination: '/chatgpt-ads', permanent: true },

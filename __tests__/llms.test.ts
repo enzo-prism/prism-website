@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+import { CASE_STUDIES } from '@/lib/case-study-data'
 import {
   isBlogPostIndexable,
   isRouteIndexable,
@@ -20,6 +21,13 @@ describe('llms.txt', () => {
     const urls = extractDesignPrismUrls(llms)
 
     expect(llms).not.toContain('Light Audit')
+    expect(llms).not.toMatch(/growth dashboard|deep audit|growth audit/i)
+    expect(llms).toContain(`${CASE_STUDIES.length} published case studies`)
+    for (const study of CASE_STUDIES) {
+      expect(llms).toContain(
+        `https://www.design-prism.com/case-studies/${study.slug})`,
+      )
+    }
     expect(llms).toContain('no exact service prices are published')
     expect(llms).toContain('does not guarantee indexing or AI citations')
     expect(llms).toContain('[Website (')

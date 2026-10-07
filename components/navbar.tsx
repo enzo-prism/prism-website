@@ -595,6 +595,9 @@ export default function Navbar() {
                   alt={LOGO_CONFIG.alt}
                   width={40}
                   height={40}
+                  // Fixed 40px slot: without this, CoreImage defaults to
+                  // sizes="100vw" and phones preload a ~1080px logo.
+                  sizes="40px"
                   className="h-full w-full rounded-none object-cover"
                   priority
                   fallbackSrc={LOGO_CONFIG.fallbackSrc}
@@ -699,9 +702,12 @@ export default function Navbar() {
           {caseStudyBreadcrumbs ? (
             <div className="border-t border-white/12 bg-black">
               <div className="container mx-auto px-4 sm:px-6">
+                {/* Visual trail only: each case study page emits its own
+                    BreadcrumbList via CaseStudySchema. */}
                 <Breadcrumbs
                   items={caseStudyBreadcrumbs}
                   className="mb-0 py-2 text-[#b8afa2]"
+                  includeSchema={false}
                 />
               </div>
             </div>

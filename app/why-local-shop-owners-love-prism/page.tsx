@@ -170,18 +170,18 @@ export default function LocalShopOwnersPage() {
                 Prism helps local shops stand out online, bring more people through the door, and run smoother than ever, without you having to deal with complicated tech or marketing systems.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
+                <Link href="/waitlist">
                   <Button size="lg" className="rounded-full px-8 py-3 text-base">
-                    talk to prism
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    {FREE_AUDIT_CTA_TEXT}
+                    see case studies
                   </Button>
                 </Link>
               </div>
@@ -481,18 +481,18 @@ export default function LocalShopOwnersPage() {
                 Prism helps local businesses get found, look great, and run smoother, with less stress and better results.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
+                <Link href="/waitlist">
                   <Button size="lg" className="rounded-full px-8 py-3 text-base">
-                    talk to prism
+                    {FREE_AUDIT_CTA_TEXT}
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full px-8 py-3 text-base"
                   >
-                    {FREE_AUDIT_CTA_TEXT}
+                    see case studies
                   </Button>
                 </Link>
               </div>

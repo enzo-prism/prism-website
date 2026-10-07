@@ -13,6 +13,7 @@ import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { ArrowRight } from 'lucide-react'
 import ServiceIllustration from '@/components/animated/ServiceIllustration'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'AI SEO',
@@ -24,12 +25,12 @@ export const metadata: Metadata = buildRouteMetadata({
 
 const primaryCta = {
   label: FREE_AUDIT_CTA_TEXT,
-  href: '/waitlist',
+  href: WAITLIST_CTA.href,
 } as const
 
 const secondaryCta = {
-  label: 'Talk to Prism',
-  href: '/contact',
+  label: 'See case studies',
+  href: '/case-studies',
 } as const
 
 const whatYouGet = [

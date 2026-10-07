@@ -4,6 +4,7 @@ import { FAQSchema } from '@/components/schema-markup'
 import type { Metadata } from 'next'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'FAQ',
@@ -22,7 +23,7 @@ const faqs = [
   {
     question: 'How much does a website cost?',
     answer:
-      'Pricing depends on your pages, content, features, and integrations. Start with a 30-minute Zoom call to discuss your goals. We confirm the scope and price before work begins, including any optional ongoing care.',
+      'Pricing depends on your pages, content, features, and integrations. Join the waitlist and share your goals. When we can take on your project, we confirm the scope and price before work begins, including any optional ongoing care.',
   },
   {
     question: "What's included in a Prism website?",
@@ -32,7 +33,7 @@ const faqs = [
   {
     question: 'How long does a website project take?',
     answer:
-      'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date on the intake or scoping call. We will agree on a realistic schedule before work begins.',
+      'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date when you join the waitlist. We will agree on a realistic schedule before work begins.',
   },
   {
     question: 'Do you work with small businesses?',
@@ -57,10 +58,10 @@ const faqs = [
   {
     question: 'Do you provide ongoing support?',
     answer:
-      'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan on a call.',
+      'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan with you.',
   },
   {
-    question: 'What happens after the first call?',
+    question: 'What happens when Prism reaches out?',
     answer:
       'We confirm the scope, price, and next steps with you. Once approved, we gather the content and access needed, build the work, and review it with you before launch.',
   },
@@ -82,7 +83,7 @@ const faqs = [
   {
     question: 'How do payments work?',
     answer:
-      'Payment terms are included with your agreed scope before work starts. Book a 30-minute Zoom call to discuss a project, or begin with a free Growth Dashboard and request a free audit from the team.',
+      'Payment terms are included with your agreed scope before work starts. To discuss a project, join the waitlist. Our team reviews applications for each monthly intake.',
   },
   {
     question: 'How do you measure success?',
@@ -140,7 +141,7 @@ export default function FAQPage() {
                   Email us
                 </a>
                 <a
-                  href="/waitlist"
+                  href={WAITLIST_CTA.href}
                   className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/16 bg-white/[0.03] px-6 font-sans text-[0.95rem] font-medium text-[#f5f0e8] transition-colors hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
                   {FREE_AUDIT_CTA_TEXT}

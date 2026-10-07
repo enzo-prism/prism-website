@@ -309,8 +309,9 @@ export default function ProofPage() {
               <h2>How Prism Proof is scoped</h2>
               <p>
                 Prism scopes the capture flow, approval process, publishing
-                cadence, and reporting around your locations and goals on a
-                30-minute call. There are no public Proof tiers or
+                cadence, and reporting around your locations and goals once we
+                can take on your team. Join the waitlist to be considered for
+                the next monthly intake. There are no public Proof tiers or
                 one-size-fits-all promises.
               </p>
               <blockquote>

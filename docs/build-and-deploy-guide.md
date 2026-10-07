@@ -104,7 +104,7 @@ Spot-check robots tags on both sides of the search policy:
 - Indexable: `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
 - Noindex: `/apps`, `/software`, `/openai`, `/ai`, `/ai-agents`, off-theme blog posts
 
-`robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing `/api/og/`.
+`robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing the `/api/blog/` markdown endpoint.
 
 ## Common gotchas
 

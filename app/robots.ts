@@ -22,14 +22,14 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        // Allow the OG image and the LLM-readable blog markdown endpoint while
-        // keeping the rest of /api private. Longer allow paths win over /api.
-        allow: ["/api/og/", "/api/blog/"],
+        // Allow the LLM-readable blog markdown endpoint while keeping the rest
+        // of /api private. Longer allow paths win over /api.
+        allow: ["/api/blog/"],
         disallow: ["/api/"],
       },
       {
         userAgent: AI_CRAWLERS,
-        allow: ["/", "/api/og/", "/api/blog/"],
+        allow: ["/", "/api/blog/"],
         disallow: ["/api/"],
       },
     ],

@@ -10,6 +10,7 @@ import { FAQSchema, HowToSchema, PersonSchema, ServiceSchema } from "@/component
 import { Button } from "@/components/ui/button"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Dental SEO',
@@ -19,13 +20,13 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 const primaryCta = {
-  label: "Get a free analysis",
-  href: "/waitlist",
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_CTA.href,
 } as const
 
 const secondaryCta = {
-  label: "Talk to Prism",
-  href: "/contact",
+  label: "See case studies",
+  href: "/case-studies",
 } as const
 
 const whatYouGet = [
@@ -442,7 +443,7 @@ export default function DentalPracticeSeoExpertPage() {
                     <Link href="/why-dental-practices-love-prism">see dental proof</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline" className="rounded-full px-5">
-                    <Link href={secondaryCta.href}>talk to prism</Link>
+                    <Link href={primaryCta.href}>join the waitlist</Link>
                   </Button>
                 </div>
               </div>
@@ -577,7 +578,7 @@ export default function DentalPracticeSeoExpertPage() {
           <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">want more visibility this quarter?</h2>
             <p className="mt-4 text-base text-white/80 sm:text-lg">
-              get a free analysis and a clear roadmap for rankings, listings, and patient conversion.
+              join the waitlist. when we can take on your practice, we map a clear roadmap for rankings, listings, and patient conversion.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild size="lg" className="rounded-full bg-white px-8 text-neutral-900 hover:bg-neutral-200">
@@ -621,7 +622,7 @@ export default function DentalPracticeSeoExpertPage() {
         offerDetails={{
           name: "Dentist SEO",
           description:
-            "Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings. Scoped on a 30-minute call.",
+            "Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
           availability: "https://schema.org/InStock",
           url: "https://www.design-prism.com/pricing",

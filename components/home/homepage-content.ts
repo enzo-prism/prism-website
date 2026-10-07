@@ -889,12 +889,12 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
     ],
   },
   {
-    question: 'What do you review in the free growth audit?',
+    question: 'What do you review when I join the waitlist?',
     answer: [
       {
         type: 'paragraph',
         content:
-          'We review your website, search visibility, reviews, and tracking. We look for what makes your business easy to find, understand, and contact.',
+          'We review the links and goals you share: your website, search visibility, reviews, and tracking. We look for what makes your business easy to find, understand, and contact.',
       },
     ],
   },
@@ -924,7 +924,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Request a free growth audit and share your website. We will review it and recommend next steps. Paid work is scoped on a 30-minute Zoom call before you commit.',
+          'Join the waitlist and share your website and goals. For each monthly intake, our team reviews applications and reaches out when we can take on your team. We agree on scope together before any work starts.',
       },
     ],
   },

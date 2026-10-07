@@ -347,9 +347,9 @@ export default function AIAgentsPage() {
                 ready to reduce missed calls?
               </h2>
               <p className="mt-4 text-base text-neutral-600">
-                start with a free growth audit. We&apos;ll map your call flows,
-                identify automation opportunities, and show how an ai agent fits
-                your business.
+                join the waitlist. when we can take on your team, we&apos;ll map
+                your call flows, identify automation opportunities, and show how
+                an ai agent fits your business.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link

@@ -34,6 +34,7 @@ import {
   isHomeElevenLabsEmbedEnabled,
   isPublicElevenLabsWidgetEnabled,
 } from '@/lib/elevenlabs-widget'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const INLINE_WIDGET_STYLE = {
   display: 'block',
@@ -121,8 +122,8 @@ export default function HomeElevenLabsAgentSection() {
 
             <div className="border-t border-white/10 pt-5">
               <p className="font-sans text-[0.9rem] leading-6 text-[#b8afa2]">
-                The guide helps you choose. Every Growth Audit is still reviewed
-                by a real person.
+                The guide helps you choose. Every waitlist application is still
+                reviewed by a real person.
               </p>
             </div>
           </div>
@@ -194,20 +195,20 @@ export default function HomeElevenLabsAgentSection() {
                 >
                   <ElevenLabsOrbMark className="h-12 w-12" />
                   <p className="mt-6 max-w-[24rem] font-sans text-[1.35rem] font-medium leading-tight tracking-[-0.035em] text-[#f5f0e8]">
-                    Start with a free Growth Audit.
+                    Start with the waitlist.
                   </p>
                   <p className="mt-3 max-w-[27rem] font-sans text-[0.95rem] leading-7 text-[#a8a092]">
-                    Share what you want to improve and Prism will point you to
-                    the clearest next step.
+                    Share what you want to improve. Prism reviews the waitlist
+                    for each monthly intake and reaches out when there is a fit.
                   </p>
                   <CoreActionLink
-                    href="/waitlist"
+                    href={WAITLIST_CTA.href}
                     label="join the waitlist"
                     location="homepage prism guide fallback"
                     variant="secondary"
                     className="mt-7"
                   >
-                    Join the waitlist
+                    {WAITLIST_CTA.label}
                   </CoreActionLink>
                 </div>
               )}

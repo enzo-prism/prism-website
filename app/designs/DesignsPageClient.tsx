@@ -15,6 +15,8 @@ import { useMobile } from '@/hooks/use-mobile'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { WAITLIST_CTA } from '@/lib/waitlist'
 import { useCallback, useEffect, useState } from 'react'
 import PixelishImg from '@/components/pixelish/PixelishImg'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
@@ -443,23 +445,23 @@ export default function DesignsPageClient() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <Link
-                href="/waitlist"
+                href={WAITLIST_CTA.href}
                 className="group flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-white text-neutral-900 px-6 py-6 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
-                <span className="text-lg font-semibold">get started</span>
+                <span className="text-lg font-semibold">join the waitlist</span>
                 <span className="text-sm text-neutral-600 group-hover:text-neutral-800">
-                  kick off your transformation plan
+                  save your spot for the next monthly intake
                 </span>
               </Link>
               <Link
-                href="/contact"
+                href="/case-studies"
                 className="group flex flex-col items-center justify-center rounded-2xl border border-white/40 bg-transparent px-6 py-6 transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-white hover:bg-white/10"
               >
                 <span className="text-lg font-semibold text-white">
-                  contact
+                  case studies
                 </span>
                 <span className="text-sm text-white/70 group-hover:text-white">
-                  talk with our team about your design needs
+                  see the work behind the designs
                 </span>
               </Link>
             </div>

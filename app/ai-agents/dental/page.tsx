@@ -102,7 +102,7 @@ const faqs = [
   {
     question: 'what does it cost?',
     answer:
-      'pricing depends on call volume and integrations. start with a free growth audit so Prism can map the right next step.',
+      'pricing depends on call volume and integrations. join the waitlist and Prism will map the right next step when we can take on your practice.',
   },
 ]
 
@@ -389,9 +389,9 @@ export default function DentalAIAgentsPage() {
               next step
             </h2>
             <p className="mt-4 text-base text-neutral-600">
-              start with a free growth audit. we&apos;ll map your call volume,
-              identify automation opportunities, and show how an ai agent fits
-              your practice.
+              join the waitlist. when we can take on your practice, we&apos;ll
+              map your call volume, identify automation opportunities, and show
+              how an ai agent fits your practice.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link

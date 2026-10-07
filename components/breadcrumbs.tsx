@@ -12,9 +12,12 @@ type Breadcrumb = {
 export default function Breadcrumbs({
   items,
   className,
+  includeSchema = true,
 }: {
   items: Breadcrumb[]
   className?: string
+  /** Set false for placeholder trails (e.g. Suspense fallbacks) that must not emit JSON-LD. */
+  includeSchema?: boolean
 }) {
   const schemaItems = items.map((item) => ({
     name: item.name,
@@ -30,7 +33,7 @@ export default function Breadcrumbs({
 
   return (
     <>
-      <BreadcrumbSchema items={schemaItems} />
+      {includeSchema ? <BreadcrumbSchema items={schemaItems} /> : null}
       <nav
         aria-label="Breadcrumb"
         className={cn(

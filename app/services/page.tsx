@@ -7,6 +7,7 @@ import { ServiceSchema } from '@/components/schema-markup'
 import FAQSection from '@/components/faq-section'
 import ServiceIllustration from '@/components/animated/ServiceIllustration'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 type CoreService = {
   name: string
@@ -25,8 +26,8 @@ const coreServices: CoreService[] = [
     learnMoreLinks: [
       { label: 'website design services', href: '/websites' },
       {
-        label: 'start a website project',
-        href: '/get-started?service=website-design',
+        label: 'join the waitlist for websites',
+        href: WAITLIST_FOCUS_HREFS.website,
       },
     ],
     illustration: 'websites',
@@ -141,32 +142,25 @@ const coreServices: CoreService[] = [
 
 const bundleExamples = [
   {
-    name: 'Growth Dashboard Path',
-    description:
-      'Best for teams that want Prism to diagnose the clearest visible opportunities first.',
-    includes: ['Free dashboard intake', 'Light Audit', 'Clear next step'],
-    ctaLabel: 'Create Growth Dashboard',
-    ctaHref: '/pricing',
+    name: 'Website Path',
+    description: 'Best for teams whose site needs to make choosing them easy.',
+    includes: ['Custom design and development', 'Search foundations', 'Analytics'],
+    ctaLabel: 'Join the waitlist for websites',
+    ctaHref: WAITLIST_FOCUS_HREFS.website,
   },
   {
-    name: '60-Day Sprint Path',
-    description:
-      'Best for teams ready to act on a focused audit-backed growth priority.',
-    includes: [
-      'Scoped sprint',
-      'Highest-leverage opportunities',
-      'Clear tracking',
-    ],
-    ctaLabel: 'See sprint pricing',
-    ctaHref: '/pricing',
+    name: 'Content Path',
+    description: 'Best for teams that want to show up consistently with useful stories.',
+    includes: ['Planning', 'Production', 'Publishing'],
+    ctaLabel: 'Join the waitlist for content',
+    ctaHref: WAITLIST_FOCUS_HREFS.content,
   },
   {
-    name: 'Ongoing Partner Path',
-    description:
-      'Best after a sprint creates enough signal for continued growth execution.',
-    includes: ['Support level', 'Execution level', 'Premium partner level'],
-    ctaLabel: 'See partner levels',
-    ctaHref: '/pricing',
+    name: 'Ads Path',
+    description: 'Best for teams ready to reach new customers on the right channels.',
+    includes: ['Campaign build', 'Call and inquiry tracking', 'Ongoing improvements'],
+    ctaLabel: 'Join the waitlist for ads',
+    ctaHref: WAITLIST_FOCUS_HREFS.ads,
   },
 ]
 
@@ -480,10 +474,10 @@ export default function ServicesPage() {
               </Link>{' '}
               or{' '}
               <Link
-                href="/get-started?service=app-development"
+                href={WAITLIST_CTA.href}
                 className="font-semibold text-neutral-900 underline underline-offset-4"
               >
-                start an app project
+                join the waitlist
               </Link>
               .
             </div>
@@ -539,8 +533,8 @@ export default function ServicesPage() {
                 popular bundles clients launch with
               </h2>
               <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Use the get started plan to fine-tune your mix. These example
-                stacks show where most teams begin.
+                Join the waitlist with the focus that fits. These paths show
+                where most teams begin.
               </p>
             </div>
             <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -630,10 +624,10 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/waitlist"
+                  href={WAITLIST_CTA.href}
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
                 >
-                  claim your audit & plan
+                  {WAITLIST_CTA.label}
                 </Link>
                 <Link
                   href="/case-studies"

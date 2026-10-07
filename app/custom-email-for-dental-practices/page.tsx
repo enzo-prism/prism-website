@@ -171,22 +171,22 @@ export default function CustomEmailDentalPage() {
                 without losing the tools you already love.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/contact">
+                <Link href="/waitlist">
                   <Button
                     size="lg"
                     className="group rounded-full px-8 py-3 text-base"
                   >
-                    Talk to Prism
+                    {FREE_AUDIT_CTA_TEXT}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link href="/waitlist">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="outline"
                     className="rounded-full border-white/40 bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-neutral-200 hover:text-neutral-900"
                   >
-                    analyze my online presence
+                    See case studies
                   </Button>
                 </Link>
               </div>
@@ -483,13 +483,13 @@ export default function CustomEmailDentalPage() {
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Link href="/contact">
+                <Link href="/case-studies">
                   <Button
                     size="lg"
                     variant="ghost"
                     className="rounded-full border border-white/20 bg-transparent px-8 py-3 text-base text-white hover:bg-white/10"
                   >
-                    Talk to Prism
+                    See case studies
                   </Button>
                 </Link>
               </div>

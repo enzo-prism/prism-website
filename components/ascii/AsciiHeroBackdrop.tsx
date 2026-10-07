@@ -34,6 +34,7 @@ type AsciiHeroBackdropProps = {
   forceAutoplay?: boolean
   bundledFrames?: boolean
   renderMode?: 'dom' | 'canvas'
+  sourceFormat?: 'text' | 'color'
 }
 
 export default function AsciiHeroBackdrop({
@@ -57,6 +58,7 @@ export default function AsciiHeroBackdrop({
   forceAutoplay = false,
   bundledFrames = true,
   renderMode = 'dom',
+  sourceFormat,
 }: AsciiHeroBackdropProps) {
   return (
     <>
@@ -79,6 +81,7 @@ export default function AsciiHeroBackdrop({
         forceAutoplay={forceAutoplay}
         bundledFrames={bundledFrames}
         renderMode={renderMode}
+        sourceFormat={sourceFormat}
       />
       <div aria-hidden="true" className={scrimClassName} />
       <div aria-hidden="true" className={focusScrimClassName} />

@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar"
 import PixelishIcon from "@/components/pixelish/PixelishIcon"
 import { WebPageSchema } from "@/components/schema-markup"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
 
 const whyStoriesWin = [
   "Build trust faster than any ad can.",
@@ -113,10 +114,10 @@ export default function StoryPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link
-                  href="/waitlist"
+                  href={WAITLIST_FOCUS_HREFS.content}
                   className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
                 >
-                  start a story-driven strategy session
+                  join the waitlist
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                 </Link>
               </div>
@@ -307,17 +308,17 @@ export default function StoryPage() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/waitlist"
+                href={WAITLIST_FOCUS_HREFS.content}
                 className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-200"
               >
-                start a story-driven strategy session
+                join the waitlist
                 <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
               </Link>
               <Link
-                href="/contact"
+                href="/case-studies"
                 className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/60"
               >
-                talk with prism
+                see case studies
               </Link>
             </div>
           </div>

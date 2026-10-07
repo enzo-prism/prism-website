@@ -37,11 +37,12 @@ import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const CTA_PRIMARY_LABEL = FREE_AUDIT_CTA_TEXT
-const CTA_SECONDARY_LABEL = 'Start your audit'
-const CTA_PRIMARY_HREF = '/waitlist'
-const CTA_SECONDARY_HREF = '/waitlist'
+const CTA_SECONDARY_LABEL = 'See case studies'
+const CTA_PRIMARY_HREF = WAITLIST_CTA.href
+const CTA_SECONDARY_HREF = '/case-studies'
 
 const heroWhatYouGet = [
   'Dental practice website that explains services and drives calls.',
@@ -401,8 +402,8 @@ export default function DentalPracticesPage() {
                 </ul>
               </div>
               <p className="mt-8 text-sm text-neutral-600">
-                Want a calmer week and clearer numbers? Start with a free growth
-                audit from the Prism team.
+                Want a calmer week and clearer numbers? Join the waitlist for
+                the next monthly intake.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Link href={CTA_PRIMARY_HREF}>
@@ -822,13 +823,13 @@ export default function DentalPracticesPage() {
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>
-                  <Link href="/book-a-shoot">
+                  <Link href={WAITLIST_FOCUS_HREFS.content}>
                     <Button
                       size="lg"
                       variant="outline-inverted"
                       className="group rounded-full px-8 py-3 text-base"
                     >
-                      Book a shoot
+                      {WAITLIST_CTA.label}
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>

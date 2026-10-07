@@ -715,8 +715,8 @@ export default function PrismFlywheelClient() {
 
             <div className="pt-8 border-t border-neutral-800">
               <p className="text-xs text-neutral-500">
-                Limited implementation capacity. Book a call to check current
-                availability.
+                Limited implementation capacity. New spots open in each monthly
+                intake, and waitlist members get first pick.
               </p>
             </div>
           </div>
