@@ -38,7 +38,7 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
 - DOM analytics contract: `<form id="waitlist" name="waitlist">`
 - Endpoint strategy:
   1. `NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT`
-  2. Fallback `https://formspree.io/f/xjkjbpdb` (the existing Contact form, which notifies `enzo@design-prism.com`). A dedicated "Prism Waitlist" form is being created; once it exists, set the env var in Vercel Production + Preview and redeploy (`NEXT_PUBLIC_*` is inlined at build time).
+  2. Fallback `https://formspree.io/f/xvkzkqqp`, the dedicated "Prism Waitlist" form in the Prism Formspree project (notifies `enzo@design-prism.com`), created 2026-10-07. Before that, waitlist entries shared the Contact form `xjkjbpdb`. `NEXT_PUBLIC_*` is inlined at build time, so an env override needs a redeploy.
 - Success flow:
   - `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
   - On `response.ok`: `trackEvent('waitlist_submit_success')`, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` (pending mode), then `router.push('/waitlist/thank-you')`. The thank-you route is noindex and mounts `LeadSuccessTracker`, which fires `generate_lead` once (`lib/lead-values.ts` `waitlist: 120`).
@@ -53,7 +53,7 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
 | --- | --- | --- | --- |
 | `/website-intake`, `/content-intake`, `/ads-intake` | `WebsiteIntakeForm` (+ `hooks/use-intake-webmcp.ts`, also deleted) | `xrpzlkrd`, `mwlkrezj`, `mnpqgaya` | Redirect keeps the service as `?focus=` |
 | `/get-started`, `/apply` | `GetStartedForm` | `mreroojo` / dashboard intake API | `/thank-you?source=apply` (`ApplySuccessTracker`) stays as a noindex landing target |
-| `/contact` (+ `/contact-us`, `/hours`) | `ContactForm` | `xjkjbpdb` | Now the waitlist fallback endpoint |
+| `/contact` (+ `/contact-us`, `/hours`) | `ContactForm` | `xjkjbpdb` | Was the waitlist fallback until 2026-10-07 (now `xvkzkqqp`) |
 | `/free-analysis`, `/analysis-thank-you` | `FreeAnalysisForm` | — | |
 | `/aeo`, `/aeo-thank-you` | `AeoAssessmentForm` | `xldarokj` | |
 | `/book-a-shoot` (+ thank-you) | `BookAShootForm` | `xjkjkggn` | Dental photography pages now link the content waitlist |
