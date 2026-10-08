@@ -73,7 +73,7 @@ newsletter signup and a paid order were worth exactly the same. The numbers are
 relative weights, not revenue reporting; re-tune them as close-rate data
 accrues.
 
-**Purchases (legacy, inert).** Nothing calls `trackPurchase` today; `components/thank-you/PurchaseSuccessTracker.tsx` is unused (see [Legacy purchase redirect](#legacy-purchase-redirect)). When it was wired, `trackPurchase` fired GA4 `purchase` (with `items`) and, when
+**Purchases (legacy, inert).** Nothing calls `trackPurchase` today; the `PurchaseSuccessTracker` component that called it was deleted (see [Legacy purchase redirect](#legacy-purchase-redirect)). When it was wired, `trackPurchase` fired GA4 `purchase` (with `items`) and, when
 `NEXT_PUBLIC_GOOGLE_ADS_PURCHASE_LABEL` is set, a separate Ads purchase
 conversion. It is idempotent per `transaction_id` via localStorage, so a
 reloaded or re-opened confirmation URL cannot double-count.

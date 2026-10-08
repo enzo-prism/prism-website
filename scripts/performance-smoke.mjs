@@ -3,13 +3,13 @@ import { chromium, devices, firefox, webkit } from '@playwright/test'
 const baseUrl = process.env.PERF_BASE_URL ?? 'http://127.0.0.1:3301'
 
 const routes = [
-  { path: '/', heading: /each channel compounds the next\./i },
+  { path: '/', heading: /your growth team\./i },
   { path: '/about', heading: /built by enzo sison\./i },
   {
     path: '/pricing',
     heading: /a clearer way to invest in growth\./i,
   },
-  { path: '/get-started', heading: /create your growth dashboard\./i },
+  { path: '/waitlist', heading: /join the waitlist/i },
 ]
 
 const targetProfiles = [
