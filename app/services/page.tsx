@@ -37,10 +37,7 @@ const coreServices: CoreService[] = [
       'Launch support, hosting, and ongoing optimizations',
     ],
     caseStudies: [
-      {
-        label: 'Laguna Beach Dental Arts',
-        href: '/case-studies/laguna-beach-dental-arts',
-      },
+      { label: 'Olympic Bootworks', href: '/case-studies/olympic-bootworks' },
       {
         label: 'Family First Smile Care',
         href: '/case-studies/family-first-smile-care',
@@ -135,7 +132,10 @@ const coreServices: CoreService[] = [
         label: 'Practice Transitions Institute',
         href: '/case-studies/practice-transitions-institute',
       },
-      { label: 'sr4 Partners', href: '/case-studies/sr4-partners' },
+      {
+        label: 'Roseville Dental Academy',
+        href: '/case-studies/roseville-dental-academy',
+      },
     ],
   },
 ]
@@ -217,7 +217,10 @@ const proofLinks = [
     label: 'Dr. Christopher B. Wong',
     href: '/case-studies/dr-christopher-wong',
   },
-  { label: 'sr4 Partners', href: '/case-studies/sr4-partners' },
+  {
+    label: 'Roseville Dental Academy',
+    href: '/case-studies/roseville-dental-academy',
+  },
 ]
 
 const faqItems = [

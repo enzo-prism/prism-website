@@ -27,13 +27,6 @@ export const CLIENTS: ClientInfo[] = [
     category: 'dentistry',
   },
   {
-    title: 'Laguna Beach Dental Arts',
-    location: 'Laguna Beach, CA',
-    image: '/laguna-beach-dental-arts.webp',
-    href: '/case-studies/laguna-beach-dental-arts',
-    category: 'dentistry',
-  },
-  {
     title: 'Town Centre Dental',
     location: 'Brentwood, CA',
     image: '/town-centre-dental.webp',
@@ -114,24 +107,11 @@ export const CLIENTS: ClientInfo[] = [
     category: 'dentistry',
   },
   {
-    title: 'sr4 Partners',
-    location: 'Evanston, IL',
-    image: '/sr4-partners.webp',
-    website: 'https://www.sr4partners.com/',
-    href: '/case-studies/sr4-partners',
-    category: 'consulting',
-  },
-  {
     title: 'Infobell IT Solutions',
     location: 'Bengaluru, India',
     website: 'https://www.infobellit.com/',
     href: '/case-studies/infobell-it',
     category: 'it',
-  },
-  {
-    title: 'Saorsa Growth Partners',
-    location: 'San Francisco, CA',
-    category: 'consulting',
   },
   {
     title: 'We Are Saplings',

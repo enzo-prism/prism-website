@@ -99,13 +99,6 @@ const dentalPartners: DentalPartner[] = [
     url: 'https://exquisitedentistryla.com',
   },
   {
-    name: 'laguna beach dental arts',
-    location: 'laguna beach, ca',
-    doctor: 'dr. teagan willes',
-    url: '/case-studies/laguna-beach-dental-arts',
-    external: false,
-  },
-  {
     name: 'dr. christopher b. wong',
     location: 'palo alto, ca',
     doctor: 'dr. christopher b. wong',

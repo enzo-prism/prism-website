@@ -56,7 +56,7 @@ describe('case study data freshness', () => {
   })
 
   it('uses factual context when a case has no strong numerical proof', () => {
-    for (const slug of ['olympic-bootworks', 'roseville-dental-academy', 'saorsa-growth-partners']) {
+    for (const slug of ['olympic-bootworks', 'roseville-dental-academy']) {
       const slide = HOMEPAGE_CLIENT_WINS.slides.find(
         (item) => item.href === `/case-studies/${slug}`,
       )
@@ -133,11 +133,9 @@ describe('case study data freshness', () => {
     const olympicText = JSON.stringify(getStudy('olympic-bootworks'))
 
     expect(laguna.websiteUrl).toBeUndefined()
-    expect(lagunaClient?.website).toBeUndefined()
-    expect(lagunaProject).toMatchObject({
-      url: '/case-studies/laguna-beach-dental-arts',
-      external: false,
-    })
+    // Former client: archive page stays, but it is off the client/project rails.
+    expect(lagunaClient).toBeUndefined()
+    expect(lagunaProject).toBeUndefined()
     expect(fanticProject?.url).toBe('https://www.olympicbootworks.com/e-bikes')
     expect(olympicText).not.toMatch(
       /Fantic Warehouse|fanticbikewarehouse|microsite|online checkout|POS-linked|two-site/i,

@@ -250,10 +250,10 @@ export function GlobalSchemaGraph() {
       {
         '@type': 'Article',
         '@id':
-          'https://www.design-prism.com/case-studies/saorsa-growth-partners#article',
-        name: 'Saorsa Growth Partners case study',
-        url: 'https://www.design-prism.com/case-studies/saorsa-growth-partners',
-        abstract: 'A focused advisory website with concise offers, clear inquiry paths, and search and analytics instrumentation.',
+          'https://www.design-prism.com/case-studies/olympic-bootworks#article',
+        name: 'Olympic Bootworks case study',
+        url: 'https://www.design-prism.com/case-studies/olympic-bootworks',
+        abstract: 'Integrated Fantic catalog with current pricing, test-ride inquiries, and owned website and email infrastructure.',
       },
     ],
     url: 'https://www.design-prism.com',

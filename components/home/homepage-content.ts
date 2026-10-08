@@ -88,7 +88,7 @@ export const HOMEPAGE_CASE_STUDY_SLUGS = [
   'olympic-bootworks',
   'roseville-dental-academy',
   'rebellious-aging',
-  'saorsa-growth-partners',
+  'infobell-it',
   'belize-kids-foundation',
   'canary-cove',
 ] as const
@@ -170,13 +170,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       image: '/case-studies/olympic-bootworks-home-mobile.jpg',
     },
     {
-      company: 'Saorsa Growth Partners',
-      location: 'San Francisco, CA',
-      href: '/case-studies/saorsa-growth-partners',
-      contextLabel: 'Consulting',
-      image: '/case-studies/saorsa-growth-partners-home-mobile.jpg',
-    },
-    {
       company: 'Belize Kids',
       location: 'San Pedro, Belize',
       href: '/case-studies/belize-kids-foundation',
@@ -187,13 +180,6 @@ export const HOMEPAGE_CLIENT_WINS = {
         label: BELIZE_SEARCH_METRIC.label,
         source: BELIZE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       },
-    },
-    {
-      company: 'sr4 Partners',
-      location: 'Evanston, IL',
-      href: '/case-studies/sr4-partners',
-      contextLabel: 'Leadership consulting',
-      image: '/case-studies/sr4-partners-home-mobile.jpg',
     },
     {
       company: 'Rebellious Aging',
@@ -227,13 +213,6 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/exquisite-dentistry',
       contextLabel: 'Dental growth',
       image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
-    },
-    {
-      company: 'Laguna Beach Dental Arts',
-      location: 'Laguna Beach, CA',
-      href: '/case-studies/laguna-beach-dental-arts',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/laguna-beach-dental-arts-home-mobile.jpg',
     },
     {
       company: 'Roseville Dental Academy',
@@ -581,8 +560,6 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'Clear treatment information, a familiar practice story, and an easier path to an appointment.',
   'exquisite-dentistry':
     'A dental website that introduces the team, explains care, and makes appointment requests easy to find.',
-  'laguna-beach-dental-arts':
-    'A coastal dental brand presence that balances high-end care with local warmth and approachability.',
   'family-first-smile-care':
     'A family-focused practice story built to feel reassuring, organized, and easy for new patients to enter.',
   'grace-dental-santa-rosa':
@@ -599,8 +576,8 @@ export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
     'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
   'rebellious-aging':
     'A website and content home for Suzanne’s writing, community, and approach to aging.',
-  'saorsa-growth-partners':
-    'A consulting firm gained sharper positioning, credibility, and lead capture.',
+  'infobell-it':
+    'A global AI and product-engineering company gained a clearer story for enterprise buyers.',
   'belize-kids-foundation':
     'A nonprofit gained clearer program storytelling, supporter journeys, and analytics groundwork.',
   'canary-cove':
@@ -621,12 +598,6 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     artifact: 'Premium dental rebuild',
     outcome: 'Trust + booking clarity',
     proof: 'Digital presence matched the level of clinical care.',
-  },
-  'laguna-beach-dental-arts': {
-    artifact: 'Local brand system',
-    outcome: 'Premium coastal trust',
-    proof:
-      'The practice feels distinctive without making patients work to understand it.',
   },
   'family-first-smile-care': {
     artifact: 'Family care journey',
@@ -671,11 +642,11 @@ export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
     proof:
       'The brand gained a clearer home for people ready to join the movement.',
   },
-  'saorsa-growth-partners': {
-    artifact: 'Advisory positioning',
-    outcome: 'Credibility + lead capture',
+  'infobell-it': {
+    artifact: 'Capability architecture',
+    outcome: 'Enterprise buyer clarity',
     proof:
-      'The site makes the offer sharper for enterprise and founder conversations.',
+      'AI, HPC, cloud, and software products are easier to understand before the first conversation.',
   },
   'belize-kids-foundation': {
     artifact: 'Impact storytelling',
