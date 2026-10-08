@@ -145,10 +145,10 @@ const PROOF_BUILDS = [
     url: 'https://www.olympicbootworks.com',
   },
   {
-    title: 'Saorsa Growth Partners',
-    type: 'Advisory',
-    image: '/case-studies/saorsa-growth-partners-home-desktop.jpg',
-    url: 'https://www.saorsapartners.com',
+    title: 'Roseville Dental Academy',
+    type: 'Education',
+    image: '/case-studies/roseville-dental-academy-home-desktop.jpg',
+    url: 'https://www.rosevilledentalacademy.com',
   },
 ] as const
 
