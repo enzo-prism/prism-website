@@ -86,7 +86,6 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
 - `components/forms/WaitlistForm.tsx` (`/waitlist`; the only live sales form)
 - `components/forms/ReferralForm.tsx` (`/refer`; $100-per-closed-referral program)
 - Founder OS application form: deleted. `/founder-os/apply` 301-redirects to `/content`.
-- `components/forms/ScalingRoadmapForm.tsx` (Formspree `xojarwbg`; only used by `components/home/HomeRoadmapSection.tsx`, which is not mounted on any route)
 - `components/ai-website-launch/AiWebsiteLaunchForm.tsx` (legacy archival form code; the `/ai-website-launch` route redirects to `/pricing` in production and should not receive active traffic)
 - `app/scholarship/ScholarshipPageClient.tsx`
 - `app/models/client-page.tsx`
@@ -138,7 +137,7 @@ for the legacy live Stripe link and no longer fires any purchase event.
 - `/waitlist/thank-you` ([`app/waitlist/thank-you/page.tsx`](../app/waitlist/thank-you/page.tsx)) — the live sales confirmation. Mounts `LeadSuccessTracker`, which consumes the pending waitlist lead and fires `generate_lead` once.
 - `/thank-you` ([`app/thank-you/page.tsx`](../app/thank-you/page.tsx)) — legacy landing target. `?source=apply` still renders the apply state and mounts `ApplySuccessTracker` (fires only when a pending apply context exists, so direct visits never convert); other visits mount `LeadSuccessTracker`. `?source=website-build` is a leftover variant and must not promise a payment link.
 - `/pricing/thank-you` ([`app/pricing/thank-you/page.tsx`](../app/pricing/thank-you/page.tsx)) — noindex leftover. Copy must not mention the retired growth sprint.
-- `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — legacy Stripe redirect landing page for the retired `$300` website order. It no longer mounts `PurchaseSuccessTracker` (now unused) because a public `session_id` is not payment proof; see [`analytics.md`](analytics.md#legacy-purchase-redirect).
+- `/checkout/website/thank-you` ([`app/checkout/website/thank-you/page.tsx`](../app/checkout/website/thank-you/page.tsx)) — legacy Stripe redirect landing page for the retired `$300` website order. It no longer mounts a purchase tracker (`PurchaseSuccessTracker` was deleted) because a public `session_id` is not payment proof; see [`analytics.md`](analytics.md#legacy-purchase-redirect).
 - `/analysis-thank-you`, `/aeo-thank-you`, and `/book-a-shoot/thank-you` are deleted.
 
 Each page is intentionally minimal.
