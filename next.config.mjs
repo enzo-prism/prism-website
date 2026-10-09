@@ -65,8 +65,8 @@ images: {
     return [
       {
         // Baseline security headers. Permissions-Policy only switches off
-        // features the site never uses; microphone stays available for the
-        // ElevenLabs voice widget, and autoplay/fullscreen for video embeds.
+        // features the site never uses; autoplay/fullscreen stay available
+        // for video embeds.
         source: '/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },

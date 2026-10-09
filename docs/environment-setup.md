@@ -18,10 +18,6 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_WAITLIST_FORM_ENDPOINT`                 | Optional            | Formspree endpoint for the `/waitlist` form, the only live sales funnel while Prism is at capacity.       | Defaults to the dedicated "Prism Waitlist" form `https://formspree.io/f/xvkzkqqp` (notifies enzo@design-prism.com) with `_subject` `New Prism waitlist application`; it shared the Contact form `xjkjbpdb` until 2026-10-07. | `lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`                                                    |
 | `NEXT_PUBLIC_SCHOLARSHIP_FORM_ENDPOINT`              | Optional            | Override the scholarship Formspree endpoint without code changes.                                       | Defaults to `https://formspree.io/f/mwpwwjek`.                                                                                                                                                                                                     | `app/scholarship/ScholarshipPageClient.tsx`                                                                             |
 | `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT`                 | Optional            | Override the `/refer` referral-form Formspree endpoint without code changes.                            | Defaults to `https://formspree.io/f/meebpgaj`.                                                                                                                                                                                                     | `components/forms/ReferralForm.tsx`                                                                                     |
-| `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`                    | Optional            | Public agent id shared by the floating `/pricing` launcher and inline homepage Prism Guide.                        | Falls back to Prism Sales (`agent_4701kkcyc4efefkv5x4awhysjyrh`).                                                                                                                                                                                  | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx`, `components/home/HomeElevenLabsAgentSection.tsx` |
-| `NEXT_PUBLIC_ELEVENLABS_MARKDOWN_LINK_ALLOWED_HOSTS` | Optional            | Comma-separated host allowlist for clickable markdown links inside ElevenLabs responses.                | Falls back to trusted booking hosts plus Prism domains.                                                                                                                                                                                            | `lib/elevenlabs.ts`, `components/global-elevenlabs-widget.tsx`                                                          |
-| `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED`            | Optional            | Opt-in for the consent-gated inline Prism guide on the homepage.                                        | Disabled unless explicitly set truthy.                                                                                                                                                                                                             | `lib/elevenlabs-widget.ts`, `components/home/HomeElevenLabsAgentSection.tsx`                                            |
-| `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED`             | Optional            | Public kill switch for deterministic visual builds or widget debugging.                                 | Disabled only when explicitly set truthy. Leave unset for normal development and production.                                                                                                                                                       | `lib/elevenlabs.ts`, `components/elevenlabs/ElevenLabsWidget.tsx`, `components/global-elevenlabs-widget.tsx`            |
 | `INSTAGRAM_ACCESS_TOKEN`                             | Optional            | Instagram Graph API token for Prism Library.                                                            | Falls back to the seed dataset.                                                                                                                                                                                                                    | `lib/library/getLibraryPosts.ts`                                                                                        |
 | `INSTAGRAM_USER_ID`                                  | Optional            | Instagram Graph API user ID for Prism Library.                                                          | Falls back to the seed dataset.                                                                                                                                                                                                                    | `lib/library/getLibraryPosts.ts`                                                                                        |
 | `TIKTOK_ACCESS_TOKEN`                                | Optional            | TikTok Display API token for Prism Library.                                                             | Falls back to the seed dataset.                                                                                                                                                                                                                    | `lib/library/getLibraryPosts.ts`                                                                                        |
@@ -39,39 +35,8 @@ cp .env.example .env.local
 
 - Supabase credentials are not needed for the current website.
 - Resend is not part of the supported Prism website runtime.
-- The old custom sales-chat server/client stack has been removed from the supported codepath, so there are no canonical `SALES_CHAT_*` variables to configure.
+- The website assistant, homepage guide, floating launcher, and earlier custom sales-chat stack are retired. No assistant environment variables are used by the website.
 - If a future project needs a bespoke assistant or custom lead-ingest backend, document that as a new implementation instead of relying on old env names.
-
-## ElevenLabs widget notes
-
-### Global launcher
-
-- `components/global-elevenlabs-widget.tsx` mounts the stock floating launcher only on non-mobile `/pricing` (`/contact` now redirects to `/waitlist`); mobile viewports and every other public route are excluded from that global launcher. The homepage surface is owned separately below.
-- On `/waitlist`, the launcher is suppressed so the waitlist form stays focused.
-- `NEXT_PUBLIC_ELEVENLABS_AGENT_ID` names the public widget agent shared by both supported surfaces. It is not a server-side assistant key and should not be used to revive the retired custom sales-chat stack.
-- Without a saved preference, the widget should start collapsed by default.
-- Keep its z-index high enough that sticky nav and other fixed chrome never render above the visible widget when it is mounted.
-
-### Homepage guide
-
-- `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED=true` enables one bounded inline guide after the homepage audience-fit section on supported desktop browsers. The code default is off; production currently enables it explicitly.
-- The first-party consent gate plus Prism Privacy Policy and Terms of Service must remain live before the vendor runtime can load. Native ElevenLabs Terms are audited separately and do not replace this repository-owned gate.
-- The first-party disclosure and affirmative acceptance control render before access. The ElevenLabs script and custom element load only after acceptance and only when the section is near the viewport.
-- Mobile and unsupported-WebGL browsers receive a lightweight fallback link instead of the vendor runtime. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` overrides both homepage and global surfaces.
-
-### Native ElevenLabs configuration handoff
-
-- As verified on July 13, 2026, the public agent endpoint reports `terms_text`, `terms_html`, and `terms_key` as `null`. The homepage remains protected by its first-party click-through, but this does not configure the vendor's native Terms screen for the floating `/pricing` launcher.
-- Native Terms, domain restrictions, audio saving, and retention are account/agent settings. They require an authenticated ElevenLabs dashboard or API session; the public widget endpoint cannot reveal private retention settings and cannot update anything.
-- Before a native change, capture the full authenticated agent configuration and deep-merge only the intended fields. Never blind-PATCH a partial `platform_settings.widget` object because that can overwrite unrelated widget, auth, or privacy settings.
-- After a change, verify the authenticated agent response, then confirm the public endpoint exposes non-null Terms fields and visually prove that interaction is blocked until acceptance. Keep the repository-owned homepage gate even after native Terms are enabled.
-
-Read-only public check:
-
-```bash
-curl -sS https://api.us.elevenlabs.io/v1/convai/agents/agent_4701kkcyc4efefkv5x4awhysjyrh/widget \
-  | jq '.widget_config | {terms_text, terms_html, terms_key, text_only, first_message}'
-```
 
 ## Notes
 
@@ -80,7 +45,6 @@ curl -sS https://api.us.elevenlabs.io/v1/convai/agents/agent_4701kkcyc4efefkv5x4
 - Vercel Web Analytics does not require an env var. Enable it in the Vercel project dashboard and deploy. Unlike GA, it is intentionally left ungated so preview traffic is still visible in Vercel's own dashboard.
 - `NEXT_PUBLIC_BASE_URL` should always match the public domain you expect search engines and OG scrapers to use.
 - The Prism Library falls back to `content/library/seed.ts` whenever Instagram/TikTok credentials are missing.
-- `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` is the preferred way to keep visual tests deterministic or isolate non-widget page debugging.
 
 ## Verification workflow
 

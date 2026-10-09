@@ -55,12 +55,17 @@ async function expectOpenMenuGeometry(page: Page) {
   expect(result?.horizontalOverflow).toBeLessThanOrEqual(1)
   expect(result?.bodyOverflow).toBe('hidden')
   expect(result?.htmlOverflow).toBe('hidden')
-  for (const [name, href] of [['Midas', 'https://midas-ai.dev'], ['zRead', 'https://zread.dev']]) {
-    await expect(page.locator('#mobile-site-nav').getByRole('link', { name: new RegExp(name) })).toHaveAttribute('href', href)
+  const links = page.locator('#mobile-site-nav').getByRole('link')
+  await expect(links).toHaveText(['Home', 'Clients', 'Wall of Love'])
+  for (const [name, href] of [
+    ['Home', '/'],
+    ['Clients', '/case-studies'],
+    ['Wall of Love', '/wall-of-love'],
+  ]) {
+    await expect(
+      page.locator('#mobile-site-nav').getByRole('link', { name, exact: true }),
+    ).toHaveAttribute('href', href)
   }
-  await expect(page.locator('#mobile-site-nav').getByRole('link')).toHaveCount(
-    8,
-  )
 }
 
 for (const route of ['/', '/about', '/wall-of-love'] as const) {
@@ -78,7 +83,7 @@ for (const route of ['/', '/about', '/wall-of-love'] as const) {
 
     const homeLink = page
       .locator('#mobile-site-nav')
-      .getByRole('link', { name: 'home', exact: true })
+      .getByRole('link', { name: 'Home', exact: true })
     await homeLink.scrollIntoViewIfNeeded()
     await expect(homeLink).toBeVisible()
 
@@ -122,7 +127,7 @@ test('mobile menu stays bounded in landscape and closes at desktop width', async
 
   const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'case studies', exact: true })
+    .getByRole('link', { name: 'Clients', exact: true })
   await caseStudiesLink.scrollIntoViewIfNeeded()
   await expect(caseStudiesLink).toBeVisible()
 
@@ -152,7 +157,7 @@ test('a mobile navigation link remains tappable on direct-body-header pages', as
   await openMenu(page)
   const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'case studies', exact: true })
+    .getByRole('link', { name: 'Clients', exact: true })
   await caseStudiesLink.scrollIntoViewIfNeeded()
   await caseStudiesLink.click()
   await expect(page).toHaveURL(/\/case-studies$/)

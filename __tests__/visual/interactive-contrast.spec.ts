@@ -1,11 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test"
 
-async function disableElevenLabsWidget(page: Page) {
-  await page.addInitScript(() => {
-    window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
-  })
-}
-
 async function stabilizePage(page: Page) {
   await page.emulateMedia({ reducedMotion: "reduce" })
   await page.addStyleTag({
@@ -315,7 +309,6 @@ async function expectReadableStates(
 
 test.describe("interactive contrast", () => {
   test.beforeEach(async ({ page }) => {
-    await disableElevenLabsWidget(page)
     await stabilizePage(page)
   })
 

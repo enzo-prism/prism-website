@@ -17,19 +17,15 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
   - `pnpm design:sync`
   - or the combined `pnpm design:check`
 - For `/waitlist` changes, run `pnpm exec jest __tests__/components/WaitlistForm.test.tsx __tests__/website-cta-map.test.ts __tests__/pricing-model.test.ts`.
-- For public assistant-surface changes, run:
-  - `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx __tests__/lib/elevenlabs.test.ts --runInBand`
-  - `pnpm test:visual:widget`
 - For pricing-sensitive changes, run:
   - `pnpm verify:pricing-consistency`
-- For non-chat changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
+- For changes touching shared infrastructure, update and run the nearest smoke tests in the relevant package (`pnpm test`, `pnpm test:visual:locked`, etc.) before merging.
 - Run `pnpm test:visual:locked` before merging changes that touch the UI of `/`, `/about`, `/pricing`, or `/waitlist` (screenshot-locked routes).
-- `pnpm test:visual:locked` now builds with `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true` and boots an isolated `next start` server on port `3300`, so the locked route snapshots stay focused on first-party page chrome instead of the live third-party ElevenLabs overlay or whichever localhost server happens to already be running. The CI job is a blocking deploy gate (with CI-only retries); local UI work should run it whenever locked routes are affected. `pnpm test:visual:widget` does the inverse: it forces a fresh production build without the kill switch so the real widget behavior check never reuses a stale disabled bundle.
+- `pnpm test:visual:locked` builds and boots an isolated `next start` server on port `3300`. The CI job is a blocking deploy gate (with CI-only retries); run it whenever locked routes are affected.
 - For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/waitlist` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
 - Run `pnpm test:visual:animations` when you change the looping hero motion on `/`, `/case-studies`, or `/wall-of-love`. It verifies the real loops advance on Chromium, Firefox, and WebKit across desktop plus mobile emulation.
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
-- Run `pnpm test:visual:widget` when changing the route-aware ElevenLabs launcher behavior.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
 
 ### Homepage refresh checklist
@@ -43,35 +39,12 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - Keep the reduced-motion fallback pinned to the static ASCII frame so visual tests remain deterministic, and keep the shared navbar/footer consistent across the homepage and inner routes.
 - The client deck directly below the hero is broad business proof, not a dental photo gallery. Its card data lives in `HOMEPAGE_CLIENT_WINS`; the wrapper is still named `HomeDentistWinsSection` for compatibility, but the live component is `components/home/HomeClientCoverFlow.tsx`, a mixed-client 3D Cover Flow.
 - Cover Flow cards render **real client-website screenshots** (each slide's `image`, a `public/case-studies/<slug>-home-mobile.jpg` capture). Motion is a restrained, input-led deck: one shared camera, a one-time back-to-front fan-open entrance, hover lift + neighbour yield, damped pointer parallax, a single `cubic-bezier(0.22,1,0.36,1)` easing, and **no autoplay**. Touch (`isTouch = useMobile('(hover: none), (pointer: coarse)')`) drops parallax/tilt/hover, uses one static shadow, mounts fewer covers with a tighter fan, drops the on-card CTA pill, and swipes 1:1 (casual swipe = one card, flick = more). Keep `prefers-reduced-motion` on the flat scroll-snap fallback. The active cover links to the case study; do not reintroduce the retired abstract-visual / `data-client-win-abstract` / color-toggle behavior. New or refreshed mobile screenshots are captured with `node scripts/capture-case-study-screenshots.mjs --force --mobile-only <slug>`.
-- ElevenLabs renders markdown in agent replies, but external links only become clickable when the host is allowlisted on the widget. Keep `markdown-link-allowed-hosts` in sync with whatever calendar or booking destination the agent is instructed to share, rely on the documented `markdown-link-include-www="true"` behavior instead of duplicating `www` hosts in code, and keep `markdown-link-allow-http="false"` so the public widget never emits insecure links.
-- Keep the stock widget aligned with the official docs: wrapper-only layout, documented attributes, and dashboard-level styling.
-- The embed runtime is deliberately pinned to `@elevenlabs/convai-widget-embed@0.14.10`. Treat a version bump as an assistant-surface change and re-run focused Jest, the widget Playwright suite, and production-bundle visual checks.
-- Avoid deep geometry overrides inside the widget Shadow DOM. ElevenLabs treats the embed as an opinionated surface; keep customization focused on supported attributes and host-level layering, and move heavier design customization to the official SDK/UI layer if we need a bespoke chat surface later.
-- The stock embed runtime forces its own host positioning, so `components/elevenlabs/ElevenLabsWidget.tsx` now re-applies only the host-level styles we actually need after the custom element mounts. Use that path for safe layer fixes like homepage section scoping or inner-page z-index elevation; do not reach into vendor shadow children for layout control.
-- The public agent id resolves via `lib/elevenlabs.ts` and can be overridden with `NEXT_PUBLIC_ELEVENLABS_AGENT_ID`.
-- `components/global-elevenlabs-widget.tsx` renders the stock floating widget only on non-mobile `/pricing`; every other route, including `/waitlist`, remains widget-free. The homepage separately owns one inline, feature-flagged guide after `HomeFitSection`. It must present the AI/recording notice and capture affirmative acceptance before loading the vendor script or custom element; mobile and unsupported-WebGL browsers receive a first-party fallback. With no saved preference, the floating launcher should stay closed by default.
-- The floating host should stay at a top-most z-index so nav, skip links, charts, and other fixed site chrome never render above the expanded widget.
-- `components/runtime-client-shell.tsx` now keeps route-surface setup plus the core GA page/form listener layer on the critical path, while `components/runtime-deferred-features.tsx` still defers heavier client-only work like monitors, Vercel Analytics, and the public widget bundle during browser idle time.
-- `NEXT_PUBLIC_ELEVENLABS_HOMEPAGE_ENABLED` is default-off in code, explicitly enabled in production, and independently controls the homepage inline guide. `NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED` is the global debug/test kill switch and overrides both inline and floating surfaces.
-- The public agent endpoint currently reports native `terms_text`, `terms_html`, and `terms_key` as `null`. The homepage first-party gate therefore remains mandatory. Native Terms, domain restrictions, audio saving, and retention require authenticated dashboard/API reads before any narrowly scoped update; never infer private retention state from the public endpoint or blind-PATCH a partial widget configuration.
-- `lib/elevenlabs.ts` retains richer legacy client-tool helpers, but the exploratory `PrismElevenLabsPanel` component has been removed; the stock widget is the only supported assistant implementation across the floating and inline surfaces. Do not rebuild bespoke panel UI casually when the product goal is "look and behave like the official widget."
-- In dev, the stock widget may log `[ConversationalAI] Cannot fetch config for agent ... signal is aborted without reason` during Fast Refresh or unmount cleanup. The current ElevenLabs bundle aborts its own config fetch on cleanup, so treat that message as harmless if the widget still renders and `pnpm build` + `pnpm start` are clean.
+- `components/runtime-client-shell.tsx` mounts route-surface setup, `AnalyticsProvider`, and Vercel Analytics immediately, then loads `components/runtime-deferred-features.tsx` during browser idle time for monitors, error/scroll tracking, and toaster wiring.
 - If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
-- If you change the homepage or global widget interaction model, re-run `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
-- For z-index, scrolling, or layout bugs involving the stock widget, validate against a fresh production bundle: `pnpm build && pnpm start -p <port>`. `next start` serves the last production build on disk, and the ElevenLabs custom element can behave differently from `pnpm dev` / Fast Refresh.
-- The fastest runtime sanity checks are:
-  - homepage: no vendor script or widget on first load; with the homepage flag enabled, the inline widget may mount only after desktop/WebGL checks, near-viewport activation, and affirmative acceptance
-  - `/waitlist`, `/ig`, `/tiktok`, blog posts, and other non-assistant routes: no public ElevenLabs script or widget should mount
-  - non-mobile `/pricing`: widget host should compute to `position: fixed` with the elevated global z-index and remain topmost in the visible widget region after scrolling
-  - mobile `/pricing`: no public ElevenLabs script or floating widget should mount
-  - default first-load behavior: widget should mount collapsed unless the user has already saved an explicit preference
-- The stock widget does not expose a documented "full-screen page-blocking modal" mode. Treat the visible widget surface as the layering boundary we control today; if product wants a true viewport scrim that blocks all underlying content, that is a migration conversation to ElevenLabs' official SDK/UI layer rather than a Shadow DOM styling patch.
 
-### Retired custom sales-chat note
+### Retired website assistant
 
-- The old custom `SalesChat` client, `/api/chat`, `/api/sales-chat/*`, and related orchestration helpers are no longer part of the supported Prism website stack.
-- The supported assistant experience uses the stock ElevenLabs widget in two forms: floating on eligible `/pricing` pages, and consent-gated inline on the homepage.
-- If product ever needs a custom assistant again, treat it as a fresh implementation with new docs, tests, and contracts instead of assuming the pre-2026 deterministic chat backend still exists.
+The homepage guide, floating launcher, and all website assistant runtime/configuration were removed on 2026-10-09. The earlier custom sales-chat stack remains retired.
 
 ## Styling Pipeline
 
@@ -242,7 +215,7 @@ The navbar dynamically sets a CSS variable (`--prism-header-height`) so other st
 
 - `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
 - The current chrome language is minimal black surfaces, white/off-white type, and restrained tactile hover/focus states. Subtle transforms/glow are okay on the logo mark when they respect reduced motion and do not change layout width; keep nav text hover states stable and readable.
-- Primary nav data lives in `lib/services.ts` and `lib/products.ts`: Home, a Services dropdown (website / content / ads), a Products dropdown (Midas, zRead), then case studies and wall of love. Pricing, Dental OS, and Infinity are footer/`/pricing` only. The dropdown panels are out of flow so they never rewrite `--prism-header-height`. The mobile sheet is home | services | products | proof (8 links, no nested dropdown, no index prefixes). `/pricing` is intentionally NOT in the top nav. When you add or remove an item, verify the desktop rail still fits at the `lg` (1024px) takeover width, the mobile sheet, locked route snapshots, and a representative case study detail page.
+- Header navigation uses `NAV_ITEMS` in `lib/constants.ts`: exactly **Home** (`/`), **Clients** (`/case-studies`), and **Wall of Love** (`/wall-of-love`), in that order on desktop and mobile. All three are direct links. Services and Products remain in the footer and homepage sections; there are no header dropdowns or header CTA. Verify the desktop rail at `lg` (1024px), the mobile sheet, locked snapshots, and a representative case-study detail page. Preserve stable `--prism-header-height`, scroll locking, prior inert state, first-link focus, Escape focus return, and route-close.
 - The footer leads with one CTA, `Join the waitlist` (`WAITLIST_CTA` via `TrackedLink`), under a short capacity line, plus a `Refer a friend ($100)` link to `/refer` in the Company column. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
 
 ## Deployment

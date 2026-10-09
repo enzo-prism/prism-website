@@ -1,5 +1,4 @@
 // Google Analytics configuration
-import { PRISM_SERVICES } from "@/lib/services"
 
 const FALLBACK_GA_MEASUREMENT_ID = "G-P9VY77PRC0"
 
@@ -96,24 +95,12 @@ export const FREE_AUDIT_CTA_TEXT = "Join the waitlist"
 
 export type NavItem = { label: string; href: string }
 
-// Public chrome (2026-08-31): Home, Services dropdown (website / content / ads),
-// then case studies and wall of love. Contact, pricing, Dental OS, and Infinity
-// stay reachable from the footer and /pricing. No CTA button in the header.
-export const HOME_NAV_ITEM: NavItem = { label: "home", href: "/" }
-
-export const SERVICE_NAV_ITEMS: NavItem[] = PRISM_SERVICES.map(
-  ({ label, href }) => ({ label, href }),
-)
-
-export const PROOF_NAV_ITEMS: NavItem[] = [
-  { label: "case studies", href: "/case-studies" },
-  { label: "wall of love", href: "/wall-of-love" },
-]
-
+// Client-focused header: shared by desktop and mobile. Services and products
+// remain available in the homepage sections and footer.
 export const NAV_ITEMS: NavItem[] = [
-  HOME_NAV_ITEM,
-  ...SERVICE_NAV_ITEMS,
-  ...PROOF_NAV_ITEMS,
+  { label: 'Home', href: '/' },
+  { label: 'Clients', href: '/case-studies' },
+  { label: 'Wall of Love', href: '/wall-of-love' },
 ]
 
 /** @deprecated Contact lives in the footer. Kept for any leftover imports. */

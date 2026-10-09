@@ -7,7 +7,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Privacy'
 const PAGE_DESCRIPTION =
-  'Learn how Prism collects, uses, and protects personal information across our website, AI guide, and services.'
+  'Learn how Prism collects, uses, and protects personal information across our website and services.'
 const CANONICAL_URL = 'https://www.design-prism.com/privacy-policy'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -18,7 +18,7 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = 'July 13, 2026'
+  const lastUpdated = 'October 9, 2026'
 
   const linkClassName =
     'font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border'
@@ -54,7 +54,6 @@ export default function PrivacyPolicyPage() {
                   in accordance with this policy.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   information we collect
@@ -111,50 +110,6 @@ export default function PrivacyPolicyPage() {
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  AI guide conversations
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  Prism offers an AI guide powered by ElevenLabs and third-party
-                  large language model providers. The guide is an AI system, not
-                  a human. Before a conversation begins, we provide a notice and
-                  ask you to agree to the recording and processing described
-                  here.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  If you use the guide by voice or text, the information
-                  collected may include your audio, a transcript of the
-                  conversation, the messages and other information you choose to
-                  provide, and technical information needed to operate the
-                  conversation. Prism, ElevenLabs, and their affiliates,
-                  subcontractors, service providers, and third-party model
-                  providers may record, view, process, store, and share these
-                  communications to provide and support the guide, improve
-                  products and services, train machine learning models, maintain
-                  safety, and comply with applicable law.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  ElevenLabs provides controls for audio saving and separate
-                  retention periods for audio recordings and conversation
-                  transcripts. The retention period that applies may depend on
-                  the settings active when you use the guide, operational needs,
-                  and legal requirements. We do not promise a specific retention
-                  period in this policy.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  Do not share payment card or bank account numbers,
-                  government-issued identifiers, health information, passwords,
-                  or other sensitive or regulated information with the guide.
-                  For more information about acceptable use and the limits of
-                  the guide, please review our{' '}
-                  <Link href="/terms-of-service" className={linkClassName}>
-                    Terms of Service
-                  </Link>
-                  .
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   how we use your information
                 </h2>
                 <p className="text-gray-600 mb-4">
@@ -171,7 +126,6 @@ export default function PrivacyPolicyPage() {
                   <li>Comply with legal obligations</li>
                 </ul>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   cookies and tracking technologies
@@ -202,7 +156,6 @@ export default function PrivacyPolicyPage() {
                   our website.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   sharing your information
@@ -231,7 +184,6 @@ export default function PrivacyPolicyPage() {
                   </li>
                 </ul>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   data security
@@ -245,7 +197,6 @@ export default function PrivacyPolicyPage() {
                   absolute security.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   your rights and choices
@@ -281,7 +232,6 @@ export default function PrivacyPolicyPage() {
                   information provided below.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   children's privacy
@@ -294,7 +244,6 @@ export default function PrivacyPolicyPage() {
                   we will take steps to delete such information.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   international data transfers
@@ -308,7 +257,6 @@ export default function PrivacyPolicyPage() {
                   your country of residence.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   third-party links
@@ -320,7 +268,6 @@ export default function PrivacyPolicyPage() {
                   policies of any third-party sites you visit.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   changes to this privacy policy
@@ -333,7 +280,6 @@ export default function PrivacyPolicyPage() {
                   changes.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                   contact us

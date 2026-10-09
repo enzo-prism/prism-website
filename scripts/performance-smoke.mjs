@@ -116,10 +116,6 @@ async function measureRoute(profile, route) {
     }
   })
 
-  await page.addInitScript(() => {
-    window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
-  })
-
   const navigationStartedAt = Date.now()
 
   await page.goto(`${baseUrl}${route.path}`, { waitUntil: 'domcontentloaded' })

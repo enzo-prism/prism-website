@@ -7,11 +7,8 @@ import { createPortal } from 'react-dom'
 
 import Breadcrumbs from '@/components/breadcrumbs'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
-import { HOME_NAV_ITEM, PROOF_NAV_ITEMS } from '@/lib/constants'
+import { NAV_ITEMS } from '@/lib/constants'
 import type { NavItem } from '@/lib/constants'
-import { PRISM_SERVICES, isServicePath } from '@/lib/services'
-import { PRISM_PRODUCTS } from '@/lib/products'
-import type { PrismServiceId } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 import PixelishIcon from '@/components/pixelish/PixelishIcon'
@@ -27,20 +24,8 @@ type BreadcrumbItem = {
 type NavVariant = 'desktop' | 'mobile'
 
 const MOBILE_NAV_ID = 'mobile-site-nav'
-type DropdownId = 'services' | 'products'
-
-const SERVICE_MENU_ICONS: Record<PrismServiceId, string> = {
-  website: '/pixelish/browser.svg',
-  content: '/pixelish/device-camera.svg',
-  ads: '/pixelish/graph-chart-high.svg',
-}
 const NAV_ICONS: Record<string, string> = {
-  'https://midas-ai.dev': '/pixelish/command.svg',
-  'https://zread.dev': '/pixelish/device-tablet.svg',
   '/': '/pixelish/home.svg',
-  '/websites': SERVICE_MENU_ICONS.website,
-  '/content': SERVICE_MENU_ICONS.content,
-  '/ads': SERVICE_MENU_ICONS.ads,
   '/case-studies': '/pixelish/folder.svg',
   '/wall-of-love': '/pixelish/emoji-heart.svg',
 }
@@ -51,9 +36,6 @@ const DESKTOP_LINK_CLASSES =
   'group/row relative inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30'
 const MOBILE_LINK_CLASSES =
   'group/row flex min-h-14 items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 [@media(max-height:500px)]:min-h-[44px] [@media(max-height:500px)]:py-2'
-const MOBILE_EYEBROW_CLASSES =
-  'px-4 pb-1.5 pt-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#b8afa2]'
-
 function getCaseStudyBreadcrumbs(
   pathname: string | null,
 ): BreadcrumbItem[] | null {
@@ -132,8 +114,6 @@ function NavbarLinks({
     <>
       {items.map((item, index) => {
         const active = isNavItemActive(pathname, item.href)
-        const service = PRISM_SERVICES.find((entry) => entry.href === item.href) ??
-          PRISM_PRODUCTS.find((entry) => entry.href === item.href)
 
         return (
           <Link
@@ -171,11 +151,6 @@ function NavbarLinks({
               </span>
               <span className="flex flex-col gap-1">
                 <span>{item.label}</span>
-                {variant === 'mobile' && service ? (
-                  <span className="font-sans text-xs font-normal normal-case tracking-normal text-[#b8afa2] [@media(max-height:500px)]:hidden">
-                    {service.navDescription}
-                  </span>
-                ) : null}
               </span>
             </span>
             {variant === 'mobile' ? <MobileRowArrow active={active} /> : null}
@@ -186,231 +161,6 @@ function NavbarLinks({
   )
 }
 
-function DesktopDropdown({
-  pathname,
-  onNavigate,
-  kind,
-  open,
-  setOpen,
-}: {
-  pathname: string | null
-  onNavigate: (label: string, href: string) => void
-  kind: DropdownId
-  open: boolean
-  setOpen: (open: boolean) => void
-}) {
-  const wrapRef = useRef<HTMLDivElement | null>(null)
-  const triggerRef = useRef<HTMLButtonElement | null>(null)
-  const closeTimer = useRef<number | null>(null)
-  const openedByHoverRef = useRef(false)
-  const serviceActive = kind === 'services' && isServicePath(pathname)
-  const menuId = `${kind}-menu`
-  const items = kind === 'services'
-    ? PRISM_SERVICES.map((service) => ({ ...service, icon: SERVICE_MENU_ICONS[service.id] }))
-    : PRISM_PRODUCTS.map((product) => ({ ...product, label: product.name, icon: NAV_ICONS[product.href] }))
-
-  const clearCloseTimer = () => {
-    if (closeTimer.current) {
-      window.clearTimeout(closeTimer.current)
-      closeTimer.current = null
-    }
-  }
-
-  const scheduleClose = () => {
-    clearCloseTimer()
-    closeTimer.current = window.setTimeout(() => setOpen(false), 120)
-  }
-
-  useEffect(() => {
-    if (!open) return
-
-    const handlePointer = (event: MouseEvent) => {
-      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false)
-    }
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        openedByHoverRef.current = false
-        setOpen(false)
-        triggerRef.current?.focus()
-      }
-    }
-
-    document.addEventListener('mousedown', handlePointer)
-    document.addEventListener('keydown', handleKey)
-    return () => {
-      document.removeEventListener('mousedown', handlePointer)
-      document.removeEventListener('keydown', handleKey)
-    }
-  }, [open, setOpen])
-
-  useEffect(() => () => clearCloseTimer(), [])
-
-  return (
-    <div
-      ref={wrapRef}
-      className="relative"
-      onMouseEnter={() => {
-        clearCloseTimer()
-        if (!open) openedByHoverRef.current = true
-        setOpen(true)
-      }}
-      onMouseLeave={scheduleClose}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-          openedByHoverRef.current = false
-          setOpen(false)
-        }
-      }}
-    >
-      <button
-        ref={triggerRef}
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="true"
-        aria-controls={menuId}
-        className={getNavItemClasses(serviceActive || open, 'desktop')}
-        onClick={() => {
-          clearCloseTimer()
-          if (openedByHoverRef.current) {
-            openedByHoverRef.current = false
-            setOpen(true)
-          } else {
-            setOpen(!open)
-          }
-        }}
-      >
-        <PixelishIcon
-          src={kind === 'services' ? '/pixelish/browser.svg' : '/pixelish/command.svg'}
-          alt=""
-          aria-hidden="true"
-          size={14}
-          className="opacity-60"
-        />
-        {kind}
-        <span
-          aria-hidden="true"
-          className={cn(
-            'inline-block text-[9px] motion-safe:transition-transform duration-200',
-            open && 'rotate-180',
-          )}
-        >
-          ▾
-        </span>
-      </button>
-      {open ? (
-        <div
-          id={menuId}
-          className="absolute left-0 top-[calc(100%+1rem)] z-[60] w-80 rounded-xl border border-white/12 bg-black p-2 shadow-2xl motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both]"
-        >
-          <p className="px-4 pb-3 pt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#8f877b]">
-            {kind === 'services' ? 'Three ways to move forward' : 'Built by Prism. Free for everyone.'}
-          </p>
-          {items.map((service) => {
-            const active = isNavItemActive(pathname, service.href)
-            const serviceIcon = service.icon
-            return (
-              <Link
-                key={service.href}
-                href={service.href}
-                aria-label={service.label}
-                aria-current={active ? 'page' : undefined}
-                onClick={() => {
-                  setOpen(false)
-                  onNavigate(service.label, service.href)
-                }}
-                className={cn(
-                  'group/row flex items-center gap-3 rounded-lg px-4 py-4 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30',
-                  active
-                    ? 'bg-white/[0.08] text-[#f5f0e8]'
-                    : 'text-[#f5f0e8] hover:bg-white/[0.05]',
-                )}
-              >
-                <span
-                  aria-hidden="true"
-                  className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-white/[0.04]"
-                >
-                  <PixelishIcon src={serviceIcon} alt="" size={20} />
-                </span>
-                <span className="flex min-w-0 flex-col">
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
-                    {service.label}
-                  </span>
-                  <span className="mt-1 font-sans text-[0.82rem] font-normal normal-case tracking-[-0.01em] text-[#b8afa2]">
-                    {service.navDescription}
-                  </span>
-                </span>
-                <span className="ml-auto">
-                  <MobileRowArrow active={active} />
-                </span>
-              </Link>
-            )
-          })}
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-function MobileNavGroups({
-  pathname,
-  onNavigate,
-}: {
-  pathname: string | null
-  onNavigate: (label: string, href: string) => void
-}) {
-  return (
-    <div className="flex flex-col">
-      <div className="pb-2 pt-1">
-        <div className="flex flex-col gap-1">
-          <NavbarLinks
-            items={[HOME_NAV_ITEM]}
-            pathname={pathname}
-            variant="mobile"
-            onNavigate={onNavigate}
-            startIndex={0}
-          />
-        </div>
-      </div>
-      <div className="border-t border-white/14 py-2">
-        <p className={MOBILE_EYEBROW_CLASSES}>Services</p>
-        <div className="flex flex-col gap-1">
-          <NavbarLinks
-            items={PRISM_SERVICES.map(({ label, href }) => ({ label, href }))}
-            pathname={pathname}
-            variant="mobile"
-            onNavigate={onNavigate}
-            startIndex={1}
-          />
-        </div>
-      </div>
-      <div className="border-t border-white/14 py-2">
-        <p className={MOBILE_EYEBROW_CLASSES}>Products</p>
-        <div className="flex flex-col gap-1">
-          <NavbarLinks
-            items={PRISM_PRODUCTS.map(({ name, href }) => ({ label: name, href }))}
-            pathname={pathname}
-            variant="mobile"
-            onNavigate={onNavigate}
-            startIndex={4}
-          />
-        </div>
-      </div>
-      <div className="border-t border-white/14 py-2">
-        <p className={MOBILE_EYEBROW_CLASSES}>Proof</p>
-        <div className="flex flex-col gap-1">
-          <NavbarLinks
-            items={[...PROOF_NAV_ITEMS]}
-            pathname={pathname}
-            variant="mobile"
-            onNavigate={onNavigate}
-            startIndex={6}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function Navbar() {
   const pathname = usePathname()
   const headerRef = useRef<HTMLElement | null>(null)
@@ -418,13 +168,11 @@ export default function Navbar() {
   const menuButtonRef = useRef<HTMLButtonElement | null>(null)
   const restoreFocusAfterCloseRef = useRef(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<DropdownId | null>(null)
   const isHome = pathname === '/'
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
 
   useEffect(() => {
     setIsMobileMenuOpen(false)
-    setOpenDropdown(null)
   }, [pathname])
 
   useEffect(() => {
@@ -552,7 +300,14 @@ export default function Navbar() {
         aria-label="Mobile"
         className="container-px-safe container relative mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2"
       >
-        <MobileNavGroups pathname={pathname} onNavigate={handleNavigate} />
+        <div className="flex flex-col gap-1">
+          <NavbarLinks
+            items={NAV_ITEMS}
+            pathname={pathname}
+            variant="mobile"
+            onNavigate={handleNavigate}
+          />
+        </div>
       </nav>
     </div>
   ) : null
@@ -626,27 +381,7 @@ export default function Navbar() {
                 className="hidden items-center gap-1 rounded-full border border-white/12 bg-white/[0.03] p-1 lg:flex"
               >
                 <NavbarLinks
-                  items={[HOME_NAV_ITEM]}
-                  pathname={pathname}
-                  variant="desktop"
-                  onNavigate={handleNavigate}
-                />
-                {(['services', 'products'] as const).map((kind) => (
-                  <DesktopDropdown
-                    key={kind}
-                    kind={kind}
-                    pathname={pathname}
-                    onNavigate={handleNavigate}
-                    open={openDropdown === kind}
-                    setOpen={(open) => setOpenDropdown((current) => open ? kind : current === kind ? null : current)}
-                  />
-                ))}
-                <span
-                  aria-hidden="true"
-                  className="mx-1.5 h-4 w-px shrink-0 bg-white/14 xl:mx-2"
-                />
-                <NavbarLinks
-                  items={PROOF_NAV_ITEMS}
+                  items={NAV_ITEMS}
                   pathname={pathname}
                   variant="desktop"
                   onNavigate={handleNavigate}

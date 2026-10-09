@@ -7,7 +7,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Terms'
 const PAGE_DESCRIPTION =
-  'Read the terms for using Prism website, AI guide, app, design, SEO, advertising, and digital marketing services.'
+  'Read the terms for using Prism website, app, design, SEO, advertising, and digital marketing services.'
 const CANONICAL_URL = 'https://www.design-prism.com/terms-of-service'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -18,7 +18,7 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default function TermsOfServicePage() {
-  const lastUpdated = 'July 13, 2026'
+  const lastUpdated = 'October 9, 2026'
 
   const linkClassName =
     'font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border'
@@ -336,66 +336,6 @@ export default function TermsOfServicePage() {
                 </p>
               </section>
 
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                  16. Prism AI guide
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  Prism may provide an AI guide powered by ElevenLabs and
-                  third-party large language model providers. The guide is an AI
-                  system, not a human. Conversations may be recorded and shared
-                  with ElevenLabs and its providers as described in our{' '}
-                  <Link href="/privacy-policy" className={linkClassName}>
-                    Privacy Policy
-                  </Link>
-                  . You must accept the notice shown before starting a
-                  conversation. By accepting that notice and each time you use
-                  the guide, you agree to the recording, processing, and sharing
-                  described there and in these Terms.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  When you use the guide, you agree that:
-                </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
-                  <li>
-                    You will use it lawfully and will not submit content that
-                    infringes another person's rights
-                  </li>
-                  <li>
-                    You will not attempt to reverse engineer, extract, copy,
-                    interfere with, misuse, or bypass safeguards in the guide,
-                    its models, or its providers' services
-                  </li>
-                  <li>
-                    You will not use the guide to develop a competing foundation
-                    model or other large-scale model
-                  </li>
-                  <li>
-                    You will not provide payment card or bank account numbers,
-                    government-issued identifiers, protected health information,
-                    passwords, or other sensitive or regulated data
-                  </li>
-                  <li>
-                    You grant ElevenLabs, its affiliates, and its subcontractors
-                    a non-exclusive right to process and use the information you
-                    provide as needed to deliver and support the guide
-                  </li>
-                </ul>
-                <p className="text-gray-600 mb-4">
-                  Prism is not ElevenLabs' agent, partner, or joint venturer.
-                  ElevenLabs is an intended third-party beneficiary of this
-                  section and may enforce the terms that protect its services.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  The guide's responses are for general informational purposes
-                  only. They may be incomplete, inaccurate, or out of date and
-                  do not constitute medical, legal, financial, accounting,
-                  investment, psychological, or other professional advice. Do
-                  not rely on the guide as a substitute for advice from a
-                  qualified professional or for decisions that require
-                  professional judgment.
-                </p>
-              </section>
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold text-gray-900 mb-4">

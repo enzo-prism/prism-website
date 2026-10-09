@@ -13,12 +13,6 @@ async function seedDeterministicRandom(page: Page) {
   })
 }
 
-async function disableElevenLabsWidget(page: Page) {
-  await page.addInitScript(() => {
-    window.__PRISM_DISABLE_ELEVENLABS_WIDGET__ = true
-  })
-}
-
 /**
  * The intake month renders from the visitor's clock, so without a freeze the
  * locked screenshots would drift every month ("October" becomes "November").
@@ -88,6 +82,10 @@ async function stabilizePage(page: Page) {
 
 async function expectLockedRouteSnapshotSurface(page: Page) {
   await expect(page.locator('elevenlabs-convai')).toHaveCount(0)
+  await expect(
+    page.locator('script[src*="@elevenlabs/convai-widget-embed"]'),
+  ).toHaveCount(0)
+  await expect(page.locator('#prism-guide')).toHaveCount(0)
 }
 
 async function stabilizeDesktopSectionHeight(
@@ -180,7 +178,6 @@ for (const route of lockedRoutes) {
       'Rendered copy is identical across projects; one pass is enough.',
     )
 
-    await disableElevenLabsWidget(page)
     await freezeIntakeMonth(page)
     await page.goto(route.path, { waitUntil: 'domcontentloaded' })
     await expect(
@@ -208,7 +205,6 @@ for (const route of lockedRoutes) {
   test(`${route.name} UI snapshot stays stable`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await seedDeterministicRandom(page)
-    await disableElevenLabsWidget(page)
     await freezeIntakeMonth(page)
     await page.goto(route.path, { waitUntil: 'domcontentloaded' })
     await page.waitForTimeout(250)
@@ -232,7 +228,6 @@ for (const route of lockedRoutes) {
 test('home fit section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
@@ -260,7 +255,6 @@ test('home fit section snapshot stays stable', async ({ page }) => {
 test('home problem section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
@@ -292,7 +286,6 @@ test('home problem section snapshot stays stable', async ({ page }) => {
 test('home services section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
@@ -323,7 +316,6 @@ test('home services section snapshot stays stable', async ({ page }) => {
 test('home proof section snapshot stays stable', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
@@ -359,7 +351,6 @@ test('home fit and service cards stay contained across responsive breakpoints', 
     'Manual breakpoint loop already covers mobile and tablet sizes.',
   )
 
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
 
   const breakpoints = [
@@ -541,7 +532,6 @@ test('home growth ramp values stay contained across responsive breakpoints', asy
     'Manual breakpoint loop already covers mobile and tablet sizes.',
   )
 
-  await disableElevenLabsWidget(page)
   await freezeIntakeMonth(page)
 
   const breakpoints = [

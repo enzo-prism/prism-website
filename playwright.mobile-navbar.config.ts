@@ -4,8 +4,6 @@ const port = process.env.PLAYWRIGHT_PORT
   ? Number(process.env.PLAYWRIGHT_PORT)
   : 3330
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`
-const elevenLabsWidgetDisabled =
-  process.env.NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED ?? 'true'
 
 export default defineConfig({
   testDir: '__tests__/visual',
@@ -35,10 +33,6 @@ export default defineConfig({
   ],
   webServer: {
     command: `pnpm start -p ${port}`,
-    env: {
-      ...process.env,
-      NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED: elevenLabsWidgetDisabled,
-    },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     url: baseURL,

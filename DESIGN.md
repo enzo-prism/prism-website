@@ -207,7 +207,7 @@ When working on UI, these files are the fastest way to understand the live syste
 - `app/globals.css` for the global canvas, type tokens, dark mode tokens, and page-wide atmosphere
 - `tailwind.config.cjs` for mapped theme tokens and typography scale
 - `components/core-route/CoreRoutePrimitives.tsx` for the shared section, panel, and CTA primitives used across the core routes
-- `lib/services.ts` for the three public services (Website, Content, Ads) that drive the header dropdown and homepage offers
+- `lib/services.ts` for the three public services (Website, Content, Ads) used in homepage offers and footer links; `lib/constants.ts` `NAV_ITEMS` for the three direct header links
 - `components/navbar.tsx` and `components/footer.tsx` for the shared chrome language
 - `components/home/homepage-content.ts` for the current homepage copy structure and content blocks
 - `components/home/*` for homepage-specific composition patterns
@@ -392,8 +392,10 @@ The navbar should stay minimal:
 
 It should feel like part of the page shell, not a separate app chrome layer.
 
-The navigation groups Home, Services (website / content / ads), Case studies,
-and Wall of love into one outlined capsule rail on desktop. Small Pixelish
+The navigation shows exactly Home (`/`), Clients (`/case-studies`), and
+Wall of Love (`/wall-of-love`) in one outlined capsule rail on desktop.
+Mobile uses the same three direct links in the same order. Services and
+Products remain in footer and homepage sections. Small Pixelish
 icons make each destination recognizable; the active destination uses a quiet
 ivory wash. The brand pairs the triangle mark with a larger sans wordmark and
 a mono tagline from `xl`. No header CTA; the inline rail starts at `lg`.
@@ -405,17 +407,12 @@ to the same native 24×24 canvas, two-unit black outline, and transparent
 negative space as the adjacent Pixelish icons. Keep the shared inversion,
 opacity, and intrinsic sizing behavior so desktop and mobile stay consistent.
 
-Services opens an out-of-flow panel with icon-led rows, a short description
-for each service, and directional arrows. Pointer, keyboard, outside-click,
-and Escape dismissal must work; Escape returns focus to the trigger.
-The panel entrance is a short fade and rise for motion-enabled visitors.
-
 Mobile uses a labeled Menu / Close toggle and a portaled full-viewport sheet
-below the header. Group Home, Services, and Proof with icon-led rows and
-short service descriptions. Hide the descriptions and compact rows for short
-viewports. Use a quiet neutral wash rather than colored atmospheric effects.
+below the header. Show the same three icon-led direct links, with compact
+rows for short viewports. Use a quiet neutral wash rather than colored atmospheric effects.
 Opening the sheet must never change `--prism-header-height` or shift content.
-Preserve focus trapping, Escape dismissal, scroll locking, and route-close.
+Preserve first-link focus, Escape dismissal with focus return, scroll locking,
+prior inert state, and route-close. The sheet closes at the desktop breakpoint.
 
 ### Service offer cards
 

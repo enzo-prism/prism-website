@@ -51,48 +51,6 @@ When the user asks to "analyze the project" or "update the project docs", do a s
 
 Homepage proof-card reminder: `HomeDentistWinsSection` is a legacy-named wrapper around the current `components/home/HomeClientCoverFlow.tsx` — a restrained 3D Cover Flow deck of **real client-website screenshots** (each slide's `image` in `HOMEPAGE_CLIENT_WINS`). It is input-led (no autoplay) and touch-adaptive via `isTouch` (`useMobile('(hover: none), (pointer: coarse)')`): phones swipe 1:1 (one casual swipe = one card), with no parallax/tilt/hover and fewer mounted covers. The old abstract, image-free art (`data-client-win-abstract`, `HomeDentistWinsCarousel`) was retired; do not bring it back unless the design direction changes and `__tests__/components/HomeClientCoverFlow.test.tsx` is updated.
 
-## 1.2 ElevenLabs widget workflow
-
-When a task touches the live assistant surface, start with the current ownership map instead of searching blindly:
-
-- `lib/elevenlabs-widget.ts` – canonical live public widget config (route allowlist, public agent id, markdown-link host allowlist, public kill switch)
-- `components/elevenlabs/ElevenLabsWidget.tsx` – stock custom-element wrapper + host-style enforcement after the widget upgrades
-- `components/global-elevenlabs-widget.tsx` – floating stock widget limited to non-mobile `/pricing`; every other public route and all mobile viewports are excluded from this global launcher
-- `components/home/HomeElevenLabsAgentSection.tsx` – independently flagged homepage inline guide with near-viewport loading, desktop/WebGL checks, and a required affirmative-consent gate
-- `types/elevenlabs-widget.d.ts` – JSX typing for `<elevenlabs-convai>`
-- `lib/elevenlabs.ts` – legacy deterministic/backend-era helpers; not the primary place for live stock-widget config anymore
-
-Rules that will save you time:
-
-- Treat the stock widget as an opinionated vendor surface. Prefer documented attributes and host-level wrapper styles only.
-- Do not style the widget Shadow DOM unless there is no other path and the product decision is explicit.
-- Public-page invariant: when mounted on `/pricing`, the floating widget host must stay above the site chrome in the visible widget region.
-- Mobile invariant: mobile viewports must not mount the floating widget or load the ElevenLabs embed script.
-- Consent invariant: the homepage vendor script and widget must not load until the visitor accepts the immediately preceding AI/recording notice.
-- Default-state invariant: without a saved preference, the launcher should mount collapsed.
-- Runtime invariant: `components/elevenlabs/ElevenLabsWidget.tsx` pins `@elevenlabs/convai-widget-embed@0.14.10`; upgrade it only with deliberate production-bundle and visual verification.
-- The stock widget is not a documented full-screen page-blocking modal scrim. If product wants that, push toward ElevenLabs' official SDK/UI layer instead of stretching the stock embed.
-
-Verification path for widget bugs:
-
-1. Run `pnpm build`.
-2. Run `pnpm start -p <port>`.
-3. Run `pnpm exec jest __tests__/components/HomeElevenLabsAgentSection.test.tsx __tests__/components/GlobalElevenLabsWidget.test.tsx __tests__/components/ElevenLabsWidget.test.tsx --runInBand`.
-4. Run `pnpm exec jest __tests__/lib/elevenlabs.test.ts --runInBand`.
-5. Run `pnpm test:visual:widget`.
-
-External agent-configuration check:
-
-- The public widget endpoint can confirm public agent identity and native terms fields, but it cannot reveal private retention settings or safely authorize an update.
-- As verified on July 13, 2026, the public `terms_text`, `terms_html`, and `terms_key` fields are null. The homepage is protected by Prism's first-party consent gate; native terms for the floating launcher remain a separate ElevenLabs account setting.
-- To change native terms, audio storage, or retention, use authenticated ElevenLabs dashboard/API access: read the complete current agent configuration, deep-merge the intended field, update it, then verify both the authenticated response and the public widget. Never send a blind partial patch.
-
-Why this matters:
-
-- `next start` serves the last production build on disk, so rebuild first or changes will look ignored.
-- The ElevenLabs custom element can behave differently under the production bundle than under `pnpm dev` / Fast Refresh.
-- The current visual spec already checks the key regressions: public-page closed-by-default behavior, top-layer ownership, and mobile suppression.
-
 ## 2. Dental photography surfaces
 
 Three tightly coupled routes – keep their navigation in sync. `/book-a-shoot` is retired (308 → `/waitlist`); booking-style CTAs now use `WAITLIST_FOCUS_HREFS.content`.

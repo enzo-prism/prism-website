@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js 16 App Router marketing website for Prism's business growth systems. **Prism is waitlist-only (since 2026-09-14): every public sales CTA and lead form is the waitlist at `/waitlist` (`lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `components/waitlist/CapacityNotice.tsx`). Booking a call is not a public action; the old intake, get-started, apply, contact, free-analysis, AEO, book-a-shoot, and `/ai` routes 308-redirect to the waitlist and their code is deleted.** Public chrome frames three services (Website `/websites`, Content `/content`, Ads `/ads` from `lib/services.ts`) plus a Products dropdown (Midas, zRead from `lib/products.ts`). `/pricing` compares four packaged offers (PRO Website, Content OS, Dental OS, Prism Infinity) modeled in `lib/pricing-model.ts`, with no public prices and waitlist CTAs. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
+Next.js 16 App Router marketing website for Prism's business growth systems. **Prism is waitlist-only (since 2026-09-14): every public sales CTA and lead form is the waitlist at `/waitlist` (`lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `components/waitlist/CapacityNotice.tsx`). Booking a call is not a public action; the old intake, get-started, apply, contact, free-analysis, AEO, book-a-shoot, and `/ai` routes 308-redirect to the waitlist and their code is deleted.** Desktop and mobile headers have exactly three direct links: Home (`/`), Clients (`/case-studies`), and Wall of Love (`/wall-of-love`), from `NAV_ITEMS` in `lib/constants.ts`. Services (Website, Content, Ads from `lib/services.ts`) and Products (Midas, zRead from `lib/products.ts`) remain in footer and homepage sections. The website assistant, homepage guide, and floating launcher were removed on 2026-10-09. `/pricing` compares four packaged offers (PRO Website, Content OS, Dental OS, Prism Infinity) modeled in `lib/pricing-model.ts`, with no public prices and waitlist CTAs. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
 
 ## Essential Commands
 
@@ -61,8 +61,8 @@ pnpm git:cleanup      # Clean stale branches
 | Search visibility | `lib/seo/search-visibility.ts` |
 | Canonical pricing | `lib/pricing-model.ts` |
 | Waitlist funnel | `lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `app/waitlist/page.tsx` |
-| Services / Products nav data | `lib/services.ts`, `lib/products.ts` |
-| Public ElevenLabs widget | `lib/elevenlabs-widget.ts`, `components/global-elevenlabs-widget.tsx` |
+| Header navigation | `lib/constants.ts` `NAV_ITEMS`, `components/navbar.tsx` |
+| Service / Product catalogs | `lib/services.ts`, `lib/products.ts` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
 | Case study template | `components/case-study-minimal.tsx`, `components/case-studies/CaseStudyVisualHero.tsx`, `lib/case-study-data.ts` |
 | MDX processing | `/lib/mdx.tsx` |
@@ -89,7 +89,7 @@ pnpm git:cleanup      # Clean stale branches
 
 ## Environment Variables
 
-All env vars are optional with sensible fallbacks; none are strictly required for local dev. `NEXT_PUBLIC_BASE_URL` (canonical host for metadata/OG/RSS) is the most impactful. The authoritative reference — Formspree form endpoints, ElevenLabs widget config, Instagram/TikTok tokens, and deploy-check URLs — lives in `.env.example` and [`docs/environment-setup.md`](docs/environment-setup.md). Copy `.env.example` to `.env.local` and fill only what your workflow touches.
+All env vars are optional with sensible fallbacks; none are strictly required for local dev. `NEXT_PUBLIC_BASE_URL` (canonical host for metadata/OG/RSS) is the most impactful. The authoritative reference — Formspree form endpoints, Instagram/TikTok tokens, and deploy-check URLs — lives in `.env.example` and [`docs/environment-setup.md`](docs/environment-setup.md). Copy `.env.example` to `.env.local` and fill only what your workflow touches.
 
 ## Quick Debugging
 

@@ -173,8 +173,11 @@ describe('Navbar', () => {
     expect(
       screen.queryByRole('link', { name: /our story/i }),
     ).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /^website$/i })).toHaveLength(1)
-    expect(screen.getAllByRole('link', { name: /^content$/i })).toHaveLength(1)
+    expect(
+      within(screen.getByRole('navigation', { name: 'Mobile' })).getAllByRole(
+        'link',
+      ),
+    ).toHaveLength(3)
     expect(
       within(
         document.querySelector('#mobile-site-nav') as HTMLElement,
@@ -262,97 +265,34 @@ describe('Navbar', () => {
     expect(document.documentElement.style.overflow).toBe('')
   })
 
-  it('highlights the services trigger on a service route', () => {
-    mockUsePathname.mockReturnValue('/websites')
+  it.each(['/case-studies', '/case-studies/exquisite-dentistry'])(
+    'highlights Clients on %s',
+    (pathname) => {
+      mockUsePathname.mockReturnValue(pathname)
+      render(<Navbar />)
+      const clients = screen.getByRole('link', { name: 'Clients' })
+      expect(clients).toHaveAttribute('href', '/case-studies')
+      expect(clients).toHaveAttribute('aria-current', 'page')
+      expect(
+        screen.getByRole('link', { name: 'Home' }),
+      ).not.toHaveAttribute('aria-current')
+    },
+  )
 
-    render(<Navbar />)
-
-    const servicesTrigger = screen.getByRole('button', { name: /services/i })
-    expect(servicesTrigger).toHaveAttribute('aria-expanded', 'false')
-    expect(servicesTrigger.className).toContain('text-[#f5f0e8]')
-
-    fireEvent.click(servicesTrigger)
-
-    const websiteLink = screen.getByRole('link', { name: /^website$/i })
-    expect(websiteLink).toHaveAttribute('href', '/websites')
-    expect(websiteLink).toHaveAttribute('aria-current', 'page')
-  })
-
-  it('keeps Services open on the first pointer click after hover, then allows dismissal', () => {
+  it('closes the mobile sheet when Clients is selected', () => {
     mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
-    const trigger = screen.getByRole('button', { name: /services/i })
-    fireEvent.mouseEnter(trigger.parentElement as HTMLElement)
-    expect(trigger).toHaveAttribute('aria-expanded', 'true')
-    fireEvent.click(trigger)
-    expect(trigger).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('link', { name: /^website$/i })).toBeInTheDocument()
-    fireEvent.click(trigger)
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('returns keyboard focus to Services on Escape and closes when focus leaves', () => {
-    mockUsePathname.mockReturnValue('/about')
-    render(<Navbar />)
-    const trigger = screen.getByRole('button', { name: /services/i })
-    fireEvent.click(trigger)
-    const website = screen.getByRole('link', { name: /^website$/i })
-    website.focus()
-    fireEvent.keyDown(document, { key: 'Escape' })
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-    expect(trigger).toHaveFocus()
-
-    fireEvent.click(trigger)
-    fireEvent.blur(screen.getByRole('link', { name: /^website$/i }), {
-      relatedTarget: screen.getByRole('link', { name: /^case studies$/i }),
-    })
-    expect(trigger).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('opens Products with external destinations and closes Services when switching', () => {
-    mockUsePathname.mockReturnValue('/about')
-    render(<Navbar />)
-    const services = screen.getByRole('button', { name: /services/i })
-    const products = screen.getByRole('button', { name: /products/i })
-    fireEvent.click(services)
-    fireEvent.click(products)
-    expect(services).toHaveAttribute('aria-expanded', 'false')
-    expect(products).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByRole('link', { name: /^midas$/i })).toHaveAttribute('href', 'https://midas-ai.dev')
-    expect(screen.getByRole('link', { name: /^zread$/i })).toHaveAttribute('href', 'https://zread.dev')
-    screen.getByRole('link', { name: /^midas$/i }).focus()
-    fireEvent.keyDown(document, { key: 'Escape' })
-    expect(products).toHaveFocus()
-    expect(products).toHaveAttribute('aria-expanded', 'false')
-    fireEvent.click(products)
-    fireEvent.mouseDown(document.body)
-    expect(products).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('dismisses Products after navigation and closes the mobile sheet for product links', () => {
-    mockUsePathname.mockReturnValue('/about')
-    render(<Navbar />)
-    const products = screen.getByRole('button', { name: /products/i })
-    fireEvent.click(products)
-    fireEvent.click(screen.getByRole('link', { name: /^midas$/i }))
-    expect(products).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
     const mobile = screen.getByRole('navigation', { name: 'Mobile' })
-    expect(within(mobile).getByText('Products')).toBeInTheDocument()
-    const zread = within(mobile).getByRole('link', { name: /^zread$/i })
-    expect(zread.querySelector('.font-sans')?.textContent).toBeTruthy()
-    fireEvent.click(zread)
-    expect(screen.queryByRole('navigation', { name: 'Mobile' })).not.toBeInTheDocument()
-  })
-
-  it('keeps mobile service descriptions visible without changing link names', () => {
-    mockUsePathname.mockReturnValue('/about')
-    render(<Navbar />)
-    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-    const panel = document.querySelector('#mobile-site-nav') as HTMLElement
-    const website = within(panel).getByRole('link', { name: /^website$/i })
-    expect(website.querySelector('img')).toHaveAttribute('alt', '')
-    expect(website.querySelector('.font-sans')?.textContent).toBeTruthy()
+    const clients = within(mobile).getByRole('link', {
+      name: 'Clients',
+    })
+    expect(clients.querySelector('img')).toHaveAttribute('alt', '')
+    fireEvent.click(clients)
+    expect(
+      screen.queryByRole('navigation', { name: 'Mobile' }),
+    ).not.toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('carries no order CTA button — links only', () => {
@@ -368,59 +308,20 @@ describe('Navbar', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('shows home, a services dropdown, then proof — with no pricing, contact, or packaged offers in the header', () => {
+  it('shows exactly Home, Clients, and Wall of Love in the header', () => {
     mockUsePathname.mockReturnValue('/about')
-
     render(<Navbar />)
-
-    expect(screen.getByRole('link', { name: /^home$/i })).toHaveAttribute(
-      'href',
-      '/',
-    )
+    const nav = screen.getByRole('navigation', { name: 'Main' })
     expect(
-      screen.getByRole('button', { name: /services/i }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('link', { name: /^case studies$/i }),
-    ).toHaveAttribute('href', '/case-studies')
-    expect(
-      screen.getByRole('link', { name: /^wall of love$/i }),
-    ).toHaveAttribute('href', '/wall-of-love')
-
-    expect(
-      screen.queryByRole('link', { name: /^website$/i }),
-    ).not.toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: /services/i }))
-
-    for (const [label, href] of [
-      ['website', '/websites'],
-      ['content', '/content'],
-      ['ads', '/ads'],
-    ] as const) {
-      expect(
-        screen.getByRole('link', { name: new RegExp(`^${label}$`, 'i') }),
-      ).toHaveAttribute('href', href)
-    }
-
-    expect(
-      screen.queryByRole('link', { name: /^pricing$/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /^get started$/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /^contact$/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /dental os/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /prism infinity/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('button', { name: /^more$/i }),
-    ).not.toBeInTheDocument()
+      within(nav)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['Home', '/'],
+      ['Clients', '/case-studies'],
+      ['Wall of Love', '/wall-of-love'],
+    ])
+    expect(within(nav).queryByRole('button')).not.toBeInTheDocument()
   })
 
   it('keeps --prism-header-height stable when the mobile menu opens', () => {
@@ -468,84 +369,23 @@ describe('Navbar', () => {
     }
   })
 
-  it('groups the mobile sheet as home, services, products, then proof', () => {
-    mockUsePathname.mockReturnValue('/about')
-
+  it('shows the same three destinations in the mobile menu', () => {
+    mockUsePathname.mockReturnValue('/case-studies/exquisite-dentistry')
     render(<Navbar />)
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-
-    const panel = document.querySelector('#mobile-site-nav')
-    expect(panel).toBeInTheDocument()
-
-    const groups = panel?.querySelectorAll(':scope nav > div > div')
-    expect(groups).toHaveLength(4)
-    expect(groups?.[1]?.className).toContain('border-t')
-    expect(groups?.[2]?.className).toContain('border-t')
+    const nav = screen.getByRole('navigation', { name: 'Mobile' })
     expect(
-      within(groups?.[0] as HTMLElement).getByRole('link', {
-        name: /^home$/i,
-      }),
-    ).toBeInTheDocument()
+      within(nav)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['Home', '/'],
+      ['Clients', '/case-studies'],
+      ['Wall of Love', '/wall-of-love'],
+    ])
     expect(
-      within(groups?.[1] as HTMLElement).getByRole('link', {
-        name: /^website$/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      within(groups?.[1] as HTMLElement).getByRole('link', {
-        name: /^content$/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      within(groups?.[1] as HTMLElement).getByRole('link', {
-        name: /^ads$/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      within(groups?.[3] as HTMLElement).getByRole('link', {
-        name: /^case studies$/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      within(groups?.[3] as HTMLElement).getByRole('link', {
-        name: /^wall of love$/i,
-      }),
-    ).toBeInTheDocument()
-  })
-
-  it('keeps all eight items one tap away in the mobile panel', () => {
-    mockUsePathname.mockReturnValue('/about')
-
-    render(<Navbar />)
-
-    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-    const panel = document.querySelector('#mobile-site-nav')
-    expect(panel).toBeInTheDocument()
-
-    for (const [pattern, href] of [
-      [/^home$/i, '/'],
-      [/^website$/i, '/websites'],
-      [/^content$/i, '/content'],
-      [/^ads$/i, '/ads'],
-      [/^midas$/i, 'https://midas-ai.dev'],
-      [/^zread$/i, 'https://zread.dev'],
-      [/^case studies$/i, '/case-studies'],
-      [/^wall of love$/i, '/wall-of-love'],
-    ] as const) {
-      expect(
-        within(panel as HTMLElement).getByRole('link', { name: pattern }),
-      ).toHaveAttribute('href', href)
-    }
-
-    expect(
-      within(panel as HTMLElement).queryByRole('link', { name: /pricing/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      within(panel as HTMLElement).queryByRole('link', { name: /^contact$/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      within(panel as HTMLElement).queryByRole('link', { name: /order now/i }),
-    ).not.toBeInTheDocument()
+      within(nav).getByRole('link', { name: 'Clients' }),
+    ).toHaveAttribute('aria-current', 'page')
   })
 
   it('shows case study breadcrumbs on nested case-study routes', () => {

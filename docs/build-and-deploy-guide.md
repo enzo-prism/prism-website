@@ -9,7 +9,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - Ruleset **"Protect main history"** (active, no bypass actors) targets the default branch and blocks non-fast-forward pushes and branch deletion. Direct pushes to `main` are still allowed, so never rely on force-push to fix history; revert instead.
 - Secret scanning and push protection are enabled; a push containing a detected secret is rejected. Remove the secret from history rather than bypassing.
 - Dependabot alerts and Dependabot security updates are enabled (there is no `.github/dependabot.yml`, so only security PRs are opened). Review those PRs through the normal CI path.
-- Baseline security headers are set for every route in `next.config.mjs` `headers()` (`nosniff`, `Referrer-Policy`, `X-Frame-Options: SAMEORIGIN`, a CSP with `frame-ancestors`/`base-uri`/`object-src`, and a `Permissions-Policy`). The policy intentionally leaves `microphone` available for the ElevenLabs widget.
+- Baseline security headers are set for every route in `next.config.mjs` `headers()` (`nosniff`, `Referrer-Policy`, `X-Frame-Options: SAMEORIGIN`, a CSP with `frame-ancestors`/`base-uri`/`object-src`, and a `Permissions-Policy`).
 
 ## Required toolchain
 
@@ -104,7 +104,7 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Home, Services dropdown, Products dropdown, Case studies, Wall of love), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Home, Clients → `/case-studies`, Wall of Love; the same three direct links on desktop and mobile), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 

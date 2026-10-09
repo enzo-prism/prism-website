@@ -35,7 +35,7 @@ jobs:
         run: pnpm test:visual:locked
 
       - name: Mobile navbar regression (Chromium + WebKit)
-        run: PLAYWRIGHT_PORT=3330 NEXT_PUBLIC_ELEVENLABS_WIDGET_DISABLED=true pnpm exec playwright test -c playwright.mobile-navbar.config.ts
+        run: PLAYWRIGHT_PORT=3330 pnpm exec playwright test -c playwright.mobile-navbar.config.ts
 
   deploy:
     name: Build and Deploy
