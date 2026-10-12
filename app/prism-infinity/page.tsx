@@ -1,22 +1,32 @@
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
-import { Check } from 'lucide-react'
+import type { CSSProperties } from 'react'
+import {
+  ArrowDown,
+  Check,
+  Infinity as InfinityIcon,
+  ListPlus,
+  PackageCheck,
+  Plus,
+  RefreshCw,
+  type LucideIcon,
+} from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
-import Navbar from '@/components/navbar'
-import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainedSectionClassName,
-  coreRouteContainerClassName,
-  coreRouteHeroFrameClassName,
-  coreRouteSectionClassName,
-  coreRouteSectionCompactClassName,
-  coreRouteSplitLayoutClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
 import HomeCountUp from '@/components/home/HomeCountUp'
-import HomeReveal from '@/components/home/HomeReveal'
+import Navbar from '@/components/navbar'
+import { OfferIconTile } from '@/components/pricing/offer-kit'
+import { FaqList } from '@/components/prism/faq-list'
+import FinalCta from '@/components/prism/final-cta'
+import { Marquee } from '@/components/prism/marquee'
+import { Reveal } from '@/components/prism/reveal'
+import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
+import { WaitlistButton } from '@/components/prism/waitlist-button'
+import { WaitlistStatus } from '@/components/prism/waitlist-status'
+import InfinityQueue, {
+  REQUEST_TYPE_META,
+} from '@/components/prism-infinity/InfinityQueue'
 import InfinityRotatingWord from '@/components/prism-infinity/InfinityRotatingWord'
 import {
   ALSO_INCLUDED,
@@ -27,22 +37,20 @@ import {
   HOW_IT_WORKS,
   MARQUEE_ITEMS,
   OWNER_REASONS,
-  QUEUE_BOARD,
   ROTATING_WORDS,
+  type InfinityRequestType,
 } from '@/components/prism-infinity/infinity-content'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import styles from '@/components/prism-infinity/infinity.module.css'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { PRISM_INFINITY_PRICE_LABEL } from '@/lib/pricing-model'
-import { WAITLIST_CTA } from '@/lib/waitlist'
-import CapacityNotice from '@/components/waitlist/CapacityNotice'
-import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import TrackedLink from '@/components/tracked-link'
+import { Button } from '@/components/ui/button'
+import {
+  CONNECTED_CLIENT_TRAFFIC,
+  PROOF_METRICS_VERIFIED_AT,
+  SOCIAL_PROOF,
+} from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { cn } from '@/lib/utils'
-
-import styles from './prism-infinity.module.css'
-
-const SUBSCRIBE_HREF = WAITLIST_CTA.href
-const SUBSCRIBE_LABEL = WAITLIST_CTA.label
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Prism Infinity',
@@ -51,6 +59,12 @@ export const metadata: Metadata = buildRouteMetadata({
   path: '/prism-infinity',
   ogImage: '/prism-opengraph.png',
 })
+
+const STEP_ICONS: Record<(typeof HOW_IT_WORKS)[number]['icon'], LucideIcon> = {
+  queue: ListPlus,
+  ship: PackageCheck,
+  next: RefreshCw,
+}
 
 const PROOF_STATS: readonly {
   value: string
@@ -61,7 +75,7 @@ const PROOF_STATS: readonly {
   {
     value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
     label: 'new users across connected client sites',
-    detail: `${CONNECTED_CLIENT_TRAFFIC.month} · ${CONNECTED_CLIENT_TRAFFIC.connectedSites} sites`,
+    detail: `${CONNECTED_CLIENT_TRAFFIC.source} · ${CONNECTED_CLIENT_TRAFFIC.month} · ${CONNECTED_CLIENT_TRAFFIC.connectedSites} sites`,
   },
   {
     value: SOCIAL_PROOF.youtube.audience,
@@ -83,566 +97,353 @@ const PROOF_STATS: readonly {
   },
 ] as const
 
-function SectionKicker({ children }: { children: ReactNode }) {
-  return (
-    <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
-      {children}
-    </p>
-  )
+const MARQUEE_TYPES: Record<(typeof MARQUEE_ITEMS)[number], InfinityRequestType> = {
+  'Landing pages': 'landing',
+  'Ad creative': 'ad',
+  Websites: 'website',
+  Photoshoots: 'photo',
+  'Video ads': 'video',
+  'SEO pages': 'content',
+  'Booking flows': 'landing',
+  'Brand systems': 'brand',
 }
 
-/**
- * Animated lemniscate: a faint full loop with a gold comet orbiting it.
- * Pure SVG + CSS — no JS, disabled under reduced motion.
- */
-function InfinityGlyph({ className }: { className?: string }) {
-  const d =
-    'M100 50C85 24 48 24 48 50C48 76 85 76 100 50C115 24 152 24 152 50C152 76 115 76 100 50Z'
+/** Card titles are lowercase and sentence style; proper nouns keep capitals. */
+const toCardTitle = (value: string) =>
+  value.charAt(0).toLowerCase() + value.slice(1)
 
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 200 100"
-      className={className}
-      focusable="false"
-    >
-      <path className={styles.glyphTrail} d={d} pathLength={1} />
-      <path className={styles.glyphGlow} d={d} pathLength={1} />
-      <path className={styles.glyphComet} d={d} pathLength={1} />
-    </svg>
-  )
-}
-
-function QueueBoard() {
-  return (
-    <div className="min-w-0 rounded-[1.4rem] border border-white/12 bg-[#070707] p-5 sm:p-6">
-      <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-4">
-        <p className="font-mono text-[0.66rem] font-medium uppercase tracking-[0.24em] text-[#8f877b]">
-          Your request board
-        </p>
-        <p className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-[#d8bc79]">
-          <span
-            aria-hidden="true"
-            className={cn(
-              'h-1.5 w-1.5 rounded-full bg-[#d8bc79]',
-              styles.pulseDot,
-            )}
-          />
-          Example
-        </p>
-      </div>
-
-      <ul className="mt-4 space-y-3">
-        <li className="flex min-w-0 items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3">
-          <Check
-            aria-hidden="true"
-            className="h-4 w-4 shrink-0 text-[#7d766a]"
-          />
-          <span className="min-w-0 flex-1 truncate text-sm text-[#8f877b] line-through decoration-white/20">
-            {QUEUE_BOARD.delivered}
-          </span>
-          <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
-            Delivered
-          </span>
-        </li>
-
-        <li className="min-w-0 rounded-xl border border-[#d8bc79]/30 bg-[#d8bc79]/[0.06] px-4 py-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <span
-              aria-hidden="true"
-              className={cn(
-                'h-2 w-2 shrink-0 rounded-full bg-[#d8bc79]',
-                styles.pulseDot,
-              )}
-            />
-            <span className="min-w-0 flex-1 truncate text-sm font-medium text-[#f5f0e8]">
-              {QUEUE_BOARD.active}
-            </span>
-            <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-              In progress
-            </span>
-          </div>
-          <div
-            aria-hidden="true"
-            className={cn('mt-3 h-1 rounded-full', styles.queueBar)}
-          >
-            <span className={styles.queueBarFill} />
-          </div>
-        </li>
-
-        {QUEUE_BOARD.queued.map((title, index) => (
-          <li
-            key={title}
-            className="flex min-w-0 items-center gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3"
-          >
-            <span className="shrink-0 font-mono text-[0.62rem] text-[#7d766a]">
-              {String(index + 2).padStart(2, '0')}
-            </span>
-            <span className="min-w-0 flex-1 truncate text-sm text-[#b8afa2]">
-              {title}
-            </span>
-            <span className="shrink-0 whitespace-nowrap font-mono text-[0.6rem] uppercase tracking-[0.18em] text-[#7d766a]">
-              Queued
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-4 border-t border-white/10 pt-4 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-[#7d766a]">
-        Unlimited queue · one active request
-      </p>
-    </div>
-  )
-}
-
-function ServiceMarquee() {
-  return (
-    <div
-      aria-label="Growth deliverables included in Prism Infinity. Focus to pause the animation."
-      className={cn('overflow-hidden border-y border-white/10', styles.marquee)}
-      role="region"
-      tabIndex={0}
-    >
-      <div className={cn('flex items-center gap-0 py-5', styles.marqueeTrack)}>
-        {[false, true].map((duplicate) => (
-          <ul
-            key={duplicate ? 'duplicate' : 'original'}
-            aria-hidden={duplicate || undefined}
-            className="flex shrink-0 items-center"
-          >
-            {MARQUEE_ITEMS.map((title) => (
-              <li
-                key={title}
-                className="flex items-center gap-3 whitespace-nowrap pr-14"
-              >
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-[#d8bc79]"
-                />
-                <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.22em] text-[#b8afa2]">
-                  {title}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </div>
-  )
-}
+const rise = (delay: number) =>
+  ({ '--rise-delay': `${delay}ms` }) as CSSProperties
 
 export default function PrismInfinityPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div className={coreRouteHeroFrameClassName}>
-              <div
-                aria-hidden="true"
-                className={cn(
-                  'absolute inset-[-12%] bg-[radial-gradient(circle_at_16%_18%,rgba(216,188,121,0.09),transparent_36%),radial-gradient(circle_at_86%_82%,rgba(245,240,232,0.05),transparent_40%),linear-gradient(135deg,rgba(0,0,0,0.1),rgba(0,0,0,0.5))]',
-                  styles.aurora,
-                )}
-              />
+        {/* Hero */}
+        <section
+          aria-labelledby="infinity-hero-heading"
+          className="relative isolate overflow-hidden pb-20 pt-8 sm:pb-28 sm:pt-12"
+        >
+          <div aria-hidden="true" className="bg-grid absolute inset-x-0 top-0 -z-10 h-[52rem] opacity-60" />
+          <div
+            aria-hidden="true"
+            className="absolute right-[-10rem] top-[-6rem] -z-10 h-[40rem] w-[min(56rem,140vw)] bg-[radial-gradient(closest-side,oklch(0.63_0.19_295/20%),transparent),radial-gradient(45%_45%_at_30%_70%,oklch(0.66_0.16_258/16%),transparent)] blur-2xl"
+          />
+          <div aria-hidden="true" className="bg-noise mask-fade-b absolute inset-0 -z-10 opacity-[0.05]" />
 
-              <div className="relative z-10 grid gap-8 px-6 py-8 sm:gap-10 sm:px-10 sm:py-14 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:items-end lg:px-12 lg:py-16">
-                <div className="flex flex-col gap-5">
-                  <p className="flex items-center gap-2.5 font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#797165]">
-                    <InfinityGlyph className="h-5 w-10" />
-                    Prism Infinity
-                  </p>
-                  <h1 className="max-w-[16ch] text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]">
-                    Unlimited
-                    <br />
-                    <InfinityRotatingWord
-                      words={ROTATING_WORDS}
-                      animationClassName={styles.rotatingWord}
-                      suffix="."
-                    />
-                    <br />
-                    One subscription.
-                  </h1>
-                  <p className="max-w-[40rem] text-pretty font-sans text-[1.02rem] leading-7 text-[#b8afa2] sm:text-[1.12rem] sm:leading-8 lg:max-w-[34rem]">
-                    One monthly plan for your ongoing creative work. Fill a
-                    queue with landing pages, ads, websites, video, and
-                    photoshoots. We ship one at a time.
-                  </p>
-                </div>
-
-                <div className="space-y-5 border-t border-white/12 pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-                  <div>
-                    <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      Monthly plan
-                    </p>
-                    <p
-                      className={cn(
-                        'mt-3 font-sans text-[clamp(2.2rem,5vw,3rem)] font-medium leading-none tracking-[-0.04em]',
-                        styles.priceShimmer,
-                      )}
-                    >
-                      {PRISM_INFINITY_PRICE_LABEL}
-                    </p>
-                  </div>
-                  <ul className="space-y-3 border-t border-white/10 pt-5">
-                    {HERO_FACTS.map((fact) => (
-                      <li
-                        key={fact}
-                        className="flex items-start gap-3 text-sm leading-6 text-[#b8afa2]"
-                      >
-                        <Check
-                          aria-hidden="true"
-                          className="mt-1 h-3.5 w-3.5 shrink-0 text-[#d8bc79]"
-                        />
-                        <span>{fact}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          <div className="prism-container grid items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+            <div className="flex min-w-0 flex-col items-start">
+              <div className="prism-rise" style={rise(0)}>
+                <WaitlistStatus />
               </div>
+              <h1
+                id="infinity-hero-heading"
+                className="text-gradient prism-rise mt-6 pb-2 text-[clamp(2.4rem,1.2rem+3.9vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.055em]"
+                style={rise(80)}
+              >
+                unlimited{' '}
+                <br />
+                <InfinityRotatingWord
+                  words={ROTATING_WORDS}
+                  animationClassName={styles.rotatingWord}
+                  wordClassName="text-spectrum prism-spectrum-pan"
+                  suffix="."
+                />{' '}
+                <br />
+                one subscription.
+              </h1>
+              <p
+                className="text-lead prism-rise mt-5 max-w-[46ch] text-pretty text-muted-foreground"
+                style={rise(160)}
+              >
+                <span className="text-foreground">Prism Infinity</span> is one
+                monthly plan for your ongoing creative work. Fill a queue with
+                landing pages, ads, websites, video, and photoshoots. We ship one
+                at a time, and the next one starts.
+              </p>
 
-              <div className="relative z-10 border-t border-white/12 px-6 py-6 sm:px-10 lg:px-12">
-                <CapacityNotice className="mb-5 max-w-[40rem]" />
-                <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
-                  <CoreActionLink
-                    href={SUBSCRIBE_HREF}
-                    variant="heroPrimary"
-                    label="join the waitlist"
+              <div
+                className="prism-rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+                style={rise(240)}
+              >
+                <WaitlistButton
+                  location="prism-infinity hero"
+                  size="xl"
+                  className="w-full sm:w-auto"
+                />
+                <Button asChild variant="outline" size="xl" className="group/see w-full sm:w-auto">
+                  <TrackedLink
+                    href="#deliverables"
+                    label="see what you can request"
                     location="prism-infinity hero"
                   >
-                    {SUBSCRIBE_LABEL}
-                  </CoreActionLink>
-                </div>
+                    See what you can request
+                    <ArrowDown
+                      aria-hidden="true"
+                      className="transition-transform duration-200 group-hover/see:translate-y-0.5"
+                    />
+                  </TrackedLink>
+                </Button>
               </div>
-            </div>
-          </div>
-        </section>
 
-        <ServiceMarquee />
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <HomeReveal>
-              <CoreSectionHeading
-                eyebrow="How it works"
-                title="Name the need. We keep shipping."
-                description="Unlimited requests, delivered one by one. You keep the queue full of work that grows the business. Prism keeps it moving."
-                titleClassName="max-w-[16ch] xl:max-w-[18ch]"
-              />
-            </HomeReveal>
-            <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-start">
-              <ol className="grid gap-4">
-                {HOW_IT_WORKS.map((step, index) => (
-                  <li key={step.label}>
-                    <HomeReveal
-                      delay={index * 90}
-                      className={cn(
-                        'flex gap-5 rounded-[1.4rem] border border-white/10 bg-[#070707] p-5 sm:p-6',
-                        styles.liftCard,
-                      )}
-                    >
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03]">
-                        <PixelishIcon
-                          src={step.iconSrc}
-                          alt=""
-                          size={20}
-                          aria-hidden="true"
-                          className={cn('h-5 w-5 opacity-80', styles.cardIcon)}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                          {String(index + 1).padStart(2, '0')}
-                        </p>
-                        <h2 className="mt-2 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                          {step.label}
-                        </h2>
-                        <p className="mt-2 text-sm leading-7 text-[#b8afa2]">
-                          {step.body}
-                        </p>
-                      </div>
-                    </HomeReveal>
+              <ul
+                className="prism-rise mt-9 grid w-full gap-x-6 gap-y-2.5 border-t border-white/[0.08] pt-6 text-sm text-muted-foreground sm:grid-cols-2"
+                style={rise(320)}
+              >
+                {HERO_FACTS.map((fact) => (
+                  <li key={fact} className="flex items-center gap-2.5">
+                    <Check aria-hidden="true" className="size-4 shrink-0 text-foreground/80" />
+                    {fact}
                   </li>
                 ))}
-              </ol>
-              <HomeReveal delay={180}>
-                <QueueBoard />
-              </HomeReveal>
+                <li className="flex items-center gap-2.5">
+                  <InfinityIcon aria-hidden="true" className="size-4 shrink-0 text-foreground/80" />
+                  One flat monthly rate
+                </li>
+              </ul>
+            </div>
+
+            <div className="prism-rise min-w-0" style={rise(200)}>
+              <InfinityQueue className="mx-auto w-full max-w-[34rem]" />
             </div>
           </div>
         </section>
 
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              coreRouteSplitLayoutClassName,
-            )}
-          >
-            <HomeReveal>
-              <CoreSectionHeading
-                eyebrow="What you'll request"
-                title="The work owners actually need."
-                description="Add the pages, creative, and content your business needs to one queue. We agree on each brief and work through your priorities one at a time."
-                titleClassName="max-w-[14ch] xl:max-w-[16ch]"
-              />
-            </HomeReveal>
-            <ol className="divide-y divide-white/10 border-y border-white/10">
-              {DELIVERABLES.map((item, index) => (
-                <li key={item.title}>
-                  <HomeReveal
-                    delay={index * 60}
-                    className="flex gap-4 py-5 sm:gap-5 sm:py-6"
-                  >
-                    <span className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-black/40">
-                      <PixelishIcon
-                        src={item.iconSrc}
-                        alt=""
-                        size={18}
-                        aria-hidden="true"
-                        className="h-4 w-4 opacity-80"
-                      />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[#7d766a]">
-                        {String(index + 1).padStart(2, '0')}
-                      </p>
-                      <h3 className="mt-2 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8] sm:text-xl">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-pretty text-sm leading-6 text-[#b8afa2]">
-                        {item.body}
-                      </p>
-                    </div>
-                  </HomeReveal>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className={cn(coreRouteContainerClassName, 'mt-6')}>
-            <HomeReveal delay={120}>
-              <div
-                className={cn(
-                  'flex flex-col gap-3 rounded-[1.4rem] border border-[#d8bc79]/25 bg-[#d8bc79]/[0.05] p-5 sm:flex-row sm:items-center sm:gap-5',
-                  styles.liftCard,
-                )}
-              >
+        {/* Everything fits in the queue */}
+        <section
+          className="border-y border-white/[0.06] bg-card/40 py-7 sm:py-9"
+        >
+          <Marquee duration={46} gap="2.5rem" label="Deliverables included in Prism Infinity">
+            {MARQUEE_ITEMS.map((item) => {
+              const Icon = REQUEST_TYPE_META[MARQUEE_TYPES[item]].icon
+              return (
                 <span
-                  aria-hidden="true"
-                  className="font-sans text-2xl font-medium leading-none text-[#d8bc79]"
+                  key={item}
+                  className="flex shrink-0 items-center gap-3 whitespace-nowrap text-[clamp(1.35rem,1.1rem+1vw,2rem)] font-semibold tracking-[-0.035em] text-foreground/80"
                 >
-                  +
+                  <Icon aria-hidden="true" className="size-[0.8em] text-subtle" />
+                  {item}
+                  <InfinityIcon aria-hidden="true" className="ml-7 size-[0.7em] text-white/15" />
                 </span>
-                <div>
-                  <p className="text-base font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                    {ALSO_INCLUDED.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[#b8afa2]">
-                    {ALSO_INCLUDED.body}
-                  </p>
-                </div>
-              </div>
-            </HomeReveal>
-          </div>
+              )
+            })}
+          </Marquee>
         </section>
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteContainedSectionClassName,
-                'grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start',
-              )}
-            >
-              <HomeReveal>
-                <div className="space-y-5">
-                  <SectionKicker>Why owners stay</SectionKicker>
-                  <p className="font-sans text-[clamp(1.7rem,3.2vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.045em] text-[#f5f0e8]">
-                    Stop hiring a new vendor for every project.
-                  </p>
-                  <p className="max-w-[34rem] text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
-                    One team, one queue, one monthly rate. Keep your brand and
-                    feedback in one place as you move from project to project.
-                  </p>
-                  <CoreActionLink
-                    href={SUBSCRIBE_HREF}
-                    variant="primary"
-                    label="join the waitlist"
-                    location="prism-infinity owner reasons"
-                  >
-                    Ask us how it works
-                  </CoreActionLink>
-                </div>
-              </HomeReveal>
-              <ul className="grid gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10 sm:grid-cols-2">
-                {OWNER_REASONS.map((reason, index) => (
-                  <li key={reason.title} className="bg-black p-5 sm:p-6">
-                    <HomeReveal delay={(index % 2) * 80}>
-                      <p className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-[#7d766a]">
-                        {String(index + 1).padStart(2, '0')}
-                      </p>
-                      <h3 className="mt-3 text-lg font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                        {reason.title}
+        {/* How it works */}
+        <Section aria-labelledby="infinity-how-heading">
+          <Reveal>
+            <SectionHeader
+              id="infinity-how-heading"
+              eyebrow="How it works"
+              title="name the need. we keep shipping."
+              description="Unlimited requests, delivered one by one. You keep the queue full of work that grows the business. Prism keeps it moving."
+              titleClassName="max-w-[16ch]"
+            />
+          </Reveal>
+          <ol className="relative mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+            <span
+              aria-hidden="true"
+              className="absolute left-5 right-5 top-5 hidden h-px bg-gradient-to-r from-white/5 via-white/20 to-white/5 md:block"
+            />
+            {HOW_IT_WORKS.map((step, index) => {
+              const Icon = STEP_ICONS[step.icon]
+              return (
+                <li key={step.label} className="relative min-w-0">
+                  <Reveal delay={index * 100}>
+                    <OfferIconTile className="relative bg-card">
+                      <Icon aria-hidden="true" className="size-[18px]" />
+                    </OfferIconTile>
+                    <p className="mt-6 font-mono text-xs text-subtle">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <h3 className="text-heading mt-2 text-foreground">
+                      {step.label.toLowerCase()}
+                    </h3>
+                    <p className="mt-3 max-w-[38ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                      {step.body}
+                    </p>
+                  </Reveal>
+                </li>
+              )
+            })}
+          </ol>
+        </Section>
+
+        {/* Deliverables */}
+        <Section
+          id="deliverables"
+          aria-labelledby="infinity-deliverables-heading"
+          className="scroll-mt-20 pt-0 sm:pt-0"
+        >
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <Reveal>
+              <SectionHeader
+                id="infinity-deliverables-heading"
+                eyebrow="What you'll request"
+                title="the work owners actually need."
+                titleClassName="max-w-[14ch]"
+              />
+            </Reveal>
+            <p className="max-w-[44ch] text-pretty text-[15px] leading-7 text-muted-foreground lg:pb-2">
+              Add the pages, creative, and content your business needs to one
+              queue. We agree on each brief and work through your priorities one
+              at a time.
+            </p>
+          </div>
+
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {DELIVERABLES.map((item, index) => {
+              const Icon = REQUEST_TYPE_META[item.icon].icon
+              return (
+                <li key={item.title} className="min-w-0">
+                  <Reveal delay={(index % 3) * 80} className="h-full">
+                    <SpotlightCard className="flex h-full flex-col p-6 sm:p-7">
+                      <div className="flex items-center justify-between">
+                        <OfferIconTile>
+                          <Icon aria-hidden="true" className="size-[18px]" />
+                        </OfferIconTile>
+                        <span className="font-mono text-xs text-subtle">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <h3 className="mt-10 text-[1.2rem] font-semibold leading-snug tracking-[-0.025em] text-foreground">
+                        {toCardTitle(item.title)}
                       </h3>
-                      <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
+                      <p className="mt-2.5 text-pretty text-[15px] leading-7 text-muted-foreground">
+                        {item.body}
+                      </p>
+                    </SpotlightCard>
+                  </Reveal>
+                </li>
+              )
+            })}
+          </ul>
+
+          <Reveal className="mt-4">
+            <div className="flex flex-col gap-4 rounded-2xl border border-dashed border-white/[0.12] bg-white/[0.015] p-6 sm:flex-row sm:items-center sm:gap-5 sm:p-7">
+              <OfferIconTile>
+                <Plus aria-hidden="true" className="size-[18px]" />
+              </OfferIconTile>
+              <div>
+                <p className="text-base font-semibold tracking-[-0.02em] text-foreground">
+                  {toCardTitle(ALSO_INCLUDED.title)}
+                </p>
+                <p className="mt-1.5 text-pretty text-[15px] leading-7 text-muted-foreground">
+                  {ALSO_INCLUDED.body}
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </Section>
+
+        {/* Why owners stay */}
+        <Section aria-labelledby="infinity-owners-heading" className="pt-0 sm:pt-0">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card">
+            <div aria-hidden="true" className="bg-dots mask-fade-b absolute inset-0 -z-10 opacity-[0.16]" />
+            <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+              <div className="flex flex-col items-start gap-6 p-6 py-12 sm:p-10 sm:py-14 lg:p-14">
+                <Eyebrow>Why owners stay</Eyebrow>
+                <h2
+                  id="infinity-owners-heading"
+                  className="text-title text-gradient max-w-[16ch] text-balance pb-1"
+                >
+                  stop hiring a new vendor for every project.
+                </h2>
+                <p className="text-lead max-w-[40ch] text-pretty text-muted-foreground">
+                  One team, one queue, one monthly rate. Keep your brand and
+                  feedback in one place as you move from project to project.
+                </p>
+                <WaitlistButton
+                  location="prism-infinity owner reasons"
+                  variant="outline"
+                  className="mt-2"
+                />
+              </div>
+              <ul className="grid gap-px border-t border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:border-l lg:border-t-0">
+                {OWNER_REASONS.map((reason, index) => (
+                  <li key={reason.title} className="min-w-0 bg-card">
+                    <Reveal delay={(index % 2) * 80} className="flex h-full flex-col p-6 sm:p-8">
+                      <span className="font-mono text-xs text-subtle">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="mt-6 text-[1.15rem] font-semibold leading-snug tracking-[-0.025em] text-foreground">
+                        {toCardTitle(reason.title)}
+                      </h3>
+                      <p className="mt-2.5 text-pretty text-[15px] leading-7 text-muted-foreground">
                         {reason.body}
                       </p>
-                    </HomeReveal>
+                    </Reveal>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-        </section>
+        </Section>
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div className={coreRouteContainedSectionClassName}>
-              <HomeReveal>
-                <CoreSectionHeading
-                  eyebrow="Proof"
-                  title="The same team behind real results."
-                  description="Explore results from client websites and the audiences on Prism’s own channels. These are examples of our wider work, not a forecast for your subscription."
-                />
-              </HomeReveal>
-              <dl className="mt-10 grid gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-                {PROOF_STATS.map((stat) => (
-                  <div key={stat.label} className="bg-black p-6">
-                    <dt className="font-sans text-[clamp(1.9rem,4vw,2.6rem)] font-medium leading-none tracking-[-0.04em] text-[#d8bc79]">
-                      <HomeCountUp value={stat.value} />
-                    </dt>
-                    <dd className="mt-3 flex items-center gap-2 text-sm leading-6 text-[#b8afa2]">
-                      {stat.brand ? (
-                        <BrandLogo
-                          brand={stat.brand}
-                          theme="dark"
-                          decorative
-                          className="h-3.5 w-3.5 shrink-0"
-                        />
-                      ) : null}
-                      {stat.label}
-                    </dd>
-                    <dd className="mt-1 font-mono text-[0.66rem] uppercase tracking-[0.2em] text-[#7d766a]">
-                      {stat.detail}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteHeroFrameClassName,
-                'px-6 py-12 text-center sm:px-10 sm:py-16',
-              )}
-            >
-              <div
-                aria-hidden="true"
-                className={cn(
-                  'absolute inset-[-12%] bg-[radial-gradient(circle_at_50%_0%,rgba(216,188,121,0.07),transparent_46%)]',
-                  styles.aurora,
-                )}
-              />
-              <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
-                <InfinityGlyph className="h-14 w-28" />
-                <div className="mt-6">
-                  <SectionKicker>Monthly plan</SectionKicker>
-                </div>
-                <p
-                  className={cn(
-                    'mt-6 font-sans text-[clamp(2.2rem,6vw,3.6rem)] font-medium leading-none tracking-[-0.05em]',
-                    styles.priceShimmer,
-                  )}
-                >
-                  {PRISM_INFINITY_PRICE_LABEL}
-                </p>
-                <p className="mt-5 max-w-md text-pretty text-[1.02rem] leading-8 text-[#b8afa2]">
-                  Unlimited landing pages, ad creative, websites, video, and
-                  photoshoots. Pause or cancel anytime. Prism is fully booked, so
-                  join the waitlist and we&apos;ll scope your subscription together
-                  when we reach out.
-                </p>
-                <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
-                  <CoreActionLink
-                    href={SUBSCRIBE_HREF}
-                    variant="heroPrimary"
-                    label="join the waitlist"
-                    location="prism-infinity pricing recap"
-                  >
-                    {SUBSCRIBE_LABEL}
-                  </CoreActionLink>
-                </div>
+        {/* Proof */}
+        <Section aria-labelledby="infinity-proof-heading" className="pt-0 sm:pt-0">
+          <Reveal>
+            <SectionHeader
+              id="infinity-proof-heading"
+              eyebrow="Proof"
+              title="the same team behind real results."
+              description="Results from client websites and the audiences on Prism's own channels. Examples of our wider work, not a forecast for your subscription."
+              titleClassName="max-w-[17ch]"
+            />
+          </Reveal>
+          <dl className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] lg:grid-cols-4">
+            {PROOF_STATS.map((stat) => (
+              <div key={stat.label} className="flex min-w-0 flex-col bg-card p-6 sm:p-7">
+                <dt className="order-2 mt-3 flex items-center gap-2 text-sm leading-6 text-muted-foreground">
+                  {stat.brand ? (
+                    <BrandLogo
+                      brand={stat.brand}
+                      theme="dark"
+                      decorative
+                      className="h-3.5 w-3.5 shrink-0"
+                    />
+                  ) : null}
+                  {stat.label}
+                </dt>
+                <dd className="order-1 text-[clamp(2.2rem,1.7rem+1.6vw,3rem)] font-semibold leading-none tracking-[-0.045em] text-foreground">
+                  <HomeCountUp value={stat.value} />
+                </dd>
+                <dd className="order-3 mt-1 font-mono text-[11px] leading-5 text-subtle">
+                  {stat.detail}
+                </dd>
               </div>
-            </div>
-          </div>
-        </section>
+            ))}
+          </dl>
+          <p className="mt-4 font-mono text-[11px] leading-5 text-subtle">
+            Verified {PROOF_METRICS_VERIFIED_AT}. Client traffic is the sum of GA4
+            new users across sites, not deduplicated people. Channel numbers are
+            Prism&apos;s own audiences.
+          </p>
+        </Section>
 
-        <section className={coreRouteSectionCompactClassName}>
-          <div className={coreRouteContainerClassName}>
-            <HomeReveal>
-              <CoreSectionHeading
+        {/* FAQ */}
+        <Section aria-labelledby="infinity-faq-heading" className="pt-0 sm:pt-0">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeader
+                id="infinity-faq-heading"
                 eyebrow="FAQ"
-                title="Good things to know first."
+                title="good things to know first."
+                titleClassName="max-w-[13ch]"
               />
-            </HomeReveal>
-            <div className="mt-10 space-y-3">
-              {FAQ_ITEMS.map((item, index) => (
-                <HomeReveal key={item.question} delay={index * 60}>
-                  <details
-                    className={cn(
-                      'group rounded-[1.4rem] border border-white/10 bg-[#070707] px-5 py-5 sm:px-6',
-                      styles.liftCard,
-                    )}
-                  >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-lg font-medium tracking-[-0.03em] text-[#f5f0e8] sm:text-xl">
-                      {item.question}
-                      <span
-                        aria-hidden="true"
-                        className="text-[#d8bc79] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-open:rotate-45 motion-reduce:transition-none"
-                      >
-                        +
-                      </span>
-                    </summary>
-                    <p className="mt-4 max-w-3xl text-sm leading-7 text-[#b8afa2]">
-                      {item.answer}
-                    </p>
-                  </details>
-                </HomeReveal>
-              ))}
             </div>
+            <FaqList items={FAQ_ITEMS} name="infinity-faq" defaultOpen={0} />
           </div>
-        </section>
+        </Section>
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <HomeReveal>
-                <CoreSectionHeading
-                  title="Keep the queue full."
-                  description="Prism is fully booked right now. Join the waitlist with your next few priorities and, when we reach out, we will review the work, explain the queue, and scope your monthly plan."
-                  titleClassName="max-w-[14ch] xl:max-w-[16ch]"
-                />
-              </HomeReveal>
-              <HomeReveal delay={120}>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-                  <CoreActionLink
-                    href={SUBSCRIBE_HREF}
-                    variant="heroPrimary"
-                    label="join the waitlist"
-                    location="prism-infinity final cta"
-                  >
-                    {SUBSCRIBE_LABEL}
-                  </CoreActionLink>
-                </div>
-              </HomeReveal>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="prism-infinity final cta"
+          title="keep the queue full."
+          href={WAITLIST_CTA.href}
+          headingId="infinity-final-cta-heading"
+        />
       </main>
       <Footer />
 

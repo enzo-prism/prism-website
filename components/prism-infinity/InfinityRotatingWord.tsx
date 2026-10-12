@@ -2,10 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { cn } from '@/lib/utils'
+
 type InfinityRotatingWordProps = {
   words: readonly string[]
   /** CSS module class applying the word-in animation. */
   animationClassName: string
+  /** Fill for the visible word (e.g. `text-spectrum`). */
+  wordClassName?: string
   /** Trailing punctuation that travels with the word (e.g. "."). */
   suffix?: string
   intervalMs?: number
@@ -22,8 +26,9 @@ type InfinityRotatingWordProps = {
 export default function InfinityRotatingWord({
   words,
   animationClassName,
+  wordClassName,
   suffix = '',
-  intervalMs = 2200,
+  intervalMs = 2400,
 }: InfinityRotatingWordProps) {
   const [index, setIndex] = useState(0)
   const [cycling, setCycling] = useState(false)
@@ -36,8 +41,8 @@ export default function InfinityRotatingWord({
 
     if (reducedMotion || words.length < 2) return
 
-    setCycling(true)
     intervalRef.current = window.setInterval(() => {
+      setCycling(true)
       setIndex((current) => (current + 1) % words.length)
     }, intervalMs)
 
@@ -49,8 +54,8 @@ export default function InfinityRotatingWord({
   }, [intervalMs, words.length])
 
   return (
-    <span className="relative inline-grid overflow-hidden align-baseline">
-      {/* Invisible copies reserve the widest word's space — no layout shift. */}
+    <span className="relative inline-grid overflow-hidden pb-[0.08em] align-baseline">
+      {/* Invisible copies reserve the widest word's space: no layout shift. */}
       {words.map((word) => (
         <span
           key={word}
@@ -63,12 +68,14 @@ export default function InfinityRotatingWord({
       ))}
       <span
         key={cycling ? words[index] : 'static'}
-        className={`col-start-1 row-start-1 whitespace-nowrap ${
-          cycling ? animationClassName : ''
-        }`}
+        className={cn(
+          'col-start-1 row-start-1 whitespace-nowrap',
+          cycling && animationClassName,
+          wordClassName,
+        )}
       >
-        <span className="text-[#d8bc79]">{words[index]}</span>
-        {suffix ? <span className="text-[#f5f0e8]">{suffix}</span> : null}
+        {words[index]}
+        {suffix}
       </span>
     </span>
   )

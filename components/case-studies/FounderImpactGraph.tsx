@@ -113,7 +113,7 @@ function buildWithoutPrismPoints(months: number): CaseStudyImpactPoint[] {
 
 function ScenarioLegend({ colors }: { colors: ResolvedChartColors }) {
   return (
-    <div className="flex flex-wrap items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.18em] font-pixel text-muted-foreground">
+    <div className="flex flex-wrap items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.18em] font-mono text-muted-foreground">
       <span className="inline-flex items-center gap-2">
         <span className="h-2 w-2 rounded-full" style={{ backgroundColor: colors.customers }} />
         customers coming in
@@ -252,7 +252,10 @@ export function FounderImpactGraph({ className, slug, calloutCopy }: FounderImpa
     <Card className={cn("rounded-2xl bg-card/90 shadow-sm", className)}>
       <CardHeader className="space-y-2">
         <CardTitle className="text-lg font-semibold">toggle to compare what happens over time.</CardTitle>
-        <CardDescription>customers coming in vs founder time + energy.</CardDescription>
+        <CardDescription>
+          customers coming in vs founder time + energy. Illustrative model,
+          not measured client data.
+        </CardDescription>
       </CardHeader>
       <CardContent className="pt-0">
         <Tabs defaultValue="with-prism" className="gap-3">

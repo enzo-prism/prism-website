@@ -1,7 +1,9 @@
 'use client'
 
+import { ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { readApplyDashboardClaimUrl } from '@/lib/dashboard-claim'
 
 export default function ApplyDashboardClaimCta() {
@@ -16,21 +18,21 @@ export default function ApplyDashboardClaimCta() {
   }
 
   return (
-    <div className="border border-[#9EFF2E]/28 bg-[#9EFF2E]/8 px-5 py-5">
+    <div className="flex flex-col gap-5 rounded-2xl border border-white/[0.08] bg-card p-6 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
+        <p className="text-heading text-foreground">
           Your private dashboard is ready.
         </p>
-        <p className="mt-2 font-mono text-[0.9rem] leading-7 text-[#C6C6C0]">
+        <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
           Claim it now. The same link is in your inbox.
         </p>
       </div>
-      <a
-        href={claimUrl}
-        className="mt-5 inline-flex min-h-12 items-center justify-center border border-[#9EFF2E]/55 bg-[#9EFF2E]/10 px-5 py-3 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#9EFF2E] transition-colors hover:bg-[#9EFF2E]/16 hover:text-[#D4FF94] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35"
-      >
-        Claim dashboard
-      </a>
+      <Button asChild size="lg" className="self-start sm:self-auto">
+        <a href={claimUrl}>
+          Claim dashboard
+          <ArrowUpRight aria-hidden="true" />
+        </a>
+      </Button>
     </div>
   )
 }

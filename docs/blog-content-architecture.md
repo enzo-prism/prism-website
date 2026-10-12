@@ -44,7 +44,7 @@ Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` use `socialImage` 
 
 The old `app/api/og/blog/[slug]` image route was deleted on 2026-10-07: no page referenced it, and it exposed `next/og` `ImageResponse` publicly. Legacy `openGraph.images` entries pointing at `/api/og/blog/...` in post frontmatter are ignored (blog metadata always overrides them). `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
 
-`components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads. The site-wide page markdown control lives in `components/copy-page-markdown-button.tsx` and is hidden on blog posts so this source-level copy remains the primary blog behavior.
+`components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads.
 
 The Markdown endpoint responds with `text/markdown; charset=utf-8`, keeps the source readable to crawlers, and sends `X-Robots-Tag: noindex, follow` plus an HTTP `Link` canonical to the HTML article. Missing or unrenderable posts return 404. The article advertises this source on the canonical production host regardless of preview environment configuration. Article schema uses the same canonical as page metadata, rather than a potentially stale `openGraph.url`.
 
@@ -65,19 +65,17 @@ Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-sl
 
 ## Category Filtering
 
-`components/blog-filter-navigation.tsx` powers the sticky filter/search bar on `/blog`. Highlights:
+`components/blog-filter-navigation-server.tsx` renders the topic pills on `/blog` (All, Engineering, Design, Marketing, with post counts). They are plain links (`/blog?category=<topic>`), so filtering works without client JavaScript. Each post's frontmatter `category` maps to a topic bucket through `getBlogFilterFromCategory()` in `lib/blog-topic-filters.ts`.
 
-- Categories are sorted from the `Map<slug, label>` produced in `app/blog/BlogPostsList.tsx`.
-- Selecting a pill filters posts by `categorySlug`. The “All” pill shows everything.
-- The search box performs a case-insensitive match against `title`, `description`, and `category`.
-
-If you introduce a new category label in MDX, it automatically appears as soon as the site rebuilds—no config changes required.
+The index (`app/blog/page.tsx`) leads page one with the newest post in the current topic as a featured card, then pages the rest in a 12-card grid (`components/blog/blog-post-cards.tsx`). Posts with their own cover art render it through `next/image`; posts that only carry the shared Prism placeholder image get a generated cover (`components/blog/blog-cover.tsx`): grid, two-color spectrum light seeded by the slug, and the topic icon.
 
 ---
 
 ## Related Posts
 
-`app/blog/[slug]/page.tsx` now fetches all posts on the server, prioritizes those that share the same `categorySlug`, then fills remaining slots with the latest posts from other categories. The top three are passed to `components/blog-post-layout.tsx`, which renders them using `SimpleBlogPostCard`.
+`app/blog/[slug]/page.tsx` fetches all posts on the server, prioritizes those in the same topic bucket, then fills remaining slots with the latest posts from other topics. The top three are passed to `components/blog-post-layout.tsx`, which renders them with the same `BlogGridCard` used on `/blog`, followed by the shared `FinalCta` (location `blog final cta`).
+
+The post layout also renders an "On this page" table of contents from `lib/mdx-toc.ts` when a post has at least three H2/H3 headings (a sticky rail on wide screens, a disclosure above the article on smaller ones), a reading-time estimate, and the copy-as-Markdown button in the header.
 
 To tweak behavior (e.g., change the count or ranking), adjust the logic in `app/blog/[slug]/page.tsx`.
 
@@ -174,17 +172,6 @@ When adjusting precision:
 
 This keeps editorial copy untouched while making outbound references consistent across all posts.
 
-## Feedback and utility enhancements
-
-Post-page UX includes this client-side interaction that runs without editing MDX:
-
-- Helpful feedback micro-interaction
-  - `components/blog/blog-post-feedback.tsx` adds a post-level `Was this post helpful?` prompt.
-  - Feedback is saved in `localStorage` per slug (`prism-blog-feedback-<slug>`) to prevent repeated prompts.
-  - No editorial copy changes are required because it renders in the shared layout after article body sections.
-
-Both components are intentionally lightweight and intentionally scoped to preserve the existing metadata flow (`app/blog/[slug]/page.tsx` and `components/blog-post-layout.tsx`) unchanged.
-
 ---
 
 ## RSS Feed (`/blog/feed.xml`)
@@ -211,7 +198,7 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 
 1. Create `content/blog/my-post-slug.mdx`.
 2. Populate required frontmatter fields.
-3. Write content in Markdown/MDX. Avoid inline styling—`prose-blog` handles typography.
+3. Write content in Markdown/MDX. Avoid inline styling: the post layout applies the shared reading styles (`proseClassName` in `components/landing/prose.ts`). GitHub-style Markdown tables are not parsed (no `remark-gfm`), so use an HTML `<table>` when a post needs one.
 4. For embeds and interactive widgets, only use MDX components that are registered in `lib/mdx.tsx` / `components/mdx-components.tsx`. Use globally available names like `<YouTubeVideoEmbed />`, `<VideoObjectSchema />`, and `<VideoPlayer />` instead of assuming a post-local import alone will work at runtime.
 5. The layout renders the post title as the single H1. Use H2 for major sections and H3 for sub-sections to keep the article hierarchy clear.
 6. Decide search visibility:

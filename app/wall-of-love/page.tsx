@@ -5,8 +5,8 @@ import WallOfLoveClientPage from "./client-page"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Client reviews',
-  description: 'Read real reviews from dental practices, nonprofits, and local brands that work with Prism.',
+  titleStem: 'Wall of Love',
+  description: 'Notes from Prism website clients, plus comments from the community that watches Prism videos on Instagram.',
   path: "/wall-of-love",
   ogImage: "/prism-opengraph.png",
 })

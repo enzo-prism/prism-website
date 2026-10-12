@@ -1,18 +1,20 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import CaseStudiesPage from '@/app/case-studies/client-page'
 import { CASE_STUDIES } from '@/lib/case-study-data'
-import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
+import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 
 jest.mock('next/link', () => ({
   __esModule: true,
   default: function MockNextLink({
     href,
     children,
+    prefetch: _prefetch,
     ...props
   }: {
     href: string
     children: React.ReactNode
+    prefetch?: boolean
     [key: string]: unknown
   }) {
     return (
@@ -49,84 +51,133 @@ jest.mock('@/components/schema-markup', () => ({
   },
 }))
 
-const measuredCount = CASE_STUDIES.filter(
+const FORMER = new Set<string>(FORMER_CLIENT_SLUGS)
+const currentStudies = CASE_STUDIES.filter((study) => !FORMER.has(study.slug))
+const verifiedStudies = currentStudies.filter(
   (study) => (study.structured?.results?.length ?? 0) > 0,
-).length
+)
 
-describe('CaseStudiesPage ledger hero', () => {
-  it('renders the kept H1 with the data-derived ledger', () => {
-    const { container } = render(<CaseStudiesPage />)
-    const hero = within(
-      container.querySelector('#case-studies-hero') as HTMLElement,
-    )
+function renderHero() {
+  const { container } = render(<CaseStudiesPage />)
+  const heroEl = container.querySelector('#case-studies-hero') as HTMLElement
+  return { container, heroEl, hero: within(heroEl) }
+}
 
-    expect(
-      hero.getByRole('heading', {
-        level: 1,
-        name: 'The work behind the growth',
-      }),
-    ).toBeInTheDocument()
+describe('Work index (/case-studies)', () => {
+  it('renders the lowercase hero headline and the waitlist CTA', () => {
+    const { hero } = renderHero()
 
     expect(
-      hero.getByText(
-        new RegExp(
-          `${CASE_STUDIES.length} client stories[\\s\\S]*${measuredCount} measured result sets[\\s\\S]*Google Search Console verified`,
-        ),
-      ),
+      hero.getByRole('heading', { level: 1, name: 'real businesses. live sites.' }),
     ).toBeInTheDocument()
+
+    const cta = hero.getByRole('link', { name: /Join the waitlist/ })
+    expect(cta).toHaveAttribute('href', '/waitlist')
   })
 
-  it('links the quiet action to the studies list anchor', () => {
-    const { container } = render(<CaseStudiesPage />)
-    const hero = within(
-      container.querySelector('#case-studies-hero') as HTMLElement,
-    )
+  it('links the secondary action to the gallery anchor', () => {
+    const { hero } = renderHero()
 
-    const action = hero.getByRole('link', { name: /Browse the studies/ })
+    const action = hero.getByRole('link', { name: /Browse the work/ })
     expect(action).toHaveAttribute('href', '#case-studies-list')
     expect(document.getElementById('case-studies-list')).toBeInTheDocument()
   })
 
-  it('renders the planet ghost underlay and server-side poster', () => {
-    const { container } = render(<CaseStudiesPage />)
-    const hero = container.querySelector('#case-studies-hero') as HTMLElement
+  it('computes the ledger from current clients and shows only verified metrics with their source', () => {
+    const { heroEl, hero } = renderHero()
 
-    const ghost = within(hero).getByText(
-      (_, element) =>
-        element?.tagName === 'PRE' &&
-        (element.textContent?.length ?? 0) > 1000,
-    )
-    expect(ghost).toHaveAttribute('aria-hidden', 'true')
-    expect(ghost).toHaveAttribute('data-ghost-frame', '')
+    expect(hero.getByText('Client stories')).toBeInTheDocument()
+    expect(hero.getAllByText(String(currentStudies.length)).length).toBeGreaterThan(0)
 
-    const poster = hero.querySelector(
-      'img[src="/animations/planet/poster.svg"]',
-    )
-    expect(poster).toBeInTheDocument()
-    expect(poster).toHaveAttribute('aria-hidden', 'true')
+    expect(verifiedStudies.map((study) => study.slug).sort()).toEqual([
+      'belize-kids-foundation',
+      'dr-christopher-wong',
+    ])
+    for (const study of verifiedStudies) {
+      const metric = study.structured!.results![0]
+      const cell = hero.getByRole('link', { name: new RegExp(metric.value.replace('+', '\\+')) })
+      expect(cell).toHaveAttribute('href', `/case-studies/${study.slug}`)
+      expect(heroEl.textContent).toContain(metric.label)
+      expect(heroEl.textContent).toContain(metric.sourceName!)
+      expect(heroEl.textContent).toContain(metric.dateRange!)
+    }
   })
 
-  it('keeps the footer conversion block byte-identical', () => {
+  it('shows every current client in the gallery and keeps former clients out of it', () => {
+    render(<CaseStudiesPage />)
+
+    const panel = screen.getByRole('tabpanel')
+    const hrefs = within(panel)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href'))
+
+    for (const study of currentStudies) {
+      expect(hrefs).toContain(`/case-studies/${study.slug}`)
+    }
+    for (const slug of FORMER_CLIENT_SLUGS) {
+      expect(hrefs).not.toContain(`/case-studies/${slug}`)
+    }
+  })
+
+  it('never lists former clients anywhere on the index (no archive row)', () => {
+    const { container } = render(<CaseStudiesPage />)
+
+    const hrefs = Array.from(container.querySelectorAll('a')).map((link) =>
+      link.getAttribute('href'),
+    )
+    const former = CASE_STUDIES.filter((study) => FORMER.has(study.slug))
+    for (const study of former) {
+      expect(hrefs).not.toContain(`/case-studies/${study.slug}`)
+      expect(container.textContent).not.toContain(study.client)
+    }
+  })
+
+  it('makes the filter row a scrollable list of tabs', () => {
+    render(<CaseStudiesPage />)
+
+    const list = screen.getByRole('tablist', { name: 'Filter work by industry' })
+    expect(list.parentElement?.className).toContain('overflow-x-auto')
+    expect(screen.getByRole('tab', { name: /^All/ })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    )
+  })
+
+  it('filters the gallery by industry', () => {
+    render(<CaseStudiesPage />)
+
+    const dentalTab = screen.getByRole('tab', { name: /^Dental/ })
+    fireEvent.mouseDown(dentalTab, { button: 0, ctrlKey: false })
+
+    const panel = screen.getByRole('tabpanel')
+    const hrefs = within(panel)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href'))
+      .filter((href) => href?.startsWith('/case-studies/'))
+
+    const dentalSlugs = currentStudies
+      .filter((study) => study.category === 'dentistry')
+      .map((study) => `/case-studies/${study.slug}`)
+
+    expect(hrefs.sort()).toEqual(dentalSlugs.sort())
+  })
+
+  it('ends at the waitlist with a secondary link to the Wall of Love', () => {
     render(<CaseStudiesPage />)
 
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'What could we improve for your business?',
+        name: 'your business could be the next case study.',
       }),
     ).toBeInTheDocument()
 
-    const audit = screen.getByRole('link', { name: FREE_AUDIT_CTA_TEXT })
-    expect(audit).toHaveAttribute('href', '/waitlist')
-
-    const reviews = screen.getByRole('link', { name: 'Read what clients say' })
+    const reviews = screen.getByRole('link', { name: /Read what clients say/ })
     expect(reviews).toHaveAttribute('href', '/wall-of-love')
   })
 
   it('keeps hero copy free of em dashes', () => {
-    const { container } = render(<CaseStudiesPage />)
-
-    const hero = container.querySelector('#case-studies-hero')
-    expect(hero?.textContent).not.toContain('—')
+    const { heroEl } = renderHero()
+    expect(heroEl.textContent).not.toContain('—')
   })
 })

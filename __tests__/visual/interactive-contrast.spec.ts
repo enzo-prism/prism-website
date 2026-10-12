@@ -1,7 +1,7 @@
-import { expect, test, type Locator, type Page } from "@playwright/test"
+import { expect, test, type Locator, type Page } from '@playwright/test'
 
 async function stabilizePage(page: Page) {
-  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.addStyleTag({
     content: `
       *, *::before, *::after {
@@ -19,7 +19,7 @@ async function readContrast(locator: Locator) {
     const parseAlpha = (value: string | undefined) => {
       if (!value) return 1
       const trimmed = value.trim()
-      if (trimmed.endsWith("%")) {
+      if (trimmed.endsWith('%')) {
         return (Number.parseFloat(trimmed) || 0) / 100
       }
       return Number.parseFloat(trimmed) || 0
@@ -27,14 +27,14 @@ async function readContrast(locator: Locator) {
 
     const parseCssColor = (input: string) => {
       const value = input.trim().toLowerCase()
-      if (!value || value === "transparent") {
+      if (!value || value === 'transparent') {
         return { r: 0, g: 0, b: 0, a: 0 }
       }
 
       const rgbaMatch = value.match(/^rgba?\(([^)]+)\)$/)
       if (rgbaMatch) {
         const [r, g, b, alpha] = rgbaMatch[1]
-          .split(",")
+          .split(',')
           .map((part) => part.trim())
         return {
           r: Number.parseFloat(r) || 0,
@@ -44,14 +44,14 @@ async function readContrast(locator: Locator) {
         }
       }
 
-      const hex = value.replace("#", "")
+      const hex = value.replace('#', '')
       if ([3, 4, 6, 8].includes(hex.length)) {
         const expanded =
           hex.length <= 4
             ? hex
-                .split("")
+                .split('')
                 .map((char) => char + char)
-                .join("")
+                .join('')
             : hex
         const hasAlpha = expanded.length === 8
         return {
@@ -66,14 +66,10 @@ async function readContrast(locator: Locator) {
         const match = value.match(pattern)
         if (!match) return null
 
-        const parts = match[1]
-          .split("/")
-          .map((part) => part.trim())
-        const rawChannels = parts[0]
-          .split(/\s+/)
-          .filter(Boolean)
+        const parts = match[1].split('/').map((part) => part.trim())
+        const rawChannels = parts[0].split(/\s+/).filter(Boolean)
         const channels = rawChannels.map((channel) =>
-          channel.endsWith("%")
+          channel.endsWith('%')
             ? Number.parseFloat(channel)
             : Number.parseFloat(channel),
         )
@@ -155,23 +151,17 @@ async function readContrast(locator: Locator) {
         const fz = fy - b / 200
         const fx3 = fx ** 3
         const fz3 = fz ** 3
-        const xr =
-          fx3 > epsilon ? fx3 : (116 * fx - 16) / kappa
-        const yr =
-          lightness > kappa * epsilon ? fy ** 3 : lightness / kappa
-        const zr =
-          fz3 > epsilon ? fz3 : (116 * fz - 16) / kappa
+        const xr = fx3 > epsilon ? fx3 : (116 * fx - 16) / kappa
+        const yr = lightness > kappa * epsilon ? fy ** 3 : lightness / kappa
+        const zr = fz3 > epsilon ? fz3 : (116 * fz - 16) / kappa
 
         const xD50 = xr * 0.96422
         const yD50 = yr
         const zD50 = zr * 0.82521
 
-        const x =
-          0.9555766 * xD50 + -0.0230393 * yD50 + 0.0631636 * zD50
-        const y =
-          -0.0282895 * xD50 + 1.0099416 * yD50 + 0.0210077 * zD50
-        const z =
-          0.0122982 * xD50 + -0.020483 * yD50 + 1.3299098 * zD50
+        const x = 0.9555766 * xD50 + -0.0230393 * yD50 + 0.0631636 * zD50
+        const y = -0.0282895 * xD50 + 1.0099416 * yD50 + 0.0210077 * zD50
+        const z = 0.0122982 * xD50 + -0.020483 * yD50 + 1.3299098 * zD50
 
         const rLinear = 3.2404542 * x + -1.5371385 * y + -0.4985314 * z
         const gLinear = -0.969266 * x + 1.8760108 * y + 0.041556 * z
@@ -205,9 +195,7 @@ async function readContrast(locator: Locator) {
 
     const srgbToLinear = (channel: number) => {
       const value = channel / 255
-      return value <= 0.03928
-        ? value / 12.92
-        : ((value + 0.055) / 1.055) ** 2.4
+      return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
     }
 
     const luminance = (color: { r: number; g: number; b: number }) =>
@@ -227,7 +215,7 @@ async function readContrast(locator: Locator) {
     const effectiveBackground = (target: Element) => {
       const rootBg = parseCssColor(
         getComputedStyle(document.documentElement).backgroundColor ||
-          "rgb(255,255,255)",
+          'rgb(255,255,255)',
       )
       let bg = rootBg.a === 0 ? { r: 255, g: 255, b: 255, a: 1 } : rootBg
       const chain: Element[] = []
@@ -249,7 +237,7 @@ async function readContrast(locator: Locator) {
     }
 
     const preferredTextTarget =
-      el.querySelector("span, strong, em, p, label") ?? el
+      el.querySelector('span, strong, em, p, label') ?? el
     const textStyles = getComputedStyle(preferredTextTarget)
     const bg = effectiveBackground(el)
     const fg = parseCssColor(textStyles.color)
@@ -259,12 +247,12 @@ async function readContrast(locator: Locator) {
       color: textStyles.color,
       backgroundColor: getComputedStyle(el).backgroundColor,
       text: (
-        el.getAttribute("aria-label") ||
+        el.getAttribute('aria-label') ||
         el.textContent ||
         (el as HTMLInputElement).placeholder ||
-        ""
+        ''
       )
-        .replace(/\s+/g, " ")
+        .replace(/\s+/g, ' ')
         .trim(),
     }
   })
@@ -273,7 +261,7 @@ async function readContrast(locator: Locator) {
 async function expectReadableIfVisible(
   locator: Locator,
   threshold: number,
-  states: Array<"default" | "hover" | "focus">,
+  states: Array<'default' | 'hover' | 'focus'>,
 ) {
   if ((await locator.count()) === 0) return
   const target = locator.first()
@@ -284,17 +272,17 @@ async function expectReadableIfVisible(
 async function expectReadableStates(
   locator: Locator,
   threshold: number,
-  states: Array<"default" | "hover" | "focus">,
+  states: Array<'default' | 'hover' | 'focus'>,
 ) {
   await locator.scrollIntoViewIfNeeded()
   await expect(locator).toBeVisible()
 
   for (const state of states) {
-    if (state === "hover") {
+    if (state === 'hover') {
       await locator.hover({ force: true })
     }
 
-    if (state === "focus") {
+    if (state === 'focus') {
       await locator.focus()
     }
 
@@ -307,78 +295,79 @@ async function expectReadableStates(
   }
 }
 
-test.describe("interactive contrast", () => {
+test.describe('interactive contrast', () => {
   test.beforeEach(async ({ page }) => {
     await stabilizePage(page)
   })
 
-  test("homepage CTA and proof states stay readable", async ({ page }) => {
-    await page.goto("/", { waitUntil: "domcontentloaded" })
+  test('homepage CTA and proof states stay readable', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
     await page.waitForTimeout(300)
     const viewport = page.viewportSize()
-    const interactiveStates: Array<"default" | "hover" | "focus"> =
+    const interactiveStates: Array<'default' | 'hover' | 'focus'> =
       viewport && viewport.width < 768
-        ? ["default", "focus"]
-        : ["default", "hover", "focus"]
+        ? ['default', 'focus']
+        : ['default', 'hover', 'focus']
 
     await expectReadableStates(
-      page.getByRole("link", { name: /join the waitlist/i }).first(),
+      page.getByRole('link', { name: /join the waitlist/i }).first(),
       4.5,
       interactiveStates,
     )
 
     await expectReadableStates(
-      page.getByRole("link", { name: /see how it works/i }).first(),
+      page
+        .locator('#homepage-hero')
+        .getByRole('link', { name: /see the work/i }),
       4.5,
       interactiveStates,
     )
 
     await expectReadableStates(
-      page.getByRole("link", { name: /see client results/i }),
+      page.getByRole('link', { name: /read the case study/i }).first(),
       4.5,
       interactiveStates,
     )
 
     if (viewport && viewport.width < 768) {
-      await expectReadableIfVisible(
-        page.getByLabel(/open menu/i),
-        4.5,
-        ["default", "focus"],
-      )
+      await expectReadableIfVisible(page.getByLabel(/open menu/i), 4.5, [
+        'default',
+        'focus',
+      ])
     } else {
       await expectReadableIfVisible(
-        page.getByRole("link", { name: /^start$/i }),
+        page.getByTestId('navbar-cta'),
         4.5,
         interactiveStates,
       )
     }
   })
 
-  test("application entry and form CTAs stay readable", async ({
-    page,
-  }) => {
-    await page.goto("/waitlist", { waitUntil: "domcontentloaded" })
+  test('application entry and form CTAs stay readable', async ({ page }) => {
+    await page.goto('/waitlist', { waitUntil: 'domcontentloaded' })
     await page.waitForTimeout(300)
     const viewport = page.viewportSize()
-    const interactiveStates: Array<"default" | "hover" | "focus"> =
+    const interactiveStates: Array<'default' | 'hover' | 'focus'> =
       viewport && viewport.width < 768
-        ? ["default", "focus"]
-        : ["default", "hover", "focus"]
+        ? ['default', 'focus']
+        : ['default', 'hover', 'focus']
 
     // Step 1 of the stepped flow: the Continue button and a focus card
     // (the checkbox itself is visually hidden; its label card carries the
     // readable state), unselected then selected.
     await expectReadableStates(
-      page.getByRole("button", { name: /continue/i }).first(),
+      page.getByRole('button', { name: /continue/i }).first(),
       4.5,
       interactiveStates,
     )
 
     const focusCard = page
-      .locator("label", { has: page.getByRole("checkbox", { name: /content/i }) })
+      .locator('label', {
+        has: page.getByRole('checkbox', { name: /content/i }),
+      })
       .first()
     await expectReadableStates(focusCard, 4.5, interactiveStates)
     await focusCard.click()
-    await expectReadableStates(focusCard, 4.5, ["default"])
+    await expectReadableStates(focusCard, 4.5, ['default'])
   })
 })

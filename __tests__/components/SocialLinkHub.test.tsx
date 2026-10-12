@@ -48,28 +48,6 @@ jest.mock('next/image', () => ({
   },
 }))
 
-jest.mock('@/components/pixelish/PixelishIcon', () => ({
-  __esModule: true,
-  default: function MockPixelishIcon({
-    className,
-    invert,
-    src,
-  }: {
-    className?: string
-    invert?: boolean
-    src: string
-  }) {
-    return (
-      <span
-        className={className}
-        data-invert={String(invert)}
-        data-src={src}
-        data-testid="pixelish-icon"
-      />
-    )
-  },
-}))
-
 jest.mock('@/components/brand-logo', () => ({
   __esModule: true,
   default: function MockBrandLogo({

@@ -2,10 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useMemo, useState } from "react"
-import { ArrowRight, Camera, CheckCircle2, ClipboardList, FileText, Lightbulb, ListChecks, ShieldCheck, Sparkles } from "lucide-react"
+import { useMemo, useState, type ReactNode } from "react"
+import { ArrowUpRight, Camera, Check, ClipboardList, FileText, Lightbulb, ListChecks, ShieldCheck, Sparkles } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Eyebrow, Section } from "@/components/prism/section"
+import { WaitlistButton } from "@/components/prism/waitlist-button"
+import { cn } from "@/lib/utils"
+import { WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
 
 type TierId = "entry" | "mid" | "premium"
 
@@ -99,7 +102,6 @@ const tiers: Record<TierId, TierContent> = {
         price: "$99.90",
         description:
           "Use the practice’s existing iPhone or Android and add a clip-on macro lens. Fast for staff, no complicated settings, and incredible close-ups with proper lighting.",
-        image: "https://dentiphoto.com/cdn/shop/products/Sa1199fe5bd554b9e880e209f52153f7bN.jpg?v=1733984014&width=700",
         link: {
           href: "https://dentiphoto.com/products/120mm-macro-lens",
           label: "dentiphoto.com"
@@ -232,6 +234,26 @@ const tiers: Record<TierId, TierContent> = {
   }
 }
 
+const panelClass = "min-w-0 rounded-2xl border border-white/[0.08] bg-card p-5 sm:p-6"
+const labelClass = "flex items-center gap-2 text-eyebrow text-subtle"
+
+function StepHeading({ children }: { children: ReactNode }) {
+  return <h3 className="text-[19px] font-semibold tracking-[-0.02em] text-foreground">{children}</h3>
+}
+
+function DotList({ items, className }: { items: string[]; className?: string }) {
+  return (
+    <ul className={cn("space-y-2 text-[14px] leading-6 text-muted-foreground", className)}>
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-2.5">
+          <Check className="mt-1 size-3.5 shrink-0 text-foreground/70" aria-hidden />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function GuideTabs() {
   const [activeTier, setActiveTier] = useState<TierId>("entry")
   const content = tiers[activeTier]
@@ -245,307 +267,283 @@ export default function GuideTabs() {
   )
 
   return (
-    <section id="guide-tabs" className="px-4 py-16 sm:py-20">
-      <div className="container mx-auto max-w-6xl">
-        <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">choose your build</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900">entry · mid · premium</h2>
-              <p className="mt-2 text-sm text-neutral-600">
-                Switch tiers to see the exact parts list, setup steps, and workflows for the gear budget that matches your practice.
-              </p>
-              <p className="mt-1 text-xs text-neutral-500">
-                All dollar amounts on this page are photography equipment estimates, not Prism website or growth service pricing.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2" role="tablist" aria-label="Before and after tier selector">
-              {(Object.keys(tiers) as TierId[]).map((tierId) => {
-                const isActive = activeTier === tierId
-                const tier = tiers[tierId]
-                return (
-                  <button
-                    key={tierId}
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => setActiveTier(tierId)}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold capitalize transition ${
-                      isActive ? "bg-neutral-900 text-white" : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                    }`}
-                  >
-                    <span className={`mr-2 text-xs font-semibold ${isActive ? "text-white/80" : "text-neutral-500"}`}>
-                      {"$".repeat(tier.priceLevel)}
-                    </span>
-                    <span>{tier.label}</span>
-                    {tier.comingSoon && (
-                      <span
-                        className={`ml-2 text-[10px] font-medium uppercase tracking-[0.3em] ${
-                          isActive ? "text-white/70" : "text-neutral-500"
-                        }`}
-                      >
-                        coming soon
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
+    <Section id="guide-tabs" aria-labelledby="guide-tabs-title" className="scroll-mt-24">
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <Eyebrow>Choose your build</Eyebrow>
+          <h2 id="guide-tabs-title" className="text-title text-gradient mt-5 pb-1">
+            entry · mid · premium.
+          </h2>
+          <p className="mt-5 text-[15px] leading-7 text-muted-foreground">
+            Switch tiers to see the exact parts list, setup steps, and workflows for the gear budget that matches your practice.
+          </p>
+          <p className="mt-2 text-[13px] leading-6 text-subtle">
+            All dollar amounts on this page are photography equipment estimates, not Prism website or growth service pricing.
+          </p>
+        </div>
+        <div
+          className="flex w-fit max-w-full flex-wrap gap-1 rounded-[1.25rem] border border-white/[0.08] bg-white/[0.03] p-1 sm:rounded-full"
+          role="tablist"
+          aria-label="Before and after tier selector"
+        >
+          {(Object.keys(tiers) as TierId[]).map((tierId) => {
+            const isActive = activeTier === tierId
+            const tier = tiers[tierId]
+            return (
+              <button
+                key={tierId}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveTier(tierId)}
+                className={cn(
+                  "inline-flex min-h-10 items-center rounded-full px-4 text-sm font-medium capitalize transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                  isActive
+                    ? "bg-white/[0.09] text-foreground shadow-[0_0_0_1px_oklch(1_0_0/12%)_inset]"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <span className={cn("mr-2 font-mono text-xs", isActive ? "text-foreground/80" : "text-subtle")}>
+                  {"$".repeat(tier.priceLevel)}
+                </span>
+                <span>{tier.label}</span>
+                {tier.comingSoon && (
+                  <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-subtle">
+                    soon
+                  </span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div className="mt-10 space-y-12 rounded-[2rem] border border-white/[0.08] bg-white/[0.015] p-5 sm:p-8 lg:p-12" role="tabpanel" aria-label={`${content.label} tier guide`}>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-start">
+          <div>
+            <p className="text-eyebrow text-subtle">{content.label} tier guide</p>
+            <p className="text-heading mt-3 text-foreground">{content.budget}</p>
+            <p className="mt-4 text-[15px] leading-7 text-muted-foreground">{content.intro}</p>
+          </div>
+          <div className="grid gap-3">
+            {overviewItems.map((item) => (
+              <div key={item.label} className={panelClass}>
+                <p className="text-eyebrow text-subtle">{item.label}</p>
+                <p className="mt-2 text-[15px] leading-6 text-foreground">{item.value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-8 space-y-10 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm md:p-10">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <div className="lg:w-2/3">
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">{content.label} tier guide</p>
-              <h3 className="mt-3 text-2xl font-semibold text-neutral-900">{content.budget}</h3>
-              <p className="mt-4 text-base text-neutral-700">{content.intro}</p>
-            </div>
-            <div className="grid gap-4 text-sm text-neutral-700 lg:w-1/3">
-              {overviewItems.map((item) => (
-                <div key={item.label} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">{item.label}</p>
-                  <p className="mt-1 font-medium text-neutral-900">{item.value}</p>
-                </div>
-              ))}
-            </div>
+        {content.guideIncludes.length > 0 && (
+          <div className={panelClass}>
+            <p className="text-eyebrow text-subtle">this guide includes</p>
+            <DotList className="mt-4 grid gap-x-8 space-y-0 gap-y-2 sm:grid-cols-2" items={content.guideIncludes} />
           </div>
+        )}
 
-          {content.guideIncludes.length > 0 && (
-            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">this guide includes</p>
-              <ul className="mt-4 grid gap-2 text-sm text-neutral-700 sm:grid-cols-2">
-                {content.guideIncludes.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {content.comingSoon ? (
-            <div className="rounded-3xl border border-dashed border-neutral-300 bg-neutral-50 p-8 text-center">
-              <p className="text-base font-medium text-neutral-800">
-                The {content.label.toLowerCase()} tier breakdown is in progress. Need it now?{" "}
-                <a href="mailto:support@design-prism.com" className="text-neutral-900 underline decoration-neutral-300 underline-offset-4">
-                  Email the Prism team
-                </a>{" "}
-                and we&apos;ll prioritize the build.
-              </p>
-            </div>
-          ) : (
-            <>
-              {content.products.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-semibold text-neutral-900">1. Recommended {content.label.toLowerCase()} products</h4>
-                  <div className="mt-4 grid gap-4 md:grid-cols-2">
-                    {content.products.map((product) => (
-                      <div key={product.title + product.subtitle} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-                        <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">{product.title}</p>
-                        {product.subtitle && <h5 className="mt-2 text-lg font-semibold text-neutral-900">{product.subtitle}</h5>}
-                        {product.price && <p className="text-sm font-medium text-neutral-700">{product.price}</p>}
-                        {product.image && (
-                          <div className="mt-4 rounded-2xl border border-neutral-100 bg-neutral-50 p-4">
-                            <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-white">
-                              <Image
-                                src={product.image}
-                                alt={product.subtitle ?? product.title}
-                                fill
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-                                className="object-contain p-2"
-                              />
-                            </div>
-                          </div>
-                        )}
-                        <p className="mt-3 text-sm text-neutral-600">{product.description}</p>
-                        {product.link && (
-                          <Link
-                            href={product.link.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="mt-3 inline-flex items-center text-sm font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                          >
-                            {product.link.label}
-                            <ArrowRight className="ml-2 h-3.5 w-3.5" aria-hidden />
-                          </Link>
-                        )}
-                        {product.bullets && (
-                          <ul className="mt-4 space-y-2 text-sm text-neutral-600">
-                            {product.bullets.map((bullet) => (
-                              <li key={bullet} className="flex items-start gap-2">
-                                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
-                                <span>{bullet}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {content.setupSteps && (
-                <div>
-                  <h4 className="text-lg font-semibold text-neutral-900">2. Physical setup (5-10 minutes)</h4>
-                  <div className="mt-4 grid gap-4 md:grid-cols-2">
-                    {content.setupSteps.map((step) => (
-                      <div key={step.title} className="rounded-2xl border border-neutral-200 bg-white p-5">
-                        <p className="text-sm font-semibold text-neutral-900">{step.title}</p>
-                        <p className="mt-2 text-sm text-neutral-600">{step.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {content.workflow && (
-                <div>
-                  <h4 className="text-lg font-semibold text-neutral-900">3. Team workflow</h4>
-                  <div className="mt-4 grid gap-4 md:grid-cols-2">
-                    {content.workflow.map((item) => (
-                      <div key={item.role} className="rounded-2xl border border-neutral-200 bg-white p-5">
-                        <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                          <ClipboardList className="h-4 w-4" aria-hidden />
-                          {item.role}
+        {content.comingSoon ? (
+          <div className="rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-8 text-center">
+            <p className="text-[15px] leading-7 text-muted-foreground">
+              The {content.label.toLowerCase()} tier breakdown is in progress. Need it now?{" "}
+              <a
+                href="mailto:support@design-prism.com"
+                className="font-medium text-foreground underline decoration-white/25 underline-offset-[5px] hover:decoration-white/70"
+              >
+                Email the Prism team
+              </a>{" "}
+              and we&apos;ll prioritize the build.
+            </p>
+          </div>
+        ) : (
+          <>
+            {content.products.length > 0 && (
+              <div>
+                <StepHeading>1. Recommended {content.label.toLowerCase()} products</StepHeading>
+                <div className="mt-5 grid gap-4 md:grid-cols-2">
+                  {content.products.map((product) => (
+                    <div key={product.title + product.subtitle} className={cn(panelClass, "flex flex-col")}>
+                      <p className="text-eyebrow text-subtle">{product.title}</p>
+                      {product.subtitle && (
+                        <h4 className="mt-2 text-[17px] font-semibold tracking-[-0.02em] text-foreground">{product.subtitle}</h4>
+                      )}
+                      {product.price && <p className="mt-1 font-mono text-[13px] text-muted-foreground">{product.price}</p>}
+                      {product.image && (
+                        <div className="relative mt-4 aspect-[16/9] w-full overflow-hidden rounded-xl bg-foreground">
+                          <Image
+                            src={product.image}
+                            alt={product.subtitle ?? product.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                            className="object-contain p-3"
+                          />
                         </div>
-                        <p className="mt-2 text-sm text-neutral-600">{item.responsibility}</p>
-                      </div>
-                    ))}
-                  </div>
+                      )}
+                      <p className="mt-4 text-[14px] leading-6 text-muted-foreground">{product.description}</p>
+                      {product.bullets && <DotList className="mt-4" items={product.bullets} />}
+                      {product.link && (
+                        <Link
+                          href={product.link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group/product mt-auto inline-flex min-h-10 items-center gap-1.5 self-start rounded-sm pt-4 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        >
+                          {product.link.label}
+                          <ArrowUpRight
+                            className="size-4 text-muted-foreground transition-transform duration-200 group-hover/product:-translate-y-0.5 group-hover/product:translate-x-0.5"
+                            aria-hidden
+                          />
+                        </Link>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {content.protocol && (
-                <div>
-                  <h4 className="text-lg font-semibold text-neutral-900">4. Photo protocol (use this every time)</h4>
-                  <div className="mt-4 grid gap-4 md:grid-cols-3">
-                    {content.protocol.map((block) => (
-                      <div key={block.title} className="rounded-2xl border border-neutral-200 bg-white p-5">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-neutral-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-neutral-600">
-                          <Camera className="h-3.5 w-3.5" aria-hidden />
-                          protocol
-                        </div>
-                        <h5 className="mt-3 text-base font-semibold text-neutral-900">{block.title}</h5>
-                        <ul className="mt-3 space-y-2 text-sm text-neutral-600">
-                          {block.instructions.map((instruction) => (
-                            <li key={instruction}>• {instruction}</li>
-                          ))}
-                        </ul>
-                        {block.tips && (
-                          <div className="mt-4 rounded-2xl bg-neutral-950 px-4 py-3 text-xs text-neutral-200">
+            {content.setupSteps && (
+              <div>
+                <StepHeading>2. Physical setup (5-10 minutes)</StepHeading>
+                <ol className="mt-5 grid overflow-hidden rounded-2xl border border-white/[0.08] bg-card md:grid-cols-2">
+                  {content.setupSteps.map((step, index) => (
+                    <li key={step.title} className="-mb-px -mr-px flex gap-4 border-b border-r border-white/[0.07] p-5 sm:p-6">
+                      <span className="font-mono text-[11px] leading-6 tracking-[0.18em] text-subtle">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="text-[15px] font-semibold text-foreground">{step.title}</p>
+                        <p className="mt-1.5 text-[14px] leading-6 text-muted-foreground">{step.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {content.workflow && (
+              <div>
+                <StepHeading>3. Team workflow</StepHeading>
+                <div className="mt-5 grid gap-4 md:grid-cols-2">
+                  {content.workflow.map((item) => (
+                    <div key={item.role} className={panelClass}>
+                      <p className={labelClass}>
+                        <ClipboardList className="size-3.5" aria-hidden />
+                        {item.role}
+                      </p>
+                      <p className="mt-3 text-[14px] leading-6 text-muted-foreground">{item.responsibility}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {content.protocol && (
+              <div>
+                <StepHeading>4. Photo protocol (use this every time)</StepHeading>
+                <div className="mt-5 grid gap-4 md:grid-cols-3">
+                  {content.protocol.map((block) => (
+                    <div key={block.title} className={cn(panelClass, "flex flex-col")}>
+                      <p className={labelClass}>
+                        <Camera className="size-3.5" aria-hidden />
+                        protocol
+                      </p>
+                      <h4 className="mt-3 text-[16px] font-semibold text-foreground">{block.title}</h4>
+                      <DotList className="mt-3" items={block.instructions} />
+                      {block.tips && (
+                        <div className="mt-auto pt-4">
+                          <div className="rounded-xl border border-white/[0.07] bg-background/60 px-4 py-3 text-[13px] leading-5 text-muted-foreground">
                             {block.tips.map((tip) => (
                               <p key={tip} className="mb-1 last:mb-0">
                                 {tip}
                               </p>
                             ))}
                           </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {(content.fileNaming || content.consent) && (
-                <div className="grid gap-6 lg:grid-cols-2">
-                  {content.fileNaming && (
-                    <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-                      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                        <FileText className="h-4 w-4" aria-hidden />
-                        file naming & storage
-                      </div>
-                      <p className="mt-3 text-sm font-medium text-neutral-900">{content.fileNaming.naming}</p>
-                      <p className="mt-2 text-sm text-neutral-600">Storage structure:</p>
-                      <ul className="mt-2 space-y-1 rounded-2xl bg-neutral-50 p-4 text-xs font-mono text-neutral-700">
-                        {content.fileNaming.storage.map((line) => (
-                          <li key={line}>{line}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {content.consent && (
-                    <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-                      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                        <ShieldCheck className="h-4 w-4" aria-hidden />
-                        consent workflow
-                      </div>
-                      <ul className="mt-3 space-y-2 text-sm text-neutral-600">
-                        {content.consent.map((item) => (
-                          <li key={item} className="flex items-start gap-2">
-                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {content.checklists && (
-                <div>
-                  <h4 className="text-lg font-semibold text-neutral-900">5. Daily operation checklists</h4>
-                  <div className="mt-4 grid gap-6 md:grid-cols-2">
-                    {content.checklists.map((group) => (
-                      <div key={group.title} className="rounded-2xl border border-neutral-200 bg-white p-5">
-                        <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                          <ListChecks className="h-4 w-4" aria-hidden />
-                          {group.title}
                         </div>
-                        <ul className="mt-3 space-y-2 text-sm text-neutral-600">
-                          {group.items.map((item) => (
-                            <li key={item} className="flex items-start gap-2">
-                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" aria-hidden />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {content.outcomes && (
-                <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6">
-                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                    <Sparkles className="h-4 w-4" aria-hidden />
-                    outcomes
-                  </div>
-                  <ul className="mt-3 grid gap-2 text-sm text-neutral-700 sm:grid-cols-2">
-                    {content.outcomes.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
-                        <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" aria-hidden />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div className="rounded-3xl border border-neutral-200 bg-neutral-950 px-6 py-8 text-neutral-50 sm:px-10">
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-sm uppercase tracking-[0.3em] text-neutral-400">ready to deploy</p>
-                    <h4 className="mt-2 text-2xl font-semibold text-white">have assets already? prism will wire them everywhere</h4>
-                    <p className="mt-3 text-sm text-neutral-200">
-                      Drop your monthly highlight folder and we&apos;ll push it to websites, ads, local listings, consult decks, and content calendars.
-                    </p>
-                  </div>
-                  <Button asChild size="lg" variant="secondary" className="rounded-full bg-white px-8 py-3 text-base text-neutral-900">
-                    <Link href="/waitlist">
-                      plug into prism
-                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                    </Link>
-                  </Button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
-            </>
-          )}
-        </div>
+            )}
+
+            {(content.fileNaming || content.consent) && (
+              <div className="grid gap-4 lg:grid-cols-2">
+                {content.fileNaming && (
+                  <div className={panelClass}>
+                    <p className={labelClass}>
+                      <FileText className="size-3.5" aria-hidden />
+                      file naming & storage
+                    </p>
+                    <p className="mt-3 text-[15px] font-medium text-foreground [overflow-wrap:anywhere]">{content.fileNaming.naming}</p>
+                    <p className="mt-2 text-[14px] text-muted-foreground">Storage structure:</p>
+                    <ul className="mt-2 space-y-1 overflow-x-auto rounded-xl border border-white/[0.07] bg-background/60 p-4 font-mono text-xs text-muted-foreground">
+                      {content.fileNaming.storage.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {content.consent && (
+                  <div className={panelClass}>
+                    <p className={labelClass}>
+                      <ShieldCheck className="size-3.5" aria-hidden />
+                      consent workflow
+                    </p>
+                    <DotList className="mt-4" items={content.consent} />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {content.checklists && (
+              <div>
+                <StepHeading>5. Daily operation checklists</StepHeading>
+                <div className="mt-5 grid gap-4 md:grid-cols-2">
+                  {content.checklists.map((group) => (
+                    <div key={group.title} className={panelClass}>
+                      <p className={labelClass}>
+                        <ListChecks className="size-3.5" aria-hidden />
+                        {group.title}
+                      </p>
+                      <DotList className="mt-4" items={group.items} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {content.outcomes && (
+              <div className={panelClass}>
+                <p className={labelClass}>
+                  <Sparkles className="size-3.5" aria-hidden />
+                  outcomes
+                </p>
+                <ul className="mt-4 grid gap-x-8 gap-y-2 text-[14px] leading-6 text-muted-foreground sm:grid-cols-2">
+                  {content.outcomes.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <Lightbulb className="mt-1 size-3.5 shrink-0 text-foreground/70" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-6 rounded-2xl border border-white/[0.08] bg-card p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-eyebrow text-subtle">ready to deploy</p>
+                <h3 className="mt-3 text-[19px] font-semibold tracking-[-0.02em] text-foreground">
+                  have assets already? prism will wire them everywhere.
+                </h3>
+                <p className="mt-2 max-w-[60ch] text-[14px] leading-6 text-muted-foreground">
+                  Drop your monthly highlight folder and we&apos;ll push it to websites, ads, local listings, consult decks, and content calendars.
+                </p>
+              </div>
+              <WaitlistButton location="before after guide deploy" href={WAITLIST_FOCUS_HREFS.content} className="shrink-0" />
+            </div>
+          </>
+        )}
       </div>
-    </section>
+    </Section>
   )
 }

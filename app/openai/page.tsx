@@ -1,13 +1,19 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
+import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+
 import BrandLogo from '@/components/brand-logo'
-import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import ServiceIllustration from '@/components/animated/ServiceIllustration'
+import { LandingHero } from '@/components/landing/landing-hero'
+import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { WebPageSchema } from '@/components/schema-markup'
+import { Button } from '@/components/ui/button'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const openAiStack = [
   {
@@ -95,224 +101,188 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
+const inlineLinkClassName =
+  'inline-flex items-center gap-1 rounded-sm font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50'
+
 export default function OpenAIPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white">
-        <section className="relative overflow-hidden border-b border-neutral-100">
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white"
-            aria-hidden="true"
-          />
-          <div className="container relative mx-auto grid gap-10 px-4 pb-16 pt-20 sm:grid-cols-[1.05fr_0.95fr] sm:items-center sm:pt-24 md:pb-20">
-            <div className="mx-auto max-w-3xl text-center sm:text-left">
-              <p className="mx-auto inline-flex items-center gap-2 text-xs uppercase tracking-[0.35em] text-neutral-400 sm:mx-0">
-                <BrandLogo
-                  brand="openai"
-                  theme="dark"
-                  decorative
-                  className="h-4 w-4"
-                />
-                <span>openai implementation</span>
-              </p>
-              <h1 className="mt-4 text-4xl font-semibold lowercase tracking-tight text-neutral-900 sm:text-5xl">
-                practical ai systems built around your business
-              </h1>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                Prism is an independent agency that implements workflows with
-                supported OpenAI products and APIs. We build the content,
-                automations, and controls. OpenAI controls its products, search
-                results, model behavior, and access.
-              </p>
-              <p className="mt-3 text-sm text-neutral-500 sm:text-base">
-                building broader small business ai systems? explore{' '}
-                <Link
-                  href="/smb"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  small business ai services
-                </Link>
-                .
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/waitlist"
-                  className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                >
-                  talk with prism
-                </Link>
-                <Link
-                  href="/services"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-                >
-                  explore services
-                </Link>
-                <Link
-                  href="/openai/site-rebuild"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900 hover:bg-neutral-50"
-                >
-                  view codex rebuild guide
-                </Link>
-              </div>
-            </div>
-            <div
-              tabIndex={0}
-              role="group"
-              className="group mx-auto flex h-64 w-full max-w-[22rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 shadow-sm transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-            >
-              <ServiceIllustration
-                variant="openai"
-                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
-              />
-            </div>
-          </div>
-        </section>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="OpenAI implementation"
+          title="practical ai systems built around your business."
+          description="Prism is an independent agency that implements workflows with supported OpenAI products and APIs. We build the content, automations, and controls. OpenAI controls its products, search results, model behavior, and access."
+          location="openai hero"
+          secondary={{
+            label: 'View the Codex rebuild guide',
+            href: '/openai/site-rebuild',
+          }}
+          glow="green"
+        >
+          <p className="text-center text-sm leading-6 text-muted-foreground">
+            Building broader small business AI systems? Explore{' '}
+            <Link href="/smb" className={inlineLinkClassName}>
+              small business AI services
+            </Link>{' '}
+            or{' '}
+            <Link href="/services" className={inlineLinkClassName}>
+              all services
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </Link>
+          </p>
+        </LandingHero>
 
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-12 max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                how we use openai for clients
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Our team configures task-specific copilots, automates repeatable
-                production steps, and keeps people responsible for review,
-                approval, and measurement.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {openAiStack.map((item) => (
-                <div
-                  key={item.title}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+        <Section aria-labelledby="openai-stack-title">
+          <Reveal>
+            <SectionHeader
+              id="openai-stack-title"
+              eyebrow="For clients"
+              title="how we use OpenAI for clients."
+              description="Our team configures task-specific copilots, automates repeatable production steps, and keeps people responsible for review, approval, and measurement."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {openAiStack.map((item, index) => (
+              <Reveal key={item.title} delay={index * 80} className="h-full">
+                <SpotlightCard
+                  beam={index === 0}
+                  className="flex h-full flex-col gap-5 p-6 sm:p-7"
                 >
                   <div>
-                    <h3 className="text-xl font-semibold lowercase text-neutral-900">
-                      {item.title}
+                    <h3 className="text-heading text-foreground">
+                      {item.title}.
                     </h3>
-                    <p className="mt-2 text-sm text-neutral-600">
+                    <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
                       {item.description}
                     </p>
                   </div>
-                  <ul className="space-y-2 text-sm text-neutral-600">
+                  <ul className="mt-auto space-y-2.5 border-t border-white/[0.08] pt-5 text-sm text-muted-foreground">
                     {item.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-2">
-                        <span
-                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
+                      <li key={highlight} className="flex gap-2.5">
+                        <Check
                           aria-hidden="true"
+                          className="mt-0.5 size-4 shrink-0 text-foreground"
                         />
                         <span>{highlight}</span>
                       </li>
                     ))}
                   </ul>
-                </div>
-              ))}
-            </div>
+                </SpotlightCard>
+              </Reveal>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-10 max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                preparing for ai discovery
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                We keep your public information accurate and machine-readable.
-                That improves discoverability, but no agency can guarantee
-                inclusion, ranking, or citation in an AI response.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {discoverySurfaces.map((partner) => (
-                <div
-                  key={partner.name}
-                  className="flex h-full flex-col gap-3 rounded-3xl border border-neutral-200 bg-white p-6"
+        <Section aria-labelledby="openai-discovery-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="openai-discovery-title"
+                eyebrow="AI discovery"
+                title="preparing for ai discovery."
+                description="We keep your public information accurate and machine-readable. That improves discoverability, but no agency can guarantee inclusion, ranking, or citation in an AI response."
+              />
+            </Reveal>
+            <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+              {discoverySurfaces.map((surface, index) => (
+                <Reveal
+                  as="li"
+                  key={surface.name}
+                  delay={index * 80}
+                  className="flex gap-4 py-6"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50">
-                      <BrandLogo
-                        brand="openai"
-                        theme="dark"
-                        decorative
-                        className="h-4.5 w-4.5"
-                      />
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/[0.08] bg-card">
+                    <BrandLogo
+                      brand="openai"
+                      theme="dark"
+                      decorative
+                      className="size-[18px]"
+                    />
+                  </span>
+                  <span>
+                    <span className="block text-lg font-semibold tracking-[-0.02em] text-foreground">
+                      {surface.name}
                     </span>
-                    <h3 className="text-lg font-semibold lowercase text-neutral-900">
-                      {partner.name}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-neutral-600">{partner.summary}</p>
-                </div>
+                    <span className="mt-1.5 block max-w-[60ch] text-[15px] leading-7 text-muted-foreground">
+                      {surface.summary}
+                    </span>
+                  </span>
+                </Reveal>
               ))}
-            </div>
+            </ul>
           </div>
-        </section>
+        </Section>
 
-        <section className="bg-white py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm sm:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                hands-on guide
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                rebuild your site locally with codex
-              </h2>
-              <p className="mt-4 text-sm text-neutral-600 sm:text-base">
-                Need the exact workflow for mirroring a live site, feeding Codex
-                accurate context, and launching the new build on localhost?
-                Follow our step-by-step Codex CLI playbook built for macOS.
-              </p>
-              <div className="mt-6">
-                <Link
-                  href="/openai/site-rebuild"
-                  className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                >
-                  read the local rebuild guide
-                </Link>
+        <Section aria-labelledby="openai-guide-title">
+          <Reveal>
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-12">
+              <div
+                aria-hidden="true"
+                className="bg-grid absolute inset-0 opacity-40"
+              />
+              <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+                <SectionHeader
+                  id="openai-guide-title"
+                  eyebrow="Hands-on guide"
+                  title="rebuild your site locally with Codex."
+                  titleClassName="text-[clamp(1.9rem,1.4rem+2vw,3rem)] font-semibold leading-[1] tracking-[-0.045em]"
+                />
+                <div className="space-y-6">
+                  <p className="text-pretty text-base leading-7 text-muted-foreground">
+                    Need the exact workflow for mirroring a live site, feeding
+                    Codex accurate context, and launching the new build on
+                    localhost? Follow our step-by-step Codex CLI playbook built
+                    for macOS.
+                  </p>
+                  <Button asChild size="lg" className="group/cta">
+                    <Link href="/openai/site-rebuild">
+                      Read the local rebuild guide
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                      />
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </Reveal>
+        </Section>
 
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-12 max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                our human + ai workflow
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Every engagement blends OpenAI systems with Prism strategists so
-                you get the velocity of automation and the judgment of a
-                seasoned team.
-              </p>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {workflow.map((stage) => (
-                <div
+        <Section aria-labelledby="openai-workflow-title">
+          <Reveal>
+            <SectionHeader
+              id="openai-workflow-title"
+              eyebrow="Workflow"
+              title="our human + ai workflow."
+              description="Every engagement blends OpenAI systems with Prism strategists so you get the velocity of automation and the judgment of a seasoned team."
+              align="center"
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <ol className="spectrum-rule mt-12 grid gap-px overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.07] md:grid-cols-2">
+              {workflow.map((stage, index) => (
+                <li
                   key={stage.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                  className="flex flex-col gap-3 bg-card p-6 sm:p-8"
                 >
-                  <h3 className="text-xl font-semibold lowercase text-neutral-900">
+                  <span className="font-mono text-[11px] font-medium tracking-[0.14em] text-subtle tabular-nums">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">
                     {stage.title}
                   </h3>
-                  <p className="mt-3 text-sm text-neutral-600">
+                  <p className="text-[15px] leading-7 text-muted-foreground">
                     {stage.description}
                   </p>
-                </div>
+                </li>
               ))}
-            </div>
-            <div className="mt-12 flex justify-center">
-              <Link
-                href={WAITLIST_CTA.href}
-                className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-              >
-                join the waitlist
-              </Link>
-            </div>
-          </div>
-        </section>
+            </ol>
+          </Reveal>
+        </Section>
+
+        <FinalCta location="openai final cta" />
       </main>
       <Footer />
       <WebPageSchema
@@ -322,6 +292,6 @@ export default function OpenAIPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

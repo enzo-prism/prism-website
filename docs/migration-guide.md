@@ -4,27 +4,16 @@ This file is historical context, not a blanket instruction to rewrite every imag
 
 ## Current rule
 
-Prism currently has three valid image patterns:
+Prism currently has two valid image patterns:
 
-- Use `next/image` directly for simple route-local imagery, screenshots, logos, and decorative assets when no custom retry/fallback behavior is needed.
-- Use `components/core-image.tsx` (`CoreImage`) for shared marketing surfaces that need Prism's loading placeholder, fallback source, and image-failure analytics.
-- Leave existing `components/image.tsx` and `components/core-image.tsx` call sites alone unless you are already touching that surface for a real bug or performance issue.
+- Use `next/image` directly for route-local imagery, client screenshots (including `BrowserFrame` / `PhoneFrame`), logos, and decorative assets. This is the default on the redesigned marketing surfaces.
+- Use `components/core-image.tsx` (`CoreImage`) where a surface needs Prism's loading placeholder, fallback source, and image-failure analytics (today: `components/scrolling-timeline.tsx` on `/about`).
+
+The old `components/image.tsx` wrapper was deleted in the 2026-10 redesign.
 
 ## Do not do this anymore
 
-Do not run a broad migration that blindly replaces:
-
-```tsx
-import CoreImage from "@/components/core-image"
-```
-
-with:
-
-```tsx
-import Image from "@/components/image"
-```
-
-That old advice does not match the current repo. `CoreImage` is still intentionally used by the navbar, case-study cards, blog cards, and older marketing components.
+Do not run a broad migration that blindly swaps image components across the repo. Change an image component only when you are already touching that surface for a real bug or performance issue.
 
 ## Before changing image components
 

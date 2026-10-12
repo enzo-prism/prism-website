@@ -2,12 +2,30 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
-import FAQSection from "@/components/faq-section"
+import { Search } from "lucide-react"
+
 import Footer from "@/components/footer"
+import {
+  ArrowLink,
+  Callout,
+  CheckList,
+  DentalFaq,
+  DentalProofStat,
+  StepRail,
+  TextLink,
+} from "@/components/landing/dental/primitives"
+import { LandingHero } from "@/components/landing/landing-hero"
 import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
+import { BrowserFrame } from "@/components/prism/browser-frame"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
+import { WaitlistButton } from "@/components/prism/waitlist-button"
 import { FAQSchema, HowToSchema, PersonSchema, ServiceSchema } from "@/components/schema-markup"
+import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { WAITLIST_CTA } from "@/lib/waitlist"
@@ -187,425 +205,359 @@ function getDentalCaseStudies() {
   return Array.from(unique.values()).slice(0, 4)
 }
 
+const rankingSignals = [
+  {
+    title: "relevance",
+    description: "match the exact treatment + location intent behind searches.",
+    bullets: [
+      "google business profile categories + services reflect your real treatments",
+      "treatment pages mirror how patients search (implants, invisalign, emergency)",
+      "clear contact and location signals on-site",
+    ],
+  },
+  {
+    title: "distance (proximity)",
+    description: "be eligible in the geos that matter, accurately.",
+    bullets: [
+      "correct address or service-area settings (no “fake” locations)",
+      "one page per real location when you have multiple offices",
+      "consistent NAP across the web so google can match entities",
+    ],
+  },
+  {
+    title: "prominence",
+    description: "prove you’re trusted with steady real-world signals.",
+    bullets: [
+      "review velocity + specific patient feedback",
+      "citations and local mentions that corroborate your practice",
+      "engagement signals: calls, direction requests, website clicks",
+    ],
+  },
+]
+
+const wontDo = [
+  "keyword-stuff your business name in google business profile",
+  "buy fake reviews, links, or citation packages",
+  "publish thin “dentist in [city]” doorway pages",
+  "ship structured data that doesn’t match visible content",
+]
+
+const engagementOptions = [
+  {
+    title: "audit + roadmap",
+    description: "clear priorities, fast wins, and a 90-day plan.",
+  },
+  {
+    title: "monthly consulting",
+    description: "reviews, content direction, and a technical backlog your team can ship.",
+  },
+  {
+    title: "consultant-led delivery",
+    description: "we execute the work with your practice, end to end.",
+  },
+]
+
 export default function DentalPracticeSeoExpertPage() {
   const caseStudies = getDentalCaseStudies()
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-neutral-900">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
 
-      <main className="flex-1">
-        <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">dentist seo</p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              dentist seo
-            </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              dentist seo (seo for dentists) helps your practice show up when nearby patients search in google maps (the local pack), organic results, and ai-powered search.
-              prism runs a consultant-led dentist seo system built around high-intent treatments, clean technical structure, and compounding trust signals across local + organic.
-            </p>
-            <p className="mt-6 text-sm text-neutral-500">
-              want the full guide? read{" "}
-              <Link
-                href="/blog/dental-seo-guide"
-                className="font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-              >
-                dental seo guide
-              </Link>
-              .{" "}
-              want the dentist-specific ai overviews checklist? read{" "}
-              <Link
-                href="/blog/ai-search-for-dental-practice"
-                className="font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-              >
-                ai search for dental practice
-              </Link>
-              . want the step-by-step checklist to rank higher in google? read{" "}
-              <Link
-                href="/blog/dental-practice-rank-higher-google-search"
-                className="font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-              >
-                dental practice rank higher in google search
-              </Link>
-              .
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href={primaryCta.href}>{primaryCta.label}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-neutral-500">
-              consultant-led. built for owner-dentists, specialty practices, and multi-location groups. expect clearer treatment pages, stronger
-              maps visibility, and a roadmap tied to calls and bookings.
-            </p>
-          </div>
-        </section>
-
-        <section className="border-b border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">google maps</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                dentist seo: how google decides who shows up
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                local rankings are a scoring system built around three signals: relevance, distance, and prominence. dentist seo makes
-                those signals unambiguous, with clean listings, strong reviews, and pages that corroborate what you do and where you do it.
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Dentist SEO"
+          title="dentist seo."
+          description="dentist seo (seo for dentists) helps your practice show up when nearby patients search in google maps (the local pack), organic results, and ai-powered search."
+          location="dentist seo hero"
+          ctaHref={primaryCta.href}
+          secondary={{ label: secondaryCta.label, href: secondaryCta.href }}
+          glow="green"
+        >
+          <div className="mx-auto grid max-w-5xl gap-4 text-left md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            <Card className="p-6 sm:p-8">
+              <p className="text-[15px] leading-7 text-muted-foreground">
+                prism runs a consultant-led dentist seo system built around high-intent treatments, clean technical structure, and compounding trust signals across local + organic.
               </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-3">
-              {[
-                {
-                  title: "relevance",
-                  description: "match the exact treatment + location intent behind searches.",
-                  bullets: [
-                    "google business profile categories + services reflect your real treatments",
-                    "treatment pages mirror how patients search (implants, invisalign, emergency)",
-                    "clear contact and location signals on-site",
-                  ],
-                },
-                {
-                  title: "distance (proximity)",
-                  description: "be eligible in the geos that matter, accurately.",
-                  bullets: [
-                    "correct address or service-area settings (no “fake” locations)",
-                    "one page per real location when you have multiple offices",
-                    "consistent NAP across the web so google can match entities",
-                  ],
-                },
-                {
-                  title: "prominence",
-                  description: "prove you’re trusted with steady real-world signals.",
-                  bullets: [
-                    "review velocity + specific patient feedback",
-                    "citations and local mentions that corroborate your practice",
-                    "engagement signals: calls, direction requests, website clicks",
-                  ],
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-                  <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3">
-                        <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">what we won’t do</p>
-              <ul className="mt-4 space-y-2">
-                {[
-                  "keyword-stuff your business name in google business profile",
-                  "buy fake reviews, links, or citation packages",
-                  "publish thin “dentist in [city]” doorway pages",
-                  "ship structured data that doesn’t match visible content",
-                ].map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                    <span>{item}</span>
-                  </li>
-                ))}
+              <p className="mt-4 text-[15px] leading-7 text-muted-foreground">
+                consultant-led. built for owner-dentists, specialty practices, and multi-location groups. expect clearer treatment pages, stronger
+                maps visibility, and a roadmap tied to calls and bookings.
+              </p>
+            </Card>
+            <Card className="p-6 sm:p-8">
+              <p className="text-eyebrow text-subtle">Read the guides</p>
+              <ul className="mt-4 space-y-3 text-[15px] leading-6 text-muted-foreground">
+                <li>
+                  want the full guide? read <TextLink href="/blog/dental-seo-guide">dental seo guide</TextLink>.
+                </li>
+                <li>
+                  want the dentist-specific ai overviews checklist? read{" "}
+                  <TextLink href="/blog/ai-search-for-dental-practice">ai search for dental practice</TextLink>.
+                </li>
+                <li>
+                  want the step-by-step checklist to rank higher in google? read{" "}
+                  <TextLink href="/blog/dental-practice-rank-higher-google-search">
+                    dental practice rank higher in google search
+                  </TextLink>
+                  .
+                </li>
               </ul>
-              <p className="mt-6 text-sm text-neutral-600">
-                want the maps checklist? read{" "}
-                <Link
-                  href="/blog/google-maps-visibility-playbook-2025"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  google maps visibility checklist
-                </Link>
-                . need listings cleanup? start with{" "}
-                <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
-                  local listings
-                </Link>
-                .
-              </p>
-            </div>
+            </Card>
           </div>
-        </section>
+        </LandingHero>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what dentist seo includes
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dental seo is two systems working together: maps trust + website clarity. no tricks, just a repeatable process that makes your
-                practice easier to understand, easier to trust, and easier to choose. these are the core dentist seo deliverables we ship.
+        <Section aria-labelledby="dseo-maps-title">
+          <Reveal>
+            <SectionHeader
+              id="dseo-maps-title"
+              eyebrow="Google Maps"
+              title="dentist seo: how google decides who shows up."
+              description="local rankings are a scoring system built around three signals: relevance, distance, and prominence. dentist seo makes those signals unambiguous, with clean listings, strong reviews, and pages that corroborate what you do and where you do it."
+              titleClassName="max-w-[20ch]"
+            />
+          </Reveal>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {rankingSignals.map((item, index) => (
+              <Reveal key={item.title} delay={index * 80}>
+                <Card className="h-full p-6 sm:p-7">
+                  <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-heading mt-4 text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  <CheckList marker="dot" className="mt-5 border-t border-white/[0.07] pt-5" items={item.bullets} />
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={120} className="mt-4">
+            <Callout tone="warn" title="what we won’t do">
+              <CheckList marker="dot" className="mt-1 grid gap-x-10 space-y-0 gap-y-2 sm:grid-cols-2" items={wontDo} />
+              <p className="mt-5">
+                want the maps checklist? read{" "}
+                <TextLink href="/blog/google-maps-visibility-playbook-2025">google maps visibility checklist</TextLink>.
+                need listings cleanup? start with <TextLink href="/local-listings">local listings</TextLink>.
               </p>
-            </div>
+            </Callout>
+          </Reveal>
+        </Section>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">google maps</p>
-                <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">maps + local pack visibility</h3>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+        <Section aria-labelledby="dseo-includes-title">
+          <Reveal>
+            <SectionHeader
+              id="dseo-includes-title"
+              eyebrow="Deliverables"
+              title="what dentist seo includes."
+              description="dental seo is two systems working together: maps trust + website clarity. no tricks, just a repeatable process that makes your practice easier to understand, easier to trust, and easier to choose. these are the core dentist seo deliverables we ship."
+            />
+          </Reveal>
+
+          <div className="mt-12 grid gap-4 lg:grid-cols-2">
+            <Reveal>
+              <SpotlightCard beam className="h-full p-6 sm:p-8">
+                <p className="text-eyebrow text-subtle">Google Maps</p>
+                <h3 className="text-heading mt-3 text-foreground">maps + local pack visibility</h3>
+                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
                   improve relevance, distance eligibility, and prominence signals, then track actions like calls and direction requests.
                 </p>
-                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                  {[
+                <CheckList
+                  className="mt-6"
+                  items={[
                     "google business profile categories, services, attributes, and photos",
                     "review velocity and response systems",
                     "listings/citations consistency (NAP cleanup)",
                     "spam-safe improvement (no name stuffing, no fake reviews)",
-                  ].map((item) => (
-                    <li key={item} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 text-sm text-neutral-600">
-                  need the listings subsystem? start with{" "}
-                  <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
-                    local listings
-                  </Link>
-                  .
+                  ]}
+                />
+                <p className="mt-6 text-[15px] text-muted-foreground">
+                  need the listings subsystem? start with <TextLink href="/local-listings">local listings</TextLink>.
                 </p>
-              </div>
-              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">organic</p>
-                <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">treatment pages that convert</h3>
-                <p className="mt-3 text-sm leading-relaxed text-neutral-600">
+              </SpotlightCard>
+            </Reveal>
+            <Reveal delay={100}>
+              <Card className="h-full p-6 sm:p-8">
+                <p className="text-eyebrow text-subtle">Organic</p>
+                <h3 className="text-heading mt-3 text-foreground">treatment pages that convert</h3>
+                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
                   become the clearest answer for the services patients actually search, and make the next step obvious.
                 </p>
-                <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                  {[
+                <CheckList
+                  className="mt-6"
+                  items={[
                     "intent-mapped service pages (implants, invisalign, emergency, etc.)",
                     "internal linking that clarifies hierarchy (treatments, locations, providers, faqs)",
                     "technical hygiene: indexation, canonicals, performance, and schema",
                     "patient-ready answers: pricing context, timelines, and booking paths",
-                  ].map((item) => (
-                    <li key={item} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 text-sm text-neutral-600">
+                  ]}
+                />
+                <p className="mt-6 text-[15px] text-muted-foreground">
                   want a faster site foundation for compounding rankings? explore{" "}
-                  <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
-                    a dental practice website
-                  </Link>
-                  .
+                  <TextLink href="/dental-website">a dental practice website</TextLink>.
                 </p>
-              </div>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {whatYouGet.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
+              </Card>
+            </Reveal>
           </div>
-        </section>
 
-        <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-center">
-              <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm">
+          <Reveal delay={120} className="mt-4">
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] md:grid-cols-2 lg:grid-cols-3">
+              {whatYouGet.map((item) => (
+                <li key={item.title} className="bg-card p-6">
+                  <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Section>
+
+        <Section aria-labelledby="dseo-engagement-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start lg:gap-16">
+            <Reveal>
+              <Card className="p-6 sm:p-8">
                 <div className="flex items-center gap-4">
                   <Image
                     src="/enzo-avatar.png"
                     alt="Enzo Sison headshot"
                     width={80}
                     height={80}
-                    className="h-20 w-20 rounded-2xl border border-neutral-200 bg-white object-cover"
+                    className="size-16 rounded-2xl border border-white/10 object-cover"
                   />
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">meet your consultant</p>
-                    <p className="mt-2 text-lg font-semibold text-neutral-900">Enzo Sison</p>
-                    <p className="mt-1 text-sm text-neutral-600">Founder, Prism</p>
+                    <p className="text-eyebrow text-subtle">Meet your consultant</p>
+                    <p className="mt-2 text-lg font-semibold text-foreground">Enzo Sison</p>
+                    <p className="text-sm text-muted-foreground">Founder, Prism</p>
                   </div>
                 </div>
-                <p className="mt-5 text-sm leading-relaxed text-neutral-600">
+                <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
                   Enzo works directly with dental teams on SEO strategy and implementation: intent-mapped pages, technical cleanup, listings
                   systems, and reporting tied to calls and forms.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button asChild size="sm" className="rounded-full px-5">
-                    <Link href="/why-dental-practices-love-prism">see dental proof</Link>
-                  </Button>
-                  <Button asChild size="sm" variant="outline" className="rounded-full px-5">
-                    <Link href={primaryCta.href}>join the waitlist</Link>
-                  </Button>
+                <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <ArrowLink href="/why-dental-practices-love-prism">see dental proof</ArrowLink>
+                  <ArrowLink href={primaryCta.href}>join the waitlist</ArrowLink>
                 </div>
-              </div>
+              </Card>
+            </Reveal>
 
-              <div>
-                <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">engagement options</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  dentist seo, your way
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                  hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. The same roadmap either way,
-                  just different levels of hands-on execution.
-                </p>
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                  {[
-                    {
-                      title: "audit + roadmap",
-                      description: "clear priorities, fast wins, and a 90-day plan.",
-                    },
-                    {
-                      title: "monthly consulting",
-                      description: "reviews, content direction, and a technical backlog your team can ship.",
-                    },
-                    {
-                      title: "consultant-led delivery",
-                      description: "we execute the work with your practice, end to end.",
-                    },
-                  ].map((item) => (
-                    <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
-                      <p className="text-base font-semibold lowercase text-neutral-900">{item.title}</p>
-                      <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
+            <Reveal delay={100} className="flex flex-col gap-8">
+              <SectionHeader
+                id="dseo-engagement-title"
+                eyebrow="Engagement options"
+                title="dentist seo, your way."
+                description="hire prism for consulting-only, consultant-led implementation, or full done-for-you delivery. The same roadmap either way, just different levels of hands-on execution."
+              />
+              <ol className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+                {engagementOptions.map((item, index) => (
+                  <li key={item.title} className="flex gap-5 p-5 sm:p-6">
+                    <span className="font-mono text-[11px] leading-6 tracking-[0.18em] text-subtle">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <p className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</p>
+                      <p className="mt-1 text-[15px] leading-6 text-muted-foreground">{item.description}</p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">high-intent searches</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                rank for the treatments that pay
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                we build around service lines and local intent, so search engines connect the dots and patients find the
-                exact page they need.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Section aria-labelledby="dseo-searches-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 text-center sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-dots mask-fade-y absolute inset-0 -z-10 opacity-50" />
+            <SectionHeader
+              id="dseo-searches-title"
+              align="center"
+              eyebrow="High-intent searches"
+              title="rank for the treatments that pay."
+              description="we build around service lines and local intent, so search engines connect the dots and patients find the exact page they need."
+            />
+            <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-2.5">
               {searches.map((term) => (
-                <div
+                <li
                   key={term}
-                  className="rounded-2xl border border-neutral-200 bg-white px-5 py-4 text-sm font-medium text-neutral-800 shadow-sm"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[14px] text-foreground"
                 >
+                  <Search aria-hidden="true" className="size-3.5 text-subtle" />
                   {term}
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-        </section>
+        </Section>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">the process</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                how prism runs dentist seo
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                start with clarity, then earn trust. that’s how you get durable rankings and steady patient demand.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-5">
-              {processSteps.map((item) => (
-                <div key={item.step} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">{item.step}</p>
-                  <h3 className="mt-3 text-base font-semibold lowercase text-neutral-900">{item.step.toLowerCase()}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href={primaryCta.href}>{primaryCta.label}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href="/seo">see the seo overview</Link>
-              </Button>
-            </div>
+        <Section aria-labelledby="dseo-process-title">
+          <Reveal>
+            <SectionHeader
+              id="dseo-process-title"
+              eyebrow="The process"
+              title="how prism runs dentist seo."
+              description="start with clarity, then earn trust. that’s how you get durable rankings and steady patient demand."
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <StepRail
+              columns={5}
+              steps={processSteps.map((item) => ({ title: item.step.toLowerCase(), description: item.description }))}
+            />
+          </Reveal>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <WaitlistButton location="dentist seo process" href={primaryCta.href} />
+            <Button asChild size="lg" variant="outline">
+              <Link href="/seo">See the SEO overview</Link>
+            </Button>
           </div>
-        </section>
+        </Section>
 
         {caseStudies.length > 0 ? (
-          <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
-            <div className="mx-auto max-w-5xl">
-              <div className="mx-auto max-w-3xl text-center">
-                <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">proof</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  dental case studies
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                  see how prism supports real practices with modern websites, local presence, and growth systems.
-                </p>
-              </div>
-
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {caseStudies.map((study) => (
+          <Section aria-labelledby="dseo-proof-title">
+            <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeader
+                id="dseo-proof-title"
+                eyebrow="Proof"
+                title="dental case studies."
+                description="see how prism supports real practices with modern websites, local presence, and growth systems."
+              />
+              <DentalProofStat className="w-full lg:max-w-sm" />
+            </Reveal>
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {caseStudies.map((study, index) => (
+                <Reveal key={study.slug} delay={index * 70}>
                   <Link
-                    key={study.slug}
                     href={`/case-studies/${study.slug}`}
-                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400"
+                    className="group/study block rounded-xl focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                   >
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-                      {study.category}
-                    </p>
-                    <h3 className="mt-2 text-lg font-semibold lowercase text-neutral-900">{study.client}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{study.location}</p>
+                    <BrowserFrame
+                      src={`/case-studies/${study.slug}-home-desktop.jpg`}
+                      alt={`${study.client} website built by Prism`}
+                      sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 92vw"
+                      className="transition-transform duration-300 group-hover/study:-translate-y-0.5"
+                    />
+                    <span className="mt-4 block text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                      {study.client}
+                    </span>
+                    <span className="mt-1 block font-mono text-[11px] text-subtle">{study.location}</span>
                   </Link>
-                ))}
-              </div>
+                </Reveal>
+              ))}
             </div>
-          </section>
+          </Section>
         ) : null}
 
-        <section className="border-t border-neutral-100 bg-neutral-950 px-4 py-16 text-white sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">want more visibility this quarter?</h2>
-            <p className="mt-4 text-base text-white/80 sm:text-lg">
-              join the waitlist. when we can take on your practice, we map a clear roadmap for rankings, listings, and patient conversion.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full bg-white px-8 text-neutral-900 hover:bg-neutral-200">
-                <Link href={primaryCta.href}>{primaryCta.label}</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full border-white/30 bg-transparent px-8 text-white hover:bg-white/10"
-              >
-                <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-white/70">
-              also exploring a website rebuild? start here:{" "}
-              <Link href="/dental-website" className="font-medium text-white underline underline-offset-4">
-                dental practice website blueprint
-              </Link>
-            </p>
-          </div>
-        </section>
-
-        <FAQSection
-          title="dentist seo questions"
-          subtitle="what most dentists want to know before hiring an seo partner."
+        <DentalFaq
+          idPrefix="dentist-seo"
+          title="dentist seo questions."
+          description="what most dentists want to know before hiring an seo partner."
           items={faqItems}
+        />
+
+        <FinalCta
+          location="dentist seo final cta"
+          href={primaryCta.href}
+          secondary={{ label: "Dental practice website blueprint", href: "/dental-website" }}
         />
 
         <ScrollToTop />

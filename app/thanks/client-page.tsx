@@ -1,26 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Calendar, CheckCircle, Home } from 'lucide-react'
+import { ArrowRight, Calendar, Check } from 'lucide-react'
+
+import { ConfirmationCard } from '@/components/landing/misc/confirmation'
 import { Button } from '@/components/ui/button'
+import { BOOKING_URL } from '@/lib/booking'
 import {
   trackBookCallClick,
   trackContactActionClick,
   trackCTAClick,
 } from '@/utils/analytics'
-import { useEffect } from 'react'
-import CoreImage from '@/components/core-image'
 import confetti from '@/utils/confetti'
-import { LOGO_CONFIG, LOGO_SIZES } from '@/lib/constants'
-import { BOOKING_URL } from '@/lib/booking'
 
 export default function ThanksPageClient() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
   useEffect(() => {
-    setIsLoaded(true)
-
     // If Rewardful is available, mark conversion
     if (typeof window !== 'undefined' && window.rewardful) {
       try {
@@ -45,85 +40,54 @@ export default function ThanksPageClient() {
   }
 
   return (
-    <main className="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-12 md:px-6">
-      <div className="mx-auto max-w-2xl text-center">
-        <div className="mb-6 flex justify-center">
-          <div className="relative h-16 w-16 overflow-hidden rounded-lg">
-            <CoreImage
-              src={LOGO_CONFIG.src}
-              alt={LOGO_CONFIG.alt}
-              width={64}
-              height={64}
-              className={`object-contain ${LOGO_CONFIG.className}`}
-              fallbackSrc={LOGO_CONFIG.fallbackSrc}
-              trackingId="thanks_page_logo"
-            />
-          </div>
-        </div>
-
-        <div className="mb-4 flex justify-center">
-          <CheckCircle className="h-16 w-16 text-green-500" />
-        </div>
-
-        <h1 className="mb-3 text-4xl font-bold lowercase tracking-tight md:text-5xl">
-          thank you for your payment
-        </h1>
-
-        <p className="mb-8 text-lg text-gray-600">
-          We're excited to start working on your project. The next step is to
-          schedule your kickoff call so we can get started right away.
-        </p>
-
-        <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-          <Button
-            size="lg"
-            className="gap-2"
-            onClick={handleScheduleClick}
-            aria-label="Book Your 15-Minute Prism Site Kickoff Call"
-          >
-            <Calendar className="h-5 w-5" />
-            Book Your 15-Minute Prism Site Kickoff Call
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-
+    <ConfirmationCard
+      icon={<Check aria-hidden="true" />}
+      eyebrow="Payment received"
+      title="thank you for your payment."
+      description="We're excited to start working on your project. The next step is to schedule your kickoff call so we can get started right away."
+    >
+      <div className="mt-9 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+        <Button size="lg" className="group/cta" onClick={handleScheduleClick}>
+          <Calendar aria-hidden="true" />
+          Book your kickoff call
+          <ArrowRight
+            aria-hidden="true"
+            className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+          />
+        </Button>
+        <Button asChild size="lg" variant="outline">
           <Link
             href="/"
             onClick={() => trackCTAClick('Return Home', 'thanks_page')}
           >
-            <Button variant="outline" size="lg" className="gap-2">
-              <Home className="h-5 w-5" />
-              Return Home
-            </Button>
+            Return home
           </Link>
-        </div>
-
-        <p className="text-sm text-gray-500">
-          Schedule a quick call to confirm your goals and launch your AI-powered
-          website. You'll get a clear plan, asset checklist, and next steps to
-          go live this week.
-        </p>
+        </Button>
       </div>
 
-      {isLoaded && (
-        <div className="mt-16 text-center text-sm text-gray-500">
-          <p>
-            A confirmation email has been sent to your inbox with your receipt
-            and next steps.
-          </p>
-          <p className="mt-2">
-            If you have any questions, you can reply to the email I just sent
-            you or email me directly at{' '}
-            <a
-              href="mailto:support@design-prism.com"
-              className="underline hover:text-gray-700"
-              onClick={() => trackContactActionClick('email', 'thanks_page')}
-            >
-              support@design-prism.com
-            </a>
-            .
-          </p>
-        </div>
-      )}
-    </main>
+      <p className="mx-auto mt-6 max-w-[52ch] text-pretty text-sm leading-6 text-subtle">
+        Schedule a quick 15-minute call to confirm your goals and launch your
+        website. You&apos;ll get a clear plan, an asset checklist, and next
+        steps to go live.
+      </p>
+
+      <div className="mt-10 border-t border-white/[0.08] pt-6 text-sm leading-6 text-muted-foreground">
+        <p>
+          A confirmation email has been sent to your inbox with your receipt and
+          next steps.
+        </p>
+        <p className="mt-2">
+          Questions? Reply to that email or write to{' '}
+          <a
+            href="mailto:support@design-prism.com"
+            className="rounded-sm text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            onClick={() => trackContactActionClick('email', 'thanks_page')}
+          >
+            support@design-prism.com
+          </a>
+          .
+        </p>
+      </div>
+    </ConfirmationCard>
   )
 }

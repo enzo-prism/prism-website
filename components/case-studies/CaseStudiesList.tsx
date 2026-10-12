@@ -1,150 +1,159 @@
-"use client"
+'use client'
 
-import { useMemo, useState } from "react"
-import CaseStudyCard from "@/components/case-study-card"
-import { trackNavigation } from "@/utils/analytics"
-const iconWrapperClassName = "h-3.5 w-3.5 shrink-0"
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 
-export type CaseStudyListItem = {
-  id: string
-  client: string
-  category: string
-  location: string
-  slug: string
-  description?: string
-  clientLogo?: string
-  hasExplainerVideo?: boolean
-  screenshotSrc?: string
-  metric?: { value: string; label: string }
-}
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { cn } from '@/lib/utils'
+import { trackNavigation } from '@/utils/analytics'
 
-type FilterGroup = {
+export type WorkFilter = {
   key: string
   label: string
-  /** Categories claimed by this group; omitted for "all" and the catch-all. */
-  categories?: string[]
-  iconSrc: string
+  count: number
 }
 
-const FILTER_GROUPS: FilterGroup[] = [
-  { key: "all", label: "all", iconSrc: "/pixelish/folder.svg" },
-  {
-    key: "dentistry",
-    label: "dentistry",
-    categories: ["dentistry"],
-    iconSrc: "/pixelish/user.svg",
-  },
-  {
-    key: "consulting",
-    label: "consulting",
-    categories: ["consulting"],
-    iconSrc: "/pixelish/briefcase.svg",
-  },
-  {
-    key: "nonprofit-community",
-    label: "nonprofit & community",
-    categories: ["nonprofit", "online community"],
-    iconSrc: "/pixelish/emoji-heart.svg",
-  },
-  {
-    key: "more-industries",
-    label: "more industries",
-    iconSrc: "/pixelish/handbag.svg",
-  },
-]
-
-const CLAIMED_CATEGORIES = new Set(
-  FILTER_GROUPS.flatMap((group) => group.categories ?? []),
-)
-
-function matchesGroup(group: FilterGroup, category: string) {
-  if (group.key === "all") return true
-  if (group.categories) return group.categories.includes(category)
-  // Catch-all group: any category no named group claims.
-  return !CLAIMED_CATEGORIES.has(category)
+export type WorkGalleryItem = {
+  slug: string
+  group: string
+  featured?: boolean
+  /** Server-rendered WorkCard. */
+  card: ReactNode
 }
 
-export default function CaseStudiesList({ studies }: { studies: CaseStudyListItem[] }) {
-  const [activeGroupKey, setActiveGroupKey] = useState<string>("all")
+type CaseStudiesListProps = {
+  filters: WorkFilter[]
+  items: WorkGalleryItem[]
+  /** Optional closing tile (server-rendered), shown after every filter. */
+  closingTile?: ReactNode
+}
 
-  const groupsWithCounts = useMemo(
-    () =>
-      FILTER_GROUPS.map((group) => ({
-        ...group,
-        count: studies.filter((study) => matchesGroup(group, study.category))
-          .length,
-      })).filter((group) => group.count > 0),
-    [studies],
+const ALL = 'all'
+
+const FADE = '2.5rem'
+
+/** Edge fade for the scrollable filter row: only on the side with more chips. */
+function fadeMask(left: boolean, right: boolean) {
+  if (!left && !right) return undefined
+  const start = left ? `transparent 0, black ${FADE}` : 'black 0'
+  const end = right ? `black calc(100% - ${FADE}), transparent 100%` : 'black 100%'
+  return `linear-gradient(to right, ${start}, ${end})`
+}
+
+/**
+ * Industry filter for the Work gallery. Cards are rendered on the server and
+ * passed in; this island only owns the active filter. The server HTML shows
+ * every card ("All"), so crawlers and no-JS visitors see the full index.
+ *
+ * Below 1024px the gallery is two columns: regular cards are half-width
+ * tiles (compact under 640px), featured cards and the closing tile span the
+ * row, and an odd last tile spans the row so the grid never leaves a hole.
+ * The filter row scrolls sideways on small screens with an edge fade on
+ * whichever side has more chips.
+ */
+export default function CaseStudiesList({
+  filters,
+  items,
+  closingTile,
+}: CaseStudiesListProps) {
+  const [active, setActive] = useState<string>(ALL)
+  const [interacted, setInteracted] = useState(false)
+  const scrollerRef = useRef<HTMLDivElement | null>(null)
+  // Server frame: chips start at the left edge, so only the right can hide
+  // more. The effect corrects this once the real widths are known.
+  const [edges, setEdges] = useState({ left: false, right: true })
+
+  const measure = useCallback(() => {
+    const node = scrollerRef.current
+    if (!node) return
+    const max = node.scrollWidth - node.clientWidth
+    const next = { left: node.scrollLeft > 4, right: node.scrollLeft < max - 4 }
+    setEdges((prev) =>
+      prev.left === next.left && prev.right === next.right ? prev : next,
+    )
+  }, [])
+
+  useEffect(() => {
+    measure()
+    const node = scrollerRef.current
+    if (!node || typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(measure)
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [measure])
+
+  const mask = fadeMask(edges.left, edges.right)
+
+  const tabs = [{ key: ALL, label: 'All', count: items.length }, ...filters].filter(
+    (tab) => tab.count > 0,
   )
 
-  const filteredStudies = useMemo(() => {
-    const group = FILTER_GROUPS.find((item) => item.key === activeGroupKey)
-    if (!group || group.key === "all") return studies
-    return studies.filter((study) => matchesGroup(group, study.category))
-  }, [activeGroupKey, studies])
-
   return (
-    <>
-      <div className="mt-6 flex flex-wrap gap-2" aria-label="filter case studies">
-        {groupsWithCounts.map((group) => {
-          const isActive = activeGroupKey === group.key
-
-          return (
-            <button
-              key={group.key}
-              type="button"
-              aria-pressed={isActive}
-              onClick={() => {
-                setActiveGroupKey(group.key)
-                trackNavigation("case_study_filter", group.key)
-              }}
-              className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] font-pixel transition ${
-                isActive
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border/60 bg-muted/40 text-muted-foreground hover:bg-muted/60 hover:text-foreground"
-              }`}
+    <Tabs
+      value={active}
+      onValueChange={(value) => {
+        setActive(value)
+        setInteracted(true)
+        trackNavigation('case_study_filter', value)
+      }}
+      className="gap-8 sm:gap-10"
+    >
+      <div
+        ref={scrollerRef}
+        onScroll={measure}
+        style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}
+        className="-mx-5 overflow-x-auto overscroll-x-contain px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+      >
+        <TabsList
+          aria-label="Filter work by industry"
+          className="w-max rounded-full border-white/[0.08] bg-white/[0.03] p-1"
+        >
+          {tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.key}
+              value={tab.key}
+              className="h-10 gap-2 px-4 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0"
             >
-              <span
-                className={`${iconWrapperClassName} ${isActive ? "opacity-100" : "opacity-90"}`}
-                aria-hidden="true"
-              >
-                <img
-                  src={group.iconSrc}
-                  alt=""
-                  width={14}
-                  height={14}
-                  className={`h-full w-full object-contain ${isActive ? "invert-0" : "dark:invert"}`}
-                />
+              {tab.label}
+              <span className="font-mono text-[11px] tabular-nums text-subtle">
+                {tab.count}
               </span>
-              <span>{group.label}</span>
-              <span className={isActive ? "opacity-80" : "opacity-60"}>
-                {group.count}
-              </span>
-            </button>
-          )
-        })}
+            </TabsTrigger>
+          ))}
+        </TabsList>
       </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredStudies.map((study) => (
-          <CaseStudyCard
-            key={study.id}
-            business={study.client}
-            category={study.category}
-            location={study.location}
-            slug={study.slug}
-            description={study.description}
-            hasExplainerVideo={study.hasExplainerVideo}
-            screenshotSrc={study.screenshotSrc}
-            metric={study.metric}
-          />
-        ))}
-        {filteredStudies.length === 0 ? (
-          <div className="col-span-full rounded-md border border-dashed border-border/60 bg-card/20 p-6 text-center text-sm text-muted-foreground">
-            no case studies in this category yet.
-          </div>
-        ) : null}
-      </div>
-    </>
+      {tabs.map((tab) => {
+        const visible =
+          tab.key === ALL ? items : items.filter((item) => item.group === tab.key)
+        const regular = visible.filter((item) => !item.featured)
+        const lastRegular =
+          regular.length % 2 === 1 ? regular[regular.length - 1]?.slug : undefined
+        return (
+          <TabsContent
+            key={tab.key}
+            value={tab.key}
+            className="grid grid-flow-row-dense grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3"
+          >
+            {visible.map((item) => (
+              <div
+                key={item.slug}
+                className={cn(
+                  'min-w-0',
+                  item.featured && 'col-span-2',
+                  item.slug === lastRegular && 'max-lg:col-span-2',
+                  interacted &&
+                    'motion-safe:animate-in motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2 motion-safe:duration-500',
+                )}
+              >
+                {item.card}
+              </div>
+            ))}
+            {closingTile ? (
+              <div className="col-span-2 min-w-0 lg:col-span-1">{closingTile}</div>
+            ) : null}
+          </TabsContent>
+        )
+      })}
+    </Tabs>
   )
 }

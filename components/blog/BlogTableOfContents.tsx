@@ -1,6 +1,8 @@
 "use client"
 
 import { type MouseEvent, useEffect, useMemo, useState } from "react"
+import { ChevronDown } from "lucide-react"
+
 import { cn } from "@/lib/utils"
 
 export type BlogTocItem = {
@@ -11,25 +13,25 @@ export type BlogTocItem = {
 
 interface BlogTableOfContentsProps {
   items: BlogTocItem[]
+  /** "rail" is the sticky desktop list; "disclosure" is the inline mobile toggle. */
+  variant?: "rail" | "disclosure"
   className?: string
 }
 
-export default function BlogTableOfContents({ items, className }: BlogTableOfContentsProps) {
-  const [activeId, setActiveId] = useState(items[0]?.id ?? "")
-  const ids = useMemo(() => items.map((item) => item.id), [items])
+function useActiveHeading(ids: string[]) {
+  const [activeId, setActiveId] = useState(ids[0] ?? "")
 
   useEffect(() => {
-    if (!ids.length || typeof window === "undefined") return
+    if (!ids.length || typeof IntersectionObserver === "undefined") return
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.target.id) {
-            setActiveId(entry.target.id)
-          }
-        })
+        const visible = entries
+          .filter((entry) => entry.isIntersecting && entry.target.id)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActiveId(visible[0].target.id)
       },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0.1, 0.5] },
+      { rootMargin: "-20% 0px -70% 0px", threshold: [0, 1] },
     )
 
     ids.forEach((id) => {
@@ -40,101 +42,85 @@ export default function BlogTableOfContents({ items, className }: BlogTableOfCon
     return () => observer.disconnect()
   }, [ids])
 
-  const scrollTo = (id: string) => {
-    if (typeof window === "undefined") return
-    const element = document.getElementById(id)
-    if (!element) return
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" })
-    if (window.history?.replaceState) {
-      window.history.replaceState(null, "", `#${id}`)
-    }
-  }
+  return activeId
+}
 
-  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
-    event.preventDefault()
-    scrollTo(id)
-  }
+function scrollToHeading(event: MouseEvent<HTMLAnchorElement>, id: string) {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+  const element = document.getElementById(id)
+  if (!element) return
+  event.preventDefault()
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  element.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" })
+  window.history?.replaceState?.(null, "", `#${id}`)
+}
+
+/** "On this page" navigation for long posts, fed by lib/mdx-toc. */
+export default function BlogTableOfContents({
+  items,
+  variant = "rail",
+  className,
+}: BlogTableOfContentsProps) {
+  const ids = useMemo(() => items.map((item) => item.id), [items])
+  const activeId = useActiveHeading(ids)
 
   if (!items.length) return null
 
-  return (
-    <div className={cn("space-y-6", className)}>
-      <div className="lg:hidden">
-        <div className="rounded-2xl border border-border/60 bg-card/40 p-4 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
-          <div className="flex items-center justify-between">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              on this page
-            </p>
-            <span className="text-xs text-muted-foreground/80">{items.length} sections</span>
-          </div>
-          <div className="mt-3 flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:overflow-visible">
-            {items.map((item) => {
-              const isActive = activeId === item.id
-              return (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={(event) => handleAnchorClick(event, item.id)}
-                  aria-current={isActive ? "location" : undefined}
-                  className={cn(
-                    "shrink-0 inline-flex min-h-[48px] items-center rounded-full border px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                    isActive
-                      ? "border-border/60 bg-foreground text-background shadow-sm"
-                      : "border-border/60 bg-background/40 text-muted-foreground hover:bg-muted/40 hover:text-foreground",
-                  )}
-                >
-                  {item.label}
-                </a>
-              )
-            })}
-          </div>
-        </div>
-      </div>
+  const list = (
+    <ul className="space-y-0.5 border-l border-white/[0.08]">
+      {items.map((item) => {
+        const isActive = activeId === item.id
+        return (
+          <li key={item.id}>
+            <a
+              href={`#${item.id}`}
+              onClick={(event) => scrollToHeading(event, item.id)}
+              aria-current={isActive ? "location" : undefined}
+              className={cn(
+                "-ml-px block border-l py-1.5 pr-2 text-[13px] leading-snug transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                item.level === 3 ? "pl-7" : "pl-4",
+                isActive
+                  ? "border-foreground text-foreground"
+                  : "border-transparent text-subtle hover:text-foreground",
+              )}
+            >
+              {item.label}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+  )
 
-      <nav className="hidden lg:block" aria-label="Table of contents">
-        <div className="sticky top-28 rounded-3xl border border-border/60 bg-card/40 p-5 shadow-sm shadow-black/40 backdrop-blur supports-[backdrop-filter]:bg-card/30">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">on this page</p>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">jump to the section you need.</p>
-          </div>
-          <ul className="mt-4 space-y-1.5">
-            {items.map((item) => {
-              const isActive = activeId === item.id
-              return (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(event) => handleAnchorClick(event, item.id)}
-                    aria-current={isActive ? "location" : undefined}
-                    className={cn(
-                      "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                      isActive
-                        ? "bg-foreground text-background shadow-sm"
-                        : "text-muted-foreground hover:bg-muted/40 hover:text-foreground",
-                      item.level === 3 && "pl-6 text-muted-foreground/80",
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "flex h-6 w-6 items-center justify-center rounded-full border text-xs font-semibold transition",
-                        isActive
-                          ? "border-background/40 bg-background/10 text-background"
-                          : "border-border/60 bg-background/60 text-muted-foreground",
-                      )}
-                      aria-hidden
-                    >
-                      {item.level === 3 ? "–" : "•"}
-                    </span>
-                    <span>{item.label}</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-      </nav>
-    </div>
+  if (variant === "disclosure") {
+    return (
+      <details
+        className={cn(
+          "group/toc rounded-2xl border border-white/[0.08] bg-card [&_summary::-webkit-details-marker]:hidden",
+          className,
+        )}
+      >
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-5 text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+          <span className="flex items-center gap-3">
+            On this page
+            <span className="font-mono text-[11px] text-subtle">{items.length} sections</span>
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            className="size-4 text-subtle transition-transform duration-200 group-open/toc:rotate-180"
+          />
+        </summary>
+        <nav aria-label="Table of contents" className="px-5 pb-5">
+          {list}
+        </nav>
+      </details>
+    )
+  }
+
+  return (
+    <nav aria-label="Table of contents" className={className}>
+      <p className="text-eyebrow mb-4 text-subtle">On this page</p>
+      {list}
+    </nav>
   )
 }

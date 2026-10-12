@@ -12,7 +12,6 @@ export type SeoHeroContent = {
   title: string
   subtitle: string
   kicker?: string
-  primaryCta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
 }
 
@@ -39,7 +38,6 @@ export const seoOverviewContent = {
     eyebrow: "seo",
     title: "Help the right customers find you",
     subtitle: "We improve your pages, listings, and site structure so people searching for your services can find clear answers and a way to contact you.",
-    primaryCta: { label: "talk with prism", href: "/get-started" },
     secondaryCta: { label: "see on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
   scoringQuestions: [
@@ -47,56 +45,48 @@ export const seoOverviewContent = {
     "can we trust this business?",
     "do real people actually engage with it?",
   ],
-  seoModes: [
-    {
-      title: "on-page seo",
-      description: "how well your website answers the search.",
-    },
-    {
-      title: "off-page seo",
-      description: "How your business is represented on other websites, directories, and review platforms.",
-    },
-  ],
   onPagePreview: {
     title: "Make every page useful",
     bullets: [
-      "each page matches real search intent",
-      "content is structured clearly for humans and search engines",
-      "clear service and location information",
-      "loading is fast, clean, and mobile friendly",
+      "Each page matches real search intent",
+      "Content is structured clearly for people and search engines",
+      "Clear service and location information",
+      "Fast, clean, mobile-friendly loading",
     ],
-    linkText: "on-page seo services",
+    linkText: "On-page SEO services",
     linkHref: "/seo/on-page",
   },
   offPagePreview: {
     title: "Build a consistent presence beyond your site",
     bullets: [
-      "who’s linking to you (quality over quantity)",
-      "where your business is listed and how consistent it is",
-      "what your reviews say across every major platform",
-      "how people interact with you on maps and listings",
+      "Who links to you (quality over quantity)",
+      "Where your business is listed and how consistent it is",
+      "What your reviews say across the major platforms",
+      "How people interact with you on maps and listings",
     ],
-    linkText: "see our approach",
+    linkText: "See our off-page approach",
     linkHref: "/seo/off-page",
   },
-  packages: [
+  // Stages of the work on every build, not price tiers: Prism sells four
+  // offers (lib/pricing-model.ts), each scoped when the waitlist intake opens.
+  buildStages: [
     {
       title: "foundation",
-      description: "clean structure, fast performance, baseline schema, key service + location pages, core listings.",
+      description: "Clean structure, fast performance, baseline schema, key service and location pages, and core listings.",
     },
     {
       title: "growth",
-      description: "deeper content, stronger internal linking, robust schema, expanded service areas, review strategy.",
+      description: "Deeper content, stronger internal linking, fuller schema, more service areas, and a review plan.",
     },
     {
       title: "ongoing improvement",
-      description: "ongoing content, advanced local listing optimization, review systems, link opportunities, continuous iteration.",
+      description: "New content, local listing upkeep, review support, link opportunities, and steady iteration.",
     },
   ],
   benefits: [
-    "a website built as a clear, structured answer to what your ideal customers search.",
-    "local listings and reviews that reinforce your authority instead of confusing it.",
-    "an seo foundation that compounds and supports ads, content, and brand campaigns.",
+    "A website built as a clear, structured answer to what your ideal customers search.",
+    "Local listings and reviews that back up your website instead of contradicting it.",
+    "An SEO foundation that supports your ads, content, and brand campaigns.",
   ],
 }
 
@@ -104,8 +94,7 @@ export const seoOnPageContent = {
   hero: {
     eyebrow: "on-page seo",
     title: "Make every page useful",
-    subtitle: "everything you control on your own site, designed to match what people are actually searching for.",
-    primaryCta: { label: "book a prism build", href: "/get-started" },
+    subtitle: "Everything you control on your own site, designed to match what people are actually searching for.",
     secondaryCta: { label: "see off-page seo", href: "/seo/off-page" },
   } satisfies SeoHeroContent,
   intro:
@@ -113,60 +102,60 @@ export const seoOnPageContent = {
   pillars: [
     {
       title: "content & intent match",
-      description: "we design content to match real search intent, not random keywords.",
+      description: "We design content to match real search intent, not random keywords.",
       bullets: [
-        "service pages for each major offer",
-        "location pages for every city or area you serve",
-        "blog posts + faqs for the questions people truly ask",
-        "clear headers so humans and search engines can scan",
-        "direct answers: what you do, who it’s for, and why it matters",
-        "real examples, photos, and videos for proof",
+        "Service pages for each major offer",
+        "Location pages for every city or area you serve",
+        "Blog posts and FAQs for the questions people truly ask",
+        "Clear headers so people and search engines can scan",
+        "Direct answers: what you do, who it’s for, and why it matters",
+        "Real examples, photos, and videos for proof",
       ],
     },
     {
       title: "technical structure",
-      description: "under the hood, your site has to be clean, fast, and easy to crawl.",
+      description: "Under the hood, your site has to be clean, fast, and easy to crawl.",
       bullets: [
-        "fast load speed through optimized media and code",
-        "mobile-first layouts on every page",
-        "clean urls that read like real words",
-        "internal linking that guides both users and crawlers",
-        "no duplicate content and correct canonicals",
-        "sitemap + robots.txt tuned to what should be crawled",
-        "structured data that accurately describes eligible page content",
-        "secure https everywhere",
+        "Fast load speed through optimized media and code",
+        "Mobile-first layouts on every page",
+        "Clean URLs that read like real words",
+        "Internal linking that guides both users and crawlers",
+        "No duplicate content, and correct canonicals",
+        "Sitemap and robots.txt tuned to what should be crawled",
+        "Structured data that accurately describes eligible page content",
+        "Secure HTTPS everywhere",
       ],
     },
     {
       title: "a clear path to an inquiry",
       description: "Visitors should be able to understand your offer, find an answer, and contact you without getting lost.",
       bullets: [
-        "easy navigation with clear menus",
-        "above-the-fold clarity so people know they’re in the right place",
-        "strong ctas for call, book, or message",
-        "readable formatting with breathable spacing",
-        "useful next steps after the information visitors came for",
+        "Easy navigation with clear menus",
+        "Above-the-fold clarity so people know they’re in the right place",
+        "Clear calls to action to call, book, or message",
+        "Readable formatting with breathable spacing",
+        "Useful next steps after the information visitors came for",
       ],
     },
     {
       title: "local business essentials",
-      description: "your site needs to line up perfectly with your real-world presence.",
+      description: "Your site needs to line up with your real-world presence.",
       bullets: [
-        "consistent nap (name, address, phone) across the site",
-        "embedded maps to connect digital + physical locations",
-        "clear service areas and coverage",
-        "team bios, credentials, and trust signals",
-        "before/after galleries and testimonials",
-        "page-level local business schema",
+        "Consistent NAP (name, address, phone) across the site",
+        "Embedded maps that connect your site and your location",
+        "Clear service areas and coverage",
+        "Team bios, credentials, and trust signals",
+        "Before-and-after galleries and testimonials",
+        "Page-level local business schema",
       ],
     },
   ],
   closing:
     "Search is part of how we plan a website. We start with useful pages and sound technical foundations, then agree on the content and improvements your business needs next.",
   closingBullets: [
-    "start with the right architecture",
-    "expand content as services and locations grow",
-    "keep iterating so search intent and messaging stay aligned",
+    "Start with the right architecture",
+    "Expand content as services and locations grow",
+    "Keep iterating so search intent and messaging stay aligned",
   ],
 }
 
@@ -175,7 +164,6 @@ export const seoOffPageContent = {
     eyebrow: "off-page seo",
     title: "Make your reputation easier to find",
     subtitle: "Accurate listings, genuine reviews, and relevant mentions help people check your business before they choose it.",
-    primaryCta: { label: "request a free review", href: "/get-started" },
     secondaryCta: { label: "review on-page seo", href: "/seo/on-page" },
   } satisfies SeoHeroContent,
   video: {
@@ -196,30 +184,30 @@ export const seoOffPageContent = {
     },
   } satisfies SeoVideoContent,
   intro:
-    "off-page seo is about proof: proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.",
+    "Off-page SEO is about proof: proof that other sites vouch for you, that your business exists in the real world, and that real people interact with you.",
   levers: [
     {
       title: "backlinks",
       description:
-        "links from other websites are public endorsements. we focus on quality, not spam.",
+        "Links from other websites are public endorsements. We focus on quality, not spam.",
       bullets: [
-        "editorial mentions and guides",
-        "guest posts with useful insights",
-        "local news coverage",
-        "industry organizations linking back",
-        "supplier + partner references",
-        "high-authority citations with accurate nap",
+        "Editorial mentions and guides",
+        "Guest posts with useful insights",
+        "Local news coverage",
+        "Industry organizations linking back",
+        "Supplier and partner references",
+        "Reputable citations with accurate NAP",
       ],
     },
     {
       title: "local listings",
       description:
-        "listings verify who you are and where you operate. consistency is everything.",
+        "Listings verify who you are and where you operate. Consistency is everything.",
       bullets: [
-        "google business profile and apple business connect",
-        "yelp, bing places, facebook",
-        "industry-specific directories",
-        "accurate nap, categories, photos, and hours",
+        "Google Business Profile and Apple Business Connect",
+        "Yelp, Bing Places, and Facebook",
+        "Industry-specific directories",
+        "Accurate NAP, categories, photos, and hours",
       ],
     },
     {
@@ -227,10 +215,10 @@ export const seoOffPageContent = {
       description:
         "Recent, genuine feedback helps customers understand what it is like to work with you.",
       bullets: [
-        "google reviews",
-        "yelp + facebook",
-        "third-party aggregators like birdeye or podium",
-        "simple requests for honest customer feedback",
+        "Google reviews",
+        "Yelp and Facebook",
+        "Third-party aggregators like Birdeye or Podium",
+        "Simple requests for honest customer feedback",
       ],
     },
     {
@@ -238,20 +226,20 @@ export const seoOffPageContent = {
       description:
         "Profile interactions help you see how people use your listings and where to improve them.",
       bullets: [
-        "maps listing clicks and direction requests",
-        "calls from listings",
-        "photo views and website taps",
-        "better visuals and descriptions that drive action",
+        "Maps listing clicks and direction requests",
+        "Calls from listings",
+        "Photo views and website taps",
+        "Better visuals and descriptions that invite action",
       ],
     },
     {
       title: "social signals",
       description:
-        "social isn’t a direct ranking factor, but it fuels branded searches and mentions.",
+        "Social isn’t a direct ranking factor, but it fuels branded searches and mentions.",
       bullets: [
-        "drives more branded queries",
-        "creates link and mention opportunities",
-        "keeps your brand obviously active",
+        "Prompts more branded searches",
+        "Creates link and mention opportunities",
+        "Shows your business is active",
       ],
     },
     {
@@ -259,10 +247,10 @@ export const seoOffPageContent = {
       description:
         "Relevant mentions put your business in context, from local events to industry publications.",
       bullets: [
-        "local blogs and community shoutouts",
-        "event sponsorships and listings",
-        "forums or groups recommending you",
-        "press releases (real ones) that document what you do",
+        "Local blogs and community shoutouts",
+        "Event sponsorships and listings",
+        "Forums or groups recommending you",
+        "Press releases (real ones) that document what you do",
       ],
     },
   ],

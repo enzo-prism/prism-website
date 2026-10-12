@@ -1,39 +1,144 @@
+import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
+
+import HomeCountUp from '@/components/home/HomeCountUp'
+import { Marquee } from '@/components/prism/marquee'
 import TrackedLink from '@/components/tracked-link'
 import {
+  getWaitlistProofImage,
+  WAITLIST_PROOF_SITES,
+} from '@/components/waitlist/waitlist-proof-sites'
+import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
+import {
   CONNECTED_CLIENT_TRAFFIC,
+  PROOF_METRICS_VERIFIED_AT,
   SOCIAL_PROOF,
+  SOCIAL_PROOF_CHANNELS,
 } from '@/lib/proof-metrics'
 import { cn } from '@/lib/utils'
 
+// One named website-client quote (never an Instagram comment, never a quote
+// that still needs consent). Renders nothing if the record changes.
+const CLIENT_QUOTE_ID = 1
+const clientQuote = quotesData.find(
+  (quote) =>
+    quote.id === CLIENT_QUOTE_ID && isClientQuote(quote) && !quote.requiresConsent,
+)
+
+const channelList = new Intl.ListFormat('en-US', {
+  style: 'long',
+  type: 'conjunction',
+}).format(SOCIAL_PROOF_CHANNELS.map((channel) => channel.platform))
+
 /**
- * Slim demand proof for the waitlist page: real audience and client-traffic
- * numbers plus the path to the wall of love. Every figure comes from
- * `lib/proof-metrics.ts`, the one shared source, with its measurement window
- * beside it. Never hardcode a proof number here.
+ * Compact, verified proof for the waitlist page: the audience and
+ * client-traffic numbers from `lib/proof-metrics.ts` (the one shared source,
+ * with source and date beside each), a rail of real current-client websites,
+ * and the path to the wall of love. Never hardcode a proof number here.
  */
 export default function WaitlistProofStrip({ className }: { className?: string }) {
   return (
-    <div
+    <section
       data-waitlist-proof="strip"
-      className={cn('mt-8 border-t border-white/10 pt-5', className)}
+      aria-labelledby="waitlist-proof-heading"
+      className={cn('flex min-w-0 flex-col', className)}
     >
-      <p className="font-mono text-[0.68rem] uppercase leading-6 tracking-[0.2em] text-[#8f877b]">
-        {SOCIAL_PROOF.combinedAudience} followers{' '}
-        <span aria-hidden="true" className="text-[#5c574e]">
-          ·
-        </span>{' '}
-        {CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US')} new users
-        across {CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites
-        in {CONNECTED_CLIENT_TRAFFIC.month}
-      </p>
+      <h2
+        id="waitlist-proof-heading"
+        className="inline-flex items-center gap-2.5 text-eyebrow text-subtle"
+      >
+        <span aria-hidden="true" className="h-px w-5 bg-spectrum" />
+        Worth the wait
+      </h2>
+
+      <Marquee
+        label="Client websites by Prism"
+        duration={60}
+        gap="0.75rem"
+        className="-mx-1 mt-5 px-1 py-1"
+      >
+        {WAITLIST_PROOF_SITES.map((site) => (
+          <figure key={site.slug} className="w-[10.5rem] shrink-0 sm:w-[11.5rem]">
+            <div className="overflow-hidden rounded-lg border border-white/10 bg-popover shadow-[0_12px_32px_-18px_oklch(0_0_0/90%)]">
+              <Image
+                src={getWaitlistProofImage(site.slug)}
+                alt={`${site.name} website by Prism`}
+                width={368}
+                height={230}
+                sizes="184px"
+                className="block aspect-[16/10] h-auto w-full object-cover object-top"
+              />
+            </div>
+            <figcaption className="mt-2 truncate text-[12px] leading-4 text-subtle">
+              {site.name}
+            </figcaption>
+          </figure>
+        ))}
+      </Marquee>
+
+      <ul className="mt-4 grid grid-cols-2 divide-x divide-white/[0.08] overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]">
+        <li className="flex flex-col p-4 sm:p-5">
+          <p className="text-pretty text-sm leading-5 text-muted-foreground">
+            <span className="mb-2 block text-[1.75rem] font-semibold leading-none tracking-[-0.04em] text-foreground sm:text-[2rem]">
+              <HomeCountUp value={SOCIAL_PROOF.combinedAudience} />
+            </span>{' '}
+            followers across {channelList}
+          </p>
+          <p className="mt-auto pt-3 font-mono text-[11px] leading-4 text-subtle">
+            Verified {PROOF_METRICS_VERIFIED_AT}
+          </p>
+        </li>
+        <li className="flex flex-col p-4 sm:p-5">
+          <p className="text-pretty text-sm leading-5 text-muted-foreground">
+            <span className="mb-2 block text-[1.75rem] font-semibold leading-none tracking-[-0.04em] text-foreground sm:text-[2rem]">
+              <HomeCountUp
+                value={CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US')}
+              />
+            </span>{' '}
+            new users across {CONNECTED_CLIENT_TRAFFIC.connectedSites} connected
+            client sites in {CONNECTED_CLIENT_TRAFFIC.month}
+          </p>
+          <p className="mt-auto pt-3 font-mono text-[11px] leading-4 text-subtle">
+            Source: {CONNECTED_CLIENT_TRAFFIC.source}
+          </p>
+        </li>
+      </ul>
+
+      {clientQuote ? (
+        <figure className="mt-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-5">
+          <blockquote className="text-pretty text-[15px] leading-6 text-foreground">
+            <p>&ldquo;{clientQuote.text}&rdquo;</p>
+          </blockquote>
+          <figcaption className="mt-3 flex items-center gap-2 text-[13px] text-muted-foreground">
+            <span
+              aria-hidden="true"
+              className="grid size-6 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-[11px] font-medium text-foreground"
+            >
+              {clientQuote.client.charAt(0)}
+            </span>
+            <span>
+              <span className="font-medium text-foreground">{clientQuote.client}</span>
+              <span aria-hidden="true" className="px-1.5 text-subtle">
+                ·
+              </span>
+              Website client
+            </span>
+          </figcaption>
+        </figure>
+      ) : null}
+
       <TrackedLink
         href="/wall-of-love"
         label="see why clients love prism"
         location="waitlist proof strip"
-        className="mt-3 inline-flex min-h-11 items-center font-sans text-[0.95rem] text-[#b8afa2] underline decoration-white/25 underline-offset-4 transition-colors hover:text-[#f5f0e8] focus-visible:rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
+        className="group/link mt-4 inline-flex min-h-10 w-fit items-center gap-1.5 rounded-sm text-[15px] font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
       >
         See why clients love Prism
+        <ArrowRight
+          aria-hidden="true"
+          className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5 motion-reduce:transition-none"
+        />
       </TrackedLink>
-    </div>
+    </section>
   )
 }

@@ -1,17 +1,24 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Apple, ArrowRight, Calendar } from 'lucide-react'
+import { Apple, ArrowRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
-import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import { ArrowLink } from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
-import ScrollToTop from '@/components/scroll-to-top'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Eyebrow, Section } from '@/components/prism/section'
 import { WebPageSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
 import { Button } from '@/components/ui/button'
-import RecentShootsSection from './recent-shoots-section'
+import { Card } from '@/components/ui/card'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { cn } from '@/lib/utils'
 import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
+
+import RecentShootsSection from './recent-shoots-section'
 
 const PAGE_TITLE = 'Dental office and team photography'
 const PAGE_DESCRIPTION =
@@ -108,128 +115,114 @@ const appleMapsShowcase = {
   alt: 'Christopher B. Wong DDS listing on Apple Maps featuring Prism photography',
 }
 
+const heroShots = [0, 1, 9, 10, 15].map((index) => recentShoots[0].shots[index])
+
 export default function OfficeTeamPhotographyPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 text-white">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            <HeroBackgroundLoop
-              videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1761852734/models_2_x9gxtj.mp4"
-              posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp"
-              posterAlt="Dental team office photography hero"
-              videoClassName="pointer-events-none hidden h-full w-full object-cover sm:block"
-              posterClassName="absolute inset-0 h-full w-full object-cover"
-              posterUnoptimized
-            />
-            <div className="absolute inset-0 bg-neutral-950/80" aria-hidden />
-          </div>
-          <div className="container relative mx-auto px-4 py-24 md:py-32">
-            <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                office + team shoots
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
-                one button to book the office shoot patients actually want to
-                see.
-              </h1>
-              <p className="mt-6 text-base text-neutral-200 md:text-lg">
-                give us a date and we&apos;ll capture portraits, lobby vibes,
-                and candid team moments that plug straight into your website,
-                ads, and recruiting funnels.
-              </p>
-              <div className="mt-8 flex w-full flex-wrap justify-center gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full rounded-full px-8 py-3 text-base lowercase transition hover:scale-105 sm:w-auto"
-                >
-                  <Link href={WAITLIST_FOCUS_HREFS.content}>
-                    join the waitlist
-                    <Calendar className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Office + team shoots"
+          title="one button to book the office shoot patients actually want to see."
+          description="give us a date and we’ll capture portraits, lobby vibes, and candid team moments that plug straight into your website, ads, and recruiting funnels."
+          location="office team photography hero"
+          ctaHref={WAITLIST_FOCUS_HREFS.content}
+          secondary={{ label: 'Before + after guide', href: '/dental-photography/before-after' }}
+          glow="warm"
+          titleClassName="max-w-[19ch]"
+        >
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:grid-rows-2">
+            {heroShots.map((shot, index) => (
+              <div
+                key={shot.src}
+                className={cn(
+                  'relative overflow-hidden rounded-2xl border border-white/10 bg-popover',
+                  index === 0
+                    ? 'col-span-2 aspect-[4/3] sm:row-span-2 sm:aspect-auto'
+                    : 'aspect-[4/3]',
+                  index > 2 && 'hidden sm:block',
+                )}
+              >
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  fill
+                  sizes={index === 0 ? '(min-width: 640px) 50vw, 92vw' : '(min-width: 640px) 25vw, 46vw'}
+                  className="object-cover"
+                  priority={index === 0}
+                />
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+          <p className="mt-4 text-center font-mono text-[11px] text-subtle">
+            From the {recentShoots[0].practice} shoot, {recentShoots[0].date}
+          </p>
+        </LandingHero>
 
         <RecentShootsSection shoots={recentShoots} />
 
-        <section className="border-y border-neutral-200 bg-neutral-900 px-4 py-16 text-white sm:py-20">
-          <div className="container mx-auto flex max-w-5xl flex-col items-center gap-6 rounded-3xl border border-white/10 bg-neutral-950 px-6 py-12 text-center sm:px-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-white/70">
-              gear
-            </span>
-            <h3 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              gear for patient before &amp; after photos
-            </h3>
-            <p className="text-base text-white/80 sm:text-lg">
-              See the exact lighting, macro, and retractors we pack so your team
-              can capture clinical-grade progress shots between Prism visits.
-            </p>
-            <Button
-              asChild
-              variant="inverted"
-              size="lg"
-              className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto"
-            >
-              <Link href="/dental-photography/before-after">
-                view the guide
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-              </Link>
-            </Button>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-200 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto flex max-w-5xl flex-col gap-8 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm md:p-10 lg:flex-row lg:items-center">
-            <div className="flex-1">
-              <div className="inline-flex items-center gap-2 rounded-full bg-neutral-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-600">
-                <Apple className="h-4 w-4" aria-hidden />
-                apple maps
-              </div>
-              <h3 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900">
-                how it shows on Apple Maps
-              </h3>
-              <p className="mt-4 text-base text-neutral-600">
-                every photo from the shoot feeds straight into your Apple
-                Business Connect listing. the result: a premium, credible first
-                impression when patients search on their iPhone.
-              </p>
-              <Button
-                asChild
-                variant="ghost"
-                className="mt-6 w-full px-4 py-2 text-sm lowercase text-neutral-900 sm:w-fit"
-              >
-                <Link href="/local-listings">
+        <Section aria-labelledby="ot-maps-title">
+          <Reveal>
+            <Card className="grid overflow-hidden lg:grid-cols-2">
+              <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-14">
+                <Eyebrow>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Apple className="size-3.5" aria-hidden />
+                    Apple Maps
+                  </span>
+                </Eyebrow>
+                <h2 id="ot-maps-title" className="text-title text-gradient mt-5 max-w-[14ch] text-balance pb-1">
+                  how it shows on Apple Maps.
+                </h2>
+                <p className="mt-5 max-w-[48ch] text-[15px] leading-7 text-muted-foreground">
+                  every photo from the shoot feeds straight into your Apple
+                  Business Connect listing. the result: a premium, credible first
+                  impression when patients search on their iPhone.
+                </p>
+                <ArrowLink href="/local-listings" className="mt-5">
                   learn more about listings
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                </Link>
-              </Button>
-            </div>
-            <div className="flex-1">
-              <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100">
+                </ArrowLink>
+              </div>
+              <div className="relative h-[360px] overflow-hidden border-t border-white/[0.08] bg-background/60 sm:h-[460px] lg:h-auto lg:min-h-[520px] lg:border-l lg:border-t-0">
                 <Image
                   src={appleMapsShowcase.src}
                   alt={appleMapsShowcase.alt}
-                  width={1280}
-                  height={900}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 600px, 92vw"
+                  className="object-cover object-top"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-card to-transparent"
                 />
               </div>
-            </div>
-          </div>
-        </section>
+            </Card>
+          </Reveal>
+
+          <Reveal delay={100} className="mt-4">
+            <Card className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+              <div>
+                <p className="text-eyebrow text-subtle">Gear</p>
+                <h2 className="mt-3 text-[19px] font-semibold tracking-[-0.02em] text-foreground">
+                  gear for patient before &amp; after photos.
+                </h2>
+                <p className="mt-2 max-w-[60ch] text-[15px] leading-7 text-muted-foreground">
+                  See the exact lighting, macro, and retractors we pack so your team
+                  can capture clinical-grade progress shots between Prism visits.
+                </p>
+              </div>
+              <Button asChild variant="outline" size="lg" className="shrink-0">
+                <Link href="/dental-photography/before-after">
+                  View the guide
+                  <ArrowRight aria-hidden="true" />
+                </Link>
+              </Button>
+            </Card>
+          </Reveal>
+        </Section>
+
+        <FinalCta location="office team photography final cta" href={WAITLIST_FOCUS_HREFS.content} />
       </main>
       <Footer />
       <ScrollToTop />
@@ -240,6 +233,6 @@ export default function OfficeTeamPhotographyPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

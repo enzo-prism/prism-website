@@ -3,15 +3,36 @@ import Link from "next/link"
 
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
+import { LandingHero } from "@/components/landing/landing-hero"
+import { BulletList } from "@/components/landing/seo/bullet-list"
+import { LinkPills } from "@/components/landing/seo/link-pills"
+import { TextLink } from "@/components/landing/seo/text-link"
 import Navbar from "@/components/navbar"
+import { BrowserFrame } from "@/components/prism/browser-frame"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
 import ScrollToTop from "@/components/scroll-to-top"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
+import { SeoSection } from "@/components/seo/seo-section"
 import SeoTextSection from "@/components/seo-text-section"
-import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { ArrowRight, Check } from "lucide-react"
+import {
+  ArrowUpRight,
+  BarChart3,
+  Code2,
+  FileText,
+  ListChecks,
+  MapPin,
+  Navigation,
+  Star,
+  Target,
+  Trophy,
+} from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Local SEO services',
@@ -109,22 +130,31 @@ const faqItems = [
   },
 ]
 
+const inlineLink =
+  "font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70"
+
+const WHAT_YOU_GET_ICONS = [MapPin, ListChecks, Star, FileText, Code2, BarChart3] as const
+const RANKING_ICONS = [Target, Navigation, Trophy] as const
+
 export default function LocalSeoServicesPage() {
   const relatedCaseStudies = [
     {
       title: "Wine Country Root Canal",
       href: "/case-studies/wine-country-root-canal",
       summary: "Local visibility and service clarity for a specialty practice.",
+      image: "/case-studies/wine-country-root-canal-home-desktop.jpg",
     },
     {
       title: "Town Centre Dental",
       href: "/case-studies/town-centre-dental",
       summary: "Modern website + analytics with map pack momentum.",
+      image: "/case-studies/town-centre-dental-home-desktop.jpg",
     },
     {
       title: "Dr. Christopher B. Wong",
       href: "/case-studies/dr-christopher-wong",
       summary: "Transition visibility with listings, SEO, and trust signals.",
+      image: "/case-studies/dr-christopher-wong-home-desktop.jpg",
     },
   ]
   const relatedPosts = [
@@ -143,243 +173,193 @@ export default function LocalSeoServicesPage() {
   ]
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <section className="px-4 py-20 sm:py-24">
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-            <div className="text-center md:text-left">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-              local seo services
-            </p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              Local SEO services that turn searches into customers
-            </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              Prism helps local businesses show up in Google Maps and organic search with listings, reviews, local content, and clean technical foundations. No keyword stuffing, just a clear system that compounds.
-            </p>
-            <p className="mt-4 text-sm text-neutral-600">
-              Want the bigger picture? See our{" "}
-              <Link href="/seo" className="font-semibold text-neutral-900 underline underline-offset-4">
-                seo approach
-              </Link>{" "}
-              and our{" "}
-              <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
-                local listings management
-              </Link>
-              .
-            </p>
-            <p className="mt-2 text-sm text-neutral-600">
-              Prefer an agency partner? Work with Prism as your{" "}
-              <Link href="/local-seo-agency" className="font-semibold text-neutral-900 underline underline-offset-4">
-                local seo agency
-              </Link>
-              .
-            </p>
-            <p className="mt-2 text-sm text-neutral-600">
-              Dental practice? Start with{" "}
-              <Link
-                href="/dental-practice-seo-expert"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                dentist seo
-              </Link>
-              .
-            </p>
-            <p className="mt-2 text-sm text-neutral-600">
-              Need a baseline first? Start with our{" "}
-              <Link href="/seo/audit" className="font-semibold text-neutral-900 underline underline-offset-4">
-                seo audit service
-              </Link>
-              .
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/waitlist">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href="#process">See our process</Link>
-              </Button>
-            </div>
-            </div>
-            <div
-              tabIndex={0}
-              role="group"
-              className="group mx-auto flex h-64 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-            >
-              <ServiceIllustration
-                variant="local"
-                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">what you get</h2>
-            <p className="mt-3 text-neutral-600">
-              Everything required to be understood, trusted, and chosen across maps, search, and AI answers.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
-            {whatYouGet.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              how local rankings work
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Local visibility is not magic. It’s a scoring system built on matching intent and proving you’re real.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-3">
-            {rankingModel.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
-            If you’re optimizing maps specifically, start with our{" "}
-            <Link href="/blog/google-maps-visibility-playbook-2025" className="font-semibold text-neutral-900 underline underline-offset-4">
-              Google Maps visibility checklist
-            </Link>
-            .
-          </div>
-        </section>
-
-        <section id="process" className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">our process</h2>
-            <p className="mt-3 text-neutral-600">
-              A simple, repeatable system, so improvements keep shipping without chaos.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-            {processSteps.map((item) => (
-              <div key={item.step} className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">step</p>
-                <h3 className="mt-2 text-xl font-semibold lowercase text-neutral-900">{item.step}</h3>
-                <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              outcomes you can expect
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Results that show up in rankings and in real customer actions.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {[
-              "Higher visibility for high-intent local searches.",
-              "More calls, directions, and lead forms from maps and search.",
-              "Cleaner brand trust signals across directories and reviews.",
-              "A content foundation you can expand as you add services and locations.",
-            ].map((outcome) => (
-              <div key={outcome} className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm">
-                <div className="mt-1 rounded-full bg-neutral-900/10 p-1">
-                  <Check className="h-4 w-4 text-neutral-900" />
-                </div>
-                <p className="text-sm text-neutral-700">{outcome}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 px-4 py-16 sm:py-20">
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="local seo services"
+          title="local seo services that turn searches into customers."
+          titleClassName="max-w-[17ch]"
+          description="Prism helps local businesses show up in Google Maps and organic search with listings, reviews, local content, and clean technical foundations. No keyword stuffing, just a clear system that compounds."
+          location="local seo services hero"
+          ctaHref={WAITLIST_CTA.href}
+          ctaLabel={FREE_AUDIT_CTA_TEXT}
+          secondary={{ label: "See our process", href: "#process" }}
+          glow="warm"
+        >
           <div className="mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-2">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">case studies</p>
-                <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                  local seo in action
-                </h2>
-                <div className="mt-6 space-y-4">
-                  {relatedCaseStudies.map((study) => (
+            <div className="mb-5 flex flex-col items-center gap-2 text-center">
+              <h2 className="text-eyebrow text-subtle">how local rankings work</h2>
+              <p className="max-w-[60ch] text-sm leading-6 text-muted-foreground">
+                Local visibility is not magic. It’s a scoring system built on matching intent and proving you’re real.
+              </p>
+            </div>
+            <div className="grid gap-px overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-white/[0.08] text-left md:grid-cols-3">
+              {rankingModel.map((item, index) => {
+                const Icon = RANKING_ICONS[index % RANKING_ICONS.length]
+                return (
+                  <div key={item.title} className="flex flex-col gap-3 bg-card/90 p-6 backdrop-blur-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <Icon aria-hidden="true" className="size-4 text-foreground" />
+                      </span>
+                      <span className="font-mono text-xs tabular-nums text-subtle">signal 0{index + 1}</span>
+                    </div>
+                    <p className="mt-2 text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</p>
+                    <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                  </div>
+                )
+              })}
+            </div>
+            <p className="mt-5 text-center text-sm leading-6 text-muted-foreground">
+              If you’re optimizing maps specifically, start with our{" "}
+              <Link href="/blog/google-maps-visibility-playbook-2025" className={inlineLink}>
+                Google Maps visibility checklist
+              </Link>
+              .
+            </p>
+            <LinkPills
+              label="Related local SEO pages"
+              className="mt-6 justify-center"
+              links={[
+                { label: "seo approach", href: "/seo" },
+                { label: "local listings management", href: "/local-listings" },
+                { label: "local seo agency", href: "/local-seo-agency" },
+                { label: "dentist seo", href: "/dental-practice-seo-expert" },
+                { label: "seo audit service", href: "/seo/audit" },
+              ]}
+            />
+          </div>
+        </LandingHero>
+
+        <Section aria-labelledby="services-what-you-get-title">
+          <Reveal>
+            <SectionHeader
+              id="services-what-you-get-title"
+              eyebrow="what you get"
+              title="understood, trusted, and chosen."
+              description="Everything required to be understood, trusted, and chosen across maps, search, and AI answers."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
+            {whatYouGet.map((item, index) => {
+              const Icon = WHAT_YOU_GET_ICONS[index % WHAT_YOU_GET_ICONS.length]
+              return (
+                <Reveal key={item.title} delay={(index % 3) * 70}>
+                  <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <h3 className="text-heading mt-6 text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  </SpotlightCard>
+                </Reveal>
+              )
+            })}
+          </div>
+        </Section>
+
+        <Section id="process" aria-labelledby="services-process-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+            <Reveal>
+              <SectionHeader
+                id="services-process-title"
+                eyebrow="process"
+                title="our process."
+                description="A simple, repeatable system, so improvements keep shipping without chaos."
+              />
+            </Reveal>
+            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+              {processSteps.map((item, index) => (
+                <li key={item.step} className="flex flex-col gap-3 bg-card p-6">
+                  <span className="font-mono text-xs tabular-nums text-subtle">step 0{index + 1}</span>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.step}</h3>
+                  <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        <SeoSection
+          eyebrow="what we track"
+          title="what we work toward."
+          description="The signals we track, in rankings and in real customer actions."
+        >
+          <Card className="p-6 sm:p-8">
+            <BulletList
+              itemClassName="text-base"
+              items={[
+                "Visibility for high-intent local searches, tracked in Search Console.",
+                "Calls, directions, and lead forms from Maps and search, reported month to month.",
+                "Cleaner brand trust signals across directories and reviews.",
+                "A content foundation you can expand as you add services and locations.",
+              ]}
+            />
+          </Card>
+        </SeoSection>
+
+        <Section aria-labelledby="services-results-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
+            <div>
+              <Reveal>
+                <SectionHeader id="services-results-title" eyebrow="case studies" title="local seo in action." />
+              </Reveal>
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {relatedCaseStudies.map((study, index) => (
+                  <Reveal key={study.href} delay={index * 70}>
                     <Link
-                      key={study.href}
                       href={study.href}
-                      className="block rounded-2xl border border-neutral-200 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-md"
+                      className="group/case block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                     >
-                      <p className="text-base font-semibold text-neutral-900">{study.title}</p>
-                      <p className="mt-2 text-sm text-neutral-600">{study.summary}</p>
+                      <Card className="flex h-full flex-col p-2.5 transition-[border-color,transform] duration-300 group-hover/case:-translate-y-0.5 group-hover/case:border-white/[0.16]">
+                        <BrowserFrame
+                          src={study.image}
+                          alt={`${study.title} website homepage`}
+                          sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 90vw"
+                        />
+                        <div className="flex flex-1 flex-col p-2.5 pt-4">
+                          <p className="text-base font-semibold tracking-[-0.02em] text-foreground">{study.title}</p>
+                          <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{study.summary}</p>
+                        </div>
+                      </Card>
                     </Link>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">from the blog</p>
-                <h2 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                  local visibility guides
-                </h2>
-                <ul className="mt-6 space-y-3 text-sm text-neutral-700">
-                  {relatedPosts.map((post) => (
-                    <li key={post.href}>
-                      <Link
-                        href={post.href}
-                        className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                      >
-                        {post.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6">
-                  <Link href="/blog" className="text-sm font-semibold text-neutral-900 underline underline-offset-4">
-                    browse all posts →
-                  </Link>
-                </div>
+                  </Reveal>
+                ))}
               </div>
             </div>
+            <Reveal delay={120}>
+              <p className="text-eyebrow text-subtle">from the blog</p>
+              <h2 className="text-heading mt-4 text-foreground">local visibility guides</h2>
+              <ul className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                {relatedPosts.map((post) => (
+                  <li key={post.href}>
+                    <Link
+                      href={post.href}
+                      className="group/post flex min-h-14 items-center justify-between gap-4 rounded-sm text-[15px] font-medium text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    >
+                      {post.title}
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="size-4 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/post:-translate-y-0.5 group-hover/post:translate-x-0.5 group-hover/post:text-foreground"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <TextLink href="/blog" className="mt-4">
+                browse all posts
+              </TextLink>
+            </Reveal>
           </div>
-        </section>
+        </Section>
 
         <FAQSection
-          title="local seo services faq"
+          title="local seo services faq."
           subtitle="Quick answers about scope, timelines, and what we actually do."
           items={faqItems}
         />
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-              Ready to show up when customers search?
-            </h2>
-            <p className="mt-4 text-neutral-600 sm:text-lg">
-              We’ll map a focused plan, fix what’s holding you back, and build the system that keeps compounding.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/waitlist">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href="/case-studies">See case studies</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
 
         <SeoTextSection title="local seo services: what we optimize and why">
           <p>
@@ -390,16 +370,18 @@ export default function LocalSeoServicesPage() {
           </p>
           <p>
             if you want a deeper overview of on-page and off-page systems, start with{" "}
-            <Link href="/seo" className="font-semibold text-neutral-900 underline underline-offset-4">
-              seo
-            </Link>
+            <Link href="/seo">seo</Link>
             . if your immediate priority is map-pack presence, see{" "}
-            <Link href="/local-listings" className="font-semibold text-neutral-900 underline underline-offset-4">
-              local listing optimization
-            </Link>
+            <Link href="/local-listings">local listing optimization</Link>
             .
           </p>
         </SeoTextSection>
+
+        <FinalCta
+          location="local seo services final cta"
+          title="show up when customers search."
+          secondary={{ label: "See case studies", href: "/case-studies" }}
+        />
       </main>
 
       <Footer />

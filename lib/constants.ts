@@ -1,10 +1,13 @@
 // Google Analytics configuration
 
-const FALLBACK_GA_MEASUREMENT_ID = "G-P9VY77PRC0"
+const FALLBACK_GA_MEASUREMENT_ID = 'G-P9VY77PRC0'
 
 const envMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
 
-export const GA_MEASUREMENT_ID = envMeasurementId && envMeasurementId.length > 0 ? envMeasurementId : FALLBACK_GA_MEASUREMENT_ID
+export const GA_MEASUREMENT_ID =
+  envMeasurementId && envMeasurementId.length > 0
+    ? envMeasurementId
+    : FALLBACK_GA_MEASUREMENT_ID
 
 // Only the real production environment should report analytics. On Vercel,
 // preview deployments also build with NODE_ENV === "production", so gating on
@@ -15,10 +18,11 @@ export const GA_MEASUREMENT_ID = envMeasurementId && envMeasurementId.length > 0
 // behaving as before).
 const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV
 export const IS_PRODUCTION_ENV = vercelEnv
-  ? vercelEnv === "production"
-  : process.env.NODE_ENV === "production"
+  ? vercelEnv === 'production'
+  : process.env.NODE_ENV === 'production'
 
-export const IS_ANALYTICS_ENABLED = IS_PRODUCTION_ENV && Boolean(GA_MEASUREMENT_ID)
+export const IS_ANALYTICS_ENABLED =
+  IS_PRODUCTION_ENV && Boolean(GA_MEASUREMENT_ID)
 
 /**
  * Hostnames that must never report analytics, checked at runtime in the browser.
@@ -54,7 +58,7 @@ export function isAnalyticsReportingHost(hostname?: string): boolean {
   if (host.endsWith('.local')) return false
   return true
 }
-export const GOOGLE_ADS_ID = "AW-11373090310"
+export const GOOGLE_ADS_ID = 'AW-11373090310'
 export const GOOGLE_ADS_LEAD_CONVERSION_SEND_TO = `${GOOGLE_ADS_ID}/hBMrCMijk70bEIasjq8q`
 
 // A lead and a completed $300 purchase are different business events, so they
@@ -68,15 +72,15 @@ const purchaseConversionLabel =
 export const GOOGLE_ADS_PURCHASE_CONVERSION_SEND_TO =
   purchaseConversionLabel && purchaseConversionLabel.length > 0
     ? `${GOOGLE_ADS_ID}/${purchaseConversionLabel}`
-    : ""
+    : ''
 
 // Logo configuration
 export const LOGO_CONFIG = {
-  src: "/prism-logo.jpeg",
-  fallbackSrc: "/prism-logo.jpeg",
-  alt: "Prism logo",
+  src: '/prism-logo.jpeg',
+  fallbackSrc: '/prism-logo.jpeg',
+  alt: 'Prism logo',
   // Consistent corner radius class for all logo instances
-  className: "rounded-lg", // This applies an 8px border-radius
+  className: 'rounded-lg', // This applies an 8px border-radius
 }
 
 // Logo sizes for different use cases
@@ -86,22 +90,63 @@ export const LOGO_SIZES = {
   hero: { width: 96, height: 96 },
   large: { width: 128, height: 128 },
   small: { width: 40, height: 40 },
-} as const 
+} as const
 
 // Waitlist funnel (2026-09-14): Prism is at capacity. The legacy export name
 // is kept because ~30 long-tail surfaces import it; every one of them now
 // reads "Join the waitlist" and lands on /waitlist via route redirects.
-export const FREE_AUDIT_CTA_TEXT = "Join the waitlist"
+export const FREE_AUDIT_CTA_TEXT = 'Join the waitlist'
 
 export type NavItem = { label: string; href: string }
 
-// Client-focused header: shared by desktop and mobile. Services and products
-// remain available in the homepage sections and footer.
+// Header (2026-10 redesign): Work, a Services menu, Wall of Love, About and
+// Pricing, plus the waitlist CTA beside the menu. Desktop and mobile share
+// these lists. Services stay hard-coded here because lib/services.ts must not
+// import this file.
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'Clients', href: '/case-studies' },
+  { label: 'Work', href: '/case-studies' },
   { label: 'Wall of Love', href: '/wall-of-love' },
+  { label: 'About', href: '/about' },
+  { label: 'Pricing', href: '/pricing' },
+]
+
+export type NavServiceItem = NavItem & {
+  description: string
+  icon: 'website' | 'content' | 'ads' | 'dental' | 'infinity'
+}
+
+export const NAV_SERVICE_ITEMS: NavServiceItem[] = [
+  {
+    label: 'Websites',
+    href: '/websites',
+    description: 'Fast, custom sites that make choosing you easy.',
+    icon: 'website',
+  },
+  {
+    label: 'Content',
+    href: '/content',
+    description: 'Video, photo and posts people actually watch.',
+    icon: 'content',
+  },
+  {
+    label: 'Ads',
+    href: '/ads',
+    description: 'Campaigns that point to a page worth landing on.',
+    icon: 'ads',
+  },
+  {
+    label: 'Dental OS',
+    href: '/dental-os',
+    description: 'Everything a practice needs to be found and booked.',
+    icon: 'dental',
+  },
+  {
+    label: 'Prism Infinity',
+    href: '/prism-infinity',
+    description: 'One subscription. An endless queue of creative.',
+    icon: 'infinity',
+  },
 ]
 
 /** @deprecated Contact lives in the footer. Kept for any leftover imports. */
-export const CONTACT_NAV_ITEM: NavItem = { label: "contact", href: "/contact" }
+export const CONTACT_NAV_ITEM: NavItem = { label: 'contact', href: '/contact' }

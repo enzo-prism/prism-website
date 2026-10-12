@@ -1,22 +1,46 @@
-"use client"
+import {
+  ArrowUpFromLine,
+  ArrowUpRight,
+  Briefcase,
+  Car,
+  CircleDollarSign,
+  Clapperboard,
+  Flag,
+  GraduationCap,
+  Laptop,
+  Medal,
+  Rocket,
+  Signature,
+  Timer,
+  Trophy,
+  type LucideIcon,
+} from "lucide-react"
 
-import HomeReveal from "@/components/home/HomeReveal"
-import CoreImage from "./core-image"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
+import CoreImage from "@/components/core-image"
+import { Reveal } from "@/components/prism/reveal"
+import { cn } from "@/lib/utils"
 
 interface TimelineEvent {
   id: number
   year: string
   title: string
   description: string
-  iconSrc: string
-  iconAlt: string
+  icon: LucideIcon
+  /** Prism milestones get the spectrum node. */
+  highlight?: boolean
   image?: {
     src: string // Can be local path or absolute URL
     alt: string
     width: number
     height: number
+    /** CSS object-position for the shared 4:3 crop. Defaults to center. */
+    position?: string
     isExternal?: boolean // Flag to indicate if src is an external URL
+  }
+  /** A neutral icon tile in place of a photo (same frame as the photos). */
+  tile?: {
+    icon: LucideIcon
+    caption: string
   }
   link?: {
     url: string
@@ -24,279 +48,324 @@ interface TimelineEvent {
   }
 }
 
-// Static timeline copy, hoisted to module scope. It takes nothing from props or
-// state, so declaring it inside the component rebuilt ~190 lines of object
-// literals on every render and produced a new array identity each pass — which
-// is why the observer effect below could not safely list it as a dependency.
+// Static timeline copy, hoisted to module scope. Image sizes are the files'
+// real pixel dimensions so the frames reserve the right space before load.
 const events: TimelineEvent[] = [
-    {
-      id: 14,
-      year: "March 2009",
-      title: "first track & field competition",
-      description: "my favorite event at the time was high jump",
-      iconSrc: "/pixelish/award.svg",
-      iconAlt: "Award icon",
-      image: {
-        src: "/first-track-field-competition.jpeg",
-        alt: "Young Enzo running in a blue and white uniform during his first track and field competition with spectators watching from the stands",
-        width: 960,
-        height: 640,
-      },
+  {
+    id: 14,
+    year: "March 2009",
+    title: "first track & field competition",
+    description: "My favorite event at the time was high jump.",
+    icon: Medal,
+    image: {
+      src: "/first-track-field-competition.jpeg",
+      alt: "Young Enzo running in a blue and white uniform during his first track and field competition with spectators watching from the stands",
+      width: 960,
+      height: 642,
     },
-    {
-      id: 13,
-      year: "September 2010",
-      title: "posted first review on youtube",
-      description: "new super Mario bros on Wii",
-      iconSrc: "/pixelish/device-camera.svg",
-      iconAlt: "Camera icon",
-      image: {
-        src: "/first-youtube-video.png",
-        alt: "Young Enzo and his brother filming their first YouTube video review, wearing costumes and holding puppies with a video game on the table",
-        width: 1200,
-        height: 675,
-      },
-      link: {
-        url: "https://www.youtube.com/watch?v=cFz_K56fACc",
-        text: "watch the original video",
-      },
+  },
+  {
+    id: 13,
+    year: "September 2010",
+    title: "posted first review on YouTube",
+    description: "New Super Mario Bros. on Wii.",
+    icon: Clapperboard,
+    image: {
+      src: "/first-youtube-video.png",
+      alt: "Young Enzo and his brother filming their first YouTube video review, wearing costumes and holding puppies with a video game on the table",
+      width: 1298,
+      height: 971,
     },
-    {
-      id: 12,
-      year: "June 2012",
-      title: "makes first dollar from youtube",
-          description:
-      "changed the way I viewed the world forever",
-      iconSrc: "/pixelish/device-monitor.svg",
-      iconAlt: "Monitor icon",
+    link: {
+      url: "https://www.youtube.com/watch?v=cFz_K56fACc",
+      text: "Watch the original video",
     },
-    {
-      id: 11,
-      year: "March 2015",
-      title: "first pole vault competition",
-      description: "spoiler…I didn't clear that bar lol",
-      iconSrc: "/pixelish/emoji-workout.svg",
-      iconAlt: "Workout icon",
-      image: {
-        src: "/first-pole-vault-competition.jpg",
-        alt: "Young Enzo mid-air during a pole vault jump at his first competition with mountains in the background",
-        width: 1080,
-        height: 1080,
-      },
+  },
+  {
+    id: 12,
+    year: "June 2012",
+    title: "makes first dollar from YouTube",
+    description: "Changed the way I viewed the world forever.",
+    icon: CircleDollarSign,
+  },
+  {
+    id: 11,
+    year: "March 2015",
+    title: "first pole vault competition",
+    description: "Spoiler… I didn't clear that bar lol",
+    icon: ArrowUpFromLine,
+    image: {
+      src: "/first-pole-vault-competition.jpg",
+      alt: "Young Enzo mid-air during a pole vault jump at his first competition with mountains in the background",
+      width: 1179,
+      height: 1222,
+      position: "50% 30%",
     },
-    {
-      id: 10,
-      year: "November 2017",
-      title: "goes d1 in track and field",
-      description: "barely made the team. ended up having a great career at cp",
-      iconSrc: "/pixelish/device-stop-clock.svg",
-      iconAlt: "Stopwatch icon",
-      image: {
-        src: "/timeline/cal-poly-track.png",
-        alt: "Enzo smiling in his Cal Poly Track and Field jacket after achieving Division 1 status.",
-        width: 450,
-        height: 600,
-      },
+  },
+  {
+    id: 10,
+    year: "November 2017",
+    title: "goes D1 in track and field",
+    description: "Barely made the team. Ended up having a great career at CP.",
+    icon: Timer,
+    image: {
+      src: "/timeline/cal-poly-track.png",
+      alt: "Enzo smiling in his Cal Poly Track and Field jacket after achieving Division 1 status.",
+      width: 546,
+      height: 767,
+      position: "50% 12%",
     },
-    {
-      id: 9,
-      year: "June 2020",
-      title: "first apple internship",
-      description:
-        "secured and completed first internship at apple (worked on find my, airplay, and some other cool products!)",
-      iconSrc: "/pixelish/logo-apple.svg",
-      iconAlt: "Apple logo icon",
-      image: {
-        src: "/welcome-to-apple.jpeg",
-        alt: "Enzo's Apple onboarding portal welcoming him to Apple",
-        width: 800,
-        height: 600,
-      },
+  },
+  {
+    id: 9,
+    year: "June 2020",
+    title: "first Apple internship",
+    description:
+      "Secured and completed first internship at Apple (worked on Find My, AirPlay, and some other cool products!)",
+    icon: Laptop,
+    image: {
+      src: "/welcome-to-apple.jpeg",
+      alt: "Enzo's Apple onboarding portal welcoming him to Apple",
+      width: 1179,
+      height: 1714,
+      position: "50% 60%",
     },
-    {
-      id: 8,
-      year: "June 2021",
-      title: "second apple internship",
-      description: "completed a second internship at apple",
-      iconSrc: "/pixelish/logo-apple.svg",
-      iconAlt: "Apple logo icon",
-      image: {
-        src: "/apple-gear-internship-2.png",
-        alt: "Collection of Apple-branded merchandise including backpack, AirPods, water bottles, cap, and other swag items from Apple internship",
-        width: 1080,
-        height: 1080,
-      },
+  },
+  {
+    id: 8,
+    year: "June 2021",
+    title: "second Apple internship",
+    description: "Completed a second internship at Apple.",
+    icon: Laptop,
+    image: {
+      src: "/apple-gear-internship-2.png",
+      alt: "Collection of Apple-branded merchandise including backpack, AirPods, water bottles, cap, and other swag items from Apple internship",
+      width: 910,
+      height: 1149,
     },
-    {
-      id: 7,
-      year: "June 2022",
-      title: "graduates cal poly",
-      description: "earned a b.s. in engineering from california polytechnic state university.",
-      iconSrc: "/pixelish/document-letter.svg",
-      iconAlt: "Document icon",
-      image: {
-        src: "/timeline/cal-poly-grad.png",
-        alt: "Enzo and a friend in green graduation gowns with their father/mentor at Cal Poly commencement ceremony",
-        width: 760,
-        height: 592,
-      },
+  },
+  {
+    id: 7,
+    year: "June 2022",
+    title: "graduates Cal Poly",
+    description: "Earned a B.S. in engineering from California Polytechnic State University.",
+    icon: GraduationCap,
+    image: {
+      src: "/timeline/cal-poly-grad.png",
+      alt: "Enzo and a friend in green graduation gowns with their father/mentor at Cal Poly commencement ceremony",
+      width: 737,
+      height: 602,
+      position: "50% 35%",
     },
-    {
-      id: 6,
-      year: "June 2022",
-      title: "starts full-time product manager role",
-      description: "at a venture-backed tech startup",
-      iconSrc: "/pixelish/briefcase.svg",
-      iconAlt: "Briefcase icon",
-      image: {
-        src: "/timeline/enzo-headshot.jpeg",
-        alt: "Enzo's professional headshot, smiling in a collared shirt, marking his first full-time product manager role.",
-        width: 800,
-        height: 800,
-      },
+  },
+  {
+    id: 6,
+    year: "June 2022",
+    title: "starts full-time product manager role",
+    description: "At a venture-backed tech startup.",
+    icon: Briefcase,
+    image: {
+      src: "/timeline/enzo-headshot.jpeg",
+      alt: "Enzo's professional headshot, smiling in a collared shirt, marking his first full-time product manager role.",
+      width: 800,
+      height: 800,
+      position: "50% 30%",
     },
-    {
-      id: 5,
-      year: "March 2023",
-      title: "first philippine national track and field championship",
-      description: "first time competing overseas!",
-      iconSrc: "/pixelish/award-checkmark.svg",
-      iconAlt: "Championship award icon",
-      image: {
-        src: "/timeline/philippines-championship.png",
-        alt: "Enzo and fellow athletes holding the Philippine flag at the Philippine National Track and Field Championship.",
-        width: 800,
-        height: 570,
-      },
+  },
+  {
+    id: 5,
+    year: "March 2023",
+    title: "first Philippine National Track and Field Championship",
+    description: "First time competing overseas!",
+    icon: Flag,
+    image: {
+      src: "/timeline/philippines-championship.png",
+      alt: "Enzo and fellow athletes holding the Philippine flag at the Philippine National Track and Field Championship.",
+      width: 417,
+      height: 279,
     },
-    {
-      id: 4,
-      year: "May 2023",
-      title: "enzo goes pro in track and field",
-      description: "signed the contract. left full-time job. moved out of sf. burned the ships.",
-      iconSrc: "/pixelish/award-plus.svg",
-      iconAlt: "Pro athlete icon",
-      image: {
-        src: "/philippine-olympic-committee-logo.png",
-        alt: "Philippine Olympic Committee Logo",
-        width: 500,
-        height: 500,
-      },
+  },
+  {
+    id: 4,
+    year: "May 2023",
+    title: "Enzo goes pro in track and field",
+    description: "Signed the contract. Left full-time job. Moved out of SF. Burned the ships.",
+    icon: Trophy,
+    tile: { icon: Signature, caption: "contract signed" },
+  },
+  {
+    id: 3,
+    year: "May 2023",
+    title: "Enzo starts driving for Uber",
+    description: "Funding the dream.",
+    icon: Car,
+    image: {
+      src: "/uber-driver-profile.jpeg",
+      alt: "Enzo's Uber driver profile showing a perfect 5.00 star rating",
+      width: 1179,
+      height: 2004,
+      position: "50% 0%",
     },
-    {
-      id: 3,
-      year: "May 2023",
-      title: "enzo starts driving for uber",
-      description: "funding the dream",
-      iconSrc: "/pixelish/device-phone.svg",
-      iconAlt: "Phone icon",
-      image: {
-        src: "/uber-driver-profile.jpeg",
-        alt: "Enzo's Uber driver profile showing a perfect 5.00 star rating, 515 total trips, and 1 year 11 months of driving experience",
-        width: 834,
-        height: 1512,
-      },
+  },
+  {
+    id: 2,
+    year: "May 2023",
+    title: "Enzo starts Prism",
+    description:
+      '"I think there\'s a way to use what the tech industry taught me to help smaller businesses…"',
+    icon: Rocket,
+    highlight: true,
+    image: {
+      src: "/prism-logo.jpeg",
+      alt: "Prism logo",
+      width: 502,
+      height: 502,
     },
-    {
-      id: 2,
-      year: "May 2023",
-      title: "enzo starts prism",
-      description: '"i think there\'s a way to use what the tech industry taught me to help smaller businesses…"',
-      iconSrc: "/pixelish/emoji-rocket.svg",
-      iconAlt: "Rocket icon",
-      image: {
-        src: "/prism-logo.jpeg",
-        alt: "Prism logo",
-        width: 800,
-        height: 800,
-      },
-    },
-    {
-      id: 1,
-      year: "December 2023",
-      title: "prism makes its first dollar $",
-      description: '"oh my gosh I think we\'re gonna make it…"',
-      iconSrc: "/pixelish/currency-dollar.svg",
-      iconAlt: "Dollar icon",
-    },
+  },
+  {
+    id: 1,
+    year: "December 2023",
+    title: "Prism makes its first dollar",
+    description: '"Oh my gosh I think we\'re gonna make it…"',
+    icon: CircleDollarSign,
+    highlight: true,
+  },
 ]
 
-export default function ScrollingTimeline() {
+// One frame for every thumbnail: a 4:3 crop at a fixed size, so the right
+// column reads as a single strip of photos. Phones get a wider frame under
+// the text; desktop gets a fixed column beside it.
+const FRAME_CLASS =
+  "relative mt-5 aspect-[4/3] w-full max-w-[16rem] overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-[0_24px_60px_-30px_oklch(0_0_0/90%)] md:mt-1 md:w-56 md:max-w-none md:shrink-0"
+
+function TimelineTile({ tile }: { tile: NonNullable<TimelineEvent["tile"]> }) {
+  const Icon = tile.icon
   return (
-    <div className="relative max-w-3xl mx-auto">
-      <div className="absolute left-4 top-0 bottom-0 w-1 -translate-x-0.5 rounded-full bg-gradient-to-b from-border/70 via-border/40 to-border/15 md:left-1/2 md:translate-x-0"></div>
-      <div className="space-y-16">
-        {events.map((event, index) => {
-          return (
-            <HomeReveal
-              key={event.id}
-              className={`relative flex flex-col md:flex-row ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              } items-start`}
-            >
-              <div
-                className={`absolute left-4 md:left-1/2 w-10 h-10 rounded-md bg-background border border-border/60 flex items-center justify-center transform -translate-x-5 md:-translate-x-5 z-10 shadow-lg shadow-black/50 hover:scale-110 transition-transform duration-300 motion-reduce:transition-none`}
-              >
-                <PixelishIcon
-                  src={event.iconSrc}
-                  alt={event.iconAlt}
-                  size={20}
-                  aria-hidden="true"
-                  className="h-5 w-5 opacity-90"
-                />
-              </div>
-              <div className={`ml-12 md:ml-0 md:w-5/12 ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}>
-                <div id={event.id.toString()} className="border border-border/60 bg-card/30 p-6 rounded-md shadow-none backdrop-blur-sm transition-colors duration-300 hover:bg-card/45 timeline-card">
-                  <div className="inline-flex items-center rounded-md border border-border/60 bg-muted/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground font-pixel mb-3">
-                    {event.year}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{event.title}</h3>
-                  <p className="text-muted-foreground">{event.description}</p>
-
-                  {event.image && (event.id === 7 || event.image.isExternal) ? ( // Check for ID 7 or isExternal flag
-                    <div className="mt-4 overflow-hidden rounded-md border border-border/60 bg-background/30 timeline-image">
-                      <img
-                        src={event.image.src || "/placeholder.svg"}
-                        alt={event.image.alt}
-                        width={event.image.width}
-                        height={event.image.height}
-                        className="w-full h-auto object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ) : event.image ? (
-                    <div className="mt-4 overflow-hidden rounded-md border border-border/60 bg-background/30 timeline-image">
-                      <CoreImage
-                        src={event.image.src}
-                        alt={event.image.alt}
-                        width={event.image.width}
-                        height={event.image.height}
-                        className="w-full h-auto object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        quality={90}
-                        trackingId={`timeline_image_${event.id}`}
-                      />
-                    </div>
-                  ) : null}
-
-                  {event.link && (
-                    <div className="mt-4">
-                      <a
-                        href={event.link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/80 hover:text-foreground transition-colors font-pixel timeline-link"
-                      >
-                        {event.link.text} <span className="ml-1">→</span>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </HomeReveal>
-          )
-        })}
+    <div aria-hidden="true" className={cn(FRAME_CLASS, "grid place-items-center bg-card")}>
+      <div className="bg-grid absolute inset-0 opacity-50" />
+      <div className="absolute inset-0 bg-[radial-gradient(55%_65%_at_50%_42%,color-mix(in_oklch,var(--spectrum-blue)_20%,transparent),transparent_72%)]" />
+      <div className="relative flex flex-col items-center gap-3">
+        <span className="grid size-14 place-items-center rounded-2xl border border-white/12 bg-background/70 text-foreground shadow-[0_1px_0_0_oklch(1_0_0/8%)_inset,0_0_40px_-10px_color-mix(in_oklch,var(--spectrum-blue)_60%,transparent)]">
+          <Icon className="size-6" />
+        </span>
+        <span className="font-mono text-[11px] text-subtle">{tile.caption}</span>
       </div>
     </div>
+  )
+}
+
+function TimelineImage({ event }: { event: TimelineEvent }) {
+  if (event.tile) return <TimelineTile tile={event.tile} />
+
+  const image = event.image
+  if (!image) return null
+  const style = { objectPosition: image.position ?? "50% 50%" }
+
+  return (
+    <div className={FRAME_CLASS}>
+      {event.id === 7 || image.isExternal ? (
+        // Kept from the original timeline: this asset renders through a plain lazy img.
+        <img
+          src={image.src || "/placeholder.svg"}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          className="absolute inset-0 size-full object-cover"
+          style={style}
+          loading="lazy"
+        />
+      ) : (
+        <CoreImage
+          src={image.src}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          className="h-full w-full object-cover"
+          style={style}
+          sizes="(max-width: 768px) 256px, 224px"
+          quality={90}
+          disableShadow
+          trackingId={`timeline_image_${event.id}`}
+        />
+      )}
+    </div>
+  )
+}
+
+/**
+ * Enzo's story as a vertical timeline (server component). The rail and nodes
+ * are static; each entry reveals on scroll through the shared Reveal kit.
+ */
+export default function ScrollingTimeline() {
+  return (
+    <ol className="relative mx-auto max-w-4xl">
+      {events.map((event, index) => {
+        const Icon = event.icon
+        const isLast = index === events.length - 1
+
+        return (
+          <li
+            key={event.id}
+            id={`timeline-${event.id}`}
+            className="relative grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-5 md:grid-cols-[8.5rem_2.25rem_minmax(0,1fr)] md:gap-x-7"
+          >
+            <p className="hidden pt-2.5 text-right font-mono text-xs text-subtle md:block">
+              {event.year}
+            </p>
+
+            <div className="relative flex justify-center" aria-hidden="true">
+              {!isLast ? (
+                <span className="absolute bottom-0 top-9 w-px bg-gradient-to-b from-white/15 to-white/[0.06]" />
+              ) : null}
+              {event.highlight ? (
+                <span className="relative z-10 grid size-9 place-items-center rounded-full bg-spectrum p-px shadow-[0_0_24px_-4px_color-mix(in_oklch,var(--spectrum-blue)_60%,transparent)]">
+                  <span className="grid size-full place-items-center rounded-full bg-background text-foreground">
+                    <Icon className="size-4" />
+                  </span>
+                </span>
+              ) : (
+                <span className="relative z-10 grid size-9 place-items-center rounded-full border border-white/12 bg-background text-muted-foreground">
+                  <Icon className="size-4" />
+                </span>
+              )}
+            </div>
+
+            <Reveal
+              className={cn(
+                "min-w-0 md:flex md:items-start md:justify-between md:gap-8",
+                isLast ? "pb-0" : "pb-12 sm:pb-14",
+              )}
+            >
+              <div className="min-w-0">
+                <p className="font-mono text-xs text-subtle md:hidden">{event.year}</p>
+                <h3 className="mt-1.5 text-pretty text-xl font-semibold tracking-[-0.025em] text-foreground">
+                  {event.title}
+                </h3>
+                <p className="mt-2 max-w-[46ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                  {event.description}
+                </p>
+
+                {event.link ? (
+                  <a
+                    href={event.link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  >
+                    {event.link.text}
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-4 transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                    />
+                  </a>
+                ) : null}
+              </div>
+
+              <TimelineImage event={event} />
+            </Reveal>
+          </li>
+        )
+      })}
+    </ol>
   )
 }

@@ -1,74 +1,70 @@
 ---
 version: alpha
-name: Prism Black System
-description: A dark-first design contract for the Prism marketing site, built around a black shell, warm ivory type, selective mono metadata, pixel accents, three section modes, and deliberate motion.
+name: Prism Spectrum System
+description: A dark, cinematic design contract for the Prism marketing site, built on stock shadcn/ui primitives, Geist type, a near-black canvas, and the prism refraction spectrum as a rationed signature accent.
 colors:
-  primary: "#F5F0E8"
-  canvas: "#000000"
-  canvas-soft: "#0F0F0F"
-  canvas-elevated: "#151515"
-  text-strong: "#F5F0E8"
-  text-muted: "#B8AFA2"
-  text-subtle: "#8F877B"
-  border: "#2A2A2A"
-  action-ink: "#050505"
-  proof-accent: "#D8BC79"
-  proof-muted: "#7D766A"
+  primary: "#FAFAFA"
+  canvas: "#050506"
+  canvas-soft: "#0A0A0C"
+  canvas-elevated: "#0D0D0F"
+  surface-muted: "#171719"
+  text-strong: "#FAFAFA"
+  text-muted: "#A7A7AF"
+  text-subtle: "#7F7F87"
+  action-ink: "#0A0A0B"
+  ring: "#A4A4A4"
+  live: "#4BDE81"
+  spectrum-red: "#F84D3E"
+  spectrum-orange: "#FE8C2C"
+  spectrum-yellow: "#F7CC4B"
+  spectrum-green: "#61CC69"
+  spectrum-blue: "#4F91F2"
+  spectrum-violet: "#946AEE"
 typography:
-  display-xl:
+  display:
     fontFamily: "Geist Sans"
-    fontSize: 56px
-    fontWeight: 500
-    lineHeight: 1
+    fontSize: 104px
+    fontWeight: 600
+    lineHeight: 0.94
+    letterSpacing: "-0.055em"
+  title:
+    fontFamily: "Geist Sans"
+    fontSize: 64px
+    fontWeight: 600
+    lineHeight: 0.98
     letterSpacing: "-0.05em"
-  display-lg:
+  heading:
     fontFamily: "Geist Sans"
-    fontSize: 40px
-    fontWeight: 500
-    lineHeight: 1.04
-    letterSpacing: "-0.045em"
-  display-md:
-    fontFamily: "Geist Sans"
-    fontSize: 24px
-    fontWeight: 500
-    lineHeight: 1.1
+    fontSize: 28px
+    fontWeight: 600
+    lineHeight: 1.12
     letterSpacing: "-0.03em"
-  body-lg:
+  lead:
     fontFamily: "Geist Sans"
-    fontSize: 18px
+    fontSize: 20px
     fontWeight: 400
-    lineHeight: 1.7
-    letterSpacing: "-0.01em"
+    lineHeight: 1.6
+    letterSpacing: "-0.012em"
   body-md:
     fontFamily: "Geist Sans"
     fontSize: 16px
     fontWeight: 400
     lineHeight: 1.6
     letterSpacing: "-0.01em"
-  mono-sm:
+  eyebrow:
     fontFamily: "Geist Mono"
-    fontSize: 12px
-    fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "0.24em"
-  mono-xs:
-    fontFamily: "Geist Mono"
-    fontSize: 10px
-    fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "0.22em"
-  pixel-accent:
-    fontFamily: "Geist Pixel"
     fontSize: 11px
-    fontWeight: 400
-    lineHeight: 1.15
-    letterSpacing: "0.08em"
+    fontWeight: 500
+    lineHeight: 1.2
+    letterSpacing: "0.18em"
 rounded:
   none: 0px
   sm: 8px
-  md: 12px
-  lg: 20px
-  xl: 32px
+  md: 10px
+  lg: 12px
+  xl: 16px
+  card: 16px
+  panel: 24px
   full: 999px
 spacing:
   xs: 4px
@@ -77,411 +73,213 @@ spacing:
   lg: 24px
   xl: 40px
   xxl: 64px
-  section: 96px
+  section: 128px
 components:
-  hero-frame:
-    backgroundColor: "{colors.canvas-soft}"
-    textColor: "{colors.text-strong}"
-    rounded: "{rounded.xl}"
-    padding: 48px
-  hero-support-pill:
-    backgroundColor: "{colors.canvas-elevated}"
-    textColor: "{colors.text-muted}"
-    typography: "{typography.mono-xs}"
-    rounded: "{rounded.full}"
-    padding: 8px
-  hero-primary-button:
+  primary-button:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.action-ink}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.md}"
-    padding: 16px
-  hero-secondary-button:
-    backgroundColor: "{colors.canvas-elevated}"
-    textColor: "{colors.text-strong}"
-    typography: "{typography.body-md}"
-    rounded: "{rounded.md}"
-    padding: 16px
-  text-link-action:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.text-strong}"
-    typography: "{typography.mono-sm}"
-    rounded: "{rounded.none}"
-    padding: 0px
-  core-panel:
+    rounded: "{rounded.full}"
+    padding: 24px
+  outline-button:
     backgroundColor: "{colors.canvas-soft}"
     textColor: "{colors.text-strong}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.xl}"
-    padding: 32px
-  section-eyebrow:
+    rounded: "{rounded.full}"
+    padding: 24px
+  card:
+    backgroundColor: "{colors.canvas-soft}"
+    textColor: "{colors.text-strong}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.card}"
+    padding: 24px
+  panel:
+    backgroundColor: "{colors.canvas-soft}"
+    textColor: "{colors.text-strong}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.panel}"
+    padding: 40px
+  eyebrow:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.text-subtle}"
-    typography: "{typography.mono-sm}"
+    typography: "{typography.eyebrow}"
     rounded: "{rounded.none}"
     padding: 0px
-  divider-rule:
-    backgroundColor: "{colors.border}"
-    textColor: "{colors.text-strong}"
-    typography: "{typography.mono-xs}"
-    rounded: "{rounded.none}"
-    padding: 0px
-  social-proof-inline:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.proof-muted}"
+  status-pill:
+    backgroundColor: "{colors.canvas-elevated}"
+    textColor: "{colors.text-muted}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.none}"
-    padding: 0px
-  social-proof-stars:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.proof-accent}"
-    typography: "{typography.mono-xs}"
-    rounded: "{rounded.none}"
-    padding: 0px
+    rounded: "{rounded.full}"
+    padding: 8px
 ---
 
-# Prism Black System
+# Prism Spectrum System
 
 ## Purpose
 
-This file is the code-facing design contract for Prism. It should describe the visual system that is actually live in this repo so future Codex sessions can extend the site without inventing new page-specific languages.
+This is the code-facing design contract for design-prism.com. It describes the
+system that ships in this repo so every route speaks one visual language.
+
+The site has one job: make a business owner think **"these people are
+excellent, and I want them on my business."** Prism is fully booked, so the
+waitlist is the only sales action. Every page should build desire and end at
+"Join the waitlist".
 
 Prism should feel:
 
-- sharp, dark, and intentional
-- warm rather than cold
-- minimal without becoming empty
-- premium without looking like generic SaaS
-- motion-aware, but never gimmicky
+- cinematic, dark, and confident
+- precise, like a well-made product (shadcn grammar, crisp hairlines)
+- alive: real work in motion, live status, light moving through glass
+- premium through restraint and proof, never through adjectives
 
-The safest mental model is **black shell + warm ivory type + selective mono metadata + pixel accents + paced section rhythm**.
-
-### Growth-first Black System
-
-For the homepage and `/waitlist`, Prism should feel like a premium operating system for business growth: calm, precise, spacious, and trust-led. The copy should favor short outcome language such as **found, trusted, chosen**, and concrete growth terms such as founders, owners, operators, qualified demand, search visibility, proof, AI discovery, tracking, and conversion paths.
-
-Keep the design dark and restrained. Do not pivot these pages into loud agency gradients, generic SaaS gloss, or luxury editorial excess. The Apple-like pattern here is clarity: fewer words, clearer hierarchy, premium spacing, buyer-decision logic, and confident CTAs around the waitlist (`Join the waitlist`).
-
-Dental remains one of Prism's strongest proof verticals, but the main homepage and waitlist flow should make it clear that Prism also helps other serious businesses grow. Use dental proof as evidence inside a broader growth story, not as the only audience definition.
-
-Homepage copy should stay ultra-minimal. Prefer short labels over explanations, compact proof over long cards, and one clear idea per section. Deeper pages can carry the detail; the homepage should make the growth offer obvious in seconds.
-
-Offer pages should lead with the deliverables owners already want (landing pages, ad creative, websites, photoshoots, video), not an agency service catalog. On `/prism-infinity`, keep the infinite-queue mechanic visible and treat brand extras (cards, print, decks) as supporting work, not peer cards in the included grid.
-
-### Abstract Client Proof Cards
-
-The homepage client proof carousel uses real client website screenshots, not abstract placeholder artwork. Those screenshots are part of the proof system: they let buyers and AI/search systems connect Prism's claims to visible portfolio quality and live case-study pages.
-
-Keep the screenshot treatment premium and restrained. Each card should still feel like a case-study link with the company, context, location, and a clear affordance. Refresh screenshots when a client's live hero changes, and avoid adding photos or decorative art that would make the proof surface feel less verifiable.
-
-Respect reduced motion. Motion can scale, pulse, route, or rotate slowly, but the card must remain legible and useful when animation is disabled.
-
-## Scope
-
-This contract is repo-wide, but it is most important for the public marketing system:
-
-- `/`
-- `/about`
-- `/pricing`
-- `/waitlist`
-- shared chrome like the navbar and footer
-
-Other routes can diverge when the content format truly requires it, but they should still feel related. Do not casually create a new visual language for a single page.
-
-### Retired light surface: Founder OS
-
-`/founder-os` and `/founder-os/apply` now 301-redirect to `/content`. `/content-os` also 301-redirects to `/content`. The leftover `[data-surface='founder-os']` CSS in `app/globals.css` and `components/founder-os/FosReveal.tsx` are archival only. Do not revive the light Founder OS theme on a live route, and do not leak those tokens onto other pages.
-
-### Scoped surface: ChatGPT Ads (`/chatgpt-ads`)
-
-`/chatgpt-ads` is an intentional exception to the dark-first core. It is an invite-only partner program, so the canvas borrows OpenAI product-marketing grammar: warm off-white field, near-black type, generous whitespace, hairline rules, and pill CTAs. Navbar and footer stay Prism black. Geist remains the type family.
-
-The page implements the current shadcn/ui (radix-vega) grammar on that warm canvas: `components/chatgpt-ads/chatgpt-ads.module.css` remaps the shadcn semantic tokens (`--background`, `--card`, `--border`, `--ring`, and friends) inside `<main>` only, and the markup uses semantic utilities (`bg-card`, `ring-1 ring-foreground/10` hairlines with `shadow-xs`, `focus-visible:ring-3 ring-ring/50` focus, `active:translate-y-px` press states, InputGroup-style invite form, native `<details>` FAQ accordion). The page rhythm alternates an editorial hero, a near-black trust-principles band, an open intent rail, a single contained process panel, and a quiet invite frame; do not flatten it back into repeated generic cards. ChatGPT green `#10A37F` is a page-scoped accent (`--cga-accent`, also the scoped `--ring`) for live status, the sponsored label, intent markers, invite verification, and focus rings only. Do not reuse this surface or its token remap on other routes, and do not use the repo's pixel-styled `components/ui` primitives here.
-
-If Prism later adds `.stitch/`, keep `.stitch/DESIGN.md` as concept memory and keep this root `DESIGN.md` as the implementation contract for shipped code.
+The mental model is **near-black canvas + stock shadcn components + Geist
+type + real client work + one rationed spectrum**.
 
 ## Code anchors
 
-When working on UI, these files are the fastest way to understand the live system:
+- `app/globals.css`: tokens (`:root` and `.dark` carry the same dark values),
+  Spectrum utilities (`text-display`, `text-title`, `text-heading`,
+  `text-lead`, `text-eyebrow`, `text-gradient`, `text-spectrum`,
+  `bg-spectrum`, `spectrum-rule`, `bg-grid`, `bg-dots`, `bg-noise`,
+  `mask-fade-x|y|b`, `prism-container`) and motion classes
+  (`prism-marquee`, `prism-live-dot`, `prism-beam`, `prism-spotlight`,
+  `prism-rise`, `data-reveal`).
+- `tailwind.config.cjs`: semantic colors (`background`, `card`, `muted`,
+  `subtle-foreground`, `live`, `spectrum-*`), radius scale.
+- `components/ui/*`: stock shadcn primitives restyled for the dark canvas.
+  Use them. Do not reintroduce the retired pixel styling (square corners,
+  pixel font, forced uppercase, green glow).
+- `components/prism/*`: the marketing kit.
+  - `Section`, `SectionHeader`, `Eyebrow` (`section.tsx`)
+  - `Marquee` (CSS-only, server component)
+  - `SpotlightCard` (pointer-tracked light, optional spectrum `beam`)
+  - `Reveal` (scroll reveal that never hides content from crawlers or
+    reduced-motion visitors)
+  - `WaitlistStatus` (live dot, "Fully booked", next intake month)
+  - `WaitlistButton` (the primary CTA, tracked)
+  - `PrismLogo` / `PrismMark`
+  - `FinalCta` (the closing waitlist band on every core route)
+  - `BrowserFrame` (window chrome around real client screenshots)
+- `components/navbar.tsx`, `components/footer.tsx`: shared chrome.
+- `components/home/*`: homepage sections.
 
-- `app/globals.css` for the global canvas, type tokens, dark mode tokens, and page-wide atmosphere
-- `tailwind.config.cjs` for mapped theme tokens and typography scale
-- `components/core-route/CoreRoutePrimitives.tsx` for the shared section, panel, and CTA primitives used across the core routes
-- `lib/services.ts` for the three public services (Website, Content, Ads) used in homepage offers and footer links; `lib/constants.ts` `NAV_ITEMS` for the three direct header links
-- `components/navbar.tsx` and `components/footer.tsx` for the shared chrome language
-- `components/home/homepage-content.ts` for the current homepage copy structure and content blocks
-- `components/home/*` for homepage-specific composition patterns
-- `components/pixelish/*` and `public/pixelish/*` for the distinctive icon layer
-- `lib/hero-media-policy.ts`, `components/home/DeferredAsciiHeroBackdrop.tsx`, `components/HeroBackgroundLoop.tsx`, and `components/HeroLoopingVideo.tsx` for motion policy and hero-loop behavior
+## Color
 
-Prefer extending those surfaces before introducing new ones.
-
-## Brand principles
-
-### 1. Dark-first, not dark-mode-for-the-sake-of-it
-
-The site should feel intentionally black, not merely inverted. Use black or near-black as the base field, then create hierarchy with typography, borders, subtle surfaces, and carefully rationed accents.
-
-Avoid default gray dashboards, translucent glass treatments, or glossy gradient-heavy hero sections.
-
-### 2. Warm contrast, not icy contrast
-
-Primary copy should land in warm ivory, not bright blue-white. Supporting copy should sit in sand and stone tones. This keeps the site legible while preserving the Prism mood.
-
-### 3. Typography carries most of the brand
-
-Prism’s strongest brand signal is the relationship between:
-
-- **Geist Sans** for headlines and body
-- **Geist Mono** for metadata, labels, and navigation utility text
-- **Geist Pixel** only for sparse accent moments
-
-Pixel is an accent language, not the default reading system.
-
-### 4. Fewer, stronger sections
-
-The site should not become a stack of interchangeable cards. Each section should have one clear job and one clear dominant idea. Use panels, dividers, and chips only when they help hierarchy.
-
-## Color system
-
-### Base palette
-
-- `canvas` is true black and should remain the dominant page field on core routes.
-- `canvas-soft` and `canvas-elevated` are for panels, hero frames, subtle chips, and contained surfaces.
-- `text-strong` is the headline and primary-copy color.
-- `text-muted` is for body support copy, secondary actions, and helper text.
-- `text-subtle` is for metadata, mono labels, and low-emphasis affordances.
-- `border` is a thin structural divider color. Borders should feel quiet and precise.
-- `proof-accent` is for tiny trust or proof signals only. It should never become the main page accent.
-
-### Color rules
-
-- Prefer the semantic colors defined above over introducing new raw hex values.
-- New accents should be rare. If the request truly needs one, add it here in the same task.
-- Gold belongs to trust and proof, not the full CTA system.
-- Bright saturated colors should stay scoped to purposeful contexts, not become the default site palette.
+- `background` (#050506) is the page. Surfaces step up through `card`
+  (#0A0A0C) and `popover` (#0D0D0F). Hierarchy comes from 1px hairlines
+  (`border-border`, white at 10%) more than from fills.
+- `foreground` is near-white. `muted-foreground` carries body copy.
+  `subtle-foreground` (`text-subtle`) is for metadata only.
+- **The spectrum** (red, orange, yellow, green, blue, violet) is the light
+  leaving the prism. It is the only brand color. Ration it:
+  - the hero refraction scene
+  - at most one `text-spectrum` phrase per viewport
+  - `spectrum-rule` hairlines and the `prism-beam` ring on a single featured
+    surface per section
+  - soft blurred glows behind a hero or final CTA
+  - charts (`--chart-*` map to the spectrum)
+- `live` green is only for status (the waitlist dot).
+- Never use the spectrum as a flat fill for buttons, body text, or large
+  backgrounds. Buttons are white (`primary`) or outline.
+- No raw hex in components. Use tokens or the utilities above. Page-scoped
+  exceptions: `/chatgpt-ads` (light OpenAI-style surface, its own module).
 
 ## Typography
 
-### Headlines
+- Geist Sans for everything people read. Geist Mono for eyebrows, metadata,
+  and small labels. Geist Pixel is retired and no longer loaded.
+- Scale utilities: `text-display` (hero h1), `text-title` (section h2),
+  `text-heading` (card titles), `text-lead` (subheads). Display and title use
+  `text-gradient` (white fading to mist) by default.
+- Headlines are **lowercase** (Prism house style, see the prism-writing
+  skill), short, and end with a period. Proper nouns keep their capitals.
+  Body copy uses normal sentence case.
+- Balance display headlines (`text-balance`), `text-pretty` for body.
 
-- Use sans display headings with tight tracking and strong line-height control.
-- Headings should usually be one or two lines on desktop and at most two or three lines on mobile.
-- Prefer medium weight with tight letter spacing over extra-bold generic marketing headings.
-- Use balanced wrapping for large headlines, but do not apply headline balancing logic to compact UI labels where it can create unnecessary extra lines.
+## Layout
 
-### Body
+- `prism-container`: max width 76rem with safe-area gutters.
+- Section rhythm: `py-20 sm:py-24` (`Section`). Hairline dividers between
+  sections are optional; spacing usually does the work.
+- Mix section shapes so pages feel paced: open header + grid, full-bleed
+  rail (marquee), bento grid, contained panel, split. Never stack three
+  identical card grids.
+- Cards: `rounded-2xl`, 1px border, `bg-card`. Panels: `rounded-3xl`.
+- Mobile first: 16px side gutters minimum, no horizontal scroll, tap targets
+  at least 40px.
 
-- Body copy should stay concise and readable.
-- Long paragraphs are almost always the wrong choice for Prism’s marketing pages.
-- Favor short paragraphs, simple sentences, and visible breathing room.
+## Components and patterns
 
-### Metadata
+### Header
 
-- Eyebrows, nav labels, support chips, and proof labels should use mono uppercase spacing.
-- Mono should feel like a precision layer, not the main narrative voice.
-- Use it selectively. If a section heading and body already explain the point clearly, skip the eyebrow instead of adding more UI noise.
-- Default to mono for navigation, proof metadata, support chips, and process markers before using it for section introductions.
-
-### Compact text and wrapping
-
-- Short UI labels, question prompts, chip text, and stat labels should wrap to as few lines as possible while staying readable.
-- Avoid letting 2-6 word interface labels break into three lines when the layout can instead allocate a slightly wider track.
-- Prefer content-aware grid tracks such as `minmax(...)` or weighted fractions for repeated card rows when one item is materially longer than its siblings.
-- Use `text-wrap: pretty` for compact UI copy and supporting sentences; reserve `text-wrap: balance` for display headlines and other large title treatments.
-- On desktop, chips and pills should stay single-line unless the mobile layout genuinely needs wrapping.
-
-### Pixel usage
-
-- Use pixel type only for rare brand accents or ASCII-adjacent moments.
-- Do not use pixel as the default font for CTA labels, paragraphs, or nav.
-
-## Layout and spacing
-
-### Containers
-
-- The core route container should stay around the current `max-w-6xl` rhythm.
-- Section spacing should feel generous. Prism reads best when sections have strong vertical rhythm and breathing room.
-
-### Sections
-
-- Divider-led sections are the default for core marketing routes.
-- Panels should use large rounded corners and quiet borders.
-- Prefer asymmetry and strong left alignment over centering everything.
-
-### Section modes
-
-Core marketing routes should alternate between three reusable section modes:
-
-- **Quiet divider section** for copy-led or list-led sections that need maximum openness.
-- **Contained panel section** for grouped ideas like process, fit, or promise sections where a darker frame improves pacing.
-- **Split section** for sections with a strong heading block on one side and supporting structure on the other.
-
-Avoid stacking too many consecutive sections in the exact same mode. The page should feel paced, not mechanically templated.
-
-### Shapes
-
-- Hero frames and primary panels use large rounded corners.
-- Hero buttons use softer rectangular corners, not pills.
-- Chips and small support labels can be pill-shaped.
-- Avoid mixing too many radius families in one surface.
-
-## Core components
-
-### Impossible hero (refraction scene)
-
-The homepage opens with a purely visual, full-viewport brand hero
-(`components/home/HomeImpossibleHero.tsx`): a white beam refracting through
-the Prism triangle into a six-band spectrum, with the single line
-"Impossible is temporary.", a mono support line ("Unlock your potential
-with Prism"), and a quiet scroll cue. Rules for this surface:
-
-- The scene is CSS-only motion in a server component; keep it that way. The
-  scroll cue is the one client island (`components/home/HomeScrollCue.tsx`):
-  a quiet anchor to `#homepage-hero` with a rAF-throttled scroll tone shift
-  and IntersectionObserver dismiss, both inert under reduced motion.
-- The spectrum colors (`#e23b2e #ee7a22 #f2c230 #5fa345 #3e6db5 #6c4e9e`)
-  are a scoped brand moment for this scene only — they are not page accents
-  and must not leak into other sections.
-- The base styles are the finished still frame; entrance choreography and
-  idle loops live behind `prefers-reduced-motion: no-preference` in the
-  component's CSS module.
-- No CTAs, badges, or copy beyond the tagline and its mono support line.
-  The conversion hero (`HomeHeroSection`, below) sits directly beneath it
-  and keeps the page h1.
+Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
+logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
+About, Pricing), then the white "Join the waitlist" pill with the live dot.
+Mobile keeps the portaled full-height panel with focus, Escape, scroll-lock
+and inert handling.
 
 ### Hero
 
-The homepage hero is the reference surface for tone:
+One dominant idea: status pill, lowercase display headline, one sentence of
+subhead, primary CTA plus one secondary, compact proof row. The homepage hero
+carries the refraction scene (`components/home/HomeHero.tsx`), the only place
+the full spectrum fan appears.
 
-- support chips at the top
-- one direct headline (currently three short outcome lines with muted verbs and a staggered rise-in)
-- one short subhead
-- simple primary and secondary CTA row
-- subtle social proof
-- a quiet mono "system strip" along the hero's bottom rule with pulsing signal dots
-- restrained motion behind the copy
+### Proof
 
-Do not overload the hero with dense copy, too many badges, or a second competing visual system.
+Real client work is the hero of the site. Use the screenshots in
+`public/case-studies/` inside `BrowserFrame`, marquees, and tilted walls.
+Numbers come only from `lib/proof-metrics.ts` and verified case-study
+metrics (`getCaseStudyMetric`). Former clients (`lib/former-clients.ts`)
+never appear on proof surfaces.
 
-### CTA grammar
+### CTAs
 
-Prism currently uses two primary CTA patterns:
+Two grammars only: the white pill (`Button` default, or `WaitlistButton`)
+and the outline pill (`Button variant="outline"`). Inline text links use an
+arrow icon. Every core route ends with `FinalCta`.
 
-- **hero buttons** for high-intent entry points
-- **text-link actions** for quieter section-level actions
+### Status
 
-Do not invent a third or fourth CTA language unless product direction changes.
-
-### Panels
-
-Panels should feel like quiet containment, not glossy cards. Use them when they genuinely improve pacing or scanning.
-
-### Section eyebrows
-
-Eyebrows are no longer the default on every section. Use them only when they add orientation or contrast that the heading itself does not already provide.
-
-### Navbar
-
-The navbar should stay minimal:
-
-- black surface
-- off-white type
-- tiny uppercase tracking
-- compact mobile toggle
-
-It should feel like part of the page shell, not a separate app chrome layer.
-
-The navigation shows exactly Home (`/`), Clients (`/case-studies`), and
-Wall of Love (`/wall-of-love`) in one outlined capsule rail on desktop.
-Mobile uses the same three direct links in the same order. Services and
-Products remain in footer and homepage sections. Small Pixelish
-icons make each destination recognizable; the active destination uses a quiet
-ivory wash. The brand pairs the triangle mark with a larger sans wordmark and
-a mono tagline from `xl`. No header CTA; the inline rail starts at `lg`.
-Keep the painted header at 73px including its bottom border.
-
-Home uses `public/pixelish/home.svg`: a front-facing house with a stepped
-roof and open doorway, derived from an image-generated concept and normalized
-to the same native 24×24 canvas, two-unit black outline, and transparent
-negative space as the adjacent Pixelish icons. Keep the shared inversion,
-opacity, and intrinsic sizing behavior so desktop and mobile stay consistent.
-
-Mobile uses a labeled Menu / Close toggle and a portaled full-viewport sheet
-below the header. Show the same three icon-led direct links, with compact
-rows for short viewports. Use a quiet neutral wash rather than colored atmospheric effects.
-Opening the sheet must never change `--prism-header-height` or shift content.
-Preserve first-link focus, Escape dismissal with focus return, scroll locking,
-prior inert state, and route-close. The sheet closes at the desktop breakpoint.
-
-### Service offer cards
-
-Website, Content, and Ads use matching Pixelish browser, camera, and chart
-icons in a contained leading tile. On hover or keyboard focus, a brief light
-pass and small icon lift provide feedback. These effects run only with
-`prefers-reduced-motion: no-preference`; no new client runtime is required.
-Use the existing palette and 64px spacing scale for the icon tile. Copy states
-what is delivered and how customers can act, without guaranteeing growth,
-rankings, attribution completeness, or zero wasted ad spend.
-
-### Social proof
-
-Proof should stay subtle and integrated. Small inline proof beats loud testimonial clutter unless the page specifically needs a stronger proof section.
-
-## Iconography
-
-Pixelish icons are part of Prism’s signature language for:
-
-- homepage support chips
-- service stacks
-- proof or process callouts
-
-Use them when the goal is brand texture or signal clarity.
-
-Lucide and other utility icons are acceptable for product/utility moments, but the marketing site should not drift into inconsistent icon systems inside the same section.
+`WaitlistStatus` and the footer capacity line are the only urgency devices.
+The month is always the live `<WaitlistIntakeMonth />`. Never invent spot
+counts, countdowns, or deadlines.
 
 ## Motion
 
-Motion should feel deliberate and technical, not flashy.
+Motion should feel like light moving through glass: smooth, purposeful, and
+quiet enough that text stays readable.
 
-### Allowed motion patterns
+- Allowed: the hero refraction choreography, marquees, scroll reveals
+  (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights, the slow
+  spectrum beam, the live dot ping, hover lifts of 1 to 2px.
+- Transform and opacity only (plus the CSS `@property` beam angle).
+- Every loop sits behind `prefers-reduced-motion: no-preference`. The base
+  style is always the finished frame, so reduced-motion, no-JS, and
+  screenshot runs see complete content.
+- No autoplaying video outside `HeroBackgroundLoop` and `HeroLoopingVideo`.
 
-- ASCII hero motion
-- looping hero or section video when it genuinely adds atmosphere
-- subtle hover state transitions, including pointer-tracked spotlight highlights on card grids
-- progressive reveal where it supports hierarchy (`components/home/HomeReveal.tsx` — content must stay visible for no-JS and reduced-motion visitors)
-- stat count-up on first view (`components/home/HomeCountUp.tsx`)
-- quiet signal accents: slow scan-lines along hairlines, pulsing status dots, and traveling rail pulses (`home-scan-line`, `home-signal-dot`, `home-rail-flow` in `app/globals.css`)
+## Copy
 
-### Motion rules
+Use the prism-writing skill, `prism-brand` pack.
 
-- Respect reduced motion.
-- Keep autoplay motion decorative and non-blocking.
-- Mobile motion should degrade gracefully rather than disappear by accident.
-- Motion must never make text harder to read.
-
-If a new animation is added, it should pass the same standard as the current homepage, case studies, and wall-of-love hero loops: clearly intentional, resilient across browsers, and quiet enough to support the page.
-
-## Implementation rules for Codex
-
-- Read this file before changing UI, marketing copy structure, layout, motion, or tokens.
-- Start from existing primitives before introducing new markup or ad hoc styles.
-- Prefer semantic tokens and the exported files in `/generated/` over inventing new values in code.
-- If you truly need a new token, update `DESIGN.md` and refresh `/generated/` in the same task.
-- Keep `AGENTS.md` operational. Put design rationale here, not there.
+- Lowercase headlines, second person, short lines, benefit first.
+- No em dashes. No "unlock", "elevate", "seamless", "world-class",
+  "cutting-edge", "revolutionary", "game-changing", "supercharge".
+- No guarantees of growth, rankings, or results. Verified numbers only, with
+  their source and date nearby.
+- One CTA per page: "Join the waitlist".
 
 ## Do
 
-- keep pages dark, clear, and restrained
-- use typography and spacing as the primary hierarchy tools
-- use mono as a metadata layer
-- keep proof and motion subtle
-- reuse `CoreRoutePrimitives` whenever possible
+- lead with real work and real numbers
+- use stock shadcn components and the `components/prism` kit
+- keep the spectrum rare so it stays special
+- keep every page ending at the waitlist
 
 ## Do not
 
-- introduce one-off brand systems per page
-- flood the site with bright gradients, glass effects, or purple defaults
-- turn every section into a card grid
-- use pixel type as general-purpose body or CTA copy
-- add raw design values casually when a token should exist
+- invent proof, urgency, or testimonials
+- reintroduce pixel-styled primitives, gold accents, or ivory text tokens
+- use glassy gradients as decoration without a job
+- hide content behind animation

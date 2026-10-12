@@ -1,5 +1,6 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
 import SeoTextSection from '@/components/seo-text-section'
 import { WebPageSchema } from '@/components/schema-markup'
 import type { Metadata } from 'next'
@@ -20,19 +21,20 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function SMBPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main>
+      <main className="flex-1" id="main-content" tabIndex={-1}>
         <SMBClientPage />
         <SeoTextSection title="small business ai setup">
           <p>
-            we implement practical ai into small business workflows: lead
-            handling, support replies, content drafting, and measurement. our
+            We implement practical AI into small business workflows: lead
+            handling, support replies, content drafting, and measurement. Our
             approach favors accuracy, governance, and simple automations
             designed to save time while keeping review and approval with your
             team.
           </p>
         </SeoTextSection>
+        <FinalCta location="smb final cta" secondary={{ label: 'See the work', href: '/case-studies' }} />
       </main>
       <Footer />
       <WebPageSchema
@@ -42,6 +44,6 @@ export default function SMBPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

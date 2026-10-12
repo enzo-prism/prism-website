@@ -1,14 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useId, useState } from "react"
 import { Sparkles, Copy, Check, RefreshCw, Target } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { fadeInUp, springScale, successPop } from "@/utils/animation-variants"
 
 interface TaglineData {
   business: string
@@ -33,7 +32,20 @@ const suggestions = {
   value: ["reliable", "affordable", "quick", "sustainable", "innovative", "trusted", "quality", "personalized"]
 }
 
+const FIELDS: Array<{
+  key: keyof TaglineData
+  label: string
+  placeholder: string
+  appendSuggestion?: boolean
+}> = [
+  { key: "business", label: "Business Name *", placeholder: "e.g., Sweet Haven", appendSuggestion: true },
+  { key: "specialty", label: "Specialty/Product *", placeholder: "e.g., artisan sourdough" },
+  { key: "audience", label: "Target Audience *", placeholder: "e.g., busy families" },
+  { key: "value", label: "Value Proposition (Optional)", placeholder: "e.g., reliable, affordable, quick" },
+]
+
 export default function BrandTaglineGenerator() {
+  const idPrefix = useId()
   const [formData, setFormData] = useState<TaglineData>({
     business: "",
     specialty: "",
@@ -54,9 +66,9 @@ export default function BrandTaglineGenerator() {
     }
 
     setIsGenerating(true)
-    
+
     setTimeout(() => {
-      const taglines = templates.map(template => 
+      const taglines = templates.map(template =>
         template
           .replace("{business}", formData.business)
           .replace("{specialty}", formData.specialty)
@@ -89,229 +101,128 @@ export default function BrandTaglineGenerator() {
 
   return (
     <TooltipProvider delayDuration={250}>
-      <motion.div
-        className="w-full bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg shadow-sm p-6 mb-8"
-        initial="initial"
-        animate="animate"
-        variants={springScale}
-      >
-      <motion.div className="mb-6" variants={fadeInUp}>
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-neutral-900">Brand Tagline Generator</h3>
-            <p className="text-sm text-neutral-600">Create your memorable 5-7 word tagline</p>
+      <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+        <div className="mb-6 flex items-start gap-4">
+          <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+            <Sparkles className="size-5 text-foreground/85" strokeWidth={1.75} aria-hidden="true" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-eyebrow mb-2! mt-0! text-subtle">Interactive</p>
+            <h3 className="mb-1! mt-0! text-xl! text-foreground">Brand Tagline Generator</h3>
+            <p className="my-0! text-sm leading-6 text-muted-foreground">Create your memorable 5-7 word tagline</p>
           </div>
         </div>
-      </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <motion.div className="space-y-4" variants={fadeInUp}>
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Business Name *
-            </label>
-            <Input
-              type="text"
-              value={formData.business}
-              onChange={(e) => handleInputChange("business", e.target.value)}
-              placeholder="e.g., Sweet Haven"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
-            />
-            <div className="flex flex-wrap gap-1 mt-2">
-              {suggestions.business.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => addSuggestion("business", `${formData.business} ${suggestion}`.trim())}
-                  variant="ghost"
-                  size="xs"
-                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
+        <div className="grid gap-8 md:grid-cols-2 md:gap-6">
+          <div className="space-y-5">
+            {FIELDS.map((field) => {
+              const inputId = `${idPrefix}-${field.key}`
+              return (
+                <div key={field.key}>
+                  <Label htmlFor={inputId} className="mb-2 text-muted-foreground">
+                    {field.label}
+                  </Label>
+                  <Input
+                    id={inputId}
+                    type="text"
+                    value={formData[field.key]}
+                    onChange={(e) => handleInputChange(field.key, e.target.value)}
+                    placeholder={field.placeholder}
+                  />
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {suggestions[field.key].map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        onClick={() =>
+                          addSuggestion(
+                            field.key,
+                            field.appendSuggestion
+                              ? `${formData.business} ${suggestion}`.trim()
+                              : suggestion,
+                          )
+                        }
+                        className="inline-flex h-7 items-center rounded-full border border-white/10 bg-white/[0.03] px-2.5 text-xs text-muted-foreground transition-colors hover:border-white/20 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+
+            <Button
+              onClick={generateTaglines}
+              disabled={!isFormValid || isGenerating}
+              size="lg"
+              className="w-full"
+            >
+              {isGenerating ? (
+                <>
+                  <RefreshCw className="size-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Target className="size-4" aria-hidden="true" />
+                  Generate Taglines
+                </>
+              )}
+            </Button>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Specialty/Product *
-            </label>
-            <Input
-              type="text"
-              value={formData.specialty}
-              onChange={(e) => handleInputChange("specialty", e.target.value)}
-              placeholder="e.g., artisan sourdough"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
-            />
-            <div className="flex flex-wrap gap-1 mt-2">
-              {suggestions.specialty.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => addSuggestion("specialty", suggestion)}
-                  variant="ghost"
-                  size="xs"
-                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
-          </div>
+          <div className="space-y-4" aria-live="polite">
+            <p className="text-eyebrow my-0! text-subtle">Generated Taglines</p>
 
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Target Audience *
-            </label>
-            <Input
-              type="text"
-              value={formData.audience}
-              onChange={(e) => handleInputChange("audience", e.target.value)}
-              placeholder="e.g., busy families"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
-            />
-            <div className="flex flex-wrap gap-1 mt-2">
-              {suggestions.audience.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => addSuggestion("audience", suggestion)}
-                  variant="ghost"
-                  size="xs"
-                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Value Proposition (Optional)
-            </label>
-            <Input
-              type="text"
-              value={formData.value}
-              onChange={(e) => handleInputChange("value", e.target.value)}
-              placeholder="e.g., reliable, affordable, quick"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-purple-500"
-            />
-            <div className="flex flex-wrap gap-1 mt-2">
-              {suggestions.value.map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  type="button"
-                  onClick={() => addSuggestion("value", suggestion)}
-                  variant="ghost"
-                  size="xs"
-                  className="h-6 rounded-full bg-neutral-100 px-2 py-1 text-xs hover:bg-neutral-200"
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <Button
-            onClick={generateTaglines}
-            disabled={!isFormValid || isGenerating}
-            className="w-full"
-          >
-            {isGenerating ? (
-              <>
-                <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Target className="w-4 h-4 mr-2" />
-                Generate Taglines
-              </>
-            )}
-          </Button>
-        </motion.div>
-
-        <motion.div className="space-y-4" variants={fadeInUp}>
-          <h4 className="font-semibold text-neutral-900">Generated Taglines</h4>
-          
-          <AnimatePresence>
             {generatedTaglines.length > 0 ? (
-              <div className="space-y-2">
+              <ul className="my-0! flex list-none! flex-col gap-2 pl-0!">
                 {generatedTaglines.map((tagline, index) => (
-                  <motion.div
+                  <li
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center justify-between p-3 bg-white rounded-lg border border-neutral-200 hover:border-purple-300 transition-colors"
+                    className="my-0! flex items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-background/50 p-3 pl-4! transition-colors hover:border-white/15"
                   >
-                    <span className="text-sm font-medium text-neutral-900">{tagline}</span>
+                    <span className="text-sm font-medium text-foreground">{tagline}</span>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <motion.button
+                        <button
                           type="button"
                           onClick={() => copyToClipboard(tagline, index)}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="rounded-full p-2 transition-colors hover:bg-neutral-100"
+                          className="grid size-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                           aria-label="Copy tagline"
                         >
-                          <AnimatePresence mode="wait">
-                            {copiedIndex === index ? (
-                              <motion.div
-                                key="check"
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                exit={{ scale: 0 }}
-                                variants={successPop}
-                              >
-                                <Check className="w-4 h-4 text-green-500" />
-                              </motion.div>
-                            ) : (
-                              <motion.div
-                                key="copy"
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                exit={{ scale: 0 }}
-                              >
-                                <Copy className="w-4 h-4 text-neutral-500" />
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </motion.button>
+                          {copiedIndex === index ? (
+                            <Check className="size-4 text-live" aria-hidden="true" />
+                          ) : (
+                            <Copy className="size-4" aria-hidden="true" />
+                          )}
+                        </button>
                       </TooltipTrigger>
                       <TooltipContent side="top">{copiedIndex === index ? "copied" : "copy"}</TooltipContent>
                     </Tooltip>
-                  </motion.div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             ) : (
-              <div className="text-center py-8 text-neutral-500">
-                <Target className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-                <p className="text-sm">Fill in the form to generate your taglines</p>
+              <div className="grid min-h-48 place-items-center rounded-2xl border border-dashed border-white/[0.12] px-6 py-10 text-center">
+                <div>
+                  <Target className="mx-auto mb-3 size-8 text-subtle" strokeWidth={1.5} aria-hidden="true" />
+                  <p className="my-0! text-sm text-muted-foreground">Fill in the form to generate your taglines</p>
+                </div>
               </div>
             )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
+          </div>
+        </div>
 
-      <motion.div 
-        className="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500"
-        variants={fadeInUp}
-      >
-        <p className="text-sm text-blue-800">
-          <strong>Pro Tip:</strong> Test your tagline by using it consistently across your website, 
-          social profiles, and directories. Aim for 20-30 mentions in the first month to help AI 
-          models associate it with your brand.
-        </p>
-      </motion.div>
-      </motion.div>
+        <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5">
+          <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-blue" />
+          <p className="my-0! text-sm leading-6 text-muted-foreground">
+            <strong>Pro Tip:</strong> Test your tagline by using it consistently across your website,
+            social profiles, and directories. Aim for 20-30 mentions in the first month to help AI
+            models associate it with your brand.
+          </p>
+        </div>
+      </div>
     </TooltipProvider>
   )
 }

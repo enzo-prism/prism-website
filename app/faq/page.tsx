@@ -1,10 +1,16 @@
+import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
+
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import FinalCta from '@/components/prism/final-cta'
+import { Section } from '@/components/prism/section'
+import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import { FAQSchema } from '@/components/schema-markup'
-import type { Metadata } from 'next'
-import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { WAITLIST_CTA } from '@/lib/waitlist'
+import { CAPACITY_MESSAGE } from '@/lib/waitlist'
+
+import FaqExplorer, { type FaqTopic } from './faq-explorer'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'FAQ',
@@ -14,145 +20,175 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const faqs = [
+/**
+ * /faq content, grouped by topic. Every answer also ships in the page's
+ * FAQPage schema. Keep answers free of prices and growth guarantees.
+ */
+const FAQ_TOPICS: readonly FaqTopic[] = [
   {
-    question: 'What makes Prism different?',
-    answer:
-      'We bring website design, engineering, content, and ads together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
+    id: 'waitlist',
+    title: 'the waitlist',
+    items: [
+      {
+        question: 'How does the waitlist work?',
+        answer: `${CAPACITY_MESSAGE.headline} New work starts in monthly intakes. Join the waitlist with your goals and links, and our team reviews applications for each intake. ${CAPACITY_MESSAGE.intakeTail}`,
+      },
+      {
+        question: 'What happens when Prism reaches out?',
+        answer:
+          'We confirm the scope, price, and next steps with you. Once approved, we gather the content and access needed, build the work, and review it with you before launch.',
+      },
+    ],
   },
   {
-    question: 'How much does a website cost?',
-    answer:
-      'Pricing depends on your pages, content, features, and integrations. Join the waitlist and share your goals. When we can take on your project, we confirm the scope and price before work begins, including any optional ongoing care.',
+    id: 'working-with-prism',
+    title: 'working with Prism',
+    items: [
+      {
+        question: 'What makes Prism different?',
+        answer:
+          'We bring website design, engineering, content, and ads together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
+      },
+      {
+        question: 'Do you work with small businesses?',
+        answer:
+          'Yes. We work with owners who want a stronger website, more consistent content, or help reaching customers through ads. You can start with one project and add support as your needs change.',
+      },
+      {
+        question: 'What industries do you serve?',
+        answer:
+          'Our work includes dental practices, retailers, professional services, and other local businesses. Dental marketing is a particular specialty. Explore our case studies to see projects closest to your own.',
+      },
+      {
+        question: 'How do your marketing services work together?',
+        answer:
+          'Your website explains the offer, content helps people understand and trust your business, and ads bring it to a relevant audience. We help you decide which part needs attention first and what to measure.',
+      },
+    ],
   },
   {
-    question: "What's included in a Prism website?",
-    answer:
-      'Custom design and development, mobile layouts, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before building. Hosting, updates, and ongoing edits are available through optional Website Care.',
+    id: 'pricing',
+    title: 'pricing and payments',
+    items: [
+      {
+        question: 'How much does a website cost?',
+        answer:
+          'Pricing depends on your pages, content, features, and integrations. Join the waitlist and share your goals. When we can take on your project, we confirm the scope and price before work begins, including any optional ongoing care.',
+      },
+      {
+        question: 'How do payments work?',
+        answer:
+          'Payment terms are included with your agreed scope before work starts. To discuss a project, join the waitlist. Our team reviews applications for each monthly intake.',
+      },
+      {
+        question: 'Do you provide ongoing support?',
+        answer:
+          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan with you.',
+      },
+    ],
   },
   {
-    question: 'How long does a website project take?',
-    answer:
-      'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date when you join the waitlist. We will agree on a realistic schedule before work begins.',
+    id: 'websites',
+    title: 'websites and builds',
+    items: [
+      {
+        question: "What's included in a Prism website?",
+        answer:
+          'Custom design and development, mobile layouts, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before building. Hosting, updates, and ongoing edits are available through optional Website Care.',
+      },
+      {
+        question: 'How long does a website project take?',
+        answer:
+          'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date when you join the waitlist. We will agree on a realistic schedule before work begins.',
+      },
+      {
+        question: 'Can you improve my existing website?',
+        answer:
+          'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a rebuild if needed.',
+      },
+      {
+        question: 'Can you add AI features to my website?',
+        answer:
+          'Yes, where they serve a clear purpose. Tell us what you want customers or your team to do more easily. We can assess an assistant, workflow, or other integration as part of the project scope.',
+      },
+      {
+        question: 'Do you offer mobile app development?',
+        answer:
+          'Yes. App development is scoped as a custom project. Share what the app needs to do, who will use it, and any integrations so we can discuss the right approach.',
+      },
+    ],
   },
   {
-    question: 'Do you work with small businesses?',
-    answer:
-      'Yes. We work with owners who want a stronger website, more consistent content, or help reaching customers through ads. You can start with one project and add support as your needs change.',
+    id: 'results',
+    title: 'results and measurement',
+    items: [
+      {
+        question: 'What results can I expect?',
+        answer:
+          'Results depend on your market, starting point, scope, and time frame. We agree on what success means for your business and use available data to track progress. Our case studies include the measurement periods and sources behind reported results.',
+      },
+      {
+        question: 'How do you measure success?',
+        answer:
+          'We choose measures that match your goals, such as search visibility, website inquiries, calls, or bookings. We review the available data with you and distinguish observed results from estimates or gaps in tracking.',
+      },
+    ],
   },
-  {
-    question: 'What industries do you serve?',
-    answer:
-      'Our work includes dental practices, retailers, professional services, and other local businesses. Dental marketing is a particular specialty. Explore our case studies to see projects closest to your own.',
-  },
-  {
-    question: 'Do you offer mobile app development?',
-    answer:
-      'Yes. App development is scoped as a custom project. Share what the app needs to do, who will use it, and any integrations so we can discuss the right approach.',
-  },
-  {
-    question: 'How do your marketing services work together?',
-    answer:
-      'Your website explains the offer, content helps people understand and trust your business, and ads bring it to a relevant audience. We help you decide which part needs attention first and what to measure.',
-  },
-  {
-    question: 'Do you provide ongoing support?',
-    answer:
-      'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan with you.',
-  },
-  {
-    question: 'What happens when Prism reaches out?',
-    answer:
-      'We confirm the scope, price, and next steps with you. Once approved, we gather the content and access needed, build the work, and review it with you before launch.',
-  },
-  {
-    question: 'Can you improve my existing website?',
-    answer:
-      'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a rebuild if needed.',
-  },
-  {
-    question: 'What results can I expect?',
-    answer:
-      'Results depend on your market, starting point, scope, and time frame. We agree on what success means for your business and use available data to track progress. Our case studies include the measurement periods and sources behind reported results.',
-  },
-  {
-    question: 'Can you add AI features to my website?',
-    answer:
-      'Yes, where they serve a clear purpose. Tell us what you want customers or your team to do more easily. We can assess an assistant, workflow, or other integration as part of the project scope.',
-  },
-  {
-    question: 'How do payments work?',
-    answer:
-      'Payment terms are included with your agreed scope before work starts. To discuss a project, join the waitlist. Our team reviews applications for each monthly intake.',
-  },
-  {
-    question: 'How do you measure success?',
-    answer:
-      'We choose measures that match your goals, such as search visibility, website inquiries, calls, or bookings. We review the available data with you and distinguish observed results from estimates or gaps in tracking.',
-  },
-]
+] as const
+
+const ALL_FAQ_ITEMS = FAQ_TOPICS.flatMap((topic) => [...topic.items])
+
+const rise = (delay: number) =>
+  ({ '--rise-delay': `${delay}ms` }) as CSSProperties
 
 export default function FAQPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-          <div className="mx-auto max-w-3xl">
-            <header className="mb-14 sm:mb-20">
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
-                FAQ
-              </p>
-              <h1 className="mt-4 text-balance font-sans text-[clamp(2.05rem,4.8vw,3.65rem)] font-medium leading-[1] tracking-[-0.05em] text-[#f5f0e8]">
-                Frequently asked questions
-              </h1>
-              <p className="mt-5 max-w-[44rem] text-pretty font-sans text-[1.05rem] leading-7 text-[#b8afa2]">
-                What to expect from your project, from the first conversation
-                through launch and ongoing support.
-              </p>
-            </header>
-
-            <dl className="divide-y divide-white/12 border-y border-white/12">
-              {faqs.map((faq) => (
-                <div key={faq.question} className="py-7 sm:py-8">
-                  <dt className="font-sans text-[1.15rem] font-medium leading-snug tracking-[-0.02em] text-[#f5f0e8]">
-                    {faq.question}
-                  </dt>
-                  <dd className="mt-3 text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
-                    {faq.answer}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-16 sm:mt-20">
-              <h2 className="font-sans text-[1.7rem] font-medium leading-tight tracking-[-0.03em] text-[#f5f0e8]">
-                Still have questions?
-              </h2>
-              <p className="mt-3 max-w-[40rem] text-pretty font-sans text-[0.98rem] leading-7 text-[#b8afa2]">
-                Send us your question and a link to your business. We can help
-                you choose a useful next step.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a
-                  href="mailto:support@design-prism.com"
-                  className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#f5f0e8] px-6 font-sans text-[0.95rem] font-medium text-[#050505] transition-colors hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                >
-                  Email us
-                </a>
-                <a
-                  href={WAITLIST_CTA.href}
-                  className="inline-flex min-h-12 items-center justify-center rounded-md border border-white/16 bg-white/[0.03] px-6 font-sans text-[0.95rem] font-medium text-[#f5f0e8] transition-colors hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                >
-                  {FREE_AUDIT_CTA_TEXT}
-                </a>
-              </div>
+        <section
+          aria-labelledby="faq-hero-heading"
+          className="relative isolate overflow-hidden pb-10 pt-8 sm:pb-12 sm:pt-12"
+        >
+          <div aria-hidden="true" className="bg-grid absolute inset-x-0 top-0 -z-10 h-[34rem] opacity-60" />
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[-14rem] -z-10 h-[30rem] w-[min(60rem,140vw)] -translate-x-1/2 bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/16%),transparent)] blur-2xl"
+          />
+          <div className="prism-container flex flex-col items-start">
+            <div className="prism-rise" style={rise(0)}>
+              <WaitlistStatus />
             </div>
+            <h1
+              id="faq-hero-heading"
+              className="text-display text-gradient prism-rise mt-6 max-w-[14ch] text-balance pb-2"
+              style={rise(80)}
+            >
+              questions, answered.
+            </h1>
+            <p
+              className="text-lead prism-rise mt-5 max-w-[52ch] text-pretty text-muted-foreground"
+              style={rise(160)}
+            >
+              What to expect from your project, from the waitlist through
+              launch and ongoing support.
+            </p>
           </div>
-        </div>
+        </section>
+
+        <Section aria-label="Frequently asked questions" className="pt-4 sm:pt-6">
+          <FaqExplorer topics={FAQ_TOPICS} />
+        </Section>
+
+        <FinalCta
+          location="faq final cta"
+          title="still curious? get on the list."
+          headingId="faq-final-cta-heading"
+          secondary={{ label: 'See the work', href: '/case-studies' }}
+        />
       </main>
       <Footer />
-      <FAQSchema questions={faqs} />
+      <FAQSchema questions={ALL_FAQ_ITEMS} />
     </div>
   )
 }

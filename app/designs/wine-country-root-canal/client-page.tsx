@@ -830,33 +830,36 @@ export default function WineCountryRootCanalDesignReview() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-50 text-neutral-900">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <section className="bg-white px-4 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pt-32">
-          <div className="mx-auto max-w-6xl">
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <section className="relative isolate overflow-x-clip pb-16 pt-14 sm:pb-20 sm:pt-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="bg-grid mask-fade-b absolute inset-x-0 top-0 h-[560px] opacity-50" />
+            <div className="absolute inset-x-0 top-0 h-[640px] bg-[radial-gradient(40%_50%_at_70%_40%,oklch(0.66_0.21_29/14%),transparent_70%),radial-gradient(36%_46%_at_30%_44%,oklch(0.76_0.17_145/10%),transparent_70%)] blur-2xl" />
+          </div>
+          <div className="prism-container">
             <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div className="space-y-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                  logo design board
-                </p>
-                <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                  wine country root canal
+                <p className="text-eyebrow text-subtle">logo design board</p>
+                <h1 className="text-display text-gradient max-w-[12ch] text-balance pb-2">
+                  wine country root canal.
                 </h1>
-                <p className="text-base text-neutral-600 sm:text-lg">
-                  Dr. Anderson
-                </p>
+                <p className="text-lead text-muted-foreground">Dr. Anderson</p>
                 <div className="flex flex-wrap gap-3">
                   <Button
                     type="button"
-                    className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                    size="lg"
                     onClick={() => setIsVoteOpen(true)}
                   >
-                    vote on design
+                    Vote on a design
                   </Button>
                 </div>
               </div>
-              <div className="relative overflow-hidden rounded-[28px] border border-neutral-200 bg-neutral-900 shadow-2xl shadow-black/20">
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset,0_40px_120px_-60px_oklch(0_0_0/90%)]">
                 <Image
                   src="/wine-country-root-canal.webp"
                   alt="Wine Country Root Canal web concepts"
@@ -866,7 +869,7 @@ export default function WineCountryRootCanalDesignReview() {
                   priority
                 />
                 <div
-                  className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent"
                   aria-hidden
                 />
               </div>
@@ -874,11 +877,11 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section id="vote" className="px-4 py-16 scroll-mt-32">
-          <div className="mx-auto max-w-6xl space-y-6">
+        <section id="vote" className="scroll-mt-32 py-16 sm:py-20">
+          <div className="prism-container space-y-8">
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold text-neutral-900">
-                design inspiration
+              <h2 className="text-title text-gradient pb-1">
+                design inspiration.
               </h2>
             </div>
             <div className="relative">
@@ -892,8 +895,8 @@ export default function WineCountryRootCanalDesignReview() {
                       key={image.alt}
                       className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
                     >
-                      <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white p-4 shadow-sm">
-                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-neutral-50">
+                      <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-card p-3">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-popover">
                           <Image
                             src={image.src}
                             alt={image.alt}
@@ -907,57 +910,43 @@ export default function WineCountryRootCanalDesignReview() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 shadow-md hover:bg-white" />
-                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 shadow-md hover:bg-white" />
+                <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
+                <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
               </Carousel>
             </div>
           </div>
         </section>
 
-        <section className="px-4 py-16">
-          <div className="mx-auto max-w-6xl space-y-8">
+        <section className="py-16 sm:py-20">
+          <div className="prism-container space-y-10">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="space-y-3">
-                <h2 className="text-3xl font-semibold text-neutral-900">
-                  logo concepts
+                <h2 className="text-title text-gradient pb-1">
+                  logo concepts.
                 </h2>
               </div>
               <Button
                 type="button"
-                className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+                size="lg"
                 onClick={() => setIsVoteOpen(true)}
               >
-                vote on design
+                Vote on a design
               </Button>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {logoConcepts.map((concept) => {
+                // Light concepts sit on a white artboard so their colors read true.
                 const frameBg =
-                  concept.variant === 'dark'
-                    ? 'bg-neutral-900'
-                    : 'bg-neutral-50'
-                const copyColor =
-                  concept.variant === 'dark' ? 'text-white' : 'text-neutral-900'
-                const descriptionColor =
-                  concept.variant === 'dark'
-                    ? 'text-white/70'
-                    : 'text-neutral-600'
-                const cardBg =
-                  concept.variant === 'dark'
-                    ? 'bg-neutral-900 border-neutral-800 text-white'
-                    : 'bg-white border-neutral-200 text-neutral-900'
-                const frameBorder =
-                  concept.variant === 'dark'
-                    ? 'border-neutral-800'
-                    : 'border-neutral-100'
-                const detailBorder =
-                  concept.variant === 'dark'
-                    ? 'border-white/20'
-                    : 'border-neutral-200/70'
+                  concept.variant === 'dark' ? 'bg-popover' : 'bg-foreground'
+                const copyColor = 'text-foreground'
+                const descriptionColor = 'text-muted-foreground'
+                const cardBg = 'bg-card border-white/[0.08] text-foreground'
+                const frameBorder = 'border-white/[0.08]'
+                const detailBorder = 'border-white/[0.08]'
                 return (
                   <div
                     key={concept.title}
-                    className={`rounded-3xl border p-6 shadow-sm ${cardBg}`}
+                    className={`rounded-2xl border p-5 sm:p-6 ${cardBg}`}
                   >
                     <div
                       className={`relative overflow-hidden rounded-2xl border ${frameBorder} ${frameBg}`}
@@ -999,9 +988,7 @@ export default function WineCountryRootCanalDesignReview() {
                                   aria-hidden
                                 />
                               ) : null}
-                              <p
-                                className={`text-xs font-semibold uppercase tracking-[0.3em] ${copyColor}`}
-                              >
+                              <p className={`text-eyebrow ${copyColor}`}>
                                 {section.heading}
                               </p>
                             </div>
@@ -1039,7 +1026,7 @@ export default function WineCountryRootCanalDesignReview() {
                                     />
                                   ) : null}
                                   <p
-                                    className={`text-xs font-semibold uppercase tracking-[0.3em] ${descriptionColor}`}
+                                    className={`text-eyebrow ${descriptionColor}`}
                                   >
                                     {subsection.label}
                                   </p>
@@ -1066,16 +1053,14 @@ export default function WineCountryRootCanalDesignReview() {
           </div>
         </section>
 
-        <section className="bg-neutral-50 px-4 py-16">
-          <div className="mx-auto max-w-6xl space-y-10">
+        <section className="py-16 sm:py-20">
+          <div className="prism-container space-y-10">
             <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                logo usage guidance
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900">
-                where the logo should live
+              <p className="text-eyebrow text-subtle">logo usage guidance</p>
+              <h2 className="text-title text-gradient pb-1">
+                where the logo should live.
               </h2>
-              <p className="text-sm text-neutral-600">
+              <p className="text-lead max-w-[58ch] text-muted-foreground">
                 Below is a complete breakdown of where the logo should appear,
                 why it matters, and what format each placement needs.
               </p>
@@ -1084,23 +1069,23 @@ export default function WineCountryRootCanalDesignReview() {
               {logoUsageDetails.map((detail) => (
                 <div
                   key={detail.title}
-                  className="flex flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+                  className="flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-card p-6"
                 >
                   <div className="flex items-center gap-3">
                     <detail.icon
-                      className="h-6 w-6 text-neutral-700"
+                      className="h-6 w-6 text-foreground"
                       aria-hidden
                     />
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+                      <p className="text-eyebrow text-subtle">
                         {detail.priorityLabel}
                       </p>
-                      <h3 className="text-xl font-semibold text-neutral-900">
+                      <h3 className="text-xl font-semibold tracking-[-0.02em] text-foreground">
                         {detail.title}
                       </h3>
                     </div>
                   </div>
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm leading-6 text-muted-foreground">
                     {detail.description}
                   </p>
                   <div className="space-y-3">
@@ -1109,10 +1094,10 @@ export default function WineCountryRootCanalDesignReview() {
                         key={`${detail.title}-${section.label}`}
                         className="space-y-1"
                       >
-                        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
+                        <p className="text-eyebrow text-subtle">
                           {section.label}
                         </p>
-                        <ul className="list-disc space-y-1 pl-5 text-sm text-neutral-700">
+                        <ul className="list-disc space-y-1 pl-5 text-sm leading-6 text-muted-foreground marker:text-subtle">
                           {section.bullets.map((bullet, index) => (
                             <li key={`${section.label}-${index}`}>{bullet}</li>
                           ))}
@@ -1123,11 +1108,11 @@ export default function WineCountryRootCanalDesignReview() {
                 </div>
               ))}
             </div>
-            <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
+            <div className="spectrum-rule rounded-2xl border border-white/[0.08] bg-card p-6">
+              <p className="text-eyebrow text-subtle">
                 summary (high-impact uses ranked)
               </p>
-              <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-neutral-700">
+              <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-6 text-muted-foreground marker:text-subtle">
                 {usageSummary.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -1140,20 +1125,16 @@ export default function WineCountryRootCanalDesignReview() {
       <Dialog open={isVoteOpen} onOpenChange={handleDialogChange}>
         <DialogContent className="max-w-2xl">
           <DialogHeader className="mb-4">
-            <DialogTitle>pick the direction</DialogTitle>
+            <DialogTitle>pick the direction.</DialogTitle>
             <DialogDescription>
               Choose your favorite concept and drop notes for the creative team.
             </DialogDescription>
           </DialogHeader>
           {voteStatus === 'success' ? (
             <div className="space-y-4 text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-                thank you
-              </p>
-              <h3 className="text-2xl font-semibold text-neutral-900">
-                vote received
-              </h3>
-              <p className="text-sm text-neutral-600">
+              <p className="text-eyebrow text-subtle">thank you</p>
+              <h3 className="text-heading text-foreground">vote received.</h3>
+              <p className="text-sm leading-6 text-muted-foreground">
                 We’ll review your notes and follow up with revised directions.
                 Feel free to share more context anytime.
               </p>
@@ -1164,44 +1145,40 @@ export default function WineCountryRootCanalDesignReview() {
                     resetForm()
                     setIsVoteOpen(false)
                   }}
-                  className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white hover:bg-neutral-800"
                 >
-                  close
+                  Close
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
-                  className="rounded-full border-neutral-300 text-neutral-900"
                   onClick={() => {
                     resetForm()
                     setVoteStatus('idle')
                   }}
                 >
-                  submit another vote
+                  Submit another vote
                 </Button>
               </div>
             </div>
           ) : (
             <form onSubmit={handleVoteSubmit} className="space-y-6">
               <div className="space-y-3">
-                <p className="text-sm font-semibold text-neutral-900">
-                  concept
-                </p>
+                <p className="text-sm font-medium text-foreground">Concept</p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {logoConcepts.map((concept) => (
                     <label
                       key={concept.title}
-                      className={`flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium transition hover:border-neutral-900 ${
+                      className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium text-foreground transition-colors hover:border-white/30 ${
                         selectedConcept === concept.title
-                          ? 'border-neutral-900 bg-neutral-900/5'
-                          : 'border-neutral-200'
+                          ? 'border-white/40 bg-white/[0.06]'
+                          : 'border-white/[0.1]'
                       }`}
                     >
                       <input
                         type="radio"
                         name="concept"
                         value={concept.title}
-                        className="h-4 w-4 border-neutral-400 text-neutral-900 focus:ring-ring"
+                        className="size-4 shrink-0 accent-white"
                         checked={selectedConcept === concept.title}
                         onChange={(event) => {
                           setSelectedConcept(event.target.value)
@@ -1217,9 +1194,9 @@ export default function WineCountryRootCanalDesignReview() {
               <div className="space-y-2">
                 <label
                   htmlFor="voter-name"
-                  className="text-sm font-semibold text-neutral-900"
+                  className="text-sm font-medium text-foreground"
                 >
-                  name (optional)
+                  Name (optional)
                 </label>
                 <Input
                   id="voter-name"
@@ -1235,9 +1212,9 @@ export default function WineCountryRootCanalDesignReview() {
               <div className="space-y-2">
                 <label
                   htmlFor="notes"
-                  className="text-sm font-semibold text-neutral-900"
+                  className="text-sm font-medium text-foreground"
                 >
-                  notes
+                  Notes
                 </label>
                 <Textarea
                   id="notes"
@@ -1249,7 +1226,10 @@ export default function WineCountryRootCanalDesignReview() {
 
               {(voteStatus === 'validation-error' ||
                 voteStatus === 'network-error') && (
-                <p className="text-sm font-semibold text-red-600" role="alert">
+                <p
+                  className="text-sm font-medium text-destructive"
+                  role="alert"
+                >
                   {voteStatus === 'validation-error'
                     ? 'Please select a concept before submitting.'
                     : "We couldn't submit your vote. Please try again."}
@@ -1259,9 +1239,10 @@ export default function WineCountryRootCanalDesignReview() {
               <Button
                 type="submit"
                 disabled={isVoteSubmitting}
-                className="w-full rounded-full px-8 py-3 text-base font-semibold"
+                size="lg"
+                className="w-full"
               >
-                {isVoteSubmitting ? 'submitting…' : 'submit vote'}
+                {isVoteSubmitting ? 'Submitting…' : 'Submit vote'}
               </Button>
             </form>
           )}

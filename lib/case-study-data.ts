@@ -103,7 +103,7 @@ export type CaseStudyMeta = {
 export const CASE_STUDIES: CaseStudyMeta[] = [
   {
     id: '1',
-    title: 'Powering a Seamless Transition',
+    title: 'Powering a Clear Practice Transition',
     client: 'Dr. Christopher B. Wong',
     clientLogo:
       'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1771353638/Chris-Wong_avwdmb.webp',

@@ -1,16 +1,26 @@
 'use client'
 
-import { ArrowDownRight } from 'lucide-react'
+import type { MouseEvent } from 'react'
+import { ArrowDown } from 'lucide-react'
 
-import { corePrimaryActionClassName } from '@/components/core-route/CoreRoutePrimitives'
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-export default function ScrollToTimelineButton() {
-  const scrollToTimeline = (event: React.MouseEvent<HTMLAnchorElement>) => {
+type ScrollToTimelineButtonProps = {
+  className?: string
+  label?: string
+}
+
+export default function ScrollToTimelineButton({
+  className,
+  label = 'See the timeline',
+}: ScrollToTimelineButtonProps) {
+  const scrollToTimeline = (event: MouseEvent<HTMLAnchorElement>) => {
     const target = document.getElementById('timeline')
     if (target) {
       event.preventDefault()
-      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' })
     }
   }
 
@@ -18,9 +28,13 @@ export default function ScrollToTimelineButton() {
     <a
       href="#timeline"
       onClick={scrollToTimeline}
-      className={cn(corePrimaryActionClassName, 'bg-transparent px-0')}
+      className={cn(buttonVariants({ variant: 'outline', size: 'xl' }), 'group/timeline', className)}
     >
-      view timeline <ArrowDownRight className="ml-2 h-4 w-4" aria-hidden />
+      {label}
+      <ArrowDown
+        aria-hidden="true"
+        className="transition-transform duration-200 group-hover/timeline:translate-y-0.5"
+      />
     </a>
   )
 }

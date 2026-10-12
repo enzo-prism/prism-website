@@ -1,8 +1,4 @@
-"use client"
-
 import React from "react"
-import { Badge } from "@/components/ui/badge"
-import { CalendarDays, Clock, User } from "lucide-react"
 
 interface MobileHeroCardProps {
   title: string
@@ -22,32 +18,22 @@ export function MobileHeroCard({
   date,
   readTime = "8 min read",
   author = "Prism Team",
-  gradientClass,
-  imageUrl
 }: MobileHeroCardProps) {
   return (
-    <div className="minimal-card">
-      {/* Category */}
-      <div className="mb-3">
-        <span className="text-xs text-neutral-500 uppercase tracking-wide">{category}</span>
-      </div>
-      
-      {/* Title */}
-      <h1 className="text-xl font-bold text-neutral-900 mb-3 leading-tight">
+    <div className="my-10 rounded-2xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-7">
+      <p className="text-eyebrow mb-3! mt-0! text-subtle">{category}</p>
+
+      <p className="mb-3! mt-0! text-balance text-xl font-semibold leading-tight tracking-[-0.02em] text-foreground">
         {title}
-      </h1>
-      
-      {/* Description */}
-      <p className="text-neutral-600 mb-4 leading-relaxed">
-        {description}
       </p>
-      
-      {/* Meta information */}
-      <div className="flex items-center gap-4 text-neutral-500 text-sm">
+
+      <p className="mb-4! mt-0! text-[15px] leading-7 text-muted-foreground">{description}</p>
+
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-subtle">
         <span>{new Date(date).toLocaleDateString()}</span>
-        <span>•</span>
+        <span aria-hidden="true">·</span>
         <span>{readTime}</span>
-        <span>•</span>
+        <span aria-hidden="true">·</span>
         <span>{author}</span>
       </div>
     </div>

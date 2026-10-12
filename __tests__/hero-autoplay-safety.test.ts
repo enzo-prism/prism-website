@@ -16,7 +16,6 @@ const AUTOPLAY_REGEX = /\bautoPlay\b/
 const APPROVED_FILES = new Set([
   'components/HeroBackgroundLoop.tsx',
   'components/HeroLoopingVideo.tsx',
-  'components/ascii/AsciiMotionIcon.tsx',
 ])
 
 const listSourceFiles = (dirPath: string): SourceFile[] => {

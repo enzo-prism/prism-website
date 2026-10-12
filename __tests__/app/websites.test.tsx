@@ -1,7 +1,8 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import WebsitesPage from '@/app/websites/page'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
+import { trackLinkInteraction } from '@/utils/analytics'
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -27,10 +28,12 @@ jest.mock('next/image', () => ({
   default: function MockNextImage({
     src,
     alt,
+    priority: _priority,
     ...props
   }: {
     src: string
     alt: string
+    priority?: boolean
     [key: string]: unknown
   }) {
     return <img src={src} alt={alt} {...props} />
@@ -60,63 +63,97 @@ jest.mock('@/components/schema-markup', () => ({
   },
 }))
 
+jest.mock('@/utils/analytics', () => ({
+  trackLinkInteraction: jest.fn(),
+}))
+
+const wong = getCaseStudyMetric('dr-christopher-wong')
+const belize = getCaseStudyMetric('belize-kids-foundation')
+
 function heroScope(container: HTMLElement) {
   return within(container.querySelector('main section') as HTMLElement)
 }
 
-describe('WebsitesPage build-log hero', () => {
-  it('renders the hero copy, CTAs, and work anchor', () => {
+beforeEach(() => {
+  jest.mocked(trackLinkInteraction).mockClear()
+})
+
+describe('WebsitesPage launch hero', () => {
+  it('renders the lowercase h1, the website-focused CTA, and the work anchor', () => {
     const { container } = render(<WebsitesPage />)
     const hero = heroScope(container)
 
     expect(
       hero.getByRole('heading', {
         level: 1,
-        name: 'Your website, engineered live.',
+        name: 'a website that makes choosing you easy.',
       }),
     ).toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
 
     const primary = hero.getByRole('link', { name: 'Join the waitlist' })
     expect(primary).toHaveAttribute('href', '/waitlist?focus=website')
+    fireEvent.click(primary)
+    expect(trackLinkInteraction).toHaveBeenCalledWith(
+      '/waitlist?focus=website',
+      'Join the waitlist',
+      'websites hero',
+    )
 
     const secondary = hero.getByRole('link', { name: 'See the work' })
     expect(secondary).toHaveAttribute('href', '#work')
     expect(document.getElementById('work')).toBeInTheDocument()
   })
 
-  it('renders the build terminal with the server-side computer poster', () => {
+  it('shows real client sites in the hero visual', () => {
     const { container } = render(<WebsitesPage />)
     const hero = heroScope(container)
 
-    expect(hero.getByText('prism -- build')).toBeInTheDocument()
-
-    const poster = container.querySelector(
-      'img[src="/animations/computer/poster.svg"]',
+    expect(
+      hero.getByAltText('Exquisite Dentistry website built by Prism'),
+    ).toHaveAttribute(
+      'src',
+      '/case-studies/exquisite-dentistry-home-desktop.jpg',
     )
-    expect(poster).toBeInTheDocument()
-    expect(poster).toHaveAttribute('aria-hidden', 'true')
+    expect(
+      hero.getByAltText(
+        'Dr. Christopher B. Wong mobile website built by Prism',
+      ),
+    ).toHaveAttribute(
+      'src',
+      '/case-studies/dr-christopher-wong-home-mobile.jpg',
+    )
   })
 
-  it('keeps the GSC proof values verbatim in the hero strip', () => {
+  it('keeps the Dr. Wong GSC proof verbatim with its source in the hero', () => {
     const { container } = render(<WebsitesPage />)
     const hero = heroScope(container)
 
-    const wong = getCaseStudyMetric('dr-christopher-wong')
-
-    for (const metric of [wong]) {
-      expect(hero.getByText(metric.value)).toBeInTheDocument()
-    }
+    const proof = hero.getByRole('link', {
+      name: new RegExp(wong.value.replace(/[.+]/g, '\\$&')),
+    })
+    expect(proof).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
+    expect(proof).toHaveTextContent(`${wong.label} for Dr. Christopher Wong`)
     expect(
-      hero.getByText(`${wong.label} for Dr. Christopher Wong`),
+      hero.getByText(`Source: ${wong.sourceName} · ${wong.dateRange}`),
     ).toBeInTheDocument()
-    expect(
-      hero.getByRole('link', { name: new RegExp(wong.value.replace(/[.+]/g, '\\$&')) }),
-    ).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
-    expect(hero.getByText('Source: Google Search Console')).toBeInTheDocument()
   })
 
-  it('lists the seven search surfaces in the READ BY ledger with icons', () => {
+  it('keeps hero copy free of em dashes', () => {
+    const { container } = render(<WebsitesPage />)
+
+    const hero = container.querySelector('main section')
+    expect(hero?.textContent).not.toContain('—')
+  })
+})
+
+describe('WebsitesPage sections', () => {
+  it('lists the seven search and answer surfaces with decorative icons', () => {
     render(<WebsitesPage />)
+
+    expect(
+      screen.getByText('Support discovery on Google and in AI.'),
+    ).toBeInTheDocument()
 
     const ledger = screen.getByRole('list', {
       name: 'Search and answer surfaces',
@@ -139,31 +176,100 @@ describe('WebsitesPage build-log hero', () => {
     }
   })
 
-  it('adds inline icons to the Visibility search-surface pills', () => {
+  it('shows both published client results with their source and date range', () => {
     render(<WebsitesPage />)
 
-    const visibility = screen
-      .getByRole('heading', { name: 'Support discovery on Google and in AI.' })
+    const results = screen
+      .getByRole('heading', { level: 2, name: 'measured at the source.' })
       .closest('section') as HTMLElement
 
-    for (const surface of [
-      'Google Search',
-      'Google Maps',
-      'AI Overviews',
-      'ChatGPT',
-      'Gemini',
-      'Claude',
-      'Perplexity',
-    ]) {
-      const pill = within(visibility).getByText(surface).closest('span')
-      expect(pill?.querySelector('img, svg')).toBeInTheDocument()
+    expect(
+      within(results).getByRole('link', {
+        name: 'Read the case study for Dr. Christopher Wong',
+      }),
+    ).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
+    expect(
+      within(results).getByRole('link', {
+        name: 'Read the case study for Belize Kids',
+      }),
+    ).toHaveAttribute('href', '/case-studies/belize-kids-foundation')
+
+    for (const metric of [wong, belize]) {
+      expect(within(results).getAllByText(metric.value).length).toBeGreaterThan(
+        0,
+      )
     }
+    expect(
+      within(results).getAllByText(/Source: Google Search Console/),
+    ).toHaveLength(2)
+    expect(
+      within(results).getAllByText(new RegExp(wong.dateRange as string)),
+    ).toHaveLength(2)
+    expect(within(results).getAllByText('Website client')).toHaveLength(2)
   })
 
-  it('keeps hero copy free of em dashes', () => {
-    const { container } = render(<WebsitesPage />)
+  it('answers FAQs in crawlable disclosures', () => {
+    render(<WebsitesPage />)
 
-    const hero = container.querySelector('main section')
-    expect(hero?.textContent).not.toContain('—')
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'before you join.' }),
+    ).toBeInTheDocument()
+
+    const first = screen
+      .getByText('What makes a Prism PRO website different?')
+      .closest('details')
+    expect(first).toHaveAttribute('open')
+
+    const ownership = screen
+      .getByText('Do I own the website?')
+      .closest('details') as HTMLElement
+    expect(ownership).not.toHaveAttribute('open')
+    // Collapsed answers still ship in the HTML so crawlers can read them.
+    expect(
+      within(ownership).getByText(/There is no lock-in of any kind\./),
+    ).toBeInTheDocument()
+  })
+
+  it('cross-links the other two services, not the current one', () => {
+    render(<WebsitesPage />)
+
+    const siblings = screen
+      .getByRole('heading', { level: 2, name: 'also from Prism.' })
+      .closest('section') as HTMLElement
+    const hrefs = within(siblings)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href'))
+    expect(hrefs).toEqual(['/content', '/ads'])
+  })
+
+  it('ends with the website-focused final CTA', () => {
+    render(<WebsitesPage />)
+
+    const finalCta = screen
+      .getByRole('heading', { level: 2, name: 'your site, next.' })
+      .closest('section') as HTMLElement
+    const cta = within(finalCta).getByRole('link', {
+      name: 'Join the waitlist',
+    })
+    expect(cta).toHaveAttribute('href', '/waitlist?focus=website')
+    fireEvent.click(cta)
+    expect(trackLinkInteraction).toHaveBeenCalledWith(
+      '/waitlist?focus=website',
+      'Join the waitlist',
+      'websites final cta',
+    )
+  })
+
+  it('keeps the whole page free of em dashes, prices, and former clients', () => {
+    const { container } = render(<WebsitesPage />)
+    const text = (
+      container.querySelector('main')?.textContent ?? ''
+    ).toLowerCase()
+
+    expect(text).not.toContain('—')
+    expect(text).not.toMatch(/\$\d/)
+    for (const former of ['saorsa', 'sr4', 'laguna beach dental arts']) {
+      expect(text).not.toContain(former)
+    }
   })
 })

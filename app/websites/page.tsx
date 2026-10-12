@@ -1,33 +1,47 @@
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import {
+  ArrowUpRight,
+  BarChart3,
+  FileText,
+  Gauge,
+  KeyRound,
+  Palette,
+  PenLine,
+  Rocket,
+  Search,
+} from 'lucide-react'
 
 import Footer from '@/components/footer'
-import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { ProofMetricCard } from '@/components/services/ProofMetricCard'
+import {
+  ServiceBento,
+  type ServiceBentoItem,
+} from '@/components/services/ServiceBento'
+import { ServiceFaq } from '@/components/services/ServiceFaq'
+import { ServiceHero } from '@/components/services/ServiceHero'
 import { ServiceSiblings } from '@/components/services/ServiceSiblings'
+import {
+  ServiceSteps,
+  type ServiceStep,
+} from '@/components/services/ServiceSteps'
+import { WebsitesHeroVisual } from '@/components/services/WebsitesHeroVisual'
+import { WebsitesWorkRail } from '@/components/services/WebsitesWorkRail'
+import { getClientQuotes } from '@/components/services/community-comments'
 import {
   TechStackIcon,
   WEBSITE_SURFACE_ICONS,
 } from '@/components/tech-stack-icons'
-import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainerClassName,
-  coreRouteSectionClassName,
-  coreRouteSectionCompactClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
-import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
-import CapacityNotice from '@/components/waitlist/CapacityNotice'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { websiteProjects } from '@/lib/website-projects'
-import { cn } from '@/lib/utils'
 
-const PAGE_TITLE = 'Pro websites'
+const PAGE_TITLE = 'PRO websites'
 const PAGE_DESCRIPTION =
   'Custom websites with clear service pages, mobile-friendly design, working inquiry forms, and analytics to help you understand what brings customers in.'
 const CANONICAL_URL = 'https://www.design-prism.com/websites'
@@ -39,22 +53,30 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-// The three disciplines every PRO build is judged against.
-const PILLARS = [
+// Real, source-attributed results from lib/case-study-data.ts (Google Search
+// Console). These are the only published client result metrics; do not
+// invent others.
+const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
+const belizeImpressions = getCaseStudyMetric('belize-kids-foundation')
+
+const WONG_CLIENT = 'Dr. Christopher Wong'
+const WONG_HREF = '/case-studies/dr-christopher-wong'
+
+// Named website clients, verbatim from content/wall-of-love-data.tsx.
+const CLIENT_QUOTES = getClientQuotes([3, 1])
+
+const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
-    label: 'Design',
-    title: 'Design that feels like your business',
-    body: 'We define your typography, color, spacing, and motion, then carry them through every page. The result is a consistent website that makes your business easier to recognize and understand.',
-    points: [
-      'A consistent look across every page',
-      'Typography, color, and motion standards',
-      'Pages organized around customer questions',
-    ],
+    icon: Palette,
+    title: 'design that feels like your business',
+    body: 'We define your typography, color, spacing, and motion, then carry them through every page, so your site looks like one business instead of a template.',
+    className: 'md:col-span-4',
+    visual: <DesignSpecimen />,
   },
   {
-    label: 'Engineering',
-    title: 'Fast, accessible, easy to navigate',
-    body: 'We build for speed, accessibility, and everyday use across devices. Clear page structure helps visitors find what they need and search engines understand what you offer.',
+    icon: Gauge,
+    title: 'fast, accessible, easy to use',
+    body: 'Built for speed and everyday use on any device, with a clear page structure people and search engines can follow.',
     points: [
       'Page speed and mobile usability checks',
       'Accessible, semantic page structure',
@@ -62,46 +84,45 @@ const PILLARS = [
     ],
   },
   {
-    label: 'Analytics',
-    title: 'Know what brings people in',
-    body: 'Analytics and conversion tracking are part of the build. See how people find your site, which pages they visit, and where they take the next step.',
-    points: [
-      'GA4 and conversion tracking configured at launch',
-      'Tracking for inquiry forms and call links',
-      'Reports that connect visits to inquiries',
-    ],
+    icon: BarChart3,
+    title: 'know what brings people in',
+    body: 'GA4 and conversion tracking are part of the build, so you can see how people find you and where they reach out.',
+    visual: <TrackingList />,
   },
-] as const
+  {
+    icon: PenLine,
+    title: 'pages that answer real questions',
+    body: 'We write and organize your pages around what customers ask before they call, then share a preview for your feedback.',
+    visual: <QuestionList />,
+  },
+  {
+    icon: KeyRound,
+    title: 'yours, completely',
+    body: 'The site and everything in it belongs to you from launch day. No lock-in. Keep Prism running it, or take it in-house.',
+    visual: <OwnershipList />,
+  },
+]
 
-// Where a PRO website has to win in 2026: classic search AND AI answers.
-const SEARCH_SURFACES = [
-  'Google Search',
-  'Google Maps',
-  'AI Overviews',
-  'ChatGPT',
-  'Gemini',
-  'Claude',
-  'Perplexity',
-] as const
-
-const PROCESS_STEPS = [
+const STEPS: readonly ServiceStep[] = [
   {
-    label: 'Join the waitlist',
-    body: 'Share your links and goals. Prism is fully booked, so we review waitlist applications for each monthly intake and reach out to scope your build with a clear plan and a clear price.',
+    icon: FileText,
+    title: 'join the waitlist',
+    detail: 'First',
+    body: 'Share your links and goals. We review applications for each monthly intake, then reach out to scope your build with a clear plan and a clear price.',
   },
   {
-    label: 'Design & build',
-    body: 'We write and design the pages, build the site, and share a preview for your feedback on the copy, images, and experience.',
+    icon: Palette,
+    title: 'design and build',
+    detail: 'Build',
+    body: 'We write and design the pages, build the site, and share a preview so you can react to the copy, images, and experience.',
   },
   {
-    label: 'Set up measurement',
-    body: 'We configure analytics and search information, then check key pages, forms, and contact links before launch.',
+    icon: Rocket,
+    title: 'launch and measure',
+    detail: 'Launch',
+    body: 'We set up analytics and search information, check every page, form, and contact link, then launch and plan what to improve next.',
   },
-  {
-    label: 'Refine and maintain',
-    body: 'We review the site with you before launch, then plan any ongoing updates to content, search visibility, and conversion paths.',
-  },
-] as const
+]
 
 const FAQ_ITEMS = [
   {
@@ -131,467 +152,336 @@ const FAQ_ITEMS = [
   },
 ] as const
 
-const PROOF_BUILDS = [
-  {
-    title: 'Exquisite Dentistry',
-    type: 'Healthcare',
-    image: '/case-studies/exquisite-dentistry-home-desktop.jpg',
-    url: 'https://exquisitedentistryla.com/',
-  },
-  {
-    title: 'Olympic Bootworks',
-    type: 'Retail',
-    image: '/case-studies/olympic-bootworks-home-desktop.jpg',
-    url: 'https://www.olympicbootworks.com',
-  },
-  {
-    title: 'Roseville Dental Academy',
-    type: 'Education',
-    image: '/case-studies/roseville-dental-academy-home-desktop.jpg',
-    url: 'https://www.rosevilledentalacademy.com',
-  },
-] as const
+// Where a PRO website has to be understood: classic search AND AI answers.
+const SURFACE_NOTES: Record<string, string> = {
+  'Google Search': 'Search results',
+  'Google Maps': 'Local results',
+  'AI Overviews': 'AI answers in Google',
+  ChatGPT: 'Assistant answers',
+  Gemini: 'Assistant answers',
+  Claude: 'Assistant answers',
+  Perplexity: 'Answer engine',
+}
 
-// Real, source-attributed results from lib/case-study-data.ts (Google Search
-// Console). Keep in sync with the source; do not invent metrics.
-const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
-
-const PROOF_POINTS = [
-  {
-    value: wongImpressions.value,
-    label: `${wongImpressions.label} for Dr. Christopher Wong`,
-    href: '/case-studies/dr-christopher-wong',
-  },
-] as const
-
-function SectionKicker({ children }: { children: ReactNode }) {
+function DesignSpecimen() {
   return (
-    <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.26em] text-[#8f877b]">
-      {children}
-    </p>
+    <div className="flex items-end justify-between gap-6 border-t border-white/[0.06] px-6 pb-6 pt-6 sm:px-7 sm:pb-7">
+      <span className="text-[clamp(4rem,3rem+3vw,6.5rem)] font-semibold leading-[0.8] tracking-[-0.06em] text-foreground">
+        Aa
+      </span>
+      <div className="flex flex-1 flex-col items-end gap-3">
+        <div className="flex gap-1.5">
+          {[
+            'bg-foreground',
+            'bg-foreground/70',
+            'bg-foreground/40',
+            'bg-foreground/15',
+            'bg-popover',
+          ].map((swatch) => (
+            <span
+              key={swatch}
+              className={`size-8 rounded-lg border border-white/10 sm:size-10 ${swatch}`}
+            />
+          ))}
+        </div>
+        <div className="flex flex-wrap justify-end gap-1.5">
+          {['Typography', 'Color', 'Spacing', 'Motion'].map((token) => (
+            <span
+              key={token}
+              className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground"
+            >
+              {token}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
-const COMPUTER_POSTER_SRC = '/animations/computer/poster.svg'
+function TrackingList() {
+  return (
+    <ul className="flex flex-col gap-1.5 px-6 pb-6 sm:px-7 sm:pb-7">
+      {[
+        'Inquiry form submitted',
+        'Call link tapped',
+        'Traffic source recorded',
+      ].map((event) => (
+        <li
+          key={event}
+          className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[13px] text-muted-foreground"
+        >
+          {event}
+          <span className="size-1.5 rounded-full bg-foreground/60" />
+        </li>
+      ))}
+    </ul>
+  )
+}
 
-const TERMINAL_STATUS_LINES = [
-  'prism build --site complete',
-  'analytics wired in',
-  'search foundations ready',
-] as const
+function QuestionList() {
+  return (
+    <ul className="flex flex-col gap-1.5 px-6 pb-6 sm:px-7 sm:pb-7">
+      {[
+        'Do you serve my area?',
+        'How soon can I book?',
+        'What should I expect?',
+      ].map((question, index) => (
+        <li
+          key={question}
+          className={`w-fit rounded-2xl rounded-bl-md border border-white/[0.08] bg-white/[0.03] px-3.5 py-2 text-[13px] text-muted-foreground ${index === 1 ? 'ml-4' : index === 2 ? 'ml-8' : ''}`}
+        >
+          {question}
+        </li>
+      ))}
+    </ul>
+  )
+}
 
-function surfaceIconFor(label: string) {
-  return WEBSITE_SURFACE_ICONS.find((icon) => icon.label === label)
+function OwnershipList() {
+  return (
+    <ul className="grid grid-cols-2 gap-1.5 px-6 pb-6 sm:px-7 sm:pb-7">
+      {['Your domain', 'Your content', 'Your analytics', 'Your code'].map(
+        (item) => (
+          <li
+            key={item}
+            className="flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[13px] text-muted-foreground"
+          >
+            <span className="size-1.5 rounded-full bg-foreground/60" />
+            {item}
+          </li>
+        ),
+      )}
+    </ul>
+  )
+}
+
+function HeroProof() {
+  return (
+    <div className="flex flex-col items-center gap-3 text-center">
+      <Link
+        href={WONG_HREF}
+        className="group/proof flex max-w-2xl flex-col items-center gap-3 rounded-2xl border border-white/[0.08] bg-card/70 px-6 py-4 backdrop-blur-md transition-colors hover:border-white/20 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:flex-row sm:gap-5 sm:text-left"
+      >
+        <span className="text-[2.5rem] font-semibold leading-none tracking-[-0.05em] text-foreground">
+          {wongImpressions.value}
+        </span>
+        <span className="text-[15px] leading-6 text-muted-foreground">
+          {wongImpressions.label} for {WONG_CLIENT}
+          <ArrowUpRight
+            aria-hidden="true"
+            className="ml-1 inline size-4 align-[-2px] text-foreground transition-transform duration-200 group-hover/proof:-translate-y-0.5 group-hover/proof:translate-x-0.5"
+          />
+        </span>
+      </Link>
+      <p className="font-mono text-[11px] text-subtle">
+        Source:{' '}
+        {[wongImpressions.sourceName, wongImpressions.dateRange]
+          .filter(Boolean)
+          .join(' · ')}
+      </p>
+    </div>
+  )
 }
 
 export default function WebsitesPage() {
-  const featuredProjects = websiteProjects.slice(0, 8)
-
   return (
-    <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className="border-b border-white/12 px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div>
-                <SectionKicker>The PRO website</SectionKicker>
-                <h1 className="mt-6 max-w-[14ch] text-balance text-[clamp(2.65rem,7.5vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#f5f0e8]">
-                  Your website, engineered live.
-                </h1>
-                <p className="mt-6 max-w-2xl text-pretty text-[1.08rem] leading-8 text-[#b8afa2] sm:text-[1.18rem]">
-                  Custom design, fast pages, and clear paths from a first
-                  visit to an inquiry. Analytics and search foundations are
-                  wired in from day one.
-                </p>
-
-                <CapacityNotice className="mt-8 max-w-2xl" />
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <CoreActionLink
-                    href={WEBSITE_WAITLIST_CTA.href}
-                    variant="heroPrimary"
-                    label={WEBSITE_WAITLIST_CTA.label.toLowerCase()}
-                    location="websites hero"
-                  >
-                    {WEBSITE_WAITLIST_CTA.label}
-                  </CoreActionLink>
-                  <CoreActionLink
-                    href="#work"
-                    variant="heroSecondary"
-                    label="see website proof"
-                    location="websites hero"
-                  >
-                    See the work
-                  </CoreActionLink>
-                </div>
-              </div>
-
-              <div className="overflow-hidden rounded-2xl border border-white/12 bg-[#070707]">
-                <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-                  <span
-                    aria-hidden="true"
-                    className="flex gap-1.5"
-                  >
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                  </span>
-                  <p className="ml-2 font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[#8f877b]">
-                    prism -- build
-                  </p>
-                </div>
-                <div className="relative min-h-[280px] overflow-hidden sm:min-h-[320px]">
-                  <DeferredAsciiHeroBackdrop
-                    animationName="computer"
-                    frameCount={78}
-                    fps={14}
-                    quality="medium"
-                    renderMode="canvas"
-                    fit="cover"
-                    zoom={1.05}
-                    maskClassName=""
-                    ariaLabel="ASCII computer animation in the website build terminal"
-                    posterSrc={COMPUTER_POSTER_SRC}
-                    posterClassName="absolute inset-0 h-full w-full object-cover object-center opacity-90 [image-rendering:pixelated]"
-                    scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
-                    focusScrimClassName=""
-                  />
-                </div>
-                <ul
+        <ServiceHero
+          title={
+            <>
+              a website that makes choosing you{' '}
+              {/* Positioned spans paint outside the h1's clipped fill, so the
+                  word carries its own gradient. */}
+              <span className="text-gradient relative whitespace-nowrap">
+                easy.
+                <span
                   aria-hidden="true"
-                  className="space-y-1.5 border-t border-white/10 px-4 py-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]"
-                >
-                  {TERMINAL_STATUS_LINES.map((line) => (
-                    <li key={line} className="flex items-center gap-2">
-                      <span className="text-[#d8bc79]">›</span>
-                      {line}
-                      <span className="ml-auto text-[#d8bc79]">✓</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                  className="absolute inset-x-[0.04em] bottom-[-0.04em] h-[0.06em] rounded-full bg-spectrum"
+                />
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-[0.04em] bottom-[-0.06em] h-[0.12em] rounded-full bg-spectrum opacity-60 blur-md"
+                />
+              </span>
+            </>
+          }
+          titleClassName="max-w-[17ch]"
+          description={
+            <>
+              <span className="text-foreground">The PRO website</span>: custom
+              design, fast pages, and a clear path from first visit to inquiry,
+              with analytics and search foundations built in from day one.
+            </>
+          }
+          ctaHref={WEBSITE_WAITLIST_CTA.href}
+          location="websites hero"
+          secondary={{
+            label: 'See the work',
+            href: '#work',
+            trackingLabel: 'see website proof',
+          }}
+          visual={<WebsitesHeroVisual />}
+          footer={<HeroProof />}
+          glow="blue"
+        />
 
-            <div className="mt-14 border-t border-white/10 pt-8">
-              <ul className="grid max-w-2xl gap-6">
-                {PROOF_POINTS.map((proof) => (
-                  <li key={proof.label}>
-                    <Link
-                      href={proof.href}
-                      className="group block focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-                    >
-                      <p className="font-sans text-[2rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
-                        {proof.value}
-                      </p>
-                      <p className="mt-2 text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
-                        {proof.label}
-                      </p>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
-                Source: Google Search Console
-              </p>
-              <div className="mt-6 border-t border-white/10 py-4">
-                <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
-                  <span
-                    aria-hidden="true"
-                    className="home-signal-dot h-1 w-1 rounded-full bg-[#d8bc79]"
-                  />
-                  Live · Read by
-                </p>
-                <ul
-                  aria-label="Search and answer surfaces"
-                  className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2"
-                >
-                  {WEBSITE_SURFACE_ICONS.map((icon, index) => (
-                    <li
-                      key={icon.label}
-                      className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#c9c1b6]"
-                    >
-                      {index > 0 ? (
-                        <span aria-hidden="true" className="mr-2 text-[#5f594f]">
-                          ·
-                        </span>
-                      ) : null}
-                      <TechStackIcon spec={icon} className="h-3.5 w-3.5" />
-                      {icon.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+        <ServiceBento
+          idPrefix="websites"
+          title="everything a site needs to win the visit."
+          description="Design, engineering, copy, and analytics in one build, so the site looks right, works everywhere, and shows you what is working."
+          items={WHAT_YOU_GET}
+        />
 
-            <div className="mt-14 grid gap-4 md:grid-cols-3">
-              {PROOF_BUILDS.map((build) => (
-                <Link
-                  key={build.title}
-                  href={build.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group overflow-hidden border border-white/12 bg-[#070707] transition-[border-color,transform] duration-500 hover:-translate-y-1 hover:border-[#d8bc79]/45 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#111]">
-                    <Image
-                      src={build.image}
-                      alt={`${build.title} website screenshot`}
-                      fill
-                      sizes="(min-width: 1024px) 360px, (min-width: 768px) 32vw, 100vw"
-                      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-                      priority={build.title === PROOF_BUILDS[0].title}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between gap-4 p-4">
-                    <div>
-                      <p className="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-[#8f877b]">
-                        {build.type}
-                      </p>
-                      <h2 className="mt-2 text-[1.05rem] font-medium tracking-[-0.03em] text-[#f5f0e8]">
-                        {build.title}
-                      </h2>
-                    </div>
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="h-4 w-4 shrink-0 text-[#d8bc79]"
-                    />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="The standard"
-              title="Design. Engineering. Analytics."
-              description="A clear visual identity, a dependable build, and the tracking to understand what works."
-            />
-            <div className="mt-10 grid gap-4 lg:grid-cols-3">
-              {PILLARS.map((pillar, index) => (
-                <article
-                  key={pillar.label}
-                  className="flex flex-col border border-white/10 bg-[#070707] p-6 sm:p-7"
-                >
-                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {String(index + 1).padStart(2, '0')} · {pillar.label}
-                  </p>
-                  <h2 className="mt-5 text-[1.35rem] font-medium leading-tight tracking-[-0.04em] text-[#f5f0e8]">
-                    {pillar.title}
-                  </h2>
-                  <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                    {pillar.body}
-                  </p>
-                  <ul className="mt-6 space-y-2 border-t border-white/10 pt-5">
-                    {pillar.points.map((point) => (
-                      <li
-                        key={point}
-                        className="flex items-start gap-3 text-[0.82rem] leading-6 text-[#c9c1b6]"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-[#d8bc79]"
-                        />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24">
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start',
-            )}
-          >
-            <div className="space-y-7">
-              <CoreSectionHeading
-                eyebrow="Visibility"
-                title="Support discovery on Google and in AI."
-                description="We organize service pages, location details, and business information so search engines and AI assistants can understand what you do. Useful answers and accurate details support discovery; rankings and recommendations are never guaranteed."
+        <Section aria-labelledby="websites-visibility-title">
+          <Reveal>
+            <div className="relative isolate grid gap-12 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-2 lg:items-center lg:gap-16">
+              <div
+                aria-hidden="true"
+                className="bg-grid absolute inset-0 -z-10 opacity-60"
               />
-              <div className="flex flex-wrap gap-2">
-                {SEARCH_SURFACES.map((surface) => {
-                  const icon = surfaceIconFor(surface)
-                  return (
-                    <span
-                      key={surface}
-                      className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]"
-                    >
-                      {icon ? (
-                        <TechStackIcon spec={icon} className="h-3.5 w-3.5" />
-                      ) : null}
-                      {surface}
-                    </span>
-                  )
-                })}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-sm leading-7 text-[#b8afa2]">
-                The same system, with results measured at the source:
-              </p>
-              <ul className="mt-5 grid gap-px overflow-hidden border border-white/10 bg-white/10">
-                {PROOF_POINTS.map((proof) => (
-                  <li key={proof.label} className="bg-black">
-                    <Link
-                      href={proof.href}
-                      className="group flex items-baseline gap-4 p-4 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-                    >
-                      <span className="shrink-0 font-sans text-[1.6rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
-                        {proof.value}
-                      </span>
-                      <span className="text-[0.82rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
-                        {proof.label}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
-                Source: Google Search Console
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="work"
-          className="scroll-mt-24 border-b border-white/12 px-4 py-20 sm:px-6 sm:py-24"
-        >
-          <div className={coreRouteContainerClassName}>
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-              <CoreSectionHeading
-                eyebrow="The work"
-                title="Selected work."
-                description="Explore websites we have built for practices, retailers, nonprofits, and service businesses."
+              <div
+                aria-hidden="true"
+                className="absolute -right-24 top-1/2 -z-10 size-[420px] -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/22%),transparent)] blur-2xl"
               />
-              <CoreActionLink
-                href="/case-studies"
-                variant="secondary"
-                label="view case studies"
-                location="websites proof"
-              >
-                Case studies
-              </CoreActionLink>
-            </div>
-
-            <div className="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-4">
-              {featuredProjects.map((project, index) => (
-                <Link
-                  key={project.id}
-                  href={project.url}
-                  target={project.external === false ? undefined : '_blank'}
-                  rel={
-                    project.external === false
-                      ? undefined
-                      : 'noopener noreferrer'
+              <div className="flex flex-col gap-5">
+                <SectionHeader
+                  id="websites-visibility-title"
+                  eyebrow="Visibility"
+                  title={
+                    <>
+                      built to be understood by Google and{' '}
+                      <span className="text-spectrum prism-spectrum-pan">
+                        AI
+                      </span>
+                      .
+                    </>
                   }
-                  className="group bg-black p-5 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-                >
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {String(index + 1).padStart(2, '0')} / {project.category}
-                  </p>
-                  <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {project.title}
-                  </h2>
-                  <p className="mt-3 text-sm leading-6 text-[#b8afa2]">
-                    {project.description}
-                  </p>
-                  <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-                    {project.external === false
-                      ? 'View case study'
-                      : 'Open site'}
-                    <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="How it works"
-              title="It starts on the waitlist."
-              description="Prism is fully booked. Join the waitlist and, when we reach out, you leave the scoping conversation with a clear plan and a clear price."
-            />
-            <ol className="mt-10 grid gap-4 md:grid-cols-4">
-              {PROCESS_STEPS.map((step, index) => (
-                <li
-                  key={step.label}
-                  className="border border-white/10 bg-[#070707] p-5"
-                >
-                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {step.label}
-                  </h2>
-                  <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                    {step.body}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionCompactClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading eyebrow="FAQ" title="Before you join." />
-            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
-              {FAQ_ITEMS.map((item) => (
-                <details key={item.question} className="group py-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {item.question}
-                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45 motion-reduce:transition-none">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 max-w-3xl text-sm leading-7 text-[#b8afa2]">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between',
-            )}
-          >
-            <CoreSectionHeading
-              title="Build a website you can grow with."
-              description="Prism is fully booked right now. Join the waitlist with your links and goals, and we will reach out to scope the build when your intake opens."
-            />
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <CoreActionLink
-                href={WEBSITE_WAITLIST_CTA.href}
-                variant="heroPrimary"
-                label={WEBSITE_WAITLIST_CTA.label.toLowerCase()}
-                location="websites final"
+                  titleClassName="max-w-[16ch]"
+                />
+                <p className="text-lead max-w-[48ch] text-pretty text-foreground">
+                  Support discovery on Google and in AI.
+                </p>
+                <p className="max-w-[52ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                  We organize service pages, location details, and business
+                  information so search engines and AI assistants can understand
+                  what you do. Useful answers and accurate details support
+                  discovery; rankings and recommendations are never guaranteed.
+                </p>
+              </div>
+              <ul
+                aria-label="Search and answer surfaces"
+                className="grid gap-2 sm:grid-cols-2"
               >
-                {WEBSITE_WAITLIST_CTA.label}
-              </CoreActionLink>
+                {WEBSITE_SURFACE_ICONS.map((icon) => (
+                  <li
+                    key={icon.label}
+                    className="flex min-h-14 items-center gap-3 rounded-xl border border-white/[0.08] bg-background/60 px-4 py-3 backdrop-blur-sm sm:last:col-span-2"
+                  >
+                    <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04]">
+                      <TechStackIcon spec={icon} className="size-4" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[15px] font-medium leading-tight text-foreground">
+                        {icon.label}
+                      </span>
+                      <span className="block text-[13px] text-subtle">
+                        {SURFACE_NOTES[icon.label]}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </Section>
+
+        <WebsitesWorkRail />
+
+        <ServiceSteps
+          idPrefix="websites"
+          title="it starts on the waitlist."
+          description="Prism is fully booked. When your intake opens, you leave the scoping conversation with a clear plan and a clear price."
+          steps={STEPS}
+        />
+
+        <Section aria-labelledby="websites-results-title">
+          <Reveal>
+            <SectionHeader
+              id="websites-results-title"
+              eyebrow="Results"
+              title="measured at the source."
+              description="Two published client results, straight from Google Search Console, plus what clients told us in their own words."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-16 lg:grid-cols-12">
+            <Reveal className="flex lg:col-span-4">
+              <ProofMetricCard
+                value={wongImpressions.value}
+                label={wongImpressions.label}
+                client={WONG_CLIENT}
+                href={WONG_HREF}
+                sourceName={wongImpressions.sourceName}
+                dateRange={wongImpressions.dateRange}
+                beam
+                className="w-full"
+              />
+            </Reveal>
+            <Reveal delay={80} className="flex lg:col-span-4">
+              <ProofMetricCard
+                value={belizeImpressions.value}
+                label={belizeImpressions.label}
+                client="Belize Kids"
+                href="/case-studies/belize-kids-foundation"
+                sourceName={belizeImpressions.sourceName}
+                dateRange={belizeImpressions.dateRange}
+                className="w-full"
+              />
+            </Reveal>
+            <div className="flex flex-col gap-4 lg:col-span-4">
+              {CLIENT_QUOTES.map((quote, index) => (
+                <Reveal
+                  key={quote.id}
+                  delay={160 + index * 80}
+                  className="flex flex-1"
+                >
+                  <figure className="flex w-full flex-col justify-between gap-6 rounded-2xl border border-white/[0.08] bg-card p-7">
+                    <blockquote className="text-pretty text-lg leading-snug tracking-[-0.015em] text-foreground">
+                      &ldquo;{quote.text}&rdquo;
+                    </blockquote>
+                    <figcaption className="flex items-center gap-2 text-sm">
+                      <span className="font-medium text-foreground">
+                        {quote.client}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="h-3 w-px bg-white/15"
+                      />
+                      <span className="text-subtle">Website client</span>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
             </div>
           </div>
-        </section>
+        </Section>
+
+        <ServiceFaq
+          idPrefix="websites"
+          items={FAQ_ITEMS}
+          title="before you join."
+        />
+
         <ServiceSiblings current="website" />
+
+        <FinalCta
+          location="websites final cta"
+          title="your site, next."
+          href={WEBSITE_WAITLIST_CTA.href}
+          headingId="websites-final-cta-title"
+        />
       </main>
       <Footer />
       <ServiceSchema

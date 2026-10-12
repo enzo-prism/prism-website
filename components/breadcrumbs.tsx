@@ -37,17 +37,17 @@ export default function Breadcrumbs({
       <nav
         aria-label="Breadcrumb"
         className={cn(
-          'mb-4 flex w-full max-w-full min-w-0 items-center overflow-x-auto py-3 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground scrollbar-hide font-pixel',
+          'mb-4 flex w-full max-w-full min-w-0 items-center overflow-x-auto py-3 text-[13px] font-medium tracking-[-0.005em] text-muted-foreground scrollbar-hide',
           className,
         )}
       >
         <div className="inline-flex min-w-max items-center pr-1">
           <Link
             href="/"
-            className="flex shrink-0 items-center text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100"
+            className="flex min-h-10 shrink-0 items-center rounded-sm text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
             aria-label="home"
           >
-            <Home size={16} strokeWidth={2} />
+            <Home size={15} strokeWidth={1.75} aria-hidden="true" />
           </Link>
 
           {cleanItems.map((item, index) => {
@@ -57,13 +57,14 @@ export default function Breadcrumbs({
               <div key={item.url + index} className="flex items-center">
                 <ChevronRight
                   size={14}
-                  className="mx-2 shrink-0 text-current opacity-45"
-                  strokeWidth={2}
+                  className="mx-1.5 shrink-0 text-current opacity-40"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
                 />
 
                 {isLastItem ? (
                   <span
-                    className="max-w-[calc(100vw-13rem)] truncate text-current opacity-100 sm:max-w-md md:max-w-xl"
+                    className="max-w-[calc(100vw-13rem)] truncate text-foreground sm:max-w-md md:max-w-xl"
                     aria-current="page"
                     title={item.name}
                   >
@@ -72,7 +73,7 @@ export default function Breadcrumbs({
                 ) : (
                   <Link
                     href={item.url}
-                    className="whitespace-nowrap text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100"
+                    className="whitespace-nowrap rounded-sm text-current opacity-85 transition-[color,opacity] hover:text-foreground hover:opacity-100 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                   >
                     {item.name}
                   </Link>

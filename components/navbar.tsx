@@ -1,41 +1,54 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Camera,
+  Infinity as InfinityIcon,
+  LayoutTemplate,
+  Megaphone,
+  Smile,
+} from 'lucide-react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
+import { PrismLogo } from '@/components/prism/prism-logo'
+import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
-import { NAV_ITEMS } from '@/lib/constants'
-import type { NavItem } from '@/lib/constants'
+import { NAV_ITEMS, NAV_SERVICE_ITEMS } from '@/lib/constants'
+import type { NavItem, NavServiceItem } from '@/lib/constants'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
-
-import CoreImage from './core-image'
-import { LOGO_CONFIG } from '@/lib/constants'
 
 type BreadcrumbItem = {
   name: string
   url: string
 }
 
-type NavVariant = 'desktop' | 'mobile'
-
 const MOBILE_NAV_ID = 'mobile-site-nav'
-const NAV_ICONS: Record<string, string> = {
-  '/': '/pixelish/home.svg',
-  '/case-studies': '/pixelish/folder.svg',
-  '/wall-of-love': '/pixelish/emoji-heart.svg',
-}
 const DESKTOP_NAV_BREAKPOINT = 1024
-const HEADER_CLASSES =
-  'border-b border-white/12 bg-black text-[#f5f0e8] transition-[background-color,border-color,color]'
-const DESKTOP_LINK_CLASSES =
-  'group/row relative inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30'
-const MOBILE_LINK_CLASSES =
-  'group/row flex min-h-14 items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 [@media(max-height:500px)]:min-h-[44px] [@media(max-height:500px)]:py-2'
+
+const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
+  website: LayoutTemplate,
+  content: Camera,
+  ads: Megaphone,
+  dental: Smile,
+  infinity: InfinityIcon,
+}
+
 function getCaseStudyBreadcrumbs(
   pathname: string | null,
 ): BreadcrumbItem[] | null {
@@ -43,7 +56,7 @@ function getCaseStudyBreadcrumbs(
 
   const baseTrail = [
     { name: 'home', url: '/' },
-    { name: 'case studies', url: '/case-studies' },
+    { name: 'work', url: '/case-studies' },
   ]
 
   const parts = pathname.split('/').filter(Boolean)
@@ -60,104 +73,152 @@ function isNavItemActive(pathname: string | null, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-function getNavItemClasses(active: boolean, variant: NavVariant) {
-  const activeClasses = 'bg-white/[0.08] text-[#f5f0e8]'
-  const inactiveClasses =
-    variant === 'desktop'
-      ? 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8]'
-      : 'text-[#8f877b] hover:bg-white/[0.04] hover:text-[#f5f0e8] active:bg-white/[0.06] active:text-[#f5f0e8]'
-
-  return cn(
-    variant === 'desktop' ? DESKTOP_LINK_CLASSES : MOBILE_LINK_CLASSES,
-    active ? activeClasses : inactiveClasses,
-  )
+function isServicesActive(pathname: string | null) {
+  return NAV_SERVICE_ITEMS.some((item) => isNavItemActive(pathname, item.href))
 }
 
-function MobileRowArrow({ active }: { active: boolean }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      className={cn(
-        'h-4 w-4 shrink-0 motion-safe:transition-[opacity,transform] duration-200',
-        active
-          ? 'translate-x-0 opacity-100'
-          : 'opacity-35 motion-safe:group-hover/row:translate-x-0.5 group-hover/row:opacity-90',
-      )}
-    >
-      <path
-        d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-function NavbarLinks({
-  items,
+function DesktopLink({
+  item,
   pathname,
-  variant,
   onNavigate,
-  startIndex = 0,
 }: {
-  items: NavItem[]
+  item: NavItem
   pathname: string | null
-  variant: NavVariant
   onNavigate: (label: string, href: string) => void
-  startIndex?: number
 }) {
+  const active = isNavItemActive(pathname, item.href)
   return (
-    <>
-      {items.map((item, index) => {
-        const active = isNavItemActive(pathname, item.href)
+    <NavigationMenuItem>
+      <NavigationMenuLink asChild active={active}>
+        <Link
+          href={item.href}
+          aria-current={active ? 'page' : undefined}
+          onClick={() => onNavigate(item.label, item.href)}
+          className={cn(
+            'inline-flex h-9 items-center rounded-full px-3.5 text-sm font-medium transition-colors hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50',
+            active ? 'text-foreground' : 'text-muted-foreground',
+          )}
+        >
+          {item.label}
+        </Link>
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+  )
+}
 
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-label={item.label}
-            aria-current={active ? 'page' : undefined}
-            onClick={() => onNavigate(item.label, item.href)}
-            className={cn(
-              getNavItemClasses(active, variant),
-              variant === 'mobile' &&
-                'motion-safe:animate-[nav-item-rise_360ms_cubic-bezier(0.22,1,0.36,1)_both]',
-            )}
-            style={
-              variant === 'mobile'
-                ? { animationDelay: `${(startIndex + index) * 40}ms` }
-                : undefined
-            }
-          >
-            <span className="flex min-w-0 items-center gap-3">
+function ServicesMenu({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string | null
+  onNavigate: (label: string, href: string) => void
+}) {
+  const active = isServicesActive(pathname)
+  return (
+    <NavigationMenuItem>
+      <NavigationMenuTrigger
+        className={cn(active && 'text-foreground')}
+        data-active={active ? 'true' : undefined}
+      >
+        Services
+      </NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <div className="grid w-[min(92vw,640px)] grid-cols-[1.35fr_1fr] gap-2 p-1.5">
+          <ul className="grid gap-1">
+            {NAV_SERVICE_ITEMS.map((item) => {
+              const Icon = SERVICE_ICONS[item.icon]
+              return (
+                <li key={item.href}>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href={item.href}
+                      onClick={() => onNavigate(item.label, item.href)}
+                      className="group/item flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-white/[0.05]"
+                    >
+                      <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-foreground transition-colors group-hover/item:border-white/20">
+                        <Icon className="size-4" aria-hidden="true" />
+                      </span>
+                      <span className="flex min-w-0 flex-col gap-0.5">
+                        <span className="text-sm font-medium text-foreground">
+                          {item.label}
+                        </span>
+                        <span className="text-[13px] leading-snug text-muted-foreground">
+                          {item.description}
+                        </span>
+                      </span>
+                    </Link>
+                  </NavigationMenuLink>
+                </li>
+              )
+            })}
+            <li>
+              <NavigationMenuLink asChild>
+                <Link
+                  href="/services"
+                  onClick={() => onNavigate('All services', '/services')}
+                  className="group/all flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+                >
+                  All services
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-3.5 transition-transform duration-200 group-hover/all:translate-x-0.5"
+                  />
+                </Link>
+              </NavigationMenuLink>
+            </li>
+          </ul>
+          <NavigationMenuLink asChild>
+            <Link
+              href={WAITLIST_CTA.href}
+              onClick={() =>
+                onNavigate('Services menu waitlist', WAITLIST_CTA.href)
+              }
+              className="group/feature relative flex flex-col justify-end overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(120%_90%_at_100%_0%,oklch(0.66_0.16_258/28%),transparent_55%),radial-gradient(90%_80%_at_0%_100%,oklch(0.66_0.21_29/22%),transparent_60%)] p-5"
+            >
               <span
                 aria-hidden="true"
-                className={cn(
-                  'shrink-0 transition-opacity motion-reduce:transition-none',
-                  variant === 'mobile'
-                    ? 'flex size-10 items-center justify-center rounded-lg border border-white/12 bg-white/[0.04] [@media(max-height:500px)]:size-6'
-                    : 'opacity-60 group-hover/row:opacity-100',
-                )}
+                className="bg-noise absolute inset-0 opacity-[0.12]"
+              />
+              <span
+                aria-hidden="true"
+                className="relative -mx-1 mb-5 block overflow-hidden rounded-lg border border-white/10 bg-popover shadow-[0_20px_40px_-20px_oklch(0_0_0/90%)] transition-transform duration-500 group-hover/feature:-translate-y-0.5"
               >
-                <PixelishIcon
-                  src={NAV_ICONS[item.href] ?? '/pixelish/arrow-right.svg'}
+                <span className="flex h-4 items-center gap-1 border-b border-white/[0.06] px-2">
+                  <span className="size-1 rounded-full bg-white/20" />
+                  <span className="size-1 rounded-full bg-white/20" />
+                  <span className="size-1 rounded-full bg-white/20" />
+                </span>
+                <Image
+                  src="/case-studies/exquisite-dentistry-home-desktop.jpg"
                   alt=""
-                  size={variant === 'mobile' ? 20 : 14}
+                  width={2880}
+                  height={1800}
+                  sizes="240px"
+                  className="block h-auto w-full"
                 />
               </span>
-              <span className="flex flex-col gap-1">
-                <span>{item.label}</span>
+              <span className="relative inline-flex items-center gap-2 text-[13px] text-muted-foreground">
+                <span className="prism-live-dot" aria-hidden="true" />
+                Fully booked
               </span>
-            </span>
-            {variant === 'mobile' ? <MobileRowArrow active={active} /> : null}
-          </Link>
-        )
-      })}
-    </>
+              <span className="relative mt-3 text-lg font-semibold leading-tight tracking-[-0.03em] text-foreground">
+                get on the list for <WaitlistIntakeMonth />.
+              </span>
+              <span className="relative mt-2 text-[13px] leading-snug text-muted-foreground">
+                We open new spots every month. Waitlist members get first pick.
+              </span>
+              <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                {WAITLIST_CTA.label}
+                <ArrowRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform duration-200 group-hover/feature:translate-x-0.5"
+                />
+              </span>
+            </Link>
+          </NavigationMenuLink>
+        </div>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
   )
 }
 
@@ -168,12 +229,32 @@ export default function Navbar() {
   const menuButtonRef = useRef<HTMLButtonElement | null>(null)
   const restoreFocusAfterCloseRef = useRef(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const isHome = pathname === '/'
+  // The waitlist routes are the destination; no header CTA back to them.
+  const isWaitlistRoute = pathname?.startsWith('/waitlist') ?? false
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
 
   useEffect(() => {
     setIsMobileMenuOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      setIsScrolled(window.scrollY > 8)
+    }
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isMobileMenuOpen) return
@@ -286,27 +367,90 @@ export default function Navbar() {
     setIsMobileMenuOpen(false)
   }
 
+  const solid = isScrolled || isMobileMenuOpen || !isHome
+
   const mobilePanel = isMobileMenuOpen ? (
     <div
       ref={mobilePanelRef}
       id={MOBILE_NAV_ID}
-      className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-[60] overflow-y-auto overscroll-contain border-t border-white/12 bg-black [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
+      className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-[60] overflow-y-auto overscroll-contain border-t border-white/[0.06] bg-background [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-linear-to-b from-white/[0.04] to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(80%_100%_at_50%_0%,oklch(1_0_0/5%),transparent)]"
       />
       <nav
         aria-label="Mobile"
-        className="container-px-safe container relative mx-auto flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2"
+        className="prism-container relative flex min-h-full flex-col pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4"
       >
-        <div className="flex flex-col gap-1">
-          <NavbarLinks
-            items={NAV_ITEMS}
-            pathname={pathname}
-            variant="mobile"
-            onNavigate={handleNavigate}
-          />
+        <ul className="flex flex-col">
+          {NAV_ITEMS.map((item) => {
+            const active = isNavItemActive(pathname, item.href)
+            return (
+              <li key={item.href} className="border-b border-white/[0.06]">
+                <Link
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={() => handleNavigate(item.label, item.href)}
+                  className={cn(
+                    'flex min-h-14 items-center justify-between gap-3 py-3 text-2xl font-semibold tracking-[-0.03em] transition-colors [@media(max-height:500px)]:min-h-11 [@media(max-height:500px)]:text-xl',
+                    active
+                      ? 'text-foreground'
+                      : 'text-foreground/80 hover:text-foreground',
+                  )}
+                >
+                  {item.label}
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="size-5 text-subtle-foreground"
+                  />
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+
+        <p className="mt-8 text-eyebrow text-subtle">Services</p>
+        <ul className="mt-3 grid grid-cols-2 gap-2">
+          {NAV_SERVICE_ITEMS.map((item) => {
+            const Icon = SERVICE_ICONS[item.icon]
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => handleNavigate(item.label, item.href)}
+                  className="flex min-h-12 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/[0.06]"
+                >
+                  <Icon
+                    aria-hidden="true"
+                    className="size-4 text-muted-foreground"
+                  />
+                  {item.label}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+
+        <div className="mt-auto pt-10">
+          <div className="rounded-2xl border border-white/[0.08] bg-card p-5">
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="prism-live-dot" aria-hidden="true" />
+              <span>
+                Fully booked. Waitlist open for <WaitlistIntakeMonth />.
+              </span>
+            </p>
+            <Link
+              href={WAITLIST_CTA.href}
+              onClick={() =>
+                handleNavigate(WAITLIST_CTA.label, WAITLIST_CTA.href)
+              }
+              className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-[15px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {WAITLIST_CTA.label}
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
+          </div>
         </div>
       </nav>
     </div>
@@ -316,117 +460,100 @@ export default function Navbar() {
     <>
       <header
         ref={headerRef}
+        data-solid={solid ? 'true' : 'false'}
         className={cn(
-          HEADER_CLASSES,
-          'overflow-x-clip',
-          isHome || isMobileMenuOpen
-            ? 'fixed inset-x-0 top-0 z-50 w-full'
-            : 'sticky top-0 z-50 w-full',
+          'z-50 w-full overflow-x-clip border-b text-foreground transition-[background-color,border-color,backdrop-filter] duration-300',
+          isHome || isMobileMenuOpen ? 'fixed inset-x-0 top-0' : 'sticky top-0',
+          solid
+            ? 'nav-blur border-white/[0.07] bg-background/75 backdrop-blur-xl backdrop-saturate-150'
+            : 'border-transparent bg-transparent',
         )}
       >
         <div data-navbar-chrome className="pt-[env(safe-area-inset-top,0px)]">
-          <div className="container-px-safe container mx-auto flex h-[72px] min-w-0 flex-nowrap items-center justify-between">
+          <div className="prism-container flex h-16 min-w-0 flex-nowrap items-center justify-between gap-4">
             <Link
               href="/"
-              className="group/logo flex min-w-0 items-center gap-3 rounded-full text-[#f5f0e8] transition-[color,transform] duration-300 ease-out hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-4 focus-visible:ring-offset-black motion-safe:hover:-translate-y-0.5"
-              onClick={() => handleNavigate('logo', '/')}
               aria-label="Prism home"
+              onClick={() => handleNavigate('Logo', '/')}
+              className="group/logo -m-1 shrink-0 rounded-xl p-1 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
-              <div
-                data-testid="navbar-logo-mark"
-                className="relative h-10 w-10 shrink-0 overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.24)] transition-[border-color,box-shadow,transform] duration-300 ease-out group-hover/logo:border-white/45 group-hover/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] group-focus-visible/logo:border-white/45 group-focus-visible/logo:shadow-[0_0_0_1px_rgba(255,255,255,0.18),-7px_0_24px_rgba(92,220,255,0.5),7px_0_24px_rgba(255,69,207,0.5),0_16px_34px_rgba(0,0,0,0.42)] motion-safe:group-hover/logo:scale-105 motion-safe:group-focus-visible/logo:scale-105"
-              >
-                <span
-                  data-testid="navbar-logo-glow"
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(118deg,rgba(92,220,255,0.55)_0%,rgba(255,255,255,0.3)_46%,rgba(255,69,207,0.55)_100%)] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-y-0 -left-1/2 z-20 w-1/2 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.78),transparent)] opacity-0 transition-[transform,opacity] duration-500 ease-out group-hover/logo:opacity-100 group-focus-visible/logo:opacity-100 motion-safe:group-hover/logo:translate-x-[300%] motion-safe:group-focus-visible/logo:translate-x-[300%]"
-                />
-                <CoreImage
-                  src={LOGO_CONFIG.src}
-                  alt={LOGO_CONFIG.alt}
-                  width={40}
-                  height={40}
-                  // Fixed 40px slot: without this, CoreImage defaults to
-                  // sizes="100vw" and phones preload a ~1080px logo.
-                  sizes="40px"
-                  className="h-full w-full rounded-none object-cover"
-                  priority
-                  fallbackSrc={LOGO_CONFIG.fallbackSrc}
-                  trackingId="navbar_logo"
-                  quality={90}
-                />
-              </div>
-
-              <div className="relative flex min-w-0 flex-col justify-center">
-                <span className="whitespace-nowrap font-sans text-2xl font-medium tracking-[-0.03em] text-[#f5f0e8] transition-[color,transform] duration-300 ease-out group-hover/logo:text-white group-focus-visible/logo:text-white motion-safe:group-hover/logo:translate-x-px motion-safe:group-focus-visible/logo:translate-x-px">
-                  Prism
-                </span>
-                <span className="hidden whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.26em] text-[#b8afa2] transition-[color,transform] duration-300 ease-out group-hover/logo:text-[#5cdcff] group-focus-visible/logo:text-[#5cdcff] motion-safe:group-hover/logo:translate-x-0.5 motion-safe:group-focus-visible/logo:translate-x-0.5 xl:block">
-                  impossible is temporary
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute -bottom-1 left-0 h-px w-0 bg-gradient-to-r from-[#5cdcff]/80 via-white/55 to-[#ff45cf]/80 opacity-0 transition-[width,opacity] duration-300 group-hover/logo:w-full group-hover/logo:opacity-100 group-focus-visible/logo:w-full group-focus-visible/logo:opacity-100"
-                />
-              </div>
+              <PrismLogo />
             </Link>
 
-            <div className="flex items-center gap-3 sm:gap-4">
-              <nav
-                aria-label="Main"
-                className="hidden items-center gap-1 rounded-full border border-white/12 bg-white/[0.03] p-1 lg:flex"
-              >
-                <NavbarLinks
-                  items={NAV_ITEMS}
+            <NavigationMenu
+              aria-label="Main"
+              className="hidden lg:flex"
+              delayDuration={80}
+            >
+              <NavigationMenuList className="gap-0.5">
+                <DesktopLink
+                  item={NAV_ITEMS[0]}
                   pathname={pathname}
-                  variant="desktop"
                   onNavigate={handleNavigate}
                 />
-              </nav>
+                <ServicesMenu pathname={pathname} onNavigate={handleNavigate} />
+                {NAV_ITEMS.slice(1).map((item) => (
+                  <DesktopLink
+                    key={item.href}
+                    item={item}
+                    pathname={pathname}
+                    onNavigate={handleNavigate}
+                  />
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
 
+            <div className="flex shrink-0 items-center gap-2">
+              {isWaitlistRoute ? (
+                <span
+                  data-testid="navbar-status"
+                  className="hidden h-9 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 text-[13px] text-muted-foreground sm:inline-flex"
+                >
+                  <span className="prism-live-dot" aria-hidden="true" />
+                  <span>
+                    <WaitlistIntakeMonth /> intake
+                  </span>
+                </span>
+              ) : (
+                <Link
+                  href={WAITLIST_CTA.href}
+                  onClick={() =>
+                    handleNavigate('Header waitlist', WAITLIST_CTA.href)
+                  }
+                  data-testid="navbar-cta"
+                  className="group/cta inline-flex h-9 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-medium text-primary-foreground shadow-[0_1px_0_0_oklch(1_0_0/40%)_inset,0_8px_24px_-12px_oklch(1_0_0/50%)] transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  <span
+                    className="prism-live-dot hidden sm:inline-flex"
+                    aria-hidden="true"
+                  />
+                  <span className="sm:hidden">Join</span>
+                  <span className="hidden sm:inline">{WAITLIST_CTA.label}</span>
+                </Link>
+              )}
               <button
                 ref={menuButtonRef}
                 type="button"
                 aria-controls={MOBILE_NAV_ID}
                 aria-expanded={isMobileMenuOpen}
                 aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-                className={cn(
-                  'inline-flex h-11 gap-3 px-4 shrink-0 items-center justify-center rounded-full border border-white/14 bg-white/[0.03] text-[#f5f0e8] transition-[border-color,background-color,color] hover:border-white/28 hover:bg-white/[0.06] hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-black lg:hidden',
-                  isMobileMenuOpen &&
-                    'border-white/28 bg-white/[0.06] text-white',
-                )}
                 onClick={() => {
                   restoreFocusAfterCloseRef.current = true
                   setIsMobileMenuOpen((open) => !open)
                 }}
+                className="inline-flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-foreground transition-colors hover:bg-white/[0.08] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 lg:hidden"
               >
-                <span
-                  aria-hidden="true"
-                  className="font-mono text-[10px] uppercase tracking-[0.22em]"
-                >
-                  {isMobileMenuOpen ? 'Close' : 'Menu'}
-                </span>
-                <span aria-hidden="true" className="relative block h-4 w-5">
+                <span aria-hidden="true" className="relative block h-3 w-4">
                   <span
                     className={cn(
-                      'absolute left-0 h-[2px] w-5 rounded-full bg-current motion-safe:transition-transform duration-200',
-                      isMobileMenuOpen ? 'top-[7px] rotate-45' : 'top-0',
+                      'absolute left-0 h-[1.5px] w-4 rounded-full bg-current motion-safe:transition-transform duration-200',
+                      isMobileMenuOpen ? 'top-[5px] rotate-45' : 'top-0.5',
                     )}
                   />
                   <span
                     className={cn(
-                      'absolute left-0 top-[7px] h-[2px] w-5 rounded-full bg-current transition-opacity duration-200',
-                      isMobileMenuOpen ? 'opacity-0' : 'opacity-100',
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      'absolute left-0 h-[2px] w-5 rounded-full bg-current motion-safe:transition-transform duration-200',
-                      isMobileMenuOpen ? 'top-[7px] -rotate-45' : 'top-[14px]',
+                      'absolute left-0 h-[1.5px] w-4 rounded-full bg-current motion-safe:transition-transform duration-200',
+                      isMobileMenuOpen ? 'top-[5px] -rotate-45' : 'top-[8.5px]',
                     )}
                   />
                 </span>
@@ -435,13 +562,13 @@ export default function Navbar() {
           </div>
 
           {caseStudyBreadcrumbs ? (
-            <div className="border-t border-white/12 bg-black">
-              <div className="container mx-auto px-4 sm:px-6">
+            <div className="border-t border-white/[0.06]">
+              <div className="prism-container">
                 {/* Visual trail only: each case study page emits its own
                     BreadcrumbList via CaseStudySchema. */}
                 <Breadcrumbs
                   items={caseStudyBreadcrumbs}
-                  className="mb-0 py-2 text-[#b8afa2]"
+                  className="mb-0 py-2 text-muted-foreground"
                   includeSchema={false}
                 />
               </div>

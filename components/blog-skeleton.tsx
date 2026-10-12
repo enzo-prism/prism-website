@@ -17,22 +17,18 @@ export function Skeleton({ className }: SkeletonProps) {
 
 export function BlogPostCardSkeleton() {
   return (
-    <div className="h-full overflow-hidden rounded-md border border-border/60 bg-card/20">
-      {/* Image skeleton */}
-      <Skeleton className="relative w-full aspect-[4/3]" />
-      
-      {/* Content skeleton */}
-      <div className="space-y-3 border-t border-border/60 p-5">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-          <Skeleton className="h-6 w-20 rounded-full" />
-          <Skeleton className="h-4 w-24" />
+    <div className="h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+      <Skeleton className="aspect-[1.91/1] w-full rounded-none bg-popover" />
+      <div className="space-y-4 border-t border-white/[0.06] p-5 sm:p-6">
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-5 w-20 rounded-full" />
+          <Skeleton className="h-3.5 w-16" />
         </div>
-        <Skeleton className="h-6 w-full" />
+        <Skeleton className="h-5 w-11/12" />
         <div className="space-y-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-3.5 w-full" />
+          <Skeleton className="h-3.5 w-3/4" />
         </div>
-        <Skeleton className="h-5 w-24" />
       </div>
     </div>
   )
@@ -40,38 +36,23 @@ export function BlogPostCardSkeleton() {
 
 export function BlogPostContentSkeleton() {
   return (
-    <div className="prose-blog space-y-6">
-      {/* Paragraph skeletons */}
-      {[1, 2, 3, 4, 5].map(i => (
+    <div className="space-y-7">
+      {[1, 2, 3].map((i) => (
         <div key={i} className="space-y-3">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-11/12" />
           <Skeleton className="h-4 w-4/5" />
         </div>
       ))}
-      
-      {/* Heading skeleton */}
-      <Skeleton className="h-8 w-3/4 mt-12" />
-      
-      {/* More paragraph skeletons */}
-      {[1, 2, 3].map(i => (
+      <Skeleton className="mt-12 h-7 w-3/5" />
+      {[1, 2].map((i) => (
         <div key={`p2-${i}`} className="space-y-3">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-5/6" />
           <Skeleton className="h-4 w-3/4" />
         </div>
       ))}
-      
-      {/* Image skeleton */}
-      <Skeleton className="h-64 w-full my-8" />
-      
-      {/* Final paragraphs */}
-      {[1, 2].map(i => (
-        <div key={`p3-${i}`} className="space-y-3">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-4/5" />
-        </div>
-      ))}
+      <Skeleton className="my-8 h-56 w-full rounded-2xl" />
     </div>
   )
 }

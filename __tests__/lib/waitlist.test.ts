@@ -1,4 +1,16 @@
-import { CAPACITY_MESSAGE, getWaitlistIntakeMonth } from '@/lib/waitlist'
+import {
+  CAPACITY_MESSAGE,
+  getWaitlistIntakeMonth,
+  isWaitlistFocus,
+  isWaitlistFocusChoice,
+  parseWaitlistFocus,
+  WAITLIST_FOCUS_CHOICES,
+  WAITLIST_FOCUS_HREFS,
+  WAITLIST_FOCUS_NOT_SURE,
+  WAITLIST_FOCUS_OPTIONS,
+  WAITLIST_NO_WEBSITE_FIELD,
+  WAITLIST_NO_WEBSITE_VALUE,
+} from '@/lib/waitlist'
 
 const MONTH_NAMES = [
   'January',
@@ -67,5 +79,34 @@ describe('CAPACITY_MESSAGE', () => {
     expect(CAPACITY_MESSAGE.intakeLead).not.toMatch(/[.!?]$/)
     expect(CAPACITY_MESSAGE.nextIntakeLead).not.toMatch(/[.!?]$/)
     expect(CAPACITY_MESSAGE.intakeTail).toMatch(/\.$/)
+  })
+})
+
+describe('waitlist focus choices', () => {
+  it('adds "Not sure yet" after the three services without changing them', () => {
+    expect(WAITLIST_FOCUS_OPTIONS.map((option) => option.value)).toEqual([
+      'website',
+      'content',
+      'ads',
+    ])
+    expect(WAITLIST_FOCUS_CHOICES).toEqual([
+      ...WAITLIST_FOCUS_OPTIONS,
+      { value: 'not-sure', label: 'Not sure yet' },
+    ])
+    expect(WAITLIST_FOCUS_NOT_SURE).toBe('not-sure')
+  })
+
+  it('keeps "Not sure yet" a form answer, never a service hand-off', () => {
+    expect(isWaitlistFocusChoice('not-sure')).toBe(true)
+    expect(isWaitlistFocusChoice('website')).toBe(true)
+    expect(isWaitlistFocusChoice('bogus')).toBe(false)
+    expect(isWaitlistFocus('not-sure')).toBe(false)
+    expect(parseWaitlistFocus('not-sure,ads')).toEqual(['ads'])
+    expect(Object.keys(WAITLIST_FOCUS_HREFS)).toEqual(['website', 'content', 'ads'])
+  })
+
+  it('names the no-website Formspree field', () => {
+    expect(WAITLIST_NO_WEBSITE_FIELD).toBe('no_website')
+    expect(WAITLIST_NO_WEBSITE_VALUE).toBe('yes')
   })
 })

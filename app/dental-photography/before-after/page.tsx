@@ -1,15 +1,20 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
 import Footer from "@/components/footer"
+import { LandingHero } from "@/components/landing/landing-hero"
 import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Eyebrow, Section } from "@/components/prism/section"
 import { WebPageSchema } from "@/components/schema-markup"
+import ScrollToTop from "@/components/scroll-to-top"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { buildRouteMetadata } from "@/lib/seo/metadata"
+import { WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
 
 import GuideTabs from "./GuideTabs"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 const PAGE_TITLE = 'Dental before-and-after photos'
 const PAGE_DESCRIPTION =
@@ -25,60 +30,54 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function BeforeAfterPhotographyPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_55%)]" aria-hidden />
-          <div className="container relative mx-auto px-4 py-24 md:py-28">
-            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                in-practice playbook
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                build a before + after system your team can run every day.
-              </h1>
-              <p className="mt-6 max-w-3xl text-base text-neutral-200 md:text-lg">
-                follow this 0 to 100% guide to set up gear, space, scripts, and file workflows so your practice captures pro-grade before-and-afters that wow patients and fuel every marketing touchpoint.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
-                  <Link href="#guide-tabs">
-                    jump to the protocol
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline-inverted" size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
-                  <Link href="/dental-photography">
-                    see all services
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="In-practice playbook"
+          title="build a before + after system your team can run every day."
+          description="follow this 0 to 100% guide to set up gear, space, scripts, and file workflows so your practice captures pro-grade before-and-afters that wow patients and fuel every marketing touchpoint."
+          location="before after guide hero"
+          hideCta
+          showStatus={false}
+          secondary={{ label: "Jump to the protocol", href: "#guide-tabs" }}
+          glow="green"
+          titleClassName="max-w-[18ch]"
+        >
+          <div className="mx-auto flex max-w-xl justify-center">
+            <Link
+              href="/dental-photography"
+              className="group/all inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            >
+              see all dental photography services
+              <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover/all:translate-x-0.5" />
+            </Link>
           </div>
-        </section>
+        </LandingHero>
 
         <GuideTabs />
 
-        <section className="border-t border-neutral-200 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto flex max-w-5xl flex-col gap-6 rounded-3xl border border-neutral-200 bg-white px-6 py-12 text-center shadow-sm sm:px-10">
-            <span className="inline-flex items-center gap-2 rounded-full bg-neutral-900/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-neutral-600">
-              team coverage
-            </span>
-            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">let prism capture the office, team, and candid moments</h2>
-            <p className="text-base text-neutral-600 sm:text-lg">
-              When you need more than before-and-afters, our on-location crew photographs the lobby, ops, and staff so every touchpoint feels cohesive.
-            </p>
-            <Button asChild size="lg" className="w-full rounded-full px-8 py-3 text-base lowercase sm:w-auto">
+        <Section aria-labelledby="ba-team-title">
+          <Card className="flex flex-col gap-6 p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <Eyebrow>Team coverage</Eyebrow>
+              <h2 id="ba-team-title" className="text-heading mt-5 text-foreground sm:text-[2rem]">
+                let prism capture the office, team, and candid moments.
+              </h2>
+              <p className="mt-4 text-[15px] leading-7 text-muted-foreground">
+                When you need more than before-and-afters, our on-location crew photographs the lobby, ops, and staff so every touchpoint feels cohesive.
+              </p>
+            </div>
+            <Button asChild size="lg" variant="outline" className="shrink-0">
               <Link href="/dental-photography/office-team">
-                explore office &amp; team shoots
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                Explore office &amp; team shoots
+                <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
-          </div>
-        </section>
+          </Card>
+        </Section>
 
+        <FinalCta location="before after guide final cta" href={WAITLIST_FOCUS_HREFS.content} />
       </main>
       <Footer />
       <ScrollToTop />
@@ -89,6 +88,6 @@ export default function BeforeAfterPhotographyPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

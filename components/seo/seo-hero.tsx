@@ -1,79 +1,51 @@
-import Link from "next/link"
-import Image from "next/image"
+import type { ReactNode } from "react"
 
-import { cn } from "@/lib/utils"
+import { LandingHero, type LandingHeroGlow } from "@/components/landing/landing-hero"
+import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export type SeoHeroProps = {
   eyebrow: string
-  title: string
-  subtitle: string
-  kicker?: string
-  primaryCta?: { label: string; href: string }
+  /** Lowercase display headline (the page's only h1). */
+  title: ReactNode
+  subtitle: ReactNode
+  /** Analytics location for both hero actions, e.g. "seo hero". */
+  location: string
   secondaryCta?: { label: string; href: string }
+  glow?: LandingHeroGlow
+  /** Visual rendered under the CTAs. */
+  children?: ReactNode
   className?: string
-  iconSrc?: string
-  iconAlt?: string
+  titleClassName?: string
 }
 
+/**
+ * Hero for the /seo family. The primary action is always the waitlist;
+ * the optional secondary action points deeper into the SEO pages.
+ */
 export function SeoHero({
   eyebrow,
   title,
   subtitle,
-  kicker,
-  primaryCta,
+  location,
   secondaryCta,
+  glow = "blue",
+  children,
   className,
-  iconSrc,
-  iconAlt,
+  titleClassName,
 }: SeoHeroProps) {
   return (
-    <section
-      className={cn(
-        "relative overflow-hidden border-b border-neutral-800 bg-neutral-950 text-white",
-        "before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_rgba(0,0,0,0.9))] before:opacity-70 before:content-['']",
-        className
-      )}
+    <LandingHero
+      eyebrow={eyebrow}
+      title={title}
+      description={subtitle}
+      location={location}
+      ctaHref={WAITLIST_CTA.href}
+      secondary={secondaryCta}
+      glow={glow}
+      className={className}
+      titleClassName={titleClassName}
     >
-      <div className="relative">
-        <div className="container mx-auto max-w-5xl px-4 py-20 text-center sm:py-24 md:px-6 md:py-28">
-          {iconSrc ? (
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white/95 p-2 shadow-sm ring-1 ring-white/20">
-              <Image
-                src={iconSrc}
-                alt={iconAlt ?? ""}
-                width={40}
-                height={40}
-                priority
-                className="h-10 w-10 object-contain"
-              />
-            </div>
-          ) : null}
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">{eyebrow}</p>
-          <h1 className="mt-5 text-4xl font-semibold lowercase tracking-tight sm:text-5xl md:text-6xl">{title}</h1>
-          <p className="mt-5 text-base text-white/80 sm:text-lg">{subtitle}</p>
-          {kicker ? <p className="mt-4 text-sm uppercase tracking-[0.35em] text-white/60">{kicker}</p> : null}
-          {(primaryCta || secondaryCta) && (
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              {primaryCta ? (
-                <Link
-                  href={primaryCta.href}
-                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold lowercase text-neutral-900 transition hover:bg-neutral-200"
-                >
-                  {primaryCta.label}
-                </Link>
-              ) : null}
-              {secondaryCta ? (
-                <Link
-                  href={secondaryCta.href}
-                  className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold lowercase text-white transition hover:border-white hover:bg-white/10"
-                >
-                  {secondaryCta.label}
-                </Link>
-              ) : null}
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
+      {children}
+    </LandingHero>
   )
 }

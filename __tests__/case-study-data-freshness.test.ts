@@ -1,8 +1,8 @@
+import * as HOMEPAGE_CONTENT from '@/components/home/homepage-content'
 import {
-  HOMEPAGE_CASE_STUDY_SUMMARIES,
   HOMEPAGE_CLIENT_WINS,
-  HOMEPAGE_GROWTH_RAMP,
   HOMEPAGE_HERO,
+  HOMEPAGE_NUMBERS,
 } from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { CASE_STUDY_NAV_ITEMS } from '@/lib/case-study-nav-data'
@@ -61,7 +61,9 @@ describe('case study data freshness', () => {
         (item) => item.href === `/case-studies/${slug}`,
       )
       expect(slide).toBeDefined()
-      expect(slide && 'metric' in slide ? slide.metric : undefined).toBeUndefined()
+      expect(
+        slide && 'metric' in slide ? slide.metric : undefined,
+      ).toBeUndefined()
     }
     for (const study of CASE_STUDIES) {
       for (const metric of study.structured?.results ?? []) {
@@ -148,18 +150,17 @@ describe('case study data freshness', () => {
         (study) => study.structured?.heroVideoId === 'VIDEO_PLACEHOLDER',
       ),
     ).toBe(false)
-    expect(HOMEPAGE_CASE_STUDY_SUMMARIES['canary-cove']).not.toMatch(
-      /private island/i,
-    )
-    expect(HOMEPAGE_HERO.subheading).toBe('Website. Content. Ads. Built around your business.')
+    const homepageCopy = JSON.stringify(HOMEPAGE_CONTENT)
+    expect(homepageCopy).not.toMatch(/private island/i)
     expect(HOMEPAGE_HERO.subheading).not.toMatch(/#1/i)
-    expect(HOMEPAGE_GROWTH_RAMP.metrics.map((metric) => metric.value)).toEqual([
-      'Baseline',
-      'Live',
-      'Progress',
+    // Every homepage number resolves from a verified source; none are typed
+    // in, and the retired invented ramp figures never come back.
+    expect(homepageCopy).not.toMatch(/\+25%|\+50%|10-30/)
+    expect(HOMEPAGE_NUMBERS.stats.map((stat) => stat.value)).toEqual([
+      getStudy('dr-christopher-wong').structured?.results?.[0]?.value,
+      getStudy('belize-kids-foundation').structured?.results?.[0]?.value,
+      '5,310',
+      '5.8M',
     ])
-    expect(JSON.stringify(HOMEPAGE_GROWTH_RAMP)).not.toMatch(
-      /\+25%|\+50%|10-30/,
-    )
   })
 })

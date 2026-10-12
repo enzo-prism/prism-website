@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
 import {
   LineChart,
   Line,
@@ -12,7 +11,7 @@ import {
   ReferenceLine,
 } from 'recharts'
 import { ChartResponsiveContainer } from '@/components/ui/chart'
-import { fadeInUp, staggerContainer } from '@/utils/animation-variants'
+import { cn } from '@/lib/utils'
 
 const data = [
   {
@@ -60,196 +59,216 @@ const data = [
 ]
 
 const industryData = [
-  { name: 'General Business', decline: 15, color: '#8b5cf6' },
-  { name: 'Health & Wellness', decline: 30, color: '#ef4444' },
-  { name: 'E-commerce', decline: 20, color: '#f59e0b' },
-  { name: 'Local Services', decline: 18, color: '#10b981' },
-  { name: 'Technology', decline: 12, color: '#3b82f6' },
+  { name: 'General Business', decline: 15, color: 'var(--spectrum-violet)' },
+  { name: 'Health & Wellness', decline: 30, color: 'var(--spectrum-red)' },
+  { name: 'E-commerce', decline: 20, color: 'var(--spectrum-orange)' },
+  { name: 'Local Services', decline: 18, color: 'var(--spectrum-green)' },
+  { name: 'Technology', decline: 12, color: 'var(--spectrum-blue)' },
 ]
+
+const GRID_STROKE = 'oklch(1 0 0 / 8%)'
+const AXIS_STROKE = 'oklch(1 0 0 / 14%)'
+const AXIS_TICK = { fontSize: 10, fill: 'var(--subtle-foreground)' }
+
+const VIEWS = [
+  { id: 'timeline', label: 'Timeline View' },
+  { id: 'industry', label: 'Industry Breakdown' },
+] as const
 
 export default function AITrafficDeclineChart() {
   const [activeView, setActiveView] = useState<'timeline' | 'industry'>(
     'timeline',
   )
-  const [animationComplete, setAnimationComplete] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setAnimationComplete(true), 1000)
-    return () => clearTimeout(timer)
-  }, [])
 
   return (
-    <motion.div
-      className="w-full bg-white border border-neutral-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      animate="animate"
-      variants={staggerContainer}
-    >
-      <motion.div className="mb-6" variants={fadeInUp}>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+    <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+      <div className="mb-6">
+        <p className="text-eyebrow mb-3! mt-0! text-subtle">Chart</p>
+        <h3 className="mb-2! mt-0! text-xl! text-foreground">
           AI Impact on Organic Traffic
         </h3>
-        <p className="text-neutral-600 text-sm">
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           How AI-powered search features are affecting click-through rates
           across industries
         </p>
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="flex flex-col sm:flex-row gap-2 mb-6"
-        variants={fadeInUp}
+      <div
+        role="group"
+        aria-label="Chart view"
+        className="mb-6 inline-flex w-full flex-col gap-1 rounded-2xl border border-white/[0.08] bg-background/60 p-1 sm:w-auto sm:flex-row sm:rounded-full"
       >
-        <button
-          onClick={() => setActiveView('timeline')}
-          className={`px-4 py-3 sm:py-2 rounded-md text-sm font-medium transition-colors touch-feedback min-h-[44px] ${
-            activeView === 'timeline'
-              ? 'bg-purple-100 text-purple-700'
-              : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-          }`}
-        >
-          Timeline View
-        </button>
-        <button
-          onClick={() => setActiveView('industry')}
-          className={`px-4 py-3 sm:py-2 rounded-md text-sm font-medium transition-colors touch-feedback min-h-[44px] ${
-            activeView === 'industry'
-              ? 'bg-purple-100 text-purple-700'
-              : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-          }`}
-        >
-          Industry Breakdown
-        </button>
-      </motion.div>
+        {VIEWS.map((view) => {
+          const isActive = activeView === view.id
+          return (
+            <button
+              key={view.id}
+              type="button"
+              onClick={() => setActiveView(view.id)}
+              aria-pressed={isActive}
+              className={cn(
+                'min-h-10 rounded-full px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                isActive
+                  ? 'bg-foreground text-background'
+                  : 'text-muted-foreground hover:text-foreground',
+              )}
+            >
+              {view.label}
+            </button>
+          )
+        })}
+      </div>
 
-      <motion.div variants={fadeInUp}>
+      <div>
         {activeView === 'timeline' ? (
-          <div className="h-64 sm:h-72 md:h-80 chart-container">
-            <ChartResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 15, left: 10, bottom: 5 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                <XAxis
-                  dataKey="month"
-                  tick={{ fontSize: 10 }}
-                  stroke="#374151"
-                  interval={0}
-                  angle={-45}
-                  textAnchor="end"
-                  height={60}
-                />
-                <YAxis
-                  tick={{ fontSize: 10 }}
-                  stroke="#374151"
-                  domain={[65, 105]}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                    zIndex: 9999,
-                  }}
-                  labelStyle={{ color: '#374151', fontWeight: 'bold' }}
-                  itemStyle={{ color: '#374151' }}
-                  formatter={(value, name) => {
-                    const safeValue = value ?? 0
-                    const safeName = name ?? 'Value'
-                    if (safeName === 'Traditional Organic') {
-                      return [`${safeValue}%`, 'Traditional Organic Search']
-                    }
-                    if (safeName === 'With AI Features') {
-                      return [`${safeValue}%`, 'With AI Search Features']
-                    }
-                    return [`${safeValue}%`, safeName]
-                  }}
-                  labelFormatter={(label) => `Period: ${label}`}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="organic"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                  name="Traditional Organic"
-                  animationDuration={animationComplete ? 0 : 2000}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="withAI"
-                  stroke="#ef4444"
-                  strokeWidth={2}
-                  dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
-                  name="With AI Features"
-                  animationDuration={animationComplete ? 0 : 2000}
-                />
-                <ReferenceLine
-                  y={85}
-                  stroke="#f59e0b"
-                  strokeDasharray="5 5"
-                  label="15% Decline"
-                />
-                <ReferenceLine
-                  y={70}
-                  stroke="#ef4444"
-                  strokeDasharray="5 5"
-                  label="30% Decline"
-                />
-              </LineChart>
-            </ChartResponsiveContainer>
-          </div>
+          <>
+            <div className="relative h-64 sm:h-72 md:h-80">
+              <ChartResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={data}
+                  margin={{ top: 5, right: 15, left: 0, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke={GRID_STROKE} />
+                  <XAxis
+                    dataKey="month"
+                    tick={AXIS_TICK}
+                    stroke={AXIS_STROKE}
+                    interval={0}
+                    angle={-45}
+                    textAnchor="end"
+                    height={60}
+                  />
+                  <YAxis
+                    tick={AXIS_TICK}
+                    stroke={AXIS_STROKE}
+                    domain={[65, 105]}
+                    width={36}
+                  />
+                  <Tooltip
+                    cursor={{ stroke: 'oklch(1 0 0 / 20%)' }}
+                    contentStyle={{
+                      backgroundColor: 'var(--popover)',
+                      border: '1px solid oklch(1 0 0 / 10%)',
+                      borderRadius: '12px',
+                      fontSize: '13px',
+                      color: 'var(--foreground)',
+                      boxShadow: '0 16px 40px -16px oklch(0 0 0 / 80%)',
+                      zIndex: 9999,
+                    }}
+                    labelStyle={{ color: 'var(--foreground)', fontWeight: 600 }}
+                    itemStyle={{ color: 'var(--muted-foreground)' }}
+                    formatter={(value, name) => {
+                      const safeValue = value ?? 0
+                      const safeName = name ?? 'Value'
+                      if (safeName === 'Traditional Organic') {
+                        return [`${safeValue}%`, 'Traditional Organic Search']
+                      }
+                      if (safeName === 'With AI Features') {
+                        return [`${safeValue}%`, 'With AI Search Features']
+                      }
+                      return [`${safeValue}%`, safeName]
+                    }}
+                    labelFormatter={(label) => `Period: ${label}`}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="organic"
+                    stroke="var(--spectrum-green)"
+                    strokeWidth={2}
+                    dot={{ fill: 'var(--spectrum-green)', strokeWidth: 0, r: 3.5 }}
+                    name="Traditional Organic"
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="withAI"
+                    stroke="var(--spectrum-red)"
+                    strokeWidth={2}
+                    dot={{ fill: 'var(--spectrum-red)', strokeWidth: 0, r: 3.5 }}
+                    name="With AI Features"
+                    isAnimationActive={false}
+                  />
+                  <ReferenceLine
+                    y={85}
+                    stroke="oklch(1 0 0 / 28%)"
+                    strokeDasharray="5 5"
+                    label={{
+                      value: '15% Decline',
+                      fill: 'var(--muted-foreground)',
+                      fontSize: 11,
+                      position: 'insideTopRight',
+                    }}
+                  />
+                  <ReferenceLine
+                    y={70}
+                    stroke="oklch(1 0 0 / 28%)"
+                    strokeDasharray="5 5"
+                    label={{
+                      value: '30% Decline',
+                      fill: 'var(--muted-foreground)',
+                      fontSize: 11,
+                      position: 'insideBottomRight',
+                    }}
+                  />
+                </LineChart>
+              </ChartResponsiveContainer>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-muted-foreground">
+              <span className="inline-flex items-center gap-2">
+                <span aria-hidden="true" className="h-0.5 w-4 rounded-full bg-spectrum-green" />
+                Traditional organic
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span aria-hidden="true" className="h-0.5 w-4 rounded-full bg-spectrum-red" />
+                With AI features
+              </span>
+            </div>
+          </>
         ) : (
-          <div className="space-y-3">
-            {industryData.map((industry, index) => (
-              <motion.div
+          <ul className="my-0! flex list-none! flex-col gap-2 pl-0!">
+            {industryData.map((industry) => (
+              <li
                 key={industry.name}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-neutral-50 rounded-lg gap-3"
+                className="my-0! flex flex-col justify-between gap-3 rounded-2xl border border-white/[0.06] bg-background/50 p-4 pl-4! sm:flex-row sm:items-center"
               >
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-4 h-4 rounded-full shrink-0"
+                  <span
+                    aria-hidden="true"
+                    className="size-2 shrink-0 rounded-full"
                     style={{ backgroundColor: industry.color }}
                   />
-                  <span className="font-medium text-neutral-900 text-sm sm:text-base">
+                  <span className="text-sm font-medium text-foreground sm:text-base">
                     {industry.name}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-20 sm:w-24 bg-neutral-200 rounded-full h-2">
-                    <motion.div
-                      className="h-2 rounded-full"
-                      style={{ backgroundColor: industry.color }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${(industry.decline / 30) * 100}%` }}
-                      transition={{ duration: 1, delay: index * 0.1 }}
+                  <div className="h-1.5 w-24 overflow-hidden rounded-full bg-white/[0.08] sm:w-32">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        backgroundColor: industry.color,
+                        width: `${(industry.decline / 30) * 100}%`,
+                      }}
                     />
                   </div>
-                  <span className="text-sm font-semibold text-neutral-700 min-w-[2rem] text-right">
+                  <span className="min-w-[2.5rem] text-right font-mono text-sm tabular-nums text-foreground">
                     -{industry.decline}%
                   </span>
                 </div>
-              </motion.div>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500"
-        variants={fadeInUp}
-      >
-        <p className="text-sm text-blue-800">
+      <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5">
+        <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-blue" />
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           <strong>Key Insight:</strong> While general business sees a 15%
           decline, health & wellness businesses are hit hardest with up to 30%
           traffic loss due to AI answering medical queries directly.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

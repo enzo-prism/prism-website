@@ -1,4 +1,7 @@
 import type { Metadata } from "next"
+import Footer from "@/components/footer"
+import { LandingHero } from "@/components/landing/landing-hero"
+import Navbar from "@/components/navbar"
 import { WebPageSchema } from "@/components/schema-markup"
 import ScholarshipPageClient from "./ScholarshipPageClient"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -17,29 +20,36 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function ScholarshipPage() {
   return (
-    <>
-      <section id="static-scholarship-hero" className="bg-neutral-900 text-white">
-        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-16">
-          <h1 className="text-4xl font-semibold tracking-tight">prism community website scholarship</h1>
-          <p className="text-lg leading-relaxed text-white/80">
-            every month we gift a custom website to one founder with a bold idea. tell us what you&apos;re building and we&apos;ll reach out if you&apos;re selected for the next build window.
-          </p>
-        </div>
-      </section>
-      <noscript>
-        <section className="px-6 py-12">
-          <div className="mx-auto max-w-5xl space-y-4 text-neutral-900">
-            <h2 className="text-2xl font-semibold tracking-tight">apply without javascript</h2>
-            <p>
-              email <a href="mailto:support@design-prism.com">support@design-prism.com</a> with your name, how you heard about prism, and a short description of the site you need. we will confirm your submission and include it in the next monthly review.
-            </p>
-            <p>
-              you can also explore example builds at <a href="https://www.design-prism.com/websites">design-prism.com/websites</a>.
-            </p>
-          </div>
-        </section>
-      </noscript>
-      <ScholarshipPageClient />
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <Navbar />
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <LandingHero
+          location="scholarship hero"
+          showStatus={false}
+          hideCta
+          eyebrow="Community website scholarship"
+          title="one founder. one free website. every month."
+          description="Every month we gift a custom website to one founder with a bold idea. Tell us what you're building and we'll reach out if you're selected for the next build window."
+          secondary={{ label: "Apply for the scholarship", href: "#apply", trackingLabel: "scholarship apply anchor" }}
+          glow="green"
+          className="pb-6 sm:pb-10"
+        />
+        <noscript>
+          <section className="prism-container py-12">
+            <div className="max-w-3xl space-y-4 text-muted-foreground">
+              <h2 className="text-heading text-foreground">apply without javascript.</h2>
+              <p>
+                Email <a className="text-foreground underline underline-offset-4" href="mailto:support@design-prism.com">support@design-prism.com</a> with your name, how you heard about Prism, and a short description of the site you need. We will confirm your submission and include it in the next monthly review.
+              </p>
+              <p>
+                You can also explore example builds at <a className="text-foreground underline underline-offset-4" href="https://www.design-prism.com/websites">design-prism.com/websites</a>.
+              </p>
+            </div>
+          </section>
+        </noscript>
+        <ScholarshipPageClient />
+      </main>
+      <Footer />
       <WebPageSchema
         name={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
@@ -47,6 +57,6 @@ export default function ScholarshipPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

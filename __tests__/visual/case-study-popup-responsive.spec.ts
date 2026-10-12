@@ -16,7 +16,7 @@ for (const slug of BASE_SLUGS) {
         await page.setViewportSize({ width: viewport.width, height: viewport.height })
         await page.goto(`/case-studies/${slug}`, { waitUntil: "domcontentloaded" })
 
-        const header = page.getByText(/What we delivered for this case/i)
+        const header = page.getByText(/what we delivered\./i)
         await expect(header).toBeVisible()
 
         const activePanel = page.getByRole("tabpanel").first()
@@ -66,7 +66,7 @@ for (const slug of BASE_SLUGS) {
             timeout: 5000,
           })
           await expect(dialog.getByText(/What it is/i)).toBeVisible()
-          await expect(dialog.getByText(/Why Prism is world-class with this/i)).toBeVisible()
+          await expect(dialog.getByText(/Why it matters/i)).toBeVisible()
 
           const box = await dialog.boundingBox()
           expect(box).not.toBeNull()

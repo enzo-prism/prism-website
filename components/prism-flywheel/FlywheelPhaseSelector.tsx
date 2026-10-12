@@ -1,7 +1,8 @@
-"use client"
+'use client'
 
-import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
+import { useState } from 'react'
+
+import { cn } from '@/lib/utils'
 
 type FlywheelPhase = {
   number: number
@@ -13,68 +14,54 @@ interface FlywheelPhaseSelectorProps {
   phases: FlywheelPhase[]
 }
 
-export default function FlywheelPhaseSelector({ phases }: FlywheelPhaseSelectorProps) {
-  const [activePhase, setActivePhase] = useState<number | null>(null)
+/** Segmented phase picker under the flywheel visual; one phase is always shown. */
+export default function FlywheelPhaseSelector({
+  phases,
+}: FlywheelPhaseSelectorProps) {
+  const [activePhase, setActivePhase] = useState<number>(phases[0]?.number ?? 1)
   const activeDetails = phases.find((phase) => phase.number === activePhase)
 
   return (
-    <>
-      <div className="mt-12 flex flex-wrap justify-center gap-8">
+    <div className="mt-8">
+      <div className="flex flex-wrap justify-center gap-2">
         {phases.map((phase) => {
           const isActive = activePhase === phase.number
           return (
-            <motion.button
+            <button
               key={phase.number}
               type="button"
-              className={`group flex flex-col items-center space-y-2 transition-opacity duration-200 ${
-                isActive ? "opacity-100" : "opacity-60 hover:opacity-100"
-              }`}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              className={cn(
+                'inline-flex min-h-10 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-[color,background-color,border-color,transform] duration-200 hover:-translate-y-px focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                isActive
+                  ? 'border-white/30 bg-white/[0.08] text-foreground'
+                  : 'border-white/[0.08] bg-white/[0.02] text-muted-foreground hover:border-white/20 hover:text-foreground',
+              )}
               aria-pressed={isActive}
-              onClick={() => setActivePhase(isActive ? null : phase.number)}
+              onClick={() => setActivePhase(phase.number)}
             >
-              <div
-                className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-colors ${
-                  isActive
-                    ? "border-neutral-900 dark:border-white bg-neutral-900 dark:bg-white"
-                    : "border-neutral-300 dark:border-neutral-700"
-                }`}
-              >
-                <span
-                  className={`text-sm font-medium ${
-                    isActive ? "text-white dark:text-neutral-900" : "text-neutral-600 dark:text-neutral-400"
-                  }`}
-                >
-                  {phase.number}
-                </span>
-              </div>
-              <span className="text-sm text-neutral-600 dark:text-neutral-400 font-medium">
-                {phase.title.split(" ")[0]}
+              <span className="font-mono text-[11px] tabular-nums text-subtle">
+                {String(phase.number).padStart(2, '0')}
               </span>
-            </motion.button>
+              {phase.title.split(' ')[0]}
+            </button>
           )
         })}
       </div>
 
-      <AnimatePresence mode="wait">
-        {activeDetails ? (
-          <motion.div
-            className="mt-8 text-center max-w-md mx-auto"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <h4 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
-              {activeDetails.title}
-            </h4>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              {activeDetails.details}
-            </p>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </>
+      {activeDetails ? (
+        <div
+          key={activeDetails.number}
+          className="prism-rise mx-auto mt-6 max-w-md text-center"
+          aria-live="polite"
+        >
+          <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">
+            {activeDetails.title}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            {activeDetails.details}
+          </p>
+        </div>
+      ) : null}
+    </div>
   )
 }

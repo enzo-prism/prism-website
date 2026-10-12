@@ -11,6 +11,8 @@
 //   --force         overwrite existing files
 //   --mobile-only   capture only the 390×844 mobile JPEG
 //   --desktop-only  capture only the 1440×900 desktop JPEG
+//   --out=<dir>     write JPEGs to <dir> instead of public/case-studies (review
+//                   a recapture before replacing the published file)
 //
 // Mobile captures dismiss first-party consent sheets, hide chat widgets, and
 // apply per-site scroll so the branded hero fills the Cover Flow crop
@@ -25,9 +27,12 @@ import { readFile } from 'node:fs/promises'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
-const OUT_DIR = path.join(ROOT, 'public', 'case-studies')
-
 const rawArgs = process.argv.slice(2)
+const OUT_ARG = rawArgs.find((arg) => arg.startsWith('--out='))
+const OUT_DIR = OUT_ARG
+  ? path.resolve(OUT_ARG.slice('--out='.length))
+  : path.join(ROOT, 'public', 'case-studies')
+
 const FORCE = rawArgs.includes('--force')
 const MOBILE_ONLY = rawArgs.includes('--mobile-only')
 const DESKTOP_ONLY = rawArgs.includes('--desktop-only')
@@ -166,9 +171,32 @@ const MOBILE_RECIPES = {
   },
   'mataria-dental-group': {
     waitForVideo: true,
-    scrollY: 175,
+    // Top of page, hero video paused on the lobby art wall (2026-10-12): the
+    // old 175px scroll cut the hero in half under a black nav band.
+    videoTime: 1,
     waitFor: 'img[alt*="Mataria Dental Group logo" i]',
     settleMs: 1000,
+  },
+}
+
+/**
+ * Desktop recipes (1440×900). Most sites need none. Use `videoTime` for a
+ * looping hero video: it pauses on a verified frame so the capture never
+ * lands mid-crossfade (Mataria's headline garbled over a dissolve).
+ */
+const DESKTOP_RECIPES = {
+  'olympic-bootworks': {
+    // "Essential only" so the capture never fires the client's analytics.
+    dismissButtons: [/essential only/i],
+    // The schedule bar's close button is labelled by sr-only "Close" text.
+    dismissSelectors: ['.header-container button:has-text("Close")'],
+    settleMs: 800,
+  },
+  'mataria-dental-group': {
+    waitForVideo: true,
+    // 1s in: the lobby art wall, nav loaded, headline legible (2026-10-12).
+    videoTime: 1,
+    settleMs: 800,
   },
 }
 
@@ -298,6 +326,25 @@ async function waitForHero(page, recipe) {
   await page.evaluate(() => document.fonts?.ready).catch(() => {})
 }
 
+/** Pause the first <video> on a fixed frame (recipe.videoTime, seconds). */
+async function seekVideo(page, recipe) {
+  if (typeof recipe.videoTime !== 'number') return
+  await page
+    .evaluate(
+      (time) =>
+        new Promise((resolve) => {
+          const video = document.querySelector('video')
+          if (!video) return resolve(undefined)
+          video.pause()
+          video.addEventListener('seeked', resolve, { once: true })
+          video.currentTime = time
+          setTimeout(resolve, 4000)
+        }),
+      recipe.videoTime,
+    )
+    .catch(() => {})
+}
+
 async function prepareMobilePage(page, slug) {
   const recipe = MOBILE_RECIPES[slug] ?? {}
 
@@ -316,6 +363,7 @@ async function prepareMobilePage(page, slug) {
   if (scrollY > 0) {
     await waitForHero(page, recipe)
   }
+  await seekVideo(page, recipe)
 
   await page.waitForTimeout(recipe.settleMs ?? 800)
 }
@@ -360,6 +408,13 @@ async function captureOne(browser, entry) {
         .waitForLoadState('networkidle', { timeout: 20_000 })
         .catch(() => {})
       await page.waitForTimeout(2500)
+      const recipe = DESKTOP_RECIPES[entry.slug]
+      if (recipe) {
+        await dismissOverlays(page, recipe)
+        await waitForHero(page, recipe)
+        await seekVideo(page, recipe)
+        await page.waitForTimeout(recipe.settleMs ?? 800)
+      }
       await page.evaluate(() => window.scrollTo(0, 0))
       await page.screenshot({
         path: desktopPath,

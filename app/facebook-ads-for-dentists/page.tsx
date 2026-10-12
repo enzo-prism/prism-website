@@ -1,13 +1,23 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { CheckCircle2, ClipboardList, LineChart, ShieldCheck, Target, Video } from "lucide-react"
 
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
+import {
+  ArrowLink,
+  DentalCaseStudyGrid,
+  StepRail,
+  TextLink,
+} from "@/components/landing/dental/primitives"
+import { LandingHero } from "@/components/landing/landing-hero"
 import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
 import { ServiceSchema } from "@/components/schema-markup"
-import { Button } from "@/components/ui/button"
+import ScrollToTop from "@/components/scroll-to-top"
+import { Card } from "@/components/ui/card"
 import { CASE_STUDIES } from "@/lib/case-study-data"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
@@ -186,228 +196,182 @@ export default function FacebookAdsForDentistsPage() {
   const caseStudies = getDentalCaseStudies()
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-neutral-900">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
 
-      <main className="flex-1">
-        <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">paid social for dental</p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              facebook ads for dentists
-            </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Paid social for dental"
+          title="facebook ads for dentists."
+          description={
+            <>
               prism helps dental practices turn Facebook &amp; Instagram (Meta) ads into booked demand with offer-first
               strategy, patient-ready creative, conversion-focused lead capture, and reporting tied to calls and consults,
               not vanity metrics.
-            </p>
-            <p className="mt-6 text-sm text-neutral-500">
-              want google-first intent too? pair this with{" "}
-              <Link href="/google/dental-ads" className="font-medium text-neutral-900 underline underline-offset-4">
-                google ads for dentists
-              </Link>
-              . want short-form scroll intent? see{" "}
-              <Link href="/tiktok-ads-for-dentists" className="font-medium text-neutral-900 underline underline-offset-4">
-                tiktok ads for dentists
-              </Link>
-              . want the step-by-step plan? read{" "}
-              <Link
-                href="/blog/facebook-ads-for-dentists-playbook"
-                className="font-medium text-neutral-900 underline underline-offset-4"
-              >
-                facebook ads for dentists: the 30-day playbook
-              </Link>
-              .
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href={primaryCta.href}>{primaryCta.label}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-neutral-500">meta strategy + creative + tracking, shipped by prism.</p>
-          </div>
-        </section>
+            </>
+          }
+          location="facebook ads for dentists hero"
+          ctaHref={primaryCta.href}
+          ctaLabel={primaryCta.label}
+          secondary={{ label: secondaryCta.label, href: secondaryCta.href }}
+          glow="violet"
+          titleClassName="max-w-[13ch]"
+          descriptionClassName="max-w-[62ch]"
+        >
+          <Card className="mx-auto max-w-3xl p-6 text-left sm:p-8">
+            <p className="text-eyebrow text-subtle">meta strategy + creative + tracking, shipped by prism.</p>
+            <ul className="mt-4 space-y-2.5 text-[15px] leading-6 text-muted-foreground">
+              <li>
+                want google-first intent too? pair this with{" "}
+                <TextLink href="/google/dental-ads">google ads for dentists</TextLink>.
+              </li>
+              <li>
+                want short-form scroll intent? see <TextLink href="/tiktok-ads-for-dentists">tiktok ads for dentists</TextLink>.
+              </li>
+              <li>
+                want the step-by-step plan? read{" "}
+                <TextLink href="/blog/facebook-ads-for-dentists-playbook">
+                  facebook ads for dentists: the 30-day playbook
+                </TextLink>
+                .
+              </li>
+            </ul>
+          </Card>
+        </LandingHero>
 
-        <section id="playbook" className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what converts on facebook for dental practices
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                dentistry is high-trust. the winners don’t look like ads. They look like calm, credible education with a
-                clear next step.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {whatConverts.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                </div>
+        <Section id="playbook" aria-labelledby="fb-converts-title" className="scroll-mt-20">
+          <Reveal>
+            <SectionHeader
+              id="fb-converts-title"
+              eyebrow="The playbook"
+              title="what converts on facebook for dental practices."
+              description="dentistry is high-trust. the winners don’t look like ads. They look like calm, credible education with a clear next step."
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <ol className="grid overflow-hidden rounded-2xl border border-white/[0.08] bg-card md:grid-cols-3">
+              {whatConverts.map((item, index) => (
+                <li
+                  key={item.title}
+                  className="-mb-px -mr-px flex flex-col gap-4 border-b border-r border-white/[0.07] p-6 sm:p-8"
+                >
+                  <span className="text-[clamp(2.25rem,1.8rem+1.5vw,3rem)] font-semibold leading-none tracking-[-0.05em] text-foreground/25 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-heading text-foreground">{item.title}</h3>
+                  <p className="text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                </li>
               ))}
-            </div>
-          </div>
-        </section>
+            </ol>
+          </Reveal>
+        </Section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">what you get</h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                everything needed to run facebook ads for dentists without wasting spend: creative direction, conversion
-                alignment, and clear reporting.
+        <Section aria-labelledby="fb-get-title">
+          <Reveal>
+            <SectionHeader
+              id="fb-get-title"
+              eyebrow="What you get"
+              title="what you get."
+              description="everything needed to run facebook ads for dentists without wasting spend: creative direction, conversion alignment, and clear reporting."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {whatYouGet.map((item, index) => (
+              <Reveal key={item.title} delay={(index % 3) * 70}>
+                <Card className="flex h-full flex-col p-6 transition-colors hover:border-white/[0.16]">
+                  <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                    <item.icon className="size-5 text-foreground" aria-hidden />
+                  </span>
+                  <h3 className="mt-6 text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mt-8 text-[15px] text-muted-foreground">
+            want a broader overview of our multi-channel ads system? see{" "}
+            <TextLink href="/ads">paid ads management</TextLink>.
+          </p>
+        </Section>
+
+        <Section aria-labelledby="fb-capture-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+            <Reveal className="flex flex-col gap-6">
+              <SectionHeader
+                id="fb-capture-title"
+                eyebrow="After the click"
+                title="lead forms vs landing pages."
+                description="most wasted spend happens after the click. we choose the lead path based on your service line, your front desk bandwidth, and how much trust patients need before they book."
+              />
+              <p className="text-[15px] leading-7 text-muted-foreground">
+                want your landing pages to convert better (even before ads)? start with{" "}
+                <TextLink href="/dental-website">modern dental websites</TextLink>.
               </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {whatYouGet.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <div className="flex items-start gap-3">
-                    <span className="mt-1 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-neutral-100 text-neutral-900">
-                      <item.icon className="h-5 w-5" aria-hidden />
-                    </span>
-                    <div>
-                      <h3 className="text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 rounded-3xl border border-neutral-200 bg-white p-8 text-sm text-neutral-600 shadow-sm">
-              want a broader overview of our multi-channel ads system? see{" "}
-              <Link href="/ads" className="font-semibold text-neutral-900 underline underline-offset-4">
-                paid ads management
-              </Link>
-              .
+            </Reveal>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {captureOptions.map((item, index) => {
+                const Shell = index === 1 ? SpotlightCard : Card
+                return (
+                  <Reveal key={item.title} delay={index * 100}>
+                    <Shell beam={index === 1 ? true : undefined} className="flex h-full flex-col p-6 sm:p-7">
+                      <p className="text-eyebrow text-subtle">option {index + 1}</p>
+                      <h3 className="text-heading mt-4 text-foreground">{item.title}</h3>
+                      <p className="mt-3 flex-1 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                      <div className="mt-6 border-t border-white/[0.07] pt-4">
+                        <p className="text-eyebrow text-subtle">best for</p>
+                        <p className="mt-2 text-[14px] leading-6 text-foreground/90">{item.bestFor}</p>
+                      </div>
+                    </Shell>
+                  </Reveal>
+                )
+              })}
             </div>
           </div>
-        </section>
+        </Section>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                lead forms vs landing pages
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                most wasted spend happens after the click. we choose the lead path based on your service line, your front
-                desk bandwidth, and how much trust patients need before they book.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {captureOptions.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">option</p>
-                  <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                  <p className="mt-4 text-sm text-neutral-600">
-                    <span className="font-semibold text-neutral-900">best for:</span> {item.bestFor}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-8 text-sm text-neutral-600">
-              want your landing pages to convert better (even before ads)? start with{" "}
-              <Link href="/dental-website" className="font-semibold text-neutral-900 underline underline-offset-4">
-                modern dental websites
-              </Link>
-              .
-            </p>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                how we set up meta campaigns (without guesswork)
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                start lean, learn fast, and scale only when lead quality and cost prove it.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {setupSteps.map((item, index) => (
-                <div key={item.step} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">step {index + 1}</p>
-                  <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">{item.step}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Section aria-labelledby="fb-setup-title">
+          <Reveal>
+            <SectionHeader
+              id="fb-setup-title"
+              eyebrow="Setup"
+              title="how we set up meta campaigns, without guesswork."
+              description="start lean, learn fast, and scale only when lead quality and cost prove it."
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <StepRail columns={5} steps={setupSteps.map((item) => ({ title: item.step, description: item.description }))} />
+          </Reveal>
+        </Section>
 
         {caseStudies.length > 0 ? (
-          <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
-            <div className="mx-auto max-w-5xl">
-              <div className="mx-auto max-w-3xl text-center">
-                <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">proof</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  dental case studies
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                  real dental teams. real systems. websites, content, and marketing that compound.
-                </p>
-              </div>
-
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {caseStudies.map((study) => (
-                  <Link
-                    key={study.slug}
-                    href={`/case-studies/${study.slug}`}
-                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">{study.category}</p>
-                    <h3 className="mt-2 text-lg font-semibold lowercase text-neutral-900">{study.client}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{study.location}</p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
+          <Section aria-labelledby="fb-proof-title">
+            <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeader
+                id="fb-proof-title"
+                eyebrow="Proof"
+                title="dental case studies."
+                description="real dental teams. real systems. websites, content, and marketing that compound."
+              />
+              <ArrowLink href={secondaryCta.href} className="shrink-0">
+                {secondaryCta.label}
+              </ArrowLink>
+            </Reveal>
+            <Reveal delay={100} className="mt-12">
+              <DentalCaseStudyGrid studies={caseStudies} />
+            </Reveal>
+          </Section>
         ) : null}
 
-        <section className="border-t border-neutral-100 bg-neutral-950 px-4 py-16 text-white sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              want booked consults from facebook this quarter?
-            </h2>
-            <p className="mt-4 text-base text-white/80 sm:text-lg">
-              join the waitlist. when we can take on your practice, we map a clear plan for offer, creative, lead capture, and tracking.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full bg-white px-8 text-neutral-900 hover:bg-neutral-200">
-                <Link href={primaryCta.href}>{primaryCta.label}</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full border-white/30 bg-transparent px-8 text-white hover:bg-white/10"
-              >
-                <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-white/70">
-              prefer search-first demand? start here:{" "}
-              <Link href="/google/dental-ads" className="font-medium text-white underline underline-offset-4">
-                google ads for dentists
-              </Link>
-            </p>
-          </div>
-        </section>
-
         <FAQSection
-          title="facebook ads questions"
+          title="facebook ads questions."
           subtitle="what most dentists ask before running facebook and instagram ads."
           items={faqItems}
+        />
+
+        <FinalCta
+          location="facebook ads for dentists final cta"
+          href={primaryCta.href}
+          secondary={{ label: "Prefer search? Google Ads for dentists", href: "/google/dental-ads" }}
         />
 
         <ScrollToTop />

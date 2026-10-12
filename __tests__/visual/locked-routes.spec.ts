@@ -122,9 +122,10 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /^your growth team\.$/i,
+    readyHeading: /^make your business impossible to ignore\.$/i,
     mustContain: [
-      /website\. content\. ads\. built around your business\./i,
+      /websites, content, and ads from one team\./i,
+      /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
       /join the waitlist to work with us in [a-z]+\./i,
       /join the waitlist/i,
@@ -225,125 +226,52 @@ for (const route of lockedRoutes) {
   })
 }
 
-test('home fit section snapshot stays stable', async ({ page }) => {
+async function snapshotHomeSection(page: Page, heading: RegExp, name: string) {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await freezeIntakeMonth(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(250)
 
-  const fitHeading = page.getByRole('heading', {
-    level: 2,
-    name: /run your business\. we’ll help it grow\./i,
-  })
-  await expect(fitHeading).toBeVisible({ timeout: 20_000 })
+  const sectionHeading = page.getByRole('heading', { level: 2, name: heading })
+  await expect(sectionHeading).toBeVisible({ timeout: 20_000 })
 
-  const fitSection = fitHeading.locator('xpath=ancestor::section[1]')
-  await expect(fitSection).toBeVisible()
-  await fitSection.scrollIntoViewIfNeeded()
-  await stabilizeDesktopSectionHeight(page, fitSection, 640)
+  const section = sectionHeading.locator('xpath=ancestor::section[1]')
+  await expect(section).toBeVisible()
+  await section.scrollIntoViewIfNeeded()
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
   await page.waitForTimeout(300)
 
-  await expect(fitSection).toHaveScreenshot('home-fit-section.png', {
-    timeout: 15_000,
-  })
-})
+  await expect(section).toHaveScreenshot(name, { timeout: 15_000 })
+}
 
-test('home problem section snapshot stays stable', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await seedDeterministicRandom(page)
-  await freezeIntakeMonth(page)
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  await page.waitForTimeout(250)
-
-  const problemHeading = page.getByRole('heading', {
-    level: 2,
-    name: /give people a reason to choose you/i,
-  })
-  await expect(problemHeading).toBeVisible({ timeout: 20_000 })
-
-  const problemSection = problemHeading.locator('xpath=ancestor::section[1]')
-  await expect(problemSection).toBeVisible()
-  await problemSection.scrollIntoViewIfNeeded()
-  await stabilizeSectionHeight(page, problemSection, {
-    mobile: 1141,
-    desktop: 683,
-  })
-
-  await stabilizePage(page)
-  await expectLockedRouteSnapshotSurface(page)
-  await page.waitForTimeout(300)
-
-  await expect(problemSection).toHaveScreenshot('home-problem-section.png', {
-    maxDiffPixelRatio: 0.05,
-    timeout: 15_000,
-  })
+test('home numbers section snapshot stays stable', async ({ page }) => {
+  await snapshotHomeSection(
+    page,
+    /numbers, not adjectives\./i,
+    'home-numbers-section.png',
+  )
 })
 
 test('home services section snapshot stays stable', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await seedDeterministicRandom(page)
-  await freezeIntakeMonth(page)
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  await page.waitForTimeout(250)
-
-  const servicesHeading = page.getByRole('heading', {
-    level: 2,
-    name: /your marketing, working together\./i,
-  })
-  await expect(servicesHeading).toBeVisible({ timeout: 20_000 })
-
-  const servicesSection = servicesHeading.locator('xpath=ancestor::section[1]')
-  await expect(servicesSection).toBeVisible()
-  await servicesSection.scrollIntoViewIfNeeded()
-  await stabilizeSectionHeight(page, servicesSection, {
-    mobile: 1717,
-    desktop: 1016,
-  })
-
-  await stabilizePage(page)
-  await expectLockedRouteSnapshotSurface(page)
-  await page.waitForTimeout(300)
-
-  await expect(servicesSection).toHaveScreenshot('home-services-section.png', {
-    timeout: 15_000,
-  })
+  await snapshotHomeSection(
+    page,
+    /one team\. every channel\./i,
+    'home-services-section.png',
+  )
 })
 
-test('home proof section snapshot stays stable', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await seedDeterministicRandom(page)
-  await freezeIntakeMonth(page)
-  await page.goto('/', { waitUntil: 'domcontentloaded' })
-  await page.waitForTimeout(250)
-
-  const proofHeading = page.getByRole('heading', {
-    level: 2,
-    name: /see what we’ve built/i,
-  })
-  await expect(proofHeading).toBeVisible({ timeout: 20_000 })
-
-  const proofSection = proofHeading.locator('xpath=ancestor::section[1]')
-  await expect(proofSection).toBeVisible()
-  await proofSection.scrollIntoViewIfNeeded()
-  await stabilizeSectionHeight(page, proofSection, {
-    mobile: 1909,
-    desktop: 873,
-  })
-
-  await stabilizePage(page)
-  await expectLockedRouteSnapshotSurface(page)
-  await page.waitForTimeout(300)
-
-  await expect(proofSection).toHaveScreenshot('home-proof-section.png', {
-    timeout: 15_000,
-  })
+test('home how-to-get-in section snapshot stays stable', async ({ page }) => {
+  await snapshotHomeSection(
+    page,
+    /fully booked\. here’s how to get in\./i,
+    'home-how-section.png',
+  )
 })
 
-test('home fit and service cards stay contained across responsive breakpoints', async ({
+test('home cards stay contained across responsive breakpoints', async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -351,31 +279,38 @@ test('home fit and service cards stay contained across responsive breakpoints', 
     'Manual breakpoint loop already covers mobile and tablet sizes.',
   )
 
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await freezeIntakeMonth(page)
 
   const breakpoints = [
+    { width: 1440, height: 960 },
     { width: 1150, height: 1100 },
     { width: 768, height: 1200 },
     { width: 390, height: 1200 },
+  ]
+
+  const sections = [
+    {
+      heading: /one team\. every channel\./i,
+      cardSelector: '[data-home-service-card]',
+      expectedCount: 6,
+    },
+    {
+      heading: /fully booked\. here’s how to get in\./i,
+      cardSelector: '[data-home-step]',
+      expectedCount: 3,
+    },
+    {
+      heading: /numbers, not adjectives\./i,
+      cardSelector: '[data-home-stat]',
+      expectedCount: 4,
+    },
   ]
 
   for (const breakpoint of breakpoints) {
     await page.setViewportSize(breakpoint)
     await page.goto('/', { waitUntil: 'domcontentloaded' })
     await page.waitForTimeout(250)
-
-    const sections = [
-      {
-        heading: /run your business\. we’ll help it grow\./i,
-        cardSelector: '[data-home-fit-card]',
-        expectedCount: 3,
-      },
-      {
-        heading: /your marketing, working together\./i,
-        cardSelector: '[data-home-service-card]',
-        expectedCount: 8,
-      },
-    ]
 
     for (const sectionConfig of sections) {
       const sectionHeading = page.getByRole('heading', {
@@ -385,7 +320,6 @@ test('home fit and service cards stay contained across responsive breakpoints', 
       await expect(sectionHeading).toBeVisible({ timeout: 20_000 })
 
       const section = sectionHeading.locator('xpath=ancestor::section[1]')
-      await expect(section).toBeVisible()
       await section.scrollIntoViewIfNeeded()
 
       await expect(section.locator(sectionConfig.cardSelector)).toHaveCount(
@@ -399,26 +333,30 @@ test('home fit and service cards stay contained across responsive breakpoints', 
           )
 
           return cards.map((card) => {
-            const heading = card.querySelector('h3')
-            const description = card.querySelector('p:last-of-type')
             const cardRect = card.getBoundingClientRect()
-            const titleRect = heading?.getBoundingClientRect()
-            const descriptionRect = description?.getBoundingClientRect()
+            const children = Array.from(
+              card.querySelectorAll<HTMLElement>('h3, p, span'),
+            ).filter((node) => {
+              // Visible text boxes only: skip sr-only copies (1px clipped
+              // boxes), aria-hidden layout ghosts, and empty nodes.
+              if (node.offsetParent === null || !node.textContent?.trim()) {
+                return false
+              }
+              if (node.closest('[aria-hidden="true"]')) return false
+              const rect = node.getBoundingClientRect()
+              return rect.width > 2 && rect.height > 2
+            })
+
+            const escaped = children.find((node) => {
+              const rect = node.getBoundingClientRect()
+              return (
+                rect.left < cardRect.left - 1 || rect.right > cardRect.right + 1
+              )
+            })
 
             return {
-              title: heading?.textContent?.trim() ?? 'unknown',
-              titleWithin:
-                !!titleRect &&
-                titleRect.top >= cardRect.top &&
-                titleRect.left >= cardRect.left &&
-                titleRect.right <= cardRect.right &&
-                titleRect.bottom <= cardRect.bottom,
-              descriptionWithin:
-                !descriptionRect ||
-                (descriptionRect.top >= cardRect.top &&
-                  descriptionRect.left >= cardRect.left &&
-                  descriptionRect.right <= cardRect.right &&
-                  descriptionRect.bottom <= cardRect.bottom),
+              label: card.textContent?.trim().slice(0, 40) ?? 'unknown',
+              escaped: escaped?.textContent?.trim().slice(0, 40) ?? null,
             }
           })
         },
@@ -427,13 +365,9 @@ test('home fit and service cards stay contained across responsive breakpoints', 
 
       for (const card of containment) {
         expect(
-          card.titleWithin,
-          `${card.title} heading overflowed at ${breakpoint.width}px`,
-        ).toBe(true)
-        expect(
-          card.descriptionWithin,
-          `${card.title} description overflowed at ${breakpoint.width}px`,
-        ).toBe(true)
+          card.escaped,
+          `"${card.label}" let "${card.escaped}" overflow at ${breakpoint.width}px`,
+        ).toBeNull()
       }
     }
   }
@@ -464,7 +398,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /^your growth team\.$/i,
+        name: /^make your business impossible to ignore\.$/i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
@@ -472,10 +406,8 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
       hero.getByRole('link', { name: /join the waitlist/i }),
-    ).toBeVisible({
-      timeout: 20_000,
-    })
-    await expect(hero.getByRole('link', { name: /wall of love/i })).toBeVisible(
+    ).toBeVisible({ timeout: 20_000 })
+    await expect(hero.getByRole('link', { name: /see the work/i })).toBeVisible(
       { timeout: 20_000 },
     )
 
@@ -487,16 +419,17 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/waitlist"]',
+        'a[href="/waitlist"]:not([class*="group/status"])',
       )
-      const secondaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/wall-of-love"]',
-      )
+      const secondaryCta =
+        hero.querySelector<HTMLAnchorElement>('a[href="#work"]')
       const primaryCtaRect = primaryCta?.getBoundingClientRect()
       const secondaryCtaRect = secondaryCta?.getBoundingClientRect()
 
       return {
         overflow: document.documentElement.scrollWidth - window.innerWidth,
+        primaryCtaAboveFold:
+          !!primaryCtaRect && primaryCtaRect.bottom <= window.innerHeight,
         primaryCtaWithinHero:
           !!primaryCtaRect &&
           primaryCtaRect.left >= heroRect.left - 1 &&
@@ -514,6 +447,10 @@ test('home hero layout stays readable across responsive breakpoints', async ({
       `hero created horizontal overflow at ${breakpoint.width}px`,
     ).toBeLessThanOrEqual(1)
     expect(
+      result?.primaryCtaAboveFold,
+      `primary hero CTA fell below the fold at ${breakpoint.width}px`,
+    ).toBe(true)
+    expect(
       result?.primaryCtaWithinHero,
       `primary hero CTA escaped the hero frame at ${breakpoint.width}px`,
     ).toBe(true)
@@ -521,83 +458,5 @@ test('home hero layout stays readable across responsive breakpoints', async ({
       result?.secondaryCtaWithinHero,
       `secondary hero CTA escaped the hero frame at ${breakpoint.width}px`,
     ).toBe(true)
-  }
-})
-
-test('home growth ramp values stay contained across responsive breakpoints', async ({
-  page,
-}, testInfo) => {
-  test.skip(
-    testInfo.project.name !== 'desktop-chromium',
-    'Manual breakpoint loop already covers mobile and tablet sizes.',
-  )
-
-  await freezeIntakeMonth(page)
-
-  const breakpoints = [
-    { width: 1440, height: 960 },
-    { width: 1280, height: 900 },
-    { width: 1024, height: 900 },
-    { width: 768, height: 1200 },
-    { width: 390, height: 1200 },
-  ]
-
-  for (const breakpoint of breakpoints) {
-    await page.setViewportSize(breakpoint)
-    await page.goto('/', { waitUntil: 'domcontentloaded' })
-    await page.waitForTimeout(250)
-
-    const rampHeading = page.getByRole('heading', {
-      level: 2,
-      name: /a clear plan\. real work\./i,
-    })
-    await expect(rampHeading).toBeVisible({ timeout: 20_000 })
-
-    const section = rampHeading.locator('xpath=ancestor::section[1]')
-    await expect(section).toBeVisible()
-    await section.scrollIntoViewIfNeeded()
-
-    await expect(
-      section.locator('[data-home-ramp-metric]'),
-    ).toHaveCount(3)
-
-    const containment = await section.evaluate((sectionNode) => {
-      const cards = Array.from(
-        sectionNode.querySelectorAll<HTMLElement>('[data-home-ramp-metric]'),
-      )
-
-      return cards.map((card) => {
-        const value = card.querySelector<HTMLElement>('p')
-        const pill = card.querySelector<HTMLElement>('span.rounded-full')
-        const cardRect = card.getBoundingClientRect()
-        const valueRect = value?.getBoundingClientRect()
-        const pillRect = pill?.getBoundingClientRect()
-
-        return {
-          day: card.dataset.homeRampMetric ?? 'unknown',
-          valueWithin:
-            !!value &&
-            value.scrollWidth <= value.clientWidth + 1 &&
-            !!valueRect &&
-            valueRect.left >= cardRect.left - 1 &&
-            valueRect.right <= cardRect.right + 1,
-          pillWithin:
-            !!pillRect &&
-            pillRect.left >= cardRect.left - 1 &&
-            pillRect.right <= cardRect.right + 1,
-        }
-      })
-    })
-
-    for (const card of containment) {
-      expect(
-        card.valueWithin,
-        `${card.day} value overflowed its card at ${breakpoint.width}px`,
-      ).toBe(true)
-      expect(
-        card.pillWithin,
-        `${card.day} pill overflowed its card at ${breakpoint.width}px`,
-      ).toBe(true)
-    }
   }
 })

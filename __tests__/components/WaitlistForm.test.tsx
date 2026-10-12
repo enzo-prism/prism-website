@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import WaitlistForm from '@/components/forms/WaitlistForm'
+import { PRISM_SERVICES } from '@/lib/services'
 import {
   getWaitlistIntakeMonth,
   WAITLIST_DRAFT_STORAGE_KEY,
@@ -46,6 +47,9 @@ async function advance() {
   fireEvent.click(continueButton())
   await waitFor(() => expect(trackEvent).toHaveBeenCalled())
 }
+
+const noWebsiteCheckbox = () =>
+  screen.getByRole('checkbox', { name: /i don.t have a website yet/i })
 
 async function completeToGoals(options: { link?: boolean } = { link: true }) {
   // 1 focus (optional)
@@ -116,6 +120,48 @@ describe('WaitlistForm (stepped flow)', () => {
       'waitlist_step_view',
       expect.objectContaining({ step: 1, step_name: 'focus' }),
     )
+  })
+
+  it('renders card choices with clean names, the shared service promises, and a spectrum progress bar', async () => {
+    const { container } = render(<WaitlistForm initialFocus={['content']} />)
+
+    // Names stay exactly the option label; the service promise is the
+    // accessible description, so screen readers and tests get both cleanly.
+    for (const service of PRISM_SERVICES) {
+      const checkbox = screen.getByRole('checkbox', { name: service.name })
+      expect(checkbox).toHaveAccessibleDescription(service.navDescription)
+      expect(checkbox.closest('label')).toBeInTheDocument()
+    }
+    expect(screen.getByRole('checkbox', { name: 'Content' })).toBeChecked()
+    // "Not sure yet" sits after the services with its own one-liner.
+    const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
+    expect(notSure).toHaveAttribute('value', 'not-sure')
+    expect(notSure).toHaveAccessibleDescription(/where to start/i)
+    expect(notSure).not.toBeChecked()
+
+    const segments = container.querySelectorAll('[data-waitlist-progress] > li')
+    expect(segments).toHaveLength(5)
+    expect(
+      Array.from(segments).map((segment) => segment.getAttribute('data-state')),
+    ).toEqual(['complete', 'upcoming', 'upcoming', 'upcoming', 'upcoming'])
+    expect(container.querySelector('[data-waitlist-progress]')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    )
+
+    // Step 1 has no Back; pressing Continue never steals focus from a field
+    // (a blur error would shift the button out from under the pointer).
+    expect(screen.queryByRole('button', { name: /^back$/i })).not.toBeInTheDocument()
+    expect(fireEvent.mouseDown(continueButton())).toBe(false)
+
+    await advance()
+    expect(
+      Array.from(container.querySelectorAll('[data-waitlist-progress] > li')).map(
+        (segment) => segment.getAttribute('data-state'),
+      ),
+    ).toEqual(['complete', 'complete', 'upcoming', 'upcoming', 'upcoming'])
+    expect(screen.getByRole('button', { name: /^back$/i })).toHaveAttribute('type', 'button')
+    expect(continueButton()).toHaveAttribute('type', 'submit')
   })
 
   it('requires a timing choice before leaving step 2 and reports the error', async () => {
@@ -236,6 +282,7 @@ describe('WaitlistForm (stepped flow)', () => {
     expect(formData.get('start_timing')).toBe('1_3_months')
     expect(formData.getAll('focus[]')).toEqual(['website', 'ads'])
     expect(formData.has('focus_other')).toBe(false)
+    expect(formData.has('no_website')).toBe(false)
     expect(screen.queryByLabelText(/something else/i)).not.toBeInTheDocument()
     expect(formData.get('form_name')).toBe('waitlist')
     expect(formData.get('form_key')).toBe('waitlist')
@@ -344,5 +391,120 @@ describe('WaitlistForm (stepped flow)', () => {
 
     await advance()
     expect(stepHeading()).toMatch(/what do you want to achieve\?/i)
+  })
+  it('treats "Not sure yet" as exclusive with the services and submits it in focus[]', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    render(<WaitlistForm initialFocus={['website', 'ads']} />)
+
+    const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
+    fireEvent.click(notSure)
+    expect(notSure).toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Website' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Ads' })).not.toBeChecked()
+
+    // Picking a service again clears "Not sure yet".
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Content' }))
+    expect(screen.getByRole('checkbox', { name: 'Content' })).toBeChecked()
+    expect(notSure).not.toBeChecked()
+
+    fireEvent.click(notSure)
+    await completeToGoals()
+    expect(screen.getByText(/your answers/i).nextElementSibling).toHaveTextContent(
+      /^Not sure yet · In 1–3 months · jordan@example\.com$/,
+    )
+
+    fireEvent.change(screen.getByLabelText(/your goals/i), {
+      target: { value: 'Help us pick where to start.' },
+    })
+    fireEvent.click(submitButton())
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/waitlist/thank-you'))
+    const [, options] = fetchSpy.mock.calls[0] as [RequestInfo | URL, RequestInit]
+    expect((options.body as FormData).getAll('focus[]')).toEqual(['not-sure'])
+    // focus_count stays the number of services (0-3), so "not sure" is 0.
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_submit_success',
+      expect.objectContaining({ form_name: 'waitlist', focus_count: 0 }),
+    )
+    // The ?focus= hand-off is unchanged.
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_form_view',
+      expect.objectContaining({ prefilled_focus: 'website,ads' }),
+    )
+  })
+
+  it('lets an owner with no website pass the links step and submits no_website=yes', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    render(<WaitlistForm />)
+    await completeToGoals({ link: false })
+
+    // Stuck without a link at first, with a pointer to the escape hatch.
+    expect(
+      await screen.findByText(/add at least one link, or check the box below/i),
+    ).toBeInTheDocument()
+    expect(noWebsiteCheckbox()).not.toBeChecked()
+
+    fireEvent.click(noWebsiteCheckbox())
+
+    expect(noWebsiteCheckbox()).toBeChecked()
+    expect(screen.queryByText(/add at least one link/i)).not.toBeInTheDocument()
+    expect(screen.getByLabelText(/^website$/i)).toBeDisabled()
+    expect(screen.getByLabelText(/^website$/i)).not.toHaveAttribute('aria-invalid', 'true')
+    expect(screen.getByText(/that.s what we build/i)).toBeInTheDocument()
+    // The other links stay optional and editable.
+    expect(screen.getByLabelText(/social profile/i)).toBeEnabled()
+    expect(screen.getByLabelText(/anything else/i)).toBeEnabled()
+
+    await advance()
+    expect(stepHeading()).toMatch(/what do you want to achieve\?/i)
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_step_complete',
+      expect.objectContaining({ step: 4, step_name: 'links' }),
+    )
+
+    fireEvent.change(screen.getByLabelText(/your goals/i), {
+      target: { value: 'A first website.' },
+    })
+    fireEvent.click(submitButton())
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/waitlist/thank-you'))
+    const [, options] = fetchSpy.mock.calls[0] as [RequestInfo | URL, RequestInit]
+    const formData = options.body as FormData
+    expect(formData.get('no_website')).toBe('yes')
+    expect(formData.get('link_website')).toBe('')
+    expect(formData.get('link_social')).toBe('')
+    expect(formData.get('goals')).toBe('A first website.')
+  })
+
+  it('brings the link rule back when the no-website box is unchecked', async () => {
+    render(<WaitlistForm />)
+    await completeToGoals({ link: false })
+    expect(await screen.findByText(/add at least one link/i)).toBeInTheDocument()
+
+    fireEvent.click(noWebsiteCheckbox())
+    expect(screen.queryByText(/add at least one link/i)).not.toBeInTheDocument()
+
+    fireEvent.click(noWebsiteCheckbox())
+    expect(screen.getByLabelText(/^website$/i)).toBeEnabled()
+
+    fireEvent.click(continueButton())
+    expect(await screen.findByText(/add at least one link/i)).toBeInTheDocument()
+    expect(stepHeading()).toMatch(/where can we see your work\?/i)
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_validation_error',
+      expect.objectContaining({ step: 4, step_name: 'links', field_name: 'link_website' }),
+    )
+  })
+
+  it('restores the no-website answer from a same-tab draft', async () => {
+    const { unmount } = render(<WaitlistForm />)
+    await completeToGoals({ link: false })
+    fireEvent.click(noWebsiteCheckbox())
+    unmount()
+
+    render(<WaitlistForm />)
+    expectStep(4)
+    expect(noWebsiteCheckbox()).toBeChecked()
+    expect(screen.getByLabelText(/^website$/i)).toBeDisabled()
   })
 })

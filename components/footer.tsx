@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+
+import { PrismLogo } from '@/components/prism/prism-logo'
 import TrackedLink from '@/components/tracked-link'
 import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { CAPACITY_MESSAGE, WAITLIST_CTA } from '@/lib/waitlist'
@@ -19,7 +22,7 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'Services',
     links: [
-      { label: 'Website', href: '/websites' },
+      { label: 'Websites', href: '/websites' },
       { label: 'Content', href: '/content' },
       { label: 'Ads', href: '/ads' },
       { label: 'All services', href: '/services' },
@@ -36,8 +39,8 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'Proof',
     links: [
-      { label: 'Case studies', href: '/case-studies' },
-      { label: 'Wall of love', href: '/wall-of-love' },
+      { label: 'Work', href: '/case-studies' },
+      { label: 'Wall of Love', href: '/wall-of-love' },
       { label: 'Prism Proof', href: '/proof' },
     ],
   },
@@ -99,73 +102,85 @@ const socialLinks: SocialLink[] = [
 const legalLinks: FooterItem[] = [
   { label: 'privacy', href: '/privacy-policy' },
   { label: 'terms', href: '/terms-of-service' },
-  { label: 'support@design-prism.com', href: 'mailto:support@design-prism.com' },
+  {
+    label: 'support@design-prism.com',
+    href: 'mailto:support@design-prism.com',
+  },
 ]
 
-// Shared visible-focus ring; per-link offset is appended at the call site.
+// Shared visible-focus ring.
 const focusRing =
-  'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-black'
+  'focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50'
 
 type FooterProps = {
   variant?: 'default' | 'home'
+  /** Hide the waitlist card on routes that are already the waitlist. */
+  showWaitlistCta?: boolean
 }
 
-export default function Footer({ variant: _variant = 'default' }: FooterProps) {
+export default function Footer({
+  variant: _variant = 'default',
+  showWaitlistCta = true,
+}: FooterProps) {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-white/12 bg-black">
-      <div className="container-px-safe mx-auto max-w-6xl py-14 sm:py-16 lg:py-20">
-        {/* Top region: brand block + link columns */}
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
-          {/* Brand block */}
-          <div className="max-w-md space-y-6 lg:max-w-xs">
-            <div className="space-y-2">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#f5f0e8]">
-                prism
-              </p>
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-[#8f877b]">
-                impossible is temporary
-              </p>
-            </div>
-
-            <p className="text-sm leading-7 text-pretty text-[#b8afa2]">
-              Websites, content, and ads that help customers find and choose your business.
+    <footer className="relative isolate overflow-hidden border-t border-white/[0.07] bg-background">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[420px] bg-[radial-gradient(60%_70%_at_50%_100%,oklch(0.66_0.16_258/14%),transparent_70%)]"
+      />
+      <div className="prism-container pt-16 sm:pt-20">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-20">
+          <div className="flex flex-col gap-6">
+            <Link
+              href="/"
+              aria-label="Prism home"
+              className={`-m-1 w-fit rounded-xl p-1 ${focusRing}`}
+            >
+              <PrismLogo />
+            </Link>
+            <p className="text-eyebrow text-subtle">impossible is temporary</p>
+            <p className="max-w-sm text-pretty text-[15px] leading-7 text-muted-foreground">
+              Websites, content, and ads that help customers find and choose
+              your business.
             </p>
-            <p className="text-sm leading-7 text-pretty text-[#8f877b]">
-              {CAPACITY_MESSAGE.headline} {CAPACITY_MESSAGE.intakeLead}{' '}
-              <WaitlistIntakeMonth />.
-            </p>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
-              <TrackedLink
-                href={WAITLIST_CTA.href}
-                label={WAITLIST_CTA.label}
-                location="footer"
-                className={`group inline-flex min-h-11 w-full items-center justify-between gap-3 border-b border-[#f5f0e8] pb-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors hover:text-white focus-visible:ring-offset-4 sm:w-auto sm:justify-start ${focusRing}`}
-              >
-                {WAITLIST_CTA.label}
-                <span
-                  aria-hidden="true"
-                  className="text-[#8f877b] transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#f5f0e8]"
+            {showWaitlistCta ? (
+              <div className="rounded-2xl border border-white/[0.08] bg-card/60 p-5">
+                <p className="flex items-start gap-2.5 text-sm leading-6 text-muted-foreground">
+                  <span
+                    className="prism-live-dot mt-[7px]"
+                    aria-hidden="true"
+                  />
+                  <span>
+                    {CAPACITY_MESSAGE.headline} {CAPACITY_MESSAGE.intakeLead}{' '}
+                    <WaitlistIntakeMonth />.
+                  </span>
+                </p>
+                <TrackedLink
+                  href={WAITLIST_CTA.href}
+                  label={WAITLIST_CTA.label}
+                  location="footer"
+                  className={`group/cta mt-4 inline-flex h-10 items-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 ${focusRing}`}
                 >
-                  →
-                </span>
-              </TrackedLink>
-            </div>
+                  {WAITLIST_CTA.label}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                  />
+                </TrackedLink>
+              </div>
+            ) : null}
           </div>
 
-          {/* Compact pairs on phones, four columns beside the brand on desktop. */}
           <nav
             aria-label="Footer"
-            className="grid grid-cols-2 gap-x-8 gap-y-10 border-t border-white/10 pt-10 sm:grid-cols-4 lg:flex-1 lg:border-t-0 lg:pt-0"
+            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4"
           >
             {footerColumns.map((column) => (
-              <div key={column.heading} className="space-y-3.5">
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8f877b]">
-                  {column.heading}
-                </p>
-                <ul className="space-y-1">
+              <div key={column.heading} className="flex flex-col gap-3">
+                <p className="text-eyebrow text-subtle">{column.heading}</p>
+                <ul className="flex flex-col">
                   {column.links.map((item) => (
                     <li key={item.label}>
                       <Link
@@ -173,7 +188,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                         prefetch={false}
                         target={item.external ? '_blank' : undefined}
                         rel={item.external ? 'noopener noreferrer' : undefined}
-                        className={`inline-flex min-h-11 items-center rounded-sm text-sm text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
+                        className={`inline-flex min-h-10 items-center rounded-sm text-[15px] text-muted-foreground transition-colors hover:text-foreground ${focusRing}`}
                       >
                         {item.label}
                       </Link>
@@ -185,12 +200,9 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
           </nav>
         </div>
 
-        {/* Bottom bar: copyright + legal, then socials — stacks on mobile, aligns on desktop */}
-        <div className="mt-14 flex flex-col gap-8 border-t border-white/10 pt-8 sm:mt-16 md:flex-row md:items-center md:justify-between">
-          <div className="flex flex-col gap-4 text-[#8f877b] sm:flex-row sm:items-center sm:gap-5">
-            <p className="font-mono text-[11px] tracking-[0.08em]">
-              Prism © 2023-{currentYear}.
-            </p>
+        <div className="mt-16 flex flex-col gap-6 border-t border-white/[0.07] pt-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-3 text-subtle sm:flex-row sm:items-center sm:gap-5">
+            <p className="font-mono text-xs">Prism © 2023-{currentYear}.</p>
             <span
               aria-hidden="true"
               className="hidden h-3 w-px bg-white/15 sm:block"
@@ -201,7 +213,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                   key={item.href}
                   href={item.href}
                   prefetch={false}
-                  className={`inline-flex min-h-11 items-center rounded-sm text-xs text-[#8f877b] transition-colors hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
+                  className={`inline-flex min-h-10 items-center rounded-sm text-[13px] text-subtle transition-colors hover:text-foreground ${focusRing}`}
                 >
                   {item.label}
                 </Link>
@@ -209,7 +221,7 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             </div>
           </div>
 
-          <div className="-ml-2.5 flex flex-wrap items-center gap-1 sm:gap-2 md:-mr-2.5 md:ml-0">
+          <div className="-ml-2.5 flex flex-wrap items-center gap-1 md:-mr-2.5 md:ml-0">
             {socialLinks.map((social) => (
               <Link
                 key={social.id}
@@ -217,11 +229,11 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Prism on ${social.label}`}
-                className={`inline-flex size-11 items-center justify-center rounded-md text-[#8f877b] transition-colors hover:bg-white/5 hover:text-[#f5f0e8] focus-visible:ring-offset-2 ${focusRing}`}
+                className={`inline-flex size-10 items-center justify-center rounded-full text-subtle transition-colors hover:bg-white/[0.06] hover:text-foreground ${focusRing}`}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="size-[18px]"
+                  className="size-[17px]"
                   fill="currentColor"
                   aria-hidden="true"
                   focusable="false"
@@ -232,6 +244,16 @@ export default function Footer({ variant: _variant = 'default' }: FooterProps) {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Oversized wordmark that sinks below the fold of the page. */}
+      <div
+        aria-hidden="true"
+        className="relative mt-6 select-none overflow-hidden"
+      >
+        <p className="mx-auto -mb-[0.14em] text-center text-[clamp(6rem,27vw,24rem)] font-semibold leading-[0.8] tracking-[-0.075em] text-white/[0.1] [mask-image:linear-gradient(to_bottom,black_35%,transparent_92%)]">
+          prism
+        </p>
       </div>
     </footer>
   )

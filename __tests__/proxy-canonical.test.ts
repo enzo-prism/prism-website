@@ -41,7 +41,7 @@ describe("proxy canonicalization", () => {
       "/favicon.ico",
       "/case-studies/exquisite-dentistry-home-desktop.jpg",
       "/logos/prism.svg",
-      "/animations/wave/high/frames.json",
+      "/ai-data.json",
     ]) {
       expect(matchesProxy(asset)).toBe(false)
     }

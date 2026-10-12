@@ -2,8 +2,9 @@
 
 import type { FocusEvent, FormEvent } from 'react'
 import { useRef, useState } from 'react'
-import { ArrowUpRight, Check } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -38,7 +39,7 @@ function FieldError({ error, id }: { error: string; id: string }) {
   return (
     <p
       id={id}
-      className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[#d8bc79]"
+      className="text-[0.8125rem] font-medium text-destructive"
       aria-live="polite"
     >
       {error}
@@ -46,11 +47,11 @@ function FieldError({ error, id }: { error: string; id: string }) {
   )
 }
 
-const fieldClassName =
-  'min-h-14 border-white/12 bg-black/40 px-4 text-[1rem] text-[#f5f0e8] placeholder:text-[#6e6e68] focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/30 focus-visible:ring-offset-0'
-const labelClassName =
-  'font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#8f877b]'
-const optionalClassName = 'text-[#6e6e68] normal-case tracking-[0.04em]'
+const fieldClassName = 'h-12 bg-background/60 px-4 text-[1rem]'
+const labelClassName = 'text-[0.875rem] font-medium text-foreground'
+const optionalClassName = 'font-normal text-subtle'
+const panelClassName =
+  'rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset,0_30px_80px_-40px_oklch(0_0_0/80%)] sm:p-8'
 
 export default function ReferralForm() {
   const successHeadingRef = useRef<HTMLHeadingElement>(null)
@@ -162,29 +163,32 @@ export default function ReferralForm() {
 
   if (isSubmitted) {
     return (
-      <div className="border border-white/10 bg-[#070707] p-6 sm:p-9">
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.3em] text-[#d8bc79]">
+      <div className={panelClassName}>
+        <p className="inline-flex items-center gap-2 text-eyebrow text-subtle">
+          <span className="prism-live-dot" aria-hidden="true" />
           Received
         </p>
         <h3
           ref={successHeadingRef}
           tabIndex={-1}
-          className="mt-4 font-sans text-[clamp(1.7rem,5vw,2.4rem)] font-medium leading-[1.02] tracking-[-0.04em] text-[#f5f0e8] focus-visible:outline-hidden"
+          className="text-heading mt-4 text-foreground focus-visible:outline-hidden"
         >
           We&apos;ll take it from here.
         </h3>
-        <p className="mt-4 max-w-xl text-[1rem] leading-7 text-[#b8afa2]">
+        <p className="mt-4 max-w-xl text-pretty text-[1rem] leading-7 text-muted-foreground">
           We&apos;ll reach out to your friend within one business day. The day
           they become a client, $100 goes to you. Then send us the next one.
         </p>
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="lg"
           onClick={handleReset}
-          className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 border border-white/16 bg-white/[0.03] px-6 font-mono text-[0.8rem] uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors duration-200 hover:border-white/30 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-0 motion-reduce:transition-none"
+          className="mt-7"
         >
           Refer another friend
-          <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-        </button>
+          <ArrowRight aria-hidden="true" />
+        </Button>
       </div>
     )
   }
@@ -197,7 +201,7 @@ export default function ReferralForm() {
       method="POST"
       noValidate
       onSubmit={handleReferralSubmit}
-      className="border border-white/10 bg-[#070707] p-6 sm:p-9"
+      className={panelClassName}
     >
       <input
         type="hidden"
@@ -267,7 +271,7 @@ export default function ReferralForm() {
           </div>
         </div>
 
-        <div className="grid gap-6 border-t border-white/10 pt-6 sm:grid-cols-2">
+        <div className="grid gap-6 border-t border-white/[0.08] pt-6 sm:grid-cols-2">
           <div className="space-y-3">
             <Label htmlFor="referral-friend-name" className={labelClassName}>
               Friend&apos;s name
@@ -331,7 +335,7 @@ export default function ReferralForm() {
           />
         </div>
 
-        <div className="space-y-3 border-t border-white/10 pt-6">
+        <div className="space-y-3 border-t border-white/[0.08] pt-6">
           <div className="flex items-start gap-3">
             <input
               id="referral-permission"
@@ -340,7 +344,7 @@ export default function ReferralForm() {
               required
               value="confirmed"
               checked={hasReferralPermission}
-              className="mt-0.5 h-5 w-5 shrink-0 accent-primary"
+              className="mt-0.5 size-5 shrink-0 rounded accent-primary"
               aria-invalid={Boolean(getError('referral_permission'))}
               aria-describedby={
                 getError('referral_permission')
@@ -358,14 +362,14 @@ export default function ReferralForm() {
             />
             <Label
               htmlFor="referral-permission"
-              className="text-[0.95rem] leading-6 text-[#b8afa2]"
+              className="text-[0.95rem] font-normal leading-6 text-muted-foreground"
             >
               I have their permission to share these contact details with Prism.
             </Label>
           </div>
           <p
             id="referral-permission-help"
-            className="pl-8 font-mono text-[0.68rem] leading-5 text-[#8f877b]"
+            className="pl-8 text-[0.8125rem] leading-5 text-subtle"
           >
             We&apos;ll use their details only to follow up about this referral.
           </p>
@@ -400,31 +404,30 @@ export default function ReferralForm() {
             maxLength={600}
             value={note}
             placeholder="They just opened a second location."
-            className="min-h-[96px] border-white/12 bg-black/40 px-4 py-3 text-[1rem] leading-7 text-[#f5f0e8] placeholder:text-[#6e6e68] focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/30 focus-visible:ring-offset-0"
+            className="min-h-[96px] bg-background/60 px-4 py-3 text-[1rem] leading-7"
             onChange={(event) => setNote(event.currentTarget.value)}
           />
         </div>
       </div>
 
-      <div className="mt-7 border-t border-white/10 pt-6">
-        <button
+      <div className="mt-7 border-t border-white/[0.08] pt-6">
+        <Button
           type="submit"
+          size="xl"
           disabled={isSubmitting}
-          className="inline-flex min-h-14 w-full items-center justify-center gap-2 border border-[#d8bc79]/60 bg-[#d8bc79]/12 px-6 font-mono text-[0.8rem] uppercase tracking-[0.18em] text-[#f5f0e8] transition-colors duration-200 hover:bg-[#d8bc79]/20 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/40 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none"
+          className="w-full"
         >
           {isSubmitting ? 'Sending…' : 'Send the referral'}
-          {!isSubmitting ? (
-            <Check aria-hidden="true" className="h-4 w-4" />
-          ) : null}
-        </button>
-        <p className="mt-4 text-center font-mono text-[0.68rem] leading-6 text-[#8f877b]">
+          {!isSubmitting ? <Check aria-hidden="true" /> : null}
+        </Button>
+        <p className="mt-4 text-center text-[0.8125rem] leading-6 text-subtle">
           We&apos;ll reach out to them. You get $100 when they become a client.
         </p>
 
         {submitError ? (
           <p
             role="alert"
-            className="mt-4 border border-[#d8bc79]/30 bg-[#d8bc79]/8 px-4 py-3 text-[0.95rem] text-[#f5f0e8]"
+            className="mt-4 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-[0.95rem] text-foreground"
           >
             {submitError}
           </p>

@@ -2,12 +2,19 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, Camera } from "lucide-react"
+import { ArrowUpRight, Camera } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { ArrowLink } from "@/components/landing/dental/primitives"
+import { Section, SectionHeader } from "@/components/prism/section"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel"
 import { WAITLIST_FOCUS_HREFS } from "@/lib/waitlist"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from "@/components/ui/carousel"
 
 type ShootShot = {
   src: string
@@ -54,65 +61,67 @@ function ShootCarouselCard({ shoot }: { shoot: Shoot }) {
   }, [api])
 
   return (
-    <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div className="overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-card p-5 sm:p-8">
+      <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-            <Camera className="h-4 w-4" aria-hidden />
-            on-location
-          </div>
-          <h3 className="mt-2 text-2xl font-semibold text-neutral-900">{shoot.practice}</h3>
+          <p className="flex items-center gap-2 text-eyebrow text-subtle">
+            <Camera className="size-3.5" aria-hidden />
+            On-location · {shoot.date}
+          </p>
+          <h3 className="text-heading mt-3 text-foreground">{shoot.practice}</h3>
+          <p className="mt-2 max-w-[56ch] text-[15px] leading-7 text-muted-foreground">{shoot.summary}</p>
         </div>
-        <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
           {shoot.website ? (
-            <Button asChild variant="ghost" className="w-full rounded-full px-6 py-2 text-sm lowercase sm:w-auto">
-              <Link href={shoot.website} target="_blank" rel="noreferrer">
-                visit website
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-              </Link>
-            </Button>
+            <a
+              href={shoot.website}
+              target="_blank"
+              rel="noreferrer"
+              className="group/site inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+            >
+              visit website
+              <ArrowUpRight
+                className="size-4 text-muted-foreground transition-transform duration-200 group-hover/site:-translate-y-0.5 group-hover/site:translate-x-0.5"
+                aria-hidden
+              />
+            </a>
           ) : null}
-          <Button asChild variant="outline" className="w-full rounded-full px-6 py-2 text-sm lowercase sm:w-auto">
-            <Link href={WAITLIST_FOCUS_HREFS.content}>
-              join the waitlist
-              <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-            </Link>
-          </Button>
+          <ArrowLink href={WAITLIST_FOCUS_HREFS.content}>join the waitlist</ArrowLink>
         </div>
       </div>
 
       <Carousel
-        className="mt-8 px-1 sm:px-0"
+        className="mt-8"
         opts={{
           align: "start",
           dragFree: true,
-          containScroll: "trimSnaps"
+          containScroll: "trimSnaps",
         }}
         setApi={setApi}
       >
-        <CarouselContent className="-ml-2">
+        <CarouselContent className="-ml-3">
           {shoot.shots.map((shot, index) => (
-            <CarouselItem key={`${shoot.practice}-${index}`} className="pl-2 sm:basis-1/2 lg:basis-1/3">
-              <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
+            <CarouselItem key={`${shoot.practice}-${index}`} className="basis-[85%] pl-3 sm:basis-1/2 lg:basis-1/3">
+              <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-popover">
                 <Image
                   src={shot.src}
                   alt={shot.alt}
                   width={1200}
                   height={800}
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 45vw, 80vw"
                   className="h-60 w-full object-cover sm:h-64"
-                  priority={index === 0}
                 />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex text-neutral-600 hover:text-neutral-900" />
-        <CarouselNext className="hidden sm:flex text-neutral-600 hover:text-neutral-900" />
+        <CarouselPrevious className="left-3 hidden size-10 bg-background/80 backdrop-blur sm:flex" />
+        <CarouselNext className="right-3 hidden size-10 bg-background/80 backdrop-blur sm:flex" />
       </Carousel>
 
       <div className="mt-5 flex items-center gap-3 sm:hidden">
         <div
-          className="flex-1 rounded-full bg-neutral-100"
+          className="h-1 flex-1 rounded-full bg-white/[0.08]"
           role="progressbar"
           aria-label="carousel progress"
           aria-valuemin={1}
@@ -120,12 +129,12 @@ function ShootCarouselCard({ shoot }: { shoot: Shoot }) {
           aria-valuenow={currentIndex + 1}
         >
           <div
-            className="h-1 rounded-full bg-neutral-900 transition-[width] duration-300 ease-out"
+            className="h-1 rounded-full bg-foreground transition-[width] duration-300 ease-out"
             style={{ width: `${progress}%` }}
             aria-hidden="true"
           />
         </div>
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+        <span className="font-mono text-[11px] text-subtle">
           {currentIndex + 1}/{totalSlides}
         </span>
       </div>
@@ -135,22 +144,18 @@ function ShootCarouselCard({ shoot }: { shoot: Shoot }) {
 
 export default function RecentShootsSection({ shoots }: RecentShootsSectionProps) {
   return (
-    <section className="px-4 py-16 sm:py-20">
-      <div className="container mx-auto max-w-6xl">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.32em] text-neutral-500">recent shoots</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">see what practices walk away with</h2>
-          <p className="mt-4 text-base text-neutral-600">
-            swipe through the latest office &amp; team sessions. Everything below is already live on websites, listings, and socials.
-          </p>
-        </div>
-
-        <div className="space-y-10">
-          {shoots.map((shoot) => (
-            <ShootCarouselCard key={shoot.practice} shoot={shoot} />
-          ))}
-        </div>
+    <Section aria-labelledby="recent-shoots-title">
+      <SectionHeader
+        id="recent-shoots-title"
+        eyebrow="Recent shoots"
+        title="see what practices walk away with."
+        description="swipe through the latest office & team sessions. Everything below is already live on websites, listings, and socials."
+      />
+      <div className="mt-12 space-y-8">
+        {shoots.map((shoot) => (
+          <ShootCarouselCard key={shoot.practice} shoot={shoot} />
+        ))}
       </div>
-    </section>
+    </Section>
   )
 }

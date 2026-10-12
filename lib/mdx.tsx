@@ -126,6 +126,11 @@ export async function renderPost(slug: string, options?: RenderPostOptions) {
         components={mdxComponents}
         options={{
           parseFrontmatter: false, // We already parsed it
+          // MDX is first-party repo content, so JS expressions stay enabled:
+          // blog widgets take array/object props like `items={[...]}`, which
+          // next-mdx-remote 6 strips by default. blockDangerousJS stays at its
+          // default (true) to keep eval/Function/require-style code out.
+          blockJS: false,
           mdxOptions: {
             remarkPlugins: [],
             rehypePlugins: [rehypeSlug],
@@ -142,15 +147,13 @@ export async function renderPost(slug: string, options?: RenderPostOptions) {
     // In development, show detailed error
     if (process.env.NODE_ENV === 'development') {
       return (
-        <div className="prose-blog">
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 my-8">
-            <h3 className="text-lg font-semibold text-red-900 mb-2">MDX Rendering Error</h3>
-            <p className="text-red-700 mb-4">Failed to render blog post "{slug}"</p>
-            <details>
-              <summary className="cursor-pointer font-medium text-red-800">Error Details</summary>
-              <pre className="mt-2 text-sm text-red-600 overflow-auto">{error instanceof Error ? error.message : String(error)}</pre>
-            </details>
-          </div>
+        <div className="my-8 rounded-2xl border border-destructive/40 bg-destructive/10 p-5">
+          <h3 className="mb-2 text-lg font-semibold text-foreground">MDX Rendering Error</h3>
+          <p className="mb-4 text-muted-foreground">Failed to render blog post "{slug}"</p>
+          <details>
+            <summary className="cursor-pointer font-medium text-foreground">Error Details</summary>
+            <pre className="mt-2 overflow-auto text-sm text-destructive">{error instanceof Error ? error.message : String(error)}</pre>
+          </details>
         </div>
       )
     }

@@ -4,6 +4,9 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
 import LibraryClient from "@/components/library/LibraryClient"
+import { LandingHero } from "@/components/landing/landing-hero"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Section } from "@/components/prism/section"
 import { CollectionPageSchema, ItemListSchema } from "@/components/schema-markup"
 import { getFeaturedPost, getLibraryPosts } from "@/lib/library"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -36,44 +39,43 @@ export default async function LibraryPage() {
   }))
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs items={[{ name: "home", url: "/" }, { name: "library", url: "/library" }]} />
-        </div>
-
-        <section className="border-b border-border/60 py-10 md:py-14">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl space-y-4">
-              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                Prism Library
-              </h1>
-              <p className="text-base text-muted-foreground sm:text-lg">
-                Short lessons from great founders and world-class athletes, often pulled from history, on
-                building companies and elite careers.
-              </p>
-              <div className="space-y-3 text-sm text-muted-foreground sm:text-base">
-                <p>
-                  Athlete lessons sharpen business and engineering decisions. Founder lessons strengthen
-                  training, recovery, and competitive mindset. Many founders and athletes follow Prism for
-                  this curated signal.
-                </p>
-                <p>
-                  Prism clients work with Prism because we apply these lessons to grow their businesses.
-                  The Library is our open archive of what we've learned about being a founder and
-                  world-class athlete so others can chase greatness.
-                </p>
-              </div>
-            </div>
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <LandingHero
+          location="library hero"
+          showStatus={false}
+          hideCta
+          align="left"
+          glow="violet"
+          eyebrow="Library"
+          title="the Prism library."
+          description="Short lessons from great founders and world-class athletes, often pulled from history, on building companies and elite careers."
+          topSlot={
+            <Breadcrumbs
+              className="mb-0 py-0"
+              items={[{ name: "home", url: "/" }, { name: "library", url: "/library" }]}
+            />
+          }
+        >
+          <div className="grid max-w-4xl gap-4 text-pretty text-[0.95rem] leading-7 text-muted-foreground sm:grid-cols-2 sm:gap-8">
+            <p>
+              Athlete lessons sharpen business and engineering decisions. Founder lessons strengthen
+              training, recovery, and competitive mindset. Many founders and athletes follow Prism for
+              this curated signal.
+            </p>
+            <p>
+              Prism clients work with Prism because we apply these lessons to grow their businesses.
+              The Library is our open archive of what we&apos;ve learned about being a founder and
+              world-class athlete so others can chase greatness.
+            </p>
           </div>
-        </section>
+        </LandingHero>
 
-        <section className="py-10 md:py-14">
-          <div className="container mx-auto px-4 md:px-6">
-            <LibraryClient posts={posts} featured={featured} />
-          </div>
-        </section>
+        <Section aria-label="Library posts" className="pt-0 sm:pt-0">
+          <LibraryClient posts={posts} featured={featured} />
+        </Section>
+        <FinalCta location="library final cta" secondary={{ label: "See the work", href: "/case-studies" }} />
       </main>
       <Footer />
       <CollectionPageSchema name="Prism Library" description={PAGE_DESCRIPTION} url={CANONICAL_URL} />

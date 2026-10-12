@@ -32,7 +32,7 @@ export default function StepIndicator({
   }
 
   const baseClasses =
-    "flex items-center justify-center rounded-md border font-semibold font-pixel tracking-[0.12em] transition-[transform,background-color,border-color,color,box-shadow] duration-200"
+    "flex items-center justify-center rounded-md border font-semibold tabular-nums transition-[transform,background-color,border-color,color,box-shadow] duration-200"
 
   const variantClasses = {
     default: cn(

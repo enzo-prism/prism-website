@@ -24,23 +24,18 @@ For a current whole-project map, start with `docs/project-overview.md`. This gui
 - `pnpm test:visual:locked` builds and boots an isolated `next start` server on port `3300`. The CI job is a blocking deploy gate (with CI-only retries); run it whenever locked routes are affected.
 - For cross-browser route-load smoke checks, run `pnpm build`, start `pnpm start -p 3301` in a second terminal, then run `pnpm test:performance:smoke`. The smoke script covers `/`, `/about`, `/pricing`, and `/waitlist` on Chromium, Firefox, and WebKit using both desktop and mobile profiles.
 - Run `pnpm test:visual` when you need broader visual coverage beyond the locked routes.
-- Run `pnpm test:visual:animations` when you change the looping hero motion on `/`, `/case-studies`, or `/wall-of-love`. It verifies the real loops advance on Chromium, Firefox, and WebKit across desktop plus mobile emulation.
+- Run `pnpm test:visual:animations` when you change homepage motion. `__tests__/visual/animation-loops.spec.ts` verifies that the hero refraction scene animates and the `#work` wall marquee moves on Chromium, Firefox, and WebKit across desktop plus mobile emulation (the old ASCII loop checks were removed with the ASCII system).
 - Run `pnpm exec playwright test __tests__/visual/blog-copy-markdown.spec.ts --project=desktop-chromium` when changing the blog markdown copy button or `/api/blog/[slug]/markdown`.
 - For blog-post content/frontmatter additions, run `pnpm exec jest __tests__/sitemap.test.ts __tests__/blog-canonical.test.ts --runInBand` as a fast regression check.
 
 ### Homepage refresh checklist
 
-- The homepage first viewport is one integrated dark composition: shared site navbar, copy-led hero card, and a subtle ASCII motion layer behind the text instead of a route-only overlay header treatment.
-- The homepage structure is intentionally ultra-minimal; see `docs/pages-overview.md#homepage-appclient-pagetsx` for the current section order (it now includes `HomeProductsSection` before the final waitlist CTA). Avoid reintroducing older apps/training/wall-of-love-carousel sections unless product direction changes.
-- `components/home/HomeAiToolsSection.tsx` is no longer part of the homepage story. If AI/tool proof comes back, it should be a tiny supporting proof detail instead of a logo matrix or explanatory section.
-- AI tool logos remain vendored from SVGL into `public/logos/ai-tools/` for any future proof detail or deeper page that needs them; they are not an active homepage requirement.
-- OpenClaw, Grok, and Cursor use supplied custom SVGs in the same folder and should be treated as local brand assets if that proof returns.
-- `components/home/HomeHeroSection.tsx` is the canonical homepage hero surface. Keep the shared `AsciiHeroBackdrop` treatment restrained so motion supports the copy instead of overpowering it.
-- Keep the reduced-motion fallback pinned to the static ASCII frame so visual tests remain deterministic, and keep the shared navbar/footer consistent across the homepage and inner routes.
-- The client deck directly below the hero is broad business proof, not a dental photo gallery. Its card data lives in `HOMEPAGE_CLIENT_WINS`; the wrapper is still named `HomeDentistWinsSection` for compatibility, but the live component is `components/home/HomeClientCoverFlow.tsx`, a mixed-client 3D Cover Flow.
-- Cover Flow cards render **real client-website screenshots** (each slide's `image`, a `public/case-studies/<slug>-home-mobile.jpg` capture). Motion is a restrained, input-led deck: one shared camera, a one-time back-to-front fan-open entrance, hover lift + neighbour yield, damped pointer parallax, a single `cubic-bezier(0.22,1,0.36,1)` easing, and **no autoplay**. Touch (`isTouch = useMobile('(hover: none), (pointer: coarse)')`) drops parallax/tilt/hover, uses one static shadow, mounts fewer covers with a tighter fan, drops the on-card CTA pill, and swipes 1:1 (casual swipe = one card, flick = more). Keep `prefers-reduced-motion` on the flat scroll-snap fallback. The active cover links to the case study; do not reintroduce the retired abstract-visual / `data-client-win-abstract` / color-toggle behavior. New or refreshed mobile screenshots are captured with `node scripts/capture-case-study-screenshots.mjs --force --mobile-only <slug>`.
+- The homepage (2026-10-12 Prism Spectrum redesign) is composed in `app/client-page.tsx`; see `docs/pages-overview.md#homepage-appclient-pagetsx` for the section order. Copy lives in `components/home/homepage-content.ts` and follows the prism-writing skill (`prism-brand` pack); never type a number into that file, resolve it from `lib/proof-metrics.ts` or `getCaseStudyMetric`.
+- The first viewport is one composition: the transparent fixed navbar, `HomeHero` (status pill, lowercase display h1, one subhead, waitlist + "See the work" CTAs, compact proof row) and the `components/home/HomeRefraction.tsx` scene (light enters a prism and leaves as labeled bands). Keep the base style the finished frame so reduced-motion runs and screenshots see complete content.
+- Real client work is the hero below the fold: `HomeWorkWall` (`#work`) is a tilted marquee of current-client desktop screenshots from `HOMEPAGE_CLIENT_WINS`. Former clients never appear there (guarded by `__tests__/former-clients-highlight.test.ts`). New or refreshed screenshots come from `node scripts/capture-case-study-screenshots.mjs --force <slug>`.
 - `components/runtime-client-shell.tsx` mounts route-surface setup, `AnalyticsProvider`, and Vercel Analytics immediately, then loads `components/runtime-deferred-features.tsx` during browser idle time for monitors, error/scroll tracking, and toaster wiring.
-- If you change hero copy/layout, update the locked-route snapshot test and re-run `pnpm test:visual:locked`.
+- If you change the homepage h1, waitlist copy, or the numbers, services, or how-to-get-in sections, update `__tests__/visual/locked-routes.spec.ts` (copy guards and section snapshots) and re-run `pnpm test:visual:locked`.
+- AI tool logos remain vendored from SVGL into `public/logos/ai-tools/` for any deeper page that needs them; they are not an active homepage requirement.
 
 ### Retired website assistant
 
@@ -57,7 +52,7 @@ The homepage guide, floating launcher, and all website assistant runtime/configu
 
 ## Formspree Integration
 
-Live forms live under `components/forms/`: `WaitlistForm` (the only sales form), `ReferralForm`, plus the scholarship, models, and design-vote forms in their routes. The Contact, Free Analysis, Get Started / `/apply`, Website/Content/Ads Intake, AEO, book-a-shoot, and `/ai` forms were deleted on 2026-09-14 (routes 308 to `/waitlist`). Legacy AI Website Launch form code remains in `components/ai-website-launch/AiWebsiteLaunchForm.tsx` for archival reference only.
+Live forms live under `components/forms/`: `WaitlistForm` (the only sales form), `ReferralForm`, plus the scholarship, models, and design-vote forms in their routes. The Contact, Free Analysis, Get Started / `/apply`, Website/Content/Ads Intake, AEO, book-a-shoot, and `/ai` forms were deleted on 2026-09-14 (routes 308 to `/waitlist`). The archival AI Website Launch form was deleted in the 2026-10 cleanup.
 
 Key details:
 
@@ -162,29 +157,17 @@ The live confirmation route is `app/waitlist/thank-you/`. `app/thank-you/` remai
   - `pnpm test:visual:animations`
 - If you introduce any new decorative autoplay video, update this section and run the above tests before merge.
 
-## Mobile Hero ASCII Resilience
+## Hero Media Delivery
 
-- ASCII animations use preview-first loading plus optional partial-frame batching in `components/ascii/AsciiAnimation.tsx`.
-- `components/home/DeferredAsciiHeroBackdrop.tsx` now treats the homepage/about ASCII hero motion as progressive enhancement with adaptive profiles instead of a blanket mobile kill switch. It still waits for idle time, but it can now render on healthy phones/tablets with a lighter FPS + batching profile so the homepage loop actually appears on mobile.
-- New props for fault-tolerant loading:
-  - `loadStrategy?: "batch" | "all"` (default: `"batch"`)
-  - `batchSize?: number` (default: `24`)
-  - `maxConcurrentFetches?: number` (default: `6`)
-  - `continueOnFrameError?: boolean` (default: `true`)
-- The homepage hero now uses `forceAutoplay` for the visible-above-the-fold ASCII layer, while `AsciiAnimation` still pauses itself when the page is hidden or motion should stop.
-- Keep the placeholder/preview frame visible while additional chunks stream in so mobile motion starts quickly even when the full set is large.
-- Never fail the entire animation because of a single frame request; keep partial sequence playback when at least 2 frames are available.
-- If zero frames load, render the deterministic fallback `"No frames loaded"`.
-- `AsciiHeroBackdrop` defaults to `bundledFrames`, which fetches a single pre-built `frames.json` per animation folder instead of hundreds of per-frame files (the homepage wave hero used to issue 301 requests). Regenerate bundles with `pnpm ascii:bundle` after adding or editing frames; the loader falls back to per-frame fetching when a bundle is missing.
-- `/animations/*` and `/ascii/*` are served with `Cache-Control: immutable` (see `next.config.mjs`). Changed assets must ship under a new filename — never overwrite an existing file in those folders.
+- The ASCII animation system (`components/ascii/*`, `DeferredAsciiHeroBackdrop`, `lib/ascii-*`, `public/animations`, `public/ascii`, and the `ascii:*` scripts) was retired in the 2026-10 redesign. Do not reintroduce it; heroes use real work, grids, glows, and the spectrum kit in `components/prism/`.
 - Cloudinary media must carry delivery transforms in the URL: `q_auto,vc_auto` (plus a `w_…` cap for oversized sources) on videos, `f_auto,q_auto,w_…` on images that bypass `next/image` (raw posters, CSS backgrounds, `<video poster>`). `buildCloudinaryVideoPoster` strips video transforms when deriving poster frames.
 
 ## Pricing Page Content
 
 - Pricing UI is in `app/pricing/client-page.tsx` with the shared dark-system hero in `components/pricing/PricingHero.tsx`.
-- Keep canonical pricing copy aligned with `lib/pricing-model.ts`, which models the **four packaged offers on `/pricing`**: the PRO Website, Content OS, Dental OS, and Prism Infinity. No offer shows a public price; every primary CTA is a waitlist CTA (`PRICING_PRIMARY_CTA = WAITLIST_CTA`). Public chrome frames three services (Website, Content, Ads) from `lib/services.ts`; Dental OS and Infinity are not top-nav items. Never reintroduce public dollar amounts (`$300`, `$100/month`, `$5,000`, `$1,000/month`, `$2,000/month` are forbidden tokens). Always spell `/month` (never `/mo`), and run `pnpm verify:pricing-consistency` (`lib/pricing-consistency.ts`) on any pricing copy change.
+- Keep canonical pricing copy aligned with `lib/pricing-model.ts`, which models the **four packaged offers on `/pricing`**: the PRO Website, Content OS, Dental OS, and Prism Infinity. No offer shows a public price; every primary CTA is a waitlist CTA (`PRICING_PRIMARY_CTA = WAITLIST_CTA`). The three public services (Website, Content, Ads) come from `lib/services.ts`; the header Services menu also links Dental OS and Prism Infinity (`NAV_SERVICE_ITEMS`). Never reintroduce public dollar amounts (`$300`, `$100/month`, `$5,000`, `$1,000/month`, `$2,000/month` are forbidden tokens). Always spell `/month` (never `/mo`), and run `pnpm verify:pricing-consistency` (`lib/pricing-consistency.ts`) on any pricing copy change.
 - Structured data here should emit the four-offer schema and point to `https://www.design-prism.com/pricing`.
-- Pricing, about, and the homepage share the core-route typography and CTA system from `components/core-route/CoreRoutePrimitives.tsx`. Reuse those primitives before hand-rolling new route-level actions or section headers.
+- Pricing, about, and the homepage share the marketing kit in `components/prism/` (`Section`, `SectionHeader`, `WaitlistButton`, `FinalCta`) and the shadcn primitives in `components/ui/`. Reuse those before hand-rolling new route-level actions or section headers.
 - History: the 2026-07-27 call-first model (`BOOK_A_CALL_CTA`) and the earlier self-serve checkout (`lib/payment-links.ts`) are retired.
 
 ## CTA Routing
@@ -193,12 +176,12 @@ Every sales CTA points to `/waitlist` (or `/waitlist?focus=website|content|ads` 
 
 ## Typography & Casing
 
-- Do not enforce global lowercase transforms for site copy; preserve natural capitalization for readability.
-- Use Tailwind text-transform utilities only when a specific component intentionally needs stylistic casing.
+- Headlines are written lowercase in the copy itself and end with a period (house style from the prism-writing skill, `prism-brand` pack); proper nouns keep their capitals. Body copy uses sentence case. Do not apply a global CSS lowercase or uppercase transform.
+- Type comes from the Spectrum scale utilities in `app/globals.css` (`text-display`, `text-title`, `text-heading`, `text-lead`, `text-eyebrow`); Geist Sans for reading, Geist Mono for eyebrows and metadata. The Geist Pixel font and `font-pixel` are retired.
 
 ## UI Components (shadcn/ui)
 
-The site uses shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers) with the `radix-vega` preset (neutral palette + subtle menu accent, Inter as `--font-sans`). Add new primitives via the CLI so we stay aligned with upstream.
+The site uses stock shadcn/ui primitives under `components/ui/` (Tailwind + Radix + `cn()` helpers) with the `radix-vega` preset (`components.json`: neutral base, subtle menu accent, lucide icons), themed for the permanently dark canvas; `--font-sans` / `--font-mono` resolve to Geist. The old pixel styling (square corners, pixel font, forced uppercase, green glow) is retired. Marketing composition lives in `components/prism/*` (see `DESIGN.md`). Add new primitives via the CLI so we stay aligned with upstream.
 
 - Add a component: `pnpm dlx shadcn@latest add <component>`
 - Common additions: `alert`, `tooltip`, `dropdown-menu`, `popover`, `sheet`, `sonner`
@@ -209,14 +192,15 @@ Form note: our marketing forms rely on native HTML5 validation via `useFormValid
 
 ## Sticky Navigation Offsets
 
-The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). If a route mounts `CaseStudySectionNav`, it also sets `--prism-case-study-nav-height` via `useCaseStudyStickyNavHeight` (see `hooks/use-case-study-sticky-nav.ts`), and jump targets rely on `scroll-margin-top` for correct offsets when scrolling into view. Current live case study detail pages are simplified and do not render chapter menus, but the offset plumbing stays available for any future long-form routes.
+The navbar dynamically sets a CSS variable (`--prism-header-height`) so other sticky UI can position itself below the full header stack (including case study breadcrumbs). The retired case-study chapter menu (`CaseStudySectionNav`, `--prism-case-study-nav-height`) was deleted in the 2026-10 cleanup.
 
 ## Navbar And Footer
 
 - `components/navbar.tsx` and `components/footer.tsx` are the canonical site chrome for both the homepage and inner routes. Prefer changing them once instead of introducing route-specific variants unless product direction explicitly splits the chrome again.
-- The current chrome language is minimal black surfaces, white/off-white type, and restrained tactile hover/focus states. Subtle transforms/glow are okay on the logo mark when they respect reduced motion and do not change layout width; keep nav text hover states stable and readable.
-- Header navigation uses `NAV_ITEMS` in `lib/constants.ts`: exactly **Home** (`/`), **Clients** (`/case-studies`), and **Wall of Love** (`/wall-of-love`), in that order on desktop and mobile. All three are direct links. Services and Products remain in the footer and homepage sections; there are no header dropdowns or header CTA. Verify the desktop rail at `lg` (1024px), the mobile sheet, locked snapshots, and a representative case-study detail page. Preserve stable `--prism-header-height`, scroll locking, prior inert state, first-link focus, Escape focus return, and route-close.
-- The footer leads with one CTA, `Join the waitlist` (`WAITLIST_CTA` via `TrackedLink`), under a short capacity line, plus a `Refer a friend ($100)` link to `/refer` in the Company column. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
+- The chrome is the Prism Spectrum header and footer: near-black surfaces, hairline borders, `PrismLogo`, white pill CTAs with the live dot, and restrained hover/focus states that respect reduced motion.
+- Header (64px; fixed and transparent at the top of `/`, solid after 8px of scroll; sticky + solid elsewhere): `NAV_ITEMS` in `lib/constants.ts` (Work `/case-studies`, Wall of Love, About, Pricing) and `NAV_SERVICE_ITEMS` (Websites, Content, Ads, Dental OS, Prism Infinity). Desktop renders a shadcn `NavigationMenu`: Work, a "Services" dropdown (five services with icons, "All services" → `/services`, a featured waitlist card), Wall of Love, About, Pricing. A white "Join the waitlist" pill with a live dot (`data-testid="navbar-cta"`) sits beside the menu; on `/waitlist*` it becomes a quiet "<Month> intake" status (`data-testid="navbar-status"`). Case study detail pages add a breadcrumb row (home / work / client). Verify the desktop menu at `lg` (1024px) with `__tests__/visual/products.spec.ts`, the mobile panel with `pnpm test:mobile-navbar`, the locked snapshots, and a representative case-study detail page.
+- Mobile panel: portaled full-height panel below the measured header listing the four links, the five services, and a waitlist CTA card. Preserve stable `--prism-header-height`, scroll locking, prior inert state, first-link focus, Escape focus return, close at desktop width, and route-close.
+- Footer: `PrismLogo`, the "impossible is temporary" line, a capacity line + `Join the waitlist` pill (`WAITLIST_CTA` via `TrackedLink`, `location="footer"`; hidden with `showWaitlistCta={false}` on `/waitlist` and `/waitlist/thank-you`), Services / Products / Proof / Company columns (Company carries `Refer a friend ($100)` → `/refer`), a legal row, socials, and an oversized "prism" wordmark. Do not add a footer calendar or "Book call" path unless the funnel strategy changes.
 
 ## Deployment
 

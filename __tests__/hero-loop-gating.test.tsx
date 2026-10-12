@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 
-import AsciiMotionIcon from '@/components/ascii/AsciiMotionIcon'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
 import HeroLoopingVideo from '@/components/HeroLoopingVideo'
 
@@ -174,38 +173,6 @@ describe('Hero background loops are device-gated on touch', () => {
     expect(screen.getByRole('img', { name: 'Hero poster' })).toBeInTheDocument()
     expect(
       document.querySelector('video[data-hero-loop="true"]'),
-    ).not.toBeInTheDocument()
-  })
-
-  it('does not render AsciiMotionIcon video on coarse/touch pointers', () => {
-    setMatchMedia({ pointerCoarse: true })
-
-    render(
-      <AsciiMotionIcon
-        videoSrc="https://example.com/icon.mp4"
-        posterSrc="https://example.com/icon-poster.png"
-        alt="ASCII icon"
-      />,
-    )
-
-    expect(screen.getByRole('img', { name: 'ASCII icon' })).toBeInTheDocument()
-    expect(document.querySelector('video')).not.toBeInTheDocument()
-  })
-
-  it('renders AsciiMotionIcon video on non-touch pointers', () => {
-    setMatchMedia({ pointerCoarse: false })
-
-    render(
-      <AsciiMotionIcon
-        videoSrc="https://example.com/icon.mp4"
-        posterSrc="https://example.com/icon-poster.png"
-        alt="ASCII icon"
-      />,
-    )
-
-    expect(document.querySelector('video')).toBeInTheDocument()
-    expect(
-      screen.queryByRole('img', { name: 'ASCII icon' }),
     ).not.toBeInTheDocument()
   })
 

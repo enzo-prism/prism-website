@@ -1,89 +1,72 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next'
+import InstagramEmbed from '@/components/instagram-embed'
+import Footer from '@/components/footer'
+import { LandingHero } from '@/components/landing/landing-hero'
+import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Section } from '@/components/prism/section'
+import { WebPageSchema } from '@/components/schema-markup'
+import { Card } from '@/components/ui/card'
+import { HOTTEST_CONTENT } from '@/lib/hottest-content'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-import InstagramEmbed from "@/components/instagram-embed"
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import { WebPageSchema } from "@/components/schema-markup"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { HOTTEST_CONTENT } from "@/lib/hottest-content"
-import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
-
-const PAGE_TITLE = 'Prism\'s hottest content library'
+const PAGE_TITLE = "Prism's hottest content library"
 const PAGE_DESCRIPTION =
-  'See Prism\'s top-performing Instagram reels exactly as they appeared on the platform, with live embeds and full context from the original posts.'
-const CANONICAL_URL = "https://www.design-prism.com/hottest-content"
+  "See Prism's top-performing Instagram reels exactly as they appeared on the platform, with live embeds and full context from the original posts."
+const CANONICAL_URL = 'https://www.design-prism.com/hottest-content'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: "/hottest-content",
+  path: '/hottest-content',
   index: false,
-  ogImage: "/prism-opengraph.png",
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function HottestContentPage() {
   const uniqueContent = Array.from(
-    new Map(HOTTEST_CONTENT.map((item) => [item.instagramUrl, item])).values()
+    new Map(HOTTEST_CONTENT.map((item) => [item.instagramUrl, item])).values(),
   )
 
   return (
-    <div className="flex min-h-screen flex-col bg-neutral-50">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1 py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center md:mx-auto md:max-w-3xl">
-            <Badge variant="outline" className="lowercase">
-              our hottest content
-            </Badge>
-            <h1 className="mt-4 text-4xl font-bold tracking-tighter lowercase sm:text-5xl">
-              the reels that broke through
-            </h1>
-            <div className="mt-6 rounded-2xl border border-neutral-200 bg-white/70 p-6 shadow-sm backdrop-blur">
-              <div className="space-y-5 text-left text-neutral-700 md:text-xl leading-relaxed lowercase">
-                <p className="font-medium text-neutral-900">
-                  we obsess over dropping the most valuable playbooks for founders: clips that teach more in 30 seconds
-                  than most courses do in hours.
-                </p>
-                <p>
-                  every strategy is vetted against our own results. these are the exact tactics we use to grow prism and help
-                  clients level up their online presence.
-                </p>
-                <p>
-                  the mission is simple: give away so much insight that you come back, share it with your team, and build louder
-                  than your competition.
-                </p>
-              </div>
-            </div>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button variant="outline" className="rounded-full lowercase" asChild>
-                <Link href="/wall-of-love">wall of love</Link>
-              </Button>
-              <Button variant="secondary" className="rounded-full lowercase" asChild>
-                <Link href="/waitlist">{FREE_AUDIT_CTA_TEXT}</Link>
-              </Button>
-            </div>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Our hottest content"
+          title="the reels that broke through."
+          description="We obsess over dropping the most valuable playbooks for founders: clips that teach more in 30 seconds than most courses do in hours."
+          location="hottest content hero"
+          secondary={{ label: 'See the Wall of Love', href: '/wall-of-love' }}
+          glow="violet"
+        />
+
+        <Section className="pt-0 sm:pt-0" aria-label="Instagram reels">
+          <div className="grid gap-6 border-y border-white/[0.08] py-8 text-pretty text-[15px] leading-7 text-muted-foreground sm:grid-cols-2 sm:gap-10">
+            <p>
+              Every strategy is vetted against our own results. These are the
+              exact tactics we use to grow Prism and help clients level up their
+              online presence.
+            </p>
+            <p>
+              The mission is simple: give away so much insight that you come
+              back, share it with your team, and build louder than your
+              competition.
+            </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2">
+          <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
             {uniqueContent.map((item) => (
-              <Card key={item.instagramUrl} className="overflow-hidden border-neutral-200">
-                <CardContent className="p-0">
+              <li key={item.instagramUrl} className="min-w-0">
+                <Card className="h-full overflow-hidden p-2 sm:p-4">
                   <InstagramEmbed url={item.instagramUrl} className="w-full" />
-                </CardContent>
-              </Card>
+                </Card>
+              </li>
             ))}
-          </div>
+          </ul>
+        </Section>
 
-          <div className="mt-16 text-center">
-            <Button variant="outline" className="rounded-full lowercase" asChild>
-              <Link href="/waitlist">{FREE_AUDIT_CTA_TEXT}</Link>
-            </Button>
-          </div>
-        </div>
+        <FinalCta location="hottest content final cta" />
       </main>
       <Footer />
       <WebPageSchema

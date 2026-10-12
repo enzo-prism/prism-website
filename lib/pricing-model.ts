@@ -24,9 +24,12 @@ export type PricingOffer = {
   priceCurrency: 'USD'
   billingPeriod: PricingBillingPeriod
   priceKind: PricingPriceKind
-  /** Primary price string shown to buyers, e.g. "Custom, scoped on a call". */
+  /**
+   * The price slot shown to buyers. With no public prices, it carries the
+   * engagement shape instead, e.g. "3-month setup, then monthly".
+   */
   priceLabel: string
-  /** Secondary price line under the primary label. */
+  /** Secondary line under the engagement shape. */
   priceSubLabel?: string
   description: string
   primaryCta: {
@@ -44,10 +47,12 @@ export type PricingOffer = {
 // waitlist (WAITLIST_CTA in lib/waitlist.ts); scope is agreed together once we
 // reach out. Do not reintroduce public dollar amounts anywhere. (Internal
 // analytics values live in lib/lead-values.ts and are not public pricing.)
-export const WEBSITE_PRICE_LABEL = 'Scoped from the waitlist'
-export const CONTENT_OS_PRICE_LABEL = 'Scoped from the waitlist'
+// The price slot shows each offer's engagement shape instead, using only
+// facts the offer pages already state.
+export const WEBSITE_PRICE_LABEL = 'One project, scoped to you'
+export const CONTENT_OS_PRICE_LABEL = '3-month setup, then monthly'
 export const DENTAL_OS_PRICE_LABEL = 'Built around your practice'
-export const PRISM_INFINITY_PRICE_LABEL = 'Scoped from the waitlist'
+export const PRISM_INFINITY_PRICE_LABEL = 'Monthly. Pause or cancel anytime.'
 
 /** Service-specific waitlist entry points (prefill the focus checkboxes). */
 export const WEBSITE_WAITLIST_CTA = {
@@ -81,12 +86,12 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: WEBSITE_PRICE_LABEL,
-    priceSubLabel: 'The PRO website, scoped to your business',
+    priceSubLabel: 'The PRO website, with optional care after launch',
     description:
       'A custom website with clear service pages, mobile-friendly design, inquiry forms, and analytics. Built to help customers understand your business and take the next step.',
     primaryCta: WEBSITE_WAITLIST_CTA,
     secondaryCta: {
-      label: 'Explore PRO websites',
+      label: 'Explore the PRO website',
       href: '/websites',
     },
   },
@@ -98,7 +103,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: CONTENT_OS_PRICE_LABEL,
-    priceSubLabel: 'Scoped to your business when your intake opens',
+    priceSubLabel: 'Month-to-month after the setup',
     description:
       'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
     primaryCta: CONTENT_WAITLIST_CTA,
@@ -115,7 +120,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: DENTAL_OS_PRICE_LABEL,
-    priceSubLabel: 'Scoped to your practice',
+    priceSubLabel: 'Scoped to your locations and goals',
     description:
       'Website, search, Google Maps, review support, and ads coordinated for your practice. Help patients understand your care and make it easier to call or request an appointment.',
     primaryCta: WAITLIST_CTA,
@@ -132,7 +137,7 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: PRISM_INFINITY_PRICE_LABEL,
-    priceSubLabel: 'Unlimited requests. Pause or cancel anytime.',
+    priceSubLabel: 'One active request at a time',
     description:
       'One monthly subscription for landing pages, ad creative, websites, video, photoshoots, and content. Add unlimited requests to your queue; we work through them one at a time. Pause or cancel anytime.',
     primaryCta: WAITLIST_CTA,

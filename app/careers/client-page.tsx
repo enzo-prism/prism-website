@@ -1,69 +1,80 @@
+import { ArrowLeft, Briefcase, Mail } from 'lucide-react'
+
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { Eyebrow, Section } from '@/components/prism/section'
 import TrackedAnchor from '@/components/tracked-anchor'
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
-import { Mail } from 'lucide-react'
 
 export default function CareersClientPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <section className="px-4 py-16 md:py-24 lg:py-32">
-          <div className="container mx-auto max-w-4xl px-4 text-center md:px-6">
-            <div className="flex justify-center" aria-hidden="true">
-              <PixelishIcon
-                src="/pixelish/briefcase.svg"
-                alt=""
-                size={40}
-                invert={false}
-                aria-hidden="true"
-              />
-            </div>
-            <p className="mt-6 text-sm font-medium uppercase tracking-[0.28em] text-neutral-500">
-              careers at prism
-            </p>
-            <h1 className="mt-4 text-4xl font-bold tracking-tighter lowercase sm:text-5xl md:text-6xl">
-              no open roles right now
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <section
+          aria-labelledby="careers-title"
+          className="relative isolate overflow-x-clip pb-16 pt-16 sm:pb-24 sm:pt-24"
+        >
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+            <div className="bg-grid absolute inset-x-0 top-0 h-[600px] opacity-50" />
+            <div className="absolute inset-x-0 top-0 h-[680px] bg-[radial-gradient(40%_50%_at_35%_40%,oklch(0.66_0.16_258/16%),transparent_70%),radial-gradient(36%_46%_at_68%_44%,oklch(0.63_0.19_295/12%),transparent_70%)] blur-2xl" />
+          </div>
+          <div className="prism-container flex flex-col items-center text-center">
+            <span
+              aria-hidden="true"
+              className="grid size-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-foreground"
+            >
+              <Briefcase className="size-5" strokeWidth={1.75} />
+            </span>
+            <Eyebrow className="mt-8">Careers at Prism</Eyebrow>
+            <h1
+              id="careers-title"
+              className="text-display text-gradient mt-5 max-w-[14ch] text-balance pb-2"
+            >
+              no open roles right now.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-neutral-600 lowercase md:text-xl">
-              we are not accepting applications for a specific position today.
-              when a role opens, the current details and application path will
+            <p className="text-lead mt-6 max-w-[52ch] text-pretty text-muted-foreground">
+              We are not accepting applications for a specific position today.
+              When a role opens, the current details and application path will
               appear on this page.
             </p>
           </div>
         </section>
 
-        <section className="bg-neutral-50 px-4 py-16 md:py-24">
-          <div className="container mx-auto max-w-3xl px-4 text-center md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter lowercase sm:text-4xl">
-              check back for current openings
+        <Section aria-labelledby="careers-check-back-title" className="pt-0 sm:pt-0">
+          <div className="mx-auto max-w-3xl rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 text-center sm:px-12 sm:py-16">
+            <h2
+              id="careers-check-back-title"
+              className="text-heading text-foreground"
+            >
+              check back for current openings.
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-neutral-600 lowercase">
-              this page is the source of truth for prism hiring. archived job
+            <p className="mx-auto mt-4 max-w-[52ch] text-pretty text-[1rem] leading-7 text-muted-foreground">
+              This page is the source of truth for Prism hiring. Archived job
               pages now return here instead of presenting an expired
               application.
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild className="rounded-full px-8 py-4 lowercase">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg">
                 <TrackedLink href="/" label="back to home" location="careers">
-                  back to home
+                  <ArrowLeft aria-hidden="true" />
+                  Back to home
                 </TrackedLink>
               </Button>
-              <TrackedAnchor
-                href="mailto:support@design-prism.com"
-                label="email prism support"
-                location="careers"
-                className="inline-flex items-center text-sm font-medium text-neutral-600 underline-offset-4 hover:text-neutral-900 hover:underline"
-              >
-                <Mail className="mr-2 h-4 w-4" aria-hidden="true" />
-                existing inquiry?
-              </TrackedAnchor>
+              <Button asChild size="lg" variant="ghost" className="text-muted-foreground hover:text-foreground">
+                <TrackedAnchor
+                  href="mailto:support@design-prism.com"
+                  label="email prism support"
+                  location="careers"
+                >
+                  <Mail aria-hidden="true" />
+                  Existing inquiry?
+                </TrackedAnchor>
+              </Button>
             </div>
           </div>
-        </section>
+        </Section>
       </main>
       <Footer />
     </div>

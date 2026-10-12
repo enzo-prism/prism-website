@@ -1,8 +1,8 @@
 import Link from "next/link"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import type { LibraryPost } from "@/lib/library/types"
 
 type LibraryClientProps = {
@@ -18,79 +18,101 @@ const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
 
 export default function LibraryClient({ posts, featured }: LibraryClientProps) {
   return (
-    <div className="space-y-10">
+    <div className="space-y-14">
       {featured ? (
-        <section className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary">featured today</Badge>
-            <span className="text-xs font-medium text-muted-foreground">
-              rotates daily
-            </span>
-          </div>
-          <Card className="border-border/60 bg-card/95">
-            <div className="flex flex-col gap-4 p-6">
+        <section aria-labelledby="library-featured-title">
+          <div className="prism-beam relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(50%_80%_at_100%_0%,oklch(0.63_0.19_295/14%),transparent_70%)]"
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">
+                <span className="prism-live-dot" aria-hidden="true" />
+                Featured today
+              </Badge>
               {featured.editorial?.group ? (
-                <Badge variant="secondary">{featured.editorial.group}</Badge>
+                <Badge variant="outline">{featured.editorial.group}</Badge>
               ) : null}
-              <div>
-                <p className="text-sm font-semibold text-muted-foreground">
-                  {featured.editorial?.speaker?.name ?? "Prism Library"}
-                </p>
-                <h2 className="text-2xl font-semibold text-foreground">
-                  {featured.title}
-                </h2>
-              </div>
-              {featured.editorial?.speaker?.subtitle ? (
-                <p className="text-sm text-muted-foreground">
-                  {featured.editorial.speaker.subtitle}
-                </p>
-              ) : null}
-              <Button asChild className="w-fit rounded-full">
-                <Link href={`/library/${featured.slug}`}>Open details</Link>
-              </Button>
+              <span className="text-xs text-subtle">Rotates daily</span>
             </div>
-          </Card>
+            <p className="mt-8 text-sm font-medium text-muted-foreground">
+              {featured.editorial?.speaker?.name ?? "Prism Library"}
+            </p>
+            <h2
+              id="library-featured-title"
+              className="text-heading mt-2 max-w-[28ch] text-balance text-foreground"
+            >
+              {featured.title}
+            </h2>
+            {featured.editorial?.speaker?.subtitle ? (
+              <p className="mt-3 max-w-[60ch] text-pretty text-[0.95rem] leading-7 text-muted-foreground">
+                {featured.editorial.speaker.subtitle}
+              </p>
+            ) : null}
+            <Button asChild className="mt-8 group/cta">
+              <Link href={`/library/${featured.slug}`}>
+                Open the lesson
+                <ArrowRight
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                />
+              </Link>
+            </Button>
+          </div>
         </section>
       ) : null}
 
-      <section className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
-          <span>{posts.length} posts</span>
+      <section aria-labelledby="library-all-title">
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.08] pb-5">
+          <h2 id="library-all-title" className="text-heading text-foreground">
+            every lesson.
+          </h2>
+          <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-subtle">
+            {posts.length} posts
+          </span>
         </div>
         {posts.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
-              <Card
-                key={post.slug}
-                className="overflow-hidden border-border/60 bg-card/95 transition-shadow hover:shadow-lg"
-              >
-                <Link href={`/library/${post.slug}`} className="block h-full">
-                  <CardContent className="flex h-full flex-col gap-3 p-4">
-                    <div className="text-xs text-muted-foreground">
+              <li key={post.slug}>
+                <Link
+                  href={`/library/${post.slug}`}
+                  className="group/lesson flex h-full flex-col gap-4 rounded-2xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-white/[0.16] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  <span className="flex items-center justify-between gap-3">
+                    <time
+                      dateTime={post.publishedAt}
+                      className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle"
+                    >
                       {DATE_FORMATTER.format(new Date(post.publishedAt))}
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-base font-semibold text-foreground">
-                        {post.title}
-                      </h3>
-                      {post.editorial?.speaker?.name ? (
-                        <p className="text-sm text-muted-foreground">
-                          {post.editorial.speaker.name}
-                        </p>
-                      ) : null}
-                    </div>
-                    {!post.curated ? (
-                      <span className="text-xs font-medium text-muted-foreground">
-                        Needs curation
+                    </time>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-4 text-subtle transition-[transform,color] duration-200 group-hover/lesson:-translate-y-0.5 group-hover/lesson:translate-x-0.5 group-hover/lesson:text-foreground"
+                    />
+                  </span>
+                  <span className="space-y-1.5">
+                    <span className="block text-[1.0625rem] font-medium leading-snug tracking-[-0.015em] text-foreground">
+                      {post.title}
+                    </span>
+                    {post.editorial?.speaker?.name ? (
+                      <span className="block text-sm text-muted-foreground">
+                        {post.editorial.speaker.name}
                       </span>
                     ) : null}
-                  </CardContent>
+                  </span>
+                  {!post.curated ? (
+                    <span className="mt-auto text-xs font-medium text-subtle">
+                      Needs curation
+                    </span>
+                  ) : null}
                 </Link>
-              </Card>
+              </li>
             ))}
-          </div>
+          </ul>
         ) : (
-          <div className="rounded-xl border border-dashed border-border/70 py-12 text-center text-sm text-muted-foreground">
+          <div className="mt-8 rounded-2xl border border-dashed border-white/15 py-12 text-center text-sm text-muted-foreground">
             No posts yet. Check back soon.
           </div>
         )}

@@ -1,5 +1,9 @@
 import BlogPostLayout from '@/components/blog-post-layout'
-import { getPost } from '@/lib/mdx-data'
+import type { BlogCardPost } from '@/components/blog/blog-post-cards'
+import { estimateReadingMinutes } from '@/components/blog/blog-utils'
+import { getBlogFilterFromCategory } from '@/lib/blog-topic-filters'
+import { getAllPosts, getPost } from '@/lib/mdx-data'
+import { getMdxToc } from '@/lib/mdx-toc'
 import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
 import {
@@ -48,6 +52,25 @@ const formatReadableDate = (value: string) => {
     month: "short",
     day: "numeric",
   }).format(date)
+}
+
+async function getRelatedPosts(slug: string, category: string): Promise<BlogCardPost[]> {
+  const posts = (await getAllPosts()) ?? []
+  const topic = getBlogFilterFromCategory(category)
+  const cards = posts
+    .filter((post) => post.slug !== slug)
+    .map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      date: post.date,
+      category: post.category,
+      image: post.image,
+      topic: getBlogFilterFromCategory(post.category),
+    }))
+  const sameTopic = cards.filter((post) => post.topic === topic)
+  const others = cards.filter((post) => post.topic !== topic)
+  return [...sameTopic, ...others].slice(0, 3)
 }
 
 export async function generateMetadata({
@@ -131,6 +154,10 @@ export default async function BlogPostPage({ params }: PageProps) {
   const updatedDate = frontmatter.openGraph?.modifiedTime
   const publishedDate = frontmatter.openGraph?.publishedTime || frontmatter.date
   const content = await renderPost(slug, { content: enrichedContent })
+  const [toc, related] = await Promise.all([
+    getMdxToc(post.content).catch(() => []),
+    getRelatedPosts(slug, frontmatter.category),
+  ])
   return (
     <BlogPostLayout
       slug={slug}
@@ -142,6 +169,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       publishedDate={formatReadableDate(publishedDate)}
       updatedDate={updatedDate ? formatReadableDate(updatedDate) : undefined}
       image={frontmatter.image}
+      category={frontmatter.category}
+      readingMinutes={estimateReadingMinutes(post.content)}
+      toc={toc}
+      related={related}
       openGraph={frontmatter.openGraph}
       canonical={canonicalUrl(frontmatter.canonical || `/blog/${slug}`)}
       howTo={frontmatter.howTo}

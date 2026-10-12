@@ -1,15 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import clsx from 'clsx'
 import type { ReactNode } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
   Archive,
   AlertTriangle,
-  ArrowRight,
+  ArrowUpRight,
   CheckCircle2,
   ClipboardCheck,
-  ClipboardList,
   FileSpreadsheet,
   FileWarning,
   Fingerprint,
@@ -25,11 +23,17 @@ import {
 import Footer from '@/components/footer'
 import GuideTableOfContents from '@/components/guide-table-of-contents'
 import InteractiveChecklist from '@/components/interactive-checklist'
+import { Callout, CheckList, TextLink } from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Eyebrow } from '@/components/prism/section'
+import { WebPageSchema } from '@/components/schema-markup'
 import ScrollProgressBar from '@/components/scroll-progress-bar'
 import ScrollToTop from '@/components/scroll-to-top'
-import { WebPageSchema } from '@/components/schema-markup'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_CTA } from '@/lib/waitlist'
 
@@ -64,67 +68,6 @@ type StepAccent =
   | 'slate'
   | 'blue'
 
-const stepAccentStyles: Record<
-  StepAccent,
-  { icon: string; badge: string; number: string }
-> = {
-  sky: {
-    icon: 'bg-sky-100 text-sky-600',
-    badge: 'border-sky-200 bg-sky-50 text-sky-800',
-    number: 'border-sky-200 bg-sky-50 text-sky-700',
-  },
-  violet: {
-    icon: 'bg-violet-100 text-violet-600',
-    badge: 'border-violet-200 bg-violet-50 text-violet-800',
-    number: 'border-violet-200 bg-violet-50 text-violet-700',
-  },
-  emerald: {
-    icon: 'bg-emerald-100 text-emerald-600',
-    badge: 'border-emerald-200 bg-emerald-50 text-emerald-800',
-    number: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  },
-  amber: {
-    icon: 'bg-amber-100 text-amber-600',
-    badge: 'border-amber-200 bg-amber-50 text-amber-800',
-    number: 'border-amber-200 bg-amber-50 text-amber-700',
-  },
-  indigo: {
-    icon: 'bg-indigo-100 text-indigo-600',
-    badge: 'border-indigo-200 bg-indigo-50 text-indigo-800',
-    number: 'border-indigo-200 bg-indigo-50 text-indigo-700',
-  },
-  purple: {
-    icon: 'bg-purple-100 text-purple-600',
-    badge: 'border-purple-200 bg-purple-50 text-purple-800',
-    number: 'border-purple-200 bg-purple-50 text-purple-700',
-  },
-  teal: {
-    icon: 'bg-teal-100 text-teal-600',
-    badge: 'border-teal-200 bg-teal-50 text-teal-800',
-    number: 'border-teal-200 bg-teal-50 text-teal-700',
-  },
-  rose: {
-    icon: 'bg-rose-100 text-rose-600',
-    badge: 'border-rose-200 bg-rose-50 text-rose-800',
-    number: 'border-rose-200 bg-rose-50 text-rose-700',
-  },
-  cyan: {
-    icon: 'bg-cyan-100 text-cyan-600',
-    badge: 'border-cyan-200 bg-cyan-50 text-cyan-800',
-    number: 'border-cyan-200 bg-cyan-50 text-cyan-700',
-  },
-  slate: {
-    icon: 'bg-slate-100 text-slate-600',
-    badge: 'border-slate-200 bg-slate-50 text-slate-800',
-    number: 'border-slate-200 bg-slate-50 text-slate-700',
-  },
-  blue: {
-    icon: 'bg-blue-100 text-blue-600',
-    badge: 'border-blue-200 bg-blue-50 text-blue-800',
-    number: 'border-blue-200 bg-blue-50 text-blue-700',
-  },
-}
-
 type StepDefinition = {
   id: string
   number: string
@@ -144,7 +87,7 @@ const steps: StepDefinition[] = [
     accent: 'sky',
     icon: ShieldCheck,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ol className="list-decimal space-y-3 pl-4 sm:pl-5">
           <li>
             Sign in to{' '}
@@ -152,8 +95,7 @@ const steps: StepDefinition[] = [
               href="https://admin.google.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline"
-            >
+              >
               admin.google.com
             </Link>{' '}
             as a super admin.
@@ -170,13 +112,12 @@ const steps: StepDefinition[] = [
             binder.
           </li>
         </ol>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Resources: Google Admin Help and Google HIPAA overview{' '}
           <Link
             href="https://support.google.com/a/answer/2888485?hl=en"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             [Google Help]
           </Link>
@@ -193,24 +134,23 @@ const steps: StepDefinition[] = [
     accent: 'violet',
     icon: Layers,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <p>
           Confirm which Google services are covered under the BAA. As of May 14,
           2026, Google lists Drive, including Docs, Forms, Sheets, Slides, and
           Vids, as Included Functionality. Google maintains the full current
           service list on the page linked below.
         </p>
-        <p className="font-semibold text-neutral-800">
+        <p className="font-semibold text-foreground">
           Action: Keep PHI inside covered services only. Do not copy PHI into
           tools that are not on Google’s HIPAA list.
         </p>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Reference:{' '}
           <Link
             href="https://workspace.google.com/terms/2015/1/hipaa_functionality/"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google Workspace HIPAA Included Functionality
           </Link>
@@ -227,7 +167,7 @@ const steps: StepDefinition[] = [
     accent: 'emerald',
     icon: FolderLock,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ol className="list-decimal space-y-3 pl-5">
           <li>
             In the Admin console go to{' '}
@@ -259,13 +199,12 @@ const steps: StepDefinition[] = [
             export. Vault retention does not retain Admin console audit events.
           </li>
         </ol>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Implementation guidance:{' '}
           <Link
             href="https://cloud.google.com/security/compliance/workspace_cloud_identity_hipaa_implementation_guide_workspace_whitepaper"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google Workspace HIPAA Implementation Guide
           </Link>
@@ -282,7 +221,7 @@ const steps: StepDefinition[] = [
     accent: 'amber',
     icon: Fingerprint,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Require 2-Step Verification for any staff with PHI access.</li>
           <li>
@@ -295,7 +234,7 @@ const steps: StepDefinition[] = [
             a super admin.
           </li>
         </ul>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Use Google&apos;s current Workspace HIPAA implementation guide for
           security and configuration practices.
         </p>
@@ -310,7 +249,7 @@ const steps: StepDefinition[] = [
     accent: 'indigo',
     icon: Archive,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Confirm Google Vault is included or licensed for your edition.
@@ -325,18 +264,17 @@ const steps: StepDefinition[] = [
             Set up matters/holds to support audits, legal requests, or disputes.
           </li>
         </ul>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Test retention rules on a small group first. A misconfigured rule can
           immediately and irreversibly purge covered data. Vault retains
           supported service content, not Admin console Drive audit events.
         </p>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Reference:{' '}
           <Link
             href="https://workspace.google.com/terms/2015/1/hipaa_functionality/"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google Workspace HIPAA Included Functionality
           </Link>
@@ -353,7 +291,7 @@ const steps: StepDefinition[] = [
     accent: 'purple',
     icon: FileSpreadsheet,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ol className="list-decimal space-y-3 pl-4 sm:pl-5">
           <li>
             Create the form from a Workspace account; name it “New Patient
@@ -391,8 +329,8 @@ const steps: StepDefinition[] = [
             </ul>
           </li>
         </ol>
-        <div className="rounded-3xl border border-amber-200 bg-amber-50 p-5 text-base leading-relaxed text-amber-900">
-          <div className="flex items-center gap-2 font-semibold">
+        <div className="rounded-xl border border-white/[0.08] border-l-[3px] border-l-spectrum-orange/80 bg-white/[0.03] p-5 text-[15px] leading-7 text-muted-foreground">
+          <div className="flex items-center gap-2 font-semibold text-foreground">
             <FileWarning className="h-5 w-5" aria-hidden />
             File uploads have major constraints
           </div>
@@ -409,8 +347,7 @@ const steps: StepDefinition[] = [
               href="https://www.jotform.com/google-forms/google-form-file-upload-without-sign-in/"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline"
-            >
+              >
               Jotform on Google Form uploads
             </Link>{' '}
             &amp;{' '}
@@ -418,20 +355,18 @@ const steps: StepDefinition[] = [
               href="https://workspaceupdates.googleblog.com/2022/06/dlp-file-uploads-to-external-forms.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline"
-            >
+              >
               Workspace Updates
             </Link>
             .
           </p>
         </div>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Domain access guidance:{' '}
           <Link
             href="https://support.google.com/docs/answer/160166?hl=en"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google Forms sharing help
           </Link>
@@ -448,7 +383,7 @@ const steps: StepDefinition[] = [
     accent: 'teal',
     icon: Table,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Keep the response Sheet inside the{' '}
@@ -467,7 +402,7 @@ const steps: StepDefinition[] = [
             retention policy requires longer availability.
           </li>
         </ul>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Refer back to Google’s HIPAA implementation whitepaper for Drive
           configuration patterns.
         </p>
@@ -482,7 +417,7 @@ const steps: StepDefinition[] = [
     accent: 'rose',
     icon: MailWarning,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>Never email PHI in plaintext.</li>
           <li>
@@ -494,13 +429,12 @@ const steps: StepDefinition[] = [
             S/MIME and document exceptions (safer approach: don’t email PHI).
           </li>
         </ul>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           Email posture recommendations:{' '}
           <Link
             href="https://cloud.google.com/security/compliance/workspace_cloud_identity_hipaa_implementation_guide_workspace_whitepaper"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google HIPAA implementation guide
           </Link>
@@ -517,7 +451,7 @@ const steps: StepDefinition[] = [
     accent: 'cyan',
     icon: ShieldAlert,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Create Drive DLP rules that flag PHI identifiers (SSN, insurance
@@ -528,13 +462,12 @@ const steps: StepDefinition[] = [
             attempts, or DLP violations.
           </li>
         </ul>
-        <p className="text-sm text-neutral-500">
+        <p className="text-[13px] leading-6 text-subtle">
           More detail:{' '}
           <Link
             href="https://cloud.google.com/security/compliance/workspace_cloud_identity_hipaa_implementation_guide_workspace_whitepaper"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
           >
             Google HIPAA implementation guide
           </Link>
@@ -551,7 +484,7 @@ const steps: StepDefinition[] = [
     accent: 'slate',
     icon: ClipboardCheck,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Submit multiple dummy entries and confirm they land in the correct
@@ -577,7 +510,7 @@ const steps: StepDefinition[] = [
     accent: 'blue',
     icon: Users,
     content: (
-      <div className="space-y-4 text-base leading-relaxed text-neutral-700">
+      <div className="space-y-4 text-[15px] leading-7 text-muted-foreground">
         <ul className="list-disc space-y-2 pl-4 sm:pl-5">
           <li>
             Staff access PHI only inside the locked Shared Drive and Sheet.
@@ -700,477 +633,300 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
+function GuideSection({
+  id,
+  eyebrow,
+  title,
+  children,
+  description,
+}: {
+  id: string
+  eyebrow: string
+  title: ReactNode
+  description?: ReactNode
+  children: ReactNode
+}) {
+  return (
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="scroll-mt-24 border-t border-white/[0.08] py-14 first:border-t-0 first:pt-0 sm:py-20"
+    >
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2
+        id={`${id}-title`}
+        className="mt-5 max-w-[22ch] text-balance pb-1 text-[clamp(1.85rem,1.4rem+1.6vw,2.75rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-gradient"
+      >
+        {title}
+      </h2>
+      {description ? (
+        <p className="mt-5 max-w-[62ch] text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base">
+          {description}
+        </p>
+      ) : null}
+      <div className="mt-10">{children}</div>
+    </section>
+  )
+}
+
 export default function GoogleDentalPatientFormsGuide() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <ScrollProgressBar />
-        <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(0,0,0,0.88))]"
-          />
-          <div className="absolute inset-0 opacity-35 mix-blend-screen">
-            <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(14,165,233,0.25),_rgba(15,23,42,0))]" />
-          </div>
-          <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
-                <ShieldCheck className="h-4 w-4" aria-hidden />
-                HIPAA INTAKE PLAYBOOK
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                Set Up Secure Electronic Patient Forms with Google Workspace
-              </h1>
-              <p className="text-base text-white/80 sm:text-lg">
-                This zero-fluff guide shows dental teams how to collect
-                new-patient intake data in Google Forms while staying inside
-                HIPAA guardrails, from executing the BAA to locking down Shared
-                Drives, Vault, DLP, and staff training.
-              </p>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href={WAITLIST_CTA.href}>
-                    {WAITLIST_CTA.label}{' '}
-                    <ArrowRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline-inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href="#checklist">
-                    Jump to checklist{' '}
-                    <ClipboardList className="ml-2 h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+      <ScrollProgressBar />
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow={
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck className="size-3.5" aria-hidden />
+              HIPAA intake playbook
+            </span>
+          }
+          title="set up secure electronic patient forms with Google Workspace."
+          description="This zero-fluff guide shows dental teams how to collect new-patient intake data in Google Forms while staying inside HIPAA guardrails, from executing the BAA to locking down Shared Drives, Vault, DLP, and staff training."
+          location="dental patient forms hero"
+          ctaHref={WAITLIST_CTA.href}
+          ctaLabel={WAITLIST_CTA.label}
+          secondary={{ label: 'Jump to checklist', href: '#checklist' }}
+          showStatus={false}
+          glow="green"
+          titleClassName="max-w-[18ch]"
+        />
 
-        <section id="overview" className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,_320px)_minmax(0,_1fr)_minmax(0,_260px)] lg:items-start">
-              <div className="flex flex-col gap-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                  What you’ll accomplish
-                </p>
-                <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                  Build a HIPAA-Aligned Intake Hub in Google Workspace
-                </h2>
-                <p className="text-base text-neutral-600">
-                  Every section links back to the same locked Shared Drive so
-                  your team can configure and review the intake flow against
-                  your documented privacy and compliance requirements.
-                </p>
-              </div>
-              <div className="space-y-6 text-base text-neutral-700">
-                <ul className="grid gap-3 sm:gap-4">
+        <div className="prism-container pb-10 sm:pb-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_13rem] lg:gap-16">
+            <div className="min-w-0 lg:order-2">
+              <GuideTableOfContents sections={guideSections} />
+            </div>
+
+            <div className="min-w-0 lg:order-1">
+              <GuideSection
+                id="overview"
+                eyebrow="What you’ll accomplish"
+                title="build a HIPAA-aligned intake hub in Google Workspace."
+                description="Every section links back to the same locked Shared Drive so your team can configure and review the intake flow against your documented privacy and compliance requirements."
+              >
+                <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2">
                   {accomplishments.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 rounded-3xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm"
-                    >
-                      <span className="mt-1 rounded-full bg-emerald-400/20 p-1.5 text-emerald-500">
-                        <CheckCircle2 className="h-4 w-4" aria-hidden />
-                      </span>
-                      <span className="text-base text-neutral-700">{item}</span>
+                    <li key={item} className="flex items-start gap-3 bg-card p-5">
+                      <CheckCircle2 className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
+                      <span className="text-[15px] leading-7 text-muted-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
-                <div className="rounded-3xl border border-sky-200 bg-sky-50 p-6 text-base leading-relaxed text-sky-900 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-sky-700">
-                    Reality check
-                  </p>
-                  <p className="mt-3">
+                <Callout className="mt-4" title="Reality check" tone="note">
+                  <p>
                     As of May 14, 2026, Google lists Forms under Drive in its
                     HIPAA “Included Functionality.” A signed BAA and correctly
                     configured Workspace tenant still matter, and practices
                     should verify the live list before launch.
                   </p>
-                  <p className="mt-3 text-sm">
+                  <p className="mt-3 text-[13px] text-subtle">
                     Source:{' '}
-                    <Link
-                      href="https://workspace.google.com/terms/2015/1/hipaa_functionality/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline"
-                    >
+                    <TextLink href="https://workspace.google.com/terms/2015/1/hipaa_functionality/">
                       Google Workspace HIPAA Included Functionality
-                    </Link>
+                    </TextLink>
                     .
                   </p>
-                </div>
-              </div>
-              <GuideTableOfContents sections={guideSections} />
-            </div>
-          </div>
-        </section>
+                </Callout>
+              </GuideSection>
 
-        <section
-          id="prerequisites"
-          className="border-b border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                PREREQUISITES
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Don’t Skip These Foundations
-              </h2>
-            </div>
-            <div className="space-y-6">
-              <ul className="grid gap-4">
-                {prerequisites.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-3xl border border-neutral-200 bg-white p-5 text-base leading-relaxed text-neutral-700 shadow-sm"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <p className="text-base text-neutral-600">
-                These steps anchor your compliance story. Auditors will ask for
-                proof of BAA execution, policies, and staff readiness before
-                they even look at Forms.
-              </p>
-              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <GuideSection id="prerequisites" eyebrow="Prerequisites" title="don’t skip these foundations.">
+                <ol className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+                  {prerequisites.map((item, index) => (
+                    <li key={item} className="flex gap-5 p-5 sm:p-6">
+                      <span className="font-mono text-[11px] leading-7 tracking-[0.18em] text-subtle">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-[15px] leading-7 text-foreground/90">{item}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-6 max-w-[62ch] text-[15px] leading-7 text-muted-foreground">
+                  These steps anchor your compliance story. Auditors will ask for
+                  proof of BAA execution, policies, and staff readiness before
+                  they even look at Forms.
+                </p>
+                <Card className="mt-6 flex flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between">
                   <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                      Need Google Workspace?
-                    </p>
-                    <p className="text-base text-neutral-700">
+                    <p className="text-eyebrow text-subtle">Need Google Workspace?</p>
+                    <p className="max-w-[56ch] text-[15px] leading-7 text-muted-foreground">
                       Eligible new Workspace customers can use our referral link
                       for the available discount, then configure intake inside
                       the covered services outlined below.
                     </p>
                   </div>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="h-auto w-full rounded-full px-6 py-3 text-sm font-semibold sm:w-auto"
-                  >
-                    <Link
-                      href={GOOGLE_WORKSPACE_LINK}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Buy Google Workspace{' '}
-                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                  <Button asChild variant="outline" className="shrink-0">
+                    <Link href={GOOGLE_WORKSPACE_LINK} target="_blank" rel="noopener noreferrer">
+                      Buy Google Workspace
+                      <ArrowUpRight aria-hidden />
                     </Link>
                   </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+                </Card>
+              </GuideSection>
 
-        <section id="steps" className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3 text-center">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                IMPLEMENTATION GUIDE
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Follow Each Step; Document Every Change
-              </h2>
-              <p className="mx-auto max-w-3xl text-sm text-neutral-600">
-                Every configuration should be captured in your operations log.
-                Screenshots, Admin audit entries, and Vault retention proofs
-                make your compliance story defensible.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-6 lg:grid-cols-2">
-              {steps.map((step) => {
-                const accent = stepAccentStyles[step.accent]
-                const Icon = step.icon
-                return (
-                  <article
-                    key={step.id}
-                    id={step.id}
-                    className="group relative flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neutral-300 hover:shadow-lg sm:max-w-none"
+              <GuideSection
+                id="steps"
+                eyebrow="Implementation guide"
+                title="follow each step; document every change."
+                description="Every configuration should be captured in your operations log. Screenshots, Admin audit entries, and Vault retention proofs make your compliance story defensible."
+              >
+                <ol className="relative space-y-4 before:absolute before:bottom-8 before:left-[19px] before:top-8 before:hidden before:w-px before:bg-white/10 sm:before:block">
+                  {steps.map((step) => {
+                    const Icon = step.icon
+                    return (
+                      <li key={step.id} id={step.id} className="relative scroll-mt-24 sm:pl-16">
+                        <span
+                          aria-hidden="true"
+                          className="absolute left-0 top-6 z-10 hidden size-10 place-items-center rounded-full border border-white/10 bg-card font-mono text-[12px] text-foreground sm:grid"
+                        >
+                          {step.number}
+                        </span>
+                        <article className="rounded-2xl border border-white/[0.08] bg-card p-5 sm:p-7">
+                          <div className="flex flex-wrap items-center gap-3">
+                            <span className="grid size-9 place-items-center rounded-lg border border-white/10 bg-white/[0.04]">
+                              <Icon className="size-4 text-foreground" aria-hidden />
+                            </span>
+                            <span className="font-mono text-[11px] tracking-[0.18em] text-subtle sm:hidden">
+                              {step.number}
+                            </span>
+                            <Badge variant="outline">{step.badge}</Badge>
+                          </div>
+                          <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.02em] text-foreground">
+                            {step.title}
+                          </h3>
+                          <div className="mt-4 [&_a]:font-medium [&_a]:text-foreground [&_a]:underline [&_a]:decoration-white/25 [&_a]:underline-offset-[5px] [&_a:hover]:decoration-white/70 [&_li::marker]:text-subtle">
+                            {step.content}
+                          </div>
+                        </article>
+                      </li>
+                    )
+                  })}
+                </ol>
+              </GuideSection>
+
+              <GuideSection id="options" eyebrow="Optional paths" title="when forms alone aren’t enough.">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Callout
+                    tone="good"
+                    title="Optional: AppSheet Intake"
+                    icon={<ShieldCheck className="size-4" aria-hidden />}
+                    className="h-full"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <span
-                        className={clsx(
-                          'inline-flex items-center justify-center rounded-full border px-3 py-1 text-xs font-semibold',
-                          accent.number,
-                        )}
-                      >
-                        {step.number}
-                      </span>
-                      <span
-                        className={clsx(
-                          'inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold',
-                          accent.badge,
-                        )}
-                      >
-                        {step.badge}
-                      </span>
-                    </div>
-                    <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-start">
-                      <span
-                        className={clsx(
-                          'flex h-12 w-12 flex-none items-center justify-center rounded-2xl',
-                          accent.icon,
-                        )}
-                        aria-hidden
-                      >
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <div className="space-y-4 sm:flex-1">
-                        <h3 className="text-lg font-semibold text-neutral-900">
-                          {step.title}
-                        </h3>
-                        {step.content}
-                      </div>
-                    </div>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="options"
-          className="border-b border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto grid gap-8 px-4 py-16 md:grid-cols-2 md:px-6 lg:py-24">
-            <div className="space-y-4 rounded-3xl border border-white/60 bg-white p-6 text-neutral-700 shadow-sm">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-sm font-semibold text-neutral-900">
-                  <ShieldCheck
-                    className="h-5 w-5 text-emerald-500"
-                    aria-hidden
-                  />
-                  Optional: AppSheet Intake
-                </div>
-                <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                  Optional
-                </span>
-              </div>
-              <p className="mt-3 text-base leading-relaxed">
-                AppSheet sits on the Included Functionality list. If you want
-                conditional logic, a mobile app experience, or tighter
-                workflows, build an app that writes to the same secure Shared
-                Drive and Sheet. Apply the same DLP, Vault, and sharing
-                controls, and still avoid emailing PHI.
-              </p>
-            </div>
-            <div className="space-y-4 rounded-3xl border border-rose-200 bg-rose-50 p-6 text-rose-900 shadow-sm">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <AlertTriangle className="h-5 w-5" aria-hidden />
-                  If You Must Collect Files From Patients
-                </div>
-                <span className="inline-flex items-center rounded-full border border-rose-300 bg-white/60 px-3 py-1 text-xs font-semibold text-rose-800">
-                  Heads-up
-                </span>
-              </div>
-              <p className="mt-3 text-base leading-relaxed">
-                Consider a dedicated HIPAA intake vendor (IntakeQ, Formstack
-                HIPAA, Jotform HIPAA). They can notify your team without
-                attaching PHI. If you insist on Google Forms uploads, patients
-                must log in with Google, a non-starter for many.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="truth-table"
-          className="border-b border-neutral-200 bg-white"
-        >
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                TRUTH TABLE
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                What This Setup Does, and Doesn’t
-              </h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="space-y-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-900">
-                <h3 className="text-base font-semibold">It Does</h3>
-                <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed">
-                  <li>
-                    Keep PHI inside covered Workspace apps and a locked Shared
-                    Drive.
-                  </li>
-                  <li>
-                    Support auditability through Vault for supported content,
-                    plus separate Drive audit logs and alerting.
-                  </li>
-                  <li>
-                    Provide a starting configuration aligned with Google’s HIPAA
-                    guidance when the required editions and controls are in
-                    place.
-                  </li>
-                </ul>
-              </div>
-              <div className="space-y-4 rounded-3xl border border-rose-200 bg-rose-50 p-6 text-rose-900">
-                <h3 className="text-base font-semibold">It Doesn’t</h3>
-                <ul className="list-disc space-y-2 pl-5 text-base leading-relaxed">
-                  <li>
-                    Make email magically safe for PHI. Never send PHI in
-                    plaintext.
-                  </li>
-                  <li>
-                    Solve anonymous file uploads in Forms (that’s a platform
-                    limitation).
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="appendix"
-          className="border-b border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto grid gap-8 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                APPENDIX
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Why Google Forms Works in 2026
-              </h2>
-            </div>
-            <div className="space-y-4 text-base leading-relaxed text-neutral-700">
-              <p>
-                Google’s HIPAA documentation explicitly includes Forms under
-                Drive once you operate under the BAA. HIPAA is always about
-                configuration and usage: Shared Drives, Vault, access controls,
-                and policy training complete the story.
-              </p>
-              <p>
-                Google publishes a Workspace + Cloud Identity HIPAA
-                implementation guide. Your admin should treat it as the playbook
-                for structure, access, and data protection.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="checklist"
-          className="border-b border-neutral-200 bg-white"
-        >
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                ONE-PAGE CHECKLIST
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Copy into Your Ops Doc
-              </h2>
-            </div>
-            <InteractiveChecklist
-              items={checklistItems}
-              storageKey="dental-intake-checklist"
-            />
-          </div>
-        </section>
-
-        <section
-          id="references"
-          className="border-b border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3 text-center">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                REFERENCES
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Bookmark the Source Material
-              </h2>
-            </div>
-            <ol className="mt-10 grid grid-cols-1 gap-4 list-none text-base leading-relaxed text-neutral-700 sm:grid-cols-2">
-              {referenceLinks.map((ref) => (
-                <li
-                  key={ref.href}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-                >
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-                        {ref.label}
-                      </span>
-                      <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-semibold text-neutral-500">
-                        ref
-                      </span>
-                    </div>
-                    <p className="text-base text-neutral-800 sm:min-h-[48px]">
-                      {ref.description}
+                    <p>
+                      AppSheet sits on the Included Functionality list. If you want
+                      conditional logic, a mobile app experience, or tighter
+                      workflows, build an app that writes to the same secure Shared
+                      Drive and Sheet. Apply the same DLP, Vault, and sharing
+                      controls, and still avoid emailing PHI.
                     </p>
-                    <Link
-                      href={ref.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="break-words text-sm font-semibold text-sky-600 underline"
-                    >
-                      View {ref.label}
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+                  </Callout>
+                  <Callout
+                    tone="warn"
+                    title="If You Must Collect Files From Patients"
+                    icon={<AlertTriangle className="size-4" aria-hidden />}
+                    className="h-full"
+                  >
+                    <p>
+                      Consider a dedicated HIPAA intake vendor (IntakeQ, Formstack
+                      HIPAA, Jotform HIPAA). They can notify your team without
+                      attaching PHI. If you insist on Google Forms uploads, patients
+                      must log in with Google, a non-starter for many.
+                    </p>
+                  </Callout>
+                </div>
+              </GuideSection>
 
-        <section className="border-t border-neutral-200 bg-neutral-950">
-          <div className="container mx-auto flex flex-col items-center gap-6 px-4 py-16 text-center text-white md:px-6 md:py-24">
-            <h2 className="text-3xl font-semibold md:text-4xl">
-              Ready for a Done-for-You Setup?
-            </h2>
-            <p className="max-w-2xl text-base text-white/80 sm:text-lg">
-              Prism can configure a HIPAA-aligned intake system, document the
-              setup, and train staff. Your practice and compliance advisers
-              remain responsible for policies, risk assessment, and ongoing
-              compliance.
-            </p>
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button
-                asChild
-                size="lg"
-                variant="inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <Link href={WAITLIST_CTA.href}>
-                  {WAITLIST_CTA.label} <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <a href="mailto:support@design-prism.com">
-                  Ask a HIPAA Question{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </a>
-              </Button>
+              <GuideSection id="truth-table" eyebrow="Truth table" title="what this setup does, and doesn’t.">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card className="p-6">
+                    <h3 className="flex items-center gap-2 text-[17px] font-semibold text-foreground">
+                      <CheckCircle2 className="size-4" aria-hidden />
+                      It Does
+                    </h3>
+                    <CheckList
+                      className="mt-4"
+                      items={[
+                        'Keep PHI inside covered Workspace apps and a locked Shared Drive.',
+                        'Support auditability through Vault for supported content, plus separate Drive audit logs and alerting.',
+                        'Provide a starting configuration aligned with Google’s HIPAA guidance when the required editions and controls are in place.',
+                      ]}
+                    />
+                  </Card>
+                  <Card className="p-6">
+                    <h3 className="flex items-center gap-2 text-[17px] font-semibold text-foreground">
+                      <ShieldAlert className="size-4" aria-hidden />
+                      It Doesn’t
+                    </h3>
+                    <CheckList
+                      marker="dot"
+                      className="mt-4"
+                      items={[
+                        'Make email magically safe for PHI. Never send PHI in plaintext.',
+                        'Solve anonymous file uploads in Forms (that’s a platform limitation).',
+                      ]}
+                    />
+                  </Card>
+                </div>
+              </GuideSection>
+
+              <GuideSection id="appendix" eyebrow="Appendix" title="why Google Forms works in 2026.">
+                <div className="max-w-[64ch] space-y-5 text-[15px] leading-7 text-muted-foreground sm:text-base sm:leading-8">
+                  <p>
+                    Google’s HIPAA documentation explicitly includes Forms under
+                    Drive once you operate under the BAA. HIPAA is always about
+                    configuration and usage: Shared Drives, Vault, access controls,
+                    and policy training complete the story.
+                  </p>
+                  <p>
+                    Google publishes a Workspace + Cloud Identity HIPAA
+                    implementation guide. Your admin should treat it as the playbook
+                    for structure, access, and data protection.
+                  </p>
+                </div>
+              </GuideSection>
+
+              <GuideSection id="checklist" eyebrow="One-page checklist" title="copy into your ops doc.">
+                <InteractiveChecklist items={checklistItems} storageKey="dental-intake-checklist" />
+              </GuideSection>
+
+              <GuideSection id="references" eyebrow="References" title="bookmark the source material.">
+                <ol className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2">
+                  {referenceLinks.map((ref) => (
+                    <li key={ref.href} className="bg-card sm:[&:last-child:nth-child(odd)]:col-span-2">
+                      <Link
+                        href={ref.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/ref flex h-full flex-col gap-2 p-5 transition-colors hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:p-6"
+                      >
+                        <span className="flex items-start justify-between gap-3">
+                          <span className="text-[15px] font-semibold leading-snug text-foreground">{ref.label}</span>
+                          <ArrowUpRight
+                            className="mt-0.5 size-4 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/ref:-translate-y-0.5 group-hover/ref:translate-x-0.5 group-hover/ref:text-foreground"
+                            aria-hidden
+                          />
+                        </span>
+                        <span className="text-[14px] leading-6 text-muted-foreground">{ref.description}</span>
+                        <span className="sr-only">(opens in a new tab)</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-6 text-[14px] text-subtle">
+                  Questions about this guide? Email{' '}
+                  <TextLink href="mailto:support@design-prism.com">support@design-prism.com</TextLink>.
+                </p>
+              </GuideSection>
             </div>
           </div>
-        </section>
+        </div>
+
+        <FinalCta
+          location="dental patient forms final cta"
+          title="want a done-for-you setup."
+          description="Prism can configure a HIPAA-aligned intake system, document the setup, and train staff. Your practice and compliance advisers remain responsible for policies, risk assessment, and ongoing compliance."
+        />
       </main>
       <ScrollToTop />
       <Footer />
@@ -1181,6 +937,6 @@ export default function GoogleDentalPatientFormsGuide() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

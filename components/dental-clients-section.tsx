@@ -1,25 +1,24 @@
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+
 import DentalClientCarousel from "./dental-client-carousel"
 
 export default function DentalClientsSection() {
   return (
-    <section className="px-4 py-16 sm:py-20">
-      <div className="container mx-auto max-w-5xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-            real practices live on prism
-          </p>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-            explore the dental brands we partner with
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-neutral-600">
-            every site is tuned for patient journeys, local search, and measurable conversions. tap through a few of the
-            practices we support to see their live experience.
-          </p>
-        </div>
-        <div className="mt-10">
+    <Section aria-labelledby="dental-clients-title">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+        <Reveal>
+          <SectionHeader
+            id="dental-clients-title"
+            eyebrow="Real practices live on Prism"
+            title="explore the dental brands we partner with."
+            description="Every site is built around the patient journey, local search, and measurable inquiries. Open a few of the practices we support to see their live sites."
+          />
+        </Reveal>
+        <Reveal delay={100}>
           <DentalClientCarousel />
-        </div>
+        </Reveal>
       </div>
-    </section>
+    </Section>
   )
 }

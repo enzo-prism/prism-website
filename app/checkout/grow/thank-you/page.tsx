@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
-import { Button } from '@/components/ui/button'
-import { CheckCircle2, Calendar } from 'lucide-react'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { ArrowRight, Calendar, TrendingUp } from 'lucide-react'
+
+import {
+  ConfirmationCard,
+  ConfirmationShell,
+} from '@/components/landing/misc/confirmation'
 import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
 import TrackedLink from '@/components/tracked-link'
+import { Button } from '@/components/ui/button'
 import { BOOKING_URL } from '@/lib/booking'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
@@ -18,39 +20,25 @@ export const metadata: Metadata = buildRouteMetadata({
   index: false,
 })
 
+/**
+ * Legacy post-payment landing page for the retired fixed plans. BOOKING_URL
+ * survives here only for customers who already paid (see AGENTS.md).
+ */
 export default function GrowThankYouPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent">
+    <>
       <LeadSuccessTracker />
-      <Navbar />
-      <main className="flex-1 flex items-center justify-center py-24 px-6">
-        <div className="max-w-lg text-center space-y-6">
-          <div className="flex justify-center">
-            <div className="rounded-md border border-sky-400/30 bg-sky-500/10 p-4">
-              <CheckCircle2 className="h-12 w-12 text-sky-200" />
-            </div>
-          </div>
-          <h1 className="text-4xl font-semibold tracking-tight">
-            Growth is on the Horizon!
-            <PixelishIcon
-              src="/pixelish/graph-chart-high.svg"
-              alt=""
-              size={20}
-              aria-hidden="true"
-              className="ml-2 inline-block align-middle"
-            />
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            We've received your submission. Our team will get back to you within
-            two business days to discuss the next steps of your project.
-          </p>
-
-          <div className="mt-6 rounded-md border border-border/60 bg-card/30 p-6 shadow-none backdrop-blur-sm">
-            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-muted-foreground font-pixel">
-              Want to accelerate the process?
-            </p>
-            <div className="flex flex-col items-center gap-3">
-              <Button asChild size="lg" className="w-full rounded-md">
+      <ConfirmationShell>
+        <ConfirmationCard
+          icon={<TrendingUp aria-hidden="true" />}
+          eyebrow="Order received"
+          title="growth is on the horizon."
+          description="We've received your submission. Our team will get back to you within two business days to discuss the next steps of your project."
+        >
+          <div className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+            <p className="text-eyebrow text-subtle">Want to move faster?</p>
+            <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg" className="w-full sm:w-auto">
                 <TrackedLink
                   href={BOOKING_URL}
                   label="Book Meeting Now"
@@ -58,22 +46,28 @@ export default function GrowThankYouPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Book Meeting Now
+                  <Calendar aria-hidden="true" />
+                  Book a kickoff call
                 </TrackedLink>
               </Button>
               <Button
                 asChild
-                variant="link"
-                className="text-muted-foreground hover:text-foreground"
+                size="lg"
+                variant="ghost"
+                className="group/home w-full text-muted-foreground hover:text-foreground sm:w-auto"
               >
-                <Link href="/">Return to Home</Link>
+                <Link href="/">
+                  Return home
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover/home:translate-x-0.5"
+                  />
+                </Link>
               </Button>
             </div>
           </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
+        </ConfirmationCard>
+      </ConfirmationShell>
+    </>
   )
 }

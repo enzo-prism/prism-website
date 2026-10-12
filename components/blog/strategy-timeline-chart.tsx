@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, Clock, ArrowRight, Zap, Target, TrendingUp, BarChart3 } from "lucide-react"
-import { fadeInUp, staggerContainer, springScale } from "@/utils/animation-variants"
+import { Check, Clock, ChevronDown, Zap, Target, TrendingUp, BarChart3 } from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 const strategies = [
   {
@@ -14,7 +15,6 @@ const strategies = [
     difficulty: "Easy",
     impact: "High",
     icon: Target,
-    color: "bg-green-500",
     steps: [
       "Define your business in 5-7 words",
       "Add to website and social profiles",
@@ -29,7 +29,6 @@ const strategies = [
     difficulty: "Medium",
     impact: "High",
     icon: TrendingUp,
-    color: "bg-blue-500",
     steps: [
       "Audit top 10-20 online mentions",
       "Create 50-word source of truth bio",
@@ -44,7 +43,6 @@ const strategies = [
     difficulty: "Medium",
     impact: "Medium",
     icon: Zap,
-    color: "bg-purple-500",
     steps: [
       "Develop unique approach/method",
       "Mention in 40-50 online instances",
@@ -59,7 +57,6 @@ const strategies = [
     difficulty: "Easy",
     impact: "High",
     icon: BarChart3,
-    color: "bg-orange-500",
     steps: [
       "Monitor social threads for questions",
       "Create comprehensive FAQ page",
@@ -68,189 +65,171 @@ const strategies = [
   }
 ]
 
+const DIFFICULTY_DOT: Record<string, string> = {
+  Easy: "bg-spectrum-green",
+  Medium: "bg-spectrum-yellow",
+  Hard: "bg-spectrum-red",
+}
+
+const IMPACT_DOT: Record<string, string> = {
+  High: "bg-spectrum-blue",
+  Medium: "bg-spectrum-violet",
+  Low: "bg-white/40",
+}
+
 export default function StrategyTimelineChart() {
   const [selectedStrategy, setSelectedStrategy] = useState<number | null>(null)
   const [completedStrategies, setCompletedStrategies] = useState<number[]>([])
 
   const toggleComplete = (strategyId: number) => {
-    setCompletedStrategies(prev => 
-      prev.includes(strategyId) 
+    setCompletedStrategies(prev =>
+      prev.includes(strategyId)
         ? prev.filter(id => id !== strategyId)
         : [...prev, strategyId]
     )
   }
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800'
-      case 'Medium': return 'bg-yellow-100 text-yellow-800'
-      case 'Hard': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
-    }
-  }
-
-  const getImpactColor = (impact: string) => {
-    switch (impact) {
-      case 'High': return 'bg-blue-100 text-blue-800'
-      case 'Medium': return 'bg-purple-100 text-purple-800'
-      case 'Low': return 'bg-gray-100 text-gray-800'
-      default: return 'bg-gray-100 text-gray-800'
-    }
-  }
+  const progress = Math.round((completedStrategies.length / strategies.length) * 100)
 
   return (
-    <motion.div
-      className="w-full bg-white border border-neutral-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      animate="animate"
-      variants={staggerContainer}
-    >
-      <motion.div className="mb-6" variants={fadeInUp}>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+    <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+      <div className="mb-6">
+        <p className="text-eyebrow mb-3! mt-0! text-subtle">Roadmap</p>
+        <h3 className="mb-2! mt-0! text-xl! text-foreground">
           4-Week Implementation Timeline
         </h3>
-        <p className="text-neutral-600 text-sm">
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           Your roadmap to AI search optimization success
         </p>
-      </motion.div>
+      </div>
 
-      <div className="space-y-6">
-        {strategies.map((strategy, index) => {
+      <ol className="my-0! flex list-none! flex-col gap-3 pl-0!">
+        {strategies.map((strategy) => {
           const isCompleted = completedStrategies.includes(strategy.id)
           const isSelected = selectedStrategy === strategy.id
           const Icon = strategy.icon
+          const panelId = `strategy-steps-${strategy.id}`
 
           return (
-            <motion.div
+            <li
               key={strategy.id}
-              variants={fadeInUp}
-              className={`relative border-2 rounded-lg transition-colors duration-300 ${
-                isCompleted 
-                  ? 'border-green-500 bg-green-50' 
-                  : isSelected 
-                  ? 'border-blue-500 bg-blue-50' 
-                  : 'border-neutral-200 hover:border-neutral-300'
-              }`}
+              className={cn(
+                "relative my-0! overflow-hidden rounded-2xl border pl-0! transition-colors duration-300",
+                isCompleted
+                  ? "border-white/20 bg-white/[0.04]"
+                  : isSelected
+                  ? "border-white/15 bg-background/60"
+                  : "border-white/[0.08] bg-background/50 hover:border-white/15"
+              )}
             >
+              {isCompleted ? (
+                <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-green" />
+              ) : null}
               <div className="p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <motion.button
-                      type="button"
-                      onClick={() => toggleComplete(strategy.id)}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-colors ${
-                        isCompleted 
-                          ? 'bg-green-500 border-green-500 text-white' 
-                          : 'border-neutral-300 hover:border-green-500'
-                      }`}
-                      aria-label={isCompleted ? `Mark ${strategy.title} incomplete` : `Mark ${strategy.title} complete`}
-                      aria-pressed={isCompleted}
-                    >
-                      {isCompleted && <CheckCircle className="w-4 h-4" aria-hidden="true" focusable="false" />}
-                    </motion.button>
-                    
-                    <div className={`w-10 h-10 rounded-lg ${strategy.color} flex items-center justify-center`}>
-                      <Icon className="w-5 h-5 text-white" aria-hidden="true" focusable="false" />
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold text-neutral-900">{strategy.title}</h4>
-                      <p className="text-sm text-neutral-600">{strategy.description}</p>
+                <div className="flex items-start gap-3">
+                  <button
+                    type="button"
+                    onClick={() => toggleComplete(strategy.id)}
+                    className={cn(
+                      "mt-1 grid size-8 shrink-0 place-items-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                      isCompleted
+                        ? "border-transparent bg-foreground text-background"
+                        : "border-white/20 text-transparent hover:border-white/40"
+                    )}
+                    aria-label={isCompleted ? `Mark ${strategy.title} incomplete` : `Mark ${strategy.title} complete`}
+                    aria-pressed={isCompleted}
+                  >
+                    <Check className="size-4" strokeWidth={2.25} aria-hidden="true" focusable="false" />
+                  </button>
+
+                  <span className="hidden size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] sm:grid">
+                    <Icon className="size-4 text-foreground/85" strokeWidth={1.75} aria-hidden="true" focusable="false" />
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <h4 className="my-0! text-base! text-foreground">{strategy.title}</h4>
+                    <p className="mb-0! mt-0.5! text-[13px] leading-5 text-muted-foreground">{strategy.description}</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <Badge variant="outline">
+                        <span aria-hidden="true" className={cn("size-1.5 rounded-full", DIFFICULTY_DOT[strategy.difficulty])} />
+                        {strategy.difficulty}
+                      </Badge>
+                      <Badge variant="outline">
+                        <span aria-hidden="true" className={cn("size-1.5 rounded-full", IMPACT_DOT[strategy.impact])} />
+                        {strategy.impact} Impact
+                      </Badge>
+                      <span className="inline-flex items-center gap-1 font-mono text-[11px] text-subtle">
+                        <Clock className="size-3.5" aria-hidden="true" focusable="false" />
+                        {strategy.timeframe}
+                      </span>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getDifficultyColor(strategy.difficulty)}`}>
-                      {strategy.difficulty}
-                    </span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getImpactColor(strategy.impact)}`}>
-                      {strategy.impact} Impact
-                    </span>
-                    <div className="flex items-center gap-1 text-sm text-neutral-500">
-                      <Clock className="w-4 h-4" aria-hidden="true" focusable="false" />
-                      {strategy.timeframe}
-                    </div>
-                    <motion.button
-                      onClick={() => setSelectedStrategy(isSelected ? null : strategy.id)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
-                    >
-                      <motion.div
-                        animate={{ rotate: isSelected ? 90 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ArrowRight className="w-4 h-4" />
-                      </motion.div>
-                    </motion.button>
-                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedStrategy(isSelected ? null : strategy.id)}
+                    aria-expanded={isSelected}
+                    aria-controls={panelId}
+                    aria-label={`${isSelected ? "Hide" : "Show"} steps for ${strategy.title}`}
+                    className="grid size-9 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  >
+                    <ChevronDown
+                      className={cn("size-4 transition-transform duration-200", isSelected && "rotate-180")}
+                      aria-hidden="true"
+                    />
+                  </button>
                 </div>
 
-                <AnimatePresence>
-                  {isSelected && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mt-4 pt-4 border-t border-neutral-200"
-                    >
-                      <h5 className="font-semibold text-neutral-900 mb-3">Implementation Steps:</h5>
-                      <div className="space-y-2">
-                        {strategy.steps.map((step, stepIndex) => (
-                          <motion.div
-                            key={stepIndex}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: stepIndex * 0.1 }}
-                            className="flex items-start gap-3 p-3 bg-white rounded-lg border border-neutral-200"
-                          >
-                            <div className="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center shrink-0 mt-0.5">
-                              <span className="text-xs font-semibold text-neutral-700">
-                                {stepIndex + 1}
-                              </span>
-                            </div>
-                            <p className="text-sm text-neutral-700">{step}</p>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {isSelected ? (
+                  <div id={panelId} className="mt-4 border-t border-white/[0.08] pt-4">
+                    <p className="text-eyebrow mb-3! mt-0! text-subtle">Implementation Steps</p>
+                    <ol className="my-0! flex list-none! flex-col gap-2 pl-0!">
+                      {strategy.steps.map((step, stepIndex) => (
+                        <li
+                          key={stepIndex}
+                          className="my-0! flex items-start gap-3 rounded-xl border border-white/[0.06] bg-card p-3 pl-3!"
+                        >
+                          <span className="grid size-6 shrink-0 place-items-center rounded-full border border-white/10 font-mono text-[11px] text-muted-foreground">
+                            {stepIndex + 1}
+                          </span>
+                          <span className="pt-0.5 text-sm leading-6 text-foreground/85">{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ) : null}
               </div>
-            </motion.div>
+            </li>
           )
         })}
-      </div>
+      </ol>
 
-      <motion.div 
-        className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200"
-        variants={fadeInUp}
-      >
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-semibold text-neutral-900 mb-1">Progress Tracker</p>
-            <p className="text-sm text-neutral-600">
-              {completedStrategies.length} of {strategies.length} strategies completed
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-32 bg-neutral-200 rounded-full h-2">
-              <motion.div
-                className="h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${(completedStrategies.length / strategies.length) * 100}%` }}
-                transition={{ duration: 0.5 }}
-              />
-            </div>
-            <span className="text-sm font-semibold text-neutral-700">
-              {Math.round((completedStrategies.length / strategies.length) * 100)}%
-            </span>
-          </div>
+      <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-background/50 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="mb-1! mt-0! text-sm font-semibold text-foreground">Progress Tracker</p>
+          <p className="my-0! text-[13px] text-muted-foreground">
+            {completedStrategies.length} of {strategies.length} strategies completed
+          </p>
         </div>
-      </motion.div>
-    </motion.div>
+        <div className="flex items-center gap-3">
+          <div
+            className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.08] sm:w-40"
+            role="progressbar"
+            aria-label="Strategies completed"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={progress}
+          >
+            <div
+              className="bg-spectrum h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <span className="min-w-[2.5rem] text-right font-mono text-sm tabular-nums text-foreground">
+            {progress}%
+          </span>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,26 +1,42 @@
 import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
-import { Globe, Megaphone, Share2, Sparkles } from 'lucide-react'
+import {
+  ArrowUpRight,
+  CalendarRange,
+  Clapperboard,
+  Globe,
+  Megaphone,
+  RefreshCw,
+  Rocket,
+  Share2,
+  Sparkles,
+} from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
-import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { CommentsRail } from '@/components/services/CommentsRail'
+import { ContentHeroVisual } from '@/components/services/ContentHeroVisual'
+import {
+  ServiceBento,
+  type ServiceBentoItem,
+} from '@/components/services/ServiceBento'
+import { ServiceFaq } from '@/components/services/ServiceFaq'
+import { ServiceHero } from '@/components/services/ServiceHero'
 import { ServiceSiblings } from '@/components/services/ServiceSiblings'
 import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainedSectionClassName,
-  coreRouteContainerClassName,
-  coreRouteHeroFrameClassName,
-  coreRouteSectionClassName,
-  coreRouteSectionCompactClassName,
-  coreRouteSplitLayoutClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
-import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
-import { CANONICAL_PRICING_OFFERS, CONTENT_WAITLIST_CTA } from '@/lib/pricing-model'
-import CapacityNotice from '@/components/waitlist/CapacityNotice'
-import { CONNECTED_CLIENT_TRAFFIC, SOCIAL_PROOF } from '@/lib/proof-metrics'
+  ServiceSteps,
+  type ServiceStep,
+} from '@/components/services/ServiceSteps'
+import { getCommunityComments } from '@/components/services/community-comments'
+import {
+  CANONICAL_PRICING_OFFERS,
+  CONTENT_WAITLIST_CTA,
+} from '@/lib/pricing-model'
+import { SOCIAL_PROOF, SOCIAL_PROOF_CHANNELS } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
@@ -35,84 +51,155 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const HERO_CHIPS = [
-  'Your social channels',
-  'Your website',
-  '3-month implementation',
+const CHANNEL_BRANDS: Record<string, BrandLogoKey> = {
+  YouTube: 'youtube',
+  Instagram: 'instagram',
+  TikTok: 'tiktok',
+}
+
+// Instagram comments on Prism's own videos. Community, never client reviews.
+const COMMENT_ROWS = [
+  getCommunityComments([44, 14, 33, 11, 36, 19]),
+  getCommunityComments([31, 39, 12, 18, 41, 25]),
 ] as const
 
-const FIRE_POSTER_SRC = '/animations/fire-2/poster.svg'
+function DraftQueue() {
+  const drafts = [
+    {
+      icon: Clapperboard,
+      title: 'Video edit',
+      meta: 'Cut for Reels and Shorts',
+      status: 'In review',
+    },
+    {
+      icon: Sparkles,
+      title: 'Script',
+      meta: 'From your customer questions',
+      status: 'Approved',
+    },
+    {
+      icon: CalendarRange,
+      title: 'Caption and post',
+      meta: 'Queued for your channels',
+      status: 'Scheduled',
+    },
+  ]
+  return (
+    <ul className="flex flex-col gap-2 border-t border-white/[0.06] px-6 pb-6 pt-5 sm:px-7 sm:pb-7">
+      {drafts.map((draft, index) => {
+        const Icon = draft.icon
+        return (
+          <li
+            key={draft.title}
+            className={cn(
+              'flex items-center gap-3 rounded-xl border border-white/[0.08] bg-background/60 px-3.5 py-3',
+              index === 1 && 'sm:ml-6',
+              index === 2 && 'sm:ml-12',
+            )}
+          >
+            <span className="grid size-8 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-foreground">
+              <Icon aria-hidden="true" className="size-4" strokeWidth={1.7} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-medium text-foreground">
+                {draft.title}
+              </span>
+              <span className="block truncate text-[13px] text-subtle">
+                {draft.meta}
+              </span>
+            </span>
+            <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground">
+              {draft.status}
+            </span>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
 
-const CAPABILITIES = [
+function ChannelRow() {
+  const brands: { brand: BrandLogoKey; label: string }[] = [
+    { brand: 'youtube', label: 'YouTube' },
+    { brand: 'instagram', label: 'Instagram' },
+    { brand: 'tiktok', label: 'TikTok' },
+    { brand: 'linkedin', label: 'LinkedIn' },
+  ]
+  return (
+    <div className="flex flex-wrap gap-2 px-6 pb-6 sm:px-7 sm:pb-7">
+      {brands.map((item) => (
+        <span
+          key={item.label}
+          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1.5 pr-3 text-[13px] text-muted-foreground"
+        >
+          <BrandLogo
+            brand={item.brand}
+            theme="dark"
+            decorative
+            className="size-4"
+          />
+          {item.label}
+        </span>
+      ))}
+      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] py-1 pl-1.5 pr-3 text-[13px] text-muted-foreground">
+        <Globe aria-hidden="true" className="size-4" />
+        Your website
+      </span>
+    </div>
+  )
+}
+
+const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
-    title: 'Posts, scripts, and video ideas',
-    body: 'We turn your footage, expertise, and customer questions into video edits, scripts, captions, and posts for review.',
     icon: Sparkles,
+    title: 'posts, scripts, and video ideas',
+    body: 'We turn your footage, expertise, and customer questions into video edits, scripts, captions, and posts, then bring them to you for review.',
+    className: 'md:col-span-4',
+    visual: <DraftQueue />,
   },
   {
-    title: 'Adapted for each channel',
-    body: 'We adjust the cut, caption, and format for the channels in your plan, then publish the approved content.',
     icon: Share2,
+    title: 'adapted for each channel',
+    body: 'We adjust the cut, caption, and format for every channel in your plan, then publish the approved content.',
+    visual: <ChannelRow />,
   },
   {
-    title: 'Ready for ads',
-    body: 'Strong organic posts can become creative for paid campaigns. Prism Ads is a separate service when you are ready to add paid distribution.',
-    icon: Megaphone,
-  },
-  {
-    title: 'On-site content',
-    body: 'Landing pages, blog posts, and search-focused content give visitors more ways to discover your business on your own website.',
     icon: Globe,
+    title: 'content on your own site',
+    body: 'Landing pages, blog posts, and search-focused articles give people more ways to find you on the site you own.',
   },
-] as const
-
-const STEPS = [
   {
-    label: 'Implement',
+    icon: Megaphone,
+    title: 'ready for ads',
+    body: 'Strong organic posts can become creative for paid campaigns. Prism Ads is a separate service when you are ready for paid reach.',
+  },
+  {
+    icon: RefreshCw,
+    title: 'a system, not a one-off',
+    body: 'Implemented over three months, then optimized every month, so showing up becomes a routine instead of a scramble.',
+  },
+]
+
+const STEPS: readonly ServiceStep[] = [
+  {
+    icon: CalendarRange,
+    title: 'implement',
     detail: '3 months',
     body: 'We gather your footage and brand references, connect the agreed channels, and set up how you review and approve content.',
   },
   {
-    label: 'Publish approved work',
+    icon: Rocket,
+    title: 'publish approved work',
     detail: 'Go live',
-    body: 'We prepare the first edits and posts, work through your feedback, and establish a publishing routine.',
+    body: 'We prepare the first edits and posts, work through your feedback, and settle into a steady publishing routine.',
   },
   {
-    label: 'Review and improve',
+    icon: RefreshCw,
+    title: 'review and improve',
     detail: 'Ongoing',
-    body: 'Each month we review performance, refine topics and formats, and use what we learn to plan the next round of content.',
+    body: 'Each month we review what held attention or prompted inquiries, then use it to plan the next batch.',
   },
-] as const
-
-const PROOF_TILES = [
-  {
-    platform: 'YouTube',
-    brand: 'youtube',
-    value: SOCIAL_PROOF.youtube.audience,
-    label: SOCIAL_PROOF.youtube.audienceLabel,
-    detail: `${SOCIAL_PROOF.youtube.activity} ${SOCIAL_PROOF.youtube.activityLabel}`,
-  },
-  {
-    platform: 'Instagram',
-    brand: 'instagram',
-    value: SOCIAL_PROOF.instagram.audience,
-    label: SOCIAL_PROOF.instagram.audienceLabel,
-    detail: `${SOCIAL_PROOF.instagram.activity} ${SOCIAL_PROOF.instagram.activityLabel}`,
-  },
-  {
-    platform: 'TikTok',
-    brand: 'tiktok',
-    value: SOCIAL_PROOF.tiktok.audience,
-    label: SOCIAL_PROOF.tiktok.audienceLabel,
-    detail: `${SOCIAL_PROOF.tiktok.activity} ${SOCIAL_PROOF.tiktok.activityLabel}`,
-  },
-] as const satisfies readonly {
-  platform: string
-  brand: BrandLogoKey
-  value: string
-  label: string
-  detail: string
-}[]
+]
 
 const FAQ_ITEMS = [
   {
@@ -157,303 +244,152 @@ const FAQ_ITEMS = [
   },
 ] as const
 
-function HeroChip({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex min-h-9 items-center rounded-full border border-white/12 bg-white/[0.03] px-4 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[#c9c1b6]">
-      {children}
-    </span>
-  )
-}
-
 export default function ContentOsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className="border-b border-white/12 px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteHeroFrameClassName,
-                'px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20',
-              )}
-            >
-              <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-                <div>
-                  <CoreSectionHeading
-                    as="h1"
-                    variant="hero"
-                    eyebrow="Content"
-                    title="Your expertise. Catching fire."
-                    description="Turn your ideas and offers into posts, scripts, and website content. We handle planning, production, and publishing across your social channels and site."
-                    titleClassName="max-w-[20ch]"
-                  />
+        <ServiceHero
+          layout="split"
+          title={
+            <>
+              <span className="block">your expertise. </span>
+              <span className="block">
+                catching{' '}
+                <span className="text-spectrum prism-spectrum-pan">fire.</span>
+              </span>
+            </>
+          }
+          description={
+            <>
+              <span className="text-foreground">Content OS</span> turns your
+              ideas and offers into videos, posts, scripts, and website
+              content, then handles the planning, production, and publishing.
+            </>
+          }
+          ctaHref={CONTENT_WAITLIST_CTA.href}
+          location="content hero"
+          secondary={{
+            label: 'See our numbers',
+            href: '#proof',
+            trackingLabel: 'see content proof',
+          }}
+          visual={<ContentHeroVisual />}
+          glow="warm"
+        />
 
-                  <p className="mt-8 text-[1.02rem] leading-7 text-[#b8afa2]">
-                    <span className="font-medium text-[#f5f0e8]">
-                      Implemented over 3 months
-                    </span>
-                    {', '}then optimized every month. Scoped to your business
-                    when we reach out.
-                  </p>
+        <ServiceBento
+          idPrefix="content"
+          title="from the first idea to the published post."
+          description="You bring the expertise and the source material. We turn it into finished content, collect your feedback, and handle publishing."
+          items={WHAT_YOU_GET}
+        />
 
-                  <CapacityNotice className="mt-8 max-w-[40rem]" />
+        <ServiceSteps
+          idPrefix="content"
+          title="set it up. keep showing up."
+          description="Three months to connect your channels and build the system, then monthly reviews that shape every new batch."
+          steps={STEPS}
+        />
 
-                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <CoreActionLink
-                      href={CONTENT_WAITLIST_CTA.href}
-                      variant="heroPrimary"
-                      label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
-                      location="content hero"
+        <Section
+          id="proof"
+          bleed
+          aria-labelledby="content-proof-title"
+          className="scroll-mt-20 overflow-x-clip"
+        >
+          <div className="prism-container">
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end lg:gap-16">
+              <Reveal>
+                <SectionHeader
+                  id="content-proof-title"
+                  eyebrow="Proof"
+                  title="we run it on ourselves first."
+                  description={`The same system runs Prism's own channels: ${SOCIAL_PROOF.combinedAudience} followers and subscribers across YouTube, Instagram, and TikTok.`}
+                />
+                <p className="mt-4 max-w-[52ch] text-xs leading-5 text-subtle">
+                  {SOCIAL_PROOF.combinedAudienceMethodology}
+                </p>
+              </Reveal>
+              <Reveal delay={80}>
+                <ul className="divide-y divide-white/[0.08] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+                  {SOCIAL_PROOF_CHANNELS.map((channel) => (
+                    <li
+                      key={channel.platform}
+                      className="group/channel relative flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:gap-5 sm:p-6"
                     >
-                      {CONTENT_WAITLIST_CTA.label}
-                    </CoreActionLink>
-                  </div>
-
-                  <div className="mt-9 flex flex-wrap gap-2">
-                    {HERO_CHIPS.map((chip) => (
-                      <HeroChip key={chip}>{chip}</HeroChip>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-[1.75rem] border border-white/12 bg-black/35 p-3 sm:p-4">
-                  <div className="relative min-h-[300px] overflow-hidden rounded-[1.3rem] border border-white/12 bg-white/5 sm:min-h-[360px]">
-                    <DeferredAsciiHeroBackdrop
-                      animationName="fire-2"
-                      frameCount={94}
-                      fps={16}
-                      quality="medium"
-                      renderMode="canvas"
-                      fit="cover"
-                      zoom={1.1}
-                      offsetY={6}
-                      maskClassName=""
-                      ariaLabel="ASCII fire animation in the content hearth panel"
-                      posterSrc={FIRE_POSTER_SRC}
-                      posterClassName="absolute inset-0 h-full w-full object-cover object-center opacity-90 [image-rendering:pixelated]"
-                      scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
-                      focusScrimClassName=""
-                    />
-                  </div>
-                  <p
-                    aria-hidden="true"
-                    className="px-2 pb-1 pt-3 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]"
-                  >
-                    Loop 094 fr . Plan / Produce / Publish
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-10 flex items-center gap-2 border-t border-white/10 pt-5 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                <span
-                  aria-hidden="true"
-                  className="home-signal-dot h-1 w-1 rounded-full bg-[#d8bc79]"
-                />
-                Plan . Produce . Publish . Repeat
-              </p>
+                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <BrandLogo
+                          brand={CHANNEL_BRANDS[channel.platform]}
+                          theme="dark"
+                          decorative
+                          className="size-5"
+                        />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                          <span className="text-2xl font-semibold tracking-[-0.04em] text-foreground tabular-nums">
+                            {channel.audience}
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            {channel.platform} {channel.audienceLabel} ·{' '}
+                            {channel.activity} {channel.activityLabel}
+                          </span>
+                        </p>
+                        <p className="mt-1.5 text-pretty text-xs leading-5 text-subtle">
+                          {channel.source.replace(/\.$/, '')}. Verified{' '}
+                          {channel.verifiedAt}.
+                        </p>
+                      </div>
+                      <a
+                        href={channel.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full px-1 text-sm font-medium text-foreground after:absolute after:inset-0 after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-[3px] focus-visible:after:ring-inset focus-visible:after:ring-ring/50"
+                      >
+                        Visit
+                        <span className="sr-only">
+                          {' '}
+                          Prism on {channel.platform}
+                        </span>
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-4 transition-transform duration-200 group-hover/channel:-translate-y-0.5 group-hover/channel:translate-x-0.5"
+                        />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
           </div>
-        </section>
 
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              coreRouteSplitLayoutClassName,
-            )}
-          >
-            <CoreSectionHeading
-              eyebrow="What it does"
-              title="From the first idea to the published post."
-              description="You bring the expertise and source material. We turn it into finished content, collect your feedback, and handle publishing."
-            />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {CAPABILITIES.map((capability) => {
-                const Icon = capability.icon
-                return (
-                  <article
-                    key={capability.title}
-                    className="border border-white/10 bg-[#070707] p-5"
-                  >
-                    <Icon
-                      className="h-5 w-5 text-[#f5f0e8]"
-                      strokeWidth={1.6}
-                      aria-hidden="true"
-                    />
-                    <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                      {capability.title}
-                    </h2>
-                    <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                      {capability.body}
-                    </p>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="How it works"
-              title="Set it up. Keep showing up."
-              description="Three months to connect your channels and build the system, followed by monthly reviews and improvements."
-            />
-            <ol className="mt-10 grid gap-4 md:grid-cols-3">
-              {STEPS.map((step, index) => (
-                <li
-                  key={step.label}
-                  className="border border-white/10 bg-[#070707] p-6"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      {String(index + 1).padStart(2, '0')}
-                    </p>
-                    <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#8f877b]">
-                      {step.detail}
-                    </p>
-                  </div>
-                  <h2 className="mt-6 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {step.label}
-                  </h2>
-                  <p className="mt-4 text-sm leading-7 text-[#b8afa2]">
-                    {step.body}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="Proof"
-              title="See it on our own channels."
-              description="This is the same system Prism runs on itself. These are our audiences and the views behind them."
-            />
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              {PROOF_TILES.map((tile) => (
-                <div
-                  key={tile.platform}
-                  className="border border-white/12 bg-[#070707] p-6"
-                >
-                  <div className="flex items-center gap-2">
-                    <BrandLogo
-                      brand={tile.brand}
-                      theme="dark"
-                      decorative
-                      className="h-4 w-4"
-                    />
-                    <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      {tile.platform}
-                    </p>
-                  </div>
-                  <p className="mt-6 font-sans text-[2.6rem] font-medium leading-none tracking-[-0.05em] text-[#d8bc79]">
-                    {tile.value}
-                  </p>
-                  <p className="mt-4 text-sm leading-6 text-[#b8afa2]">
-                    {tile.label} · {tile.detail}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 border border-[#d8bc79]/25 bg-[#d8bc79]/[0.05] p-6 text-[0.98rem] leading-7 text-[#c9c1b6]">
-              <span className="font-medium text-[#d8bc79]">
-                {CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US')}
-              </span>{' '}
-              new users across {CONNECTED_CLIENT_TRAFFIC.connectedSites}{' '}
-              connected client sites in {CONNECTED_CLIENT_TRAFFIC.month}.
+          <div className="mt-16 sm:mt-20">
+            <p className="prism-container mb-6 text-eyebrow text-subtle">
+              Comments on Prism&apos;s own videos · community, not client
+              reviews
             </p>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteContainedSectionClassName,
-                'flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between',
-              )}
-            >
-              <div className="space-y-5">
-                <CoreSectionHeading
-                  eyebrow="Pricing"
-                  title="Scoped to your business."
-                />
-                <div className="space-y-2">
-                  <p className="text-[1.1rem] leading-7 text-[#f5f0e8]">
-                    <span className="font-medium">
-                      Every business runs content differently.
-                    </span>
-                  </p>
-                  <p className="text-[1rem] leading-7 text-[#8f877b]">
-                    Join the waitlist and, when your intake opens, we&apos;ll scope
-                    the system and the investment together.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:flex-col lg:items-stretch">
-                <CoreActionLink
-                  href={CONTENT_WAITLIST_CTA.href}
-                  variant="heroPrimary"
-                  label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
-                  location="content pricing"
-                >
-                  {CONTENT_WAITLIST_CTA.label}
-                </CoreActionLink>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionCompactClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading eyebrow="FAQ" title="Before you start." />
-            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
-              {FAQ_ITEMS.map((item) => (
-                <details key={item.question} className="group py-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {item.question}
-                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45 motion-reduce:transition-none">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 max-w-3xl text-sm leading-7 text-[#b8afa2]">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between',
-            )}
-          >
-            <CoreSectionHeading
-              title="Put your next content batch in motion."
-              description="Prism is fully booked right now. Join the waitlist and we will map the content, workflow, and scope with you when we reach out."
+            <CommentsRail
+              rows={COMMENT_ROWS}
+              label="Instagram comments on Prism content"
             />
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <CoreActionLink
-                href={CONTENT_WAITLIST_CTA.href}
-                variant="heroPrimary"
-                label={CONTENT_WAITLIST_CTA.label.toLowerCase()}
-                location="content final"
-              >
-                {CONTENT_WAITLIST_CTA.label}
-              </CoreActionLink>
-            </div>
           </div>
-        </section>
+        </Section>
+
+        <ServiceFaq
+          idPrefix="content"
+          items={FAQ_ITEMS}
+          title="before you start."
+        />
+
         <ServiceSiblings current="content" />
+
+        <FinalCta
+          location="content final cta"
+          title="your content, next."
+          href={CONTENT_WAITLIST_CTA.href}
+          headingId="content-final-cta-title"
+        />
       </main>
       <Footer />
       <ServiceSchema

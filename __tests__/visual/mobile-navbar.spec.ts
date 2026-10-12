@@ -56,11 +56,24 @@ async function expectOpenMenuGeometry(page: Page) {
   expect(result?.bodyOverflow).toBe('hidden')
   expect(result?.htmlOverflow).toBe('hidden')
   const links = page.locator('#mobile-site-nav').getByRole('link')
-  await expect(links).toHaveText(['Home', 'Clients', 'Wall of Love'])
+  await expect(links).toHaveText([
+    'Work',
+    'Wall of Love',
+    'About',
+    'Pricing',
+    'Websites',
+    'Content',
+    'Ads',
+    'Dental OS',
+    'Prism Infinity',
+    'Join the waitlist',
+  ])
   for (const [name, href] of [
-    ['Home', '/'],
-    ['Clients', '/case-studies'],
+    ['Work', '/case-studies'],
     ['Wall of Love', '/wall-of-love'],
+    ['About', '/about'],
+    ['Pricing', '/pricing'],
+    ['Join the waitlist', '/waitlist'],
   ]) {
     await expect(
       page.locator('#mobile-site-nav').getByRole('link', { name, exact: true }),
@@ -81,11 +94,11 @@ for (const route of ['/', '/about', '/wall-of-love'] as const) {
     await openMenu(page)
     await expectOpenMenuGeometry(page)
 
-    const homeLink = page
+    const workLink = page
       .locator('#mobile-site-nav')
-      .getByRole('link', { name: 'Home', exact: true })
-    await homeLink.scrollIntoViewIfNeeded()
-    await expect(homeLink).toBeVisible()
+      .getByRole('link', { name: 'Work', exact: true })
+    await workLink.scrollIntoViewIfNeeded()
+    await expect(workLink).toBeVisible()
 
     if (testInfo.project.name === 'mobile-webkit' && route === '/') {
       const outputDir = process.env.PRISM_MOBILE_AUDIT_OUTPUT
@@ -127,7 +140,7 @@ test('mobile menu stays bounded in landscape and closes at desktop width', async
 
   const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'Clients', exact: true })
+    .getByRole('link', { name: 'Work', exact: true })
   await caseStudiesLink.scrollIntoViewIfNeeded()
   await expect(caseStudiesLink).toBeVisible()
 
@@ -157,7 +170,7 @@ test('a mobile navigation link remains tappable on direct-body-header pages', as
   await openMenu(page)
   const caseStudiesLink = page
     .locator('#mobile-site-nav')
-    .getByRole('link', { name: 'Clients', exact: true })
+    .getByRole('link', { name: 'Work', exact: true })
   await caseStudiesLink.scrollIntoViewIfNeeded()
   await caseStudiesLink.click()
   await expect(page).toHaveURL(/\/case-studies$/)

@@ -1,7 +1,6 @@
-"use client"
-
 import React, { ReactNode } from "react"
-import { motion } from "framer-motion"
+
+import { cn } from "@/lib/utils"
 
 interface MobileContentSectionProps {
   children: ReactNode
@@ -9,78 +8,53 @@ interface MobileContentSectionProps {
   subtitle?: string
   variant?: "default" | "emphasized" | "compact"
   className?: string
+  /** Kept for API compatibility; sections render as their finished frame. */
   animationDelay?: number
 }
 
 const variantStyles = {
   default: {
-    container: "px-4 py-6",
-    title: "text-2xl font-bold text-neutral-900 dark:text-white mb-4",
-    subtitle: "text-lg text-neutral-600 dark:text-neutral-400 mb-6",
-    content: "space-y-4"
+    container: "my-10",
+    title: "",
+    subtitle: "text-lg leading-8 text-muted-foreground",
+    content: "flex flex-col gap-6",
   },
   emphasized: {
-    container: "px-4 py-8 bg-neutral-50 dark:bg-neutral-900/50 rounded-xl mx-4",
-    title: "text-2xl font-bold text-neutral-900 dark:text-white mb-4",
-    subtitle: "text-lg text-neutral-600 dark:text-neutral-400 mb-6",
-    content: "space-y-6"
+    container: "my-10 rounded-3xl border border-white/[0.08] bg-card p-6 sm:p-8",
+    title: "mt-0!",
+    subtitle: "text-lg leading-8 text-muted-foreground",
+    content: "flex flex-col gap-6",
   },
   compact: {
-    container: "px-4 py-4",
-    title: "text-xl font-semibold text-neutral-900 dark:text-white mb-3",
-    subtitle: "text-base text-neutral-600 dark:text-neutral-400 mb-4",
-    content: "space-y-3"
-  }
+    container: "my-8",
+    title: "text-xl!",
+    subtitle: "text-base leading-7 text-muted-foreground",
+    content: "flex flex-col gap-4",
+  },
 }
 
+/**
+ * Long-form section wrapper used inside MDX posts. Renders inside the blog
+ * prose column, so headings and paragraphs inherit the reading styles; the
+ * wrapper only adds rhythm and an optional emphasized card.
+ */
 export function MobileContentSection({
   children,
   title,
   subtitle,
   variant = "default",
   className = "",
-  animationDelay = 0
 }: MobileContentSectionProps) {
   const styles = variantStyles[variant]
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: animationDelay, ease: "easeOut" }}
-      className={`${styles.container} ${className}`}
-    >
-      {title && (
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: animationDelay + 0.1 }}
-          className={styles.title}
-        >
-          {title}
-        </motion.h2>
-      )}
-      
-      {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: animationDelay + 0.2 }}
-          className={styles.subtitle}
-        >
-          {subtitle}
-        </motion.p>
-      )}
-      
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: animationDelay + 0.3 }}
-        className={styles.content}
-      >
-        {children}
-      </motion.div>
-    </motion.section>
+    <section className={cn(styles.container, className)}>
+      {title && <h2 className={cn("text-foreground", styles.title)}>{title}</h2>}
+
+      {subtitle && <p className={cn("mb-6! mt-0!", styles.subtitle)}>{subtitle}</p>}
+
+      <div className={styles.content}>{children}</div>
+    </section>
   )
 }
 
@@ -90,27 +64,27 @@ interface MobileParagraphProps {
   emphasized?: boolean
 }
 
+/**
+ * Paragraph block for MDX. Renders a div because MDX already wraps the inner
+ * text in its own <p>; a <p> wrapper here produced invalid <p><p> nesting.
+ */
 export function MobileParagraph({
   children,
   className = "",
   emphasized = false
 }: MobileParagraphProps) {
   return (
-    <motion.p
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`
-        leading-relaxed text-base
-        ${emphasized 
-          ? "text-lg font-medium text-neutral-800 dark:text-neutral-200" 
-          : "text-neutral-700 dark:text-neutral-300"
-        }
-        ${className}
-      `}
+    <div
+      className={cn(
+        "[&_p]:my-0!",
+        emphasized
+          ? "text-[1.15em] leading-[1.65] tracking-[-0.012em] text-foreground"
+          : "text-foreground/[0.82]",
+        className,
+      )}
     >
       {children}
-    </motion.p>
+    </div>
   )
 }
 
@@ -125,38 +99,30 @@ export function MobileList({
   type = "bullet",
   className = ""
 }: MobileListProps) {
+  // next-mdx-remote strips JS expression props (blockJS), so MDX array props
+  // can arrive empty. Render nothing rather than an empty list.
+  if (!items.length) return null
+
+  const ListTag = type === "numbered" ? "ol" : "ul"
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`space-y-3 ${className}`}
-    >
+    <ListTag className={cn("my-0! flex list-none! flex-col gap-3 pl-0!", className)}>
       {items.map((item, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: index * 0.1 }}
-          className="flex items-start gap-3"
-        >
-          <div className="shrink-0 mt-2">
-            {type === "bullet" ? (
-              <div className="w-2 h-2 bg-neutral-400 dark:bg-neutral-600 rounded-full" />
-            ) : (
-              <div className="w-6 h-6 bg-neutral-200 dark:bg-neutral-700 rounded-full flex items-center justify-center">
-                <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
-                  {index + 1}
-                </span>
-              </div>
-            )}
-          </div>
-          <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed flex-1">
-            {item}
-          </p>
-        </motion.div>
+        <li key={index} className="my-0! flex items-start gap-3 pl-0!">
+          {type === "bullet" ? (
+            <span aria-hidden="true" className="mt-[0.7em] size-1.5 shrink-0 rounded-full bg-white/40" />
+          ) : (
+            <span
+              aria-hidden="true"
+              className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border border-white/10 font-mono text-[11px] text-muted-foreground"
+            >
+              {index + 1}
+            </span>
+          )}
+          <span className="flex-1">{item}</span>
+        </li>
       ))}
-    </motion.div>
+    </ListTag>
   )
 }
 
@@ -171,30 +137,20 @@ export function MobileHeading({
   level = 2,
   className = ""
 }: MobileHeadingProps) {
-  const baseStyles = "font-bold text-neutral-900 dark:text-white leading-tight"
-  
   const levelStyles = {
     1: "text-3xl mb-6",
     2: "text-2xl mb-4",
     3: "text-xl mb-3",
     4: "text-lg mb-2"
   }
-  
+
   const componentTag = `h${level}` as keyof React.JSX.IntrinsicElements
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {React.createElement(
-        componentTag,
-        {
-          className: `${baseStyles} ${levelStyles[level]} ${className}`
-        },
-        children,
-      )}
-    </motion.div>
+
+  return React.createElement(
+    componentTag,
+    {
+      className: cn("font-semibold leading-tight text-foreground", levelStyles[level], className),
+    },
+    children,
   )
 }

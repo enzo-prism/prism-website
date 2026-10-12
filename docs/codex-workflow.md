@@ -35,7 +35,7 @@ Default operating loop:
 | Search visibility          | `lib/seo/search-visibility.ts`, `app/sitemap.ts`, `public/llms.txt`, `scripts/seo-*`                                       | `docs/project-overview.md`, `docs/development-guide.md`, `docs/blog-content-architecture.md` |
 | Blog post or blog behavior | `content/blog`, `lib/mdx-data.ts`, `app/blog/*`, `components/blog-*`                                                       | `docs/blog-content-architecture.md`                                                          |
 | Forms and thank-you flows  | `components/forms/*`, `hooks/use-form-validation.ts`, `components/thank-you/*`, route pages                                | `docs/forms.md`, `docs/environment-setup.md` if env vars change                              |
-| Pricing                    | `lib/pricing-model.ts`, `app/pricing/*`, `app/websites/page.tsx` for the dedicated one-time build exception, pricing tests | README/AGENTS only if the canonical policy changes                                           |
+| Pricing                    | `lib/pricing-model.ts`, `app/pricing/*`, `app/websites/page.tsx` (PRO website offer, no public price), pricing tests | README/AGENTS only if the canonical policy changes                                           |
 | Case studies               | `lib/case-study-data.ts`, `app/case-studies/*`, `components/case-studies/*`                                                | `docs/pages-overview.md`                                                                     |
 | Deploy/release             | `.github/workflows/deploy.yml`, `vercel.json`, `docs/build-and-deploy-guide.md`                                            | `docs/build-and-deploy-guide.md`                                                             |
 
@@ -49,7 +49,7 @@ When the user asks to "analyze the project" or "update the project docs", do a s
 4. Update existing docs in place. Do not add a new top-level doc unless the user explicitly asks for one.
 5. For docs-only changes, run the nearest cheap validation (`pnpm design:lint` if the design contract moved, focused Jest if public machine-readable files changed, or a targeted `rg` stale-term check when only prose changed).
 
-Homepage proof-card reminder: `HomeDentistWinsSection` is a legacy-named wrapper around the current `components/home/HomeClientCoverFlow.tsx` — a restrained 3D Cover Flow deck of **real client-website screenshots** (each slide's `image` in `HOMEPAGE_CLIENT_WINS`). It is input-led (no autoplay) and touch-adaptive via `isTouch` (`useMobile('(hover: none), (pointer: coarse)')`): phones swipe 1:1 (one casual swipe = one card), with no parallax/tilt/hover and fewer mounted covers. The old abstract, image-free art (`data-client-win-abstract`, `HomeDentistWinsCarousel`) was retired; do not bring it back unless the design direction changes and `__tests__/components/HomeClientCoverFlow.test.tsx` is updated.
+Homepage proof reminder (2026-10-12 Prism Spectrum redesign): client proof on `/` is `HomeWorkWall` (`#work`, a tilted marquee of current-client desktop screenshots from `HOMEPAGE_CLIENT_WINS`) and the `HomeCaseStudies` tabs. Former clients stay off both (`__tests__/former-clients-highlight.test.ts`). The old Cover Flow deck and its abstract-art predecessor are retired; do not bring them back. UI work follows `DESIGN.md` (stock shadcn in `components/ui`, the `components/prism` kit) and copy follows the prism-writing skill (`prism-brand` pack).
 
 ## 2. Dental photography surfaces
 
@@ -103,15 +103,9 @@ When the wrapper can’t be used, require that all autoplay videos in decorative
 For regressions, run:
 `pnpm exec jest __tests__/hero-loop-gating.test.tsx __tests__/hero-autoplay-safety.test.ts`.
 
-## 3.1 ASCII fallback policy (desktop + mobile)
+## 3.1 ASCII animations (retired)
 
-When the hero uses `components/ascii/AsciiAnimation`, prefer the resilience settings in production routes:
-
-- `loadStrategy="batch"` (default) with bounded batches on large sequences
-- `batchSize={24}` and `maxConcurrentFetches={6}`
-- `continueOnFrameError={true}`
-
-This keeps `/software` and `/blog` hero animations moving even when a subset of frame fetches fails.
+The ASCII hero animation system (`components/ascii`, `lib/ascii-*`, `public/animations`, and the `ascii:*` scripts) was removed in the 2026-10-12 redesign. Do not reintroduce it; homepage motion is the CSS refraction scene and marquees, checked by `pnpm test:visual:animations`.
 
 ## 4. Carousel shorthand
 
@@ -154,10 +148,9 @@ Keep captions optional; if omitted, remove the text block so cards stay compact.
 3. **Run lint if touching shared components** – `pnpm lint` catches Tailwind ordering issues.
 4. **Document new flows** – drop short notes in this file or `docs/forms.md` whenever we add a Formspree endpoint or new data fields, instead of creating new top-level docs.
 
-## 8. Homepage hero slider rules
+## 8. Homepage testimonial rules
 
-- The hero review slider only surfaces one quote at a time from a curated list. Those records live in `content/wall-of-love-data.tsx` under `HOMEPAGE_HERO_REVIEW_IDS`. When marketing wants a different quote, add the testimonial to `quotesData` (if missing), ensure it doesn’t require consent, and append its ID to that array.
-- Randomization now happens client-side to avoid hydration mismatches. The server always renders the first curated review; on the client we pick a random one and store its index in `localStorage` under `prism-hero-review`. If you change this logic, keep SSR deterministic (no `Math.random()` on the server) and guard any browser APIs with `typeof window !== "undefined"`.
-- If the curated pool ever empties (e.g., IDs removed), the helper falls back to the first 10 consent-safe quotes. This prevents crashes in builds. When editing, keep this fallback in mind and prefer editing the curated list instead of reworking the slider.
+- `HomeTestimonials` reads `HOMEPAGE_TESTIMONIALS` in `components/home/homepage-content.ts`: named client quotes are every quote in `content/wall-of-love-data.tsx` whose `company` is `website client` and that does not require consent; the community marquee pulls the handles listed in `COMMUNITY_HANDLES` and is labeled as comments on Prism's own posts.
+- To change a quote, edit `quotesData` (keep `requiresConsent` accurate) or the handle list; never paraphrase a verbatim quote beyond dropping an em dash. The old one-at-a-time hero review slider is retired.
 
 Following this playbook should keep Codex contributors productive without re-learning the project every session.

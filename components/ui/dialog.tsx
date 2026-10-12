@@ -48,7 +48,7 @@ DialogHeader.displayName = "DialogHeader"
 
 const DialogTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
   <DialogPrimitive.Title
-    className={cn("text-xl font-semibold text-foreground font-pixel tracking-[0.08em] sm:text-2xl", className)}
+    className={cn("text-xl font-semibold tracking-[-0.03em] text-foreground sm:text-2xl", className)}
     {...props}
   />
 )

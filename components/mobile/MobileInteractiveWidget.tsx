@@ -1,23 +1,22 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
-import { motion, useAnimation, useMotionValue, useSpring } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { 
-  Play, 
-  Pause, 
-  RotateCcw, 
-  Share2, 
-  Download, 
-  Copy, 
+import React, { useId, useState } from "react"
+import {
+  Play,
+  RotateCcw,
+  Share2,
+  Copy,
   Check,
   Sparkles,
   Lightbulb,
   Target,
   TrendingUp
 } from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 interface MobileInteractiveWidgetProps {
   title: string
@@ -26,36 +25,33 @@ interface MobileInteractiveWidgetProps {
   className?: string
 }
 
+const TYPE_ICON = {
+  quiz: Target,
+  calculator: TrendingUp,
+  generator: Lightbulb,
+} as const
+
 export function MobileInteractiveWidget({
   title,
   description,
   type = "quiz",
   className = ""
 }: MobileInteractiveWidgetProps) {
+  const inputId = useId()
   const [isActive, setIsActive] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [results, setResults] = useState<string[]>([])
   const [copied, setCopied] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const controls = useAnimation()
-  
-  // Touch interaction
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const mouseX = useSpring(x, { stiffness: 300, damping: 30 })
-  const mouseY = useSpring(y, { stiffness: 300, damping: 30 })
 
   const handleStart = () => {
     setIsActive(true)
     setCurrentStep(0)
-    controls.start({ scale: 1.02, rotateY: 5 })
   }
 
   const handleReset = () => {
     setIsActive(false)
     setCurrentStep(0)
     setResults([])
-    controls.start({ scale: 1, rotateY: 0 })
   }
 
   const handleCopy = async () => {
@@ -68,29 +64,20 @@ export function MobileInteractiveWidget({
     }
   }
 
-  const handleMouseMove = (event: React.MouseEvent) => {
-    if (!containerRef.current) return
-    
-    const rect = containerRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    
-    const mouseX = (event.clientX - centerX) * 0.05
-    const mouseY = (event.clientY - centerY) * 0.05
-    
-    x.set(mouseX)
-    y.set(mouseY)
-  }
+  const TypeIcon = type in TYPE_ICON ? TYPE_ICON[type as keyof typeof TYPE_ICON] : null
 
-  const handleMouseLeave = () => {
-    x.set(0)
-    y.set(0)
-  }
+  const stage = (heading: string, caption: string) => (
+    <div className="text-center">
+      <p className="mb-2! mt-0! text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">
+        {heading}
+      </p>
+      <p className="my-0! text-sm text-muted-foreground">{caption}</p>
+    </div>
+  )
 
-  // Initialize animations
-  useEffect(() => {
-    controls.start({ opacity: 1, y: 0 })
-  }, [controls])
+  const panel = (children: React.ReactNode) => (
+    <div className="rounded-2xl border border-white/[0.08] bg-background/50 p-4">{children}</div>
+  )
 
   // Widget type specific content
   const getWidgetContent = () => {
@@ -98,30 +85,23 @@ export function MobileInteractiveWidget({
       case "quiz":
         return (
           <div className="space-y-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2">
-                {isActive ? `Step ${currentStep + 1}/3` : "Take Quiz"}
-              </div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {isActive ? "Answer the questions to get personalized recommendations" : "Test your knowledge"}
-              </p>
-            </div>
-            
-            {isActive && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
-                <div className="bg-white dark:bg-neutral-800 rounded-lg p-4 border">
-                  <h4 className="font-medium mb-3">What's your primary business goal?</h4>
+            {stage(
+              isActive ? `Step ${currentStep + 1}/3` : "Take Quiz",
+              isActive ? "Answer the questions to get personalized recommendations" : "Test your knowledge",
+            )}
+
+            {isActive &&
+              panel(
+                <>
+                  <p className="mb-3! mt-0! text-base font-medium text-foreground">
+                    What&apos;s your primary business goal?
+                  </p>
                   <div className="grid grid-cols-1 gap-2">
                     {["Increase Traffic", "Generate Leads", "Build Brand Awareness"].map((option) => (
                       <Button
                         key={option}
                         variant="outline"
-                        size="sm"
-                        className="justify-start h-auto p-3 text-left"
+                        className="h-auto min-h-11 justify-start rounded-xl px-4 py-3 text-left"
                         onClick={() => {
                           setResults([...results, option])
                           setCurrentStep(currentStep + 1)
@@ -131,198 +111,99 @@ export function MobileInteractiveWidget({
                       </Button>
                     ))}
                   </div>
-                </div>
-              </motion.div>
-            )}
+                </>,
+              )}
           </div>
         )
-        
+
       case "calculator":
         return (
           <div className="space-y-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
-                {isActive ? "Calculate" : "AI Impact Calculator"}
-              </div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                Estimate your traffic loss from AI search
-              </p>
-            </div>
-            
-            {isActive && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
-                <div className="bg-white dark:bg-neutral-800 rounded-lg p-4 border">
-                  <label className="block text-sm font-medium mb-2">
+            {stage(isActive ? "Calculate" : "AI Impact Calculator", "Estimate your traffic loss from AI search")}
+
+            {isActive &&
+              panel(
+                <>
+                  <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-muted-foreground">
                     Monthly Website Traffic
                   </label>
-                  <Input
-                    type="number"
-                    placeholder="e.g., 10000"
-                    className="w-full"
-                  />
-                </div>
-              </motion.div>
-            )}
+                  <Input id={inputId} type="number" placeholder="e.g., 10000" />
+                </>,
+              )}
           </div>
         )
-        
+
       case "generator":
         return (
           <div className="space-y-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600 mb-2">
-                {isActive ? "Generate" : "Tagline Generator"}
-              </div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                Create AI-friendly brand taglines
-              </p>
-            </div>
-            
-            {isActive && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-4"
-              >
-                <div className="bg-white dark:bg-neutral-800 rounded-lg p-4 border">
+            {stage(isActive ? "Generate" : "Tagline Generator", "Create AI-friendly brand taglines")}
+
+            {isActive &&
+              panel(
+                <>
                   <Input
                     placeholder="Enter your business type…"
-                    className="w-full mb-3"
+                    aria-label="Business type"
+                    className="mb-3"
                   />
-                  <Button size="sm" className="w-full">
-                    <Sparkles className="h-4 w-4 mr-2" />
+                  <Button className="w-full">
+                    <Sparkles className="size-4" aria-hidden="true" />
                     Generate Taglines
                   </Button>
-                </div>
-              </motion.div>
-            )}
+                </>,
+              )}
           </div>
         )
-        
+
       default:
-        return (
-          <div className="space-y-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-amber-600 mb-2">
-                Interactive Tool
-              </div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                Tap to get started
-              </p>
-            </div>
-          </div>
-        )
+        return stage("Interactive Tool", "Tap to get started")
     }
   }
 
   return (
-    <motion.div
-      ref={containerRef}
-      initial={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`
-        relative overflow-hidden rounded-2xl bg-gradient-to-br from-white via-neutral-50 to-neutral-100 
-        dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 
-        border-2 border-neutral-200 dark:border-neutral-700
-        shadow-xl hover:shadow-2xl transition-shadow duration-300
-        p-6 touch-manipulation
-        ${className}
-      `}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        x: mouseX,
-        y: mouseY,
-        willChange: "transform",
-        backfaceVisibility: "hidden",
-      }}
-      animate={controls}
+    <div
+      className={cn(
+        "relative my-10 overflow-hidden rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8",
+        className,
+      )}
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500" />
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <h3 className="mb-2! mt-0! text-xl! text-foreground">{title}</h3>
+          <p className="my-0! text-sm leading-6 text-muted-foreground">{description}</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <Badge variant="outline">Interactive</Badge>
+          {TypeIcon ? <TypeIcon className="size-4 text-subtle" aria-hidden="true" /> : null}
+        </div>
       </div>
-      
-      {/* Floating elements */}
-      <div className="absolute top-4 right-4 flex gap-2">
-        <Badge variant="secondary" className="text-xs">
-          Interactive
-        </Badge>
-        {type === "quiz" && <Target className="h-4 w-4 text-purple-500" />}
-        {type === "calculator" && <TrendingUp className="h-4 w-4 text-blue-500" />}
-        {type === "generator" && <Lightbulb className="h-4 w-4 text-green-500" />}
-      </div>
-      
-      {/* Header */}
-      <div className="relative z-10 mb-6">
-        <motion.h3
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-xl font-bold text-neutral-900 dark:text-white mb-2"
-        >
-          {title}
-        </motion.h3>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-neutral-600 dark:text-neutral-300 text-sm"
-        >
-          {description}
-        </motion.p>
-      </div>
-      
+
       {/* Widget content */}
-      <div className="relative z-10 mb-6">
-        {getWidgetContent()}
-      </div>
-      
+      <div className="mb-6">{getWidgetContent()}</div>
+
       {/* Action buttons */}
-      <div className="relative z-10 flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap justify-center gap-2">
         {!isActive ? (
-          <Button
-            onClick={handleStart}
-            size="lg"
-            className="gap-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-0"
-          >
-            <Play className="h-4 w-4" />
+          <Button onClick={handleStart} size="lg">
+            <Play className="size-4" aria-hidden="true" />
             Start Tool
           </Button>
         ) : (
           <>
-            <Button
-              onClick={handleReset}
-              variant="outline"
-              size="sm"
-              className="gap-2"
-            >
-              <RotateCcw className="h-4 w-4" />
+            <Button onClick={handleReset} variant="outline" size="sm">
+              <RotateCcw className="size-4" aria-hidden="true" />
               Reset
             </Button>
-            
+
             {results.length > 0 && (
               <>
-                <Button
-                  onClick={handleCopy}
-                  variant="outline"
-                  size="sm"
-                  className="gap-2"
-                >
-                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                <Button onClick={handleCopy} variant="outline" size="sm">
+                  {copied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-4" aria-hidden="true" />}
                   {copied ? "Copied!" : "Copy"}
                 </Button>
-                
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="gap-2"
-                >
-                  <Share2 className="h-4 w-4" />
+
+                <Button variant="outline" size="sm">
+                  <Share2 className="size-4" aria-hidden="true" />
                   Share
                 </Button>
               </>
@@ -330,29 +211,16 @@ export function MobileInteractiveWidget({
           </>
         )}
       </div>
-      
+
       {/* Progress indicator */}
       {isActive && (
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="absolute bottom-0 left-0 right-0 h-1 bg-neutral-200 dark:bg-neutral-700"
-        >
-          <div 
-            className="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-[width] duration-300"
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-white/[0.08]">
+          <div
+            className="bg-spectrum h-full transition-[width] duration-300 motion-reduce:transition-none"
             style={{ width: `${(currentStep / 3) * 100}%` }}
           />
-        </motion.div>
+        </div>
       )}
-      
-      {/* Glow effect */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: isActive ? 0.3 : 0.1, scale: isActive ? 1.2 : 1 }}
-        transition={{ duration: 0.5 }}
-        className="absolute -inset-2 bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 rounded-2xl blur-xl"
-      />
-    </motion.div>
+    </div>
   )
 }

@@ -1,4 +1,5 @@
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -36,13 +37,6 @@ jest.mock('next/link', () => ({
   },
 }))
 
-jest.mock('@/components/core-image', () => ({
-  __esModule: true,
-  default: function MockCoreImage() {
-    return <div data-testid="navbar-core-image" />
-  },
-}))
-
 jest.mock('@/components/breadcrumbs', () => ({
   __esModule: true,
   default: function MockBreadcrumbs() {
@@ -53,6 +47,8 @@ jest.mock('@/components/breadcrumbs', () => ({
 jest.mock('@/utils/analytics', () => ({
   trackNavigation: jest.fn(),
 }))
+
+import { trackNavigation } from '@/utils/analytics'
 
 const ResizeObserverMock = class {
   observe() {}
@@ -67,98 +63,131 @@ describe('Navbar', () => {
 
   beforeEach(() => {
     mockUsePathname.mockReset()
+    ;(trackNavigation as jest.Mock).mockClear()
     document.body.innerHTML = ''
     document.body.removeAttribute('style')
     document.documentElement.removeAttribute('style')
     delete document.documentElement.dataset.mobileNavOpen
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 })
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: 390,
+    })
   })
 
-  it('uses the home solid treatment on the homepage route', () => {
+  it('floats transparent over the homepage hero until the page scrolls', () => {
     mockUsePathname.mockReturnValue('/')
 
     render(<Navbar />)
 
     const banner = screen.getByRole('banner')
-    expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('fixed')
-    expect(
-      screen.getByRole('button', { name: /open menu/i }),
-    ).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /open menu/i })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    )
-    expect(
-      screen.getAllByRole('link', { name: /^home$/i })[0].className,
-    ).toContain('rounded-full')
-    expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
-    expect(screen.getByText(/^prism$/i)).toBeInTheDocument()
-    expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
+    expect(banner).toHaveAttribute('data-solid', 'false')
+
+    const raf = jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((callback: FrameRequestCallback) => {
+        callback(0)
+        return 1
+      })
+    try {
+      Object.defineProperty(window, 'scrollY', {
+        configurable: true,
+        value: 120,
+      })
+      act(() => {
+        fireEvent.scroll(window)
+      })
+      expect(banner).toHaveAttribute('data-solid', 'true')
+    } finally {
+      raf.mockRestore()
+    }
   })
 
-  it('keeps the default solid treatment on inner routes', () => {
+  it('is sticky and solid on inner routes', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
     const banner = screen.getByRole('banner')
-    expect(banner.className).toContain('bg-black')
     expect(banner.className).toContain('sticky')
-    expect(
-      screen.getByRole('button', { name: /open menu/i }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getAllByRole('link', { name: /^home$/i })[0].className,
-    ).toContain('rounded-full')
-    expect(screen.getByTestId('navbar-core-image')).toBeInTheDocument()
-    expect(screen.getByText(/impossible is temporary/i)).toBeInTheDocument()
+    expect(banner.className).toContain('overflow-x-clip')
+    expect(banner).toHaveAttribute('data-solid', 'true')
+    expect(screen.getByRole('link', { name: /prism home/i })).toHaveAttribute(
+      'href',
+      '/',
+    )
+    expect(screen.getByTestId('navbar-logo-mark')).toBeInTheDocument()
   })
 
-  it('gives the logo a stable hover and focus treatment', () => {
-    mockUsePathname.mockReturnValue('/get-started')
+  it('shows Work, a Services menu, Wall of Love, About and Pricing in the main nav', () => {
+    mockUsePathname.mockReturnValue('/about')
+    render(<Navbar />)
+    const nav = screen.getByRole('navigation', { name: 'Main' })
+    expect(
+      within(nav)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['Work', '/case-studies'],
+      ['Wall of Love', '/wall-of-love'],
+      ['About', '/about'],
+      ['Pricing', '/pricing'],
+    ])
+    expect(
+      within(nav).getByRole('button', { name: /services/i }),
+    ).toBeInTheDocument()
+  })
 
+  it('puts the waitlist CTA beside the menu, never a booking CTA', () => {
+    mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
 
-    const logoLink = screen.getByRole('link', { name: /prism home/i })
-    const logoMark = screen.getByTestId('navbar-logo-mark')
-    const logoGlow = screen.getByTestId('navbar-logo-glow')
+    const cta = screen.getByTestId('navbar-cta')
+    expect(cta).toHaveAttribute('href', '/waitlist')
+    expect(cta).toHaveTextContent(/join the waitlist/i)
+    expect(screen.getByRole('navigation', { name: 'Main' }).contains(cta)).toBe(
+      false,
+    )
+    fireEvent.click(cta)
+    expect(trackNavigation).toHaveBeenCalledWith('Header waitlist', '/waitlist')
 
-    expect(logoLink.className).toContain('group/logo')
-    // Focus rings stay warm/neutral per the design contract; the cyan/pink
-    // refraction accents are reserved for the hover glow treatment.
-    expect(logoLink.className).toContain('focus-visible:ring-white/30')
-    expect(logoMark.className).toContain(
-      'motion-safe:group-hover/logo:scale-105',
+    expect(document.body.textContent).not.toMatch(
+      /book a call|order now|get started/i,
     )
-    expect(logoMark.className).toContain(
-      'motion-safe:group-focus-visible/logo:scale-105',
-    )
-    expect(logoMark.className).toContain('group-hover/logo:border-white/45')
-    expect(logoGlow).toHaveAttribute('aria-hidden', 'true')
-    expect(logoGlow.className).toContain('mix-blend-screen')
-    expect(logoGlow.className).toContain('group-hover/logo:opacity-100')
-    expect(logoGlow.className).toContain('group-focus-visible/logo:opacity-100')
   })
 
-  it('keeps the mobile chrome on one row with a non-shrinking menu button', () => {
+  it.each(['/case-studies', '/case-studies/exquisite-dentistry'])(
+    'highlights Work on %s',
+    (pathname) => {
+      mockUsePathname.mockReturnValue(pathname)
+      render(<Navbar />)
+      const nav = screen.getByRole('navigation', { name: 'Main' })
+      const work = within(nav).getByRole('link', { name: 'Work' })
+      expect(work).toHaveAttribute('href', '/case-studies')
+      expect(work).toHaveAttribute('aria-current', 'page')
+      expect(
+        within(nav).getByRole('link', { name: 'About' }),
+      ).not.toHaveAttribute('aria-current')
+    },
+  )
+
+  it('keeps the mobile chrome on one row', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
-    expect(screen.getByRole('banner').className).toContain('overflow-x-clip')
-    expect(
-      screen.getByRole('button', { name: /open menu/i }).className,
-    ).toContain('shrink-0')
     const chrome = document.querySelector('[data-navbar-chrome] > div')
     expect(chrome?.className).toContain('flex-nowrap')
   })
 
-  it('opens a simple inline mobile nav instead of a separate modal layer', () => {
+  it('opens a portaled mobile panel with every destination and the waitlist CTA', () => {
     mockUsePathname.mockReturnValue('/about')
 
     render(<Navbar />)
 
     const toggle = screen.getByRole('button', { name: /open menu/i })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(toggle)
 
     expect(screen.getByRole('button', { name: /close menu/i })).toHaveAttribute(
@@ -166,22 +195,31 @@ describe('Navbar', () => {
       'true',
     )
     expect(document.documentElement.dataset.mobileNavOpen).toBe('true')
-    const mobilePanel = document.querySelector('#mobile-site-nav')
+    const mobilePanel = document.querySelector(
+      '#mobile-site-nav',
+    ) as HTMLElement
     expect(mobilePanel).toBeInTheDocument()
-    expect(mobilePanel?.parentElement).toBe(document.body)
+    expect(mobilePanel.parentElement).toBe(document.body)
     expect(screen.getByRole('banner').contains(mobilePanel)).toBe(false)
+
+    const mobileNav = screen.getByRole('navigation', { name: 'Mobile' })
+    const hrefs = within(mobileNav)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href'))
+    expect(hrefs).toEqual([
+      '/case-studies',
+      '/wall-of-love',
+      '/about',
+      '/pricing',
+      '/websites',
+      '/content',
+      '/ads',
+      '/dental-os',
+      '/prism-infinity',
+      '/waitlist',
+    ])
     expect(
-      screen.queryByRole('link', { name: /our story/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      within(screen.getByRole('navigation', { name: 'Mobile' })).getAllByRole(
-        'link',
-      ),
-    ).toHaveLength(3)
-    expect(
-      within(
-        document.querySelector('#mobile-site-nav') as HTMLElement,
-      ).getByRole('link', { name: /^home$/i }),
+      within(mobilePanel).getByRole('link', { name: /^work$/i }),
     ).toHaveFocus()
   })
 
@@ -191,21 +229,14 @@ describe('Navbar', () => {
     render(<Navbar />, { container: document.body })
     const header = screen.getByRole('banner')
 
-    // Reproduce Next App Router pages where the header is a direct body child.
     expect(header.parentElement).toBe(document.body)
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
 
     expect(header).not.toHaveAttribute('inert')
     expect(screen.getByRole('button', { name: /close menu/i })).toBeEnabled()
     const mobilePanel = document.querySelector('#mobile-site-nav')
-    expect(mobilePanel).toBeInTheDocument()
     expect(mobilePanel).not.toHaveAttribute('inert')
     expect(mobilePanel?.parentElement).toBe(document.body)
-    expect(
-      within(mobilePanel as HTMLElement).getByRole('link', {
-        name: /^home$/i,
-      }),
-    ).toBeEnabled()
   })
 
   it('preserves pre-existing inert state and restores overflow on close', () => {
@@ -224,8 +255,6 @@ describe('Navbar', () => {
     expect(footer).toHaveAttribute('inert')
     expect(document.body.style.overflow).toBe('hidden')
     expect(document.documentElement.style.overflow).toBe('hidden')
-
-    expect(document.documentElement.dataset.mobileNavOpen).toBe('true')
 
     fireEvent.click(screen.getByRole('button', { name: /close menu/i }))
 
@@ -265,63 +294,17 @@ describe('Navbar', () => {
     expect(document.documentElement.style.overflow).toBe('')
   })
 
-  it.each(['/case-studies', '/case-studies/exquisite-dentistry'])(
-    'highlights Clients on %s',
-    (pathname) => {
-      mockUsePathname.mockReturnValue(pathname)
-      render(<Navbar />)
-      const clients = screen.getByRole('link', { name: 'Clients' })
-      expect(clients).toHaveAttribute('href', '/case-studies')
-      expect(clients).toHaveAttribute('aria-current', 'page')
-      expect(
-        screen.getByRole('link', { name: 'Home' }),
-      ).not.toHaveAttribute('aria-current')
-    },
-  )
-
-  it('closes the mobile sheet when Clients is selected', () => {
+  it('closes the mobile panel when a destination is selected', () => {
     mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
     const mobile = screen.getByRole('navigation', { name: 'Mobile' })
-    const clients = within(mobile).getByRole('link', {
-      name: 'Clients',
-    })
-    expect(clients.querySelector('img')).toHaveAttribute('alt', '')
-    fireEvent.click(clients)
+    fireEvent.click(within(mobile).getByRole('link', { name: /^work$/i }))
     expect(
       screen.queryByRole('navigation', { name: 'Mobile' }),
     ).not.toBeInTheDocument()
     expect(document.body.style.overflow).toBe('')
-  })
-
-  it('carries no order CTA button — links only', () => {
-    mockUsePathname.mockReturnValue('/about')
-
-    render(<Navbar />)
-
-    expect(
-      screen.queryByRole('link', { name: /order now/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /^order$/i }),
-    ).not.toBeInTheDocument()
-  })
-
-  it('shows exactly Home, Clients, and Wall of Love in the header', () => {
-    mockUsePathname.mockReturnValue('/about')
-    render(<Navbar />)
-    const nav = screen.getByRole('navigation', { name: 'Main' })
-    expect(
-      within(nav)
-        .getAllByRole('link')
-        .map((link) => [link.textContent, link.getAttribute('href')]),
-    ).toEqual([
-      ['Home', '/'],
-      ['Clients', '/case-studies'],
-      ['Wall of Love', '/wall-of-love'],
-    ])
-    expect(within(nav).queryByRole('button')).not.toBeInTheDocument()
+    expect(trackNavigation).toHaveBeenCalledWith('Work', '/case-studies')
   })
 
   it('keeps --prism-header-height stable when the mobile menu opens', () => {
@@ -337,9 +320,9 @@ describe('Navbar', () => {
             top: 0,
             left: 0,
             right: 390,
-            bottom: 73,
+            bottom: 64,
             width: 390,
-            height: 73,
+            height: 64,
             toJSON() {
               return {}
             },
@@ -354,7 +337,7 @@ describe('Navbar', () => {
         document.documentElement.style.getPropertyValue(
           '--prism-header-height',
         ),
-      ).toBe('73px')
+      ).toBe('64px')
 
       fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
 
@@ -363,29 +346,10 @@ describe('Navbar', () => {
         document.documentElement.style.getPropertyValue(
           '--prism-header-height',
         ),
-      ).toBe('73px')
+      ).toBe('64px')
     } finally {
       HTMLElement.prototype.getBoundingClientRect = originalRect
     }
-  })
-
-  it('shows the same three destinations in the mobile menu', () => {
-    mockUsePathname.mockReturnValue('/case-studies/exquisite-dentistry')
-    render(<Navbar />)
-    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
-    const nav = screen.getByRole('navigation', { name: 'Mobile' })
-    expect(
-      within(nav)
-        .getAllByRole('link')
-        .map((link) => [link.textContent, link.getAttribute('href')]),
-    ).toEqual([
-      ['Home', '/'],
-      ['Clients', '/case-studies'],
-      ['Wall of Love', '/wall-of-love'],
-    ])
-    expect(
-      within(nav).getByRole('link', { name: 'Clients' }),
-    ).toHaveAttribute('aria-current', 'page')
   })
 
   it('shows case study breadcrumbs on nested case-study routes', () => {

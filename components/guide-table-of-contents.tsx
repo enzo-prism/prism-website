@@ -1,13 +1,13 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import clsx from "clsx"
-import { Button } from "@/components/ui/button"
-import PixelishImg from "@/components/pixelish/PixelishImg"
+
+import { cn } from "@/lib/utils"
 
 type GuideSection = {
   id: string
   label: string
+  /** Legacy decoration fields; accepted for compatibility, not rendered. */
   emoji?: string
   iconSrc?: string
   iconAlt?: string
@@ -17,38 +17,34 @@ interface GuideTableOfContentsProps {
   sections: GuideSection[]
 }
 
+/**
+ * "On this page" navigation for long guides: scrollable pills on mobile and a
+ * sticky hairline rail on desktop, with the section in view highlighted.
+ */
 export default function GuideTableOfContents({ sections }: GuideTableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "")
 
   const sectionIds = useMemo(() => sections.map((section) => section.id), [sections])
 
   useEffect(() => {
-    if (sectionIds.length === 0 || typeof window === "undefined") return
+    if (sectionIds.length === 0 || typeof IntersectionObserver === "undefined") return
 
-    const observers: IntersectionObserver[] = []
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting && entry.target.id)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActiveId(visible[0].target.id)
+      },
+      { rootMargin: "-30% 0px -60% 0px", threshold: [0, 0.25] },
+    )
 
     sectionIds.forEach((id) => {
       const element = document.getElementById(id)
-      if (!element) return
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveId(id)
-            }
-          })
-        },
-        { rootMargin: "-45% 0px -45% 0px", threshold: [0.25, 0.6] },
-      )
-
-      observer.observe(element)
-      observers.push(observer)
+      if (element) observer.observe(element)
     })
 
-    return () => {
-      observers.forEach((observer) => observer.disconnect())
-    }
+    return () => observer.disconnect()
   }, [sectionIds])
 
   const scrollToSection = (id: string) => {
@@ -57,94 +53,61 @@ export default function GuideTableOfContents({ sections }: GuideTableOfContentsP
     if (!element) return
     const offset = window.innerWidth >= 1024 ? 96 : 72
     const top = element.getBoundingClientRect().top + window.scrollY - offset
-    window.scrollTo({ top, behavior: "smooth" })
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    window.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" })
+    setActiveId(id)
   }
 
   if (sections.length === 0) return null
 
   return (
     <>
-      <div className="lg:hidden">
-        <div className="flex flex-wrap gap-2 pb-4 pt-2">
-          {sections.map((section) => (
-            <Button
-              type="button"
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              variant="ghost"
-              className={clsx(
-                "w-full rounded-full border px-4 py-2 text-sm font-medium transition sm:w-auto",
-                activeId === section.id
-                  ? "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-900"
-                  : "border-neutral-300 bg-white text-neutral-600 hover:border-neutral-400 hover:bg-white hover:text-neutral-900",
-              )}
-            >
-              {(section.iconSrc || section.emoji) && (
-                <span className="mr-2 inline-flex items-center" aria-hidden="true">
-                  {section.iconSrc ? (
-                    <PixelishImg
-                      src={section.iconSrc}
-                      alt=""
-                      size={14}
-                      invert={activeId === section.id}
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    section.emoji
+      <nav aria-label="On this page" className="lg:hidden">
+        <ul className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-4 pt-2 scrollbar-hide">
+          {sections.map((section) => {
+            const isActive = activeId === section.id
+            return (
+              <li key={section.id} className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection(section.id)}
+                  aria-current={isActive ? "location" : undefined}
+                  className={cn(
+                    "inline-flex h-10 items-center rounded-full border px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                    isActive
+                      ? "border-transparent bg-foreground text-background"
+                      : "border-white/10 bg-white/[0.03] text-muted-foreground hover:border-white/20 hover:text-foreground",
                   )}
-                </span>
-              )}
-              {section.label}
-            </Button>
-          ))}
-        </div>
-      </div>
+                >
+                  {section.label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
 
-      <nav className="hidden lg:block">
-        <div className="sticky top-28 space-y-4 rounded-3xl border border-neutral-200 bg-white p-5 shadow-sm">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">On this page</p>
-            <p className="mt-1 text-sm text-neutral-500">Jump to the section you need.</p>
-          </div>
-          <ul className="space-y-1.5">
+      <nav aria-label="On this page" className="hidden lg:block">
+        <div className="sticky top-28">
+          <p className="text-eyebrow mb-4 text-subtle">On this page</p>
+          <ul className="space-y-0.5 border-l border-white/[0.08]">
             {sections.map((section) => {
               const isActive = activeId === section.id
               return (
                 <li key={section.id}>
-                  <Button
+                  <button
                     type="button"
                     onClick={() => scrollToSection(section.id)}
-                    variant="ghost"
-                    className={clsx(
-                      "flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-left text-sm font-medium transition",
+                    aria-current={isActive ? "location" : undefined}
+                    className={cn(
+                      "-ml-px block w-full border-l py-1.5 pl-4 pr-2 text-left text-[13px] leading-snug transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
                       isActive
-                        ? "bg-neutral-900 text-white shadow-sm hover:bg-neutral-900"
-                        : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900",
+                        ? "border-foreground text-foreground"
+                        : "border-transparent text-subtle hover:text-foreground",
                     )}
                   >
-                    <span
-                      className={clsx(
-                        "flex h-6 w-6 items-center justify-center rounded-full border text-xs font-semibold transition",
-                        isActive
-                          ? "border-white/40 bg-white/10 text-white"
-                          : "border-neutral-300 bg-white text-neutral-500",
-                      )}
-                      aria-hidden
-                    >
-                      {section.iconSrc ? (
-                        <PixelishImg
-                          src={section.iconSrc}
-                          alt=""
-                          size={14}
-                          invert={isActive}
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        (section.emoji ?? "•")
-                      )}
-                    </span>
-                    <span>{section.label}</span>
-                  </Button>
+                    {section.label}
+                  </button>
                 </li>
               )
             })}

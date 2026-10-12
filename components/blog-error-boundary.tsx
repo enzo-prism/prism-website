@@ -81,11 +81,11 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
     <div className="min-h-[400px] flex items-center justify-center p-8">
       <div className="text-center max-w-md mx-auto">
         <div className="mb-6">
-          <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+          <AlertTriangle className="mx-auto mb-5 size-10 text-muted-foreground" strokeWidth={1.5} aria-hidden="true" />
+          <h2 className="text-heading mb-3 text-foreground">
             {isMDXError ? 'Blog post failed to load' : 'Something went wrong'}
           </h2>
-          <p className="text-neutral-600">
+          <p className="text-pretty text-muted-foreground">
             {isMDXError 
               ? 'There was an error loading this blog post. Please try again or go back to the blog list.'
               : 'We encountered an unexpected error. Please try refreshing the page.'
@@ -94,7 +94,7 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
         </div>
         
         <div className="space-y-3">
-          <Button onClick={retry} className="bg-neutral-900 text-white hover:bg-neutral-800">
+          <Button onClick={retry}>
             <RefreshCw />
             Try again
           </Button>
@@ -102,7 +102,7 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
           <div>
             <Link
               href="/blog"
-              className="inline-flex items-center px-4 py-2 text-neutral-600 hover:text-neutral-900 transition-colors"
+              className="inline-flex min-h-10 items-center rounded-full px-4 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to blog
@@ -112,10 +112,10 @@ function BlogErrorFallback({ error, retry }: { error: Error; retry: () => void }
         
         {process.env.NODE_ENV === 'development' && (
           <details className="mt-6 text-left">
-            <summary className="cursor-pointer text-sm text-neutral-500 hover:text-neutral-700">
+            <summary className="cursor-pointer text-sm text-subtle hover:text-foreground">
               Error Details (Development)
             </summary>
-            <pre className="mt-2 p-3 bg-neutral-100 rounded text-xs overflow-auto text-left">
+            <pre className="mt-2 overflow-auto rounded-xl border border-white/[0.08] bg-card p-3 text-left font-mono text-xs text-muted-foreground">
               {error.stack}
             </pre>
           </details>
@@ -130,19 +130,19 @@ export function BlogPostErrorBoundary({ children }: { children: React.ReactNode 
   return (
     <BlogErrorBoundary
       fallback={({ error, retry }) => (
-        <div className="prose-blog">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 my-8">
+        <div>
+          <div className="my-8 rounded-2xl border border-destructive/30 bg-destructive/[0.06] p-6">
             <div className="flex items-start">
-              <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 mr-3 shrink-0" />
+              <AlertTriangle className="mr-3 mt-0.5 size-5 shrink-0 text-destructive" aria-hidden="true" />
               <div>
-                <h3 className="text-lg font-semibold text-red-900 mb-2">
+                <h3 className="mb-2 text-lg font-semibold text-foreground">
                   Failed to render blog content
                 </h3>
-                <p className="text-red-700 mb-4">
+                <p className="mb-4 text-muted-foreground">
                   There was an error processing the blog post content. This might be due to invalid 
                   formatting or a temporary issue.
                 </p>
-                <Button onClick={retry} variant="destructive" size="sm">
+                <Button onClick={retry} variant="outline" size="sm">
                   <RefreshCw />
                   Retry loading
                 </Button>
@@ -170,17 +170,17 @@ export function BlogListErrorBoundary({ children }: { children: React.ReactNode 
   return (
     <BlogErrorBoundary
       fallback={({ error, retry }) => (
-        <section className="px-4 py-8 md:py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center py-16 border border-dashed border-red-200 rounded-lg bg-red-50">
-              <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-red-900 mb-2">
+        <section className="py-8 md:py-12">
+          <div className="prism-container">
+            <div className="rounded-3xl border border-dashed border-white/15 bg-card py-16 text-center">
+              <AlertTriangle className="mx-auto mb-4 size-10 text-muted-foreground" strokeWidth={1.5} aria-hidden="true" />
+              <h3 className="mb-2 text-xl font-medium text-foreground">
                 Failed to load blog posts
               </h3>
-              <p className="text-red-700 mb-6">
+              <p className="mb-6 text-muted-foreground">
                 We couldn't load the blog posts right now. Please try again.
               </p>
-              <Button onClick={retry} variant="destructive">
+              <Button onClick={retry} variant="outline">
                 <RefreshCw />
                 Retry loading
               </Button>

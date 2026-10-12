@@ -1,7 +1,8 @@
 'use client'
 
+import { ArrowUpRight } from 'lucide-react'
+
 import { trackCTAClick } from '@/utils/analytics'
-import { ArrowRight } from 'lucide-react'
 
 type DentalClient = {
   name: string
@@ -16,88 +17,77 @@ const DENTAL_CLIENTS: DentalClient[] = [
     name: 'Dr. Christopher B. Wong',
     location: 'Palo Alto, CA',
     url: 'https://www.chriswongdds.com',
-    focus: 'smooth ownership transition',
+    focus: 'Smooth ownership transition',
   },
   {
     name: 'Town Centre Dental',
     location: 'Brentwood, CA',
     url: 'https://www.towncentredental.net',
-    focus: 'modernized booking + analytics',
+    focus: 'Modernized booking and analytics',
   },
   {
     name: 'Coast Periodontics',
     location: 'San Luis Obispo, CA',
     url: 'https://www.coastperiodontics.com',
-    focus: 'specialty periodontic growth system',
+    focus: 'Specialty periodontic website',
   },
   {
     name: 'Grace Dental',
     location: 'Santa Rosa, CA',
     url: 'https://www.tingjenjidds.com',
-    focus: 'brand refresh & local acquisition',
+    focus: 'Brand refresh and local search',
   },
   {
     name: 'Exquisite Dentistry',
     location: 'Los Angeles, CA',
     url: 'https://exquisitedentistryla.com/',
-    focus: 'luxury cosmetic + general dentistry',
+    focus: 'Luxury cosmetic and general dentistry',
   },
   {
     name: 'Wine Country Root Canal',
     location: 'Santa Rosa, CA',
     url: 'https://www.winecountryrootcanal.com/',
-    focus: 'specialty endodontic launch',
+    focus: 'Specialty endodontic launch',
   },
   {
     name: 'Family First Smile Care',
     location: 'Los Gatos, CA',
     url: 'https://famfirstsmile.com/',
-    focus: 'family dentistry growth system',
+    focus: 'Family dentistry website',
   },
 ]
 
+/** Live dental client sites as a hairline list (external links, tracked). */
 export default function DentalClientCarousel() {
   return (
-    <div className="relative">
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white via-white/70 to-transparent"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white via-white/70 to-transparent"
-        aria-hidden
-      />
-      <div
-        className="flex gap-6 overflow-x-auto px-1 pb-6 sm:gap-7 [mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ WebkitOverflowScrolling: 'touch', msOverflowStyle: 'none' }}
-      >
-        {DENTAL_CLIENTS.map((client) => (
+    <ul className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+      {DENTAL_CLIENTS.map((client) => (
+        <li key={client.name}>
           <a
-            key={client.name}
             href={client.url}
             target={client.external === false ? undefined : '_blank'}
             rel={client.external === false ? undefined : 'noreferrer'}
             onClick={() => trackCTAClick('dental_client_click', client.name)}
-            className="group block min-w-[260px] shrink-0 rounded-3xl border border-neutral-200 bg-neutral-50/80 p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:bg-white hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+            className="group/client flex min-h-16 items-center gap-4 px-5 py-4 transition-colors hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:px-6"
           >
-            <div className="flex items-center justify-between gap-2">
-              <div>
-                <p className="text-sm font-semibold text-neutral-900">
-                  {client.name}
-                </p>
-                <p className="text-xs text-neutral-500">{client.location}</p>
-              </div>
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white">
-                <ArrowRight className="h-4 w-4" aria-hidden />
+            <span className="min-w-0 flex-1 sm:flex sm:items-center sm:gap-6">
+              <span className="block min-w-0 sm:w-[46%] sm:shrink-0">
+                <span className="block truncate text-[15px] font-medium text-foreground">{client.name}</span>
+                <span className="block font-mono text-[11px] text-subtle">{client.location}</span>
               </span>
-            </div>
-            <p className="mt-4 text-sm text-neutral-600">{client.focus}</p>
-            <p className="mt-5 text-xs font-medium uppercase tracking-[0.28em] text-neutral-400">
-              {client.external === false ? 'view case study' : 'view site'}
-            </p>
+              <span className="mt-1 block text-[14px] text-muted-foreground sm:mt-0">{client.focus}</span>
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-1.5 text-[13px] text-muted-foreground transition-colors group-hover/client:text-foreground">
+              <span className="hidden md:inline">{client.external === false ? 'View case study' : 'View site'}</span>
+              <span className="sr-only md:hidden">{client.external === false ? 'View case study' : 'View site'}</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/client:-translate-y-0.5 group-hover/client:translate-x-0.5"
+              />
+            </span>
           </a>
-        ))}
-      </div>
-    </div>
+        </li>
+      ))}
+    </ul>
   )
 }

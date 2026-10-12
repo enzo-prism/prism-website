@@ -2,13 +2,13 @@
 
 ## Overview
 
-The blog styling system has been improved to provide clean, consistent, and readable typography for all blog posts. The new system uses Tailwind's Typography plugin with custom enhancements specifically designed for the Prism blog.
+The blog styling system provides clean, consistent, and readable typography for all blog posts. Since the 2026-10-12 Prism Spectrum redesign, posts are styled by `proseClassName` (`components/landing/prose.ts`), a set of descendant utilities authored instead of the Tailwind Typography `prose` classes so global styles cannot override them.
 
 ## Key Improvements
 
 1. **Better Readability**
-   - Blog index + post pages now use the Inter typeface (`next/font/google`)
-   - Optimized body font size (`clamp(1.06rem, 0.98rem + 0.24vw, 1.2rem)`) for comfortable reading
+   - Blog index + post pages use Geist Sans (with Geist Mono for metadata), like the rest of the site
+   - Body copy is 17px (18px from `sm`) with a 1.8 line height in a 68ch column
    - Improved line height and spacing between elements
    - Softer text colors to reduce eye strain
    - Consistent spacing throughout the article
@@ -17,7 +17,7 @@ The blog styling system has been improved to provide clean, consistent, and read
    - No need for inline styles in MDX files
    - All standard HTML elements are automatically styled
    - Consistent appearance across all blog posts
-   - Dark mode support built-in
+   - Built for the permanently dark canvas (tokens only, no raw hex)
    - Table of contents links are generated from H2/H3 headings
    - Blog card titles/descriptions keep authored capitalization (no forced lowercase transforms)
 
@@ -97,14 +97,14 @@ This is an informational callout box.
 
 ## Technical Details
 
-The blog styling system consists of:
+The blog styling system consists of (2026-10 Spectrum redesign, see `DESIGN.md`):
 
-1. **`app/blog/layout.tsx`**: Keeps blog pages on Prism's shared Geist type system
-2. **`blog-reading-surface` + `prose-blog` classes**: Route-scoped typography tuning for long-form reading
-3. **Text-first page chrome**: Article pages omit hero media, sharing controls, table-of-contents panels, promotional modules, related-card grids, and the global footer so the writing stays primary
-4. **Compact index**: The blog index uses a paginated text list instead of image cards, with search and topic filters kept visually quiet
-5. **MDX renderer**: Cleans up inline styles automatically
-6. **Dark mode**: Automatic color adjustments for dark theme
+1. **`app/blog/layout.tsx`**: Keeps blog pages on Prism's shared Geist type system (`blog-reading-surface`)
+2. **`proseClassName` (`components/landing/prose.ts`)**: The long-form reading styles for posts (68ch column, foreground-tinted body, clear H2/H3 rhythm, code, blockquotes, images, tables). Authored as descendant utilities, so the legacy `.prose-blog` rules in `globals.css` no longer apply to posts.
+3. **Post chrome (`components/blog-post-layout.tsx`)**: Header with category badge, reading time, the display title, author and date, and the copy-as-Markdown button; optional cover image when the post has custom art; "On this page" table of contents (sticky rail on wide screens, disclosure on small ones); author card; three related posts; the shared `FinalCta`; and the global footer.
+4. **Index (`app/blog/page.tsx`)**: Hero, topic pills with counts, a featured newest post, and a paginated 12-card grid with real or generated covers (`components/blog/blog-cover.tsx`).
+5. **MDX components (`components/mdx-components.tsx`)**: Callouts, check lists, CTA buttons (white or outline pills, opt out of link styling with `.mdx-cta`), grids and cards in the dark token system.
+6. **Dark only**: The site is permanently dark; use tokens, never raw hex, in blog components.
 
 ## Migration from Old Posts
 

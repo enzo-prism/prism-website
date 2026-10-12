@@ -1,54 +1,37 @@
-import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import Breadcrumbs from "@/components/breadcrumbs"
-import ScrollProgressBar from "@/components/scroll-progress-bar"
-import { Skeleton, BlogPostContentSkeleton } from "@/components/blog-skeleton"
+import Navbar from "@/components/navbar"
+import { BlogPostContentSkeleton, Skeleton } from "@/components/blog-skeleton"
 
 export default function BlogPostLoading() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <ScrollProgressBar />
-      <div className="pt-1">
-        <Navbar />
-        <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs
-            items={[{ name: "blog", url: "/blog" }, { name: "loading…", url: "#" }]}
-            includeSchema={false}
-          />
-        </div>
-        <main className="flex-1">
-          <div className="w-full bg-transparent py-12 md:py-16">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="max-w-3xl mx-auto">
-                {/* Back button skeleton */}
-                <div className="mb-6">
-                  <Skeleton className="h-5 w-32" />
-                </div>
-                
-                <article>
-                  {/* Hero image skeleton */}
-                  <div className="relative w-full max-w-2xl mx-auto mb-8 md:mb-12 rounded-lg overflow-hidden">
-                    <Skeleton className="aspect-[16/9] w-full" />
-                  </div>
-                  
-                  {/* Metadata skeleton */}
-                  <div className="mb-10">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      <Skeleton className="h-6 w-20 rounded-full" />
-                      <Skeleton className="h-5 w-24" />
-                    </div>
-                    <Skeleton className="h-10 w-full mb-4" />
-                  </div>
-                  
-                  {/* Content skeleton */}
-                  <BlogPostContentSkeleton />
-                </article>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <Navbar />
+      <main className="flex-1" aria-busy="true">
+        <div className="prism-container pb-24 pt-10 sm:pt-16">
+          <div className="mx-auto w-full max-w-[46rem]">
+            <Skeleton className="h-4 w-24" />
+            <div className="mt-10 flex items-center gap-3">
+              <Skeleton className="h-5 w-24 rounded-full" />
+              <Skeleton className="h-3.5 w-16" />
+            </div>
+            <Skeleton className="mt-6 h-12 w-full sm:h-14" />
+            <Skeleton className="mt-3 h-12 w-3/4 sm:h-14" />
+            <Skeleton className="mt-7 h-5 w-full" />
+            <Skeleton className="mt-3 h-5 w-2/3" />
+            <div className="mt-9 flex items-center gap-3 border-t border-white/[0.08] pt-6">
+              <Skeleton className="size-9 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-3.5 w-24" />
+                <Skeleton className="h-3 w-20" />
               </div>
             </div>
+            <div className="mt-14">
+              <BlogPostContentSkeleton />
+            </div>
           </div>
-        </main>
-        <Footer />
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   )
 }

@@ -1,8 +1,15 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { FileText, LayoutTemplate, MapPin, MousePointerClick } from "lucide-react"
 
+import { BulletList } from "@/components/landing/seo/bullet-list"
+import { LinkPills } from "@/components/landing/seo/link-pills"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
+import { Card } from "@/components/ui/card"
 import VideoPlayer from "@/components/video-player"
 import { seoOnPageContent } from "@/content/seo"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
@@ -10,10 +17,21 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'On-page SEO services',
-  description: 'Prism structures content, technical SEO, and engagement signals so every page reads like the perfect answer for the local searches that matter.',
+  description: 'Prism structures content, technical SEO, and engagement signals so every page reads like a clear answer for the local searches that matter.',
   path: "/seo/on-page",
   ogImage: "/prism-opengraph.png",
 })
+
+const PILLAR_ICONS = [FileText, LayoutTemplate, MousePointerClick, MapPin] as const
+
+const RELATED_LINKS = [
+  { label: "Back to the SEO overview", href: "/seo" },
+  { label: "Explore off-page SEO", href: "/seo/off-page" },
+  { label: "SEO audit service", href: "/seo/audit" },
+  { label: "SEO for dentists", href: "/dental-practice-seo-expert" },
+  { label: "AI SEO services", href: "/ai-seo-services" },
+  { label: "How dental practices rank higher in Google", href: "/blog/dental-practice-rank-higher-google-search" },
+] as const
 
 export default function SeoOnPagePage() {
   const { hero, intro, pillars, closing, closingBullets } = seoOnPageContent
@@ -25,18 +43,24 @@ export default function SeoOnPagePage() {
 
   return (
     <>
-      <SeoHero {...hero} />
+      <SeoHero
+        eyebrow="On-page SEO"
+        title="make every page useful."
+        subtitle="Everything you control on your own site, designed to match what people are actually searching for."
+        location="seo on-page hero"
+        secondaryCta={{ label: "See off-page SEO", href: "/seo/off-page" }}
+      />
 
       <SeoSection
         id={videoSectionId}
         eyebrow="watch"
-        title="enzo explains our on-page approach"
-        description="hear directly from enzo on why we obsess over information architecture, content clarity, and technical polish before layering any off-page proof."
+        title="Enzo explains our on-page approach."
+        description="Hear from Enzo on why we focus on information architecture, content clarity, and technical polish before layering on off-page proof."
       >
         <VideoPlayer
           src={videoSrc}
           poster={videoPoster}
-          title="Enzo on building perfect on-page answers"
+          title="Enzo on building clear on-page answers"
           caption="How Prism thinks through content structure, schema, and UX so every visit feels like an obvious next step."
           className="w-full"
           schema={{
@@ -47,92 +71,77 @@ export default function SeoOnPagePage() {
             uploadDate: "2025-05-24T00:00:00Z",
             contentUrl: videoSrc,
             embedUrl: `https://www.design-prism.com/seo/on-page#${videoSectionId}`,
-            creatorName: "Enzo Perez",
+            creatorName: "Enzo Sison",
           }}
         />
       </SeoSection>
 
-      <SeoSection
-        eyebrow="intro"
-        title="build the best answer"
-        description={intro}
-      >
-        <p className="text-sm text-neutral-600">
-          it’s not about keyword stuffing. it’s about the right pages, the right structure, and the right information delivered in a way that loads fast and feels effortless to use.
-        </p>
-      </SeoSection>
+      <Section aria-labelledby="on-page-intro-title">
+        <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+          <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+          <Reveal className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            <SectionHeader
+              id="on-page-intro-title"
+              eyebrow="intro"
+              title="build the best answer."
+              titleClassName="max-w-[12ch]"
+            />
+            <div className="space-y-5 self-end">
+              <p className="text-lead text-pretty text-foreground/90">{intro}</p>
+              <p className="text-pretty text-[15px] leading-7 text-muted-foreground">
+                It’s not about keyword stuffing. It’s about the right pages, the right structure, and the right information, delivered in a way that loads fast and is easy to use.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
 
-      {pillars.map((pillar) => (
-        <SeoSection key={pillar.title} title={pillar.title} description={pillar.description}>
-          <ul className="space-y-3 text-sm text-neutral-700">
-            {pillar.bullets?.map((bullet) => (
-              <li key={bullet} className="flex gap-3">
-                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </SeoSection>
-      ))}
+      <Section aria-labelledby="on-page-pillars-title">
+        <Reveal>
+          <SectionHeader
+            id="on-page-pillars-title"
+            eyebrow="the pillars"
+            title="what every page gets."
+            description="Four layers, built together, so each page answers the search and gives people a clear next step."
+          />
+        </Reveal>
+        <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2">
+          {pillars.map((pillar, index) => {
+            const Icon = PILLAR_ICONS[index % PILLAR_ICONS.length]
+            return (
+              <Reveal key={pillar.title} delay={(index % 2) * 80}>
+                <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-8">
+                  <div className="flex items-center justify-between">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-heading mt-6 text-foreground">{pillar.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{pillar.description}</p>
+                  {pillar.bullets ? <BulletList items={pillar.bullets} marker="dot" className="mt-6" /> : null}
+                </SpotlightCard>
+              </Reveal>
+            )
+          })}
+        </div>
+      </Section>
 
-      <SeoSection
-        eyebrow="closing"
-        title="on-page seo is the spine"
-        description={closing}
-      >
-        <ul className="space-y-3 text-sm text-neutral-700">
-          {closingBullets.map((item) => (
-            <li key={item} className="flex gap-3">
-              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="flex flex-wrap gap-3 pt-6">
-          <Link
-            href="/seo"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            back to seo overview
-          </Link>
-          <Link
-            href="/seo/off-page"
-            className="inline-flex items-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-neutral-900"
-          >
-            explore off-page seo
-          </Link>
-          <Link
-            href="/seo/audit"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            seo audit service
-          </Link>
-          <Link
-            href="/dental-practice-seo-expert"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            seo for dentists
-          </Link>
-          <Link
-            href="/ai-seo-services"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            ai seo services
-          </Link>
-          <Link
-            href="/blog/dental-practice-rank-higher-google-search"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            rank higher in google
-          </Link>
-          <Link
-            href="/waitlist"
-            className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
-          >
-            talk with prism
-          </Link>
+      <SeoSection eyebrow="closing" title="on-page seo is the spine." description={closing}>
+        <Card className="p-6 sm:p-8">
+          <BulletList items={closingBullets} />
+        </Card>
+        <div>
+          <p className="text-eyebrow text-subtle">keep exploring</p>
+          <LinkPills links={RELATED_LINKS} label="Related SEO pages" className="mt-4" />
         </div>
       </SeoSection>
+
+      <FinalCta
+        location="seo on-page final cta"
+        title="every page, a clear answer."
+        secondary={{ label: "See the SEO audit", href: "/seo/audit" }}
+      />
 
       <ServiceSchema
         serviceId="seo-on-page"

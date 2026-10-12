@@ -1,10 +1,28 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import {
+  ArrowRight,
+  BellRing,
+  CalendarCheck,
+  ClipboardList,
+  Moon,
+  PhoneForwarded,
+  Plug,
+  Receipt,
+  ShieldCheck,
+  type LucideIcon,
+} from 'lucide-react'
 
-import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import ScrollToTop from '@/components/scroll-to-top'
+import { Callout, DentalFaq, TextLink } from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
+import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
 import { FAQSchema, WebPageSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
+import { Card } from '@/components/ui/card'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
@@ -65,12 +83,12 @@ const impactStats = [
 ]
 
 const integrations = [
-  'dentrix',
-  'open dental',
-  'eaglesoft',
-  'google calendar',
-  'patient communication platforms',
-  'practice management systems',
+  'Dentrix',
+  'Open Dental',
+  'Eaglesoft',
+  'Google Calendar',
+  'Patient communication platforms',
+  'Practice management systems',
 ]
 
 const faqs = [
@@ -118,297 +136,191 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
+const featureIcons: LucideIcon[] = [CalendarCheck, Moon, Receipt, BellRing, ClipboardList, PhoneForwarded]
+
+const relatedServices = [
+  {
+    label: 'dental websites',
+    description: 'conversion-first sites that earn trust and book appointments',
+    href: '/dental-website',
+  },
+  {
+    label: 'dental seo',
+    description: 'local search work aimed at high-intent patients',
+    href: '/dental-practice-seo-expert',
+  },
+  {
+    label: 'facebook ads',
+    description: 'targeted campaigns aimed at new patient inquiries',
+    href: '/facebook-ads-for-dentists',
+  },
+  {
+    label: 'custom email',
+    description: 'professional @yourpractice.com email for your team',
+    href: '/custom-email-for-dental-practices',
+  },
+]
+
 export default function DentalAIAgentsPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        {/* Hero */}
-        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(76,201,240,0.15),_transparent_55%)]"
-            aria-hidden
-          />
-          <div className="container relative mx-auto px-4 py-24 md:py-28">
-            <div className="mx-auto max-w-4xl text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                ai voice agents for dental practices
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                an ai receptionist for routine calls and careful handoffs
-              </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                prism builds custom elevenlabs ai agents for dental practices.
-                extend phone coverage, handle approved scheduling and
-                administrative workflows, and route clinical or sensitive
-                questions to your team.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/waitlist"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
-                >
-                  {FREE_AUDIT_CTA_TEXT}
-                </Link>
-                <Link
-                  href="/ai-agents"
-                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40"
-                >
-                  see all ai agent services
-                </Link>
-              </div>
-            </div>
-            <div className="mx-auto mt-8 max-w-3xl rounded-3xl border border-amber-200 bg-amber-50 p-6 text-sm leading-relaxed text-amber-950">
-              <p className="font-semibold">protected health information</p>
-              <p className="mt-2">
-                PHI is submitted to ElevenLabs only when the practice is an
-                Enterprise customer with an executed ElevenLabs BAA and Zero
-                Retention Mode enabled and configured. Otherwise, the agent
-                collects non-PHI or routes the caller to staff. The practice
-                remains responsible for its compliance program.{' '}
-                <Link
-                  href="https://elevenlabs.io/docs/eleven-agents/legal/hipaa"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold underline underline-offset-4"
-                >
-                  Review ElevenLabs&apos; HIPAA requirements
-                </Link>
-                .
-              </p>
-            </div>
-          </div>
-        </section>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="AI voice agents for dental practices"
+          title="an ai receptionist for routine calls and careful handoffs."
+          description="prism builds custom elevenlabs ai agents for dental practices. extend phone coverage, handle approved scheduling and administrative workflows, and route clinical or sensitive questions to your team."
+          location="dental ai agents hero"
+          ctaHref="/waitlist"
+          ctaLabel={FREE_AUDIT_CTA_TEXT}
+          secondary={{ label: 'See all AI agent services', href: '/ai-agents' }}
+          glow="blue"
+          titleClassName="max-w-[17ch]"
+        >
+          <Callout
+            tone="warn"
+            title="protected health information"
+            icon={<ShieldCheck className="size-4" aria-hidden />}
+            className="mx-auto max-w-3xl text-left"
+          >
+            <p>
+              PHI is submitted to ElevenLabs only when the practice is an
+              Enterprise customer with an executed ElevenLabs BAA and Zero
+              Retention Mode enabled and configured. Otherwise, the agent
+              collects non-PHI or routes the caller to staff. The practice
+              remains responsible for its compliance program.{' '}
+              <TextLink href="https://elevenlabs.io/docs/eleven-agents/legal/hipaa">
+                Review ElevenLabs&apos; HIPAA requirements
+              </TextLink>
+              .
+            </p>
+          </Callout>
+        </LandingHero>
 
-        {/* What Your Agent Handles */}
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                built for dental workflows
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what your dental ai agent handles
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                every feature is designed around the calls your front desk
-                fields daily: scheduling, insurance, intake, and after-hours
-                triage.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {agentFeatures.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <h3 className="text-lg font-semibold text-neutral-900">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm text-neutral-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+        <Section aria-labelledby="agent-handles-title">
+          <Reveal>
+            <SectionHeader
+              id="agent-handles-title"
+              eyebrow="Built for dental workflows"
+              title="what your dental ai agent handles."
+              description="every feature is designed around the calls your front desk fields daily: scheduling, insurance, intake, and after-hours triage."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {agentFeatures.map((item, index) => {
+              const Icon = featureIcons[index] ?? PhoneForwarded
+              return (
+                <Reveal key={item.title} delay={(index % 3) * 70}>
+                  <Card className="flex h-full flex-col p-6 transition-colors hover:border-white/[0.16]">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon className="size-[18px] text-foreground" aria-hidden />
+                    </span>
+                    <h3 className="mt-6 text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  </Card>
+                </Reveal>
+              )
+            })}
           </div>
-        </section>
+        </Section>
 
-        {/* ROI / Impact */}
-        <section className="border-y border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                the business case
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                the operating case for an ai receptionist
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                the business case depends on your call volume, staffing,
-                integrations, and conversion baseline. prism measures coverage,
-                handoffs, and booked outcomes instead of promising a universal
-                return.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {impactStats.map((item) => (
-                <div
-                  key={item.stat}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 text-center shadow-sm"
-                >
-                  <p className="text-4xl font-semibold text-neutral-900">
-                    {item.stat}
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-neutral-900">
-                    {item.label}
-                  </p>
-                  <p className="mt-2 text-xs text-neutral-500">
-                    {item.context}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Integrations */}
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center">
-              <div className="space-y-6">
-                <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                  connected tools
-                </p>
-                <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  connects to the tools your practice already uses
-                </h2>
-                <p className="text-base leading-relaxed text-neutral-600">
-                  connection options depend on each vendor and account. prism
-                  validates permissions, supported actions, data handling, and
-                  fallback behavior before an integration goes live.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm">
-                <ul className="space-y-3">
-                  {integrations.map((tool) => (
-                    <li key={tool} className="flex items-center gap-3">
-                      <span
-                        className="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
-                        aria-hidden="true"
-                      />
-                      <span className="text-sm font-medium text-neutral-900">
-                        {tool}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-6 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] md:items-start">
-              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <h2 className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white">
-                  FAQ
-                </h2>
-                <p className="mt-4 text-sm text-neutral-600">
-                  common questions from dental practices evaluating ai phone
-                  agents.
-                </p>
-              </div>
-              <div className="space-y-6">
-                {faqs.map((faq) => (
-                  <div
-                    key={faq.question}
-                    className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+        <Section aria-labelledby="agent-case-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] lg:items-end lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="agent-case-title"
+                eyebrow="The business case"
+                title="the operating case for an ai receptionist."
+                description="the business case depends on your call volume, staffing, integrations, and conversion baseline. prism measures coverage, handoffs, and booked outcomes instead of promising a universal return."
+              />
+            </Reveal>
+            <Reveal delay={120}>
+              <ul className="spectrum-rule grid grid-cols-1 overflow-hidden rounded-2xl border border-white/[0.08] bg-card sm:grid-cols-2">
+                {impactStats.map((item) => (
+                  <li
+                    key={item.stat}
+                    className="-mb-px -mr-px flex flex-col gap-3 border-b border-r border-white/[0.07] p-6 sm:p-8"
                   >
-                    <h3 className="text-lg font-semibold text-neutral-900">
-                      {faq.question}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                      {faq.answer}
-                    </p>
-                  </div>
+                    <span className="text-[clamp(1.75rem,1.4rem+1.2vw,2.5rem)] font-semibold leading-none tracking-[-0.045em] text-foreground">
+                      {item.stat}
+                    </span>
+                    <span className="text-[15px] font-medium text-foreground/90">{item.label}</span>
+                    <span className="text-[13px] leading-5 text-subtle">{item.context}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="agent-tools-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-40" />
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-16">
+              <SectionHeader
+                id="agent-tools-title"
+                eyebrow="Connected tools"
+                title="connecting the tools your practice already uses."
+                description="Connection options depend on each vendor and account. Prism validates permissions, supported actions, data handling, and fallback behavior before an integration goes live."
+              />
+              <ul className="flex flex-wrap gap-2.5">
+                {integrations.map((tool) => (
+                  <li
+                    key={tool}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-background/60 px-4 py-2 text-[14px] text-foreground"
+                  >
+                    <Plug className="size-3.5 text-subtle" aria-hidden />
+                    {tool}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </section>
+        </Section>
 
-        {/* Related Services */}
-        <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                the full dental growth stack
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                pair your ai agent with prism&apos;s dental services
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                ai phone agents work best when every touchpoint (your website,
-                ads, seo, and follow-up) is working together.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  label: 'dental websites',
-                  description:
-                    'conversion-first sites that earn trust and book appointments',
-                  href: '/dental-website',
-                },
-                {
-                  label: 'dental seo',
-                  description:
-                    'local search visibility that brings high-intent patients',
-                  href: '/dental-practice-seo-expert',
-                },
-                {
-                  label: 'facebook ads',
-                  description:
-                    'targeted campaigns that fill your schedule with new patients',
-                  href: '/facebook-ads-for-dentists',
-                },
-                {
-                  label: 'custom email',
-                  description:
-                    'professional @yourpractice.com email for your team',
-                  href: '/custom-email-for-dental-practices',
-                },
-              ].map((service) => (
-                <Link
-                  key={service.href}
-                  href={service.href}
-                  className="block rounded-2xl border border-neutral-200 bg-neutral-50 p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md"
-                >
-                  <h3 className="text-base font-semibold text-neutral-900">
-                    {service.label}
-                  </h3>
-                  <p className="mt-2 text-sm text-neutral-600">
-                    {service.description}
-                  </p>
-                </Link>
+        <DentalFaq
+          idPrefix="dental-ai-agents"
+          description="common questions from dental practices evaluating ai phone agents."
+          items={faqs}
+        />
+
+        <Section aria-labelledby="agent-related-title">
+          <Reveal>
+            <SectionHeader
+              id="agent-related-title"
+              eyebrow="The full dental growth stack"
+              title="pair your ai agent with prism’s dental services."
+              description="ai phone agents work best when every touchpoint (your website, ads, seo, and follow-up) is working together."
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4">
+              {relatedServices.map((service) => (
+                <li key={service.href} className="bg-card">
+                  <Link
+                    href={service.href}
+                    className="group/related flex h-full flex-col gap-2 p-6 transition-colors hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50"
+                  >
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{service.label}</span>
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-4 text-subtle transition-[color,transform] duration-200 group-hover/related:translate-x-0.5 group-hover/related:text-foreground"
+                      />
+                    </span>
+                    <span className="text-[14px] leading-6 text-muted-foreground">{service.description}</span>
+                  </Link>
+                </li>
               ))}
-            </div>
-          </div>
-        </section>
+            </ul>
+          </Reveal>
+        </Section>
 
-        {/* Final CTA */}
-        <section className="px-4 pb-20 pt-16 sm:pb-24">
-          <div className="container mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-              ready to stop missing patient calls?
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-              next step
-            </h2>
-            <p className="mt-4 text-base text-neutral-600">
-              join the waitlist. when we can take on your practice, we&apos;ll
-              map your call volume, identify automation opportunities, and show
-              how an ai agent fits your practice.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/waitlist"
-                className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-              >
-                {FREE_AUDIT_CTA_TEXT}
-              </Link>
-              <Link
-                href="/pricing"
-                className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-8 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-              >
-                view pricing
-              </Link>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="dental ai agents final cta"
+          href="/waitlist"
+          secondary={{ label: 'View pricing', href: '/pricing' }}
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -420,6 +332,6 @@ export default function DentalAIAgentsPage() {
         isPartOfId="https://www.design-prism.com/#website"
       />
       <FAQSchema questions={faqs} />
-    </>
+    </div>
   )
 }

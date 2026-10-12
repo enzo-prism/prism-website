@@ -1,5 +1,7 @@
 # Alternative Minimalist Designs for Prism Flywheel Section
 
+> **History.** This memo describes the pre-2026-10 `/prism-flywheel` design. Since the 2026-10-12 Prism Spectrum redesign the route uses the shared lander kit (`components/landing/landing-hero.tsx`, `FinalCta`) on the dark system in `DESIGN.md`; do not treat the styling below as current.
+
 ## Current Design Analysis
 
 The current Prism Flywheel section has been updated to be more minimalistic with:

@@ -1,7 +1,20 @@
 'use client'
 
-import type { FocusEvent, FormEvent, ReactNode } from 'react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type {
+  ChangeEvent,
+  FocusEvent,
+  FormEvent,
+  MouseEvent,
+  ReactNode,
+} from 'react'
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useRouter } from 'next/navigation'
 import {
   ArrowLeft,
@@ -9,38 +22,43 @@ import {
   CalendarDays,
   CalendarRange,
   Check,
+  CircleAlert,
+  CircleQuestionMark,
   Compass,
   Globe,
   Hourglass,
-  Link2,
   type LucideIcon,
   Megaphone,
-  MessageSquare,
   PenLine,
-  Target,
-  User,
   Zap,
 } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import { useFormValidation } from '@/hooks/use-form-validation'
 import { appendAttributionToFormData } from '@/lib/marketing-attribution'
+import { PRISM_SERVICES } from '@/lib/services'
 import {
   CAPACITY_MESSAGE,
   WAITLIST_DRAFT_STORAGE_KEY,
   WAITLIST_DRAFT_TTL_MS,
-  WAITLIST_FOCUS_OPTIONS,
+  WAITLIST_FOCUS_CHOICES,
+  WAITLIST_FOCUS_NOT_SURE,
   WAITLIST_FORM_ENDPOINT,
   WAITLIST_FORM_NAME,
   WAITLIST_FORM_SUBJECT,
+  WAITLIST_NO_WEBSITE_FIELD,
+  WAITLIST_NO_WEBSITE_VALUE,
   WAITLIST_STEPS,
   WAITLIST_THANK_YOU_PATH,
   WAITLIST_TIMING_OPTIONS,
   isWaitlistFocus,
+  isWaitlistFocusChoice,
   type WaitlistFocus,
+  type WaitlistFocusChoice,
   type WaitlistStepId,
   type WaitlistTiming,
 } from '@/lib/waitlist'
@@ -60,7 +78,7 @@ type ValidFieldElement =
   | HTMLSelectElement
 
 type WaitlistAnswers = {
-  focus: WaitlistFocus[]
+  focus: WaitlistFocusChoice[]
   start_timing: WaitlistTiming | ''
   first_name: string
   last_name: string
@@ -69,6 +87,8 @@ type WaitlistAnswers = {
   link_website: string
   link_social: string
   link_other: string
+  /** "I don't have a website yet": satisfies the links step on its own. */
+  no_website: boolean
   goals: string
 }
 
@@ -82,21 +102,40 @@ const EMPTY_ANSWERS: WaitlistAnswers = {
   link_website: '',
   link_social: '',
   link_other: '',
+  no_website: false,
   goals: '',
 }
 
-const STEP_ICONS: Record<WaitlistStepId, LucideIcon> = {
-  focus: Target,
-  timing: CalendarDays,
-  about: User,
-  links: Link2,
-  goals: MessageSquare,
-}
-
-const FOCUS_ICONS: Record<WaitlistFocus, LucideIcon> = {
+const FOCUS_ICONS: Record<WaitlistFocusChoice, LucideIcon> = {
   website: Globe,
   content: PenLine,
   ads: Megaphone,
+  [WAITLIST_FOCUS_NOT_SURE]: CircleQuestionMark,
+}
+
+// One-line service promises from the shared catalog (lib/services.ts), so the
+// option cards say exactly what the service pages say. "Not sure yet" is not
+// a service, so it carries its own line.
+const FOCUS_DESCRIPTIONS: Partial<Record<WaitlistFocusChoice, string>> = {
+  ...(Object.fromEntries(
+    PRISM_SERVICES.map((service) => [service.id, service.navDescription]),
+  ) as Partial<Record<WaitlistFocus, string>>),
+  [WAITLIST_FOCUS_NOT_SURE]: 'We suggest where to start.',
+}
+
+/**
+ * "Not sure yet" is exclusive with the services: choosing it clears them, and
+ * choosing a service clears it. Keeps `focus_count` bounded and the answer
+ * unambiguous in the inbox.
+ */
+function normalizeFocus(
+  focus: readonly WaitlistFocusChoice[],
+): WaitlistFocusChoice[] {
+  const services = focus.filter(isWaitlistFocus)
+  if (services.length > 0) return Array.from(new Set(services))
+  return focus.includes(WAITLIST_FOCUS_NOT_SURE)
+    ? [WAITLIST_FOCUS_NOT_SURE]
+    : []
 }
 
 const TIMING_ICONS: Record<WaitlistTiming, LucideIcon> = {
@@ -136,14 +175,19 @@ function readDraft(): StoredDraft | null {
       return null
     }
     const focus = Array.isArray(parsed.answers.focus)
-      ? parsed.answers.focus.filter(isWaitlistFocus)
+      ? normalizeFocus(parsed.answers.focus.filter(isWaitlistFocusChoice))
       : []
     const stepIndex =
       typeof parsed.stepIndex === 'number'
         ? Math.min(Math.max(parsed.stepIndex, 0), TOTAL_STEPS - 1)
         : 0
     return {
-      answers: { ...EMPTY_ANSWERS, ...parsed.answers, focus },
+      answers: {
+        ...EMPTY_ANSWERS,
+        ...parsed.answers,
+        focus,
+        no_website: parsed.answers.no_website === true,
+      },
       stepIndex,
       savedAt: parsed.savedAt,
     }
@@ -179,26 +223,30 @@ function FieldError({ error, id }: { error: string; id: string }) {
     <p
       id={id}
       role="alert"
-      className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-[#d8bc79]"
+      className="flex items-center gap-1.5 text-[13px] leading-5 text-destructive"
     >
+      <CircleAlert aria-hidden="true" className="size-3.5 shrink-0" />
       {error}
     </p>
   )
 }
 
-const fieldClassName =
-  'min-h-14 rounded-xl border-white/12 bg-white/[0.03] px-4 font-sans text-[1rem] text-[#f5f0e8] placeholder:text-[#6e6e68] aria-invalid:border-[#d8bc79]/70 focus-visible:border-[#d8bc79]/65 focus-visible:ring-[#d8bc79]/55 focus-visible:ring-offset-0'
-const labelClassName =
-  'font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b] sm:tracking-[0.2em]'
-const optionalClassName = 'text-[#8f877b] normal-case tracking-[0.04em]'
+// 16px on phones so iOS never zooms the page on focus.
+const fieldClassName = 'h-12 rounded-xl bg-white/[0.02] px-4 sm:text-[15px]'
+const labelClassName = 'text-[13px] text-foreground'
+const optionalClassName = 'font-normal text-subtle'
+
+/**
+ * shadcn "card choice": the native input stays in the DOM (sr-only) and the
+ * label card reflects its state through `has-[:checked]`, so the visual state
+ * can never drift from the real form value.
+ */
 const optionCardClassName =
-  'group flex min-h-14 w-full cursor-pointer items-center gap-4 rounded-xl border border-white/12 bg-white/[0.03] px-4 py-3 text-left font-sans text-[1rem] text-[#f5f0e8] transition-[border-color,background-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-white/30 has-[:checked]:border-[#d8bc79]/60 has-[:checked]:bg-[#d8bc79]/10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#d8bc79]/55 has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-black motion-reduce:transition-none'
+  'group/option relative flex w-full cursor-pointer items-center gap-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] p-3 pr-4 text-left transition-[border-color,background-color,box-shadow] duration-200 hover:border-white/[0.18] hover:bg-white/[0.04] has-[:checked]:border-foreground/50 has-[:checked]:bg-white/[0.06] has-[:checked]:inset-ring-1 has-[:checked]:inset-ring-foreground/20 has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50 motion-reduce:transition-none sm:gap-4 sm:p-3.5 sm:pr-5'
 const optionIconClassName =
-  'grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-white/12 bg-white/[0.04] text-[#b8afa2] transition-colors duration-300 group-has-[:checked]:border-[#d8bc79]/50 group-has-[:checked]:text-[#f5f0e8] motion-reduce:transition-none'
-const primaryButtonClassName =
-  'inline-flex min-h-14 w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-[#f5f0e8]/70 bg-[#f5f0e8] px-6 font-sans text-[0.97rem] font-medium tracking-[-0.01em] text-[#050505] transition-[transform,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#f5f0e8]/35 focus-visible:ring-offset-4 focus-visible:ring-offset-black active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none sm:w-auto sm:min-w-[11rem]'
-const backButtonClassName =
-  'inline-flex min-h-12 items-center gap-2 rounded-lg px-3 font-sans text-[0.95rem] text-[#b8afa2] transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25 focus-visible:ring-offset-4 focus-visible:ring-offset-black'
+  'grid size-10 shrink-0 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-muted-foreground transition-colors duration-200 group-hover/option:text-foreground group-has-[:checked]/option:border-white/20 group-has-[:checked]/option:bg-white/[0.08] group-has-[:checked]/option:text-foreground motion-reduce:transition-none'
+const optionTitleClassName =
+  'block text-[15px] font-medium leading-6 tracking-[-0.01em] text-foreground'
 
 type WaitlistFormProps = {
   /** Pre-selected focus from `?focus=` so service pages can hand off intent. */
@@ -224,7 +272,6 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   const step = WAITLIST_STEPS[stepIndex]
   const stepId: WaitlistStepId = step.id
   const isLastStep = stepIndex === TOTAL_STEPS - 1
-  const StepIcon = STEP_ICONS[step.id]
 
   const trackStep = useCallback(
     (
@@ -320,12 +367,16 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     [markStarted],
   )
 
-  const toggleFocus = (value: WaitlistFocus) => {
+  const toggleFocus = (value: WaitlistFocusChoice) => {
+    if (answers.focus.includes(value)) {
+      update('focus', answers.focus.filter((item) => item !== value))
+      return
+    }
     update(
       'focus',
-      answers.focus.includes(value)
-        ? answers.focus.filter((item) => item !== value)
-        : [...answers.focus, value],
+      value === WAITLIST_FOCUS_NOT_SURE
+        ? [WAITLIST_FOCUS_NOT_SURE]
+        : normalizeFocus([...answers.focus, value]),
     )
   }
 
@@ -346,11 +397,17 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
 
         const formData = new FormData(form)
         for (const [key, value] of Object.entries(answers)) {
-          if (key === 'focus') continue
+          if (key === 'focus' || key === WAITLIST_NO_WEBSITE_FIELD) continue
           formData.set(key, String(value))
         }
         formData.delete('focus[]')
         for (const value of answers.focus) formData.append('focus[]', value)
+        // Only sent when checked, so existing submissions keep their shape.
+        if (answers.no_website) {
+          formData.set(WAITLIST_NO_WEBSITE_FIELD, WAITLIST_NO_WEBSITE_VALUE)
+        } else {
+          formData.delete(WAITLIST_NO_WEBSITE_FIELD)
+        }
         appendAttributionToFormData(formData)
 
         try {
@@ -384,7 +441,8 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         trackEvent('waitlist_submit_success', {
           form_name: WAITLIST_FORM_NAME,
           form_location: FORM_LOCATION,
-          focus_count: answers.focus.length,
+          // Services chosen (0-3); "Not sure yet" counts as none.
+          focus_count: answers.focus.filter(isWaitlistFocus).length,
         })
         // Pending mode: /waitlist/thank-you mounts LeadSuccessTracker, which
         // consumes this context and fires generate_lead once.
@@ -420,7 +478,16 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               input instanceof HTMLInputElement ? input.value : answers[name]
             return liveValue.trim().length > 0
           })
-          if (!hasLink) message = 'Add at least one link'
+          const noWebsiteInput = formRef.current?.elements.namedItem(
+            WAITLIST_NO_WEBSITE_FIELD,
+          )
+          const hasNoWebsite =
+            noWebsiteInput instanceof HTMLInputElement
+              ? noWebsiteInput.checked
+              : answers.no_website
+          if (!hasLink && !hasNoWebsite) {
+            message = 'Add at least one link, or check the box below'
+          }
           break
         }
         case 'goals':
@@ -508,34 +575,58 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     handleBlur(event)
   }
 
+  // The shared "at least one link" rule lives on link_website. A sibling link
+  // or the no-website box can satisfy it, so changing either must re-run it
+  // and the error clears (or returns) right away.
+  const resyncWebsiteRule = (event: FormEvent<ValidFieldElement>) => {
+    const websiteField = formRef.current?.elements.namedItem('link_website')
+    if (!(websiteField instanceof HTMLInputElement)) return
+    syncFieldValidity(websiteField)
+    handleInput({
+      ...event,
+      currentTarget: websiteField,
+      target: websiteField,
+    } as FormEvent<ValidFieldElement>)
+  }
+
   const handleValidatedInput = (event: FormEvent<ValidFieldElement>) => {
     const field = event.currentTarget
     syncFieldValidity(field)
     handleInput(event)
-    // The shared "at least one link" rule lives on link_website; typing in
-    // either sibling must re-run it so the error clears as soon as any link
-    // exists.
     if (
       (LINK_FIELD_NAMES as readonly string[]).includes(field.name) &&
       field.name !== 'link_website'
     ) {
-      const websiteField = formRef.current?.elements.namedItem('link_website')
-      if (websiteField instanceof HTMLInputElement) {
-        syncFieldValidity(websiteField)
-        handleInput({
-          ...event,
-          currentTarget: websiteField,
-          target: websiteField,
-        } as FormEvent<ValidFieldElement>)
-      }
+      resyncWebsiteRule(event)
     }
+  }
+
+  const handleNoWebsiteChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.currentTarget
+    markStarted()
+    setStepError(null)
+    setAnswers((current) => ({
+      ...current,
+      no_website: checked,
+      // Nothing to link yet: drop a half-typed URL so it never ships.
+      link_website: checked ? '' : current.link_website,
+    }))
+    resyncWebsiteRule(event)
+  }
+
+  // A blur error grows the step above the footer. If that happened between
+  // mousedown and mouseup on Continue/Back, the button would move out from
+  // under the pointer and the click would be lost. Keeping focus where it is
+  // until the click lands avoids that; submit validates every field anyway.
+  const keepFieldFocus = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
   }
 
   const describedBy = (name: string) =>
     getError(name) ? `waitlist-${name}-error` : undefined
 
   const summary = useMemo(() => {
-    const focusLabels = WAITLIST_FOCUS_OPTIONS.filter((option) =>
+    const focusLabels = WAITLIST_FOCUS_CHOICES.filter((option) =>
       answers.focus.includes(option.value),
     ).map((option) => option.label)
     const timing = WAITLIST_TIMING_OPTIONS.find(
@@ -552,38 +643,67 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   switch (stepId) {
     case 'focus':
       stepBody = (
-        <fieldset className="grid min-w-0 gap-3">
+        <fieldset className="grid min-w-0 gap-2.5">
           <legend className="sr-only">{step.title}</legend>
-          {WAITLIST_FOCUS_OPTIONS.map((option, index) => {
+          {WAITLIST_FOCUS_CHOICES.map((option, index) => {
             const Icon = FOCUS_ICONS[option.value]
             const checked = answers.focus.includes(option.value)
+            const labelId = `waitlist-focus-${option.value}-label`
+            const description = FOCUS_DESCRIPTIONS[option.value]
+            const descriptionId = description
+              ? `waitlist-focus-${option.value}-description`
+              : undefined
+            const isNotSure = option.value === WAITLIST_FOCUS_NOT_SURE
             return (
-              <label key={option.value} className={optionCardClassName}>
-                <input
-                  type="checkbox"
-                  name="focus[]"
-                  value={option.value}
-                  checked={checked}
-                  onChange={() => toggleFocus(option.value)}
-                  className="sr-only"
-                  data-step-focus={index === 0 ? '' : undefined}
-                />
-                <span className={optionIconClassName} aria-hidden="true">
-                  <Icon className="h-5 w-5" strokeWidth={1.75} />
-                </span>
-                <span className="flex-1 font-medium">{option.label}</span>
-                <span
-                  aria-hidden="true"
-                  className={cn(
-                    'grid h-6 w-6 place-items-center rounded-full border transition-colors duration-300 motion-reduce:transition-none',
-                    checked
-                      ? 'border-[#d8bc79] bg-[#d8bc79] text-[#050505]'
-                      : 'border-white/20 text-transparent',
-                  )}
-                >
-                  <Check className="h-3.5 w-3.5" strokeWidth={3} />
-                </span>
-              </label>
+              <Fragment key={option.value}>
+                {isNotSure ? (
+                  // Picking "Not sure yet" clears the services (and back), so
+                  // set it apart from the multi-select above.
+                  <span
+                    aria-hidden="true"
+                    className="flex items-center gap-3 py-0.5 text-eyebrow text-subtle"
+                  >
+                    <span className="h-px flex-1 bg-white/[0.08]" />
+                    or
+                    <span className="h-px flex-1 bg-white/[0.08]" />
+                  </span>
+                ) : null}
+                <label className={optionCardClassName}>
+                  <input
+                    type="checkbox"
+                    name="focus[]"
+                    value={option.value}
+                    checked={checked}
+                    onChange={() => toggleFocus(option.value)}
+                    className="sr-only"
+                    aria-labelledby={labelId}
+                    aria-describedby={descriptionId}
+                    data-step-focus={index === 0 ? '' : undefined}
+                  />
+                  <span className={optionIconClassName} aria-hidden="true">
+                    <Icon className="size-[18px]" strokeWidth={1.75} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span id={labelId} className={optionTitleClassName}>
+                      {option.label}
+                    </span>
+                    {description ? (
+                      <span
+                        id={descriptionId}
+                        className="mt-0.5 block text-[13px] leading-5 text-muted-foreground"
+                      >
+                        {description}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="grid size-5 shrink-0 place-items-center rounded-[6px] border border-white/20 bg-white/[0.02] text-transparent transition-colors duration-200 group-has-[:checked]/option:border-primary group-has-[:checked]/option:bg-primary group-has-[:checked]/option:text-primary-foreground motion-reduce:transition-none"
+                  >
+                    <Check className="size-3.5" strokeWidth={3} />
+                  </span>
+                </label>
+              </Fragment>
             )
           })}
         </fieldset>
@@ -592,7 +712,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     case 'timing':
       stepBody = (
         <fieldset
-          className="grid min-w-0 gap-3"
+          className="grid min-w-0 gap-2.5"
           aria-describedby={stepError ? 'waitlist-start_timing-error' : undefined}
         >
           <legend className="sr-only">{step.title}</legend>
@@ -612,19 +732,18 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                     (answers.start_timing ? checked : index === 0) ? '' : undefined
                   }
                 />
-                <span className={optionIconClassName} aria-hidden="true">
-                  <Icon className="h-5 w-5" strokeWidth={1.75} />
+                <span className={cn(optionIconClassName, 'size-9')} aria-hidden="true">
+                  <Icon className="size-4" strokeWidth={1.75} />
                 </span>
-                <span className="flex-1 font-medium">{option.label}</span>
+                <span className={cn(optionTitleClassName, 'min-w-0 flex-1')}>
+                  {option.label}
+                </span>
                 <span
                   aria-hidden="true"
-                  className={cn(
-                    'h-4 w-4 rounded-full border-2 transition-colors duration-300 motion-reduce:transition-none',
-                    checked
-                      ? 'border-[#d8bc79] bg-[#d8bc79]'
-                      : 'border-white/25',
-                  )}
-                />
+                  className="grid size-5 shrink-0 place-items-center rounded-full border border-white/20 bg-white/[0.02] transition-colors duration-200 group-has-[:checked]/option:border-primary motion-reduce:transition-none"
+                >
+                  <span className="size-2.5 scale-0 rounded-full bg-primary transition-transform duration-200 group-has-[:checked]/option:scale-100 motion-reduce:transition-none" />
+                </span>
               </label>
             )
           })}
@@ -636,8 +755,8 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       stepBody = (
         <fieldset className="grid min-w-0 gap-5">
           <legend className="sr-only">{step.title}</legend>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div className="space-y-2">
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-4">
+            <div className="grid content-start gap-2">
               <Label htmlFor="waitlist-first-name" className={labelClassName}>
                 First name
               </Label>
@@ -660,7 +779,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
                 error={getError('first_name')}
               />
             </div>
-            <div className="space-y-2">
+            <div className="grid content-start gap-2">
               <Label htmlFor="waitlist-last-name" className={labelClassName}>
                 Last name
               </Label>
@@ -683,7 +802,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               />
             </div>
           </div>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-email" className={labelClassName}>
               Email
             </Label>
@@ -705,7 +824,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
             />
             <FieldError id="waitlist-email-error" error={getError('email')} />
           </div>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-phone" className={labelClassName}>
               Phone <span className={optionalClassName}>(optional)</span>
             </Label>
@@ -727,13 +846,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       stepBody = (
         <fieldset className="grid min-w-0 gap-5" aria-describedby="waitlist-links-hint">
           <legend className="sr-only">{step.title}</legend>
-          <p
-            id="waitlist-links-hint"
-            className="text-pretty font-sans text-[0.95rem] leading-6 text-[#b8afa2]"
-          >
-            One link is enough.
-          </p>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-link-website" className={labelClassName}>
               Website
             </Label>
@@ -747,18 +860,41 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               onChange={(event) => update('link_website', event.target.value)}
               onBlur={handleValidatedBlur}
               onInput={handleValidatedInput}
+              disabled={answers.no_website}
               aria-invalid={Boolean(getError('link_website'))}
               aria-describedby={describedBy('link_website') ?? 'waitlist-links-hint'}
-              placeholder="https://yourcompany.com"
+              placeholder={
+                answers.no_website ? 'No website yet' : 'https://yourcompany.com'
+              }
               className={fieldClassName}
-              data-step-focus=""
+              data-step-focus={answers.no_website ? undefined : ''}
             />
             <FieldError
               id="waitlist-link_website-error"
               error={getError('link_website')}
             />
+            {/* The escape hatch for owners with no site yet: it satisfies
+                the step on its own and ships as no_website=yes. */}
+            <label className="group/nosite -ml-1 flex min-h-10 w-fit cursor-pointer items-center gap-2.5 rounded-lg py-1.5 pl-1 pr-2 text-[14px] leading-5 text-muted-foreground transition-colors duration-200 hover:text-foreground has-[:checked]:text-foreground has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50 motion-reduce:transition-none">
+              <input
+                type="checkbox"
+                name={WAITLIST_NO_WEBSITE_FIELD}
+                value={WAITLIST_NO_WEBSITE_VALUE}
+                checked={answers.no_website}
+                onChange={handleNoWebsiteChange}
+                className="sr-only"
+                data-step-focus={answers.no_website ? '' : undefined}
+              />
+              <span
+                aria-hidden="true"
+                className="grid size-5 shrink-0 place-items-center rounded-[6px] border border-white/25 bg-white/[0.02] text-transparent transition-colors duration-200 group-hover/nosite:border-white/40 group-has-[:checked]/nosite:border-primary group-has-[:checked]/nosite:bg-primary group-has-[:checked]/nosite:text-primary-foreground motion-reduce:transition-none"
+              >
+                <Check className="size-3.5" strokeWidth={3} />
+              </span>
+              I don&rsquo;t have a website yet
+            </label>
           </div>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-link-social" className={labelClassName}>
               Social profile
             </Label>
@@ -776,7 +912,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               className={fieldClassName}
             />
           </div>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-link-other" className={labelClassName}>
               Anything else
             </Label>
@@ -801,7 +937,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       stepBody = (
         <fieldset className="grid min-w-0 gap-5">
           <legend className="sr-only">{step.title}</legend>
-          <div className="space-y-2">
+          <div className="grid content-start gap-2">
             <Label htmlFor="waitlist-goals" className={labelClassName}>
               Your goals
             </Label>
@@ -817,25 +953,28 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
               aria-invalid={Boolean(getError('goals'))}
               aria-describedby={describedBy('goals')}
               placeholder="A sentence or two is plenty."
-              className={cn(
-                fieldClassName,
-                'min-h-[9rem] py-3 leading-7 sm:min-h-[8rem]',
-              )}
+              className="min-h-[8.5rem] rounded-xl bg-white/[0.02] px-4 py-3 leading-7 sm:text-[15px]"
               data-step-focus=""
             />
             <FieldError id="waitlist-goals-error" error={getError('goals')} />
           </div>
           {summary.length > 0 ? (
-            <p className="min-w-0 break-words border-t border-white/10 pt-4 font-sans text-[0.9rem] leading-6 text-[#8f877b]">
-              {summary.join(' · ')}{' '}
-              <button
+            <div className="flex min-w-0 items-start justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] py-3 pl-4 pr-2">
+              <div className="min-w-0 pt-0.5">
+                <p className="text-eyebrow text-subtle">Your answers</p>
+                <p className="mt-2 break-words text-sm leading-6 text-muted-foreground">
+                  {summary.join(' · ')}
+                </p>
+              </div>
+              <Button
                 type="button"
+                variant="ghost"
                 onClick={() => goToStep(0)}
-                className="inline-flex min-h-11 items-center rounded-md px-1 align-middle text-[#b8afa2] underline decoration-white/25 underline-offset-4 transition-colors hover:text-[#f5f0e8] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
+                className="shrink-0 text-muted-foreground hover:text-foreground"
               >
                 Edit
-              </button>
-            </p>
+              </Button>
+            </div>
           ) : null}
         </fieldset>
       )
@@ -846,6 +985,21 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     }
   }
 
+  const stepHint: ReactNode =
+    stepId === 'focus' ? (
+      'Pick any that apply.'
+    ) : stepId === 'timing' ? (
+      <>
+        {CAPACITY_MESSAGE.nextIntakeLead} <WaitlistIntakeMonth />.
+      </>
+    ) : stepId === 'links' ? (
+      <span id="waitlist-links-hint">
+        {answers.no_website
+          ? 'No problem, that’s what we build. Add a social profile if you have one.'
+          : 'One link is enough.'}
+      </span>
+    ) : null
+
   return (
     <form
       ref={formRef}
@@ -855,7 +1009,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       method="POST"
       noValidate
       onSubmit={handleStepSubmit}
-      className="flex flex-col"
+      className="flex scroll-mt-24 flex-col"
       data-step={step.id}
     >
       <input type="hidden" name="_subject" value={WAITLIST_FORM_SUBJECT} />
@@ -874,93 +1028,99 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         {`Step ${stepIndex + 1} of ${TOTAL_STEPS}. ${step.title}`}
       </p>
 
-      <div className="flex items-center justify-between gap-4">
-        <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-[#8f877b]">
-          Step {stepIndex + 1} of {TOTAL_STEPS}
-        </p>
-        <ol
-          aria-hidden="true"
-          className="flex items-center gap-1.5"
-        >
-          {WAITLIST_STEPS.map((item, index) => (
-            <li
-              key={item.id}
+      <p className="text-eyebrow text-subtle">
+        Step {stepIndex + 1} of {TOTAL_STEPS}
+      </p>
+      {/* Slim spectrum progress: each segment carries its own slice of the
+          spectrum, so the light fully refracts on the last step. */}
+      <ol
+        aria-hidden="true"
+        data-waitlist-progress=""
+        className="mt-3 grid grid-cols-5 gap-1.5"
+      >
+        {WAITLIST_STEPS.map((item, index) => (
+          <li
+            key={item.id}
+            data-state={index <= stepIndex ? 'complete' : 'upcoming'}
+            className="relative h-1 overflow-hidden rounded-full bg-white/[0.08]"
+          >
+            <span
               className={cn(
-                'h-1.5 rounded-full transition-[width,background-color] duration-300 motion-reduce:transition-none',
-                index === stepIndex
-                  ? 'w-6 bg-[#d8bc79]'
-                  : index < stepIndex
-                    ? 'w-1.5 bg-[#f5f0e8]/70'
-                    : 'w-1.5 bg-white/20',
+                'absolute inset-0 rounded-full transition-opacity duration-500 motion-reduce:transition-none',
+                index <= stepIndex ? 'opacity-100' : 'opacity-0',
               )}
+              style={{
+                backgroundImage: 'var(--spectrum)',
+                backgroundSize: `${TOTAL_STEPS * 100}% 100%`,
+                backgroundPosition: `${(index / (TOTAL_STEPS - 1)) * 100}% 50%`,
+              }}
             />
-          ))}
-        </ol>
-      </div>
+          </li>
+        ))}
+      </ol>
 
       <div
         key={step.id}
         ref={panelRef}
-        className={cn('mt-6 sm:mt-8', styles.stepEnter)}
+        className={cn('mt-7 sm:mt-8', styles.stepEnter)}
       >
-        <div className="flex items-start gap-4">
-          <span
-            aria-hidden="true"
-            className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-[10px] border border-white/12 bg-white/[0.04] text-[#d8bc79]"
-          >
-            <StepIcon className="h-5 w-5" strokeWidth={1.75} />
-          </span>
-          <div className="min-w-0">
-            <h2 className="text-balance font-sans text-[clamp(1.5rem,5.5vw,1.9rem)] font-medium leading-[1.1] tracking-[-0.03em] text-[#f5f0e8]">
-              {step.title}
-            </h2>
-            {stepId === 'timing' ? (
-              <p className="mt-2 text-pretty font-sans text-[0.95rem] leading-6 text-[#b8afa2]">
-                {CAPACITY_MESSAGE.nextIntakeLead} <WaitlistIntakeMonth />.
-              </p>
-            ) : null}
-          </div>
-        </div>
+        <h2 className="text-balance text-[1.5rem] font-semibold leading-[1.15] tracking-[-0.03em] text-foreground sm:text-[1.75rem]">
+          {step.title}
+        </h2>
+        {stepHint ? (
+          <p className="mt-2 text-pretty text-[15px] leading-6 text-muted-foreground">
+            {stepHint}
+          </p>
+        ) : null}
 
-        <div className="mt-6 sm:mt-8">{stepBody}</div>
+        <div className="mt-6">{stepBody}</div>
       </div>
 
-      <div className="mt-8 flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-8 flex items-center gap-3 border-t border-white/[0.08] pt-6">
         {stepIndex > 0 ? (
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="lg"
+            onMouseDown={keepFieldFocus}
             onClick={() => goToStep(stepIndex - 1)}
-            className={backButtonClassName}
+            className="h-12 px-5"
           >
-            <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+            <ArrowLeft aria-hidden="true" />
             Back
-          </button>
-        ) : (
-          <span />
-        )}
-        <button
+          </Button>
+        ) : null}
+        <Button
           type="submit"
-          className={primaryButtonClassName}
+          size="lg"
           disabled={isSubmitting}
+          onMouseDown={keepFieldFocus}
+          className="group/submit ml-auto h-12 flex-1 px-6 sm:flex-none sm:min-w-[11rem]"
         >
-          {isLastStep
-            ? isSubmitting
-              ? 'Saving your spot…'
-              : 'Join the waitlist'
-            : 'Continue'}
+          <span>
+            {isLastStep
+              ? isSubmitting
+                ? 'Saving your spot…'
+                : 'Join the waitlist'
+              : 'Continue'}
+          </span>
           {isLastStep ? (
-            <Check aria-hidden="true" className="h-4 w-4" />
+            <Check aria-hidden="true" />
           ) : (
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            <ArrowRight
+              aria-hidden="true"
+              className="transition-transform duration-200 group-hover/submit:translate-x-0.5 motion-reduce:transition-none"
+            />
           )}
-        </button>
+        </Button>
       </div>
 
       {submitError ? (
         <p
           role="alert"
-          className="mt-4 rounded-xl border border-[#d8bc79]/30 bg-[#d8bc79]/8 px-4 py-3 font-sans text-[0.95rem] text-[#f5f0e8]"
+          className="mt-4 flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-[15px] leading-6 text-foreground"
         >
+          <CircleAlert aria-hidden="true" className="mt-1 size-4 shrink-0 text-destructive" />
           {submitError}
         </p>
       ) : null}

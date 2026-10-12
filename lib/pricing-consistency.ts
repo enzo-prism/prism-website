@@ -23,8 +23,9 @@ export const PRICING_STRICT_FILES = [
   'app/local-listings/page.tsx',
   'components/footer.tsx',
   'components/social-link-hub.tsx',
-  'components/home/HomeOffersSection.tsx',
-  'components/home/HomeHeroSection.tsx',
+  'components/home/HomeHero.tsx',
+  'components/home/homepage-content.ts',
+  'components/prism/final-cta.tsx',
   'app/content/page.tsx',
   'app/dental-os/page.tsx',
   'app/prism-infinity/page.tsx',
@@ -131,7 +132,7 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     'PricingStructuredData',
   ],
   'components/pricing/PricingHero.tsx': [
-    'A clearer way to invest in growth.',
+    'a clearer way to invest in growth.',
     'PRICING_PRIMARY_CTA',
   ],
   'lib/pricing-model.ts': [

@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 
 import Link from 'next/link'
+import { ArrowRight, Check } from 'lucide-react'
 
-import Footer from '@/components/footer'
-import Navbar from '@/components/navbar'
+import { ConfirmationShell } from '@/components/landing/misc/confirmation'
+import { Eyebrow } from '@/components/prism/section'
 import ApplyDashboardClaimCta from '@/components/thank-you/ApplyDashboardClaimCta'
 import ApplySuccessTracker from '@/components/thank-you/ApplySuccessTracker'
 import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { firstSearchParamString } from '@/lib/search-params'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
@@ -87,15 +90,15 @@ export default async function ThankYouPage({
       ? WEBSITE_BUILD_NEXT_STEPS
       : DEFAULT_NEXT_STEPS
   const kicker = isApplyFlow
-    ? 'FREE GROWTH AUDIT'
+    ? 'Free growth audit'
     : isWebsiteBuildFlow
-      ? 'WEBSITE BUILD'
-      : 'RECEIVED'
+      ? 'Website build'
+      : 'Received'
   const headline = isApplyFlow
-    ? 'Audit request received.'
+    ? 'audit request received.'
     : isWebsiteBuildFlow
-      ? 'Website request received.'
-      : 'Review in progress.'
+      ? 'website request received.'
+      : 'review in progress.'
   const body = isApplyFlow
     ? "Thanks, we've got it. Every real business submission receives a Growth Audit. Your audit lives in a free Growth Dashboard. Claim it to follow the review from one place."
     : isWebsiteBuildFlow
@@ -104,77 +107,77 @@ export default async function ThankYouPage({
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-[#040404] font-sans text-[#F5F5F2]">
-        {isApplyFlow ? <ApplySuccessTracker /> : <LeadSuccessTracker />}
-        <Navbar />
-        <main className="flex-1 px-4 py-16 sm:px-6 sm:py-20">
-          <section className="mx-auto max-w-[1180px] space-y-8">
-            <div className="border border-white/10 bg-[#070707] px-6 py-8 sm:px-10 sm:py-12">
-              <p className="font-mono text-[0.76rem] uppercase tracking-[0.4em] text-[#9EFF2E]">
-                {kicker}
-              </p>
-              <h1 className="mt-6 max-w-[9ch] text-balance font-sans text-[clamp(2.45rem,5.4vw,4.6rem)] font-medium leading-[0.98] tracking-[-0.06em] text-[#F5F5F2]">
-                {headline}
-              </h1>
-              <p className="mt-6 max-w-[42rem] font-mono text-[1rem] leading-8 text-[#A0A09A]">
-                {body}
-              </p>
+      {isApplyFlow ? <ApplySuccessTracker /> : <LeadSuccessTracker />}
+      <ConfirmationShell center={false}>
+        <div className="mx-auto max-w-5xl space-y-5">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-10 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:px-12 sm:py-14">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-[12%] top-0 h-px bg-spectrum opacity-70"
+            />
+            <div className="mb-7 grid size-12 place-items-center rounded-full border border-white/10 bg-white/[0.04]">
+              <Check aria-hidden="true" className="size-5 text-foreground" />
             </div>
+            <Eyebrow>{kicker}</Eyebrow>
+            <h1 className="text-gradient mt-5 max-w-[16ch] text-balance pb-1 text-[clamp(2.3rem,1.6rem+3vw,4rem)] font-semibold leading-[0.98] tracking-[-0.05em]">
+              {headline}
+            </h1>
+            <p className="text-lead mt-6 max-w-[54ch] text-pretty text-muted-foreground">
+              {body}
+            </p>
+          </div>
 
-            {isApplyFlow ? <ApplyDashboardClaimCta /> : null}
+          {isApplyFlow ? <ApplyDashboardClaimCta /> : null}
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {nextSteps.map((step) => (
-                <article
-                  key={step.label}
-                  className="border border-white/10 bg-[#070707] px-5 py-5"
-                >
-                  <p className="font-mono text-[0.8rem] uppercase tracking-[0.32em] text-[#767670]">
+          <ol className="grid gap-4 lg:grid-cols-3">
+            {nextSteps.map((step) => (
+              <li key={step.label}>
+                <Card className="h-full p-6">
+                  <p className="font-mono text-[11px] font-medium tracking-[0.14em] text-subtle tabular-nums">
                     {step.label}
                   </p>
-                  <h2 className="mt-4 font-sans text-[1.45rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
+                  <h2 className="text-heading mt-4 text-foreground">
                     {step.title}
                   </h2>
-                  <p className="mt-4 font-mono text-[0.92rem] leading-7 text-[#C6C6C0]">
+                  <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
                     {step.body}
                   </p>
-                </article>
-              ))}
+                </Card>
+              </li>
+            ))}
+          </ol>
+
+          <Card className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-heading text-foreground">
+                {isApplyFlow ? 'while we review.' : 'in the meantime.'}
+              </p>
+              <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
+                {isApplyFlow
+                  ? 'Check your inbox for the same dashboard link.'
+                  : isWebsiteBuildFlow
+                    ? 'Gather any copy, images, links, or references you want Prism to review.'
+                    : 'You can review case studies or head back home.'}
+              </p>
             </div>
 
-            <div className="flex flex-col gap-4 border border-white/10 bg-[#070707] px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-[#F5F5F2]">
-                  {isApplyFlow ? 'While we review' : 'In the meantime'}
-                </p>
-                <p className="mt-2 font-mono text-[0.92rem] leading-7 text-[#A0A09A]">
-                  {isApplyFlow
-                    ? 'Check your inbox for the same dashboard link.'
-                    : isWebsiteBuildFlow
-                      ? 'Gather any copy, images, links, or references you want Prism to review.'
-                      : 'You can review case studies or head back home.'}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/case-studies"
-                  className="inline-flex min-h-12 items-center justify-center border border-white/12 px-5 py-3 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#F5F5F2] transition-colors hover:border-[#9EFF2E]/45 hover:text-[#9EFF2E] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#9EFF2E]/35"
-                >
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="group/cta">
+                <Link href="/case-studies">
                   View case studies
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                  />
                 </Link>
-                <Link
-                  href="/"
-                  className="inline-flex min-h-12 items-center justify-center border border-white/12 px-5 py-3 font-mono text-[0.82rem] uppercase tracking-[0.2em] text-[#A0A09A] transition-colors hover:border-white/30 hover:text-[#F5F5F2] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/25"
-                >
-                  Back to home
-                </Link>
-              </div>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/">Back to home</Link>
+              </Button>
             </div>
-          </section>
-        </main>
-        <Footer />
-      </div>
+          </Card>
+        </div>
+      </ConfirmationShell>
     </>
   )
 }

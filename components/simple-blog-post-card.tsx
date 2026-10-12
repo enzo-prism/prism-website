@@ -1,133 +1,52 @@
-import { cn } from '@/lib/utils'
-import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
-import { ArrowRight } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { BlogGridCard } from '@/components/blog/blog-post-cards'
+import { getBlogFilterFromCategory } from '@/lib/blog-topic-filters'
 
 interface SimpleBlogPostCardProps {
   title: string
   category: string
   date: string
-  author: string
+  /** Kept for API compatibility with older call sites. */
+  author?: string
   description: string
   slug: string
   image?: string | null
   featured?: boolean
   compact?: boolean
-  gradientClass: string
+  gradientClass?: string
   prefetch?: boolean
-  /** Eager-load + fetchpriority high for the first card (the /blog LCP image). */
+  /** Eager-load the cover for the first card in view. */
   priority?: boolean
 }
 
+/**
+ * Post card for blog rails embedded on landing pages (/seo, /local-listings).
+ * Renders the same card as /blog so the journal looks identical everywhere.
+ */
 export default function SimpleBlogPostCard({
   title,
   category,
   date,
-  author,
   description,
   slug,
   image,
-  featured = false,
-  compact = false,
-  gradientClass,
   prefetch,
   priority = false,
 }: SimpleBlogPostCardProps) {
-  const featuredImage =
-    typeof image === 'string' && image.trim().length > 0
-      ? image
-      : DEFAULT_BLOG_FEATURED_IMAGE
-
-  const normalizedAuthor = author.trim()
-  const isEnzoAuthor = normalizedAuthor.toLowerCase() === 'enzo sison'
-
   return (
-    <article className="group h-full overflow-hidden rounded-md border border-border/60 bg-card/30 backdrop-blur-sm flex flex-col transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-card/45">
-      <Link
-        href={`/blog/${slug}`}
-        prefetch={prefetch}
-        data-cta-text="view blog post"
-        data-cta-location={title}
-      >
-        <div
-          className={cn(
-            'relative w-full aspect-[4/3] overflow-hidden',
-            gradientClass,
-          )}
-        >
-          <Image
-            src={featuredImage}
-            alt={`${title} featured image`}
-            fill
-            priority={priority}
-            loading={priority ? undefined : 'lazy'}
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
-          />
-        </div>
-      </Link>
-      <div className="flex flex-1 flex-col space-y-3 border-t border-border/60 p-5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/40 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            {category}
-          </span>
-          <div className="flex flex-wrap items-center justify-end gap-x-1 gap-y-1 text-xs text-muted-foreground">
-            <time dateTime={new Date(date).toISOString()}>
-              {new Intl.DateTimeFormat(undefined, {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              }).format(new Date(date))}
-            </time>
-            <span className="text-border" aria-hidden>
-              &middot;
-            </span>
-            <span className="font-medium text-foreground/80 normal-case">
-              By{' '}
-              {isEnzoAuthor ? (
-                <Link
-                  href="/about"
-                  className="underline decoration-border/50 underline-offset-4 transition-colors hover:decoration-border"
-                >
-                  {author}
-                </Link>
-              ) : (
-                author
-              )}
-            </span>
-          </div>
-        </div>
-        <Link
-          href={`/blog/${slug}`}
-          prefetch={prefetch}
-          data-cta-text="view blog post"
-          data-cta-location={title}
-        >
-          <h3 className="blog-card-title text-balance text-foreground normal-case">
-            {title}
-          </h3>
-        </Link>
-        {!compact && (
-          <p className="blog-card-description text-muted-foreground line-clamp-3 normal-case">
-            {description}
-          </p>
-        )}
-        <Link
-          href={`/blog/${slug}`}
-          prefetch={prefetch}
-          data-cta-text="view blog post"
-          data-cta-location={title}
-          className="flex items-center pt-1 text-xs font-semibold uppercase tracking-[0.12em] text-foreground"
-        >
-          Read post
-          <ArrowRight
-            className="ml-1 h-4 w-4"
-            aria-hidden="true"
-            focusable="false"
-          />
-        </Link>
-      </div>
-    </article>
+    <BlogGridCard
+      headingLevel="h3"
+      priority={priority}
+      prefetch={prefetch}
+      trackCta
+      post={{
+        slug,
+        title,
+        description,
+        date,
+        category,
+        image: typeof image === 'string' ? image : undefined,
+        topic: getBlogFilterFromCategory(category),
+      }}
+    />
   )
 }

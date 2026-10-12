@@ -1,8 +1,9 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react"
+import { isValidElement } from "react"
+import { AlertTriangle, ArrowRight, Check, CircleCheck, CircleX, Info } from "lucide-react"
+
 import { cn } from "@/lib/utils"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import { isValidElement } from "react"
 
 type CTAButtonProps = {
   href: string
@@ -29,8 +30,8 @@ const CTAButton = ({
 
   const variantClasses =
     variant === "secondary"
-      ? "mdx-cta mdx-cta-secondary border border-neutral-900 text-neutral-900 hover:bg-neutral-100 focus-visible:outline-neutral-400 dark:border-white dark:text-white dark:hover:bg-white/10"
-      : "mdx-cta bg-neutral-900 text-white hover:bg-neutral-800 focus-visible:outline-neutral-900 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100"
+      ? "mdx-cta mdx-cta-secondary border border-border bg-white/[0.03] text-foreground hover:border-white/20 hover:bg-white/[0.07]"
+      : "mdx-cta bg-primary text-primary-foreground shadow-[0_1px_0_0_oklch(1_0_0/40%)_inset,0_8px_24px_-12px_oklch(1_0_0/45%)] hover:bg-primary/90"
 
   return (
     <a
@@ -38,13 +39,19 @@ const CTAButton = ({
       target={resolvedTarget}
       rel={resolvedRel}
       className={cn(
-        "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
+        "group/mdx-cta inline-flex h-11 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-medium tracking-[-0.01em] no-underline transition-[color,background-color,border-color] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
         variantClasses,
         block && "w-full sm:w-auto",
         className,
       )}
     >
       {children}
+      {variant === "primary" ? (
+        <ArrowRight
+          aria-hidden="true"
+          className="size-4 transition-transform duration-200 group-hover/mdx-cta:translate-x-0.5"
+        />
+      ) : null}
     </a>
   )
 }
@@ -96,106 +103,116 @@ const MDXAnchor = ({
   )
 }
 
+const CALLOUT_STYLES = {
+  info: { icon: Info, accent: "bg-spectrum-blue", iconClass: "text-spectrum-blue" },
+  warning: { icon: AlertTriangle, accent: "bg-spectrum-yellow", iconClass: "text-spectrum-yellow" },
+  success: { icon: CircleCheck, accent: "bg-spectrum-green", iconClass: "text-spectrum-green" },
+  error: { icon: CircleX, accent: "bg-spectrum-red", iconClass: "text-spectrum-red" },
+} as const
+
 export const MDXComponents = {
   // Typography components
   a: MDXAnchor,
   Lead: ({ children, className }: { children: ReactNode; className?: string }) => (
-    <p className={cn("text-lg leading-relaxed text-neutral-700 dark:text-neutral-300", className)}>
+    <p className={cn("text-[1.2em] leading-[1.6] tracking-[-0.015em] text-foreground", className)}>
       {children}
     </p>
   ),
-  
+
   // List components
   CheckList: ({ children }: { children: ReactNode }) => (
-    <ul className="space-y-3 my-6">
-      {children}
-    </ul>
+    <ul className="my-6 list-none! pl-0!">{children}</ul>
   ),
-  
+
   CheckItem: ({ children }: { children: ReactNode }) => (
-    <li className="flex gap-3">
-      <PixelishIcon
-        src="/pixelish/checkmark.svg"
-        alt=""
-        size={16}
-        invert={false}
+    <li className="flex gap-3 pl-0!">
+      <span
         aria-hidden="true"
-        className="mt-0.5 opacity-90 dark:invert"
-      />
+        className="mt-[0.35em] grid size-5 shrink-0 place-items-center rounded-full border border-white/15 bg-white/[0.05]"
+      >
+        <Check className="size-3 text-foreground" strokeWidth={2.25} />
+      </span>
       <span>{children}</span>
     </li>
   ),
-  
+
   // Callout/highlight boxes
-  Callout: ({ 
-    children, 
-    type = "info" 
-  }: { 
-    children: ReactNode; 
-    type?: "info" | "warning" | "success" | "error" 
+  Callout: ({
+    children,
+    type = "info",
+  }: {
+    children: ReactNode
+    type?: "info" | "warning" | "success" | "error"
   }) => {
-    const styles = {
-      info: "bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800",
-      warning: "bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-800",
-      success: "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800",
-      error: "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800"
-    }
-    
+    const style = CALLOUT_STYLES[type] ?? CALLOUT_STYLES.info
+    const Icon = style.icon
     return (
-      <div className={cn("p-4 my-6 border rounded-lg", styles[type])}>
-        {children}
+      <div className="relative my-8 flex gap-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-card p-5 text-[0.95em] sm:p-6 [&>div>*:first-child]:mt-0 [&>div>*:last-child]:mb-0">
+        <span aria-hidden="true" className={cn("absolute inset-y-0 left-0 w-0.5 opacity-80", style.accent)} />
+        <Icon aria-hidden="true" className={cn("mt-1 size-4 shrink-0", style.iconClass)} />
+        <div className="min-w-0">{children}</div>
       </div>
     )
   },
-  
+
   // Section divider
-  Divider: () => <hr className="my-12 border-neutral-200 dark:border-neutral-800" />,
+  Divider: () => <hr className="my-14 h-px border-0 bg-white/[0.1]" />,
   SectionBreak: ({ label }: { label?: string }) => (
-    <div className="my-12 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.35em] text-neutral-400">
-      <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+    <div className="my-14 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
+      <span className="h-px flex-1 bg-white/[0.1]" />
       {label ? (
         <span>{label}</span>
       ) : (
-        <span className="h-1.5 w-1.5 rounded-full bg-neutral-300 dark:bg-neutral-700" aria-hidden />
+        <span className="size-1.5 rounded-full bg-white/25" aria-hidden />
       )}
-      <span className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+      <span className="h-px flex-1 bg-white/[0.1]" />
     </div>
   ),
-  
+
   CTAButton,
   // CTA component
-  BlogCTA: ({ 
-    title, 
-    description, 
+  BlogCTA: ({
+    title,
+    description,
     buttonText,
-    href = "/waitlist" 
-  }: { 
-    title: string; 
-    description: string; 
-    buttonText?: string;
-    href?: string;
+    href = "/waitlist",
+  }: {
+    title: string
+    description: string
+    buttonText?: string
+    href?: string
   }) => (
-    <div className="my-12 p-8 bg-neutral-50 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800">
-      <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-6">{description}</p>
-      <CTAButton href={href}>
-        {href?.startsWith("/waitlist") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
-      </CTAButton>
+    <div className="relative my-12 overflow-hidden rounded-3xl border border-white/[0.08] bg-card p-7 sm:p-9">
+      <div aria-hidden="true" className="absolute inset-x-[12%] bottom-0 h-px bg-spectrum opacity-70" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(50%_60%_at_25%_100%,oklch(0.66_0.21_29/14%),transparent_70%),radial-gradient(50%_60%_at_75%_100%,oklch(0.66_0.16_258/16%),transparent_70%)]"
+      />
+      <div className="relative">
+        <h3 className="mb-2! mt-0! text-xl! font-semibold tracking-[-0.02em] text-foreground">{title}</h3>
+        <p className="mb-6! mt-0! text-muted-foreground">{description}</p>
+        <CTAButton href={href}>
+          {href?.startsWith("/waitlist") ? FREE_AUDIT_CTA_TEXT : buttonText ?? FREE_AUDIT_CTA_TEXT}
+        </CTAButton>
+      </div>
     </div>
   ),
-  
+
   // Video embed component
-  VideoEmbed: ({ 
-    src, 
-    title 
-  }: { 
-    src: string; 
-    title: string;
+  VideoEmbed: ({
+    src,
+    title,
+  }: {
+    src: string
+    title: string
   }) => (
     <div className="my-12">
-      <div className="relative overflow-hidden rounded-xl shadow-md" style={{ paddingBottom: "56.25%" }}>
+      <div
+        className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card"
+        style={{ paddingBottom: "56.25%" }}
+      >
         <iframe
-          className="absolute top-0 left-0 w-full h-full border-0 rounded-xl"
+          className="absolute left-0 top-0 h-full w-full border-0"
           src={src}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -204,36 +221,38 @@ export const MDXComponents = {
       </div>
     </div>
   ),
-  
+
   // Grid layout for comparison or features
-  Grid: ({ 
-    children, 
-    cols = 2 
-  }: { 
-    children: ReactNode; 
-    cols?: 2 | 3 | 4;
+  Grid: ({
+    children,
+    cols = 2,
+  }: {
+    children: ReactNode
+    cols?: 2 | 3 | 4
   }) => (
-    <div className={cn(
-      "grid gap-4 my-6",
-      cols === 2 && "md:grid-cols-2",
-      cols === 3 && "md:grid-cols-3",
-      cols === 4 && "md:grid-cols-4"
-    )}>
+    <div
+      className={cn(
+        "my-8 grid gap-4",
+        cols === 2 && "md:grid-cols-2",
+        cols === 3 && "md:grid-cols-3",
+        cols === 4 && "md:grid-cols-4",
+      )}
+    >
       {children}
     </div>
   ),
-  
+
   // Card component for grid items
-  Card: ({ 
-    title, 
-    children 
-  }: { 
-    title?: string; 
-    children: ReactNode;
+  Card: ({
+    title,
+    children,
+  }: {
+    title?: string
+    children: ReactNode
   }) => (
-    <div className="border border-neutral-200 dark:border-neutral-800 p-4 rounded-lg">
-      {title && <h4 className="font-semibold mb-2">{title}</h4>}
-      <div className="text-neutral-600 dark:text-neutral-400">{children}</div>
+    <div className="rounded-2xl border border-white/[0.08] bg-card p-5 text-[0.95em] [&>div>*:first-child]:mt-0 [&>div>*:last-child]:mb-0">
+      {title && <h4 className="mb-2! mt-0! font-semibold text-foreground">{title}</h4>}
+      <div className="text-muted-foreground">{children}</div>
     </div>
   ),
 }

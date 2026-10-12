@@ -1,32 +1,34 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import type { LucideIcon } from 'lucide-react'
 import {
   Activity,
   ArrowRight,
   BotMessageSquare,
+  Briefcase,
   ChartLine,
-  CheckCircle2,
-  ExternalLink,
+  Check,
   Figma,
-  GraduationCap,
   LayoutDashboard,
+  MapPin,
   SearchCheck,
-  Sparkles,
 } from 'lucide-react'
 import { notFound } from 'next/navigation'
 
+import CaseStudyMoreWork from '@/components/case-studies/CaseStudyMoreWork'
+import CaseStudySnapshotStats from '@/components/case-studies/CaseStudySnapshotStats'
+import CaseStudyVisualHero from '@/components/case-studies/CaseStudyVisualHero'
 import { CaseStudyWorkHighlights } from '@/components/case-studies/CaseStudyWorkHighlights'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import { BrowserFrame } from '@/components/prism/browser-frame'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { CaseStudySchema } from '@/components/schema-markup'
-import TrackedLink from '@/components/tracked-link'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { CASE_STUDIES } from '@/lib/case-study-data'
-import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { cn } from '@/lib/utils'
 
 const SLUG = 'roseville-dental-academy'
 const CANONICAL_URL = `https://www.design-prism.com/case-studies/${SLUG}`
@@ -46,15 +48,16 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: WEBSITE_SCREENSHOTS.og,
 })
 
-const statCards = [
+// Delivered-work facts for the stats band. No invented numbers.
+const facts = [
   {
     label: 'Platform move',
-    value: 'GoDaddy -> Vercel',
+    value: 'GoDaddy to Vercel',
     detail: 'From stock-site constraints to a production web stack.',
   },
   {
     label: 'Measurement',
-    value: 'GA4 + GSC + Hotjar',
+    value: 'GA4, Search Console, Hotjar',
     detail: 'Search, behavior, and custom conversion visibility.',
   },
   {
@@ -65,7 +68,7 @@ const statCards = [
   {
     label: 'Student support',
     value: 'AI assistant',
-    detail: 'ElevenLabs support integrated into the admissions experience.',
+    detail: 'ElevenLabs support built into the admissions experience.',
   },
 ]
 
@@ -140,111 +143,6 @@ const beforeAfter = [
   },
 ]
 
-function CaseStudyPanel({
-  title,
-  description,
-  icon: Icon,
-}: {
-  title: string
-  description: string
-  icon: LucideIcon
-}) {
-  return (
-    <div className="rounded-lg border border-border/60 bg-card/70 p-5 shadow-sm">
-      <div className="flex items-start gap-3">
-        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border/70 bg-background">
-          <Icon className="size-4 text-foreground" aria-hidden="true" />
-        </span>
-        <div className="space-y-2">
-          <h3 className="text-base font-semibold tracking-tight">{title}</h3>
-          <p className="text-sm leading-6 text-muted-foreground">
-            {description}
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function SectionEyebrow({ children }: { children: string }) {
-  return (
-    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-      {children}
-    </p>
-  )
-}
-
-function BrowserScreenshotFrame({
-  src,
-  alt,
-  label,
-  priority = false,
-  className,
-  imageClassName,
-  sizes = '(min-width: 1024px) 46vw, 100vw',
-}: {
-  src: string
-  alt: string
-  label: string
-  priority?: boolean
-  className?: string
-  imageClassName?: string
-  sizes?: string
-}) {
-  return (
-    <div
-      className={cn(
-        'overflow-hidden rounded-2xl border border-border/70 bg-black shadow-[0_30px_80px_-48px_rgba(0,0,0,0.9)]',
-        className,
-      )}
-    >
-      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
-        <span
-          className="size-2.5 rounded-full bg-red-400/70"
-          aria-hidden="true"
-        />
-        <span
-          className="size-2.5 rounded-full bg-amber-300/70"
-          aria-hidden="true"
-        />
-        <span
-          className="size-2.5 rounded-full bg-emerald-300/70"
-          aria-hidden="true"
-        />
-        <span className="ml-2 truncate rounded-full border border-white/10 bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          {label}
-        </span>
-      </div>
-      <div className="relative aspect-[16/10] bg-muted">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes={sizes}
-          className={cn('object-cover object-top', imageClassName)}
-        />
-      </div>
-    </div>
-  )
-}
-
-function MobileScreenshotFrame({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="overflow-hidden rounded-[1.75rem] border border-border/70 bg-black p-2 shadow-[0_26px_70px_-42px_rgba(0,0,0,0.95)]">
-      <div className="relative aspect-[9/19] overflow-hidden rounded-[1.25rem] bg-muted">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(min-width: 768px) 15vw, 45vw"
-          className="object-cover object-top"
-        />
-      </div>
-    </div>
-  )
-}
-
 export default function RosevilleDentalAcademyCaseStudyPage() {
   const caseStudy = CASE_STUDIES.find((item) => item.slug === SLUG)
 
@@ -257,286 +155,150 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
       <Navbar />
 
       <main className="flex-1">
-        <section className="border-b border-border/60 px-4 py-12 md:py-20">
-          <div className="container mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-6">
-            <div className="space-y-7">
-              <Badge
-                variant="secondary"
-                className="w-fit rounded-full px-4 py-2 text-[10px] tracking-[0.22em]"
-              >
-                dental education case study
-              </Badge>
+        <CaseStudyVisualHero
+          title="Roseville Dental Academy"
+          description="Prism moved the academy from a stock GoDaddy presence to a measurable admissions system: a Vercel-hosted website, deeper analytics, cleaner forms, Search Console, Hotjar, Meta attribution, and an ElevenLabs AI assistant for prospective students."
+          eyebrow="Dental education case study"
+          badges={[
+            { label: 'Dental Education', icon: <Briefcase aria-hidden="true" /> },
+            { label: 'Roseville, CA', icon: <MapPin aria-hidden="true" /> },
+          ]}
+          websiteUrl="https://www.rosevilledentalacademy.com/"
+          websiteHost="rosevilledentalacademy.com"
+          trackedLocation="Roseville Dental Academy case study hero"
+          homeDesktopSrc={WEBSITE_SCREENSHOTS.homeDesktop}
+          homeDesktopAlt="Roseville Dental Academy homepage after Prism rebuilt the admissions website"
+          homeMobileSrc={WEBSITE_SCREENSHOTS.homeMobile}
+          homeMobileAlt="Mobile Roseville Dental Academy homepage with signup path"
+        />
 
-              <div className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground sm:text-sm">
-                  Roseville, CA / Dental education
-                </p>
-                <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                  Roseville Dental Academy
-                </h1>
-                <p className="max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-                  Prism helped move the academy from a stock GoDaddy presence
-                  into a measurable admissions system: a Vercel-hosted website,
-                  deeper analytics, cleaner forms, Search Console, Hotjar, Meta
-                  attribution, and an ElevenLabs AI assistant for prospective
-                  students.
-                </p>
-              </div>
+        <CaseStudySnapshotStats facts={facts} />
 
-              <div className="flex flex-wrap gap-3">
-                <Button asChild className="rounded-full px-5">
-                  <TrackedLink
-                    href="https://www.rosevilledentalacademy.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    label="Open Roseville Dental Academy website"
-                    location="Roseville Dental Academy case study hero"
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      <span>Open live site</span>
-                      <ExternalLink className="size-4" aria-hidden="true" />
-                    </span>
-                  </TrackedLink>
-                </Button>
-                <Button
-                  asChild
-                  variant="secondary"
-                  className="rounded-full px-5"
-                >
-                  <TrackedLink
-                    href="/waitlist"
-                    label="Join the waitlist from Roseville case study"
-                    location="Roseville Dental Academy case study hero"
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      <span>{FREE_AUDIT_CTA_TEXT}</span>
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </span>
-                  </TrackedLink>
-                </Button>
-              </div>
-            </div>
-
-            <div className="relative pb-8">
-              <BrowserScreenshotFrame
-                src={WEBSITE_SCREENSHOTS.homeDesktop}
-                alt="Roseville Dental Academy homepage after Prism rebuilt the admissions website"
-                label="rosevilledentalacademy.com"
-                priority
+        <Section aria-labelledby="roseville-shift-title" className="pt-16 sm:pt-20">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-14">
+            <Reveal className="lg:col-span-5">
+              <SectionHeader
+                id="roseville-shift-title"
+                eyebrow="The shift"
+                title="from brochure site to admissions system."
+                description="The academy does not just need a pretty homepage. Students need to find the right course, trust the instructors, ask questions, and send a clear inquiry. The rebuild made that journey measurable."
               />
-              <div className="ml-auto mt-4 w-36 sm:absolute sm:-bottom-3 sm:-left-4 sm:ml-0 sm:mt-0 sm:w-40 md:-left-6 lg:w-44">
-                <MobileScreenshotFrame
-                  src={WEBSITE_SCREENSHOTS.homeMobile}
-                  alt="Mobile Roseville Dental Academy homepage with signup path"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-border/60 px-4 py-10">
-          <div className="container mx-auto grid max-w-6xl gap-3 px-4 sm:grid-cols-2 md:grid-cols-4 md:px-6">
-            {statCards.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-lg border border-border/60 bg-muted/30 p-4"
-              >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                  {stat.label}
-                </p>
-                <p className="mt-3 text-xl font-semibold tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-sm leading-5 text-muted-foreground">
-                  {stat.detail}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="border-b border-border/60 px-4 py-14 md:py-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <div className="grid gap-10 md:grid-cols-[0.85fr_1.15fr] md:items-start">
-              <div className="space-y-4">
-                <SectionEyebrow>the shift</SectionEyebrow>
-                <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                  From brochure site to admissions infrastructure.
-                </h2>
-                <p className="text-base leading-7 text-muted-foreground">
-                  Roseville Dental Academy does not just need a pretty homepage.
-                  It needs students to understand the right course, trust the
-                  instructors, ask questions, and submit a clear inquiry. The
-                  rebuild made that journey measurable.
-                </p>
-              </div>
-
-              <div className="grid gap-3">
-                {beforeAfter.map((item) => (
-                  <div
-                    key={item.before}
-                    className="grid gap-3 rounded-lg border border-border/60 bg-card/60 p-4 sm:grid-cols-[0.8fr_1fr]"
-                  >
+            </Reveal>
+            <ol className="flex flex-col gap-3 lg:col-span-7">
+              {beforeAfter.map((item, index) => (
+                <Reveal as="li" key={item.before} delay={index * 90}>
+                  <Card className="grid gap-4 p-5 sm:grid-cols-[minmax(0,0.8fr)_auto_minmax(0,1.2fr)] sm:items-center sm:gap-6 sm:p-6">
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                        before
+                      <p className="text-eyebrow text-subtle">Before</p>
+                      <p className="mt-2 text-[15px] font-medium text-muted-foreground line-through decoration-white/25">
+                        {item.before}
                       </p>
-                      <p className="mt-2 text-sm font-medium">{item.before}</p>
                     </div>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="hidden size-4 text-subtle sm:block"
+                    />
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                        after
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      <p className="text-eyebrow text-subtle">After</p>
+                      <p className="mt-2 text-[15px] leading-6 text-foreground">
                         {item.after}
                       </p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-border/60 px-4 py-14 md:py-20">
-          <div className="container mx-auto max-w-6xl px-4 md:px-6">
-            <div className="mb-8 max-w-3xl space-y-4">
-              <SectionEyebrow>what prism rebuilt</SectionEyebrow>
-              <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                A student acquisition system with the right signals underneath.
-              </h2>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {rebuildCards.map((card) => (
-                <CaseStudyPanel key={card.title} {...card} />
+                  </Card>
+                </Reveal>
               ))}
-            </div>
+            </ol>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-b border-border/60 px-4 py-14 md:py-20">
-          <div className="container mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[1fr_0.9fr] md:px-6">
-            <div className="space-y-5">
-              <SectionEyebrow>live surface</SectionEyebrow>
-              <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-                The website now has clearer enrollment paths for real dental
-                training demand.
-              </h2>
-              <p className="text-base leading-7 text-muted-foreground">
-                The live site presents the academy as an accredited hands-on
-                training institution and routes students toward the right next
-                step with a Quick Sign Up Form, contact information, course
-                pages, and the AI assistant layer.
-              </p>
+        <Section aria-labelledby="roseville-rebuilt-title" className="py-12 sm:py-16">
+          <Reveal>
+            <SectionHeader
+              id="roseville-rebuilt-title"
+              eyebrow="What Prism rebuilt"
+              title="a student pipeline with the right signals underneath."
+            />
+          </Reveal>
+          <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {rebuildCards.map((card, index) => {
+              const Icon = card.icon
+              return (
+                <Reveal as="li" key={card.title} delay={(index % 3) * 90} className="min-w-0">
+                  <SpotlightCard className="flex h-full flex-col gap-5 p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
+                      <Icon aria-hidden="true" className="size-[18px]" />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-semibold leading-snug tracking-[-0.02em] text-foreground">
+                        {card.title}
+                      </h3>
+                      <p className="mt-2 text-pretty text-sm leading-6 text-muted-foreground">
+                        {card.description}
+                      </p>
+                    </div>
+                  </SpotlightCard>
+                </Reveal>
+              )
+            })}
+          </ul>
+        </Section>
 
-              <div className="grid gap-2 sm:grid-cols-2">
-                {programSignals.map((program) => (
-                  <div
-                    key={program}
-                    className="flex min-h-11 items-center gap-3 rounded-lg border border-border/60 bg-muted/25 px-3 py-2"
-                  >
-                    <CheckCircle2
-                      className="size-4 shrink-0 text-foreground"
-                      aria-hidden="true"
-                    />
-                    <span className="text-sm font-medium">{program}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="overflow-hidden rounded-lg border border-border/60 bg-card/70">
-              <BrowserScreenshotFrame
-                src={WEBSITE_SCREENSHOTS.programDesktop}
-                alt="Roseville Dental Academy dental assisting program page with upcoming class dates"
-                label="program page"
-                sizes="(min-width: 1024px) 38vw, 100vw"
-                className="rounded-none border-0 border-b border-border/60 shadow-none"
-                imageClassName="object-top"
+        <Section aria-labelledby="roseville-live-title" className="py-12 sm:py-16">
+          <Reveal>
+            <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10 lg:p-14">
+              <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+              <div
+                aria-hidden="true"
+                className="absolute -right-24 bottom-0 -z-10 h-80 w-[36rem] rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/18%),transparent)] blur-2xl"
               />
-
-              <div className="p-6">
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex size-10 items-center justify-center rounded-full border border-border/70 bg-background">
-                    <GraduationCap className="size-5" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold">
-                      Dental education, not generic local service copy
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      The page structure supports programs, certifications,
-                      prerequisites, student trust, and admissions follow-up.
-                    </p>
-                  </div>
+              <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
+                <div className="lg:col-span-5">
+                  <SectionHeader
+                    id="roseville-live-title"
+                    eyebrow="Live surface"
+                    title="clear enrollment paths."
+                    description="The live site presents the academy as an accredited hands-on training institution and routes students to the right next step: a quick sign-up form, contact details, course pages, and the AI assistant."
+                  />
+                  <ul className="mt-8 flex flex-wrap gap-2" aria-label="Programs on the site">
+                    {programSignals.map((program) => (
+                      <li
+                        key={program}
+                        className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-[13px] font-medium text-foreground"
+                      >
+                        <Check aria-hidden="true" className="size-3.5 text-muted-foreground" />
+                        {program}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-
-                <div className="mt-6 space-y-4 border-t border-border/60 pt-6">
-                  <div>
-                    <p className="text-3xl font-semibold tracking-tight">
-                      Public proof
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      Current reviews and student trust signals are surfaced
-                      without freezing a volatile rating or count in this case
-                      study.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-3xl font-semibold tracking-tight">
-                      916-888-9821
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      Contact path stays visible alongside form and AI-assisted
-                      qualification.
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold">
-                      1271 Pleasant Grove Boulevard, Ste. 100
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      Roseville, California 95747
-                    </p>
-                  </div>
+                <div className="lg:col-span-7">
+                  <BrowserFrame
+                    src={WEBSITE_SCREENSHOTS.programDesktop}
+                    alt="Roseville Dental Academy dental assisting program page with upcoming class dates"
+                    url="rosevilledentalacademy.com"
+                    sizes="(min-width: 1024px) 640px, 90vw"
+                    width={1440}
+                    height={960}
+                    className="rounded-2xl"
+                  />
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </Reveal>
+        </Section>
 
         <CaseStudyWorkHighlights caseStudySlug={SLUG} />
 
-        <section className="px-4 py-14 md:py-20">
-          <div className="container mx-auto max-w-4xl px-4 text-center md:px-6">
-            <div className="mx-auto mb-4 inline-flex size-10 items-center justify-center rounded-full border border-border/70 bg-muted/30">
-              <Sparkles className="size-5" aria-hidden="true" />
-            </div>
-            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              The lesson for dental organizations is simple.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-              A modern dental website is not only a design asset. It is a
-              visibility, trust, inquiry, analytics, and follow-up system. That
-              is what Prism built for Roseville Dental Academy.
-            </p>
-            <div className="mt-7 flex justify-center">
-              <Button asChild className="rounded-full px-5">
-                <TrackedLink
-                  href="/waitlist"
-                  label="Join the waitlist from Roseville case study footer"
-                  location="Roseville Dental Academy case study footer"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <span>Build my growth system</span>
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </span>
-                </TrackedLink>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <CaseStudyMoreWork
+          slug={SLUG}
+          trackedLocation="Roseville Dental Academy case study more work"
+        />
+
+        <FinalCta
+          location="Roseville Dental Academy case study final cta"
+          title="your business, next."
+          secondary={{ label: 'Read what clients say', href: '/wall-of-love' }}
+        />
       </main>
 
       <Footer />

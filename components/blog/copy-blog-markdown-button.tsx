@@ -111,18 +111,22 @@ export default function CopyBlogMarkdownButton({
     <Button
       type="button"
       variant="outline"
-      size="xs"
+      size="sm"
       onClick={handleCopy}
       className={cn(
-        'min-h-11 rounded-md border-border/70 px-3 text-[10px] sm:text-[11px]',
-        copied && 'border-primary/70 bg-primary/15 text-primary',
+        'h-10 gap-2 px-4 text-[13px] text-muted-foreground hover:text-foreground',
+        copied && 'border-white/25 text-foreground',
         className,
       )}
       aria-label="Copy full blog post in markdown format"
       disabled={isLoading}
     >
-      {copied ? <Check className="h-3.5 w-3.5" aria-hidden /> : <Copy className="h-3.5 w-3.5" aria-hidden />}
-      <span>{isLoading ? 'Loading markdown' : copied ? 'Markdown copied' : 'Copy markdown'}</span>
+      {copied ? (
+        <Check className="size-3.5 text-live" aria-hidden />
+      ) : (
+        <Copy className="size-3.5" aria-hidden />
+      )}
+      <span>{isLoading ? 'Loading markdown' : copied ? 'Markdown copied' : 'Copy as Markdown'}</span>
     </Button>
   )
 }

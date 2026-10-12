@@ -21,28 +21,11 @@ We've added several GPU acceleration techniques across blog components:
 - **Will-change Property**: Optimizing `will-change` values for transform and opacity animations
 - **CSS Containment**: Using `contain: layout style paint` to isolate rendering boundaries
 
-### 2. Optimized Components
+### 2. Current Blog Components (2026-10-12 Prism Spectrum redesign)
 
-#### SimpleBlogGrid
-- Added GPU acceleration styles to the grid container
-- Implemented CSS containment for better paint performance
-- Added perspective for 3D transforms
-
-#### SimpleBlogPostCard
-- Each card now has its own hardware layer
-- Smooth hover animations using GPU-accelerated transforms
-- Replaced opacity-only hover with transform-based animations
-
-#### OptimizedBlogGrid (New)
-- Intersection Observer for lazy rendering
-- Virtual scrolling support for large lists
-- Progressive enhancement with visibility detection
-
-#### OptimizedBlogPostCard (New)
-- Framer Motion integration for smooth animations
-- Staggered entrance animations
-- Parallax hover effects
-- Content visibility optimization
+- `/blog` renders `BlogFeaturedCard` and `BlogGridCard` from `components/blog/blog-post-cards.tsx` (server components, `next/image` covers, generated covers from `components/blog/blog-cover.tsx`, prefetch off by default) plus `FinalCta`.
+- Posts render through `components/blog-post-layout.tsx` with the `proseClassName` reading styles from `components/landing/prose.ts`; motion is limited to CSS transitions and the scroll-progress bar.
+- `SimpleBlogGrid` / `SimpleBlogPostCard` remain only for the related-post rails on `/seo` and `/local-listings`. The old `OptimizedBlogGrid`, `OptimizedBlogPostCard`, mobile blog grid/card, and Framer Motion card animations were deleted in the 2026-10 redesign.
 
 ### 3. Scroll Performance
 
@@ -70,13 +53,7 @@ useEffect(() => {
 
 ### 4. CSS Utility Classes
 
-New utility classes added to `globals.css`:
-
-- `.gpu-accelerated`: Basic GPU acceleration
-- `.hardware-accelerated`: Full hardware acceleration with vendor prefixes
-- `.optimized-grid`: Grid-specific optimizations with content visibility
-- `.card-3d`: 3D card transforms with smooth transitions
-- `.smooth-scroll`: Native smooth scrolling support
+`app/globals.css` still ships `.hardware-accelerated` for legacy surfaces. The old `.gpu-accelerated`, `.optimized-grid`, `.card-3d`, and `.smooth-scroll` helpers were removed with the redesign; new UI should use the Spectrum utilities and transform/opacity transitions described in `DESIGN.md`.
 
 ### 5. Accessibility Considerations
 
@@ -86,42 +63,17 @@ New utility classes added to `globals.css`:
 
 ## Usage Examples
 
-### Basic Implementation
 ```tsx
-import SimpleBlogGrid from '@/components/simple-blog-grid'
-import SimpleBlogPostCard from '@/components/simple-blog-post-card'
+import { BlogFeaturedCard, BlogGridCard } from '@/components/blog/blog-post-cards'
 
-// The components now have GPU acceleration built-in
-<SimpleBlogGrid posts={posts}>
+// Server-rendered cards; keep prefetch off on long lists.
+<ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
   {posts.map((post) => (
-    <SimpleBlogPostCard key={post.slug} {...post} />
+    <li key={post.slug}>
+      <BlogGridCard post={post} />
+    </li>
   ))}
-</SimpleBlogGrid>
-```
-
-### Advanced Implementation
-```tsx
-import OptimizedBlogGrid from '@/components/optimized-blog-grid'
-import OptimizedBlogPostCard from '@/components/optimized-blog-post-card'
-
-// For better performance with many posts
-<OptimizedBlogGrid posts={posts}>
-  {posts.map((post, index) => (
-    <OptimizedBlogPostCard key={post.slug} {...post} index={index} />
-  ))}
-</OptimizedBlogGrid>
-```
-
-### Virtual Scrolling (for very large lists)
-```tsx
-import { VirtualizedBlogGrid } from '@/components/optimized-blog-grid'
-
-// Renders only visible items for optimal performance
-<VirtualizedBlogGrid posts={posts}>
-  {posts.map((post) => (
-    <OptimizedBlogPostCard key={post.slug} {...post} />
-  ))}
-</VirtualizedBlogGrid>
+</ul>
 ```
 
 ## Performance Metrics

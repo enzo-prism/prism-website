@@ -1,14 +1,22 @@
-import Link from "next/link"
+import type { LucideIcon } from "lucide-react"
+import { AppWindow, ArrowUpRight, ChartColumn, Command, Play } from "lucide-react"
 
-import PixelishIcon from "@/components/pixelish/PixelishIcon"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
+import { Badge } from "@/components/ui/badge"
 import type { SoftwareApp } from "@/lib/software-apps"
+import { cn } from "@/lib/utils"
 
 type SoftwareAppCardsProps = {
   apps: SoftwareApp[]
   cardClassName?: string
   buttonClassName?: string
+}
+
+/** Legacy pixel icon paths in lib/software-apps.ts mapped to lucide glyphs. */
+const ICONS: Record<string, LucideIcon> = {
+  "/pixelish/bar-chart-average.svg": ChartColumn,
+  "/pixelish/media-play.svg": Play,
+  "/pixelish/command.svg": Command,
 }
 
 export default function SoftwareAppCards({
@@ -17,51 +25,50 @@ export default function SoftwareAppCards({
   buttonClassName = "",
 }: SoftwareAppCardsProps) {
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:gap-7">
-      {apps.map((app) => (
-        <Card
-          key={app.title}
-          className={`group relative overflow-hidden border-border/60 bg-card/90 transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl ${cardClassName}`}
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(100%_100%_at_0%_0%,hsl(var(--primary)/0.14)_0%,transparent_55%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          <CardHeader className="relative z-10 space-y-5 pb-4">
-            <div className="flex items-start justify-between gap-4">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-border/80 bg-background/95 shadow-sm ring-1 ring-border/50">
-                <div className="absolute inset-1 rounded-xl border border-border/50 bg-muted/30" />
-                <PixelishIcon
-                  src={app.icon.src}
-                  alt={app.icon.alt}
-                  size={app.icon.size}
-                  aria-hidden="true"
-                  className="relative h-10 w-10 origin-center opacity-95"
-                />
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/85 px-3 py-1 text-[11px] font-medium tracking-wide text-muted-foreground">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary/80" aria-hidden="true" />
-                {app.platform ?? "Prism app"}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <CardTitle className="text-2xl tracking-tight text-foreground">{app.title}</CardTitle>
-              <CardDescription className="max-w-[48ch] text-base leading-relaxed text-muted-foreground">
-                {app.description}
-              </CardDescription>
-            </div>
-          </CardHeader>
-          <CardFooter className="relative z-10 mt-auto pt-2">
-            <Button
-              asChild
-              variant="outline"
-              className={`w-full justify-between rounded-xl border-border/70 bg-background/80 px-4 text-sm font-medium transition-all duration-300 group-hover:border-primary/40 group-hover:bg-background ${buttonClassName}`}
+    <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {apps.map((app, index) => {
+        const Icon = ICONS[app.icon.src] ?? AppWindow
+        return (
+          <li key={app.title}>
+            <SpotlightCard
+              beam={index === 0}
+              className={cn("group/app flex h-full flex-col p-6 sm:p-7", cardClassName)}
             >
-              <Link href={app.href} target="_blank" rel="noopener noreferrer">
+              <div className="flex items-start justify-between gap-4">
+                <span
+                  role="img"
+                  aria-label={app.icon.alt}
+                  className="grid size-12 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-foreground"
+                >
+                  <Icon aria-hidden="true" className="size-5" strokeWidth={1.75} />
+                </span>
+                <Badge variant="outline">{app.platform ?? "Prism app"}</Badge>
+              </div>
+              <h3 className="text-heading mt-8 text-foreground">{app.title}</h3>
+              <p className="mt-3 max-w-[48ch] text-pretty text-[0.95rem] leading-7 text-muted-foreground">
+                {app.description}
+              </p>
+              <div className="mt-auto pt-8">
+              <a
+                href={app.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "flex min-h-11 w-full items-center justify-between gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 text-sm font-medium text-foreground transition-colors hover:border-white/20 hover:bg-white/[0.07] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                  buttonClassName,
+                )}
+              >
                 <span>{app.hrefLabel}</span>
-                <span aria-hidden="true">↗</span>
-              </Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform duration-200 group-hover/app:-translate-y-0.5 group-hover/app:translate-x-0.5"
+                />
+              </a>
+              </div>
+            </SpotlightCard>
+          </li>
+        )
+      })}
+    </ul>
   )
 }

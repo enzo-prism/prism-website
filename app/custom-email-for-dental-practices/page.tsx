@@ -1,20 +1,29 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
-import {
-  ArrowRight,
-  CheckCircle2,
-  MailCheck,
-  ShieldCheck,
-  Users2,
-} from 'lucide-react'
+import { ArrowUpRight, Mail, MailCheck, ShieldCheck, Users2 } from 'lucide-react'
 
 import Footer from '@/components/footer'
+import {
+  Callout,
+  CheckList,
+  DentalFaq,
+  TextLink,
+} from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
-import ScrollToTop from '@/components/scroll-to-top'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { FAQSchema, WebPageSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { cn } from '@/lib/utils'
+
+const GOOGLE_WORKSPACE_PARTNER_LINK =
+  'https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO'
 
 const tldrPoints = [
   'Looks professional and trustworthy to patients and partners.',
@@ -149,353 +158,253 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function CustomEmailDentalPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(120,119,198,0.25),_transparent_55%)]"
-            aria-hidden
-          />
-          <div className="container relative mx-auto px-4 py-24 md:py-32">
-            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                Email foundations for dental teams
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                Custom Email for Dental Practices
-              </h1>
-              <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                name@yourpractice.com beats @gmail.com every time. Earn trust,
-                open hiring portals like Handshake, and control every inbox
-                without losing the tools you already love.
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Email foundations for dental teams"
+          title="custom email for dental practices."
+          description="name@yourpractice.com beats @gmail.com every time. Earn trust, open hiring portals like Handshake, and control every inbox without losing the tools you already love."
+          location="custom email hero"
+          ctaHref="/waitlist"
+          ctaLabel={FREE_AUDIT_CTA_TEXT}
+          secondary={{ label: "See case studies", href: "/case-studies" }}
+          glow="violet"
+        >
+          <div className="mx-auto grid max-w-3xl gap-3 text-left sm:grid-cols-2">
+            <Card className="p-5 opacity-70">
+              <p className="text-eyebrow text-subtle">Before</p>
+              <p className="mt-3 flex items-center gap-2.5 font-mono text-[14px] text-muted-foreground">
+                <Mail aria-hidden="true" className="size-4 shrink-0 text-subtle" />
+                <span className="truncate">yourpractice@gmail.com</span>
               </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/waitlist">
-                  <Button
-                    size="lg"
-                    className="group rounded-full px-8 py-3 text-base"
-                  >
-                    {FREE_AUDIT_CTA_TEXT}
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-                <Link href="/case-studies">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="rounded-full border-white/40 bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-neutral-200 hover:text-neutral-900"
-                  >
-                    See case studies
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-neutral-100 bg-white">
-          <div className="container mx-auto px-4 py-20">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                TL;DR for the no-nonsense crowd
-              </h2>
-              <p className="mt-4 text-base text-neutral-600">
-                Five reasons your dental practice needs a custom domain email
-                yesterday.
+              <p className="mt-3 text-[13px] leading-5 text-subtle">Personal inbox, no admin control, easy to spoof.</p>
+            </Card>
+            <SpotlightCard beam className="p-5">
+              <p className="text-eyebrow text-subtle">After</p>
+              <p className="mt-3 flex items-center gap-2.5 font-mono text-[14px] text-foreground">
+                <MailCheck aria-hidden="true" className="size-4 shrink-0" />
+                <span className="truncate">hello@yourpractice.com</span>
               </p>
-            </div>
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {tldrPoints.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-4 rounded-2xl border border-neutral-100 bg-neutral-50/70 p-6 shadow-sm"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-white">
-                    <CheckCircle2 className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-700">
-                    {point}
-                  </p>
-                </li>
-              ))}
-            </ul>
+              <p className="mt-3 text-[13px] leading-5 text-muted-foreground">Your domain, role addresses, SPF, DKIM, and DMARC.</p>
+            </SpotlightCard>
           </div>
-        </section>
+        </LandingHero>
 
-        <section className="border-b border-neutral-100 bg-neutral-50/80">
-          <div className="container mx-auto px-4 py-20">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                The problem we keep seeing
-              </h2>
-              <p className="mt-6 text-base text-neutral-700">
+        <Section aria-labelledby="ce-tldr-title">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="ce-tldr-title"
+                eyebrow="TL;DR"
+                title="tl;dr for the no-nonsense crowd."
+                description="Five reasons your dental practice needs a custom domain email yesterday."
+              />
+            </Reveal>
+            <Reveal delay={100}>
+              <ol className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+                {tldrPoints.map((point, index) => (
+                  <li key={point} className="flex gap-5 p-5 sm:p-6">
+                    <span className="font-mono text-[11px] leading-7 tracking-[0.18em] text-subtle">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-[15px] leading-7 text-foreground/90">{point}</p>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="ce-problem-title" className="pt-0 sm:pt-0">
+          <Reveal className="mx-auto max-w-3xl">
+            <Eyebrow>The problem</Eyebrow>
+            <h2 id="ce-problem-title" className="text-title text-gradient mt-5 max-w-[16ch] text-balance pb-1">
+              the problem we keep seeing.
+            </h2>
+            <div className="mt-8 space-y-5 text-lead text-muted-foreground">
+              <p>
                 Practices try to post jobs or verify their business with
                 third-party platforms and get stuck because they are using
                 yourpractice@gmail.com. Handshake, for instance, expects
                 employer accounts to use a company email so they can validate
                 faster. Generic emails face limits and manual review.
               </p>
-              <p className="mt-4 text-base text-neutral-700">
+              <p>
                 Patients feel the same. Medical information sent from a free
                 mailbox looks less trustworthy, and when a staff member leaves
                 you lose conversations, candidate threads, and patient context
                 tied to their personal inbox. It is preventable.
               </p>
             </div>
-          </div>
-        </section>
+          </Reveal>
+        </Section>
 
-        <section className="border-b border-neutral-100 bg-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                The benefits, explained in plain English
-              </h2>
-              <p className="mt-4 text-base text-neutral-600">
-                Seven wins you feel the first week you switch from generic
-                inboxes.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {benefits.map((benefit, idx) => (
-                <div
-                  key={benefit.title}
-                  className="flex h-full flex-col rounded-2xl border border-neutral-100 bg-neutral-50/80 p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+        <Section aria-labelledby="ce-benefits-title">
+          <Reveal>
+            <SectionHeader
+              id="ce-benefits-title"
+              eyebrow="Benefits"
+              title="the benefits, explained in plain english."
+              description="Seven wins you feel the first week you switch from generic inboxes."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {benefits.map((benefit, idx) => (
+              <Reveal
+                key={benefit.title}
+                delay={(idx % 3) * 70}
+                className={cn(
+                  idx === 0 && 'sm:col-span-2 lg:col-span-1 lg:row-span-2',
+                  idx === benefits.length - 1 && 'lg:col-span-2',
+                )}
+              >
+                <Card
+                  className={cn(
+                    'flex h-full flex-col p-6 transition-colors hover:border-white/[0.16]',
+                    idx === 0 && 'lg:justify-between lg:p-8',
+                  )}
                 >
-                  <div className="flex items-center justify-between text-neutral-500">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-base font-semibold text-white">
-                      {idx + 1}
+                  <span className="flex items-center justify-between">
+                    <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
+                      {String(idx + 1).padStart(2, '0')}
                     </span>
-                    <MailCheck className="h-5 w-5 text-neutral-400" />
+                    <MailCheck aria-hidden="true" className="size-4 text-subtle" />
+                  </span>
+                  <div className={idx === 0 ? 'mt-6 lg:mt-auto' : 'mt-6'}>
+                    <h3 className={cn('font-semibold tracking-[-0.02em] text-foreground', idx === 0 ? 'text-heading' : 'text-[17px]')}>
+                      {benefit.title}
+                    </h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{benefit.description}</p>
                   </div>
-                  <h3 className="mt-6 text-xl font-semibold text-neutral-900">
-                    {benefit.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-                    {benefit.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+                </Card>
+              </Reveal>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-b border-neutral-200 bg-neutral-900 text-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                What Prism sets up for you
-              </h2>
-              <p className="mt-4 text-base text-neutral-300">
-                Done-for-you implementation so your practice can focus on
-                patients, not MX records.
-              </p>
-            </div>
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {setupChecklist.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-6"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-100">
-                    {item}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="border-b border-neutral-100 bg-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="grid gap-12 md:grid-cols-[1.2fr_1fr] md:items-center">
-              <div>
-                <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                  Pricing that stays simple
-                </h2>
-                <p className="mt-4 text-base text-neutral-600">
-                  Whether you are modernizing one practice or coordinating
-                  multiple locations, Prism scopes everything up front.
-                </p>
-                <p className="mt-4 text-sm text-neutral-500">
-                  Already on Google Workspace or Microsoft 365? We will harden
-                  deliverability, clean up DNS, and lock in best practices
-                  without rebuilding from scratch.
-                </p>
-                <p className="mt-4 text-sm text-neutral-500">
-                  Need a HIPAA-aware intake workflow too? Read our{' '}
-                  <Link
-                    href="/google/dental-patient-forms"
-                    className="font-semibold text-neutral-900 underline underline-offset-4"
-                  >
-                    Google Workspace patient forms guide
-                  </Link>
-                  .
-                </p>
-              </div>
-              <div className="grid gap-4">
-                {pricingOptions.map((option) => (
-                  <div
-                    key={option.name}
-                    className="rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6 shadow-sm"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Users2 className="h-5 w-5 text-neutral-500" />
-                      <h3 className="text-lg font-semibold text-neutral-900">
-                        {option.name}
-                      </h3>
-                    </div>
-                    <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-                      {option.description}
-                    </p>
+        <Section aria-labelledby="ce-setup-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-40" />
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+              <SectionHeader
+                id="ce-setup-title"
+                eyebrow="Done for you"
+                title="what Prism sets up for you."
+                description="Done-for-you implementation so your practice can focus on patients, not MX records."
+              />
+              <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                {setupChecklist.map((item) => (
+                  <div key={item} className="flex gap-3 rounded-xl border border-white/[0.07] bg-background/50 p-4">
+                    <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-foreground" />
+                    <p className="text-[14px] leading-6 text-muted-foreground">{item}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-b border-neutral-100 bg-neutral-900 text-white">
-          <div className="container mx-auto px-4 py-20">
-            <div className="mx-auto max-w-4xl rounded-3xl border border-white/10 bg-white/5 p-12 text-center shadow-lg sm:p-16">
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-300">
-                google workspace partner perk
+        <Section aria-labelledby="ce-pricing-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-16">
+            <Reveal className="flex flex-col gap-6">
+              <SectionHeader
+                id="ce-pricing-title"
+                eyebrow="Scope"
+                title="pricing that stays simple."
+                description="Whether you are modernizing one practice or coordinating multiple locations, Prism scopes everything up front."
+              />
+              <p className="max-w-[56ch] text-[15px] leading-7 text-muted-foreground">
+                Already on Google Workspace or Microsoft 365? We will harden
+                deliverability, clean up DNS, and lock in best practices
+                without rebuilding from scratch.
               </p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                10% off your first year of Google Workspace
+              <p className="max-w-[56ch] text-[15px] leading-7 text-muted-foreground">
+                Need a HIPAA-aware intake workflow too? Read our{' '}
+                <TextLink href="/google/dental-patient-forms">Google Workspace patient forms guide</TextLink>.
+              </p>
+            </Reveal>
+            <Reveal delay={100} className="grid gap-3">
+              {pricingOptions.map((option) => (
+                <Card key={option.name} className="flex gap-4 p-5 sm:p-6">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                    <Users2 aria-hidden="true" className="size-4 text-foreground" />
+                  </span>
+                  <div>
+                    <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{option.name}</h3>
+                    <p className="mt-1 text-[15px] leading-6 text-muted-foreground">{option.description}</p>
+                  </div>
+                </Card>
+              ))}
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="ce-perk-title">
+          <SpotlightCard className="relative isolate px-5 py-12 text-center sm:px-12 sm:py-16">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 -z-10 h-2/3 bg-[radial-gradient(45%_60%_at_50%_0%,oklch(0.66_0.16_258/18%),transparent_70%)]"
+            />
+            <div className="mx-auto flex max-w-2xl flex-col items-center">
+              <Eyebrow>Google Workspace partner perk</Eyebrow>
+              <h2 id="ce-perk-title" className="text-title text-gradient mt-5 max-w-[16ch] text-balance pb-1">
+                10% off your first year of Google Workspace.
               </h2>
-              <p className="mt-6 text-base text-neutral-100 sm:text-lg">
+              <p className="text-lead mt-5 text-pretty text-muted-foreground">
                 Prism is set up with Google to pass preferred pricing to our
                 clients. When we launch your custom domain email, you can enroll
                 through our partner link and keep an extra 10% in your pocket
                 while we handle the setup, security hardening, and training.
               </p>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90"
-                >
-                  <a
-                    href="https://c.gle/APy2Ad08G18tc2DVKTvFnIX7ZsIi8C_16CofJocN9aFYsQDXBJRKDAH3FRQb6BfrqNgPv1Buz5DypvRjWF8E2rqpEvohTLTUWmLF6UOh4oCinNkIBx-wbk3wUX2jqxqDYiPNn4cWz4pfBlfNZT7je1YO"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Activate 10% off Google Workspace
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-                <p className="max-w-md text-xs uppercase tracking-[0.28em] text-neutral-400">
-                  Link opens in a new tab · available for new workspace orgs
-                  only
-                </p>
-              </div>
+              <Button asChild size="lg" variant="outline" className="mt-8">
+                <a href={GOOGLE_WORKSPACE_PARTNER_LINK} target="_blank" rel="noopener noreferrer">
+                  Activate 10% off Google Workspace
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              </Button>
+              <p className="mt-4 font-mono text-[11px] text-subtle">
+                Link opens in a new tab · available for new workspace orgs only
+              </p>
             </div>
-          </div>
-        </section>
+          </SpotlightCard>
+        </Section>
 
-        <section className="border-b border-neutral-100 bg-neutral-50/80">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Frequently asked questions
-              </h2>
-            </div>
-            <div className="mt-12 space-y-6">
-              {faqs.map((faq) => (
-                <div
-                  key={faq.question}
-                  className="rounded-2xl border border-neutral-100 bg-white p-6 shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold text-neutral-900">
-                    {faq.question}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-700">
-                    {faq.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <DentalFaq idPrefix="custom-email" title="frequently asked questions." items={faqs} />
 
-        <section className="border-b border-neutral-100 bg-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Micro-checklist we execute for every dental practice
-              </h2>
-            </div>
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {microChecklist.map((item) => (
+        <Section aria-labelledby="ce-checklist-title">
+          <Reveal>
+            <SectionHeader
+              id="ce-checklist-title"
+              eyebrow="Every practice"
+              title="micro-checklist we execute for every dental practice."
+              titleClassName="max-w-[20ch]"
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <ol className="grid overflow-hidden rounded-2xl border border-white/[0.08] bg-card sm:grid-cols-2 lg:grid-cols-4">
+              {microChecklist.map((item, index) => (
                 <li
                   key={item}
-                  className="flex items-start gap-4 rounded-2xl border border-neutral-100 bg-neutral-50/80 p-6"
+                  className="-mb-px -mr-px flex flex-col gap-3 border-b border-r border-white/[0.07] p-6"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-white">
-                    <CheckCircle2 className="h-5 w-5" />
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-700">
-                    {item}
-                  </p>
+                  <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-[15px] leading-6 text-foreground/90">{item}</p>
                 </li>
               ))}
-            </ul>
-          </div>
-        </section>
+            </ol>
+          </Reveal>
+          <Callout className="mt-6" title="Sources for your ops notes">
+            <CheckList marker="dot" items={sources} />
+          </Callout>
+        </Section>
 
-        <section className="border-b border-neutral-100 bg-neutral-50/60">
-          <div className="container mx-auto px-4 py-16">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
-                sources for your ops notes
-              </p>
-              <ul className="mt-6 space-y-3 text-sm text-neutral-600">
-                {sources.map((source) => (
-                  <li key={source}>{source}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white">
-          <div className="container mx-auto px-4 py-24">
-            <div className="mx-auto max-w-2xl rounded-3xl border border-neutral-100 bg-neutral-900 px-6 py-16 text-center text-white shadow-lg">
-              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Ready to look legit, hire faster, and protect your brand?
-              </h2>
-              <p className="mt-4 text-base text-neutral-200">
-                Prism sets up the infrastructure, migration, and team training
-                so your practice can focus on care.
-              </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/waitlist">
-                  <Button
-                    size="lg"
-                    className="group rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-900 hover:bg-white/90"
-                  >
-                    {FREE_AUDIT_CTA_TEXT}
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-                <Link href="/case-studies">
-                  <Button
-                    size="lg"
-                    variant="ghost"
-                    className="rounded-full border border-white/20 bg-transparent px-8 py-3 text-base text-white hover:bg-white/10"
-                  >
-                    See case studies
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="custom email final cta"
+          secondary={{ label: 'See case studies', href: '/case-studies' }}
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -507,6 +416,6 @@ export default function CustomEmailDentalPage() {
         isPartOfId="https://www.design-prism.com/#website"
       />
       <FAQSchema questions={faqs} />
-    </>
+    </div>
   )
 }

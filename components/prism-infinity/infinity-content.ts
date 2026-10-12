@@ -29,17 +29,17 @@ export const HOW_IT_WORKS = [
   {
     label: 'Name the need',
     body: 'Add a landing page, ad creative, website update, or photoshoot to your queue. Put the most important request first.',
-    iconSrc: '/pixelish/kanban.svg',
+    icon: 'queue',
   },
   {
     label: 'We ship it',
     body: 'We confirm the brief and work on one request at a time. Larger projects have milestones so you can review progress along the way.',
-    iconSrc: '/pixelish/checkmark.svg',
+    icon: 'ship',
   },
   {
     label: 'The next one starts',
     body: 'Review the work with us, then move to the next priority. Reorder the queue as your business needs change.',
-    iconSrc: '/pixelish/arrow-refresh.svg',
+    icon: 'next',
   },
 ] as const
 
@@ -47,32 +47,32 @@ export const DELIVERABLES = [
   {
     title: 'Landing pages for your offers',
     body: 'Offer pages, campaign pages, and booking flows built to turn attention into customers.',
-    iconSrc: '/pixelish/browser.svg',
+    icon: 'landing',
   },
   {
     title: 'Ad creative to test',
     body: 'Images, copy, and video variations for your campaigns on Meta, Google, and YouTube.',
-    iconSrc: '/pixelish/graph-chart-high.svg',
+    icon: 'ad',
   },
   {
     title: 'New websites and site updates',
     body: 'New sites, redesigns, service pages, and contact flows with clear copy and search foundations.',
-    iconSrc: '/pixelish/house.svg',
+    icon: 'website',
   },
   {
     title: 'Video edits for your story',
     body: 'Short-form, ads, and long-form cuts edited to your offer and story.',
-    iconSrc: '/pixelish/media-play.svg',
+    icon: 'video',
   },
   {
     title: 'Photoshoots you own',
     body: 'Team, location, and product photography for your website, ads, and social posts. We agree on the shoot brief and logistics first.',
-    iconSrc: '/pixelish/device-camera.svg',
+    icon: 'photo',
   },
   {
     title: 'Content for your channels',
     body: 'Posts, pages, and creative that keep the brand visible after the campaign ends.',
-    iconSrc: '/pixelish/document-letter.svg',
+    icon: 'content',
   },
 ] as const
 
@@ -100,11 +100,48 @@ export const OWNER_REASONS = [
   },
 ] as const
 
+export type InfinityRequestType =
+  | 'landing'
+  | 'ad'
+  | 'website'
+  | 'video'
+  | 'photo'
+  | 'content'
+  | 'brand'
+
 export const QUEUE_BOARD = {
   delivered: 'Booking landing page',
   active: 'Homepage conversion pass',
   queued: ['Meta ads (6 variations)', 'Location photoshoot'],
 } as const
+
+/** Request type for each example on the queue board. */
+export const QUEUE_BOARD_TYPES: Record<string, InfinityRequestType> = {
+  'Booking landing page': 'landing',
+  'Homepage conversion pass': 'website',
+  'Meta ads (6 variations)': 'ad',
+  'Location photoshoot': 'photo',
+}
+
+/**
+ * Example requests that keep arriving behind the queued items in the hero
+ * board. Illustrative only (the board is labeled "Example"), and every one
+ * sits inside the deliverables listed above.
+ */
+export const QUEUE_STREAM: readonly {
+  title: string
+  type: InfinityRequestType
+}[] = [
+  { title: 'Spring offer landing page', type: 'landing' },
+  { title: 'Search ad copy set', type: 'ad' },
+  { title: 'Team photoshoot', type: 'photo' },
+  { title: 'Service page rewrite', type: 'website' },
+  { title: 'Reels edit, three cuts', type: 'video' },
+  { title: 'Instagram carousel', type: 'content' },
+  { title: 'New location page', type: 'website' },
+  { title: 'Retargeting ad set', type: 'ad' },
+  { title: 'Brand guidelines refresh', type: 'brand' },
+]
 
 export const FAQ_ITEMS = [
   {

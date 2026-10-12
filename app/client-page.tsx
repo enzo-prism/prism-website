@@ -1,37 +1,38 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import HomeDentistWinsSection from '@/components/home/HomeDentistWinsSection'
-import HomeFinalCtaSection from '@/components/home/HomeFinalCtaSection'
-import HomeFitSection from '@/components/home/HomeFitSection'
+import HomeCaseStudies from '@/components/home/HomeCaseStudies'
+import HomeFaq from '@/components/home/HomeFaq'
+import HomeFounder from '@/components/home/HomeFounder'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
-import HomeHeroSection from '@/components/home/HomeHeroSection'
-import HomeHowItWorksSection from '@/components/home/HomeHowItWorksSection'
-import HomeImpossibleHero from '@/components/home/HomeImpossibleHero'
-import HomeOffersSection from '@/components/home/HomeOffersSection'
-import HomeProblemSection from '@/components/home/HomeProblemSection'
-import HomeProductsSection from '@/components/home/HomeProductsSection'
-import HomeProofBandSection from '@/components/home/HomeProofBandSection'
-import HomeProofSection from '@/components/home/HomeProofSection'
-import HomeServicesSection from '@/components/home/HomeServicesSection'
+import HomeHero from '@/components/home/HomeHero'
+import HomeHowToGetIn from '@/components/home/HomeHowToGetIn'
+import HomeNumbers from '@/components/home/HomeNumbers'
+import HomeProducts from '@/components/home/HomeProducts'
+import HomeServicesBento from '@/components/home/HomeServicesBento'
+import HomeTestimonials from '@/components/home/HomeTestimonials'
+import HomeWorkWall from '@/components/home/HomeWorkWall'
+import { FinalCta } from '@/components/prism/final-cta'
 
 export default function ClientPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent font-sans text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-transparent font-sans text-foreground">
       <Navbar />
       <HomeHashScrollStabilizer />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <HomeImpossibleHero />
-        <HomeHeroSection />
-        <HomeDentistWinsSection />
-        <HomeProblemSection />
-        <HomeServicesSection />
-        <HomeProofBandSection />
-        <HomeFitSection />
-        <HomeHowItWorksSection />
-        <HomeProofSection />
-        <HomeOffersSection />
-        <HomeProductsSection />
-        <HomeFinalCtaSection />
+        <HomeHero />
+        <HomeWorkWall />
+        <HomeNumbers />
+        <HomeServicesBento />
+        <HomeCaseStudies />
+        <HomeTestimonials />
+        <HomeFounder />
+        <HomeProducts />
+        <HomeHowToGetIn />
+        <HomeFaq />
+        <FinalCta
+          location="homepage final cta"
+          secondary={{ label: 'See the work', href: '/case-studies' }}
+        />
       </main>
       <Footer />
     </div>

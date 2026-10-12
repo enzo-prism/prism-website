@@ -14,7 +14,7 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function PricingPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <PricingPageClient />

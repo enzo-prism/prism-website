@@ -1,23 +1,37 @@
-import Link from 'next/link'
-
-import PricingHero from '@/components/pricing/PricingHero'
 import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainerClassName,
-  coreRouteIntroBandClassName,
-  coreRoutePanelClassName,
-  coreRouteSectionClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
+  ArrowRight,
+  ArrowUpRight,
+  Camera,
+  Hammer,
+  Infinity as InfinityIcon,
+  ListPlus,
+  MessagesSquare,
+  Wrench,
+} from 'lucide-react'
+
+import BrowserFrame from '@/components/prism/browser-frame'
+import FinalCta from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { FaqList } from '@/components/prism/faq-list'
+import { Section, SectionHeader } from '@/components/prism/section'
+import HomeCountUp from '@/components/home/HomeCountUp'
+import { OfferIconTile } from '@/components/pricing/offer-kit'
+import PricingComparison, {
+  type ComparisonRow,
+} from '@/components/pricing/PricingComparison'
+import PricingHero from '@/components/pricing/PricingHero'
+import PricingPlans, { type PricingPlan } from '@/components/pricing/PricingPlans'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import TrackedLink from '@/components/tracked-link'
+import { Badge } from '@/components/ui/badge'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import {
   CANONICAL_PRICING_OFFERS,
+  CONTENT_OS_PRICE_LABEL,
   PRICING_OFFER_ORDER,
-  PRICING_PRIMARY_CTA,
-  PRICING_SECONDARY_CTA,
+  PRISM_INFINITY_PRICE_LABEL,
+  type PricingOfferId,
 } from '@/lib/pricing-model'
-import { cn } from '@/lib/utils'
 
 // How any Prism engagement starts. (Identifier kept for the
 // pricing-consistency required-snippet guard.)
@@ -25,73 +39,200 @@ const growthPathSteps = [
   {
     stage: '01',
     title: 'Join the waitlist',
-    price: 'About two minutes',
+    meta: 'About two minutes',
+    icon: ListPlus,
     description:
       'Share your links, goals, and when you want to start. Prism is fully booked, so this is how every engagement begins right now.',
   },
   {
     stage: '02',
     title: 'We review and reach out',
-    price: 'Clear scope and price',
+    meta: 'Clear scope and price',
+    icon: MessagesSquare,
     description:
       'For each monthly intake we review applications, reach out to the teams we can take on, and confirm what is included, what it costs, and how the work will run before you commit.',
   },
   {
     stage: '03',
     title: 'We build',
-    price: 'Prism standard',
+    meta: 'Prism standard',
+    icon: Hammer,
     description:
-      'We build the agreed work, review it with you, and prepare it for launch. You know what is ready and what needs your input.',
+      'We build the agreed work, review it with you, and prepare it for launch. You always know what is ready and what needs your input.',
   },
 ] as const
 
-// The four productized offers, snapshot form. (Identifier kept for the
+// Who each plan is for and what it includes. Copy stays inside what
+// lib/pricing-model.ts and the offer pages already promise.
+const PLAN_DETAILS: Record<
+  PricingOfferId,
+  Pick<PricingPlan, 'badge' | 'audience' | 'includes' | 'featured'>
+> = {
+  website: {
+    badge: 'Custom build',
+    audience: 'For businesses whose website should make choosing them easy.',
+    includes: [
+      'Custom design and development',
+      'Clear service pages and inquiry forms',
+      'Mobile-friendly design',
+      'Foundations for Google and AI search',
+      'Analytics set up at launch',
+      'The finished site is yours',
+    ],
+  },
+  content_os: {
+    badge: 'Ongoing',
+    audience:
+      'For owners who want to show up every week without running content themselves.',
+    includes: [
+      'Scripts and video edits',
+      'Social posts for your agreed channels',
+      'Website content',
+      'Planning, review, and publishing',
+      'Three-month setup, then ongoing production',
+    ],
+  },
+  dental_os: {
+    badge: 'Dental practices',
+    audience:
+      'For dental practices that want more patients to find, trust, and contact them.',
+    includes: [
+      'Practice website',
+      'SEO and AI search',
+      'Google Maps and local listings',
+      'Review requests and response support',
+      'Google and Meta ads with call and inquiry tracking',
+    ],
+  },
+  prism_infinity: {
+    badge: 'Unlimited requests',
+    featured: true,
+    audience: 'For teams with a steady stream of creative work to ship.',
+    includes: [
+      'Landing pages and websites',
+      'Ad creative and video edits',
+      'Photoshoots and content',
+      'Unlimited requests, one active at a time',
+      'Pause or cancel anytime',
+    ],
+  },
+}
+
+// The four productized offers as plan cards. (Identifier kept for the
 // pricing-consistency required-snippet guard.)
-const pricingSnapshot = PRICING_OFFER_ORDER.map((offerId) => {
+const pricingSnapshot: PricingPlan[] = PRICING_OFFER_ORDER.map((offerId) => {
   const offer = CANONICAL_PRICING_OFFERS[offerId]
   return {
-    item: offer.name,
-    price: offer.priceLabel,
-    role: offer.description,
-    // Rows navigate to the offer page; the waitlist CTA lives on the offer
-    // cards below.
-    href: offer.secondaryCta?.href ?? offer.primaryCta.href,
+    offerId,
+    name: offer.name,
+    priceLabel: offer.priceLabel,
+    priceSubLabel: offer.priceSubLabel,
+    cta: offer.primaryCta,
+    explore: offer.secondaryCta,
+    ...PLAN_DETAILS[offerId],
   }
 })
 
-// The ongoing, recurring systems — all scoped together once we reach out.
+const comparisonRows: ComparisonRow[] = [
+  {
+    label: 'Custom website with search foundations',
+    values: {
+      website: true,
+      content_os: false,
+      dental_os: true,
+      prism_infinity: 'New sites and updates',
+    },
+  },
+  {
+    label: 'Video, social, and website content',
+    values: {
+      website: false,
+      content_os: true,
+      dental_os: false,
+      prism_infinity: true,
+    },
+  },
+  {
+    label: 'Google Maps and local listings',
+    values: {
+      website: false,
+      content_os: false,
+      dental_os: true,
+      prism_infinity: false,
+    },
+  },
+  {
+    label: 'Review requests and responses',
+    values: {
+      website: false,
+      content_os: false,
+      dental_os: true,
+      prism_infinity: false,
+    },
+  },
+  {
+    label: 'Ads',
+    values: {
+      website: false,
+      content_os: false,
+      dental_os: 'Google and Meta campaigns',
+      prism_infinity: 'Ad creative',
+    },
+  },
+  {
+    label: 'How it runs',
+    values: {
+      website: 'One project, optional care after launch',
+      content_os: 'Three-month setup, then month-to-month',
+      dental_os: 'Ongoing, scoped to each practice',
+      prism_infinity: 'Monthly, pause or cancel anytime',
+    },
+  },
+]
+
+// The ongoing, recurring systems, all scoped together once we reach out.
 // (Identifier kept for the pricing-consistency required-snippet guard.)
 const partnerLevels = [
   {
     title: 'Website Care',
-    price: 'Scoped with your build',
+    price: 'Optional, after launch',
+    icon: Wrench,
+    href: '/websites',
     description:
       'Hosting, updates, and ongoing edits for your Prism website once it is live. Optional, and only after delivery.',
   },
   {
     title: 'Content OS',
-    price: 'Scoped from the waitlist',
+    price: CONTENT_OS_PRICE_LABEL,
+    icon: Camera,
+    href: '/content',
     description:
       'A plan for consistent content across your website and selected social channels. We handle production, publishing, and ongoing improvements.',
   },
   {
     title: 'Prism Infinity',
-    price: 'Scoped from the waitlist',
+    price: PRISM_INFINITY_PRICE_LABEL,
+    icon: InfinityIcon,
+    href: '/prism-infinity',
     description:
       'Ongoing landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime.',
   },
 ] as const
 
 // Real, source-attributed results from lib/case-study-data.ts (Google Search
-// Console). Used as quantified proof beside the primary pricing CTA — keep in
-// sync with the source; do not invent metrics.
-const wongImpressions = getCaseStudyMetric('dr-christopher-wong')
-
-const CTA_PROOF_POINTS = [
+// Console). Keep in sync with the source; do not invent metrics.
+const PROOF_POINTS = [
   {
-    value: wongImpressions.value,
-    label: `${wongImpressions.label} (Dr. Christopher Wong)`,
-    href: '/case-studies/dr-christopher-wong',
+    client: 'Dr. Christopher Wong',
+    host: 'chriswongdds.com',
+    slug: 'dr-christopher-wong',
+    metric: getCaseStudyMetric('dr-christopher-wong'),
+  },
+  {
+    client: 'Belize Kids',
+    host: 'belizekids.org',
+    slug: 'belize-kids-foundation',
+    metric: getCaseStudyMetric('belize-kids-foundation'),
   },
 ] as const
 
@@ -130,270 +271,242 @@ const faqs = [
 
 export default function PricingPageClient() {
   return (
-    <div className="bg-transparent font-sans text-[#f5f0e8]">
+    <div className="bg-background text-foreground">
       <PricingHero />
 
-      <section id="offers" className={coreRouteSectionClassName}>
-        <div
-          className={cn(
-            coreRouteContainerClassName,
-            'grid gap-12 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]',
-          )}
-        >
-          <CoreSectionHeading
-            eyebrow="Snapshot"
-            title="Choose the support your business needs."
-            description="A custom website, consistent content, dental marketing, or ongoing creative support. Start with the work that matters most to your business."
-          />
-
-          <div className="overflow-hidden border-y border-white/12">
-            {pricingSnapshot.map((row) => (
-              <Link
-                key={row.item}
-                href={row.href}
-                className="group grid gap-4 border-b border-white/12 py-5 transition-colors last:border-b-0 hover:bg-white/[0.02] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/30 md:grid-cols-[minmax(0,0.7fr)_minmax(10rem,0.5fr)_minmax(0,1.1fr)] md:items-start"
-              >
-                <p className="text-[1.05rem] font-medium tracking-[-0.02em] text-[#f5f0e8]">
-                  {row.item}
-                </p>
-                <p className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-                  {row.price}
-                </p>
-                <p className="text-[0.95rem] leading-7 text-[#b8afa2] group-hover:text-[#c9c1b6]">
-                  {row.role}
-                </p>
-              </Link>
-            ))}
-          </div>
+      {/* Plans */}
+      <Section
+        id="offers"
+        aria-labelledby="pricing-offers-heading"
+        className="scroll-mt-20 pt-4 sm:pt-6"
+      >
+        <SectionHeader
+          id="pricing-offers-heading"
+          eyebrow="The plans"
+          title="four ways to work with Prism."
+          titleClassName="max-w-none"
+        />
+        <div className="mt-10">
+          <PricingPlans plans={pricingSnapshot} />
         </div>
-      </section>
+      </Section>
 
-      <section id="offer-cards" className={coreRouteSectionClassName}>
-        <div className={coreRouteContainerClassName}>
-          <div className={coreRouteIntroBandClassName}>
-            <CoreSectionHeading
-              eyebrow="The offers"
-              title="Pick how you want to grow."
-              description="Prism is fully booked. Join the waitlist for the offer that fits and we will recommend a starting point and confirm scope and pricing when we reach out."
+      {/* Proof */}
+      <Section aria-labelledby="pricing-proof-heading" className="pt-0 sm:pt-0">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-16">
+          <Reveal>
+            <SectionHeader
+              id="pricing-proof-heading"
+              eyebrow="Proof"
+              title="the work behind the plans."
+              description="Measured search growth from two current clients, straight from Google Search Console."
+              titleClassName="max-w-[15ch]"
             />
+          </Reveal>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {PROOF_POINTS.map((proof, index) => (
+              <li key={proof.slug} className="min-w-0">
+                <Reveal delay={index * 90} className="h-full">
+                  <TrackedLink
+                    href={`/case-studies/${proof.slug}`}
+                    label={`${proof.client} case study`}
+                    location="pricing proof"
+                    className="group/proof flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-white/[0.16] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  >
+                    <div className="mask-fade-b relative h-40 overflow-hidden px-5 pt-5 sm:h-44">
+                      <BrowserFrame
+                        src={`/case-studies/${proof.slug}-home-desktop.jpg`}
+                        alt={`${proof.client} website home page built by Prism`}
+                        url={proof.host}
+                        sizes="(min-width: 1024px) 26vw, (min-width: 640px) 45vw, 90vw"
+                        className="transition-transform duration-500 group-hover/proof:-translate-y-1"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6 pt-4">
+                      <p className="text-eyebrow text-subtle">{proof.client}</p>
+                      <p className="text-title mt-3 text-foreground">
+                        <HomeCountUp value={proof.metric.value} />
+                      </p>
+                      <p className="mt-2 text-pretty text-sm leading-6 text-muted-foreground">
+                        {proof.metric.label}
+                      </p>
+                      <p className="mt-auto pt-5 font-mono text-[11px] leading-5 text-subtle">
+                        {proof.metric.sourceName} · {proof.metric.dateRange}
+                      </p>
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                        Read the case study
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-4 transition-transform duration-200 group-hover/proof:-translate-y-0.5 group-hover/proof:translate-x-0.5"
+                        />
+                      </span>
+                    </div>
+                  </TrackedLink>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* Comparison */}
+      <Section aria-labelledby="pricing-compare-heading" className="pt-0 sm:pt-0">
+        <Reveal>
+          <SectionHeader
+            id="pricing-compare-heading"
+            eyebrow="Compare"
+            title="what each plan includes."
+            description="The short version. Your exact scope is agreed with you when your intake opens."
+            align="center"
+          />
+        </Reveal>
+        <Reveal className="mt-12">
+          <PricingComparison
+            columns={pricingSnapshot.map((plan) => ({
+              offerId: plan.offerId,
+              name: plan.name,
+              featured: plan.featured,
+            }))}
+            rows={comparisonRows}
+          />
+        </Reveal>
+        <p className="mt-4 text-center text-[13px] text-subtle sm:hidden">
+          Swipe the table to see every plan.
+        </p>
+      </Section>
+
+      {/* How an engagement starts */}
+      <Section aria-labelledby="pricing-growth-path-heading" className="pt-0 sm:pt-0">
+        <div
+          id="growth-path"
+          className="spectrum-rule relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 sm:px-10 sm:py-16 lg:px-14"
+        >
+          <div aria-hidden="true" className="bg-dots absolute inset-0 -z-10 opacity-[0.18] mask-fade-b" />
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              id="pricing-growth-path-heading"
+              eyebrow="How an engagement starts"
+              title="map it, scope it, then build it."
+              titleClassName="max-w-[16ch]"
+            />
+            <p className="max-w-[38ch] text-pretty text-[15px] leading-7 text-muted-foreground lg:pb-2">
+              Join the waitlist. When we reach out, agree on the scope and price,
+              then give us the go-ahead to build.
+            </p>
           </div>
 
-          <div className="mt-10 grid gap-4 sm:gap-5 lg:grid-cols-2">
-            {PRICING_OFFER_ORDER.map((offerId) => {
-              const offer = CANONICAL_PRICING_OFFERS[offerId]
+          <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] lg:grid-cols-3">
+            {growthPathSteps.map((step, index) => {
+              const Icon = step.icon
               return (
-                <article
-                  key={offerId}
-                  className={cn(
-                    coreRoutePanelClassName,
-                    'flex flex-col gap-5 p-6 sm:p-8',
-                  )}
-                >
-                  <div className="space-y-3">
-                    <h2 className="text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-[#f5f0e8]">
-                      {offer.name}
-                    </h2>
-                    <div>
-                      <p className="text-[1.05rem] text-[#f5f0e8]">
-                        {offer.priceLabel}
-                      </p>
-                      {offer.priceSubLabel ? (
-                        <p className="mt-1 text-[0.82rem] leading-snug text-[#8f877b]">
-                          {offer.priceSubLabel}
-                        </p>
-                      ) : null}
+                <li key={step.stage} className="min-w-0 bg-card">
+                  <Reveal delay={index * 90} className="flex h-full flex-col p-6 sm:p-8">
+                    <div className="flex items-center justify-between gap-3">
+                      <OfferIconTile>
+                        <Icon aria-hidden="true" className="size-[18px]" />
+                      </OfferIconTile>
+                      <span className="font-mono text-xs text-subtle">{step.stage}</span>
                     </div>
-                    <p className="text-pretty text-[0.96rem] leading-7 text-[#b8afa2]">
-                      {offer.description}
+                    <h3 className="text-heading mt-8 text-foreground">
+                      {step.title.toLowerCase()}
+                    </h3>
+                    <Badge variant="outline" className="mt-4">
+                      {step.meta}
+                    </Badge>
+                    <p className="mt-5 text-pretty text-[15px] leading-7 text-muted-foreground">
+                      {step.description}
                     </p>
-                  </div>
-                  <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-2">
-                    <CoreActionLink
-                      href={offer.primaryCta.href}
-                      label={offer.primaryCta.label.toLowerCase()}
-                      location={`pricing offers · ${offer.name}`}
-                      variant="primary"
-                    >
-                      {offer.primaryCta.label}
-                    </CoreActionLink>
-                    {offer.secondaryCta ? (
-                      <CoreActionLink
-                        href={offer.secondaryCta.href}
-                        label={offer.secondaryCta.label.toLowerCase()}
-                        location={`pricing offers secondary · ${offer.name}`}
-                        variant="secondary"
-                      >
-                        {offer.secondaryCta.label}
-                      </CoreActionLink>
-                    ) : null}
-                  </div>
-                </article>
+                  </Reveal>
+                </li>
               )
             })}
-          </div>
+          </ol>
         </div>
-      </section>
+      </Section>
 
-      <section id="growth-path" className={coreRouteSectionClassName}>
-        <div className={coreRouteContainerClassName}>
-          <div className={coreRouteIntroBandClassName}>
-            <CoreSectionHeading
-              eyebrow="How an engagement starts"
-              title="Map it, scope it, then build it."
-              description="Join the waitlist. When we reach out, agree on the scope and price, then give us the go-ahead to build."
-              titleClassName="max-w-[14ch]"
+      {/* Support after launch */}
+      <Section aria-labelledby="pricing-support-heading" className="pt-0 sm:pt-0">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+          <Reveal>
+            <SectionHeader
+              id="pricing-support-heading"
+              eyebrow="Ongoing systems"
+              title="support after launch."
+              description="Keep your website maintained, your content consistent, or your next project moving."
+              titleClassName="max-w-[12ch]"
             />
-          </div>
-
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            {growthPathSteps.map((step) => (
-              <article
-                key={step.stage}
-                className={cn(
-                  coreRoutePanelClassName,
-                  'flex min-h-[20rem] flex-col p-6',
-                )}
-              >
-                <p className="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-[#797165]">
-                  {step.stage}
-                </p>
-                <h3 className="mt-5 text-[1.35rem] font-medium leading-[1.05] tracking-[-0.04em] text-[#f5f0e8]">
-                  {step.title}
-                </h3>
-                <p className="mt-4 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-                  {step.price}
-                </p>
-                <p className="mt-auto pt-8 text-[0.95rem] leading-7 text-[#b8afa2]">
-                  {step.description}
-                </p>
-              </article>
-            ))}
-          </div>
+          </Reveal>
+          <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+            {partnerLevels.map((level, index) => {
+              const Icon = level.icon
+              return (
+                <li key={level.title}>
+                  <Reveal delay={index * 80}>
+                    <TrackedLink
+                      href={level.href}
+                      label={level.title.toLowerCase()}
+                      location="pricing support after launch"
+                      className="group/level grid gap-4 py-7 transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start sm:gap-6"
+                    >
+                      <OfferIconTile>
+                        <Icon aria-hidden="true" className="size-[18px]" />
+                      </OfferIconTile>
+                      <span className="flex min-w-0 flex-col gap-2">
+                        <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                          <span className="text-[1.15rem] font-semibold tracking-[-0.02em] text-foreground">
+                            {level.title}
+                          </span>
+                          <Badge variant="outline">{level.price}</Badge>
+                        </span>
+                        <span className="max-w-[56ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                          {level.description}
+                        </span>
+                      </span>
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="hidden size-5 text-subtle transition-[transform,color] duration-200 group-hover/level:translate-x-0.5 group-hover/level:text-foreground sm:mt-2.5 sm:block"
+                      />
+                    </TrackedLink>
+                  </Reveal>
+                </li>
+              )
+            })}
+          </ul>
         </div>
-      </section>
+      </Section>
 
-      <section className={coreRouteSectionClassName}>
-        <div
-          className={cn(
-            coreRouteContainerClassName,
-            'grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]',
-          )}
-        >
-          <CoreSectionHeading
-            eyebrow="Ongoing systems"
-            title="Support after launch."
-            description="Keep your website maintained, your content consistent, or your next project moving with ongoing support."
-          />
-
-          <div className="grid gap-4">
-            {partnerLevels.map((level) => (
-              <article
-                key={level.title}
-                className="grid gap-4 border-b border-white/12 pb-5 last:border-b-0 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]"
-              >
-                <div>
-                  <h2 className="text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {level.title}
-                  </h2>
-                  <p className="mt-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-                    {level.price}
-                  </p>
-                </div>
-                <p className="text-[0.98rem] leading-7 text-[#b8afa2]">
-                  {level.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={coreRouteSectionClassName}>
-        <div
-          className={cn(
-            coreRouteContainerClassName,
-            'grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]',
-          )}
-        >
-          <CoreSectionHeading
-            eyebrow="FAQ"
-            title="Common pricing questions."
-            description="What is included, how ongoing care works, and how we scope your plan."
-          />
-
-          <div className="border-t border-white/12 lg:border-t-0">
-            {faqs.map((faq) => (
-              <article
-                key={faq.question}
-                className="border-b border-white/12 py-6 first:pt-0"
-              >
-                <h2 className="font-sans text-[1.35rem] font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  {faq.question}
-                </h2>
-                <p className="mt-3 max-w-3xl text-[1rem] leading-7 text-[#b8afa2]">
-                  {faq.answer}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-4 py-20 pb-28 sm:px-6 sm:py-24">
-        <div
-          className={cn(
-            coreRouteContainerClassName,
-            'border-t border-white/12 pt-8 sm:pt-10',
-          )}
-        >
-          <CoreSectionHeading
-            title="Let’s find the right starting point."
-            description="Prism is fully booked right now. Join the waitlist with your goals and questions, and we will help you choose a focused project or ongoing support when your intake opens."
-            titleClassName="max-w-[14ch]"
-          />
-
-          <div className="mt-10 grid max-w-2xl gap-px overflow-hidden border border-white/12 bg-white/10">
-            {CTA_PROOF_POINTS.map((proof) => (
-              <Link
-                key={proof.label}
-                href={proof.href}
-                className="group bg-black p-6 transition-colors hover:bg-[#0b0b0b] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#d8bc79]/35"
-              >
-                <p className="font-sans text-[2rem] font-medium leading-none tracking-[-0.04em] text-[#f5f0e8]">
-                  {proof.value}
-                </p>
-                <p className="mt-3 text-[0.92rem] leading-6 text-[#b8afa2] group-hover:text-[#c9c1b6]">
-                  {proof.label}
-                </p>
-              </Link>
-            ))}
-          </div>
-          <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-[#8f877b]">
-            Source: Google Search Console
-          </p>
-
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
-            <CoreActionLink
-              href={PRICING_PRIMARY_CTA.href}
-              label={PRICING_PRIMARY_CTA.label.toLowerCase()}
-              location="pricing final cta"
-              variant="heroPrimary"
+      {/* FAQ */}
+      <Section aria-labelledby="pricing-faq-heading" className="pt-0 sm:pt-0">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionHeader
+              id="pricing-faq-heading"
+              eyebrow="FAQ"
+              title="pricing questions."
+              description="What is included, how ongoing care works, and how we scope your plan."
+              titleClassName="max-w-[15ch]"
+            />
+            <TrackedLink
+              href="/faq"
+              label="faq"
+              location="pricing faq"
+              className="group/faq mt-8 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
-              {PRICING_PRIMARY_CTA.label}
-            </CoreActionLink>
-            <CoreActionLink
-              href={PRICING_SECONDARY_CTA.href}
-              variant="heroSecondary"
-            >
-              {PRICING_SECONDARY_CTA.label}
-            </CoreActionLink>
+              More answers on the FAQ page
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/faq:translate-x-0.5"
+              />
+            </TrackedLink>
           </div>
-          <p className="mt-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-[#d8bc79]">
-            waitlist first &middot; built to the Prism standard
-            &middot; scope and price confirmed before work begins
-          </p>
+          <FaqList items={faqs} name="pricing-faq" defaultOpen={0} />
         </div>
-      </section>
+      </Section>
+
+      <FinalCta
+        location="pricing final cta"
+        secondary={{ label: 'See the work', href: '/case-studies' }}
+      />
 
       <PricingStructuredData />
     </div>
@@ -432,7 +545,7 @@ function PricingStructuredData() {
           description: contentOs.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
-                          url: 'https://www.design-prism.com/content',
+          url: 'https://www.design-prism.com/content',
         }}
       />
       <ServiceSchema

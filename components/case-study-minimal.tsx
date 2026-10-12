@@ -1,34 +1,51 @@
-import Footer from '@/components/footer'
-import CaseStudyCard from '@/components/case-study-card'
-import CaseStudyExplainerVideo from '@/components/case-studies/CaseStudyExplainerVideo'
-import CaseStudyOutcomesGrid from '@/components/case-studies/CaseStudyOutcomesGrid'
-import CaseStudyResultsBand from '@/components/case-studies/CaseStudyResultsBand'
-import CaseStudySnapshotStats from '@/components/case-studies/CaseStudySnapshotStats'
-import CaseStudyVisualHero from '@/components/case-studies/CaseStudyVisualHero'
-import Navbar from '@/components/navbar'
-import { CaseStudyWorkHighlights } from '@/components/case-studies/CaseStudyWorkHighlights'
-import { CaseStudySchema } from '@/components/schema-markup'
-import TrackedLink from '@/components/tracked-link'
-import { Button } from '@/components/ui/button'
-import { CASE_STUDIES } from '@/lib/case-study-data'
-import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
-import { ArrowRight, Sparkles } from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { existsSync } from 'node:fs'
-import path from 'node:path'
+import { Archive, BadgeCheck, Briefcase, MapPin, Play } from 'lucide-react'
+
+import CaseStudyExplainerVideo from '@/components/case-studies/CaseStudyExplainerVideo'
+import CaseStudyMoreWork from '@/components/case-studies/CaseStudyMoreWork'
+import CaseStudyOutcomesGrid from '@/components/case-studies/CaseStudyOutcomesGrid'
+import CaseStudySnapshotStats, {
+  type SnapshotFact,
+} from '@/components/case-studies/CaseStudySnapshotStats'
+import CaseStudyStory from '@/components/case-studies/CaseStudyStory'
+import CaseStudyVisualHero, {
+  type CaseStudyHeroBadge,
+} from '@/components/case-studies/CaseStudyVisualHero'
+import CaseStudyVoice from '@/components/case-studies/CaseStudyVoice'
+import {
+  getCaseStudyQuotes,
+  getCaseStudyVideo,
+  summarizeServices,
+} from '@/components/case-studies/case-study-proof'
+import { CaseStudyWorkHighlights } from '@/components/case-studies/CaseStudyWorkHighlights'
+import {
+  getDesktopShot,
+  getHostLabel,
+  getMobileShot,
+  getVerifiedMetric,
+  isFormerClient,
+} from '@/components/case-studies/work-index'
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { CaseStudySchema } from '@/components/schema-markup'
+import { CASE_STUDIES } from '@/lib/case-study-data'
+import {
+  getCaseStudyWorkProfile,
+  normalizeCaseStudyWorkProfile,
+} from '@/lib/case-study-work-highlights'
 
 type MinimalCaseStudyPageProps = {
   slug: string
 }
 
-function hasPublicAsset(publicPath: string) {
-  try {
-    return existsSync(path.join(process.cwd(), 'public', publicPath.replace(/^\//, '')))
-  } catch {
-    return false
-  }
-}
-
+/**
+ * Shared case study template (23 pages). A launch page for the client: the
+ * live site in the hero, a stats band of verified metrics or delivered-work
+ * facts, the client's own voice when a verified video or quote exists, the
+ * published story, outcomes, the work highlights, three more current-client
+ * stories, and the waitlist close.
+ */
 export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps) {
   const caseStudy = CASE_STUDIES.find((item) => item.slug === slug)
 
@@ -40,149 +57,107 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
     caseStudy.structured?.canonicalUrl ??
     `https://www.design-prism.com/case-studies/${caseStudy.slug}`
   const websiteUrl = caseStudy.websiteUrl
+  const websiteHost = getHostLabel(websiteUrl)
   const results = caseStudy.structured?.results ?? []
+  const metric = getVerifiedMetric(caseStudy)
   const story = caseStudy.structured?.story
+  const outcomes = caseStudy.structured?.outcomes ?? []
+  const archived = isFormerClient(caseStudy.slug)
+  const workProfile = normalizeCaseStudyWorkProfile(getCaseStudyWorkProfile(slug))
+  const video = getCaseStudyVideo(caseStudy)
+  const quotes = getCaseStudyQuotes(caseStudy.slug)
 
-  const relatedPool = CASE_STUDIES.filter(
-    (item) => item.slug !== caseStudy.slug,
-  )
-  const sameSegment = relatedPool.filter((item) =>
-    item.segments.some((segment) => caseStudy.segments.includes(segment)),
-  )
-  const byMeasuredResultsFirst = (list: typeof CASE_STUDIES) =>
-    [...list].sort(
-      (a, b) =>
-        Number(Boolean(b.structured?.results)) -
-        Number(Boolean(a.structured?.results)),
-    )
-  const relatedStudies = [
-    ...byMeasuredResultsFirst(sameSegment),
-    ...byMeasuredResultsFirst(
-      relatedPool.filter((item) => !sameSegment.includes(item)),
-    ),
-  ].slice(0, 3)
   const resultsSentence =
     results.length > 0
       ? ` Measured results: ${results
-          .map((metric) => `${metric.value} ${metric.label}`)
+          .map((item) => `${item.value} ${item.label}`)
           .join('; ')}.`
       : ''
   const schemaDescription = `Prism case study for ${caseStudy.client} featuring the live website plus the services and tech stack used for the engagement.${resultsSentence}`
   const schemaOutcome =
     results.length > 0
       ? results
-          .map((metric) => `${metric.value} ${metric.label}. Source: ${metric.detail}`)
+          .map((item) => `${item.value} ${item.label}. Source: ${item.detail}`)
           .join(' ')
       : `Live website, service list, and tech stack overview for ${caseStudy.client}.`
 
-  const desktopShot = `/case-studies/${slug}-home-desktop.jpg`
-  const mobileShot = `/case-studies/${slug}-home-mobile.jpg`
-  const hasDesktopShot = hasPublicAsset(desktopShot)
-  const hasMobileShot = hasPublicAsset(mobileShot)
-
+  const desktopShot = getDesktopShot(slug)
+  const mobileShot = getMobileShot(slug)
   const trackedLocation = `${slug} case study`
 
-  const statCards = [
-    { label: 'Industry', value: caseStudy.industry },
-    { label: 'Location', value: caseStudy.location },
-    caseStudy.structured?.focus
-      ? { label: 'Focus', value: caseStudy.structured.focus }
-      : caseStudy.founder
-        ? { label: 'Founder', value: caseStudy.founder }
-        : null,
-    caseStudy.structured?.scope
-      ? { label: 'Scope', value: caseStudy.structured.scope }
-      : null,
-  ].filter(Boolean) as { label: string; value: string; detail?: string }[]
+  const badges: CaseStudyHeroBadge[] = [
+    { label: caseStudy.industry, icon: <Briefcase aria-hidden="true" /> },
+    { label: caseStudy.location, icon: <MapPin aria-hidden="true" /> },
+    ...(metric
+      ? [{ label: 'Verified result', icon: <BadgeCheck aria-hidden="true" /> }]
+      : []),
+    ...(video
+      ? [
+          {
+            label: video.kind === 'Interview' ? 'Client interview' : 'Client video',
+            icon: <Play aria-hidden="true" />,
+          },
+        ]
+      : []),
+    ...(caseStudy.explainerVideo
+      ? [{ label: 'Explainer video', icon: <Play aria-hidden="true" /> }]
+      : []),
+    ...(archived
+      ? [{ label: 'Past project', icon: <Archive aria-hidden="true" /> }]
+      : []),
+  ]
 
-  const outcomesTitle = `What Prism built for ${caseStudy.client}.`
+  // Stats band: only facts that already exist in the data, in owner terms
+  // (what was delivered and what it was for). Never tool counts.
+  const facts: SnapshotFact[] = []
+  if (workProfile.services.length > 0) {
+    facts.push({
+      label: 'Services delivered',
+      value: String(workProfile.services.length),
+      detail: summarizeServices(workProfile.services),
+      numeric: true,
+    })
+  }
+  if (caseStudy.structured?.focus) {
+    facts.push({ label: 'Focus', value: caseStudy.structured.focus })
+  } else if (caseStudy.founder) {
+    facts.push({ label: 'Led by', value: caseStudy.founder })
+  }
+  if (caseStudy.structured?.scope) {
+    facts.push({ label: 'Scope', value: caseStudy.structured.scope })
+  }
+  if (facts.length < 4) facts.push({ label: 'Industry', value: caseStudy.industry })
+  if (facts.length < 4) facts.push({ label: 'Location', value: caseStudy.location })
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
 
       <main className="flex-1">
-        {hasDesktopShot ? (
-          <CaseStudyVisualHero
-            badge="case study"
-            eyebrow={`${caseStudy.industry} / ${caseStudy.location}`}
-            title={caseStudy.client}
-            description={caseStudy.description}
-            websiteUrl={websiteUrl}
-            trackedLocation={`${trackedLocation} hero`}
-            homeDesktopSrc={desktopShot}
-            homeDesktopAlt={`${caseStudy.client} homepage built by Prism`}
-            homeMobileSrc={hasMobileShot ? mobileShot : undefined}
-            homeMobileAlt={`Mobile view of the ${caseStudy.client} site`}
-            primaryCta={{
-              href: '/waitlist',
-              label: `Join the waitlist from ${slug} case study`,
-              text: FREE_AUDIT_CTA_TEXT,
-            }}
-          />
-        ) : (
-          <section className="border-b border-border/60 px-4 py-16 md:py-24">
-            <div className="container mx-auto max-w-4xl px-4 md:px-6">
-              <div className="space-y-6">
-                <span className="inline-flex w-fit rounded-full bg-muted/40 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                  case study
-                </span>
-                <div className="space-y-3">
-                  <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                    {caseStudy.client}
-                  </h1>
-                  <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground sm:text-sm">
-                    {caseStudy.industry} / {caseStudy.location}
-                  </p>
-                  <p className="max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-                    {caseStudy.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+        <CaseStudyVisualHero
+          title={caseStudy.client}
+          description={caseStudy.description}
+          eyebrow={archived ? 'Case study archive' : 'Case study'}
+          badges={badges}
+          websiteUrl={websiteUrl}
+          websiteHost={websiteHost}
+          trackedLocation={`${trackedLocation} hero`}
+          homeDesktopSrc={desktopShot}
+          homeDesktopAlt={`${caseStudy.client} homepage built by Prism`}
+          homeMobileSrc={mobileShot}
+          homeMobileAlt={`Mobile view of the ${caseStudy.client} site`}
+        />
 
-        <CaseStudySnapshotStats stats={statCards} />
+        <CaseStudySnapshotStats metric={metric} facts={facts} />
 
-        {story ? (
-          <section
-            aria-label={`How Prism worked with ${caseStudy.client}`}
-            className="border-b border-border/60 px-4 py-14 md:py-20"
-          >
-            <div className="container mx-auto max-w-4xl px-4 md:px-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                the story
-              </p>
-              <div className="mt-8 space-y-10">
-                {[
-                  { heading: 'The situation.', body: story.situation },
-                  { heading: 'The approach.', body: story.approach },
-                  { heading: 'The result.', body: story.result },
-                ].map(({ heading, body }) => (
-                  <div
-                    key={heading}
-                    className="grid gap-3 md:grid-cols-[180px_1fr] md:gap-8"
-                  >
-                    <h2 className="text-lg font-semibold tracking-tight text-foreground">
-                      {heading}
-                    </h2>
-                    <p className="text-base leading-7 text-muted-foreground">
-                      {body}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
+        <CaseStudyVoice
+          slug={caseStudy.slug}
+          clientName={caseStudy.client}
+          video={video}
+          quotes={quotes}
+        />
 
-        {results.length > 0 ? (
-          <CaseStudyResultsBand
-            clientName={caseStudy.client}
-            results={results}
-          />
-        ) : null}
+        {story ? <CaseStudyStory clientName={caseStudy.client} story={story} /> : null}
 
         {caseStudy.explainerVideo ? (
           <CaseStudyExplainerVideo
@@ -192,93 +167,23 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
           />
         ) : null}
 
-        {caseStudy.structured?.outcomes && caseStudy.structured.outcomes.length > 0 ? (
+        {outcomes.length > 0 ? (
           <CaseStudyOutcomesGrid
-            eyebrow="what changed"
-            title={outcomesTitle}
-            outcomes={caseStudy.structured.outcomes}
+            eyebrow="Outcomes"
+            title="what changed."
+            outcomes={outcomes}
           />
         ) : null}
 
         <CaseStudyWorkHighlights caseStudySlug={caseStudy.slug} />
 
-        {relatedStudies.length > 0 ? (
-          <section
-            aria-label="More client work"
-            className="border-b border-border/60 px-4 py-14 md:py-20"
-          >
-            <div className="container mx-auto max-w-5xl px-4 md:px-6">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
-                    more client work
-                  </p>
-                  <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-                    Related case studies.
-                  </h2>
-                </div>
-                <TrackedLink
-                  href="/case-studies"
-                  label={`All case studies from ${slug} related row`}
-                  location={`${trackedLocation} related`}
-                  className="text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-                >
-                  All case studies
-                </TrackedLink>
-              </div>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {relatedStudies.map((related) => (
-                  <CaseStudyCard
-                    key={related.slug}
-                    business={related.client}
-                    category={related.category}
-                    location={related.location}
-                    slug={related.slug}
-                    description={related.description}
-                    screenshotSrc={
-                      hasPublicAsset(
-                        `/case-studies/${related.slug}-home-desktop.jpg`,
-                      )
-                        ? `/case-studies/${related.slug}-home-desktop.jpg`
-                        : undefined
-                    }
-                    metric={related.structured?.results?.[0]}
-                    hasExplainerVideo={Boolean(related.explainerVideo)}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
+        <CaseStudyMoreWork slug={caseStudy.slug} trackedLocation={`${trackedLocation} more work`} />
 
-        <section className="px-4 py-14 md:py-20">
-          <div className="container mx-auto max-w-4xl px-4 text-center md:px-6">
-            <div className="mx-auto mb-4 inline-flex size-10 items-center justify-center rounded-full border border-border/70 bg-muted/30">
-              <Sparkles className="size-5" aria-hidden="true" />
-            </div>
-            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-              Want a growth system like {caseStudy.client}&apos;s?
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-              Prism builds modern websites, search visibility, conversion paths,
-              analytics, and AI infrastructure as a single connected system.
-            </p>
-            <div className="mt-7 flex justify-center">
-              <Button asChild className="rounded-full px-5">
-                <TrackedLink
-                  href="/waitlist"
-                  label={`Join the waitlist from ${slug} case study footer`}
-                  location={`${trackedLocation} footer`}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <span>Build my growth system</span>
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </span>
-                </TrackedLink>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location={`${trackedLocation} final cta`}
+          title="your business, next."
+          secondary={{ label: 'Read what clients say', href: '/wall-of-love' }}
+        />
       </main>
 
       <Footer />
@@ -288,7 +193,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
         description={schemaDescription}
         url={canonicalUrl}
         imageUrl={
-          hasDesktopShot
+          desktopShot
             ? `https://www.design-prism.com${desktopShot}`
             : (caseStudy.structured?.heroImage ?? caseStudy.clientLogo)
         }

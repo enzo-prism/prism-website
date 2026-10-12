@@ -1,8 +1,12 @@
-"use client"
-
-import { cn } from "@/lib/utils"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Section, SectionHeader } from "@/components/prism/section"
 import { serializeJsonLd } from "@/components/schema-markup"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { cn } from "@/lib/utils"
 
 interface FAQItem {
   question: string
@@ -14,78 +18,77 @@ interface FAQSectionProps {
   subtitle?: string
   items: FAQItem[]
   className?: string
+  /** "compact" stacks the header above the list with tighter spacing. */
   variant?: "default" | "compact"
 }
 
-export default function FAQSection({ 
-  title = "frequently asked questions",
+/**
+ * Shared FAQ band for the long-tail landers: a sticky header on the left and
+ * a shadcn Accordion on the right, plus FAQPage JSON-LD for every item so
+ * each answer stays visible to crawlers.
+ */
+export default function FAQSection({
+  title = "frequently asked questions.",
   subtitle,
-  items, 
+  items,
   className,
-  variant = "default" 
+  variant = "default",
 }: FAQSectionProps) {
-  const paddingClasses = {
-    default: "py-12 sm:py-16",
-    compact: "py-8 sm:py-10"
-  }
-
-  // Generate FAQ schema markup
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": items.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
-      "name": item.question,
-      "acceptedAnswer": {
+      name: item.question,
+      acceptedAnswer: {
         "@type": "Answer",
-        "text": item.answer
-      }
-    }))
+        text: item.answer,
+      },
+    })),
   }
 
+  const compact = variant === "compact"
+
   return (
-    <section className={cn(
-      "px-4",
-      paddingClasses[variant],
-      "border-t border-border/60 bg-transparent",
-      className
-    )}>
+    <Section className={cn(compact && "py-14 sm:py-16", className)} aria-label={title}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema) }}
       />
-      
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="mb-3 text-2xl font-semibold text-foreground sm:text-3xl">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-              {subtitle}
-            </p>
-          )}
+      <div
+        className={cn(
+          "grid gap-10",
+          compact ? "mx-auto max-w-3xl" : "lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20",
+        )}
+      >
+        <div className={cn(!compact && "lg:sticky lg:top-28 lg:self-start")}>
+          <SectionHeader
+            eyebrow="FAQ"
+            title={title}
+            description={subtitle}
+            titleClassName={cn(
+              "max-w-[14ch]",
+              compact && "text-[clamp(1.85rem,1.4rem+1.6vw,2.75rem)] font-semibold leading-[1] tracking-[-0.045em]",
+            )}
+          />
         </div>
-
-        <div className="space-y-4">
-          <Accordion type="multiple" className="space-y-4">
-            {items.map((item, index) => (
-              <AccordionItem
-                key={index}
-                value={`faq-${index}`}
-                className="overflow-hidden rounded-md border border-border/60 bg-card/40 shadow-none border-b-0"
-              >
-                <AccordionTrigger className="px-6 py-4 text-left text-foreground hover:bg-muted/50 hover:no-underline [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-muted-foreground">
-                  <span className="pr-4">{item.question}</span>
-                </AccordionTrigger>
-                <AccordionContent className="px-6 text-base text-muted-foreground leading-relaxed">
-                  <p>{item.answer}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Accordion type="multiple" className="border-t border-white/[0.08]">
+          {items.map((item, index) => (
+            <AccordionItem
+              key={`${item.question}-${index}`}
+              value={`faq-${index}`}
+              className="border-white/[0.08]"
+            >
+              <AccordionTrigger className="min-h-14 gap-6 py-5 text-[17px] text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0 [&>svg]:text-subtle">
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent className="max-w-[64ch] pb-6 text-pretty text-[15px] leading-7 text-muted-foreground">
+                <p>{item.answer}</p>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
-    </section>
+    </Section>
   )
 }

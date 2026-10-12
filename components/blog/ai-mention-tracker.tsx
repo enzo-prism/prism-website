@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Search, AlertCircle, CheckCircle, TrendingUp, RefreshCw } from "lucide-react"
+import { useId, useState } from "react"
+import { Search, AlertCircle, CheckCircle, RefreshCw, Plus } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { fadeInUp, springScale, successPop } from "@/utils/animation-variants"
+import { Label } from "@/components/ui/label"
 
 interface TestResult {
   query: string
@@ -45,6 +45,7 @@ const mockResults: TestResult[] = [
 ]
 
 export default function AIMentionTracker() {
+  const idPrefix = useId()
   const [businessName, setBusinessName] = useState("")
   const [industry, setIndustry] = useState("")
   const [targetAudience, setTargetAudience] = useState("")
@@ -55,8 +56,8 @@ export default function AIMentionTracker() {
 
   const generateQueries = () => {
     if (!industry) return []
-    
-    return sampleQueries.map(query => 
+
+    return sampleQueries.map(query =>
       query
         .replace("{industry}", industry)
         .replace("{target audience}", targetAudience || "consumers")
@@ -68,12 +69,12 @@ export default function AIMentionTracker() {
 
     setIsAnalyzing(true)
     const queries = generateQueries()
-    
+
     // Simulate AI testing with progressive updates
     queries.forEach((query, index) => {
       setTimeout(() => {
         setCurrentQuery(query)
-        
+
         if (index === queries.length - 1) {
           setTimeout(() => {
             setResults(mockResults)
@@ -101,70 +102,64 @@ export default function AIMentionTracker() {
   const totalResults = results.length
   const mentionRate = totalResults > 0 ? (mentionedCount / totalResults) * 100 : 0
 
+  const fields = [
+    {
+      id: `${idPrefix}-business`,
+      label: "Business Name *",
+      value: businessName,
+      onChange: setBusinessName,
+      placeholder: "e.g., Sweet Haven",
+    },
+    {
+      id: `${idPrefix}-industry`,
+      label: "Industry/Category *",
+      value: industry,
+      onChange: setIndustry,
+      placeholder: "e.g., coffee roasters, fitness coaching",
+    },
+    {
+      id: `${idPrefix}-audience`,
+      label: "Target Audience (Optional)",
+      value: targetAudience,
+      onChange: setTargetAudience,
+      placeholder: "e.g., busy professionals, families",
+    },
+  ]
+
   return (
-    <motion.div
-      className="w-full bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      animate="animate"
-      variants={springScale}
-    >
-      <motion.div className="mb-6" variants={fadeInUp}>
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-            <Search className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-neutral-900">AI Mention Tracker</h3>
-            <p className="text-sm text-neutral-600">Test if your brand appears in AI search results</p>
-          </div>
+    <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+      <div className="mb-6 flex items-start gap-4">
+        <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+          <Search className="size-5 text-foreground/85" strokeWidth={1.75} aria-hidden="true" />
+        </span>
+        <div className="min-w-0">
+          <p className="text-eyebrow mb-2! mt-0! text-subtle">Interactive</p>
+          <h3 className="mb-1! mt-0! text-xl! text-foreground">AI Mention Tracker</h3>
+          <p className="my-0! text-sm leading-6 text-muted-foreground">Test if your brand appears in AI search results</p>
         </div>
-      </motion.div>
+      </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <motion.div className="space-y-4" variants={fadeInUp}>
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Business Name *
-            </label>
-            <Input
-              type="text"
-              value={businessName}
-              onChange={(e) => setBusinessName(e.target.value)}
-              placeholder="e.g., Sweet Haven"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Industry/Category *
-            </label>
-            <Input
-              type="text"
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              placeholder="e.g., coffee roasters, fitness coaching"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
-            />
-          </div>
+      <div className="grid gap-8 md:grid-cols-2 md:gap-6">
+        <div className="space-y-5">
+          {fields.map((field) => (
+            <div key={field.id}>
+              <Label htmlFor={field.id} className="mb-2 text-muted-foreground">
+                {field.label}
+              </Label>
+              <Input
+                id={field.id}
+                type="text"
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                placeholder={field.placeholder}
+              />
+            </div>
+          ))}
 
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
-              Target Audience (Optional)
-            </label>
-            <Input
-              type="text"
-              value={targetAudience}
-              onChange={(e) => setTargetAudience(e.target.value)}
-              placeholder="e.g., busy professionals, families"
-              className="w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-2">
+            <p className="mb-2! mt-0! text-sm font-medium text-muted-foreground">
               Custom Test Queries (Optional)
-            </label>
+            </p>
             {customQueries.map((query, index) => (
               <Input
                 key={index}
@@ -172,17 +167,19 @@ export default function AIMentionTracker() {
                 value={query}
                 onChange={(e) => updateCustomQuery(index, e.target.value)}
                 placeholder="e.g., best local coffee shop"
-                className="mb-2 w-full border-neutral-300 px-3 py-2 focus-visible:ring-blue-500"
+                aria-label={`Custom test query ${index + 1}`}
+                className="mb-2"
               />
             ))}
             {customQueries.length < 3 && (
               <Button
                 type="button"
                 onClick={addCustomQuery}
-                variant="link"
-                className="h-auto p-0 text-sm text-blue-600 hover:text-blue-800"
+                variant="outline"
+                size="sm"
               >
-                + Add custom query
+                <Plus aria-hidden="true" />
+                Add custom query
               </Button>
             )}
           </div>
@@ -190,122 +187,117 @@ export default function AIMentionTracker() {
           <Button
             onClick={runAnalysis}
             disabled={!businessName || !industry || isAnalyzing}
+            size="lg"
             className="w-full"
           >
             {isAnalyzing ? (
               <>
-                <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                <RefreshCw className="size-4 animate-spin motion-reduce:animate-none" aria-hidden="true" />
                 Analyzing...
               </>
             ) : (
               <>
-                <Search className="w-4 h-4 mr-2" />
+                <Search className="size-4" aria-hidden="true" />
                 Test AI Mentions
               </>
             )}
           </Button>
 
-          <AnimatePresence>
-            {isAnalyzing && currentQuery && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="p-3 bg-blue-100 rounded-lg border border-blue-200"
-              >
-                <p className="text-sm text-blue-800">
-                  <strong>Testing:</strong> "{currentQuery}"
+          <div aria-live="polite">
+            {isAnalyzing && currentQuery ? (
+              <div className="rounded-2xl border border-white/[0.08] bg-background/50 p-3">
+                <p className="my-0! flex items-center gap-2 text-sm text-muted-foreground">
+                  <span className="prism-live-dot" aria-hidden="true" />
+                  <span>
+                    <strong>Testing:</strong> &quot;{currentQuery}&quot;
+                  </span>
                 </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+              </div>
+            ) : null}
+          </div>
+        </div>
 
-        <motion.div className="space-y-4" variants={fadeInUp}>
-          <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-neutral-900">Results</h4>
+        <div className="space-y-4" aria-live="polite">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-eyebrow my-0! text-subtle">Results</p>
             {results.length > 0 && (
               <div className="flex items-center gap-2">
-                <div className="w-20 bg-neutral-200 rounded-full h-2">
-                  <motion.div
-                    className="h-2 bg-gradient-to-r from-blue-500 to-green-500 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${mentionRate}%` }}
-                    transition={{ duration: 1 }}
+                <div className="h-1.5 w-20 overflow-hidden rounded-full bg-white/[0.08]">
+                  <div
+                    className="h-full rounded-full bg-spectrum-green transition-[width] duration-700 motion-reduce:transition-none"
+                    style={{ width: `${mentionRate}%` }}
                   />
                 </div>
-                <span className="text-sm font-semibold text-neutral-700">
+                <span className="font-mono text-sm tabular-nums text-foreground">
                   {mentionRate.toFixed(0)}%
                 </span>
               </div>
             )}
           </div>
 
-          <AnimatePresence>
-            {results.length > 0 ? (
-              <div className="space-y-3">
-                {results.map((result, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`p-4 rounded-lg border-2 ${
-                      result.mentioned 
-                        ? 'border-green-200 bg-green-50' 
-                        : 'border-red-200 bg-red-50'
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 mt-1">
-                        {result.mentioned ? (
-                          <CheckCircle className="w-5 h-5 text-green-500" />
-                        ) : (
-                          <AlertCircle className="w-5 h-5 text-red-500" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <h5 className="font-semibold text-neutral-900 mb-1">
-                          {result.query}
-                        </h5>
-                        <p className="text-sm text-neutral-600 mb-2">
-                          {result.context}
-                        </p>
-                        {result.suggestions.length > 0 && (
-                          <div className="space-y-1">
-                            <p className="text-xs font-medium text-neutral-700">Suggestions:</p>
-                            {result.suggestions.map((suggestion, i) => (
-                              <p key={i} className="text-xs text-neutral-600">
-                                • {suggestion}
-                              </p>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+          {results.length > 0 ? (
+            <ul className="my-0! flex list-none! flex-col gap-2 pl-0!">
+              {results.map((result, index) => (
+                <li
+                  key={index}
+                  className="relative my-0! overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5!"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-y-0 left-0 w-0.5 ${result.mentioned ? "bg-spectrum-green" : "bg-spectrum-red"}`}
+                  />
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 shrink-0">
+                      {result.mentioned ? (
+                        <CheckCircle className="size-4 text-spectrum-green" aria-label="Mentioned" />
+                      ) : (
+                        <AlertCircle className="size-4 text-spectrum-red" aria-label="Not mentioned" />
+                      )}
                     </div>
-                  </motion.div>
-                ))}
+                    <div className="min-w-0 flex-1">
+                      <p className="mb-1! mt-0! text-sm font-semibold text-foreground">
+                        {result.query}
+                      </p>
+                      <p className="mb-2! mt-0! text-[13px] leading-5 text-muted-foreground">
+                        {result.context}
+                      </p>
+                      {result.suggestions.length > 0 && (
+                        <div>
+                          <p className="text-eyebrow mb-1.5! mt-0! text-subtle">Suggestions</p>
+                          <ul className="my-0! flex list-none! flex-col gap-1 pl-0!">
+                            {result.suggestions.map((suggestion, i) => (
+                              <li key={i} className="my-0! flex gap-2 pl-0! text-[13px] leading-5 text-muted-foreground">
+                                <span aria-hidden="true" className="mt-2 size-1 shrink-0 rounded-full bg-white/40" />
+                                {suggestion}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="grid min-h-48 place-items-center rounded-2xl border border-dashed border-white/[0.12] px-6 py-10 text-center">
+              <div>
+                <Search className="mx-auto mb-3 size-8 text-subtle" strokeWidth={1.5} aria-hidden="true" />
+                <p className="my-0! text-sm text-muted-foreground">Enter your business details to test AI mentions</p>
               </div>
-            ) : (
-              <div className="text-center py-8 text-neutral-500">
-                <Search className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-                <p className="text-sm">Enter your business details to test AI mentions</p>
-              </div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <motion.div 
-        className="mt-6 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500"
-        variants={fadeInUp}
-      >
-        <p className="text-sm text-orange-800">
-          <strong>Note:</strong> This is a simulation for demonstration purposes. In practice, 
-          you would test these queries monthly with real AI tools like ChatGPT, Claude, or Google's 
+      <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5">
+        <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-orange" />
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
+          <strong>Note:</strong> This is a simulation for demonstration purposes. In practice,
+          you would test these queries monthly with real AI tools like ChatGPT, Claude, or Google&apos;s
           AI features to track your actual mention rate.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

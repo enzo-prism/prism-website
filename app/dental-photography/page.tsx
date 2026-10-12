@@ -3,9 +3,7 @@ import Link from 'next/link'
 import {
   ArrowRight,
   Award,
-  Calendar,
   Camera,
-  Layers3,
   MapPin,
   Megaphone,
   Share2,
@@ -14,12 +12,18 @@ import {
 } from 'lucide-react'
 
 import Footer from '@/components/footer'
-import Navbar from '@/components/navbar'
-import ScrollToTop from '@/components/scroll-to-top'
 import HeroBackgroundLoop from '@/components/HeroBackgroundLoop'
+import { ArrowLink, CheckList } from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
+import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { WebPageSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
 import { Button } from '@/components/ui/button'
-import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
+import { Card } from '@/components/ui/card'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
@@ -51,52 +55,25 @@ const channelCards = [
     title: 'websites that feel alive',
     description:
       'hero videos, provider bios, treatment pages, and smile galleries swap stock for authentic footage that boosts time-on-site.',
-    icon: <Sparkles className="h-6 w-6" aria-hidden />,
+    icon: <Sparkles className="size-5" aria-hidden />,
   },
   {
     title: 'ads that stop the scroll',
     description:
       'paid social, youtube, and display ads use cinematic b-roll and patient stories that raise CTR and trust.',
-    icon: <Megaphone className="h-6 w-6" aria-hidden />,
+    icon: <Megaphone className="size-5" aria-hidden />,
   },
   {
     title: 'local listings that win the map pack',
     description:
       'google, apple, and yelp profiles stay refreshed with seasonal shots, procedure close-ups, and team portraits.',
-    icon: <MapPin className="h-6 w-6" aria-hidden />,
+    icon: <MapPin className="size-5" aria-hidden />,
   },
   {
     title: 'social feeds with a point of view',
     description:
       'reels, carousels, and behind-the-scenes snippets feed your content calendar for months after the shoot.',
-    icon: <Share2 className="h-6 w-6" aria-hidden />,
-  },
-]
-
-const processSteps = [
-  {
-    step: '01',
-    title: 'pre-production workshop',
-    description:
-      'treatment priorities, talent releases, wardrobe, shot lists, and editing references dialed in on a 45-minute call.',
-  },
-  {
-    step: '02',
-    title: 'on-site shoot day',
-    description:
-      'two-person team manages lighting, directing, and patient flow with minimal downtime for your clinicians.',
-  },
-  {
-    step: '03',
-    title: 'edit, retouch, deliver',
-    description:
-      'color grading, light retouching, and exports sized for web, ads, and print all delivered within 10 days.',
-  },
-  {
-    step: '04',
-    title: 'deployment across prism stack',
-    description:
-      'we wire final selects into website modules, ad templates, listing profiles, and scheduled social content.',
+    icon: <Share2 className="size-5" aria-hidden />,
   },
 ]
 
@@ -116,7 +93,7 @@ const specialtyTracks = [
     description:
       'portraits, lobby, and candid team stories shot by prism. perfect for websites, ads, local listings, and hiring kits.',
     href: '/dental-photography/office-team',
-    icon: <Users className="h-6 w-6" aria-hidden />,
+    icon: <Users className="size-5" aria-hidden />,
   },
   {
     label: 'case acceptance (diy guide)',
@@ -124,7 +101,7 @@ const specialtyTracks = [
     description:
       'a self-serve protocol any practice can run in-house to capture standardized before/after photos and clips for case presentations.',
     href: '/dental-photography/before-after',
-    icon: <Award className="h-6 w-6" aria-hidden />,
+    icon: <Award className="size-5" aria-hidden />,
   },
 ]
 
@@ -142,264 +119,147 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function DentalPhotographyPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 text-white">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "url('https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp')",
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            <HeroBackgroundLoop
-              videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1761852734/models_2_x9gxtj.mp4"
-              posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp"
-              posterAlt="Dental photography hero poster"
-              videoClassName="pointer-events-none hidden h-full w-full object-cover sm:block"
-              posterClassName="absolute inset-0 h-full w-full object-cover"
-              posterUnoptimized
-            />
-            <div className="absolute inset-0 bg-neutral-950/80" aria-hidden />
-          </div>
-          <div className="container relative mx-auto px-4 py-24 md:py-28">
-            <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                dental photography
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                pro photos that make every prism deliverable hit harder.
-              </h1>
-              <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                we shoot cinematic photos inside your practice so websites feel
-                bespoke, ads look premium, local listings stay fresh, and social
-                media never runs out of material.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button
-                  asChild
-                  variant="outline-inverted"
-                  size="lg"
-                  className="rounded-full px-8 py-3 text-base lowercase"
-                >
-                  <Link href="/dental-photography/office-team">
-                    office + team photos
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline-inverted"
-                  size="lg"
-                  className="rounded-full px-8 py-3 text-base lowercase"
-                >
-                  <Link href="/dental-photography/before-after">
-                    patient before + after guide
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Dental photography"
+          title="pro photos that make every prism deliverable hit harder."
+          description="we shoot cinematic photos inside your practice so websites feel bespoke, ads look premium, local listings stay fresh, and social media never runs out of material."
+          location="dental photography hero"
+          ctaHref={WAITLIST_FOCUS_HREFS.content}
+          secondary={{ label: 'Office + team photos', href: '/dental-photography/office-team' }}
+          glow="warm"
+          titleClassName="max-w-[18ch]"
+        >
+          <figure className="mx-auto max-w-5xl">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-popover shadow-[0_30px_80px_-30px_oklch(0_0_0/90%)]">
+              <HeroBackgroundLoop
+                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1761852734/models_2_x9gxtj.mp4"
+                posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/f_auto,q_auto,w_1600/v1761853323/thumbnail_yscklx.webp"
+                posterAlt="Behind the scenes of a Prism photo and video shoot"
+                videoClassName="pointer-events-none hidden h-full w-full object-cover sm:block"
+                posterClassName="absolute inset-0 h-full w-full object-cover"
+                posterSizes="(min-width: 1024px) 1024px, 92vw"
+                posterUnoptimized
+              />
             </div>
-          </div>
-        </section>
+            <figcaption className="mt-3 text-center font-mono text-[11px] text-subtle">
+              Behind the scenes on a Prism shoot
+            </figcaption>
+          </figure>
+        </LandingHero>
 
-        <section className="border-b border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-6xl">
-            <div className="grid gap-6 md:grid-cols-2">
-              {specialtyTracks.map((track) => (
-                <div
-                  key={track.title}
-                  className="flex flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-full bg-neutral-900/5 p-3 text-neutral-900">
-                      {track.icon}
+        <Section aria-label="Dental photography services" className="pt-4 sm:pt-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            {specialtyTracks.map((track, index) => {
+              const isOfficeTeam = track.href === '/dental-photography/office-team'
+              const Shell = index === 0 ? SpotlightCard : Card
+              return (
+                <Reveal key={track.title} delay={index * 100}>
+                  <Shell className="flex h-full flex-col p-6 sm:p-8">
+                    <div className="flex items-center gap-4">
+                      <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
+                        {track.icon}
+                      </span>
+                      <div>
+                        <p className="text-eyebrow text-subtle">{track.label}</p>
+                        <h2 className="text-heading mt-1.5 text-foreground">{track.title}</h2>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.32em] text-neutral-400">
-                        {track.label}
-                      </p>
-                      <h3 className="text-xl font-semibold text-neutral-900">
-                        {track.title}
-                      </h3>
+                    <p className="mt-5 flex-1 text-[15px] leading-7 text-muted-foreground">{track.description}</p>
+                    <div className="mt-6 flex flex-wrap items-center gap-3">
+                      <Button asChild variant="outline">
+                        <Link href={track.href}>
+                          {isOfficeTeam ? 'View results' : 'Open the guide'}
+                          <ArrowRight aria-hidden="true" />
+                        </Link>
+                      </Button>
+                      {isOfficeTeam ? (
+                        <ArrowLink href={WAITLIST_FOCUS_HREFS.content} className="px-2">
+                          join the waitlist
+                        </ArrowLink>
+                      ) : null}
                     </div>
-                  </div>
-                  <p className="mt-4 flex-1 text-sm text-neutral-600">
-                    {track.description}
-                  </p>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="mt-6 w-full rounded-full border-neutral-200 px-6 py-3 text-base lowercase"
-                  >
-                    <Link href={track.href}>
-                      {track.href === '/dental-photography/office-team'
-                        ? 'view results'
-                        : 'open the guide'}
-                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                    </Link>
-                  </Button>
-                  {track.href === '/dental-photography/office-team' && (
-                    <Button
-                      asChild
-                      variant="ghost"
-                      className="mt-3 w-full rounded-full px-6 py-3 text-sm lowercase text-neutral-900"
-                    >
-                      <Link href={WAITLIST_FOCUS_HREFS.content}>
-                        join the waitlist
-                        <Calendar className="ml-2 h-4 w-4" aria-hidden />
-                      </Link>
-                    </Button>
-                  )}
-                </div>
-              ))}
-            </div>
+                  </Shell>
+                </Reveal>
+              )
+            })}
           </div>
-        </section>
+        </Section>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center">
-              <div className="space-y-6">
-                <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                  why it matters
-                </p>
-                <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  photos that sell dentistry
-                </h2>
-                <p className="text-base leading-relaxed text-neutral-600">
-                  patients judge the quality of your work before they ever call.
-                  our creative team directs real moments with your dentists,
-                  team, and patients so every pixel feels candid, modern, and
-                  clinically accurate.
-                </p>
-                <div className="space-y-4">
-                  {proofPoints.map((item) => (
-                    <div
-                      key={item.title}
-                      className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5"
-                    >
-                      <h3 className="text-lg font-semibold text-neutral-900">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-neutral-600">
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <Camera className="h-10 w-10 text-neutral-900" aria-hidden />
+        <Section aria-labelledby="dp-why-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
+            <Reveal className="flex flex-col gap-8">
+              <SectionHeader
+                id="dp-why-title"
+                eyebrow="Why it matters"
+                title="photos that sell dentistry."
+                description="patients judge the quality of your work before they ever call. our creative team directs real moments with your dentists, team, and patients so every pixel feels candid, modern, and clinically accurate."
+              />
+              <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2">
+                {proofPoints.map((item) => (
+                  <li key={item.title} className="bg-card p-5 sm:p-6">
+                    <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+            <Reveal delay={120} className="lg:pt-28">
+              <Card className="p-6 sm:p-8">
+                <div className="flex items-center gap-4">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                    <Camera className="size-5 text-foreground" aria-hidden />
+                  </span>
                   <div>
-                    <p className="text-sm uppercase tracking-[0.32em] text-neutral-500">
-                      shot list staples
-                    </p>
-                    <h3 className="text-xl font-semibold text-neutral-900">
+                    <p className="text-eyebrow text-subtle">Shot list staples</p>
+                    <h3 className="mt-1.5 text-[19px] font-semibold tracking-[-0.02em] text-foreground">
                       delivered from every shoot
                     </h3>
                   </div>
                 </div>
-                <ul className="mt-6 space-y-3 text-sm text-neutral-600">
-                  {shotTypes.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <Layers3
-                        className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400"
-                        aria-hidden
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 rounded-2xl bg-neutral-950 px-4 py-3 text-sm text-neutral-100">
+                <CheckList className="mt-6" items={shotTypes} />
+                <p className="mt-6 rounded-xl border border-white/[0.07] bg-background/60 px-4 py-3 text-[14px] leading-6 text-muted-foreground">
                   ready-to-publish folders land in your drive plus a highlight
                   reel for quick approvals.
                 </p>
-              </div>
-            </div>
+              </Card>
+            </Reveal>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-6xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                plugged into prism
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                one shoot, four growth engines
-              </h2>
-              <p className="mt-4 text-base text-neutral-600">
-                your photo library syncs straight into prism&apos;s website
-                sprints, ad builds, local listing optimizations, and social
-                calendars so every campaign launches faster and stays on-brand.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {channelCards.map((card) => (
-                <div
-                  key={card.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-full bg-neutral-900/5 p-3 text-neutral-900">
-                      {card.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold text-neutral-900">
-                      {card.title}
-                    </h3>
-                  </div>
-                  <p className="mt-4 text-sm text-neutral-600">
-                    {card.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+        <Section aria-labelledby="dp-engines-title">
+          <Reveal>
+            <SectionHeader
+              id="dp-engines-title"
+              eyebrow="Plugged into Prism"
+              title="one shoot, four growth engines."
+              description="your photo library syncs straight into prism’s website sprints, ad builds, local listing optimizations, and social calendars so every campaign launches faster and stays on-brand."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {channelCards.map((card, index) => (
+              <Reveal key={card.title} delay={index * 70}>
+                <Card className="flex h-full flex-col p-6 transition-colors hover:border-white/[0.16]">
+                  <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
+                    {card.icon}
+                  </span>
+                  <h3 className="mt-6 text-[17px] font-semibold tracking-[-0.02em] text-foreground">{card.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{card.description}</p>
+                </Card>
+              </Reveal>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-y border-neutral-200 bg-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-              ready when you are
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-              pick the direction, we handle the shoot
-            </h2>
-            <p className="mt-4 text-base text-neutral-600">
-              whether you want prism on-site for office + team photography or
-              you&apos;re following the before + after guide yourself, we make
-              sure every asset lands where it needs to go.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full px-8 py-3 text-base lowercase"
-              >
-                <Link href={WAITLIST_FOCUS_HREFS.content}>
-                  join the waitlist
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8 py-3 text-base lowercase"
-              >
-                <Link href="/dental-photography/before-after">
-                  open the DIY guide
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="dental photography final cta"
+          href={WAITLIST_FOCUS_HREFS.content}
+          title="pick the direction, we handle the shoot."
+          description="whether you want prism on-site for office + team photography or you’re following the before + after guide yourself, we make sure every asset lands where it needs to go."
+          secondary={{ label: 'Open the DIY guide', href: '/dental-photography/before-after' }}
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -410,6 +270,6 @@ export default function DentalPhotographyPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

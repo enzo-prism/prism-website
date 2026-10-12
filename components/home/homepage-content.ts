@@ -1,12 +1,18 @@
-import { getHeroReviewCount, quotesData } from '@/content/wall-of-love-data'
-import type { BrandLogoKey, BrandLogoTheme } from '@/components/brand-logo'
-import { getCaseStudyMetric } from '@/lib/case-study-data'
+import { quotesData, isClientQuote } from '@/content/wall-of-love-data'
+import { CASE_STUDIES, getCaseStudyMetric } from '@/lib/case-study-data'
+import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import {
   CONNECTED_CLIENT_TRAFFIC,
   PROOF_METRICS_VERIFIED_AT,
   SOCIAL_PROOF,
-  SOCIAL_PROOF_CHANNELS,
 } from '@/lib/proof-metrics'
+
+/*
+ * Homepage copy and proof (2026-10 redesign). Copy follows the prism-writing
+ * skill (prism-brand pack): lowercase headlines, no em dashes, no guarantees.
+ * Every number here resolves from lib/proof-metrics.ts or a verified
+ * case-study metric; never type a figure into this file.
+ */
 
 export type HomepageFAQBlock =
   | { type: 'paragraph'; content: string }
@@ -17,56 +23,18 @@ export type HomepageFAQItem = {
   answer: HomepageFAQBlock[]
 }
 
-type HomepageIconCard = {
-  title: string
-  description: string
-  iconSrc: string
-  href?: string
-  brandLogo?: BrandLogoKey
-  brandLogoTheme?: BrandLogoTheme
-}
-
-type HomepageHeroSupportPoint = {
-  label: string
-  iconSrc: string
-  iconInvert?: boolean
-  variant?: 'default' | 'aiRecommendation'
-}
-
-type HomepageProblemPoint = {
-  label: string
-  text: string
-  iconSrc?: string
-  brandLogo?: BrandLogoKey
-  brandLogoTheme?: BrandLogoTheme
-}
-
-type HomepageProblemStackItem = {
-  label: string
-  iconSrc?: string
-  brandLogo?: BrandLogoKey
-  brandLogoTheme?: BrandLogoTheme
-}
-
-type HomepageAiTool = {
-  name: string
-  logoSrc: string
-  logoAlt: string
-}
-
 export type HomepageClientWinSlide = {
   /** Company / brand name shown as the prominent card label (never a person). */
   company: string
   location: string
   href: string
   contextLabel: string
-  /** Portrait screenshot of the client's live website used as the cover-flow cover. */
+  /** Portrait screenshot of the client's live website. */
   image: string
   /**
    * Optional headline result. ONLY populate from a metric that is verified
    * against the named `source` (mirrors the client's `structured.results` in
-   * lib/case-study-data.ts). Never invent a value. Cards without verified
-   * data simply omit this and show their `contextLabel` instead.
+   * lib/case-study-data.ts). Never invent a value.
    */
   metric?: {
     value: string
@@ -75,92 +43,171 @@ export type HomepageClientWinSlide = {
   }
 }
 
-export type HomepageGrowthRampMetric = {
-  day: string
-  value: string
-  label: string
-  detail: string
-}
-
-export const HOMEPAGE_CASE_STUDY_SLUGS = [
-  'dr-christopher-wong',
-  'exquisite-dentistry',
-  'olympic-bootworks',
-  'roseville-dental-academy',
-  'rebellious-aging',
-  'infobell-it',
-  'belize-kids-foundation',
-  'canary-cove',
-] as const
-
-const HOMEPAGE_HERO_REVIEW_COUNT = getHeroReviewCount()
-const HOMEPAGE_HERO_REVIEW_COUNT_LABEL =
-  HOMEPAGE_HERO_REVIEW_COUNT >= 20 ? '20+' : `${HOMEPAGE_HERO_REVIEW_COUNT}`
-
 const BELIZE_SEARCH_METRIC = getCaseStudyMetric('belize-kids-foundation')
 const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
 
+const formerClientSlugs = new Set<string>(FORMER_CLIENT_SLUGS)
+const CURRENT_CASE_STUDIES = CASE_STUDIES.filter(
+  (study) => !formerClientSlugs.has(study.slug),
+)
+const CURRENT_CLIENT_LOCATIONS = new Set(
+  CURRENT_CASE_STUDIES.map((study) => study.location),
+)
+
 export const HOMEPAGE_HERO = {
-  title: 'Your growth team.',
-  subheading: 'Website. Content. Ads. Built around your business.',
-  description:
-    'You run the business. We build the website, create the content, and manage the campaigns that help people find you and get in touch.',
-  supportPoints: [
-    {
-      label: 'Your business. Our team.',
-      iconSrc: '/pixelish/emoji-heart.svg',
-      iconInvert: true,
-      variant: 'aiRecommendation',
-    },
-  ] satisfies readonly HomepageHeroSupportPoint[],
-  stats: {
-    note: `Verified · ${PROOF_METRICS_VERIFIED_AT}`,
-    headline: {
-      label: 'Traffic & attention',
-      items: [
-        {
-          value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
-          unit: '',
-          label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites · ${CONNECTED_CLIENT_TRAFFIC.month}`,
-        },
-        {
-          value: SOCIAL_PROOF.combinedAudience,
-          unit: '',
-          label: 'followers across our channels',
-        },
-        {
-          value: SOCIAL_PROOF.tiktok.audience,
-          unit: '',
-          label: `TikTok followers · through ${SOCIAL_PROOF.tiktok.audienceAsOf}`,
-        },
-      ],
-    },
-    reach: {
-      label: 'Our channels',
-      channels: SOCIAL_PROOF_CHANNELS,
-    },
-  },
-  systemStrip: [
-    'Website',
-    'Content',
-    'Ads',
-    'SEO',
-    'Reviews',
-    'Social',
-    'Tracking',
-  ],
-  socialProof: {
-    headline: `${HOMEPAGE_HERO_REVIEW_COUNT_LABEL} stories from founders, doctors, and business owners`,
-    linkLabel: 'See results',
-  },
+  titleLead: 'make your business',
+  titleAccent: 'impossible to ignore.',
+  subheading:
+    'Websites, content, and ads from one team. Built so the right people find you, trust you, and choose you.',
   primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
-  secondaryCta: { label: 'Wall of Love', href: '/wall-of-love' },
+  secondaryCta: { label: 'See the work', href: '#work' },
+  /** Labels for the refracted bands, top to bottom. */
+  spectrumLabels: [
+    'website',
+    'content',
+    'ads',
+    'search',
+    'ai answers',
+    'reviews',
+  ],
+  proof: [
+    { value: `${CURRENT_CASE_STUDIES.length}`, label: 'client case studies' },
+    { value: `${CURRENT_CLIENT_LOCATIONS.size}`, label: 'cities' },
+    {
+      value: SOCIAL_PROOF.combinedAudience,
+      label: 'followers on our own channels',
+    },
+  ],
+} as const
+
+export const HOMEPAGE_NUMBERS = {
+  eyebrow: 'by the numbers',
+  title: 'numbers, not adjectives.',
+  description:
+    'We publish results we can source and date. Here is what that looks like right now.',
+  note: `Verified ${PROOF_METRICS_VERIFIED_AT}. Search results from Google Search Console, latest complete 90 days vs the same window a year earlier. New users from ${CONNECTED_CLIENT_TRAFFIC.source}, summed across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites for ${CONNECTED_CLIENT_TRAFFIC.month}. Lifetime views from YouTube Studio, including earlier channel content.`,
+  stats: [
+    {
+      value: DR_WONG_SEARCH_METRIC.value,
+      label: 'Google Search impressions for Dr. Wong, year over year',
+      href: '/case-studies/dr-christopher-wong',
+    },
+    {
+      value: BELIZE_SEARCH_METRIC.value,
+      label: 'Google Search impressions for Belize Kids, year over year',
+      href: '/case-studies/belize-kids-foundation',
+    },
+    {
+      value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
+      label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} client sites we track, ${CONNECTED_CLIENT_TRAFFIC.month}`,
+      href: '/case-studies',
+    },
+    {
+      value: SOCIAL_PROOF.youtube.activity,
+      label: 'lifetime views on the Prism YouTube channel',
+      href: '/content',
+    },
+  ],
+} as const
+
+export const HOMEPAGE_SERVICES = {
+  eyebrow: 'what we do',
+  title: 'one team. every channel.',
+  description:
+    'Your website, content, and ads, built together so each one makes the others work harder.',
+} as const
+
+export const HOMEPAGE_CASE_STUDIES = {
+  eyebrow: 'up close',
+  title: 'real clients. real launches.',
+  description:
+    'Four businesses, four different problems, one team behind every pixel.',
+  slugs: [
+    'dr-christopher-wong',
+    'belize-kids-foundation',
+    'exquisite-dentistry',
+    'olympic-bootworks',
+  ],
+} as const
+
+const COMMUNITY_HANDLES = [
+  'relevique',
+  'helder_movement',
+  'aaronwbateman',
+  '_dev_khant',
+  'notpharaoh_',
+  'andriiikoo',
+  'mr.mazamio',
+] as const
+
+export const HOMEPAGE_TESTIMONIALS = {
+  eyebrow: 'wall of love',
+  title: 'in their words.',
+  description:
+    'From the owners we build for, and from the people who watch what we make.',
+  clientQuotes: quotesData.filter(
+    (quote) => isClientQuote(quote) && !quote.requiresConsent,
+  ),
+  communityQuotes: COMMUNITY_HANDLES.map((handle) =>
+    quotesData.find(
+      (quote) => quote.client === handle && !quote.requiresConsent,
+    ),
+  ).filter((quote): quote is (typeof quotesData)[number] => Boolean(quote)),
+} as const
+
+export const HOMEPAGE_FOUNDER = {
+  eyebrow: 'who builds it',
+  title: 'built by a founder chasing LA 2028.',
+  name: 'Enzo Sison',
+  role: 'Founder, Prism',
+  facts: [
+    'Two Apple internships',
+    'Cal Poly engineering',
+    'D1 track and field',
+    'Pole vaulter for the Philippines',
+  ],
+  body: 'Enzo founded Prism in 2023 to help small businesses turn a stronger online presence into more customer conversations. He builds Prism while pole vaulting for the Philippines on the path to LA 2028.',
+  image:
+    'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp',
+  motto: 'impossible is temporary.',
+} as const
+
+export const HOMEPAGE_HOW_IT_WORKS = {
+  eyebrow: 'how to get in',
+  title: 'fully booked. here’s how to get in.',
+  steps: [
+    {
+      title: 'apply in two minutes.',
+      body: 'Tell us what you want help with, share your links, and say what a great year looks like.',
+    },
+    {
+      title: 'we review every month.',
+      body: 'Each intake, our team reads every application and looks for the businesses we can help most.',
+    },
+    {
+      title: 'we build together.',
+      body: 'When a spot opens, we reach out, agree on scope, and get to work.',
+    },
+  ],
+} as const
+
+export const HOMEPAGE_PRODUCTS = {
+  eyebrow: 'products',
+  title: 'built for our team. free for yours.',
+  description:
+    'We make our own tools to work faster. Two of them are free and open source.',
+} as const
+
+export const HOMEPAGE_FAQ = {
+  eyebrow: 'faq',
+  title: 'questions, answered.',
 } as const
 
 export const HOMEPAGE_CLIENT_WINS = {
-  eyebrow: 'Clients',
-  title: 'Meet the businesses we’ve helped',
-  description: '',
+  eyebrow: 'the work',
+  title: 'proof you can click.',
+  description:
+    'Dentists in Palo Alto. A retail and e-bike shop in Tahoe. A kids’ foundation in Belize. Every site here is live, and every one has a case study.',
   slides: [
     {
       company: 'Olympic Bootworks',
@@ -308,545 +355,6 @@ export const HOMEPAGE_CLIENT_WINS = {
     },
   ] satisfies readonly HomepageClientWinSlide[],
 } as const
-
-export const HOMEPAGE_GROWTH_RAMP = {
-  eyebrow: 'What to expect',
-  title: 'A clear plan. Real work.',
-  microcopy: 'Agree on the priorities. Put them into practice. Learn from the results.',
-  finePrint:
-    'We agree on your scope and timeline before work begins.',
-  metrics: [
-    {
-      day: 'Step 1',
-      value: 'Baseline',
-      label: 'know where to start',
-      detail:
-        'Review how customers find you, check your tracking, and agree on what to fix first.',
-    },
-    {
-      day: 'Step 2',
-      value: 'Live',
-      label: 'put the plan to work',
-      detail:
-        'Launch the agreed website, search, content, or campaign improvements.',
-    },
-    {
-      day: 'Step 3',
-      value: 'Progress',
-      label: 'choose what comes next',
-      detail:
-        'Review the results, see what is working, and choose the next improvements.',
-    },
-  ] satisfies readonly HomepageGrowthRampMetric[],
-} as const
-
-export const HOMEPAGE_PROBLEM = {
-  eyebrow: 'Why it works',
-  title: 'Give people a reason to choose you.',
-  description:
-    'A search gets you noticed. A clear website and real reviews help people decide. An easy way to call or book turns that interest into a conversation.',
-  closingLine:
-    'We work on the whole path, from the first search to the first inquiry.',
-  points: [
-    {
-      label: 'Can people find you?',
-      text: 'Help customers find you in search and on maps.',
-      iconSrc: '/pixelish/lens.svg',
-    },
-    {
-      label: 'Do they trust you?',
-      text: 'Show real reviews and work that earns confidence.',
-      iconSrc: '/pixelish/award-checkmark.svg',
-    },
-    {
-      label: 'Can AI search understand you?',
-      text: 'Make your business easier for AI search to understand.',
-      iconSrc: '/pixelish/chatgpt.svg',
-      brandLogo: 'openai',
-      brandLogoTheme: 'dark',
-    },
-    {
-      label: 'Is the next step easy?',
-      text: 'Make calling, asking a question, or booking simple.',
-      iconSrc: '/pixelish/calendar.svg',
-    },
-  ] satisfies readonly HomepageProblemPoint[],
-  stackLabel: 'What buyers check',
-  stack: [
-    { label: 'Website', iconSrc: '/pixelish/browser.svg' },
-    {
-      label: 'Search',
-      iconSrc: '/pixelish/lens.svg',
-      brandLogo: 'google',
-    },
-    { label: 'Reviews', iconSrc: '/pixelish/emoji-heart.svg' },
-    {
-      label: 'ChatGPT',
-      iconSrc: '/pixelish/chatgpt.svg',
-      brandLogo: 'openai',
-      brandLogoTheme: 'dark',
-    },
-  ] satisfies readonly HomepageProblemStackItem[],
-} as const
-
-export const HOMEPAGE_AI_TOOLS = {
-  title: 'Modern tools. Human judgment.',
-  tools: [
-    {
-      name: 'Codex',
-      logoSrc: '/logos/ai-tools/codex.svg',
-      logoAlt: 'Codex logo',
-    },
-    {
-      name: 'Claude Code',
-      logoSrc: '/logos/ai-tools/claude.svg',
-      logoAlt: 'Claude Code logo',
-    },
-    {
-      name: 'Gemini',
-      logoSrc: '/logos/ai-tools/gemini.svg',
-      logoAlt: 'Gemini logo',
-    },
-    {
-      name: 'OpenClaw',
-      logoSrc: '/logos/ai-tools/openclaw.svg',
-      logoAlt: 'OpenClaw logo',
-    },
-    {
-      name: 'Grok',
-      logoSrc: '/logos/ai-tools/grok.svg',
-      logoAlt: 'Grok logo',
-    },
-    {
-      name: 'Cursor',
-      logoSrc: '/logos/ai-tools/cursor.svg',
-      logoAlt: 'Cursor logo',
-    },
-  ] satisfies readonly HomepageAiTool[],
-} as const
-
-export const HOMEPAGE_SERVICES = {
-  eyebrow: 'What Prism does',
-  title: 'Your marketing, working together.',
-  description:
-    'A useful ad needs a useful landing page. Good content needs a clear next step. We connect the work so your customers can move forward and you know what to improve.',
-  closingLine: '',
-} as const
-
-export const HOMEPAGE_SERVICE_ITEMS: readonly HomepageIconCard[] = [
-  {
-    title: 'Website',
-    description: 'A fast, credible site that makes choosing you easy.',
-    iconSrc: '/pixelish/browser.svg',
-    href: '/websites',
-  },
-  {
-    title: 'Search',
-    description: 'Show up on Google when people search for what you do.',
-    iconSrc: '/pixelish/lens.svg',
-    brandLogo: 'google',
-    href: '/seo',
-  },
-  {
-    title: 'Local & Maps',
-    description: 'Help nearby customers find your business on Google Maps.',
-    iconSrc: '/pixelish/lens.svg',
-    brandLogo: 'googleMaps',
-    href: '/local-seo-services',
-  },
-  {
-    title: 'Reviews & proof',
-    description: 'Real reviews and results that build trust fast.',
-    iconSrc: '/pixelish/emoji-heart.svg',
-    href: '/proof',
-  },
-  {
-    title: 'Ads',
-    description: 'Test campaigns, reach relevant audiences, and track results.',
-    iconSrc: '/pixelish/device-radio.svg',
-    href: '/ads',
-  },
-  {
-    title: 'Content',
-    description: 'Answer the questions buyers actually ask.',
-    iconSrc: '/pixelish/document-letter.svg',
-    href: '/blog',
-  },
-  {
-    title: 'Tracking',
-    description: 'See which channels bring calls, inquiries, and customers.',
-    iconSrc: '/pixelish/bar-chart-average.svg',
-    href: '/services',
-  },
-  {
-    title: 'AI discovery',
-    description: 'Build the signals that help ChatGPT and AI search find you.',
-    iconSrc: '/pixelish/chatgpt.svg',
-    brandLogo: 'openai',
-    brandLogoTheme: 'dark',
-    href: '/ai-seo-services',
-  },
-] as const
-
-export const HOMEPAGE_WHY_PRISM = {
-  title: 'Why founders choose Prism',
-} as const
-
-export const HOMEPAGE_DIFFERENTIATORS: readonly HomepageIconCard[] = [
-  {
-    title: 'Clear updates. Less chasing.',
-    description:
-      'Clear priorities and plain-language updates, so you know what is happening.',
-    iconSrc: '/pixelish/checkmark.svg',
-  },
-  {
-    title: 'Design that feels like you',
-    description:
-      'Thoughtful design that reflects your business and makes your offer clear.',
-    iconSrc: '/pixelish/award.svg',
-  },
-  {
-    title: 'One team to call',
-    description:
-      'The same team connects your website, content, campaigns, and tracking.',
-    iconSrc: '/pixelish/command.svg',
-  },
-  {
-    title: 'Built for your customers',
-    description:
-      'Every page, profile, and campaign is shaped around how real people compare options before they act.',
-    iconSrc: '/pixelish/graph-chart-high.svg',
-  },
-  {
-    title: 'Know what comes next',
-    description:
-      'See the work, understand the results, and know what we recommend next.',
-    iconSrc: '/pixelish/emoji-heart.svg',
-  },
-] as const
-
-export const HOMEPAGE_HOW_IT_WORKS = {
-  title: 'How it works',
-  ctaLabel: 'Join the waitlist',
-} as const
-
-export const HOMEPAGE_HOW_IT_WORKS_STEPS = [
-  {
-    title: 'Join the waitlist',
-    description: 'Share your links, goals, and when you want to start.',
-  },
-  {
-    title: 'We review applications',
-    description:
-      'For each monthly intake, our team reviews the waitlist and looks for a strong fit.',
-  },
-  {
-    title: 'We reach out',
-    description:
-      'When we can take on your team, we email you to scope the work together.',
-  },
-] as const
-
-export const HOMEPAGE_PROOF = {
-  eyebrow: 'Results',
-  title: 'See what we’ve built',
-  description:
-    'Explore our work with dental practices, retailers, consultants, schools, nonprofits, and hospitality brands.',
-  ctaLabel: 'See client results',
-} as const
-
-export const HOMEPAGE_CASE_STUDY_SUMMARIES: Record<string, string> = {
-  'dr-christopher-wong':
-    'Clear treatment information, a familiar practice story, and an easier path to an appointment.',
-  'exquisite-dentistry':
-    'A dental website that introduces the team, explains care, and makes appointment requests easy to find.',
-  'family-first-smile-care':
-    'A family-focused practice story built to feel reassuring, organized, and easy for new patients to enter.',
-  'grace-dental-santa-rosa':
-    'A modern dental web presence with clearer service navigation and stronger patient confidence signals.',
-  'town-centre-dental':
-    'A local practice presence built to make everyday dental decisions feel simple and trustworthy.',
-  'coast-periodontics-and-laser-surgery':
-    'A specialist site that turns intimidating procedures into calm, confidence-building patient education.',
-  'wine-country-root-canal':
-    'An endodontic experience that makes urgent specialty care feel calm, precise, and easier to choose.',
-  'olympic-bootworks':
-    'A Tahoe retail business gained an integrated Fantic e-bike catalog, visible pricing, direct inquiry paths, and cleaner owned infrastructure.',
-  'roseville-dental-academy':
-    'A GoDaddy web presence became an admissions platform with analytics, forms, Search Console, Hotjar, and AI support.',
-  'rebellious-aging':
-    'A website and content home for Suzanne’s writing, community, and approach to aging.',
-  'infobell-it':
-    'A global AI and product-engineering company gained a clearer story for enterprise buyers.',
-  'belize-kids-foundation':
-    'A nonprofit gained clearer program storytelling, supporter journeys, and analytics groundwork.',
-  'canary-cove':
-    'A private beachfront estate on Ambergris Caye gained immersive visuals, direct inquiry flows, and tracking.',
-}
-
-export const HOMEPAGE_CASE_STUDY_SIGNALS: Record<
-  string,
-  { artifact: string; outcome: string; proof: string }
-> = {
-  'dr-christopher-wong': {
-    artifact: 'Trust-first refresh',
-    outcome: 'Clearer patient confidence',
-    proof:
-      'The practice story became easier to understand before the first call.',
-  },
-  'exquisite-dentistry': {
-    artifact: 'Premium dental rebuild',
-    outcome: 'Trust + booking clarity',
-    proof: 'Digital presence matched the level of clinical care.',
-  },
-  'family-first-smile-care': {
-    artifact: 'Family care journey',
-    outcome: 'Approachable booking path',
-    proof: 'The site supports families who need clarity before choosing care.',
-  },
-  'grace-dental-santa-rosa': {
-    artifact: 'Service clarity',
-    outcome: 'Easier treatment discovery',
-    proof: 'Patients can move from need to next step with less friction.',
-  },
-  'town-centre-dental': {
-    artifact: 'Practice growth base',
-    outcome: 'Local patient readiness',
-    proof: 'The experience gives nearby patients a clearer reason to call.',
-  },
-  'coast-periodontics-and-laser-surgery': {
-    artifact: 'Specialist authority',
-    outcome: 'Lower patient anxiety',
-    proof: 'Complex periodontal care is explained with calm, human confidence.',
-  },
-  'wine-country-root-canal': {
-    artifact: 'Urgent-care clarity',
-    outcome: 'Specialty trust',
-    proof: 'Root canal care feels precise, calm, and easier to act on.',
-  },
-  'olympic-bootworks': {
-    artifact: 'Integrated e-bike catalog',
-    outcome: 'Easier product comparison',
-    proof:
-      'Model details, prices, and test-ride inquiries sit alongside the shop’s services.',
-  },
-  'roseville-dental-academy': {
-    artifact: 'Admissions platform',
-    outcome: 'Lead flow clarified',
-    proof:
-      'Forms, analytics, AI support, and visibility were rebuilt around enrollment.',
-  },
-  'rebellious-aging': {
-    artifact: 'Movement foundation',
-    outcome: 'A home for the community',
-    proof:
-      'The brand gained a clearer home for people ready to join the movement.',
-  },
-  'infobell-it': {
-    artifact: 'Capability architecture',
-    outcome: 'Enterprise buyer clarity',
-    proof:
-      'AI, HPC, cloud, and software products are easier to understand before the first conversation.',
-  },
-  'belize-kids-foundation': {
-    artifact: 'Impact storytelling',
-    outcome: 'Supporter clarity',
-    proof: 'Programs, stories, and donation paths became easier to understand.',
-  },
-  'canary-cove': {
-    artifact: 'Hospitality experience',
-    outcome: 'Direct guest inquiries',
-    proof:
-      'The private beachfront estate became more immersive and easier to act on.',
-  },
-}
-
-export const HOMEPAGE_FIT_AUDIENCES: readonly HomepageIconCard[] = [
-  {
-    title: 'Founders & startup teams',
-    description:
-      'You have a product worth choosing. You need a clear story and a way to reach the right customers.',
-    iconSrc: '/pixelish/graph-chart-high.svg',
-  },
-  {
-    title: 'Local & specialty practices',
-    description:
-      'Help nearby customers understand your services and feel ready to call. Explore our work with dental practices.',
-    iconSrc: '/pixelish/award.svg',
-  },
-  {
-    title: 'Owners & operators',
-    description:
-      'You need a team that handles the website, content, and campaigns while you run the business.',
-    iconSrc: '/pixelish/users.svg',
-  },
-] as const
-
-export const HOMEPAGE_FIT = {
-  eyebrow: 'Who it is for',
-  title: 'Run your business. We’ll help it grow.',
-  description:
-    'For owners who want better marketing without managing a separate designer, developer, editor, and ads team.',
-  notFitLine:
-    'Start with one service. Add more when the business needs it.',
-  fitHeading: 'Prism is a good fit if...',
-  fitItems: [
-    'You are a founder, owner, or operator who wants more qualified demand.',
-    'You care about search, proof, trust, AI visibility, and measurable action.',
-    'Your website feels behind the quality of your business.',
-    'You want clear tracking without becoming the marketing department.',
-    'You want a trusted partner you can keep working with long term.',
-    'You care about premium design, clarity, and steady business growth.',
-  ],
-  fitClosing: 'If that sounds like your company, Prism was built for you.',
-  notFitHeading: 'Prism may not be the right fit if...',
-  notFitItems: [
-    'Your decision is based on price alone.',
-    'You want overnight results with no real strategy.',
-    'You need execution without agreeing on goals or priorities.',
-    'You cannot make time for feedback or share the access the work needs.',
-  ],
-  notFitClosing:
-    'We do our best work with companies that want to build something strong over time.',
-} as const
-
-export const HOMEPAGE_FINAL_CTA = {
-  /**
-   * Title, split around the live intake-month token rendered by
-   * `<WaitlistIntakeMonth />`: "Prism is fully booked. Save your October
-   * spot."
-   */
-  titleLead: 'Prism is fully booked. Save your',
-  titleTail: 'spot.',
-  description:
-    'We open new spots every month. Join the waitlist, tell us your goals, and we will reach out when we can take on your team.',
-  primaryCtaLabel: 'Join the waitlist',
-  supportLine: 'Reviewed by our team for each monthly intake. No obligation.',
-} as const
-
-export const HOMEPAGE_STATS = [
-  { value: '22', label: 'client growth stories' },
-  { value: '7+', label: 'markets served' },
-  { value: 'one team', label: 'website + search + proof + ads' },
-  { value: 'clear goals', label: 'practical next steps' },
-] as const
-
-export const HOMEPAGE_HERO_FACTS = [
-  { value: '22', label: 'client growth stories' },
-  { value: 'one partner', label: 'from audit to execution' },
-  {
-    value: 'website + search + proof + ads',
-    label: 'planned and measured together',
-  },
-] as const
-
-export const HOMEPAGE_SYSTEM_STEPS = [
-  {
-    title: 'Visibility',
-    description: 'Get found.',
-  },
-  {
-    title: 'Trust',
-    description: 'Earn confidence.',
-  },
-  {
-    title: 'Booking',
-    description: 'Turn intent into action.',
-  },
-] as const
-
-export const HOMEPAGE_CAPABILITIES = [
-  {
-    title: 'Websites',
-    description: 'Make the business easy to choose.',
-  },
-  {
-    title: 'Search',
-    description: 'Show up where buyers look.',
-  },
-  {
-    title: 'Content',
-    description: 'Answer buyer questions.',
-  },
-  {
-    title: 'Ads',
-    description: 'Find the right audience.',
-  },
-  {
-    title: 'Proof',
-    description: 'Build trust before the first call.',
-  },
-  {
-    title: 'Tracking',
-    description: 'Know what creates demand.',
-  },
-] as const
-
-export const HOMEPAGE_CONTENT_PROOF = {
-  eyebrow: 'content delivery',
-  summary: 'From the first idea to the finished post.',
-  href: '/hottest-content',
-} as const
-
-export const HOMEPAGE_SEARCH_PROOF = {
-  src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp',
-  alt: 'Historical Google Search Console snapshot for Olympic Bootworks',
-  width: 498,
-  height: 667,
-  eyebrow: 'search visibility',
-  summary: 'See the search results behind the work.',
-} as const
-
-export const HOMEPAGE_SEARCH_CONSOLE_SLIDES = [
-  {
-    src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search-olympic-bootworks_issxqh.webp',
-    alt: 'Historical Google Search Console snapshot for Olympic Bootworks',
-    width: 498,
-    height: 667,
-  },
-  {
-    src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767370938/Google-search_lwg9un.webp',
-    alt: 'Google Search Console growth for a Prism client',
-    width: 495,
-    height: 666,
-  },
-  {
-    src: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1767372191/LV-google-search_pyr1sx.webp',
-    alt: 'Google Search Console growth for a Prism client in Las Vegas',
-    width: 496,
-    height: 667,
-  },
-] as const
-
-export const HOMEPAGE_ROADMAP_PHASES = [
-  {
-    title: 'Visibility',
-    description: 'What to fix first so the right people can find you.',
-  },
-  {
-    title: 'Trust',
-    description: 'What helps buyers feel ready to act.',
-  },
-  {
-    title: 'Booking',
-    description:
-      'What turns online attention into calls, forms, bookings, or sales.',
-  },
-] as const
-
-export const HOMEPAGE_CTA_NOTES = [
-  'Website',
-  'Search',
-  'Reviews',
-  'Proof',
-  'Tracking',
-] as const
-
-const HOMEPAGE_TESTIMONIAL_IDS = [1, 2] as const
-
-export const HOMEPAGE_TESTIMONIALS = HOMEPAGE_TESTIMONIAL_IDS.map((id) =>
-  quotesData.find((quote) => quote.id === id),
-).filter((quote): quote is (typeof quotesData)[number] => Boolean(quote))
 
 export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
   {

@@ -2,8 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import {
-  HOMEPAGE_CASE_STUDY_SLUGS,
+  HOMEPAGE_CASE_STUDIES,
   HOMEPAGE_CLIENT_WINS,
+  HOMEPAGE_TESTIMONIALS,
 } from '@/components/home/homepage-content'
 import { CLIENTS } from '@/lib/clients'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
@@ -13,7 +14,9 @@ import { websiteProjects } from '@/lib/website-projects'
 // archive pages but must not be featured on any of these.
 const FEATURED_FILES = [
   'components/home/homepage-content.ts',
-  'components/home/HomeProofSection.tsx',
+  'components/home/HomeWorkWall.tsx',
+  'components/home/HomeCaseStudies.tsx',
+  'components/home/HomeServicesBento.tsx',
   'components/schema-markup.tsx',
   'components/dental-client-carousel.tsx',
   'app/websites/page.tsx',
@@ -38,16 +41,25 @@ const FORMER_CLIENT_MARKERS = [
 ] as const
 
 describe('former clients stay off current-client proof surfaces', () => {
-  it('keeps former clients out of the homepage cover flow', () => {
+  it('keeps former clients out of the homepage work wall', () => {
     const hrefs = HOMEPAGE_CLIENT_WINS.slides.map((slide) => slide.href)
     for (const slug of FORMER_CLIENT_SLUGS) {
       expect(hrefs).not.toContain(`/case-studies/${slug}`)
     }
   })
 
-  it('keeps former clients out of the homepage proof grid', () => {
+  it('keeps former clients out of the homepage case study tabs', () => {
     for (const slug of FORMER_CLIENT_SLUGS) {
-      expect(HOMEPAGE_CASE_STUDY_SLUGS).not.toContain(slug)
+      expect(HOMEPAGE_CASE_STUDIES.slugs).not.toContain(slug)
+    }
+  })
+
+  it('only quotes consented testimonials on the homepage', () => {
+    for (const quote of [
+      ...HOMEPAGE_TESTIMONIALS.clientQuotes,
+      ...HOMEPAGE_TESTIMONIALS.communityQuotes,
+    ]) {
+      expect(quote.requiresConsent).toBeFalsy()
     }
   })
 

@@ -4,14 +4,22 @@ import Link from 'next/link'
 import BrandLogo from '@/components/brand-logo'
 import FAQSection from '@/components/faq-section'
 import Footer from '@/components/footer'
+import { LandingHero } from '@/components/landing/landing-hero'
+import { BulletList } from '@/components/landing/seo/bullet-list'
+import { LinkPills } from '@/components/landing/seo/link-pills'
+import { TextLink } from '@/components/landing/seo/text-link'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import ScrollToTop from '@/components/scroll-to-top'
 import { HowToSchema, ServiceSchema } from '@/components/schema-markup'
-import { Button } from '@/components/ui/button'
+import { SeoSection } from '@/components/seo/seo-section'
+import { Card } from '@/components/ui/card'
 import SeoTextSection from '@/components/seo-text-section'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
-import { ArrowRight } from 'lucide-react'
-import ServiceIllustration from '@/components/animated/ServiceIllustration'
+import { Ban, FileCheck2, Search, ServerCog, ShieldCheck } from 'lucide-react'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_CTA } from '@/lib/waitlist'
 
@@ -157,261 +165,153 @@ const faqItems = [
   },
 ]
 
+const COMPONENT_ICONS = [ServerCog, FileCheck2, ShieldCheck] as const
+
 export default function AiSeoServicesPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-neutral-900">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <section className="border-b border-neutral-100 px-4 py-20 sm:py-24">
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-            <div className="text-center md:text-left">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-                ai seo services
-              </p>
-              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-                ai seo services that help you get cited and chosen
-              </h1>
-              <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-                prism helps your brand earn visibility in google ai overviews
-                and chat-based search (chatgpt, gemini, perplexity) by building
-                clear, proof-backed pages and a measurable shipping loop. no
-                spam. no keyword stuffing. just a system that compounds.
-              </p>
-              <p className="mt-4 text-sm text-neutral-600">
-                want the offer breakdown?{' '}
-                <Link
-                  href="/pricing"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  prism pricing
-                </Link>
-                . want the fundamentals too?{' '}
-                <Link
-                  href="/seo"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  seo overview
-                </Link>
-                . prism is fully booked right now, so{' '}
-                <Link
-                  href="/waitlist"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  join the waitlist
-                </Link>
-                . need a baseline first?{' '}
-                <Link
-                  href="/seo/audit"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  seo audit service
-                </Link>
-                .
-              </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-2 md:justify-start">
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="ai seo services"
+          title="ai seo services that help you get cited and chosen."
+          titleClassName="max-w-[17ch]"
+          description="Prism helps your brand earn visibility in Google AI Overviews and chat-based search (ChatGPT, Gemini, Perplexity) by building clear, proof-backed pages and a measurable shipping loop. No spam. No keyword stuffing. Just a system that compounds."
+          location="ai seo services hero"
+          ctaHref={primaryCta.href}
+          ctaLabel={primaryCta.label}
+          secondary={secondaryCta}
+          glow="violet"
+        >
+          <div className="mx-auto max-w-2xl">
+            <Card className="spectrum-rule relative overflow-hidden p-4 text-left sm:p-5">
+              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-background/70 px-4 py-3">
+                <Search aria-hidden="true" className="size-4 shrink-0 text-subtle" />
+                <span className="truncate text-[15px] text-muted-foreground">
+                  who should I trust with my website and local search?
+                </span>
+                <span aria-hidden="true" className="ml-auto h-4 w-px shrink-0 animate-pulse bg-foreground/60 motion-reduce:animate-none" />
+              </div>
+              <p className="mt-4 text-eyebrow text-subtle">where buyers ask now</p>
+              <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {aiSearchSurfaces.map((surface) => (
-                  <span
+                  <li
                     key={surface.label}
-                    className="inline-flex min-h-10 items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-semibold lowercase tracking-[0.14em] text-neutral-600"
+                    className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-foreground/90"
                   >
-                    <BrandLogo
-                      brand={surface.brand}
-                      theme={surface.brand === 'openai' ? 'dark' : undefined}
-                      decorative
-                      className="h-4 w-4"
-                    />
+                    <BrandLogo brand={surface.brand} theme="dark" decorative className="h-4 w-4" />
                     <span>{surface.label}</span>
-                  </span>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Button asChild size="lg" className="rounded-full px-8">
-                  <Link href={primaryCta.href}>
-                    {primaryCta.label}
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full px-8"
-                >
-                  <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
-                </Button>
-              </div>
-            </div>
-            <div
-              tabIndex={0}
-              role="group"
-              className="group mx-auto flex h-64 w-full max-w-[20rem] items-center justify-center rounded-3xl border border-neutral-200 bg-white px-4 py-3 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-            >
-              <ServiceIllustration
-                variant="seo"
-                className="h-full w-full text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what’s included
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                ai seo services are not a plugin. they’re a combination of
-                technical cleanliness, answer-ready content, and corroborated
-                proof so engines can confidently recommend you.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-2">
-              {whatYouGet.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-                the components
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what ai systems actually need to trust you
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                engines don’t just match keywords. they try to understand who
-                you are, what you do, and whether the web corroborates it.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {components.map((component) => (
-                <div
-                  key={component.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold lowercase text-neutral-900">
-                    {component.title}
-                  </h3>
-                  <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                    {component.bullets.map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span
-                          className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900"
-                          aria-hidden
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="process" className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-                the process
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                a 90-day ai seo services plan
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                we ship improvements in a steady cadence: baseline first, then
-                page upgrades, then corroboration, then iteration.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-5">
-              {processSteps.map((item) => (
-                <div
-                  key={item.step}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-                    {item.step}
-                  </p>
-                  <h3 className="mt-3 text-base font-semibold lowercase text-neutral-900">
-                    {item.step.toLowerCase()}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href={primaryCta.href}>
-                  {primaryCta.label}
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8"
-              >
-                <Link href="/pricing">see pricing options</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-                guardrails
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what we won’t do
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                sustainable visibility comes from clarity and proof, not spam
-                tactics that create risk.
-              </p>
-            </div>
-
-            <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <ul className="space-y-2 text-sm text-neutral-700">
-                {whatWeWontDo.map((item) => (
-                  <li key={item} className="flex gap-3">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900"
-                      aria-hidden
-                    />
-                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Card>
+            <LinkPills
+              label="Related pages"
+              className="mt-6 justify-center"
+              links={[
+                { label: 'prism pricing', href: '/pricing' },
+                { label: 'seo overview', href: '/seo' },
+                { label: 'join the waitlist', href: '/waitlist' },
+                { label: 'seo audit service', href: '/seo/audit' },
+              ]}
+            />
           </div>
-        </section>
+        </LandingHero>
+
+        <Section aria-labelledby="ai-seo-included-title">
+          <Reveal>
+            <SectionHeader
+              id="ai-seo-included-title"
+              eyebrow="scope"
+              title="what’s included."
+              description="ai seo services are not a plugin. they’re a combination of technical cleanliness, answer-ready content, and corroborated proof so engines can confidently recommend you."
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <ul className="mt-12 grid gap-px overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-white/[0.08] sm:mt-14 md:grid-cols-2">
+              {whatYouGet.map((item, index) => (
+                <li key={item.title} className="flex flex-col gap-3 bg-card p-6 sm:p-8">
+                  <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                  <h3 className="text-heading text-foreground">{item.title}</h3>
+                  <p className="text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Section>
+
+        <Section aria-labelledby="ai-seo-components-title">
+          <Reveal>
+            <SectionHeader
+              id="ai-seo-components-title"
+              eyebrow="the components"
+              title="what ai systems actually need to trust you."
+              description="engines don’t just match keywords. they try to understand who you are, what you do, and whether the web corroborates it."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-3">
+            {components.map((component, index) => {
+              const Icon = COMPONENT_ICONS[index % COMPONENT_ICONS.length]
+              return (
+                <Reveal key={component.title} delay={index * 80}>
+                  <SpotlightCard beam={index === 1} className="h-full p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <h3 className="text-heading mt-6 text-foreground">{component.title}</h3>
+                    <BulletList items={component.bullets} marker="dot" className="mt-5" />
+                  </SpotlightCard>
+                </Reveal>
+              )
+            })}
+          </div>
+        </Section>
+
+        <Section id="process" aria-labelledby="ai-seo-process-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+            <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeader
+                id="ai-seo-process-title"
+                eyebrow="the process"
+                title="a 90-day ai seo services plan."
+                description="we ship improvements in a steady cadence: baseline first, then page upgrades, then corroboration, then iteration."
+              />
+              <TextLink href="/pricing" className="shrink-0">
+                see pricing options
+              </TextLink>
+            </Reveal>
+            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
+              {processSteps.map((item, index) => (
+                <li key={item.step} className="flex flex-col gap-3 bg-card p-6">
+                  <span className="font-mono text-xs tabular-nums text-subtle">step 0{index + 1}</span>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.step.toLowerCase()}</h3>
+                  <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        <SeoSection
+          eyebrow="guardrails"
+          title="what we won’t do."
+          description="sustainable visibility comes from clarity and proof, not spam tactics that create risk."
+        >
+          <Card className="p-6 sm:p-8">
+            <ul className="space-y-4">
+              {whatWeWontDo.map((item) => (
+                <li key={item} className="flex gap-3 text-[15px] leading-7 text-muted-foreground">
+                  <Ban aria-hidden="true" className="mt-1 size-4 shrink-0 text-subtle" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </SeoSection>
 
         <FAQSection
-          title="ai seo services faq"
+          title="ai seo services faq."
           subtitle="quick answers to the questions teams ask before hiring ai seo services."
           items={faqItems}
         />
@@ -423,39 +323,30 @@ export default function AiSeoServicesPage() {
           </p>
           <ul>
             <li>
-              <Link
-                href="/blog/new-rules-of-visibility-ai-seo"
-                className="font-semibold underline underline-offset-4"
-              >
+              <Link href="/blog/new-rules-of-visibility-ai-seo">
                 the new rules of visibility (ai seo)
               </Link>
             </li>
             <li>
-              <Link
-                href="/blog/winning-ai-search-game"
-                className="font-semibold underline underline-offset-4"
-              >
-                winning the ai search game
-              </Link>
+              <Link href="/blog/winning-ai-search-game">winning the ai search game</Link>
             </li>
             <li>
-              <Link
-                href="/blog/future-of-seo-ai-search"
-                className="font-semibold underline underline-offset-4"
-              >
+              <Link href="/blog/future-of-seo-ai-search">
                 actionable checklist for ai search
               </Link>
             </li>
             <li>
-              <Link
-                href="/blog/turning-your-website-into-an-ai-powered-seo-flywheel"
-                className="font-semibold underline underline-offset-4"
-              >
+              <Link href="/blog/turning-your-website-into-an-ai-powered-seo-flywheel">
                 turning your website into an ai-powered seo flywheel
               </Link>
             </li>
           </ul>
         </SeoTextSection>
+
+        <FinalCta
+          location="ai seo services final cta"
+          secondary={{ label: secondaryCta.label, href: secondaryCta.href }}
+        />
 
         <ScrollToTop />
       </main>

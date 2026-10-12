@@ -1,161 +1,146 @@
-import Image from 'next/image'
-import { ArrowRight, ExternalLink } from 'lucide-react'
+import { Fragment, type ReactNode } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 
+import { PhoneFrame } from '@/components/case-studies/PhoneFrame'
+import { BrowserFrame } from '@/components/prism/browser-frame'
+import { Eyebrow } from '@/components/prism/section'
+import { WaitlistButton } from '@/components/prism/waitlist-button'
 import TrackedLink from '@/components/tracked-link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
+export type CaseStudyHeroBadge = {
+  label: string
+  icon?: ReactNode
+}
+
 type CaseStudyVisualHeroProps = {
-  eyebrow?: string
   title: string
-  description: string
-  badge?: string
+  description: ReactNode
+  eyebrow?: string
+  badges?: CaseStudyHeroBadge[]
   websiteUrl?: string
-  websiteLabel?: string
+  /** Host shown in the browser chrome and the outline CTA. */
+  websiteHost?: string
+  /** Analytics location prefix, e.g. "dr-christopher-wong case study hero". */
   trackedLocation: string
-  homeDesktopSrc: string
-  homeDesktopAlt: string
+  homeDesktopSrc?: string
+  homeDesktopAlt?: string
   homeMobileSrc?: string
   homeMobileAlt?: string
-  primaryCta?: {
-    href: string
-    label: string
-    text: string
-  }
 }
 
-export function BrowserScreenshotFrame({
-  src,
-  alt,
-  label,
-  priority = false,
-  className,
-  imageClassName,
-  sizes = '(min-width: 1280px) 480px, (min-width: 768px) 45vw, calc(100vw - 64px)',
-}: {
-  src: string
-  alt: string
-  label: string
-  priority?: boolean
-  className?: string
-  imageClassName?: string
-  sizes?: string
-}) {
+/**
+ * Keeps honorifics and initials on the line of the word they introduce
+ * ("Dr. Christopher", "B. Wong"), so a wrapping name never strands "Dr." on
+ * its own line. The spans only bind from 336px up, where the pair always
+ * fits the column; the accessible name and copied text keep plain spaces.
+ */
+function BoundName({ name }: { name: string }) {
+  const words = name.split(/\s+/)
+  const groups: string[] = []
+  for (let index = 0; index < words.length; index += 1) {
+    const word = words[index]
+    const binds = /^(Dr|Mr|Mrs|Ms|St)\.$|^[A-Z]\.$/.test(word)
+    if (binds && index < words.length - 1) {
+      groups.push(`${word} ${words[index + 1]}`)
+      index += 1
+    } else {
+      groups.push(word)
+    }
+  }
   return (
-    <div
-      className={cn(
-        'overflow-hidden rounded-2xl border border-border/70 bg-black shadow-[0_30px_80px_-48px_rgba(0,0,0,0.9)]',
-        className,
-      )}
-    >
-      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.03] px-4 py-3">
-        <span className="size-2.5 rounded-full bg-red-400/70" aria-hidden="true" />
-        <span className="size-2.5 rounded-full bg-amber-300/70" aria-hidden="true" />
-        <span className="size-2.5 rounded-full bg-emerald-300/70" aria-hidden="true" />
-        <span className="ml-2 truncate rounded-full border border-white/10 bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          {label}
-        </span>
-      </div>
-      <div className="relative aspect-[16/10] bg-muted">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes={sizes}
-          className={cn('object-cover object-top', imageClassName)}
-        />
-      </div>
-    </div>
+    <>
+      {groups.map((group, index) => (
+        <Fragment key={`${group}-${index}`}>
+          {index > 0 ? ' ' : null}
+          {group.includes(' ') ? (
+            <span className="min-[21rem]:whitespace-nowrap">{group}</span>
+          ) : (
+            group
+          )}
+        </Fragment>
+      ))}
+    </>
   )
 }
 
-export function MobileScreenshotFrame({
-  src,
-  alt,
-  className,
-  sizes = '(min-width: 1024px) 176px, (min-width: 640px) 160px, 144px',
-}: {
-  src: string
-  alt: string
-  className?: string
-  sizes?: string
-}) {
-  return (
-    <div
-      className={cn(
-        'overflow-hidden rounded-[1.75rem] border border-border/70 bg-black p-2 shadow-[0_26px_70px_-42px_rgba(0,0,0,0.95)]',
-        className,
-      )}
-    >
-      <div className="relative aspect-[9/19] overflow-hidden rounded-[1.25rem] bg-muted">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          className="object-cover object-top"
-        />
-      </div>
-    </div>
-  )
-}
-
-function getHostLabel(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, '')
-  } catch {
-    return url
-  }
-}
-
+/**
+ * Launch-page hero for a case study: industry and location badges, the
+ * client name as a full-width display headline (long names wrap in balanced
+ * lines instead of a narrow column), a row with the description, the
+ * waitlist CTA and a link to the live site, then the real homepage in window
+ * chrome with the phone capture docked over its corner.
+ */
 export default function CaseStudyVisualHero({
-  eyebrow,
   title,
   description,
-  badge,
+  eyebrow = 'Case study',
+  badges = [],
   websiteUrl,
-  websiteLabel,
+  websiteHost,
   trackedLocation,
   homeDesktopSrc,
   homeDesktopAlt,
   homeMobileSrc,
   homeMobileAlt,
-  primaryCta,
 }: CaseStudyVisualHeroProps) {
-  const browserLabel = websiteLabel ?? (websiteUrl ? getHostLabel(websiteUrl) : 'live site')
+  const longTitle = title.length > 23
 
   return (
-    <section className="border-b border-border/60 px-4 py-12 md:py-20">
-      <div className="container mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 md:grid-cols-[1.1fr_0.9fr] md:items-center md:px-6">
-        <div className="space-y-7">
-          {badge ? (
-            <Badge
-              variant="secondary"
-              className="w-fit rounded-full px-4 py-2 text-[10px] tracking-[0.22em]"
-            >
-              {badge}
-            </Badge>
+    <section
+      aria-labelledby="case-study-title"
+      className="relative isolate overflow-x-clip pb-12 pt-10 sm:pb-16 sm:pt-16"
+    >
+      <div
+        aria-hidden="true"
+        className="bg-grid absolute inset-x-0 top-0 -z-10 h-[720px] opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute left-1/2 top-[-12rem] -z-10 h-[32rem] w-[66rem] max-w-[170vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/18%),transparent)] blur-2xl"
+      />
+      <div aria-hidden="true" className="bg-noise absolute inset-0 -z-10 opacity-[0.05]" />
+
+      <div className="prism-container">
+        <div className="prism-rise flex flex-col items-start gap-5">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          {badges.length > 0 ? (
+            <ul className="flex flex-wrap gap-2" aria-label="Project details">
+              {badges.map((badge) => (
+                <li key={badge.label}>
+                  <Badge
+                    variant="outline"
+                    className="h-7 gap-1.5 px-3 text-[12px] [&>svg]:size-3.5"
+                  >
+                    {badge.icon}
+                    {badge.label}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
           ) : null}
+        </div>
 
-          <div className="space-y-4">
-            {eyebrow ? (
-              <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground sm:text-sm">
-                {eyebrow}
-              </p>
-            ) : null}
-            <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              {title}
-            </h1>
-            <p className="max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-              {description}
-            </p>
-          </div>
+        <h1
+          id="case-study-title"
+          className={cn(
+            'prism-rise text-display text-gradient mt-8 max-w-[22ch] text-balance pb-2 [--rise-delay:80ms]',
+            longTitle && 'lg:text-[clamp(3rem,1.6rem+4.2vw,5.25rem)]',
+          )}
+        >
+          <BoundName name={title} />
+        </h1>
 
-          <div className="flex flex-wrap gap-3">
+        <div className="prism-rise mt-7 flex flex-col gap-7 [--rise-delay:160ms] lg:mt-9 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+          <p className="text-lead min-w-0 max-w-[52ch] text-pretty text-muted-foreground lg:flex-1">
+            {description}
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:shrink-0 lg:flex-nowrap">
+            <WaitlistButton location={trackedLocation} size="lg" />
             {websiteUrl ? (
-              <Button asChild className="rounded-full px-5">
+              <Button asChild variant="outline" size="lg" className="group/site">
                 <TrackedLink
                   href={websiteUrl}
                   target="_blank"
@@ -163,46 +148,45 @@ export default function CaseStudyVisualHero({
                   label={`Open ${title} live site`}
                   location={trackedLocation}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    <span>Open live site</span>
-                    <ExternalLink className="size-4" aria-hidden="true" />
+                  <span className="truncate">
+                    Visit {websiteHost ?? 'the live site'}
                   </span>
-                </TrackedLink>
-              </Button>
-            ) : null}
-            {primaryCta ? (
-              <Button asChild variant="secondary" className="rounded-full px-5">
-                <TrackedLink
-                  href={primaryCta.href}
-                  label={primaryCta.label}
-                  location={trackedLocation}
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <span>{primaryCta.text}</span>
-                    <ArrowRight className="size-4" aria-hidden="true" />
-                  </span>
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover/site:-translate-y-0.5 group-hover/site:translate-x-0.5"
+                  />
                 </TrackedLink>
               </Button>
             ) : null}
           </div>
         </div>
 
-        <div className="relative pb-8">
-          <BrowserScreenshotFrame
-            src={homeDesktopSrc}
-            alt={homeDesktopAlt}
-            label={browserLabel}
-            priority
-          />
-          {homeMobileSrc ? (
-            <div className="ml-auto mt-4 w-36 sm:absolute sm:-bottom-3 sm:-left-4 sm:ml-0 sm:mt-0 sm:w-40 md:-left-6 lg:w-44">
-              <MobileScreenshotFrame
-                src={homeMobileSrc}
-                alt={homeMobileAlt ?? homeDesktopAlt}
-              />
-            </div>
-          ) : null}
-        </div>
+        {homeDesktopSrc ? (
+          <div className="prism-rise relative mt-14 [--rise-delay:240ms] sm:mt-20">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-[6%] -bottom-10 top-[20%] -z-10 bg-[radial-gradient(45%_55%_at_25%_70%,oklch(0.66_0.21_29/16%),transparent_70%),radial-gradient(45%_55%_at_70%_70%,oklch(0.66_0.16_258/22%),transparent_70%)] blur-3xl"
+            />
+            <BrowserFrame
+              src={homeDesktopSrc}
+              alt={homeDesktopAlt ?? `${title} homepage built by Prism`}
+              url={websiteHost}
+              priority
+              sizes="(min-width: 1280px) 1152px, calc(100vw - 2.5rem)"
+              className="rounded-2xl"
+            />
+            {homeMobileSrc ? (
+              <div className="absolute -bottom-6 right-3 w-[27%] max-w-[248px] sm:-bottom-10 sm:right-8 sm:w-[21%] lg:-right-5 lg:w-[19%]">
+                <PhoneFrame
+                  src={homeMobileSrc}
+                  alt={homeMobileAlt ?? `Mobile view of the ${title} site`}
+                  priority
+                  sizes="(min-width: 1280px) 248px, 27vw"
+                />
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </section>
   )

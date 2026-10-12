@@ -1,7 +1,11 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import ClientPage from '@/app/client-page'
+import { CASE_STUDIES } from '@/lib/case-study-data'
+import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
+import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { getWaitlistIntakeMonth } from '@/lib/waitlist'
+import { trackLinkInteraction } from '@/utils/analytics'
 
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -27,6 +31,10 @@ jest.mock('next/link', () => ({
   },
 }))
 
+jest.mock('@/utils/analytics', () => ({
+  trackLinkInteraction: jest.fn(),
+}))
+
 jest.mock('@/components/navbar', () => ({
   __esModule: true,
   default: function MockNavbar() {
@@ -41,132 +49,153 @@ jest.mock('@/components/footer', () => ({
   },
 }))
 
-jest.mock('@/components/home/DeferredAsciiHeroBackdrop', () => ({
-  __esModule: true,
-  default: function MockDeferredAsciiHeroBackdrop() {
-    return <div data-testid="home-hero-ascii-backdrop" />
-  },
-}))
-
 describe('ClientPage homepage flow', () => {
-  it('renders the current growth-first homepage section headings', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('tells the story in order: promise, work, proof, services, love, founder, how to get in', () => {
     render(<ClientPage />)
 
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^your growth team\.$/i,
+        name: /^make your business impossible to ignore\.$/i,
       }),
     ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /website\. content\. ads\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /meet the businesses we’ve helped/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /give people a reason to choose you\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /your marketing, working together\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /a clear plan\. real work\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /run your business\. we’ll help it grow\./i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /^how it works$/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: /see what we’ve built/i,
-      }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', {
-        level: 2,
-        name: new RegExp(
-          `^prism is fully booked\\. save your ${getWaitlistIntakeMonth().month} spot\\.$`,
-          'i',
-        ),
-      }),
-    ).toBeInTheDocument()
-    const waitlistLinks = screen.getAllByRole('link', {
-      name: /join the waitlist/i,
-    })
-    expect(waitlistLinks.length).toBeGreaterThanOrEqual(4)
-    expect(
-      waitlistLinks.some((link) => link.getAttribute('href') === '/waitlist'),
-    ).toBe(true)
-    expect(
-      waitlistLinks.some(
-        (link) => link.getAttribute('href') === '/waitlist?focus=website',
-      ),
-    ).toBe(true)
-    expect(
-      screen.queryByRole('link', { name: /start my website/i }),
-    ).not.toBeInTheDocument()
-    expect(
-      screen.queryByRole('link', { name: /book a free demo/i }),
-    ).not.toBeInTheDocument()
+
+    const headings = screen
+      .getAllByRole('heading', { level: 2 })
+      .map((heading) => heading.textContent?.trim())
+
+    expect(headings).toEqual([
+      'proof you can click.',
+      'numbers, not adjectives.',
+      'one team. every channel.',
+      'real clients. real launches.',
+      'in their words.',
+      'built by a founder chasing LA 2028.',
+      'built for our team. free for yours.',
+      'fully booked. here’s how to get in.',
+      'questions, answered.',
+      `get on the list for ${getWaitlistIntakeMonth().month}.`,
+    ])
   })
 
-  it('renders icon-backed problem blocks and buyer check pills', () => {
+  it('keeps the waitlist the only sales action, with the live intake month', () => {
     render(<ClientPage />)
 
-    const problemPoints = screen.getAllByTestId('home-problem-point')
-    const stackItems = screen.getAllByTestId('home-problem-stack-item')
+    const waitlistLinks = screen
+      .getAllByRole('link', { name: /join the waitlist/i })
+      .map((link) => link.getAttribute('href'))
+    expect(waitlistLinks.length).toBeGreaterThanOrEqual(3)
+    expect(new Set(waitlistLinks)).toEqual(new Set(['/waitlist']))
 
-    expect(problemPoints).toHaveLength(4)
-    expect(stackItems).toHaveLength(4)
-    expect(
-      problemPoints.every((point) => point.querySelector('img')),
-    ).toBeTruthy()
-    expect(stackItems.every((item) => item.querySelector('img'))).toBeTruthy()
-    expect(
-      new Set(
-        stackItems.map((item) =>
-          item.querySelector('img')?.getAttribute('src'),
-        ),
-      ).size,
-    ).toBe(4)
-    expect(screen.getByText(/what buyers check/i)).toBeInTheDocument()
-    expect(screen.queryAllByTestId('home-ai-tool-card')).toHaveLength(0)
+    const month = getWaitlistIntakeMonth().month
+    expect(document.body).toHaveTextContent('Prism is fully booked right now.')
+    expect(document.body).toHaveTextContent(
+      `Join the waitlist to work with us in ${month}.`,
+    )
+    expect(document.body).toHaveTextContent(`Waitlist open for ${month}`)
+    expect(document.body.textContent).not.toMatch(
+      /book a (free )?(call|demo)|start my website|get started free/i,
+    )
   })
 
-  it('renders the system, fit, and proof card grids', () => {
-    const { container } = render(<ClientPage />)
+  it('tracks the hero CTAs with their location', () => {
+    render(<ClientPage />)
 
-    expect(container.querySelectorAll('[data-home-service-card]')).toHaveLength(
-      8,
+    const hero = document.getElementById('homepage-hero')
+    expect(hero).not.toBeNull()
+    const heroScope = within(hero as HTMLElement)
+
+    heroScope.getByRole('link', { name: /join the waitlist/i }).click()
+    expect(trackLinkInteraction).toHaveBeenCalledWith(
+      '/waitlist',
+      'Join the waitlist',
+      'homepage hero',
     )
-    expect(container.querySelectorAll('[data-home-fit-card]')).toHaveLength(3)
+
+    const seeWork = heroScope.getByRole('link', { name: /see the work/i })
+    expect(seeWork).toHaveAttribute('href', '#work')
+  })
+
+  it('shows only verified numbers with their sources', () => {
+    render(<ClientPage />)
+
+    const wong = CASE_STUDIES.find(
+      (study) => study.slug === 'dr-christopher-wong',
+    )
+    const belize = CASE_STUDIES.find(
+      (study) => study.slug === 'belize-kids-foundation',
+    )
+    expect(document.body).toHaveTextContent(
+      wong?.structured?.results?.[0]?.value ?? 'missing',
+    )
+    expect(document.body).toHaveTextContent(
+      belize?.structured?.results?.[0]?.value ?? 'missing',
+    )
+    expect(document.body).toHaveTextContent(SOCIAL_PROOF.combinedAudience)
+    expect(document.body).toHaveTextContent(SOCIAL_PROOF.youtube.activity)
+    expect(document.body).toHaveTextContent(/Google Search Console/)
+    expect(document.body).toHaveTextContent(/Verified October 4, 2026/)
+  })
+
+  it('features real client work and never former clients', () => {
+    render(<ClientPage />)
+
+    const work = document.getElementById('work') as HTMLElement
+    const workLinks = within(work)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href') ?? '')
     expect(
-      container.querySelectorAll('[data-home-proof-card]').length,
+      workLinks.filter((href) => href.startsWith('/case-studies/')).length,
     ).toBeGreaterThanOrEqual(8)
+    expect(workLinks).toContain('/case-studies')
+
+    const allHrefs = Array.from(document.querySelectorAll('a')).map(
+      (link) => link.getAttribute('href') ?? '',
+    )
+    for (const slug of FORMER_CLIENT_SLUGS) {
+      expect(allHrefs).not.toContain(`/case-studies/${slug}`)
+    }
+
+    expect(
+      screen.getByRole('link', { name: /read the case study/i }),
+    ).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
+  })
+
+  it('separates client quotes from community comments', () => {
+    render(<ClientPage />)
+
+    expect(screen.getAllByText('Website client').length).toBeGreaterThanOrEqual(
+      4,
+    )
+    expect(screen.getAllByText(/on Instagram$/).length).toBeGreaterThanOrEqual(
+      3,
+    )
+    expect(
+      screen.getByRole('link', { name: /see the wall of love/i }),
+    ).toHaveAttribute('href', '/wall-of-love')
+  })
+
+  it('links the services bento and products', () => {
+    render(<ClientPage />)
+
+    const services = document.getElementById('services') as HTMLElement
+    expect(services.querySelectorAll('[data-home-service-card]')).toHaveLength(
+      6,
+    )
+    for (const href of ['/websites', '/content', '/ads']) {
+      expect(services.querySelector(`a[href="${href}"]`)).not.toBeNull()
+    }
+
+    const products = document.getElementById('products') as HTMLElement
+    expect(
+      within(products).getByRole('link', { name: 'Midas' }),
+    ).toHaveAttribute('href', 'https://midas-ai.dev')
+    expect(
+      within(products).getByRole('link', { name: 'zRead' }),
+    ).toHaveAttribute('target', '_blank')
   })
 })

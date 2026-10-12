@@ -35,12 +35,6 @@ module.exports = {
           '"Courier New"',
           "monospace",
         ],
-        pixel: [
-          "var(--font-pixel)",
-          "var(--font-sans)",
-          "system-ui",
-          "sans-serif",
-        ],
       },
       colors: {
         background: "var(--background)",
@@ -73,6 +67,16 @@ module.exports = {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
         },
+        "subtle-foreground": "var(--subtle-foreground)",
+        live: "var(--live)",
+        spectrum: {
+          red: "var(--spectrum-red)",
+          orange: "var(--spectrum-orange)",
+          yellow: "var(--spectrum-yellow)",
+          green: "var(--spectrum-green)",
+          blue: "var(--spectrum-blue)",
+          violet: "var(--spectrum-violet)",
+        },
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
@@ -103,6 +107,7 @@ module.exports = {
         "7xl": ["4rem", { lineHeight: "1.02" }],
       },
       borderRadius: {
+        xl: "calc(var(--radius) + 4px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",

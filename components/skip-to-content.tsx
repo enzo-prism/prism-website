@@ -30,7 +30,7 @@ export default function SkipToContent() {
           main.scrollIntoView({ block: "start" })
         }, 0)
       }}
-      className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[10000] focus-visible:rounded-md focus-visible:border focus-visible:border-border/60 focus-visible:bg-card focus-visible:px-4 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:tracking-[0.12em] focus-visible:text-foreground focus-visible:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background font-pixel uppercase"
+      className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[10000] focus-visible:rounded-full focus-visible:bg-primary focus-visible:px-5 focus-visible:py-2.5 focus-visible:text-sm focus-visible:font-medium focus-visible:text-primary-foreground focus-visible:shadow-lg focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
     >
       Skip to content
     </a>

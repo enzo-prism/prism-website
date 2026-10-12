@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import PrismInfinityPage from '@/app/prism-infinity/page'
 import {
@@ -109,5 +109,22 @@ describe('Prism Infinity framing', () => {
     expect(screen.queryByText('Print design')).not.toBeInTheDocument()
     expect(screen.queryByText('Slide deck design')).not.toBeInTheDocument()
     expect(screen.queryByText('Logo design')).not.toBeInTheDocument()
+  })
+
+  it('keeps every CTA on the waitlist, shows no prices, and ships FAQ answers in the HTML', () => {
+    const { container } = render(<PrismInfinityPage />)
+
+    const ctas = screen.getAllByRole('link', { name: /join the waitlist/i })
+    expect(ctas.length).toBeGreaterThanOrEqual(2)
+    for (const cta of ctas) {
+      expect(cta).toHaveAttribute('href', '/waitlist')
+    }
+    expect(container.textContent ?? '').not.toMatch(/\$\s?\d/)
+
+    const pause = screen
+      .getByText('Can I really pause or cancel anytime?')
+      .closest('details') as HTMLElement
+    expect(pause).not.toHaveAttribute('open')
+    expect(within(pause).getByText(/You can pause or cancel the plan/)).toBeInTheDocument()
   })
 })

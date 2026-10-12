@@ -1,38 +1,50 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import {
+  ArrowUpRight,
+  BarChart3,
+  Clock,
+  Compass,
+  Filter,
+  FlaskConical,
+  LayoutTemplate,
+  MapPin,
+  Rocket,
+  Sparkles,
+  Target,
+  type LucideIcon,
+} from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
-import DeferredAsciiHeroBackdrop from '@/components/home/DeferredAsciiHeroBackdrop'
 import Navbar from '@/components/navbar'
+import { BrowserFrame } from '@/components/prism/browser-frame'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
 import {
-  ADS_STAGE_ICONS,
-  TechStackIcon,
-  type TechStackIconSpec,
-} from '@/components/tech-stack-icons'
+  FAQSchema,
+  ServiceSchema,
+  VideoSchema,
+} from '@/components/schema-markup'
+import { AdsHeroVisual } from '@/components/services/AdsHeroVisual'
+import { FounderVideo } from '@/components/services/FounderVideo'
 import {
-  CoreActionLink,
-  CoreSectionHeading,
-  coreRouteContainedSectionClassName,
-  coreRouteContainerClassName,
-  coreRouteHeroFrameClassName,
-  coreRoutePanelClassName,
-  coreRouteSectionClassName,
-  coreRouteSectionCompactClassName,
-  coreRouteSplitLayoutClassName,
-} from '@/components/core-route/CoreRoutePrimitives'
-import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+  ServiceBento,
+  type ServiceBentoItem,
+} from '@/components/services/ServiceBento'
+import { ServiceFaq } from '@/components/services/ServiceFaq'
+import { ServiceHero } from '@/components/services/ServiceHero'
 import { ServiceSiblings } from '@/components/services/ServiceSiblings'
-import SimpleBlogGrid from '@/components/simple-blog-grid'
-import SimpleBlogPostCard from '@/components/simple-blog-post-card'
-import VideoPlayer from '@/components/video-player'
-import { getAllPosts } from '@/lib/mdx-data'
+import {
+  ServiceSteps,
+  type ServiceStep,
+} from '@/components/services/ServiceSteps'
+import { getClientSites } from '@/components/services/client-sites'
+import TrackedLink from '@/components/tracked-link'
+import { Button } from '@/components/ui/button'
 import { ADS_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import CapacityNotice from '@/components/waitlist/CapacityNotice'
-import { cn } from '@/lib/utils'
-
-const CANONICAL_URL = 'https://www.design-prism.com/ads'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Ads',
@@ -42,142 +54,336 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
-const ROCKET_POSTER_SRC = '/animations/rocket/poster.svg'
+// The source file is 1920x1080 with Enzo in a rounded window at its center.
+// Cloudinary crops to that window (inset past its rounded corners), so the
+// player matches the clip instead of letterboxing it. The poster is the same
+// crop at 5s, a frame with Enzo smiling, eyes open (frame 0 is mid-blink).
+const FOUNDER_VIDEO_BASE = 'https://res.cloudinary.com/dhqpqfw6w/video/upload'
+const FOUNDER_VIDEO_CROP = 'c_crop,w_680,h_564,x_620,y_258'
+const FOUNDER_VIDEO_PATH = 'v1763165529/Untitled_xmscby'
 
-// The five launch-rail STAGES rows. Icons resolve through the shared tech
-// stack map; statuses stay descriptive (no metric claims in the hero).
-const ADS_STAGE_STATUSES = [
-  'Active',
-  'Active',
-  'Active',
-  'Queued',
-  'Invite',
+const FOUNDER_VIDEO = {
+  id: 'founder-vsl',
+  src: `${FOUNDER_VIDEO_BASE}/${FOUNDER_VIDEO_CROP}/q_auto,vc_auto/${FOUNDER_VIDEO_PATH}.mp4`,
+  poster: `${FOUNDER_VIDEO_BASE}/${FOUNDER_VIDEO_CROP}/so_5,q_auto/${FOUNDER_VIDEO_PATH}.jpg`,
+  title: 'Founder Enzo Sison on Prism Ads',
+  width: 680,
+  height: 564,
+  duration: '2:48',
+}
+
+// A current client's live homepage: the kind of page a Prism campaign sends
+// people to. Former clients are filtered out by getClientSites.
+const [LANDING_SITE] = getClientSites(['town-centre-dental'])
+
+const AD_ANATOMY_NOTES = [
+  { label: 'The offer', body: 'In the words customers search' },
+  { label: 'Why you', body: 'One clear reason, one line' },
+  { label: 'The next step', body: 'Call, book, or inquire' },
 ] as const
 
-const ADS_STAGES: ReadonlyArray<
-  TechStackIconSpec & { status: (typeof ADS_STAGE_STATUSES)[number] }
-> = ADS_STAGE_ICONS.map((icon, index) => ({
-  ...icon,
-  status: ADS_STAGE_STATUSES[index],
-}))
+function AnatomyMarker({ index }: { index: number }) {
+  return (
+    <span className="grid size-5 shrink-0 place-items-center rounded-full border border-white/15 bg-background font-mono text-[10px] text-foreground">
+      {index}
+    </span>
+  )
+}
 
-const WHAT_YOU_GET = [
+/** Illustrative search ad, labeled as an example, annotated part by part. */
+function AdAnatomy() {
+  return (
+    <div className="grid gap-4 border-t border-white/[0.06] px-6 pb-6 pt-5 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] sm:items-center sm:gap-6 sm:px-7 sm:pb-7">
+      <div className="rounded-xl border border-white/[0.08] bg-background/70 p-4 shadow-[0_24px_60px_-30px_oklch(0_0_0/90%)] sm:p-5">
+        <div className="flex items-center justify-between gap-3">
+          <span className="flex min-w-0 items-center gap-2.5">
+            <span className="grid size-7 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-[11px] font-semibold text-foreground">
+              Y
+            </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-[13px] text-foreground">
+                Your business
+              </span>
+              <span className="block truncate font-mono text-[10px] text-subtle">
+                yourbusiness.com
+              </span>
+            </span>
+          </span>
+          <span className="shrink-0 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 text-xs text-muted-foreground">
+            Example ad
+          </span>
+        </div>
+        <div className="mt-4 flex items-start gap-2.5">
+          <AnatomyMarker index={1} />
+          <p className="text-[16px] font-medium leading-snug tracking-[-0.01em] text-spectrum-blue">
+            Same-week appointments near you
+          </p>
+        </div>
+        <div className="mt-2 flex items-start gap-2.5">
+          <AnatomyMarker index={2} />
+          <p className="text-[13px] leading-5 text-muted-foreground">
+            A friendly team, clear answers before you visit, and an easy way to
+            book.
+          </p>
+        </div>
+        <div className="mt-3.5 flex items-center gap-2.5">
+          <AnatomyMarker index={3} />
+          <span className="flex flex-wrap gap-1.5">
+            {['Book online', 'Call now', 'Services'].map((link) => (
+              <span
+                key={link}
+                className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[12px] text-foreground/90"
+              >
+                {link}
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+      <ol className="grid gap-2.5 sm:gap-3">
+        {AD_ANATOMY_NOTES.map((note, index) => (
+          <li key={note.label} className="flex items-start gap-2.5">
+            <AnatomyMarker index={index + 1} />
+            <span className="leading-tight">
+              <span className="block text-[13px] font-medium text-foreground">
+                {note.label}
+              </span>
+              <span className="block text-[12px] text-subtle">{note.body}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+/** A real, current-client page in browser chrome: where the click lands. */
+function LandingPageShot() {
+  if (!LANDING_SITE) return null
+  return (
+    <div className="px-6 pb-6 sm:px-7 sm:pb-7">
+      <div className="mask-fade-b h-40 overflow-hidden">
+        <BrowserFrame
+          src={LANDING_SITE.desktop}
+          alt={`${LANDING_SITE.client} website home page built by Prism`}
+          url={LANDING_SITE.host}
+          sizes="(min-width: 768px) 24rem, 90vw"
+        />
+      </div>
+      <p className="mt-3 text-[12px] text-subtle">
+        A Prism-built page for {LANDING_SITE.client}
+      </p>
+    </div>
+  )
+}
+
+function GoalBrief() {
+  const rows = [
+    ['Audience', 'Who you want to reach'],
+    ['Action', 'Call, book, or inquire'],
+    ['Budget', 'Enough to learn from'],
+  ]
+  return (
+    <dl className="mx-6 mb-6 divide-y divide-white/[0.06] rounded-xl border border-white/[0.08] bg-background/60 sm:mx-7 sm:mb-7">
+      {rows.map(([term, detail]) => (
+        <div
+          key={term}
+          className="flex items-center justify-between gap-3 px-3.5 py-2.5 text-[13px]"
+        >
+          <dt className="font-mono text-[11px] text-subtle">{term}</dt>
+          <dd className="text-right text-muted-foreground">{detail}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+/** The conversion events a campaign is judged on, set up before launch. */
+function ConversionEvents() {
+  return (
+    <ul className="flex flex-col gap-1.5 px-6 pb-6 sm:px-7 sm:pb-7">
+      {['Call from the ad', 'Form submitted', 'Booking requested'].map(
+        (event) => (
+          <li
+            key={event}
+            className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[13px] text-muted-foreground"
+          >
+            {event}
+            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-subtle">
+              <span className="size-1.5 rounded-full bg-foreground/60" />
+              Tracked
+            </span>
+          </li>
+        ),
+      )}
+    </ul>
+  )
+}
+
+function ReportChips() {
+  return (
+    <div className="flex flex-wrap gap-2 px-6 pb-6 sm:px-7 sm:pb-7">
+      {['Calls', 'Form fills', 'Booked appointments', 'Cost per lead'].map(
+        (chip) => (
+          <span
+            key={chip}
+            className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[13px] text-muted-foreground"
+          >
+            {chip}
+          </span>
+        ),
+      )}
+    </div>
+  )
+}
+
+const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
-    title: 'Strategy that fits the goal',
+    icon: Target,
+    title: 'strategy that fits the goal',
     body: 'Define the customers you want to reach, the action you want them to take, and the budget to test it.',
+    visual: <GoalBrief />,
   },
   {
-    title: 'Creative that earns the click',
+    icon: Sparkles,
+    title: 'creative that earns the click',
     body: 'Images, video, and clear copy built around your offer and the next step you want customers to take.',
+    className: 'md:col-span-4',
+    visual: <AdAnatomy />,
   },
   {
-    title: 'A clear page after the click',
+    icon: LayoutTemplate,
+    title: 'a clear page after the click',
     body: 'Send visitors to a relevant page with a clear offer and a straightforward way to call, book, or inquire.',
+    visual: <LandingPageShot />,
   },
   {
-    title: 'Campaign setup and tracking',
-    body: 'Set up the selected ad accounts, audiences, and conversion events so campaign results can be reviewed.',
+    icon: Compass,
+    title: 'setup and tracking',
+    body: 'We set up the ad accounts, audiences, and conversion events so every campaign can be judged on real inquiries.',
+    visual: <ConversionEvents />,
   },
   {
-    title: 'Weekly optimization',
-    body: 'Shift budget to winners, pause what is not working, and test the next idea.',
+    icon: BarChart3,
+    title: 'weekly tuning, plain reports',
+    body: 'Shift budget to what works, pause what does not, and review results in plain English.',
+    visual: <ReportChips />,
   },
-  {
-    title: 'Transparent reporting',
-    body: 'Calls, form fills, booked appointments, and cost per lead, in plain English.',
-  },
-] as const
-
-const BUDGET_GUARDS = [
-  {
-    title: 'Reduce irrelevant clicks',
-    body: 'Use search exclusions and audience filters to reduce irrelevant traffic, then review lead quality as campaigns run.',
-  },
-  {
-    title: 'Show up when buyers are ready',
-    body: 'Review when inquiries arrive and adjust ad schedules and budget pacing to match your business hours and demand.',
-  },
-  {
-    title: 'Right radius, right people',
-    body: 'Focus ads on the areas you serve and exclude locations outside your market.',
-  },
-  {
-    title: 'Keep testing the details',
-    body: 'Test headlines, images, offers, and forms to learn what improves lead quality and cost per lead.',
-  },
-] as const
+]
 
 type AdPlatform = {
   name: string
   why: string
-  logoBrands?: readonly BrandLogoKey[]
+  role: string
+  logoBrands: readonly BrandLogoKey[]
 }
 
 const PLATFORMS: readonly AdPlatform[] = [
   {
     name: 'Google Ads',
+    role: 'Search intent',
     why: 'High-intent searches when people need you now.',
     logoBrands: ['google'],
   },
   {
     name: 'Facebook & Instagram',
+    role: 'Paid social',
     why: 'Precise audiences plus creative that builds demand and trust.',
     logoBrands: ['facebook', 'instagram'],
   },
   {
     name: 'TikTok',
+    role: 'Short-form video',
     why: 'Short videos that introduce your offer in a format people expect in their feed.',
     logoBrands: ['tiktok'],
   },
   {
     name: 'Yelp Ads',
+    role: 'Local discovery',
     why: 'Reach people comparing local businesses, services, and reviews.',
     logoBrands: ['yelp'],
   },
 ]
 
-const PROCESS_STEPS = [
+const STEPS: readonly ServiceStep[] = [
   {
-    step: 'Discover',
-    body: 'Goals, budget, ideal customers, and local market reality.',
+    icon: Compass,
+    title: 'plan and build',
+    detail: 'First',
+    body: 'Goals, budget, ideal customers, and your local market. Then tracking, audiences, creative, and landing page fixes.',
   },
   {
-    step: 'Build',
-    body: 'Tracking, audiences, creative, and landing page improvements.',
+    icon: Rocket,
+    title: 'launch focused',
+    detail: 'Launch',
+    body: 'Start with a focused budget on the right channels and gather real performance data before expanding.',
   },
   {
-    step: 'Launch',
-    body: 'Start with a focused budget and gather performance data before expanding.',
+    icon: BarChart3,
+    title: 'optimize and report',
+    detail: 'Weekly',
+    body: 'Review results, move spend toward what works, test the next idea, and walk through it all in plain English.',
   },
-  {
-    step: 'Optimize',
-    body: 'Review results, adjust spend, and test the next improvement.',
-  },
-  {
-    step: 'Report',
-    body: 'Review spend, tracked inquiries, lead quality, and the next tests with you.',
-  },
-] as const
+]
 
-const OUTCOMES = [
-  'Lower cost per lead through testing and tighter targeting.',
-  'Higher conversion rates with better offers and landing pages.',
-  'A cleaner pipeline by filtering out low-quality clicks and calls.',
-  'A clearer view of campaign spend, tracked inquiries, and gaps in measurement.',
-] as const
+const BUDGET_GUARDS: readonly {
+  icon: LucideIcon
+  title: string
+  body: string
+}[] = [
+  {
+    icon: Filter,
+    title: 'reduce irrelevant clicks',
+    body: 'Search exclusions and audience filters cut irrelevant traffic, and we review lead quality as campaigns run.',
+  },
+  {
+    icon: Clock,
+    title: 'show up when buyers are ready',
+    body: 'Ad schedules and budget pacing follow when inquiries actually arrive and when you can answer.',
+  },
+  {
+    icon: MapPin,
+    title: 'right radius, right people',
+    body: 'Ads focus on the areas you serve and exclude locations outside your market.',
+  },
+  {
+    icon: FlaskConical,
+    title: 'keep testing the details',
+    body: 'Headlines, images, offers, and forms are tested to learn what improves lead quality and cost per lead.',
+  },
+]
 
-const HANDLED_FOR_YOU = [
-  'Ad account setup',
-  'Conversion tracking',
-  'Pixels and tags',
-  'Creative and copy',
-  'Offer testing',
-  'Negative keywords and exclusions',
-  'Geo-targeting',
-  'Remarketing',
-  'Call tracking',
-  'Weekly optimizations',
-  'Monthly summaries',
+const AUDIENCE_SEGMENTS = [
+  {
+    name: 'dental and medical teams',
+    description:
+      'Patient-focused ads, clear landing pages, and inquiry tracking.',
+    href: '/why-dental-practices-love-prism',
+  },
+  {
+    name: 'local shop owners',
+    description:
+      'Hyper-local offers on Google, Meta, and Yelp that turn scrollers into visits.',
+    href: '/why-local-shop-owners-love-prism',
+  },
+  {
+    name: 'consulting and professional services',
+    description:
+      'Show your expertise and give prospects a clear way to request a consultation.',
+    href: '/why-consulting-companies-love-prism',
+  },
+  {
+    name: 'online community founders',
+    description:
+      'Paid social and retargeting loops that grow engaged membership.',
+    href: '/why-online-community-founders-love-prism',
+  },
+  {
+    name: 'nonprofits and education',
+    description:
+      'Programs and fundraising campaigns with tracking for the actions that matter.',
+    href: '/why-nonprofits-love-prism',
+  },
 ] as const
 
 const FAQ_ITEMS = [
@@ -218,584 +424,288 @@ const FAQ_ITEMS = [
   },
 ] as const
 
-const AUDIENCE_SEGMENTS = [
-  {
-    name: 'Dental and medical teams',
-    description:
-      'Explain your services with patient-focused ads, clear landing pages, and inquiry tracking.',
-    href: '/why-dental-practices-love-prism',
-  },
-  {
-    name: 'Local shop owners',
-    description:
-      'Hyper-local offers on Google, Meta, and Yelp that turn scrollers into foot traffic and orders.',
-    href: '/why-local-shop-owners-love-prism',
-  },
-  {
-    name: 'Consulting and professional services',
-    description:
-      'Show your expertise and give interested prospects a clear way to request a consultation.',
-    href: '/why-consulting-companies-love-prism',
-  },
-  {
-    name: 'Online community founders',
-    description:
-      'Acquisition loops that combine paid social and retargeting to expand engaged membership.',
-    href: '/why-online-community-founders-love-prism',
-  },
-  {
-    name: 'Nonprofits and education',
-    description:
-      'Promote programs and fundraising campaigns with clear messages and tracking for the actions that matter.',
-    href: '/why-nonprofits-love-prism',
-  },
-] as const
-
-export default async function AdsPage() {
-  const allPosts = (await getAllPosts()) ?? []
-  const adsBlogPosts = allPosts
-    .filter((post) => {
-      const slug = post.slug.toLowerCase()
-      const category = (post.category ?? '').toLowerCase()
-      const description = (post.description ?? '').toLowerCase()
-      return (
-        slug.includes('ads') ||
-        slug.includes('ad-') ||
-        slug.includes('ppc') ||
-        slug.includes('paid') ||
-        slug.includes('marketing') ||
-        category.includes('ads') ||
-        category.includes('ppc') ||
-        category.includes('marketing') ||
-        description.includes('ads') ||
-        description.includes('ppc') ||
-        description.includes('marketing') ||
-        description.includes('campaign')
-      )
-    })
-    .slice(0, 3)
-
+export default function AdsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-black font-sans text-[#f5f0e8]">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <section className="border-b border-white/12 px-4 pb-16 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteHeroFrameClassName,
-                'px-6 py-12 sm:px-10 sm:py-16 lg:px-14 lg:py-20',
-              )}
-            >
-              <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-                <div>
-                  <CoreSectionHeading
-                    as="h1"
-                    variant="hero"
-                    eyebrow="Ads"
-                    title="Launch campaigns that bring qualified inquiries."
-                    description="Google, Meta, TikTok, and Yelp ads with creative, landing pages, and tracking. Aimed at the calls, inquiries, and appointments you want."
-                    titleClassName="max-w-[16ch]"
-                  />
-                  <CapacityNotice className="mt-8 max-w-[40rem]" />
-                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <CoreActionLink
-                      href={ADS_WAITLIST_CTA.href}
-                      variant="heroPrimary"
-                      label={ADS_WAITLIST_CTA.label.toLowerCase()}
-                      location="ads hero"
-                    >
-                      {ADS_WAITLIST_CTA.label}
-                    </CoreActionLink>
-                    <CoreActionLink
-                      href="#platforms"
-                      variant="heroSecondary"
-                      label="see platforms"
-                      location="ads hero"
-                    >
-                      See the platforms
-                    </CoreActionLink>
-                  </div>
-                </div>
+        <ServiceHero
+          title={
+            <>
+              campaigns built around{' '}
+              <span className="text-spectrum [background-position:100%_50%]">
+                better leads.
+              </span>
+            </>
+          }
+          description={
+            <>
+              <span className="text-foreground">Prism Ads</span> runs Google,
+              Meta, TikTok, and Yelp campaigns with creative, landing pages, and
+              tracking, aimed at the calls, inquiries, and appointments you
+              actually want.
+            </>
+          }
+          ctaHref={ADS_WAITLIST_CTA.href}
+          location="ads hero"
+          secondary={{
+            label: 'See the platforms',
+            href: '#platforms',
+            trackingLabel: 'see platforms',
+          }}
+          visual={<AdsHeroVisual />}
+          glow="green"
+        />
 
-                <div className="overflow-hidden rounded-2xl border border-white/12 bg-white/[0.03]">
-                  <div className="relative h-60 overflow-hidden sm:h-72 lg:h-80">
-                    <DeferredAsciiHeroBackdrop
-                      animationName="rocket"
-                      frameCount={120}
-                      fps={18}
-                      quality="high"
-                      renderMode="canvas"
-                      fit="contain"
-                      maskClassName=""
-                      ariaLabel="ASCII rocket animation in the ads launch rail"
-                      posterSrc={ROCKET_POSTER_SRC}
-                      posterClassName="absolute inset-0 h-full w-full object-contain object-center opacity-90 [image-rendering:pixelated]"
-                      scrimClassName="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/40"
-                      focusScrimClassName=""
-                    />
-                  </div>
-                  <div className="border-t border-white/10 px-4 py-4 sm:px-5">
-                    <p className="flex items-center justify-between gap-4 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      Launch manifest
-                      <span className="inline-flex items-center gap-1.5 text-[#d8bc79]">
-                        <span
-                          aria-hidden="true"
-                          className="h-1.5 w-1.5 rounded-full bg-[#d8bc79]"
-                        />
-                        Ready
-                      </span>
-                    </p>
-                    <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                      Stages
-                    </p>
-                    <ul
-                      aria-label="Ad platforms"
-                      className="mt-1 divide-y divide-white/10"
-                    >
-                      {ADS_STAGES.map((stage) => (
-                        <li
-                          key={stage.label}
-                          className="flex min-h-11 items-center gap-3 px-1 py-3"
-                        >
-                          <TechStackIcon
-                            spec={stage}
-                            className="h-4 w-4 opacity-90"
-                          />
-                          <span className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[#c9c1b6]">
-                            {stage.label}
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className="mx-1 flex-1 border-b border-dotted border-white/10"
-                          />
-                          <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#8f877b]">
-                            {stage.status}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                    <dl className="mt-2 space-y-1.5 border-t border-white/10 pt-3 font-mono text-[0.65rem] uppercase tracking-[0.18em]">
-                      <div className="flex items-center justify-between gap-4">
-                        <dt className="text-[#8f877b]">Guidance</dt>
-                        <dd className="text-[#c9c1b6]">Weekly optimization</dd>
-                      </div>
-                      <div className="flex items-center justify-between gap-4">
-                        <dt className="text-[#8f877b]">Telemetry</dt>
-                        <dd className="text-[#c9c1b6]">
-                          Call + inquiry tracking
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ServiceBento
+          idPrefix="ads"
+          title="from campaign strategy to the next call."
+          description="Creative, targeting, landing pages, and reporting, all pointed at calls, inquiries, and booked appointments."
+          items={WHAT_YOU_GET}
+        />
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div id="ads-founder-vsl" className="mx-auto max-w-3xl">
-              <CoreSectionHeading
-                eyebrow="Hear from our founder"
-                title="How Prism plans and manages ads."
-                description="Enzo explains how we choose channels, develop creative, and review campaign results."
-              />
-              <div className="mt-8">
-                <VideoPlayer
-                  src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763165529/Untitled_xmscby.mp4"
-                  poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/Untitled_xmscby.jpg"
-                  title="Founder Enzo Sison on Prism Ads"
-                  caption="Enzo shares how Prism chooses channels, prepares creative, and reviews calls and inquiries from paid campaigns."
-                  schema={{
-                    id: 'https://www.design-prism.com/ads#founder-vsl',
-                    name: 'Founder Enzo Sison on Prism Ads',
-                    description:
-                      'Enzo Sison explains how Prism plans campaigns, develops creative, and reviews results across Google, Meta, TikTok, and Yelp.',
-                    thumbnailUrl:
-                      'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/Untitled_xmscby.jpg',
-                    uploadDate: '2025-01-24T00:00:00Z',
-                    duration: 'PT60S',
-                    contentUrl:
-                      'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763165529/Untitled_xmscby.mp4',
-                    embedUrl: 'https://www.design-prism.com/ads#founder-vsl',
-                    width: 1920,
-                    height: 1080,
-                    creatorName: 'Enzo Sison',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              coreRouteSplitLayoutClassName,
-            )}
-          >
-            <CoreSectionHeading
-              eyebrow="What you get"
-              title="From campaign strategy to the next call."
-              description="Creative, targeting, and reporting focused on calls, inquiries, and booked appointments."
-            />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {WHAT_YOU_GET.map((item) => (
-                <article
-                  key={item.title}
-                  className="border border-white/10 bg-[#070707] p-5"
-                >
-                  <h2 className="text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {item.title}
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                    {item.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="budget-protection" className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="Budget"
-              title="Keep your budget focused."
-              description="Practical checks that help reduce waste and improve the quality of your leads."
-            />
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {BUDGET_GUARDS.map((item) => (
-                <article
-                  key={item.title}
-                  className="border border-white/10 bg-[#070707] p-6"
-                >
-                  <h2 className="text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {item.title}
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                    {item.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="platforms" className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
+        <Section
+          id="platforms"
+          aria-labelledby="ads-platforms-title"
+          className="scroll-mt-20"
+        >
+          <Reveal>
+            <SectionHeader
+              id="ads-platforms-title"
               eyebrow="Platforms"
-              title="Where we run, and why."
-              description="Each channel covers a different stage of the buyer journey."
+              title="where we run, and why."
+              description="Each channel covers a different moment in the buyer journey, so we pick the mix that fits your customers."
             />
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {PLATFORMS.map((platform) => (
-                <article
-                  key={platform.name}
-                  className="border border-white/10 bg-[#070707] p-6"
-                >
-                  <div className="mb-4 flex items-center gap-2">
-                    {platform.logoBrands?.length ? (
-                      platform.logoBrands.map((brand) => (
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="mt-12 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card sm:mt-16">
+              <div className="divide-y divide-white/[0.08]">
+                {PLATFORMS.map((platform) => (
+                  <article
+                    key={platform.name}
+                    className="grid gap-4 p-6 transition-colors hover:bg-white/[0.02] sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center sm:gap-8 sm:px-10 sm:py-8"
+                  >
+                    <div className="flex items-center gap-2">
+                      {platform.logoBrands.map((brand) => (
                         <span
                           key={brand}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/12 bg-white/[0.03]"
+                          className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.04]"
                         >
                           <BrandLogo
                             brand={brand}
                             theme="dark"
                             decorative
-                            className="h-4 w-4"
+                            className="size-5"
                           />
                         </span>
-                      ))
-                    ) : (
-                      <span className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                        Local
-                      </span>
-                    )}
+                      ))}
+                    </div>
+                    <div>
+                      <h3 className="text-heading text-foreground">
+                        {platform.name}
+                      </h3>
+                      <p className="mt-2 max-w-[56ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                        {platform.why}
+                      </p>
+                    </div>
+                    <span className="w-fit rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-muted-foreground">
+                      {platform.role}
+                    </span>
+                  </article>
+                ))}
+                <article className="spectrum-rule relative grid gap-5 bg-white/[0.02] p-6 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center sm:gap-8 sm:px-10 sm:py-8">
+                  <div className="flex items-center gap-2">
+                    <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <BrandLogo
+                        brand="openai"
+                        theme="dark"
+                        decorative
+                        className="size-5"
+                      />
+                    </span>
                   </div>
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    Channel
-                  </p>
-                  <h2 className="mt-2 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {platform.name}
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                    {platform.why}
-                  </p>
+                  <div>
+                    <p className="text-eyebrow text-subtle">Invite only</p>
+                    <h3 className="text-heading mt-2 text-foreground">
+                      ChatGPT Ads
+                    </h3>
+                    <p className="mt-2 max-w-[56ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                      A new place to show up: inside the conversation. Access is
+                      limited to Prism&apos;s network. If you were invited,
+                      bring your code.
+                    </p>
+                  </div>
+                  <Button asChild variant="outline" size="lg" className="w-fit">
+                    <TrackedLink
+                      href="/chatgpt-ads"
+                      label="see chatgpt ads"
+                      location="ads chatgpt"
+                    >
+                      See the program
+                      <ArrowUpRight aria-hidden="true" />
+                    </TrackedLink>
+                  </Button>
                 </article>
-              ))}
-            </div>
-            <div
-              className={cn(
-                coreRouteContainedSectionClassName,
-                'mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between',
-              )}
-            >
-              <div className="max-w-2xl space-y-3">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                  Invite only
-                </p>
-                <h2 className="text-2xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  ChatGPT Ads
-                </h2>
-                <p className="text-sm leading-7 text-[#b8afa2]">
-                  A new place to show up: inside the conversation. Access is
-                  limited to Prism&apos;s network. If you were invited, bring
-                  your code.
-                </p>
               </div>
-              <CoreActionLink
-                href="/chatgpt-ads"
-                label="see chatgpt ads"
-                location="ads chatgpt"
-                variant="primary"
-              >
-                See the program
-              </CoreActionLink>
             </div>
-          </div>
-        </section>
+          </Reveal>
+        </Section>
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="Fit"
-              title="Who we build campaigns for."
-              description="Local teams that want to reach more potential customers and understand what their ad spend delivers."
-            />
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {AUDIENCE_SEGMENTS.map((segment) => (
-                <Link
-                  key={segment.name}
-                  href={segment.href}
-                  className={cn(
-                    coreRoutePanelClassName,
-                    'block p-6 transition-colors hover:border-white/20',
-                  )}
-                >
-                  <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    Segment
-                  </p>
-                  <h2 className="mt-3 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {segment.name}
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                    {segment.description}
-                  </p>
-                  <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c9c1b6]">
-                    See how we support them →
-                  </p>
-                </Link>
-              ))}
+        <ServiceSteps
+          idPrefix="ads"
+          title="launch, learn, improve."
+          description="A simple loop from the first brief to weekly optimization, with every decision tied to tracked inquiries."
+          steps={STEPS}
+        />
+
+        <Section aria-labelledby="ads-budget-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="ads-budget-title"
+                eyebrow="Budget"
+                title="keep your budget focused."
+                description="Practical checks that cut waste and keep improving the quality of your leads."
+                titleClassName="max-w-[13ch]"
+              />
+            </Reveal>
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
+              {BUDGET_GUARDS.map((guard, index) => {
+                const Icon = guard.icon
+                return (
+                  <Reveal
+                    as="li"
+                    key={guard.title}
+                    delay={index * 60}
+                    className="flex flex-col gap-3 bg-card p-6 sm:p-7"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="size-5 text-foreground"
+                      strokeWidth={1.6}
+                    />
+                    <h3 className="mt-2 text-lg font-semibold tracking-[-0.02em] text-foreground">
+                      {guard.title}
+                    </h3>
+                    <p className="text-pretty text-[15px] leading-7 text-muted-foreground">
+                      {guard.body}
+                    </p>
+                  </Reveal>
+                )
+              })}
+            </ul>
+          </div>
+        </Section>
+
+        <Section
+          id="ads-founder-vsl"
+          aria-labelledby="ads-founder-title"
+          className="scroll-mt-20"
+        >
+          <Reveal>
+            <div className="relative isolate grid gap-10 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-center lg:gap-14 lg:p-12">
+              <div
+                aria-hidden="true"
+                className="bg-grid absolute inset-0 -z-10 opacity-50"
+              />
+              <div className="flex flex-col gap-5">
+                <SectionHeader
+                  id="ads-founder-title"
+                  eyebrow="Hear from our founder"
+                  title="how Prism runs ads."
+                  description="Enzo explains how we choose channels, develop creative, and review the calls and inquiries campaigns bring in."
+                  titleClassName="max-w-[12ch]"
+                />
+              </div>
+              <figure className="mx-auto w-full max-w-xl lg:max-w-none">
+                <FounderVideo
+                  src={FOUNDER_VIDEO.src}
+                  poster={FOUNDER_VIDEO.poster}
+                  title={FOUNDER_VIDEO.title}
+                  width={FOUNDER_VIDEO.width}
+                  height={FOUNDER_VIDEO.height}
+                  label="Watch Enzo"
+                  duration={FOUNDER_VIDEO.duration}
+                  location="ads founder video"
+                />
+                <figcaption className="mt-3 text-sm text-subtle">
+                  {FOUNDER_VIDEO.title}
+                </figcaption>
+              </figure>
             </div>
-            <p className="mt-6 text-sm leading-7 text-[#b8afa2]">
-              Running paid social for a dental practice? Start with{' '}
+          </Reveal>
+        </Section>
+
+        <Section aria-labelledby="ads-fit-title">
+          <Reveal>
+            <SectionHeader
+              id="ads-fit-title"
+              eyebrow="Fit"
+              title="who we build campaigns for."
+              description="Teams that want more of the right customers and a clear view of what their ad spend delivers."
+            />
+          </Reveal>
+          <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
+            {AUDIENCE_SEGMENTS.map((segment, index) => (
+              <Reveal
+                as="li"
+                key={segment.name}
+                delay={(index % 3) * 60}
+                className="flex bg-background"
+              >
+                <Link
+                  href={segment.href}
+                  className="group/segment flex w-full flex-col gap-2 p-6 transition-colors hover:bg-card focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:p-7"
+                >
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="text-lg font-semibold tracking-[-0.02em] text-foreground">
+                      {segment.name}
+                    </span>
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="mt-1 size-4 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/segment:-translate-y-0.5 group-hover/segment:translate-x-0.5 group-hover/segment:text-foreground"
+                    />
+                  </span>
+                  <span className="text-pretty text-[15px] leading-7 text-muted-foreground">
+                    {segment.description}
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+            <li className="flex flex-col justify-center gap-2 bg-background p-6 text-[15px] leading-7 text-muted-foreground sm:p-7">
+              <span className="text-eyebrow text-subtle">For dentists</span>
               <Link
                 href="/facebook-ads-for-dentists"
-                className="text-[#f5f0e8] underline underline-offset-4"
+                className="group/dental inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
               >
                 Facebook ads for dentists
+                <ArrowUpRight aria-hidden="true" className="size-4" />
               </Link>
-              . Want short-form demand too? See{' '}
               <Link
                 href="/tiktok-ads-for-dentists"
-                className="text-[#f5f0e8] underline underline-offset-4"
+                className="group/dental inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
               >
                 TikTok ads for dentists
+                <ArrowUpRight aria-hidden="true" className="size-4" />
               </Link>
-              .
-            </p>
-          </div>
-        </section>
+            </li>
+          </ul>
+        </Section>
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="Process"
-              title="Launch, learn, and improve."
-              description="A simple loop from first brief to weekly optimization."
-              titleClassName="max-w-[16ch]"
-            />
-            <ol className="mt-10 grid gap-4 md:grid-cols-5">
-              {PROCESS_STEPS.map((stage, index) => (
-                <li
-                  key={stage.step}
-                  className="border border-white/10 bg-[#070707] p-5"
-                >
-                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <h2 className="mt-5 text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {stage.step}
-                  </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#b8afa2]">
-                    {stage.body}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
+        <ServiceFaq
+          idPrefix="ads"
+          items={FAQ_ITEMS}
+          title="before you spend."
+        />
 
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading
-              eyebrow="Outcomes"
-              title="What we work to improve."
-              description="We review lead quality, conversion rates, and cost per lead to guide the next decision."
-              titleClassName="max-w-[16ch]"
-            />
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-              {OUTCOMES.map((outcome) => (
-                <li
-                  key={outcome}
-                  className="border border-white/10 bg-[#070707] p-6 text-sm leading-7 text-[#c9c1b6]"
-                >
-                  {outcome}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                What we handle
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {HANDLED_FOR_YOU.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-[#c9c1b6]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {adsBlogPosts.length > 0 ? (
-          <section className={coreRouteSectionClassName}>
-            <div className={coreRouteContainerClassName}>
-              <CoreSectionHeading
-                eyebrow="From the blog"
-                title="Ads and growth notes."
-                description="Practical articles on offers, targeting, ad creative, and campaign measurement."
-              />
-              <div className="mt-10">
-                <SimpleBlogGrid posts={adsBlogPosts}>
-                  {adsBlogPosts.map((post) => (
-                    <SimpleBlogPostCard
-                      key={post.slug}
-                      title={post.title}
-                      category={post.category}
-                      date={post.date}
-                      author={post.author}
-                      description={post.description}
-                      slug={post.slug}
-                      image={post.image}
-                      gradientClass={post.gradientClass}
-                    />
-                  ))}
-                </SimpleBlogGrid>
-              </div>
-              <div className="mt-8">
-                <CoreActionLink
-                  href="/blog"
-                  label="browse all articles"
-                  location="ads blog"
-                  variant="primary"
-                >
-                  Browse all articles
-                </CoreActionLink>
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        <section className={coreRouteSectionCompactClassName}>
-          <div className={coreRouteContainerClassName}>
-            <CoreSectionHeading eyebrow="FAQ" title="Before you spend." />
-            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
-              {FAQ_ITEMS.map((item) => (
-                <details key={item.question} className="group py-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-left text-xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                    {item.question}
-                    <span className="text-[#d8bc79] transition-transform group-open:rotate-45 motion-reduce:transition-none">
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 max-w-3xl text-sm leading-7 text-[#b8afa2]">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div className={coreRouteContainerClassName}>
-            <div
-              className={cn(
-                coreRouteContainedSectionClassName,
-                'flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between',
-              )}
-            >
-              <div className="max-w-xl space-y-3">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.24em] text-[#8f877b]">
-                  Referral program
-                </p>
-                <h2 className="text-2xl font-medium tracking-[-0.04em] text-[#f5f0e8]">
-                  Know a team who needs better ads?
-                </h2>
-                <p className="text-sm leading-7 text-[#b8afa2]">
-                  Point them to Prism&apos;s referral program. We take it from
-                  there, and you get $100 when they become a client.
-                </p>
-              </div>
-              <CoreActionLink
-                href="/refer"
-                label="refer a business"
-                location="ads refer"
-                variant="primary"
-              >
-                Refer a business
-              </CoreActionLink>
-            </div>
-          </div>
-        </section>
-
-        <section className={coreRouteSectionClassName}>
-          <div
-            className={cn(
-              coreRouteContainerClassName,
-              'flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between',
-            )}
-          >
-            <CoreSectionHeading
-              title="Ready to reach better customers?"
-              description="Prism is fully booked right now. Join the waitlist and, when we reach out, we will map your audience, channels, and starting budget with a clear plan for measuring results."
-              titleClassName="max-w-[16ch]"
-            />
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <CoreActionLink
-                href={ADS_WAITLIST_CTA.href}
-                variant="heroPrimary"
-                label={ADS_WAITLIST_CTA.label.toLowerCase()}
-                location="ads final"
-              >
-                {ADS_WAITLIST_CTA.label}
-              </CoreActionLink>
-            </div>
-          </div>
-        </section>
         <ServiceSiblings current="ads" />
+
+        <FinalCta
+          location="ads final cta"
+          title="your next campaign starts here."
+          href={ADS_WAITLIST_CTA.href}
+          headingId="ads-final-cta-title"
+        />
       </main>
       <Footer />
       <ServiceSchema
@@ -812,6 +722,19 @@ export default async function AdsPage() {
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/ads',
         }}
+      />
+      <VideoSchema
+        id={FOUNDER_VIDEO.id}
+        name={FOUNDER_VIDEO.title}
+        description="Enzo Sison explains how Prism plans campaigns, develops creative, and reviews results across Google, Meta, TikTok, and Yelp."
+        thumbnailUrl={FOUNDER_VIDEO.poster}
+        uploadDate="2025-01-24T00:00:00Z"
+        duration="PT2M48S"
+        contentUrl={FOUNDER_VIDEO.src}
+        embedUrl="https://www.design-prism.com/ads#founder-vsl"
+        width={FOUNDER_VIDEO.width}
+        height={FOUNDER_VIDEO.height}
+        creatorName="Enzo Sison"
       />
       <FAQSchema questions={[...FAQ_ITEMS]} />
     </div>

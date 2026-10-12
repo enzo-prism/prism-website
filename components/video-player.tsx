@@ -122,7 +122,7 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
   }
 
   const containerClass = [
-    "rounded-3xl border border-neutral-200 bg-white/80 p-4 shadow-lg backdrop-blur-sm",
+    "rounded-3xl border border-white/[0.08] bg-card p-3 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-4",
     className,
   ]
     .filter(Boolean)
@@ -131,7 +131,7 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
   return (
     <>
       <div className={containerClass}>
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/[0.06] bg-background">
           <video
             ref={videoRef}
             src={src}
@@ -144,18 +144,18 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
           />
         </div>
         {title ? (
-          <p className="mt-4 text-base font-semibold text-neutral-900">{title}</p>
+          <p className="mt-4 px-1 text-base font-semibold tracking-[-0.01em] text-foreground">{title}</p>
         ) : null}
         {caption ? (
-          <p className="mt-1 text-sm text-neutral-600">
+          <p className="mt-1 px-1 text-sm text-muted-foreground">
             {caption}
           </p>
         ) : null}
-        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="mt-4 flex flex-col gap-4 px-1 pb-1 sm:flex-row sm:items-center">
           <button
             type="button"
             onClick={togglePlayback}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
             aria-pressed={isPlaying}
             aria-label={isPlaying ? "Pause video" : "Play video"}
           >
@@ -163,7 +163,7 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
             {isPlaying ? "Pause" : "Play"}
           </button>
           <div className="flex w-full flex-1 items-center gap-3">
-            <span className="text-xs font-medium text-neutral-500">{formatTime(currentTime)}</span>
+            <span className="font-mono text-[11px] tabular-nums text-subtle">{formatTime(currentTime)}</span>
             <input
               type="range"
               min={0}
@@ -171,10 +171,10 @@ export default function VideoPlayer({ src, poster, title, caption, className, sc
               step={0.1}
               value={progress}
               onChange={event => handleSeek(Number(event.target.value))}
-              className="flex-1 cursor-pointer accent-neutral-900"
+              className="flex-1 cursor-pointer accent-foreground"
               aria-label="Video timeline"
             />
-            <span className="text-xs font-medium text-neutral-500">{formatTime(duration)}</span>
+            <span className="font-mono text-[11px] tabular-nums text-subtle">{formatTime(duration)}</span>
           </div>
         </div>
       </div>

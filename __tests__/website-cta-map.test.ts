@@ -45,9 +45,11 @@ describe('waitlist CTA map', () => {
   it('never leaves a public booking or intake CTA on the core sales surfaces', () => {
     const surfaces = [
       'components/footer.tsx',
-      'components/home/HomeOffersSection.tsx',
-      'components/home/HomeHeroSection.tsx',
-      'components/home/HomeFinalCtaSection.tsx',
+      'components/home/HomeHero.tsx',
+      'components/home/homepage-content.ts',
+      'components/prism/final-cta.tsx',
+      'components/prism/waitlist-button.tsx',
+      'components/navbar.tsx',
       'components/pricing/PricingHero.tsx',
       'components/social-link-hub.tsx',
       'app/pricing/client-page.tsx',
@@ -63,9 +65,13 @@ describe('waitlist CTA map', () => {
 
     for (const relativePath of surfaces) {
       const source = read(relativePath)
-      expect(source).not.toMatch(/BOOK_A_CALL_CTA|WEBSITE_START_CTA|BOOKING_URL/)
+      expect(source).not.toMatch(
+        /BOOK_A_CALL_CTA|WEBSITE_START_CTA|BOOKING_URL/,
+      )
       expect(source).not.toMatch(/\/(website|content|ads)-intake/)
-      expect(source).not.toMatch(/["'`]\/(get-started|apply|free-analysis|contact)["'`]/)
+      expect(source).not.toMatch(
+        /["'`]\/(get-started|apply|free-analysis|contact)["'`]/,
+      )
       expect(source).toMatch(/waitlist/i)
     }
   })

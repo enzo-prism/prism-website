@@ -1,17 +1,22 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
 
 import BrandLogo from '@/components/brand-logo'
 import Footer from '@/components/footer'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
 import ScrollToTop from '@/components/scroll-to-top'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
 import { WebPageSchema } from '@/components/schema-markup'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { getAllPosts } from '@/lib/mdx-data'
-import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const REPLIT_REFERRAL_URL = 'https://replit.com/refer/enzo78'
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@the_design_prism'
@@ -27,41 +32,41 @@ const formatBlogDate = (date: string) => {
   if (Number.isNaN(parsed.getTime())) {
     return date
   }
-  return BLOG_DATE_FORMATTER.format(parsed).toLowerCase()
+  return BLOG_DATE_FORMATTER.format(parsed)
 }
 
 const WORKFLOW_ITEMS = [
   {
     title: 'custom website builds',
     description:
-      'fast, lightweight, seo-optimized sites built in html, css, javascript, or frameworks like react.',
+      'Fast, lightweight, SEO-optimized sites built in HTML, CSS, JavaScript, or frameworks like React.',
   },
   {
     title: 'live collaboration',
-    description: 'clients can review and comment inside replit in real time.',
+    description: 'Clients can review and comment inside Replit in real time.',
   },
   {
-    title: 'ai-assisted development',
+    title: 'AI-assisted development',
     description:
-      'powered by replit’s ghostwriter and prism’s design systems for speed and consistency.',
+      'Powered by Replit’s Ghostwriter and Prism’s design systems for speed and consistency.',
   },
   {
     title: 'instant deployment',
     description:
-      'shareable links, automated updates, and analytics integrations built right in.',
+      'Shareable links, automated updates, and analytics integrations built right in.',
   },
 ]
 
 const LEARNING_CHANNELS = [
   {
-    title: 'our blog',
+    title: 'Our blog',
     description:
-      'detailed guides for replit web development and design best practices.',
+      'Detailed guides for Replit web development and design best practices.',
     href: '/blog',
   },
   {
-    title: 'our youtube channel',
-    description: 'walkthroughs, tips, and visual tutorials.',
+    title: 'Our YouTube channel',
+    description: 'Walkthroughs, tips, and visual tutorials.',
     href: YOUTUBE_CHANNEL_URL,
   },
 ]
@@ -89,380 +94,287 @@ export default async function ReplitPage() {
     )
     .slice(0, 3)
 
+  const linkClassName =
+    'rounded-sm font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50'
+
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900 lowercase">
-        <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(0,0,0,0.85))]"
-          />
-          <div className="absolute inset-0 opacity-50 mix-blend-screen">
-            <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(129,140,248,0.35),_rgba(67,56,202,0))]" />
-          </div>
-          <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center lowercase md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
-                <BrandLogo brand="replit" decorative className="h-4 w-4" />
-                prism × replit
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                prism × replit: building the next generation of websites
-              </h1>
-              <p className="text-lg font-medium text-white/90 sm:text-xl">
-                build. launch. grow. all on replit.
-              </p>
-              <p className="max-w-3xl text-base text-white/80 sm:text-lg">
-                prism partners with replit to design and build high-performance
-                websites for modern businesses. whether you want a custom site
-                built by our team or prefer to learn how to build your own,
-                we’ll help you get started.
-              </p>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href="/waitlist">
-                    <span className="inline-flex items-center gap-2">
-                      <PixelishIcon
-                        src={pixelishForEmoji('🚀').src}
-                        alt=""
-                        size={18}
-                        invert={false}
-                        aria-hidden
-                      />
-                      <span>get a website built in replit</span>
-                      <ArrowRight className="h-5 w-5" aria-hidden />
-                    </span>
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline-inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link
-                    href={REPLIT_REFERRAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      <BrandLogo
-                        brand="replit"
-                        decorative
-                        className="h-4.5 w-4.5"
-                      />
-                      <span>start with replit</span>
-                      <ArrowRight className="h-5 w-5" aria-hidden />
-                    </span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Prism × Replit"
+          title="building the next generation of websites."
+          description="Prism partners with Replit to design and build high-performance websites for modern businesses. Whether you want a custom site built by our team or prefer to learn how to build your own, we'll help you get started."
+          location="replit hero"
+          ctaHref={WAITLIST_FOCUS_HREFS.website}
+          secondary={{
+            label: 'Learn to build it yourself',
+            href: '#learn-replit',
+          }}
+          glow="violet"
+        >
+          <p className="flex items-center justify-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.18em] text-subtle">
+            <BrandLogo brand="replit" decorative className="size-4" />
+            Build. Launch. Grow. All on Replit.
+          </p>
+        </LandingHero>
 
-        <section className="border-t border-neutral-200 bg-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                why we use replit
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                a better way to build websites.
-              </h2>
-            </div>
-            <div className="flex flex-col gap-6 text-base text-neutral-600 sm:text-lg">
+        <Section aria-labelledby="replit-why-title">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="replit-why-title"
+                eyebrow="Why we use Replit"
+                title="a better way to build websites."
+              />
+            </Reveal>
+            <Reveal
+              delay={80}
+              className="space-y-5 text-pretty text-lg leading-8 text-muted-foreground lg:pt-12"
+            >
               <p>
-                replit is one of the fastest, most collaborative platforms for
+                Replit is one of the fastest, most collaborative platforms for
                 web development, letting us design, build, and deploy client
-                websites entirely in the browser. no downloads. no setup. just a
-                link, and we’re live.
+                websites entirely in the browser. No downloads. No setup. Just a
+                link, and we&apos;re live.
               </p>
               <p>
-                prism uses replit to streamline everything from design previews
+                Prism uses Replit to streamline everything from design previews
                 to real-time collaboration, so clients can see updates, give
-                feedback, and launch faster than ever.
+                feedback, and launch faster.
               </p>
-            </div>
+            </Reveal>
           </div>
-        </section>
+        </Section>
 
-        <section className="bg-neutral-950 text-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-white/60">
-                how prism builds
-              </p>
-              <h2 className="text-3xl font-semibold md:text-4xl">
-                our workflow.
-              </h2>
-              <p className="text-sm text-white/60">we use replit for:</p>
-            </div>
-            <ul className="grid gap-6">
+        <Section aria-labelledby="replit-workflow-title">
+          <Reveal>
+            <SectionHeader
+              id="replit-workflow-title"
+              eyebrow="How Prism builds"
+              title="our workflow."
+              description="We use Replit for:"
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <ul className="spectrum-rule mt-12 grid gap-px overflow-hidden rounded-[2rem] border border-white/[0.08] bg-white/[0.07] sm:grid-cols-2">
               {WORKFLOW_ITEMS.map((item) => (
-                <li
-                  key={item.title}
-                  className="flex items-start gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur"
-                >
-                  <span className="mt-0.5 rounded-full bg-emerald-400/20 p-2 text-emerald-300">
-                    <CheckCircle2 className="h-5 w-5" aria-hidden />
+                <li key={item.title} className="flex gap-4 bg-card p-6 sm:p-8">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04]">
+                    <Check
+                      aria-hidden="true"
+                      className="size-4 text-foreground"
+                    />
                   </span>
-                  <div className="space-y-1">
-                    <h3 className="text-xl font-semibold">{item.title}</h3>
-                    <p className="text-sm text-white/70 sm:text-base">
+                  <div>
+                    <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
                       {item.description}
                     </p>
                   </div>
                 </li>
               ))}
             </ul>
-            <div className="md:col-start-2">
-              <Button
-                asChild
-                size="lg"
-                variant="inverted"
-                className="mt-4 h-auto w-full rounded-full px-8 py-4 text-base font-semibold sm:w-auto"
-              >
-                <Link href="/waitlist" className="lowercase">
-                  get started with prism{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+          </Reveal>
+        </Section>
 
-        <section className="border-t border-neutral-200 bg-neutral-50 lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                learn to build on replit
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                prefer to build it yourself?
-              </h2>
-            </div>
-            <div className="space-y-6 text-base text-neutral-700 sm:text-lg">
-              <p>
-                we also publish free tutorials and step-by-step guides for
-                creators who want to learn how to build on replit. you’ll find
-                them on:
-              </p>
-              <dl className="space-y-4">
+        <Section id="learn-replit" aria-labelledby="replit-learn-title">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="replit-learn-title"
+                eyebrow="Learn to build on Replit"
+                title="prefer to build it yourself?"
+                description="We also publish free tutorials and step-by-step guides for creators who want to learn how to build on Replit. You'll find them here:"
+              />
+            </Reveal>
+            <Reveal delay={80} className="lg:pt-12">
+              <ul className="grid gap-4 sm:grid-cols-2">
                 {LEARNING_CHANNELS.map((channel) => {
                   const isExternal = channel.href.startsWith('http')
                   return (
-                    <div key={channel.title} className="space-y-2">
-                      <dt>
-                        <Link
-                          href={channel.href}
-                          target={isExternal ? '_blank' : undefined}
-                          rel={isExternal ? 'noopener noreferrer' : undefined}
-                          className="inline-flex items-center gap-2 text-lg font-semibold text-neutral-900 transition-colors hover:text-neutral-700"
-                        >
-                          {channel.title}{' '}
-                          <ArrowRight className="h-4 w-4" aria-hidden />
-                        </Link>
-                      </dt>
-                      <dd className="text-sm text-neutral-600 sm:text-base">
-                        {channel.description}
-                      </dd>
-                    </div>
+                    <li key={channel.title}>
+                      <Link
+                        href={channel.href}
+                        target={isExternal ? '_blank' : undefined}
+                        rel={isExternal ? 'noopener noreferrer' : undefined}
+                        className="group/learn block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                      >
+                        <Card className="flex h-full flex-col gap-2 p-6 transition-[border-color,transform] duration-300 group-hover/learn:-translate-y-0.5 group-hover/learn:border-white/20">
+                          <span className="flex items-center justify-between gap-3 text-lg font-semibold tracking-[-0.02em] text-foreground">
+                            {channel.title}
+                            <ArrowUpRight
+                              aria-hidden="true"
+                              className="size-4 text-subtle transition-[color,transform] duration-200 group-hover/learn:-translate-y-0.5 group-hover/learn:translate-x-0.5 group-hover/learn:text-foreground"
+                            />
+                          </span>
+                          <span className="text-[15px] leading-7 text-muted-foreground">
+                            {channel.description}
+                          </span>
+                        </Card>
+                      </Link>
+                    </li>
                   )
                 })}
-              </dl>
-              <Button
-                asChild
-                size="lg"
-                className="h-auto w-full rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white sm:w-auto"
-              >
-                <Link
+              </ul>
+              <Button asChild size="lg" variant="outline" className="mt-6">
+                <a
                   href={REPLIT_REFERRAL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  start with replit (referral link){' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
+                  <BrandLogo brand="replit" decorative className="size-4" />
+                  Start with Replit (referral link)
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
               </Button>
-              {replitBlogPosts.length > 0 && (
-                <div className="mt-12 space-y-6">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <h3 className="text-2xl font-semibold text-neutral-900">
-                      dive into our replit tutorials
-                    </h3>
+            </Reveal>
+          </div>
+
+          {replitBlogPosts.length > 0 ? (
+            <div className="mt-16 sm:mt-20">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <h3 className="text-heading text-foreground">
+                  dive into our Replit tutorials.
+                </h3>
+                <Link
+                  href="/blog"
+                  className="group/blog inline-flex items-center gap-1.5 rounded-sm text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  Browse the blog
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-200 group-hover/blog:translate-x-0.5"
+                  />
+                </Link>
+              </div>
+              <ul className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {replitBlogPosts.map((post, index) => (
+                  <Reveal as="li" key={post.slug} delay={index * 80}>
                     <Link
-                      href="/blog"
-                      className="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.3em] text-neutral-600 transition-colors hover:text-neutral-900"
+                      href={`/blog/${post.slug}`}
+                      className="group/post block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                     >
-                      browse the blog{' '}
-                      <ArrowRight className="h-4 w-4" aria-hidden />
-                    </Link>
-                  </div>
-                  <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                    {replitBlogPosts.map((post) => (
-                      <Link
-                        key={post.slug}
-                        href={`/blog/${post.slug}`}
-                        className="group flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-lg"
-                      >
+                      <Card className="flex h-full flex-col justify-between gap-6 p-6 transition-[border-color,transform] duration-300 group-hover/post:-translate-y-0.5 group-hover/post:border-white/20">
                         <div className="space-y-4">
-                          <span className="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium tracking-[0.25em] text-neutral-600">
-                            {post.category}
-                          </span>
-                          <h4 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-700">
+                          <Badge variant="outline">{post.category}</Badge>
+                          <h4 className="text-lg font-semibold leading-snug tracking-[-0.02em] text-foreground">
                             {post.title}
                           </h4>
-                          <p className="text-sm text-neutral-600">
+                          <p className="line-clamp-3 text-[15px] leading-7 text-muted-foreground">
                             {post.description}
                           </p>
                         </div>
-                        <div className="mt-6 flex items-center justify-between text-sm font-medium text-neutral-500">
-                          <span>{formatBlogDate(post.date)}</span>
-                          <span className="inline-flex items-center gap-2 text-neutral-900">
-                            read post{' '}
-                            <ArrowRight className="h-4 w-4" aria-hidden />
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="font-mono text-[12px] text-subtle">
+                            {formatBlogDate(post.date)}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
+                            Read post
+                            <ArrowRight
+                              aria-hidden="true"
+                              className="size-4 transition-transform duration-200 group-hover/post:translate-x-0.5"
+                            />
                           </span>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-200 bg-white lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-500">
-                partnership statement
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                our partnership with replit.
-              </h2>
-            </div>
-            <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
-              <p>
-                prism is proud to be part of replit’s creator ecosystem,
-                helping businesses and creators build their online presence
-                faster and smarter. through our partnership, anyone who joins
-                replit using our referral link helps support prism’s mission to
-                make professional web design accessible to everyone.
-              </p>
-              <Button
-                asChild
-                size="lg"
-                className="h-auto w-full rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white sm:w-auto"
-              >
-                <Link
-                  href={REPLIT_REFERRAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  join replit through our link{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-200 bg-neutral-100 lowercase">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold tracking-[0.28em] text-neutral-600">
-                explore our work
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                see the websites we build on replit.
-              </h2>
-            </div>
-            <div className="space-y-6 text-base text-neutral-700 sm:text-lg">
-              <p>
-                visit our dedicated{' '}
-                <Link
-                  href="/websites"
-                  className="underline decoration-neutral-400 underline-offset-4 transition-colors hover:text-neutral-900 hover:decoration-neutral-600"
-                >
-                  websites gallery
-                </Link>{' '}
-                to explore launched projects, performance results, and the
-                design systems powering each build.
-              </p>
-              <ul className="space-y-4">
-                {[
-                  'real-world examples of prism sites built with replit.',
-                  'detailed launch stories, tech stacks, and design decisions.',
-                  'insights on performance, accessibility, and conversion boosts.',
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-3 text-sm text-neutral-600 sm:text-base"
-                  >
-                    <span className="mt-1 rounded-full bg-emerald-400/20 p-1.5 text-emerald-500">
-                      <CheckCircle2 className="h-4 w-4" aria-hidden />
-                    </span>
-                    <span>{item}</span>
-                  </li>
+                      </Card>
+                    </Link>
+                  </Reveal>
                 ))}
               </ul>
-              <Button
-                asChild
-                size="lg"
-                className="h-auto w-full rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white sm:w-auto"
-              >
-                <Link href="/websites">
-                  explore prism websites{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
             </div>
-          </div>
-        </section>
+          ) : null}
+        </Section>
 
-        <section className="border-t border-neutral-200 bg-neutral-950 lowercase">
-          <div className="container mx-auto flex flex-col items-center gap-6 px-4 py-16 text-center text-white md:px-6 md:py-24">
-            <h2 className="text-3xl font-semibold md:text-4xl">
-              ready to build something?
-            </h2>
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button
-                asChild
-                size="lg"
-                variant="inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <Link href="/waitlist">
-                  get a website built by prism{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <Link
-                  href={REPLIT_REFERRAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  start building on replit{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-            </div>
+        <Section aria-label="Replit partnership and work">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Reveal className="h-full">
+              <Card className="flex h-full flex-col p-6 sm:p-10">
+                <p className="text-eyebrow text-subtle">
+                  Partnership statement
+                </p>
+                <h2 className="text-heading mt-4 text-foreground">
+                  our partnership with Replit.
+                </h2>
+                <p className="mt-4 text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base">
+                  Prism is proud to be part of Replit&apos;s creator ecosystem,
+                  helping businesses and creators build their online presence
+                  faster and smarter. Through our partnership, anyone who joins
+                  Replit using our referral link helps support Prism&apos;s
+                  mission to make professional web design accessible to
+                  everyone.
+                </p>
+                <div className="mt-auto pt-8">
+                  <Button asChild size="lg" variant="outline">
+                    <a
+                      href={REPLIT_REFERRAL_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Join Replit through our link
+                      <ArrowUpRight aria-hidden="true" />
+                    </a>
+                  </Button>
+                </div>
+              </Card>
+            </Reveal>
+            <Reveal delay={80} className="h-full">
+              <Card className="flex h-full flex-col p-6 sm:p-10">
+                <p className="text-eyebrow text-subtle">Explore our work</p>
+                <h2 className="text-heading mt-4 text-foreground">
+                  see the websites we build on Replit.
+                </h2>
+                <p className="mt-4 text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base">
+                  Visit our dedicated{' '}
+                  <Link href="/websites" className={linkClassName}>
+                    websites page
+                  </Link>{' '}
+                  to explore launched projects, performance results, and the
+                  design systems powering each build.
+                </p>
+                <ul className="mt-6 space-y-3 text-[15px] text-muted-foreground">
+                  {[
+                    'Real-world examples of Prism sites built with Replit.',
+                    'Detailed launch stories, tech stacks, and design decisions.',
+                    'Insights on performance, accessibility, and conversion.',
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <Check
+                        aria-hidden="true"
+                        className="mt-1 size-4 shrink-0 text-foreground"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto pt-8">
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="group/web"
+                  >
+                    <Link href="/websites">
+                      Explore Prism websites
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="transition-transform duration-200 group-hover/web:translate-x-0.5"
+                      />
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
+            </Reveal>
           </div>
-        </section>
+        </Section>
+
+        <FinalCta
+          location="replit final cta"
+          href={WAITLIST_FOCUS_HREFS.website}
+          title="ready to build something?"
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -473,6 +385,6 @@ export default async function ReplitPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

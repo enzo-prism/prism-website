@@ -1,19 +1,29 @@
 import FAQSection from '@/components/faq-section'
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import Footer from '@/components/footer'
+import { LandingHero } from '@/components/landing/landing-hero'
+import { BulletList } from '@/components/landing/seo/bullet-list'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
 import ScrollToTop from '@/components/scroll-to-top'
+import { SeoSection } from '@/components/seo/seo-section'
 import SimpleBlogGrid from '@/components/simple-blog-grid'
 import SimpleBlogPostCard from '@/components/simple-blog-post-card'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check } from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { ArrowRight, ArrowUpRight, MapPin, Store } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
-import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import { ServiceSchema } from '@/components/schema-markup'
 import { getAllPosts } from '@/lib/mdx-data'
 import VideoPlayer from '@/components/video-player'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { WAITLIST_CTA } from '@/lib/waitlist'
 
 type Platform = {
   name: string
@@ -249,361 +259,315 @@ export default async function LocalListingsPage() {
     })
     .slice(0, 3)
 
+  const inlineLink =
+    'font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70'
+
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
 
-      <main className="flex-1">
-        <section className="px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-neutral-400">
-              local listing optimization
-            </p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-              Be the obvious choice in your neighborhood
-            </h1>
-            <p className="mt-6 text-base text-neutral-600 sm:text-lg">
-              We optimize and maintain your listings across Google, Apple, Yelp,
-              Bing, Facebook, Instagram, Nextdoor, Waze, and more so you show up
-              higher, look better, and win more nearby customers.
-            </p>
-            <p className="mt-4 text-sm text-neutral-600">
-              Need the full plan beyond listings? Explore our{' '}
-              <Link
-                href="/local-seo-services"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="local listing optimization"
+          title="be the obvious choice in your neighborhood."
+          description="We optimize and maintain your listings across Google, Apple, Yelp, Bing, Facebook, Instagram, Nextdoor, Waze, and more so nearby customers find accurate hours, photos, and details wherever they look."
+          location="local listings hero"
+          ctaHref={WAITLIST_CTA.href}
+          ctaLabel={FREE_AUDIT_CTA_TEXT}
+          secondary={{ label: 'See our process', href: '#process' }}
+          glow="green"
+        >
+          <ul
+            aria-label="Platforms we manage"
+            className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2.5"
+          >
+            {platforms.map((platform) => (
+              <li
+                key={platform.name}
+                className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4 text-sm text-muted-foreground backdrop-blur-sm"
               >
+                <span className="flex -space-x-1.5">
+                  {platform.logoBrands?.length ? (
+                    platform.logoBrands.map((brand) => (
+                      <span
+                        key={brand}
+                        className="grid size-7 place-items-center rounded-full border border-white/10 bg-card"
+                      >
+                        <BrandLogo brand={brand} theme="dark" decorative className="h-3.5 w-3.5" />
+                      </span>
+                    ))
+                  ) : (
+                    <span className="grid size-7 place-items-center rounded-full border border-white/10 bg-card">
+                      <MapPin aria-hidden="true" className="size-3.5 text-foreground" />
+                    </span>
+                  )}
+                </span>
+                {platform.name}
+              </li>
+            ))}
+          </ul>
+        </LandingHero>
+
+        <SeoSection
+          id="local-listings-founder-vsl"
+          eyebrow="hear from our founder"
+          title="your listing is the first impression."
+          description={
+            <>
+              Need the full plan beyond listings? Explore our{' '}
+              <Link href="/local-seo-services" className={inlineLink}>
                 local seo services
               </Link>{' '}
               or work with Prism as your{' '}
-              <Link
-                href="/local-seo-agency"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
+              <Link href="/local-seo-agency" className={inlineLink}>
                 local seo agency
               </Link>
               .
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/waitlist">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8"
-              >
-                <Link href="#process">See our process</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+            </>
+          }
+        >
+          <VideoPlayer
+            src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4"
+            poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg"
+            title="Founder Enzo Sison on owning your local listings"
+            caption="Enzo explains why your Google Business Profile is the real first impression, how Prism refreshes every listing (Google, Apple, Yelp, Bing, and more), and why accurate listings matter for visibility, calls, and loyal regulars."
+            schema={{
+              id: 'https://www.design-prism.com/local-listings#founder-vsl',
+              name: 'Founder Enzo Sison on owning your local listings',
+              description:
+                'Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles (photos, services, descriptions, posts, and reviews) to lift visibility, conversions, and repeat business.',
+              thumbnailUrl:
+                'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg',
+              uploadDate: '2025-01-24T00:00:00Z',
+              duration: 'PT60S',
+              contentUrl:
+                'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4',
+              embedUrl:
+                'https://www.design-prism.com/local-listings#founder-vsl',
+              width: 1920,
+              height: 1080,
+              creatorName: 'Enzo Sison',
+            }}
+          />
+        </SeoSection>
 
-        <section className="px-4 py-12 sm:py-16">
-          <div
-            id="local-listings-founder-vsl"
-            className="mx-auto max-w-3xl text-left"
-          >
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
-              hear from our founder
-            </p>
-            <VideoPlayer
-              className="mt-4"
-              src="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4"
-              poster="https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg"
-              title="Founder Enzo Sison on owning your local listings"
-              caption="Enzo explains why your Google Business Profile is the real first impression, how Prism refreshes every listing (Google, Apple, Yelp, Bing, and more), and how better listings boost visibility, calls, and loyal regulars."
-              schema={{
-                id: 'https://www.design-prism.com/local-listings#founder-vsl',
-                name: 'Founder Enzo Sison on local listing domination',
-                description:
-                  'Enzo Sison covers why outdated listings kill trust and how Prism rebuilds Google, Apple, Yelp, and Bing profiles (photos, services, descriptions, posts, and reviews) to lift visibility, conversions, and repeat business.',
-                thumbnailUrl:
-                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/so_0,q_auto/local_listings_di9gy7.jpg',
-                uploadDate: '2025-01-24T00:00:00Z',
-                duration: 'PT60S',
-                contentUrl:
-                  'https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1763162481/local_listings_di9gy7.mp4',
-                embedUrl:
-                  'https://www.design-prism.com/local-listings#founder-vsl',
-                width: 1920,
-                height: 1080,
-                creatorName: 'Enzo Sison',
-              }}
+        <Section aria-labelledby="listings-what-you-get-title">
+          <Reveal>
+            <SectionHeader
+              id="listings-what-you-get-title"
+              eyebrow="what you get"
+              title="accurate everywhere. built to convert."
+              description="Everything you need to stay accurate everywhere and convert views into action."
             />
-          </div>
-        </section>
+          </Reveal>
+          <Reveal delay={80}>
+            <ul className="mt-12 grid gap-px overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-white/[0.08] sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
+              {whatYouGet.map((item, index) => (
+                <li key={item.title} className="flex flex-col gap-3 bg-card p-6 sm:p-8">
+                  <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                  <p className="text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Section>
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              what you get
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Everything you need to stay accurate everywhere and convert views
-              into action.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
-            {whatYouGet.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm"
-              >
-                <h3 className="text-lg font-semibold text-neutral-900">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm text-neutral-600">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              platforms we manage (and why)
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Coverage across the agreed profiles where customers search, compare,
-              and contact you.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {platforms.map((platform) => (
-              <div
-                key={platform.name}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm"
-              >
-                {platform.logoBrands?.length ? (
-                  <div className="mb-4 flex items-center gap-2">
-                    {platform.logoBrands.map((brand) => (
-                      <span
-                        key={brand}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50"
-                      >
-                        <BrandLogo
-                          brand={brand}
-                          theme="dark"
-                          decorative
-                          className="h-4.5 w-4.5"
-                        />
+        <Section aria-labelledby="listings-platforms-title">
+          <Reveal>
+            <SectionHeader
+              id="listings-platforms-title"
+              eyebrow="coverage"
+              title="platforms we manage (and why)."
+              description="Coverage across the agreed profiles where customers search, compare, and contact you."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
+            {platforms.map((platform, index) => (
+              <Reveal key={platform.name} delay={(index % 3) * 70}>
+                <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-7">
+                  <div className="flex items-center gap-2">
+                    {platform.logoBrands?.length ? (
+                      platform.logoBrands.map((brand) => (
+                        <span
+                          key={brand}
+                          className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]"
+                        >
+                          <BrandLogo brand={brand} theme="dark" decorative className="h-[18px] w-[18px]" />
+                        </span>
+                      ))
+                    ) : (
+                      <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <MapPin className="size-[18px] text-foreground" aria-hidden="true" />
                       </span>
-                    ))}
+                    )}
                   </div>
-                ) : (
-                  <div className="mb-4 flex items-center gap-2">
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-500">
-                      <Check className="h-4 w-4" aria-hidden />
-                    </span>
-                  </div>
-                )}
-                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">
-                  platform
-                </span>
-                <h3 className="mt-2 text-xl font-semibold text-neutral-900">
-                  {platform.name}
-                </h3>
-                <p className="mt-2 text-sm text-neutral-600">{platform.why}</p>
-              </div>
+                  <p className="mt-6 text-eyebrow text-subtle">platform</p>
+                  <h3 className="text-heading mt-2 text-foreground">{platform.name}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{platform.why}</p>
+                </SpotlightCard>
+              </Reveal>
             ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              who we lift in the map pack
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Local teams that depend on accurate listings, real reviews, and
-              consistent visibility in every neighborhood.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
+        <SeoSection
+          eyebrow="who we help"
+          title="who we lift in the map pack."
+          description="Local teams that depend on accurate listings, real reviews, and consistent visibility in every neighborhood."
+        >
+          <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
             {audienceSegments.map((segment) => (
-              <Link
-                key={segment.name}
-                href={segment.href}
-                className="group block rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50"
-              >
-                <span className="text-xs font-medium uppercase tracking-wide text-neutral-400">
-                  segment
-                </span>
-                <div className="mt-2">
-                  <h3 className="text-xl font-semibold text-neutral-900 group-hover:text-neutral-800">
-                    {segment.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-neutral-600 group-hover:text-neutral-700">
-                    {segment.description}
-                  </p>
-                </div>
-                <span className="mt-4 inline-flex items-center text-sm font-medium text-muted-foreground group-hover:text-foreground">
-                  Learn how we support them
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
+              <li key={segment.name}>
+                <Link
+                  href={segment.href}
+                  className="group/segment flex items-start justify-between gap-6 rounded-sm py-6 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  <span>
+                    <span className="block text-lg font-semibold tracking-[-0.02em] text-foreground">
+                      {segment.name}
+                    </span>
+                    <span className="mt-1.5 block text-[15px] leading-7 text-muted-foreground">
+                      {segment.description}
+                    </span>
+                    <span className="sr-only">Learn how we support them</span>
+                  </span>
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="mt-1 size-5 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/segment:-translate-y-0.5 group-hover/segment:translate-x-0.5 group-hover/segment:text-foreground"
+                  />
+                </Link>
+              </li>
             ))}
-          </div>
-          <div className="mx-auto mt-12 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-8 text-left shadow-sm sm:flex sm:items-center sm:justify-between sm:gap-8">
+          </ul>
+          <Card className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
-                referral program
-              </span>
-              <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">
-                know someone struggling with listings?
-              </h3>
-              <p className="mt-3 text-sm text-neutral-600">
-                Send them to our referral program. We take it from there, and
-                you get $100 when they become a Prism client.
+              <Badge variant="outline">referral program</Badge>
+              <h3 className="text-heading mt-4 text-foreground">know someone struggling with listings?</h3>
+              <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
+                Send them to our referral program. We take it from there, and you get $100 when they become a
+                Prism client.
               </p>
             </div>
-            <Button
-              asChild
-              size="lg"
-              className="mt-6 rounded-full px-8 sm:mt-0"
-            >
-              <Link href="/refer">refer a business</Link>
+            <Button asChild variant="outline" size="lg" className="shrink-0">
+              <Link href="/refer">
+                refer a business
+                <ArrowRight aria-hidden="true" />
+              </Link>
             </Button>
-          </div>
-        </section>
+          </Card>
+        </SeoSection>
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              what we improve on your profiles
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Accurate details and useful content that help people understand your
-              business and take the next step.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {rankingLevers.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm"
-              >
-                <h3 className="text-lg font-semibold text-neutral-900">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm text-neutral-600">
-                  {item.description}
+        <Section aria-labelledby="listings-improve-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+              <Reveal>
+                <SectionHeader
+                  id="listings-improve-title"
+                  eyebrow="profile signals"
+                  title="what we improve on your profiles."
+                  description="Accurate details and useful content that help people understand your business and take the next step."
+                  titleClassName="max-w-[14ch]"
+                />
+              </Reveal>
+              <Reveal delay={80}>
+                <dl className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
+                  {rankingLevers.map((item) => (
+                    <div key={item.title} className="bg-background/60 p-6">
+                      <dt className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</dt>
+                      <dd className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
+                  running a dental practice and trying to rank higher in google? read{' '}
+                  <Link href="/blog/dental-practice-rank-higher-google-search" className={inlineLink}>
+                    dental practice rank higher in google search
+                  </Link>
+                  .
                 </p>
-              </div>
-            ))}
+              </Reveal>
+            </div>
           </div>
-          <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-left text-sm text-neutral-600 shadow-sm">
-            running a dental practice and trying to rank higher in google? read{' '}
-            <Link
-              href="/blog/dental-practice-rank-higher-google-search"
-              className="font-semibold text-neutral-900 underline underline-offset-4"
-            >
-              dental practice rank higher in google search
-            </Link>
-            .
-          </div>
-        </section>
+        </Section>
 
-        <section id="process" className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              our simple process
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              Built to clean up fast, improve continuously, and stay ahead of
-              the competition.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 max-w-4xl space-y-4">
+        <SeoSection
+          id="process"
+          eyebrow="process"
+          title="our simple process."
+          description="Built to clean up fast, then keep improving month to month."
+        >
+          <ol className="relative space-y-3 before:absolute before:bottom-6 before:left-5 before:top-6 before:w-px before:bg-white/10">
             {processSteps.map((stage, index) => (
-              <div
-                key={stage.step}
-                className="flex flex-col gap-3 rounded-2xl border border-neutral-200 p-6 shadow-sm sm:flex-row sm:items-center"
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-white">
+              <li key={stage.step} className="relative flex gap-5">
+                <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full border border-white/15 bg-card font-mono text-xs tabular-nums text-foreground">
                   {index + 1}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-neutral-900">
-                    {stage.step}
-                  </h3>
-                  <p className="mt-1 text-sm text-neutral-600">
-                    {stage.description}
-                  </p>
-                </div>
-              </div>
+                </span>
+                <Card className="flex-1 px-5 py-4">
+                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{stage.step}</h3>
+                  <p className="mt-1 text-[15px] leading-7 text-muted-foreground">{stage.description}</p>
+                </Card>
+              </li>
             ))}
-          </div>
-        </section>
+          </ol>
+        </SeoSection>
 
-        <section className="border-t border-neutral-100 bg-neutral-900 px-4 py-16 text-white sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase sm:text-4xl">
-              what we handle for you
-            </h2>
-            <p className="mt-3 text-neutral-300">
-              Full-service listing management so your team can focus on running
-              the business.
-            </p>
-          </div>
-          <div className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
-            {handledForYou.map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-neutral-100"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
+        <Section aria-labelledby="listings-handled-title">
+          <Reveal>
+            <SectionHeader
+              id="listings-handled-title"
+              eyebrow="full service"
+              title="what we handle for you."
+              description="Full-service listing management so your team can focus on running the business."
+              align="center"
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <ul className="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-2.5 sm:mt-14">
+              {handledForYou.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-foreground/90"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Section>
 
-        <section className="px-4 py-16 sm:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-              outcomes you can expect
-            </h2>
-            <p className="mt-3 text-neutral-600">
-              See what changed on your profiles and how customers use them.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-            {outcomes.map((outcome) => (
-              <div
-                key={outcome}
-                className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm"
-              >
-                <div className="mt-1 rounded-full bg-neutral-900/10 p-1">
-                  <Check className="h-4 w-4 text-neutral-900" />
-                </div>
-                <p className="text-sm text-neutral-700">{outcome}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <SeoSection
+          eyebrow="outcomes"
+          title="outcomes you can expect."
+          description="See what changed on your profiles and how customers use them."
+        >
+          <Card className="p-6 sm:p-8">
+            <BulletList items={outcomes} itemClassName="text-base" />
+          </Card>
+          <p className="flex items-start gap-3 text-sm leading-6 text-subtle">
+            <Store aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+            You keep ownership and admin access to every profile.
+          </p>
+        </SeoSection>
 
         {localListingsPosts.length > 0 ? (
-          <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-            <div className="mx-auto max-w-4xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">
-                from the blog
-              </span>
-              <h2 className="mt-3 text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                local visibility notes
-              </h2>
-              <p className="mt-3 text-neutral-600">
-                Field guides on tightening map-pack signals, cleaning data, and
-                keeping listings conversion-ready.
-              </p>
-            </div>
-            <div className="mx-auto mt-10 max-w-6xl">
+          <Section aria-labelledby="listings-blog-title">
+            <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <SectionHeader
+                id="listings-blog-title"
+                eyebrow="from the blog"
+                title="local visibility notes."
+                description="Field guides on tightening map-pack signals, cleaning data, and keeping listings conversion-ready."
+              />
+              <Button asChild variant="outline" size="lg" className="shrink-0">
+                <Link href="/blog">
+                  browse all articles
+                  <ArrowRight aria-hidden="true" />
+                </Link>
+              </Button>
+            </Reveal>
+            <div className="mt-12 sm:mt-14">
               <SimpleBlogGrid posts={localListingsPosts}>
                 {localListingsPosts.map((post) => (
                   <SimpleBlogPostCard
@@ -620,55 +584,20 @@ export default async function LocalListingsPage() {
                 ))}
               </SimpleBlogGrid>
             </div>
-            <div className="mt-10 text-center">
-              <Button asChild variant="outline" className="rounded-full px-8">
-                <Link href="/blog">browse all articles</Link>
-              </Button>
-            </div>
-          </section>
+          </Section>
         ) : null}
 
         <FAQSection
-          title="local listings faq"
+          title="local listings faq."
           subtitle="Quick answers so you know exactly how we manage and grow every profile."
           items={faqItems}
         />
 
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-20 sm:py-24">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-              Ready to become the local favorite?
-            </h2>
-            <p className="mt-4 text-neutral-600 sm:text-lg">
-              We will map a simple plan, clean up your listings, and turn
-              profile views into real customers.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/waitlist">
-                  {FREE_AUDIT_CTA_TEXT}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8"
-              >
-                <Link href="/case-studies">See case studies</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8"
-              >
-                <Link href="/pricing">See pricing</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="local listings final cta"
+          title="become the local favorite."
+          secondary={{ label: 'See case studies', href: '/case-studies' }}
+        />
       </main>
 
       <Footer />
@@ -688,7 +617,6 @@ export default async function LocalListingsPage() {
           url: 'https://www.design-prism.com/pricing',
         }}
       />
-      <FAQSchema questions={faqItems} />
     </div>
   )
 }

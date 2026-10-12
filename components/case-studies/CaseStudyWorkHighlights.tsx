@@ -1,12 +1,47 @@
 'use client'
 
+import Link from 'next/link'
+import { useState } from 'react'
+import type { LucideIcon } from 'lucide-react'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+  Activity,
+  Apple,
+  ArrowLeftRight,
+  ArrowRight,
+  BotMessageSquare,
+  Brain,
+  Building2,
+  ChartLine,
+  Database,
+  Figma,
+  GitBranch,
+  Globe,
+  LayoutDashboard,
+  MapPin,
+  Megaphone,
+  Music2,
+  Palette,
+  Plus,
+  Radar,
+  Rocket,
+  Search,
+  SearchCheck,
+  SendHorizontal,
+  Share2,
+  Sparkles,
+  Store,
+  Video,
+  X,
+} from 'lucide-react'
+
+import {
+  BrandLogo,
+  type BrandLogoKey,
+  type BrandLogoTheme,
+} from '@/components/brand-logo'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { Card } from '@/components/ui/card'
 import {
   Dialog,
   DialogClose,
@@ -20,43 +55,6 @@ import {
   getCaseStudyWorkProfileForCase,
   normalizeCaseStudyWorkProfile,
 } from '@/lib/case-study-work-highlights'
-import type { LucideIcon } from 'lucide-react'
-import {
-  Activity,
-  Apple,
-  ArrowLeftRight,
-  BotMessageSquare,
-  Brain,
-  ChartLine,
-  Database,
-  Figma,
-  GitBranch,
-  LayoutDashboard,
-  MapPin,
-  Megaphone,
-  Music2,
-  Palette,
-  Radar,
-  Rocket,
-  Search,
-  Globe,
-  SearchCheck,
-  SendHorizontal,
-  Share2,
-  Sparkles,
-  Store,
-  Video,
-  Building2,
-  X,
-} from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
-
-import {
-  BrandLogo,
-  type BrandLogoKey,
-  type BrandLogoTheme,
-} from '@/components/brand-logo'
 
 // Services with a dedicated marketing page get a deep link in the dialog.
 const SERVICE_ROUTE_MAP: Record<string, { href: string; label: string }> = {
@@ -75,24 +73,9 @@ type CaseStudyWorkHighlightsProps = {
 
 type BrandLogoSpec = {
   brand: BrandLogoKey
+  /** Variant for the dark tiles and the dark dialog. */
   theme?: BrandLogoTheme
-  dialogTheme?: BrandLogoTheme
 }
-
-const SERVICE_TILE_COLORS = [
-  { bg: '#e6fbff', text: '#38bdf8', border: '#b3e5f8' },
-  { bg: '#eaffea', text: '#34d399', border: '#b5e6b7' },
-  { bg: '#fff0f4', text: '#fb7185', border: '#f9bfce' },
-  { bg: '#fff5e1', text: '#fbbf24', border: '#ffd89a' },
-  { bg: '#ece9ff', text: '#a78bfa', border: '#c7c0ff' },
-  { bg: '#f8e9ff', text: '#d946ef', border: '#e0b6ff' },
-  { bg: '#e8fcf4', text: '#2dd4bf', border: '#a9ead9' },
-  { bg: '#e8f3ff', text: '#60a5fa', border: '#b5d9ff' },
-  { bg: '#fff4e6', text: '#f97316', border: '#ffc985' },
-  { bg: '#f0f5ff', text: '#818cf8', border: '#c4d0ff' },
-  { bg: '#f5f8ff', text: '#64748b', border: '#bcc2f4' },
-  { bg: '#ffedf7', text: '#f472b6', border: '#ffbed4' },
-]
 
 const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
   'Website transfer': ArrowLeftRight,
@@ -137,27 +120,20 @@ const TECH_ICON_MAP: Record<string, LucideIcon> = {
   'Yelp for Business': Store,
 }
 
+// Every surface here is dark, so mono marks use their dark-surface variant.
 const TECH_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
-  Codex: { brand: 'openai', theme: 'dark', dialogTheme: 'light' },
+  Codex: { brand: 'openai', theme: 'dark' },
   'Claude Code': { brand: 'claude' },
-  Vercel: { brand: 'vercel', theme: 'dark', dialogTheme: 'light' },
+  Vercel: { brand: 'vercel', theme: 'dark' },
   Figma: { brand: 'figma' },
-  'GPT-5.3 Codex': {
-    brand: 'openai',
-    theme: 'dark',
-    dialogTheme: 'light',
-  },
-  'GPT-5.5 xhigh': {
-    brand: 'openai',
-    theme: 'dark',
-    dialogTheme: 'light',
-  },
-  'Opus 4.6': { brand: 'anthropic', theme: 'dark', dialogTheme: 'light' },
+  'GPT-5.3 Codex': { brand: 'openai', theme: 'dark' },
+  'GPT-5.5 xhigh': { brand: 'openai', theme: 'dark' },
+  'Opus 4.6': { brand: 'anthropic', theme: 'dark' },
   'Gemini 3.1': { brand: 'gemini' },
   'Google Analytics': { brand: 'googleAnalytics' },
   Replit: { brand: 'replit' },
   Git: { brand: 'git' },
-  Cursor: { brand: 'cursor', theme: 'dark', dialogTheme: 'light' },
+  Cursor: { brand: 'cursor', theme: 'dark' },
   Webflow: { brand: 'webflow' },
   'Meta Business Suite': { brand: 'meta' },
   'Meta Pixel': { brand: 'meta' },
@@ -171,36 +147,13 @@ const SERVICE_LOGO_MAP: Partial<Record<string, BrandLogoSpec>> = {
 
 const FALLBACK_SERVICE_ICON: LucideIcon = Search
 const FALLBACK_TECH_ICON: LucideIcon = Sparkles
-const FALLBACK_TECH_ICON_COLOR = '#9ca3af'
-const FALLBACK_SERVICE_COLOR = '#f8fafc'
-
-const TECH_ICON_COLOR_MAP: Record<string, string> = {
-  Codex: '#f0abfc',
-  'Claude Code': '#38bdf8',
-  Vercel: '#ffffff',
-  Figma: '#f24e1e',
-  'GPT-5.3 Codex': '#a78bfa',
-  'GPT-5.5 xhigh': '#c084fc',
-  'Opus 4.6': '#f97316',
-  'Gemini 3.1': '#3b82f6',
-  'Google Analytics': '#f59e0b',
-  'Next.js': '#ffffff',
-  'Hotjar analytics': '#ff6b4d',
-  'Google Search Console': '#34a853',
-  Formspree: '#22c55e',
-  ElevenLabs: '#f8fafc',
-  'Meta Pixel': '#60a5fa',
-  Semrush: '#f97316',
-  'Google Business Profile': '#4285f4',
-  'Apple Business Connect': '#6e7681',
-  'Yelp for Business': '#d93025',
-}
 
 const WORK_HIGHLIGHT_COPY: Record<
   string,
   {
     type: 'service' | 'tech'
     whatItIs: string
+    /** Rendered under "Why it matters". */
     whyPrism: string
   }
 > = {
@@ -489,259 +442,227 @@ const getWorkHighlightCopy = (name: string, type: 'service' | 'tech') => {
       }
 }
 
-const getServiceIcon = (service: string): LucideIcon =>
-  SERVICE_ICON_MAP[service] ?? FALLBACK_SERVICE_ICON
+const getItemLogo = (item: WorkHighlightItem): BrandLogoSpec | undefined =>
+  item.type === 'service' ? SERVICE_LOGO_MAP[item.name] : TECH_LOGO_MAP[item.name]
 
-const getTechIcon = (tech: string): LucideIcon =>
-  TECH_ICON_MAP[tech] ?? FALLBACK_TECH_ICON
+function ItemMark({
+  item,
+  size = 'sm',
+}: {
+  item: WorkHighlightItem
+  size?: 'sm' | 'lg'
+}) {
+  const Icon =
+    item.type === 'service'
+      ? (SERVICE_ICON_MAP[item.name] ?? FALLBACK_SERVICE_ICON)
+      : (TECH_ICON_MAP[item.name] ?? FALLBACK_TECH_ICON)
+  const logo = getItemLogo(item)
+  const iconElement = (
+    <Icon
+      aria-hidden="true"
+      className={size === 'lg' ? 'size-5 text-foreground' : 'size-4 text-muted-foreground'}
+    />
+  )
 
-const getTechLogo = (tech: string): BrandLogoSpec | undefined =>
-  TECH_LOGO_MAP[tech]
-
-const getServiceLogo = (service: string): BrandLogoSpec | undefined =>
-  SERVICE_LOGO_MAP[service]
-
-const getTechIconColor = (tech: string): string =>
-  TECH_ICON_COLOR_MAP[tech] ?? FALLBACK_TECH_ICON_COLOR
-
-const getServiceColor = (profile: CaseStudyWorkProfile, service: string) => {
-  const index = profile.services.indexOf(service)
-  if (index >= 0)
-    return SERVICE_TILE_COLORS[index % SERVICE_TILE_COLORS.length].text
-  return FALLBACK_SERVICE_COLOR
+  return (
+    <span
+      data-slot="work-item-mark"
+      className={
+        size === 'lg'
+          ? 'grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-background'
+          : 'grid size-8 shrink-0 place-items-center rounded-lg border border-white/[0.08] bg-background'
+      }
+    >
+      {logo ? (
+        <BrandLogo
+          brand={logo.brand}
+          theme={logo.theme}
+          decorative
+          className={size === 'lg' ? 'max-h-5 max-w-5' : 'max-h-4 max-w-4'}
+          fallback={iconElement}
+        />
+      ) : (
+        iconElement
+      )}
+    </span>
+  )
 }
 
-const getTechColor = (tech: string) => getTechIconColor(tech)
-
-type CaseStudyWorkProfile = {
-  services: string[]
-  techStack: string[]
+function ItemTile({
+  item,
+  onSelect,
+}: {
+  item: WorkHighlightItem
+  onSelect: (item: WorkHighlightItem) => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(item)}
+      className="group/tile flex min-h-14 w-full items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-2.5 text-left transition-[background-color,border-color] duration-200 hover:border-white/[0.16] hover:bg-white/[0.05] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+    >
+      <ItemMark item={item} />
+      <span className="min-w-0 flex-1 text-sm font-medium leading-snug text-foreground">
+        {item.name}
+      </span>
+      <Plus
+        aria-hidden="true"
+        className="size-4 shrink-0 text-subtle transition-[transform,color] duration-200 group-hover/tile:rotate-90 group-hover/tile:text-foreground"
+      />
+    </button>
+  )
 }
 
 export function CaseStudyWorkHighlights({
   caseStudySlug,
 }: CaseStudyWorkHighlightsProps) {
+  // The item stays set while the dialog animates closed, so the panel never
+  // collapses mid-fade.
   const [selectedItem, setSelectedItem] = useState<WorkHighlightItem | null>(
     null,
   )
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const openItem = (item: WorkHighlightItem) => {
+    setSelectedItem(item)
+    setDialogOpen(true)
+  }
   const profile = normalizeCaseStudyWorkProfile(
     getCaseStudyWorkProfileForCase(caseStudySlug),
   )
   const selectedCopy = selectedItem
     ? getWorkHighlightCopy(selectedItem.name, selectedItem.type)
     : null
-  const selectedIconColor = selectedItem
-    ? selectedItem.type === 'tech'
-      ? getTechColor(selectedItem.name)
-      : getServiceColor(profile, selectedItem.name)
-    : undefined
-  const SelectedIcon = selectedItem
-    ? selectedItem.type === 'service'
-      ? getServiceIcon(selectedItem.name)
-      : getTechIcon(selectedItem.name)
-    : FALLBACK_SERVICE_ICON
-  const selectedLogo = selectedItem
-    ? selectedItem.type === 'tech'
-      ? getTechLogo(selectedItem.name)
-      : getServiceLogo(selectedItem.name)
-    : undefined
-  const selectedIconElement = selectedItem ? (
-    <SelectedIcon
-      className="size-4 shrink-0"
-      style={{ color: selectedIconColor }}
-    />
-  ) : null
 
   if (!profile.services.length && !profile.techStack.length) {
     return null
   }
 
+  const groups = [
+    {
+      value: 'services',
+      label: 'Services',
+      items: profile.services.map((name) => ({ name, type: 'service' as const })),
+    },
+    {
+      value: 'tech-stack',
+      label: 'Tech stack',
+      items: profile.techStack.map((name) => ({ name, type: 'tech' as const })),
+    },
+  ].filter((group) => group.items.length > 0)
+
   return (
-    <section className="border-b border-border/60 bg-muted/40 px-4 py-10">
+    <Section aria-labelledby="case-study-work-title" className="py-12 sm:py-16">
       <Dialog
-        open={Boolean(selectedItem)}
-        onOpenChange={(open) => {
-          if (!open) setSelectedItem(null)
-        }}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
       >
-        <DialogContent className="sm:max-w-xl">
-          <DialogHeader className="text-left sm:text-left">
-            <DialogTitle className="flex items-start justify-between gap-2 pr-8">
-              <span>{selectedItem?.name}</span>
-              <DialogClose asChild>
-                <button
-                  type="button"
-                  aria-label="Close details"
-                  className="rounded-full p-1.5 text-muted-foreground transition hover:bg-muted/60 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <X className="size-4" />
-                  <span className="sr-only">Close</span>
-                </button>
-              </DialogClose>
-            </DialogTitle>
-            {selectedItem ? (
-              <>
-                <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                  {selectedLogo ? (
-                    <span className="inline-flex size-4 shrink-0 items-center justify-center">
-                      <BrandLogo
-                        brand={selectedLogo.brand}
-                        theme={selectedLogo.dialogTheme ?? selectedLogo.theme}
-                        decorative
-                        className="max-h-4 max-w-4"
-                        fallback={selectedIconElement}
-                      />
-                    </span>
-                  ) : (
-                    selectedIconElement
-                  )}
-                  <span className="font-medium text-foreground/85">
-                    What it is
-                  </span>
+        <DialogContent className="gap-0 p-0 sm:max-w-lg">
+          {selectedItem ? (
+            <div className="overflow-y-auto p-6 sm:p-7">
+              <DialogHeader className="text-left sm:text-left">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-3.5">
+                    <ItemMark item={selectedItem} size="lg" />
+                    <div className="min-w-0">
+                      <p className="text-eyebrow text-subtle">
+                        {selectedItem.type === 'service' ? 'Service' : 'Tech stack'}
+                      </p>
+                      <DialogTitle className="mt-1.5 text-xl leading-tight sm:text-2xl">
+                        {selectedItem.name}
+                      </DialogTitle>
+                    </div>
+                  </div>
+                  <DialogClose asChild>
+                    <button
+                      type="button"
+                      aria-label="Close details"
+                      className="-mr-1.5 -mt-1.5 grid size-10 shrink-0 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                    >
+                      <X aria-hidden="true" className="size-4" />
+                      <span className="sr-only">Close</span>
+                    </button>
+                  </DialogClose>
                 </div>
-                <DialogDescription className="text-sm text-foreground/85">
+              </DialogHeader>
+
+              <div className="mt-6">
+                <p className="text-sm font-medium text-foreground">What it is</p>
+                <DialogDescription className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
                   {selectedCopy?.whatItIs}
                 </DialogDescription>
-                <div className="mt-4 rounded-md border border-border/60 bg-muted/30 px-3 py-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    Why Prism is good at this
-                  </p>
-                  <p className="mt-2 text-sm text-foreground/90">
-                    {selectedCopy?.whyPrism}
-                  </p>
-                </div>
-                {selectedItem.type === 'service' &&
-                SERVICE_ROUTE_MAP[selectedItem.name] ? (
-                  <Link
-                    href={SERVICE_ROUTE_MAP[selectedItem.name].href}
-                    className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-foreground underline underline-offset-4 hover:text-foreground/80"
-                  >
-                    {SERVICE_ROUTE_MAP[selectedItem.name].label} →
-                  </Link>
-                ) : null}
-              </>
-            ) : null}
-          </DialogHeader>
+              </div>
+
+              <div className="spectrum-rule mt-5 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
+                <p className="text-sm font-medium text-foreground">Why it matters</p>
+                <p className="mt-1.5 text-sm leading-6 text-muted-foreground">
+                  {selectedCopy?.whyPrism}
+                </p>
+              </div>
+
+              {selectedItem.type === 'service' &&
+              SERVICE_ROUTE_MAP[selectedItem.name] ? (
+                <Link
+                  href={SERVICE_ROUTE_MAP[selectedItem.name].href}
+                  className="group/explore mt-5 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  {SERVICE_ROUTE_MAP[selectedItem.name].label}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-200 group-hover/explore:translate-x-0.5"
+                  />
+                </Link>
+              ) : null}
+            </div>
+          ) : null}
         </DialogContent>
       </Dialog>
 
-      <div className="container mx-auto max-w-5xl px-4 md:px-6">
-        <Card className="border-border/60 shadow-sm">
-          <CardHeader>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-              work highlights
-            </p>
-            <CardTitle className="text-2xl tracking-tight sm:text-3xl">
-              What we delivered for this case
-            </CardTitle>
-            <CardDescription>
-              Switch between the core service work and the systems stack used to
-              execute it.
-            </CardDescription>
-          </CardHeader>
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <Reveal className="lg:col-span-4">
+          <SectionHeader
+            id="case-study-work-title"
+            eyebrow="Work highlights"
+            title="what we delivered."
+            description="Tap any service or tool to see what it is and why it matters."
+          />
+        </Reveal>
 
-          <CardContent>
-            <Tabs defaultValue="services" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="services">Services</TabsTrigger>
-                <TabsTrigger value="tech-stack">Tech stack</TabsTrigger>
+        <Reveal className="lg:col-span-8" delay={90}>
+          <Card className="p-2.5 sm:p-3">
+            <Tabs defaultValue={groups[0]?.value} className="gap-3">
+              <TabsList className="grid h-auto w-full grid-cols-2 rounded-xl border-white/[0.06] bg-white/[0.03] p-1">
+                {groups.map((group) => (
+                  <TabsTrigger
+                    key={group.value}
+                    value={group.value}
+                    className="h-10 gap-2 rounded-lg focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0"
+                  >
+                    {group.label}
+                    <span
+                      aria-hidden="true"
+                      className="font-mono text-[11px] tabular-nums text-subtle"
+                    >
+                      {group.items.length}
+                    </span>
+                  </TabsTrigger>
+                ))}
               </TabsList>
 
-              <TabsContent value="services" className="mt-4">
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {profile.services.map((service, index) => {
-                    const color =
-                      SERVICE_TILE_COLORS[index % SERVICE_TILE_COLORS.length]
-                    const ServiceIcon = getServiceIcon(service)
-                    const serviceColor = color.text
-                    const serviceLogo = getServiceLogo(service)
-
-                    return (
-                      <button
-                        key={service}
-                        type="button"
-                        className="w-full rounded-lg border border-zinc-700 bg-black px-4 py-3 text-left transition focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-white/60"
-                        onClick={() =>
-                          setSelectedItem({ name: service, type: 'service' })
-                        }
-                      >
-                        <div className="flex min-h-[28px] items-start gap-3">
-                          {serviceLogo ? (
-                            <span className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center">
-                              <BrandLogo
-                                brand={serviceLogo.brand}
-                                theme={serviceLogo.theme}
-                                decorative
-                                className="max-h-4 max-w-4"
-                              />
-                            </span>
-                          ) : (
-                            <ServiceIcon
-                              className="mt-0.5 size-4 shrink-0"
-                              style={{ color: serviceColor }}
-                            />
-                          )}
-                          <span className="text-sm font-semibold leading-tight text-white">
-                            {service}
-                          </span>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="tech-stack" className="mt-4">
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {profile.techStack.map((tech) => {
-                    const TechIcon = getTechIcon(tech)
-                    const techColor = getTechIconColor(tech)
-                    const techLogo = getTechLogo(tech)
-
-                    return (
-                      <button
-                        key={tech}
-                        type="button"
-                        className="w-full rounded-lg border border-zinc-700 bg-black px-4 py-3 text-left transition focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-white/60"
-                        onClick={() =>
-                          setSelectedItem({ name: tech, type: 'tech' })
-                        }
-                      >
-                        <div className="flex min-h-[28px] items-start gap-3">
-                          {techLogo ? (
-                            <span className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center">
-                              <BrandLogo
-                                brand={techLogo.brand}
-                                theme={techLogo.theme}
-                                decorative
-                                className="max-h-4 max-w-4"
-                                fallback={
-                                  <TechIcon
-                                    className="size-4 shrink-0"
-                                    style={{ color: techColor }}
-                                  />
-                                }
-                              />
-                            </span>
-                          ) : (
-                            <TechIcon
-                              className="size-4 shrink-0"
-                              style={{ color: techColor }}
-                            />
-                          )}
-                          <span className="text-sm font-medium leading-tight text-zinc-300">
-                            {tech}
-                          </span>
-                        </div>
-                      </button>
-                    )
-                  })}
-                </div>
-              </TabsContent>
+              {groups.map((group) => (
+                <TabsContent key={group.value} value={group.value} className="p-0.5">
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {group.items.map((item) => (
+                      <ItemTile key={item.name} item={item} onSelect={openItem} />
+                    ))}
+                  </div>
+                </TabsContent>
+              ))}
             </Tabs>
-          </CardContent>
-        </Card>
+          </Card>
+        </Reveal>
       </div>
-    </section>
+    </Section>
   )
 }
+
+export default CaseStudyWorkHighlights

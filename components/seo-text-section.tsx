@@ -1,60 +1,61 @@
-import { cn } from "@/lib/utils"
 import type { HTMLAttributes, ReactNode } from "react"
+
+import { proseClassName } from "@/components/landing/prose"
+import { Eyebrow } from "@/components/prism/section"
+import { cn } from "@/lib/utils"
 
 interface SeoTextSectionProps extends HTMLAttributes<HTMLElement> {
   title: string
   children: ReactNode
   subtitle?: string
+  /** Kept for API compatibility; all variants share the split reading layout. */
   variant?: "default" | "compact" | "expanded"
   showDivider?: boolean
+  eyebrow?: string
 }
 
-export default function SeoTextSection({ 
-  title, 
-  children, 
+/**
+ * Long-form explainer band used near the end of SEO landers: a quiet heading
+ * column beside a readable prose column (68ch measure).
+ */
+export default function SeoTextSection({
+  title,
+  children,
   subtitle,
   variant = "default",
   showDivider = true,
-  className, 
-  ...rest 
+  eyebrow = "In depth",
+  className,
+  ...rest
 }: SeoTextSectionProps) {
-  const paddingClasses = {
-    default: "py-12 sm:py-16",
-    compact: "py-8 sm:py-10",
-    expanded: "py-16 sm:py-20"
-  }
-
-  const containerClasses = {
-    default: "max-w-3xl",
-    compact: "max-w-2xl",
-    expanded: "max-w-4xl"
-  }
-
   return (
     <section
       className={cn(
-        "px-4",
-        paddingClasses[variant],
-        showDivider && "border-t border-border/60",
-        "bg-transparent",
-        className
+        "relative",
+        variant === "compact" ? "py-14 sm:py-16" : "py-20 sm:py-24",
+        className,
       )}
       {...rest}
     >
-      <div className={cn("mx-auto", containerClasses[variant])}>
-        <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="mb-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {subtitle}
-          </p>
-        )}
-        <div className="prose prose-invert max-w-none prose-p:text-base prose-p:leading-relaxed prose-p:mb-4 prose-p:text-muted-foreground prose-li:text-muted-foreground prose-a:text-foreground prose-a:underline prose-a:decoration-border/60 prose-a:underline-offset-4 hover:prose-a:decoration-border prose-strong:text-foreground">
-          {children}
+      <div className="prism-container">
+        <div
+          className={cn(
+            "grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-16",
+            showDivider && "border-t border-white/[0.08] pt-12 sm:pt-16",
+          )}
+        >
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <Eyebrow>{eyebrow}</Eyebrow>
+            <h2 className="text-heading mt-4 max-w-[22ch] text-balance text-foreground">{title}</h2>
+            {subtitle ? (
+              <p className="mt-4 max-w-[44ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                {subtitle}
+              </p>
+            ) : null}
+          </div>
+          <div className={cn(proseClassName, "max-w-[68ch] text-base sm:text-[1.0625rem]")}>{children}</div>
         </div>
       </div>
     </section>
   )
 }
-

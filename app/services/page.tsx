@@ -1,40 +1,117 @@
-import Link from 'next/link'
 import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Camera,
+  Check,
+  Infinity as InfinityIcon,
+  LayoutTemplate,
+  Megaphone,
+  Smile,
+  type LucideIcon,
+} from 'lucide-react'
 
-import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import { ServiceSchema } from '@/components/schema-markup'
-import FAQSection from '@/components/faq-section'
-import ServiceIllustration from '@/components/animated/ServiceIllustration'
+import Navbar from '@/components/navbar'
+import { OfferIconTile } from '@/components/pricing/offer-kit'
+import BrowserFrame from '@/components/prism/browser-frame'
+import { FaqList } from '@/components/prism/faq-list'
+import FinalCta from '@/components/prism/final-cta'
+import { Marquee } from '@/components/prism/marquee'
+import { Reveal } from '@/components/prism/reveal'
+import { Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
+import { WaitlistButton } from '@/components/prism/waitlist-button'
+import { WaitlistStatus } from '@/components/prism/waitlist-status'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import TrackedLink from '@/components/tracked-link'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
+import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
+import { WAITLIST_CTA } from '@/lib/waitlist'
+
+import { SERVICE_VISUALS } from './service-visuals'
+
+const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
+  website: LayoutTemplate,
+  content: Camera,
+  ads: Megaphone,
+}
+
+// Navigation-style labels for the three services ("Websites", matching the
+// header's Services menu; "the PRO website" is the product line).
+const SERVICE_LABELS: Record<PrismServiceId, string> = {
+  website: 'Websites',
+  content: 'Content',
+  ads: 'Ads',
+}
+
+/** Card titles: lowercase, no closing period ("a site that makes choosing you easy"). */
+const toCardTitle = (value: string) => value.toLowerCase().replace(/\.$/, '')
+
+// What each core service includes, in plain terms.
+const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
+  website: [
+    'Custom design and development',
+    'Search foundations and analytics',
+    'Clear paths to call, book, or inquire',
+  ],
+  content: [
+    'Planning and scripts',
+    'Video, photo, and written production',
+    'Publishing on your agreed channels',
+  ],
+  ads: [
+    'Campaigns on the channels that fit',
+    'Call and inquiry tracking',
+    'Ongoing improvements from the data',
+  ],
+}
+
+// The packaged offers that bundle the services (canonical copy lives in
+// lib/pricing-model.ts; no public prices).
+const PACKAGED_OFFERS = [
+  {
+    offer: CANONICAL_PRICING_OFFERS.dental_os,
+    icon: Smile,
+    badge: 'For dental practices',
+    featured: false,
+  },
+  {
+    offer: CANONICAL_PRICING_OFFERS.prism_infinity,
+    icon: InfinityIcon,
+    badge: 'Unlimited requests',
+    featured: true,
+  },
+] as const
 
 type CoreService = {
+  /** Schema name (Title Case). */
   name: string
+  /** Card title shown on the page (lowercase, sentence style). */
+  title: string
   summary: string
-  illustration: 'websites' | 'local' | 'ads' | 'content' | 'analytics'
   outcomes: string[]
   caseStudies: { label: string; href: string }[]
   learnMoreLinks?: { label: string; href: string }[]
 }
 
+// How the supporting work fits around the three services. Also feeds the
+// ServiceSchema entries below.
 const coreServices: CoreService[] = [
   {
     name: 'Websites & Experience Design',
+    title: 'websites and experience design',
     summary:
-      'Design systems, copy, and development that give you a conversion-ready site, managed end to end by Prism.',
-    learnMoreLinks: [
-      { label: 'website design services', href: '/websites' },
-      {
-        label: 'join the waitlist for websites',
-        href: WAITLIST_FOCUS_HREFS.website,
-      },
-    ],
-    illustration: 'websites',
+      'Design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
+    learnMoreLinks: [{ label: 'Website design services', href: '/websites' }],
     outcomes: [
-      'Custom design, UX, and development in one sprint team',
-      'Editable component library and CMS governance',
-      'Launch support, hosting, and ongoing optimizations',
+      'Custom design, UX, and development',
+      'Editable components and content management',
+      'Launch support, hosting, and ongoing care',
     ],
     caseStudies: [
       { label: 'Olympic Bootworks', href: '/case-studies/olympic-bootworks' },
@@ -47,20 +124,20 @@ const coreServices: CoreService[] = [
   },
   {
     name: 'Local Presence & Reviews',
-    illustration: 'local',
+    title: 'local presence and reviews',
     summary:
-      'Keep your practice or storefront discoverable with listings, reputation management, and map pack reporting.',
+      'Keep your practice or storefront discoverable with accurate listings, review workflows, and local search reporting.',
     learnMoreLinks: [
-      { label: 'local seo services', href: '/local-seo-services' },
-      { label: 'local seo agency', href: '/local-seo-agency' },
-      { label: 'dentist seo', href: '/dental-practice-seo-expert' },
-      { label: 'seo audit service', href: '/seo/audit' },
-      { label: 'ai seo services', href: '/ai-seo-services' },
+      { label: 'Local SEO services', href: '/local-seo-services' },
+      { label: 'Local SEO agency', href: '/local-seo-agency' },
+      { label: 'Dentist SEO', href: '/dental-practice-seo-expert' },
+      { label: 'SEO audit service', href: '/seo/audit' },
+      { label: 'AI SEO services', href: '/ai-seo-services' },
     ],
     outcomes: [
       'Google, Apple, Yelp, and niche directory management',
-      'Review capture flows and response playbooks',
-      'Local landing blocks, schema, and reporting dashboards',
+      'Review request flows and response playbooks',
+      'Local landing pages, schema, and reporting',
     ],
     caseStudies: [
       {
@@ -72,14 +149,17 @@ const coreServices: CoreService[] = [
   },
   {
     name: 'Paid Media & Creative',
-    illustration: 'ads',
+    title: 'paid media and creative',
     summary:
-      'Strategy, creative, and execution for always-on paid search and paid social campaigns.',
-    learnMoreLinks: [{ label: 'ads', href: '/ads' }],
+      'Strategy, creative, and execution for paid search and paid social campaigns.',
+    learnMoreLinks: [
+      { label: 'Ads', href: '/ads' },
+      { label: 'TikTok ads for dentists', href: '/tiktok-ads-for-dentists' },
+    ],
     outcomes: [
-      'Full-funnel campaign setup across Google, Meta, and TikTok',
-      'High-performing creative, landing pages, and reporting',
-      'Weekly optimizations and offer testing',
+      'Campaign setup across Google, Meta, and TikTok',
+      'Ad creative, landing pages, and reporting',
+      'Ongoing optimization and offer testing',
     ],
     caseStudies: [
       {
@@ -94,20 +174,20 @@ const coreServices: CoreService[] = [
   },
   {
     name: 'Content & Communications',
-    illustration: 'content',
+    title: 'content and communications',
     summary:
-      'Operator-friendly content systems for email, video, blogs, and in-practice storytelling.',
+      'Content systems for video, blogs, email, and in-practice storytelling that owners can keep up with.',
     learnMoreLinks: [
-      { label: 'content', href: '/content' },
+      { label: 'Content', href: '/content' },
       {
-        label: 'custom email for dental practices',
+        label: 'Custom email for dental practices',
         href: '/custom-email-for-dental-practices',
       },
     ],
     outcomes: [
       'Editorial calendars and brand voice guidelines',
-      'Short-form video, blog, and email nurture production',
-      'Asset library and automation-ready templates',
+      'Short-form video, blog, and email production',
+      'Asset library and reusable templates',
     ],
     caseStudies: [
       {
@@ -119,13 +199,14 @@ const coreServices: CoreService[] = [
   },
   {
     name: 'Analytics, Automation & Support',
-    illustration: 'analytics',
+    title: 'analytics, automation, and support',
     summary:
-      'A single source of truth with GA4, ads, CRM, and in-office tools stitched together.',
+      'One clear view of GA4, ads, and in-office tools, with automations that save your team time.',
+    learnMoreLinks: [{ label: 'App development', href: '/apps' }],
     outcomes: [
-      'Dashboards and scorecards for leads, bookings, and revenue',
+      'Dashboards for leads, calls, and bookings',
       'Automations for follow-up, reminders, and hand-offs',
-      'Quarterly planning and priority shaping with the Prism team',
+      'Planning and priorities with the Prism team',
     ],
     caseStudies: [
       {
@@ -140,76 +221,41 @@ const coreServices: CoreService[] = [
   },
 ]
 
-const bundleExamples = [
-  {
-    name: 'Website Path',
-    description: 'Best for teams whose site needs to make choosing them easy.',
-    includes: ['Custom design and development', 'Search foundations', 'Analytics'],
-    ctaLabel: 'Join the waitlist for websites',
-    ctaHref: WAITLIST_FOCUS_HREFS.website,
-  },
-  {
-    name: 'Content Path',
-    description: 'Best for teams that want to show up consistently with useful stories.',
-    includes: ['Planning', 'Production', 'Publishing'],
-    ctaLabel: 'Join the waitlist for content',
-    ctaHref: WAITLIST_FOCUS_HREFS.content,
-  },
-  {
-    name: 'Ads Path',
-    description: 'Best for teams ready to reach new customers on the right channels.',
-    includes: ['Campaign build', 'Call and inquiry tracking', 'Ongoing improvements'],
-    ctaLabel: 'Join the waitlist for ads',
-    ctaHref: WAITLIST_FOCUS_HREFS.ads,
-  },
-]
-
 const workflow = [
+  {
+    title: 'join the waitlist',
+    description:
+      'Share your goals and links. For each monthly intake we review applications and reach out to the teams we can take on.',
+  },
   {
     title: 'map the system',
     description:
-      'we audit every touchpoint (site, listings, paid media, email, and practice operations) so we know where to focus first.',
+      'We review your site, listings, ads, and analytics so we know where to focus first.',
   },
   {
     title: 'build the core',
     description:
-      'your website, analytics, and local presence are stabilized in a single project sprint, giving every other channel a reliable foundation.',
+      'Your website, tracking, and local presence come first, giving every other channel a reliable foundation.',
   },
   {
-    title: 'layer the growth levers',
+    title: 'improve and report',
     description:
-      'paid media, content, and automation join the mix as we hit traction milestones, with scope tailored to your goals and budget.',
+      'Content, ads, and automation join as the foundation holds. We review the data with you and plan the next improvement.',
   },
-  {
-    title: 'optimize and report',
-    description:
-      'weekly measurements, quarterly planning, and shared dashboards keep the entire growth engine accountable and transparent.',
-  },
-]
+] as const
 
-const whoItsFor = [
-  'Local businesses that need a clear, conversion‑ready online presence.',
-  'Founders or operators tired of juggling five vendors for one growth goal.',
-  'Teams launching new locations, services, or product lines.',
-  'Brands that want one system for website, local visibility, ads, and analytics.',
-]
-
-const problemsWeSolve = [
-  'Outdated websites that look fine but don’t convert.',
-  'Inconsistent listings, reviews, and map pack visibility.',
-  'Paid ads that spend money without showing real ROI.',
-  'Disconnected analytics that make growth decisions guessy.',
-  'Manual follow‑ups and intake that slow your team down.',
-]
-
-const deliverables = [
-  'A modern website and design system you can evolve.',
-  'Listings + review engine that keeps you accurate and trusted.',
-  'Always‑on paid search/social campaigns tuned to local intent.',
-  'Content and creative that supports offers and authority.',
-  'Dashboards tying leads, bookings, and revenue to channels.',
-  'Quarterly planning and weekly optimizations with Prism.',
-]
+// Current clients only (lib/former-clients.ts lists the ones that must never
+// appear here). Every slug has a real homepage capture in public/case-studies.
+const WORK_RAIL = [
+  { slug: 'olympic-bootworks', host: 'olympicbootworks.com', name: 'Olympic Bootworks' },
+  { slug: 'dr-christopher-wong', host: 'chriswongdds.com', name: 'Dr. Christopher B. Wong' },
+  { slug: 'belize-kids-foundation', host: 'belizekids.org', name: 'Belize Kids' },
+  { slug: 'exquisite-dentistry', host: 'exquisitedentistryla.com', name: 'Exquisite Dentistry' },
+  { slug: 'rebellious-aging', host: 'rebelwithsuz.com', name: 'Rebellious Aging' },
+  { slug: 'canary-cove', host: 'canarycove.com', name: 'Canary Cove' },
+  { slug: 'town-centre-dental', host: 'towncentredental.net', name: 'Town Centre Dental' },
+  { slug: 'we-are-saplings', host: 'wearesaplings.com', name: 'We Are Saplings' },
+] as const
 
 const proofLinks = [
   { label: 'Olympic Bootworks', href: '/case-studies/olympic-bootworks' },
@@ -221,46 +267,57 @@ const proofLinks = [
     label: 'Roseville Dental Academy',
     href: '/case-studies/roseville-dental-academy',
   },
-]
+] as const
 
 const faqItems = [
   {
     question: 'Do I need every service to work with Prism?',
     answer:
-      'No. Most clients start with one foundation, usually a website or local presence, and add paid media, content, or automation once the core is stable.',
+      'No. Most clients start with one foundation, usually a website or local presence, and add content or ads once the core is stable.',
   },
   {
     question: 'How do you decide what to prioritize first?',
     answer:
-      'We start with a short audit of your website, listings, ads, and analytics, then map the fastest path to measurable wins based on your market and goals.',
+      'When we reach out from the waitlist, we review your website, listings, ads, and analytics, then agree on where to start based on your market and goals.',
   },
   {
     question: 'What industries do you work with?',
     answer:
-      'We focus on local and service‑based businesses: dental and medical practices, local retail, professional services, nonprofits, and community brands.',
+      'We focus on local and service-based businesses: dental and medical practices, local retail, professional services, nonprofits, and community brands.',
   },
   {
     question: 'How do you measure success?',
     answer:
-      'We track calls, forms, bookings, and revenue lift against channel spend, then report in plain English so you know what’s working and why.',
+      'We track the calls, forms, and bookings your tools can report, then explain in plain English what is working and why.',
   },
   {
     question: 'Can you collaborate with our internal team?',
     answer:
-      'Yes. We plug into existing marketing, ops, or front‑office teams, share dashboards, and provide playbooks so execution stays aligned.',
+      'Yes. We work alongside existing marketing, operations, or front-office teams and share the data and plans so execution stays aligned.',
   },
   {
     question: 'What does an engagement look like month to month?',
     answer:
-      'You get a dedicated Prism sprint team, weekly check‑ins, and quarterly planning. We ship improvements continuously rather than in big, risky redesigns.',
+      'It depends on the offer. A website is one project with optional care after launch. Content OS, Dental OS, and Prism Infinity are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
   },
-]
+  {
+    question: 'How do I start?',
+    answer:
+      'Join the waitlist. Prism is fully booked, so new work starts in monthly intakes, and waitlist members get first pick.',
+  },
+] as const
 
 const slugify = (value: string) =>
   value
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)+/g, '')
+
+const rise = (delay: number) =>
+  ({ '--rise-delay': `${delay}ms` }) as CSSProperties
+
+const inlineLinkClassName =
+  'group/link inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50'
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Services',
@@ -272,376 +329,442 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function ServicesPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white">
-        <section className="relative overflow-hidden border-b border-neutral-100">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        {/* Hero */}
+        <section
+          aria-labelledby="services-hero-heading"
+          className="relative isolate overflow-hidden pb-20 pt-8 sm:pb-28 sm:pt-12"
+        >
+          <div aria-hidden="true" className="bg-grid absolute inset-x-0 top-0 -z-10 h-[44rem] opacity-60" />
           <div
-            className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-white"
             aria-hidden="true"
+            className="absolute left-[-12rem] top-[-8rem] -z-10 h-[38rem] w-[min(56rem,140vw)] bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/18%),transparent),radial-gradient(40%_45%_at_70%_70%,oklch(0.76_0.17_145/8%),transparent)] blur-2xl"
           />
-          <div className="container relative mx-auto px-4 pb-16 pt-20 sm:pt-24 md:pb-20">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                services
-              </p>
-              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-                Website. Content. Ads.
+          <div aria-hidden="true" className="bg-noise mask-fade-b absolute inset-0 -z-10 opacity-[0.05]" />
+
+          <div className="prism-container grid items-end gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
+            <div className="flex min-w-0 flex-col items-start">
+              <div className="prism-rise" style={rise(0)}>
+                <WaitlistStatus />
+              </div>
+              <h1
+                id="services-hero-heading"
+                className="text-display text-gradient prism-rise mt-6 max-w-[11ch] pb-2"
+                style={rise(80)}
+              >
+                website. content. ads.
               </h1>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
+              <p
+                className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
+                style={rise(160)}
+              >
                 Prism helps with three things. The website makes choosing you
                 easy. Content keeps you found and trusted. Ads bring the right
-                customers without wasted spend. Everything else supports those
-                three.
+                customers. Everything else supports those three.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/websites"
-                  className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                >
-                  Website
-                </Link>
-                <Link
-                  href="/content"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-                >
-                  Content
-                </Link>
-                <Link
-                  href="/ads"
-                  className="inline-flex items-center justify-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-                >
-                  Ads
-                </Link>
+              <div
+                className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
+                style={rise(240)}
+              >
+                <WaitlistButton location="services hero" size="xl" className="w-full sm:w-auto" />
+                <Button asChild variant="outline" size="xl" className="group/compare w-full sm:w-auto">
+                  <TrackedLink href="/pricing" label="compare offers" location="services hero">
+                    Compare offers
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="transition-transform duration-200 group-hover/compare:translate-x-0.5"
+                    />
+                  </TrackedLink>
+                </Button>
               </div>
             </div>
+
+            <nav
+              aria-label="Prism services"
+              className="prism-rise min-w-0"
+              style={rise(200)}
+            >
+              <ol className="overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card/80 shadow-[0_40px_120px_-40px_oklch(0_0_0/90%),0_1px_0_0_oklch(1_0_0/6%)_inset] backdrop-blur-sm">
+                {PRISM_SERVICES.map((service, index) => {
+                  const Icon = SERVICE_ICONS[service.id]
+                  return (
+                    <li key={service.id} className="border-b border-white/[0.06] last:border-b-0">
+                      <TrackedLink
+                        href={service.href}
+                        label={service.homeCta.toLowerCase()}
+                        location="services hero index"
+                        className="group/index flex items-center gap-4 px-5 py-5 transition-colors hover:bg-white/[0.03] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:px-7 sm:py-6"
+                      >
+                        <span className="font-mono text-xs text-subtle">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <OfferIconTile>
+                          <Icon aria-hidden="true" className="size-[18px]" />
+                        </OfferIconTile>
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="text-[1.15rem] font-semibold tracking-[-0.025em] text-foreground">
+                            {SERVICE_LABELS[service.id]}
+                          </span>
+                          <span className="text-pretty text-sm text-muted-foreground">
+                            {service.navDescription}
+                          </span>
+                        </span>
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-5 shrink-0 text-subtle transition-[transform,color] duration-200 group-hover/index:-translate-y-0.5 group-hover/index:translate-x-0.5 group-hover/index:text-foreground"
+                        />
+                      </TrackedLink>
+                    </li>
+                  )
+                })}
+              </ol>
+            </nav>
           </div>
         </section>
 
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2">
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                  who it&apos;s for
-                </h2>
-                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
-                  {whoItsFor.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span
-                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
-                        aria-hidden="true"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="space-y-4">
-                <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                  problems we solve
-                </h2>
-                <ul className="space-y-2 text-sm text-neutral-600 sm:text-base">
-                  {problemsWeSolve.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span
-                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
-                        aria-hidden="true"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+        {/* The three services */}
+        <Section aria-labelledby="services-core-heading" className="pt-0 sm:pt-0">
+          <Reveal>
+            <SectionHeader
+              id="services-core-heading"
+              eyebrow="Three services"
+              title="one team for the whole path to a customer."
+              titleClassName="max-w-[17ch]"
+            />
+          </Reveal>
+          <ul className="mt-12 grid gap-4 lg:grid-cols-3">
+            {PRISM_SERVICES.map((service, index) => {
+              const Icon = SERVICE_ICONS[service.id]
+              const Visual = SERVICE_VISUALS[service.id]
+              return (
+                <li key={service.id} className="min-w-0">
+                  <Reveal delay={index * 90} className="h-full">
+                    <SpotlightCard className="group/service flex h-full flex-col">
+                      <div aria-hidden="true" className="border-b border-white/[0.06]">
+                        <Visual />
+                      </div>
+                      <div className="flex flex-1 flex-col p-6 sm:p-7">
+                        <div className="flex items-center gap-3">
+                          <OfferIconTile className="size-9 rounded-lg">
+                            <Icon aria-hidden="true" className="size-4" />
+                          </OfferIconTile>
+                          <p className="text-eyebrow text-subtle">{SERVICE_LABELS[service.id]}</p>
+                        </div>
+                        <h3 className="text-heading mt-5 text-foreground">
+                          {toCardTitle(service.homeTitle)}
+                        </h3>
+                        <p className="mt-3 text-pretty text-[15px] leading-7 text-muted-foreground">
+                          {service.description}
+                        </p>
+                        <ul className="mt-5 space-y-2.5">
+                          {SERVICE_INCLUDES[service.id].map((item) => (
+                            <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                              <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-foreground" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-7">
+                          <WaitlistButton
+                            location={`services core · ${service.name}`}
+                            href={service.primaryCta.href}
+                            label={service.primaryCta.label}
+                            variant="outline"
+                            size="default"
+                          />
+                          <TrackedLink
+                            href={service.href}
+                            label={service.homeCta.toLowerCase()}
+                            location={`services core · ${service.name}`}
+                            className={inlineLinkClassName}
+                          >
+                            {service.homeCta}
+                            <ArrowRight
+                              aria-hidden="true"
+                              className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+                            />
+                          </TrackedLink>
+                        </div>
+                      </div>
+                    </SpotlightCard>
+                  </Reveal>
+                </li>
+              )
+            })}
+          </ul>
+        </Section>
 
-            <div className="mx-auto mt-12 max-w-4xl text-center">
-              <h2 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                what you get
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                A single sprint team that covers strategy, design, engineering,
-                and growth, so every lever stays connected.
-              </p>
-            </div>
-            <ul className="mx-auto mt-8 grid max-w-4xl gap-3 text-sm text-neutral-600 sm:grid-cols-2 sm:text-base">
-              {deliverables.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-2 rounded-2xl border border-neutral-200 bg-white p-4"
-                >
-                  <span
-                    className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
-                    aria-hidden="true"
-                  />
-                  <span>{item}</span>
+        {/* Packaged offers */}
+        <Section aria-labelledby="services-offers-heading" className="pt-0 sm:pt-0">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <Reveal>
+              <SectionHeader
+                id="services-offers-heading"
+                eyebrow="Packaged offers"
+                title="or take it all as one plan."
+                titleClassName="max-w-[14ch]"
+              />
+            </Reveal>
+            <TrackedLink
+              href="/pricing"
+              label="compare all four offers"
+              location="services packaged offers"
+              className={`${inlineLinkClassName} lg:mb-3`}
+            >
+              Compare all four offers on pricing
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+              />
+            </TrackedLink>
+          </div>
+          <ul className="mt-12 grid gap-4 md:grid-cols-2">
+            {PACKAGED_OFFERS.map(({ offer, icon: Icon, badge, featured }, index) => (
+              <li key={offer.offerId} className="min-w-0">
+                <Reveal delay={index * 90} className="h-full">
+                  <SpotlightCard
+                    beam={featured}
+                    className={featured ? 'flex h-full flex-col overflow-visible bg-popover p-7 sm:p-10' : 'flex h-full flex-col p-7 sm:p-10'}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <OfferIconTile>
+                        <Icon aria-hidden="true" className="size-[18px]" />
+                      </OfferIconTile>
+                      <Badge variant="outline">{badge}</Badge>
+                    </div>
+                    <h3 className="text-title mt-10 text-foreground">{offer.name}</h3>
+                    <p className="mt-2 text-sm text-subtle">{offer.priceLabel}</p>
+                    <p className="mt-5 max-w-[52ch] text-pretty text-[15px] leading-7 text-muted-foreground">
+                      {offer.description}
+                    </p>
+                    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-9">
+                      <WaitlistButton
+                        location={`services packaged · ${offer.name}`}
+                        href={offer.primaryCta.href}
+                        label={offer.primaryCta.label}
+                        variant={featured ? 'default' : 'outline'}
+                      />
+                      {offer.secondaryCta ? (
+                        <TrackedLink
+                          href={offer.secondaryCta.href}
+                          label={offer.secondaryCta.label.toLowerCase()}
+                          location={`services packaged · ${offer.name}`}
+                          className={inlineLinkClassName}
+                        >
+                          {offer.secondaryCta.label}
+                          <ArrowRight
+                            aria-hidden="true"
+                            className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+                          />
+                        </TrackedLink>
+                      ) : null}
+                    </div>
+                  </SpotlightCard>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </Section>
+
+        {/* How the pieces fit */}
+        <Section aria-labelledby="services-capabilities-heading" className="pt-0 sm:pt-0">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
+            <Reveal className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeader
+                id="services-capabilities-heading"
+                eyebrow="What we run for you"
+                title="everything else supports those three."
+                description="Every engagement starts with the essentials, then adds channels as the foundation holds."
+                titleClassName="max-w-[15ch]"
+              />
+            </Reveal>
+            <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+              {coreServices.map((service, index) => (
+                <li key={service.name}>
+                  <Reveal delay={index * 60} className="grid gap-5 py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8">
+                    <div>
+                      <h3 className="text-[1.2rem] font-semibold tracking-[-0.025em] text-foreground">
+                        {service.title}
+                      </h3>
+                      <p className="mt-2 text-pretty text-[15px] leading-7 text-muted-foreground">
+                        {service.summary}
+                      </p>
+                      <ul className="mt-4 space-y-2">
+                        {service.outcomes.map((item) => (
+                          <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                            <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-foreground" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex flex-col gap-5">
+                      {service.learnMoreLinks?.length ? (
+                        <div>
+                          <p className="text-eyebrow text-subtle">Learn more</p>
+                          <ul className="mt-2 flex flex-wrap gap-2">
+                            {service.learnMoreLinks.map((link) => (
+                              <li key={link.href}>
+                                <TrackedLink
+                                  href={link.href}
+                                  label={link.label.toLowerCase()}
+                                  location="services capabilities"
+                                  className="inline-flex min-h-9 items-center rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[13px] text-foreground/90 transition-colors hover:border-white/20 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                                >
+                                  {link.label}
+                                </TrackedLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
+                      <div>
+                        <p className="text-eyebrow text-subtle">Case studies</p>
+                        <ul className="mt-2 flex flex-col">
+                          {service.caseStudies.map((caseStudy) => (
+                            <li key={caseStudy.href}>
+                              <TrackedLink
+                                href={caseStudy.href}
+                                label={caseStudy.label.toLowerCase()}
+                                location="services capabilities case study"
+                                className="group/case inline-flex min-h-9 items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                              >
+                                {caseStudy.label}
+                                <ArrowUpRight
+                                  aria-hidden="true"
+                                  className="size-3.5 transition-transform duration-200 group-hover/case:-translate-y-0.5 group-hover/case:translate-x-0.5"
+                                />
+                              </TrackedLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+
+        {/* How it works */}
+        <Section aria-labelledby="services-process-heading" className="pt-0 sm:pt-0">
+          <div className="spectrum-rule relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 sm:px-10 sm:py-16 lg:px-14">
+            <div aria-hidden="true" className="bg-dots mask-fade-b absolute inset-0 -z-10 opacity-[0.16]" />
+            <SectionHeader
+              id="services-process-heading"
+              eyebrow="How it works"
+              title="foundation first, then growth."
+              description="We start with the foundation, then bring in more services as your goals expand."
+              titleClassName="max-w-[16ch]"
+            />
+            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+              {workflow.map((step, index) => (
+                <li key={step.title} className="min-w-0 bg-card">
+                  <Reveal delay={index * 80} className="flex h-full flex-col p-6">
+                    <span className="font-mono text-xs text-subtle">
+                      Step {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="mt-8 text-[1.2rem] font-semibold tracking-[-0.025em] text-foreground">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2.5 text-pretty text-[15px] leading-7 text-muted-foreground">
+                      {step.description}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        {/* Proof rail */}
+        <section aria-labelledby="services-proof-heading" className="pb-20 sm:pb-24">
+          <div className="prism-container flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <Reveal>
+              <SectionHeader
+                id="services-proof-heading"
+                eyebrow="Proof"
+                title="proof in the wild."
+                description="Recent launches showing how Prism connects design, engineering, and growth for local brands."
+                titleClassName="max-w-[12ch]"
+              />
+            </Reveal>
+            <TrackedLink
+              href="/case-studies"
+              label="see all case studies"
+              location="services proof"
+              className={`${inlineLinkClassName} lg:mb-3`}
+            >
+              See all case studies
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+              />
+            </TrackedLink>
+          </div>
+          <Marquee
+            duration={60}
+            gap="1.25rem"
+            className="mt-12 py-2"
+            label="Client websites built by Prism"
+          >
+            {WORK_RAIL.map((site) => (
+              <figure key={site.slug} className="w-[19rem] shrink-0 sm:w-[26rem]">
+                <BrowserFrame
+                  src={`/case-studies/${site.slug}-home-desktop.jpg`}
+                  alt={`${site.name} website home page built by Prism`}
+                  url={site.host}
+                  sizes="(min-width: 640px) 26rem, 19rem"
+                />
+                <figcaption className="mt-3 text-sm text-muted-foreground">{site.name}</figcaption>
+              </figure>
+            ))}
+          </Marquee>
+          <div className="prism-container mt-8">
+            <ul className="flex flex-wrap gap-2">
+              {proofLinks.map((link) => (
+                <li key={link.href}>
+                  <TrackedLink
+                    href={link.href}
+                    label={link.label.toLowerCase()}
+                    location="services proof"
+                    className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-4 text-sm text-foreground/90 transition-colors hover:border-white/20 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  >
+                    {link.label}
+                    <ArrowUpRight aria-hidden="true" className="size-3.5 text-subtle" />
+                  </TrackedLink>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto mb-12 max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                what we run for you
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Every engagement starts with the essentials, then layers in new
-                channels as we bank wins. Here's how each service helps.
-              </p>
+        {/* FAQ */}
+        <Section aria-labelledby="services-faq-heading" className="pt-0 sm:pt-0">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeader
+                id="services-faq-heading"
+                eyebrow="FAQ"
+                title="before you pick a service."
+                description="Answers about scope, timing, and how to start."
+                titleClassName="max-w-[13ch]"
+              />
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {coreServices.map((service) => (
-                <div
-                  key={service.name}
-                  tabIndex={0}
-                  role="group"
-                  className="group flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:shadow-lg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-                >
-                  <div className="h-14 w-14 rounded-xl border border-neutral-200 bg-white p-2 transition-colors duration-300 group-hover:border-orange-300 group-focus-visible:border-orange-300 group-active:border-orange-400">
-                    <ServiceIllustration
-                      variant={service.illustration}
-                      className="h-10 w-10 text-neutral-500 transition-colors group-hover:text-orange-500 group-focus-visible:text-orange-500 group-active:text-orange-600"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold lowercase text-neutral-900">
-                      {service.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-neutral-600">
-                      {service.summary}
-                    </p>
-                    {service.learnMoreLinks?.length ? (
-                      <div className="mt-3 flex flex-wrap gap-3">
-                        {service.learnMoreLinks.map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className="inline-flex items-center text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
-                          >
-                            {link.label}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                  <ul className="space-y-2 text-sm text-neutral-600">
-                    {service.outcomes.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span
-                          className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-900"
-                          aria-hidden="true"
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto space-y-2">
-                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                      case studies
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {service.caseStudies.map((caseStudy) => (
-                        <Link
-                          key={caseStudy.href}
-                          href={caseStudy.href}
-                          className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
-                        >
-                          {caseStudy.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mx-auto mt-10 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
-              dental teams running paid social: see{' '}
-              <Link
-                href="/tiktok-ads-for-dentists"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                tiktok ads for dentists
-              </Link>
-              .
-            </div>
-            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700">
-              building an app alongside your growth stack? explore our{' '}
-              <Link
-                href="/apps"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                app development work
-              </Link>{' '}
-              or{' '}
-              <Link
-                href={WAITLIST_CTA.href}
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                join the waitlist
-              </Link>
-              .
-            </div>
-            <div className="mx-auto mt-6 max-w-4xl rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-sm text-neutral-700">
-              need plan details before you dive in? compare options on our{' '}
-              <Link
-                href="/pricing"
-                className="font-semibold text-neutral-900 underline underline-offset-4"
-              >
-                pricing page
-              </Link>
-              .
-            </div>
+            <FaqList items={faqItems} name="services-faq" defaultOpen={0} />
           </div>
-        </section>
+        </Section>
 
-        <section className="border-y border-neutral-100 bg-neutral-50 py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                how it works
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                We start with the foundation, then bring in additional services
-                as your goals expand.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {workflow.map((step, idx) => (
-                <div
-                  key={step.title}
-                  className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                    step {String(idx + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="mt-3 text-lg font-semibold lowercase text-neutral-900">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-neutral-600">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                popular bundles clients launch with
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Join the waitlist with the focus that fits. These paths show
-                where most teams begin.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {bundleExamples.map((bundle) => (
-                <div
-                  key={bundle.name}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                      path
-                    </p>
-                    <h3 className="mt-2 text-xl font-semibold lowercase text-neutral-900">
-                      {bundle.name}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-neutral-600">
-                    {bundle.description}
-                  </p>
-                  <ul className="space-y-1 text-sm text-neutral-600">
-                    {bundle.includes.map((item) => (
-                      <li key={item}>• {item}</li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto">
-                    <Link
-                      href={bundle.ctaHref}
-                      className="text-sm font-semibold lowercase text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
-                    >
-                      {bundle.ctaLabel}
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 py-16 sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                proof in the wild
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600 sm:text-base">
-                Recent launches showing how Prism connects design, engineering,
-                and growth for local brands.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                {proofLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-full border border-neutral-200 bg-white px-5 py-2 text-sm font-semibold lowercase text-neutral-900 transition hover:border-neutral-900"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                <Link
-                  href="/case-studies"
-                  className="rounded-full bg-neutral-900 px-5 py-2 text-sm font-semibold lowercase text-white transition hover:bg-neutral-800"
-                >
-                  see all case studies
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <FAQSection
-          title="services faq"
-          subtitle="Answers about scope, timing, and how to start."
-          items={faqItems}
-          className="bg-neutral-50"
+        <FinalCta
+          location="services final cta"
+          title="one team for all of it."
+          href={WAITLIST_CTA.href}
+          headingId="services-final-cta-heading"
+          secondary={{ label: 'See client wins', href: '/case-studies' }}
         />
-
-        <section className="bg-neutral-900 py-16 text-white sm:py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-semibold lowercase sm:text-4xl">
-                build your mix with prism
-              </h2>
-              <p className="mt-3 text-sm text-neutral-300 sm:text-base">
-                Tell us where you need momentum (local visibility, conversions,
-                or full-funnel growth) and we'll recommend the right combination
-                of services.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  href={WAITLIST_CTA.href}
-                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
-                >
-                  {WAITLIST_CTA.label}
-                </Link>
-                <Link
-                  href="/case-studies"
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-                >
-                  see client wins
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
       {coreServices.map((service) => (
@@ -654,6 +777,7 @@ export default function ServicesPage() {
           areaServed="United States"
         />
       ))}
-    </>
+      <FAQSchema questions={faqItems.map((item) => ({ ...item }))} />
+    </div>
   )
 }

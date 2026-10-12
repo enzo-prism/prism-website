@@ -1,9 +1,12 @@
 import Footer from '@/components/footer'
+import { LandingHero } from '@/components/landing/landing-hero'
+import { proseClassName } from '@/components/landing/prose'
 import Navbar from '@/components/navbar'
 import { WebPageSchema } from '@/components/schema-markup'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
+import { cn } from '@/lib/utils'
 
 const PAGE_TITLE = 'Privacy'
 const PAGE_DESCRIPTION =
@@ -17,56 +20,109 @@ export const metadata: Metadata = buildRouteMetadata({
   ogImage: '/prism-opengraph.png',
 })
 
+const SECTIONS = [
+  { id: 'introduction', label: 'introduction' },
+  { id: 'information-we-collect', label: 'information we collect' },
+  { id: 'how-we-use-your-information', label: 'how we use your information' },
+  { id: 'cookies-and-tracking-technologies', label: 'cookies and tracking technologies' },
+  { id: 'sharing-your-information', label: 'sharing your information' },
+  { id: 'data-security', label: 'data security' },
+  { id: 'your-rights-and-choices', label: 'your rights and choices' },
+  { id: 'childrens-privacy', label: "children's privacy" },
+  { id: 'international-data-transfers', label: 'international data transfers' },
+  { id: 'third-party-links', label: 'third-party links' },
+  { id: 'changes-to-this-privacy-policy', label: 'changes to this privacy policy' },
+  { id: 'contact-us', label: 'contact us' },
+] as const
+
 export default function PrivacyPolicyPage() {
   const lastUpdated = 'October 9, 2026'
 
-  const linkClassName =
-    'font-semibold text-foreground underline decoration-border/60 underline-offset-4 hover:decoration-border'
-
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <header className="mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 lowercase">
-                privacy policy
-              </h1>
-              <p className="text-gray-600">Last updated: {lastUpdated}</p>
-            </header>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow={<>Last updated {lastUpdated}</>}
+          title="privacy policy."
+          description={PAGE_DESCRIPTION}
+          location="privacy policy hero"
+          hideCta
+          showStatus={false}
+          glow="none"
+          align="left"
+          className="pb-10 sm:pb-14"
+          titleClassName="text-title max-w-[18ch]"
+          id="legal-title"
+        />
 
-            <div className="prose prose-gray dark:prose-invert max-w-none">
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+        <section aria-labelledby="legal-title" className="pb-20 sm:pb-28">
+          <div className="prism-container">
+            <div className="grid gap-10 border-t border-white/[0.08] pt-10 sm:pt-14 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16">
+              <nav aria-label="On this page" className="lg:sticky lg:top-28 lg:self-start">
+                <details className="group/toc rounded-2xl border border-white/[0.08] bg-card lg:hidden">
+                  <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between px-5 text-sm font-medium text-foreground [&::-webkit-details-marker]:hidden">
+                    On this page
+                    <span aria-hidden="true" className="text-subtle transition-transform duration-200 group-open/toc:rotate-45">+</span>
+                  </summary>
+                  <ol className="space-y-1 border-t border-white/[0.08] px-5 py-4">
+                    {SECTIONS.map((section) => (
+                      <li key={section.id}>
+                        <a href={`#${section.id}`} className="flex min-h-9 items-center text-sm text-muted-foreground transition-colors hover:text-foreground">
+                          {section.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+                <div className="hidden lg:block">
+                  <p className="text-eyebrow text-subtle">On this page</p>
+                  <ol className="mt-4 space-y-0.5 border-l border-white/[0.08]">
+                    {SECTIONS.map((section) => (
+                      <li key={section.id}>
+                        <a
+                          href={`#${section.id}`}
+                          className="-ml-px block border-l border-transparent py-1.5 pl-4 text-[13px] leading-5 text-muted-foreground transition-colors hover:border-white/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        >
+                          {section.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </nav>
+
+              <article className={cn(proseClassName, 'max-w-[68ch] [&>section:first-child>h2]:mt-0')}>
+              <section>
+                <h2 id="introduction">
                   introduction
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   prism agency ("we," "our," or "us") is committed to protecting
                   your privacy. This Privacy Policy explains how we collect,
                   use, disclose, and safeguard your information when you visit
                   our website design-prism.com, use our services, or engage with
                   us in any way.
                 </p>
-                <p className="text-gray-600 mb-4">
+                <p>
                   Please read this privacy policy carefully. By using our
                   services, you agree to the collection and use of information
                   in accordance with this policy.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="information-we-collect">
                   information we collect
                 </h2>
 
-                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                <h3>
                   personal information
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We may collect personal information that you voluntarily
                   provide to us when you:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>Fill out contact forms on our website</li>
                   <li>Subscribe to our newsletter or blog</li>
                   <li>Request a quote or consultation</li>
@@ -75,10 +131,10 @@ export default function PrivacyPolicyPage() {
                     Communicate with us via email, phone, or other channels
                   </li>
                 </ul>
-                <p className="text-gray-600 mb-4">
+                <p>
                   This information may include:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>
                     Name and contact information (email address, phone number,
                     mailing address)
@@ -91,14 +147,14 @@ export default function PrivacyPolicyPage() {
                   <li>Any other information you choose to provide</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                <h3>
                   automatically collected information
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p>
                   When you visit our website, we automatically collect certain
                   information about your device and usage, including:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>Browser type and version</li>
                   <li>Operating system</li>
                   <li>IP address</li>
@@ -108,14 +164,14 @@ export default function PrivacyPolicyPage() {
                 </ul>
               </section>
 
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="how-we-use-your-information">
                   how we use your information
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We use the information we collect to:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>Provide, operate, and maintain our services</li>
                   <li>Process transactions and send related information</li>
                   <li>Respond to your comments, questions, and requests</li>
@@ -126,16 +182,16 @@ export default function PrivacyPolicyPage() {
                   <li>Comply with legal obligations</li>
                 </ul>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="cookies-and-tracking-technologies">
                   cookies and tracking technologies
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We use cookies and similar tracking technologies to track
                   activity on our website and store certain information. These
                   technologies may include:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>
                     <strong>Cookies:</strong> Small data files stored on your
                     device
@@ -149,23 +205,23 @@ export default function PrivacyPolicyPage() {
                     and similar services to understand how visitors use our site
                   </li>
                 </ul>
-                <p className="text-gray-600 mb-4">
+                <p>
                   You can instruct your browser to refuse all cookies or to
                   indicate when a cookie is being sent. However, if you do not
                   accept cookies, you may not be able to use some portions of
                   our website.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="sharing-your-information">
                   sharing your information
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We do not sell, trade, or rent your personal information to
                   third parties. We may share your information in the following
                   situations:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>
                     <strong>Service Providers:</strong> With third-party vendors
                     who perform services on our behalf
@@ -184,11 +240,11 @@ export default function PrivacyPolicyPage() {
                   </li>
                 </ul>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="data-security">
                   data security
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We implement appropriate technical and organizational security
                   measures to protect your personal information against
                   unauthorized access, alteration, disclosure, or destruction.
@@ -197,15 +253,15 @@ export default function PrivacyPolicyPage() {
                   absolute security.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="your-rights-and-choices">
                   your rights and choices
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   Depending on your location, you may have certain rights
                   regarding your personal information:
                 </p>
-                <ul className="list-disc pl-6 text-gray-600 mb-4">
+                <ul>
                   <li>
                     <strong>Access:</strong> Request a copy of the personal
                     information we hold about you
@@ -227,16 +283,16 @@ export default function PrivacyPolicyPage() {
                     portable format
                   </li>
                 </ul>
-                <p className="text-gray-600 mb-4">
+                <p>
                   To exercise these rights, please contact us using the
                   information provided below.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="childrens-privacy">
                   children's privacy
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   Our services are not directed to individuals under the age of
                   13. We do not knowingly collect personal information from
                   children under 13. If you become aware that a child has
@@ -244,11 +300,11 @@ export default function PrivacyPolicyPage() {
                   we will take steps to delete such information.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="international-data-transfers">
                   international data transfers
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   Your information may be transferred to and processed in
                   countries other than your country of residence. These
                   countries may have data protection laws that are different
@@ -257,22 +313,22 @@ export default function PrivacyPolicyPage() {
                   your country of residence.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="third-party-links">
                   third-party links
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   Our website may contain links to third-party websites. We are
                   not responsible for the privacy practices or content of these
                   third-party sites. We encourage you to review the privacy
                   policies of any third-party sites you visit.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="changes-to-this-privacy-policy">
                   changes to this privacy policy
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   We may update our Privacy Policy from time to time. We will
                   notify you of any changes by posting the new Privacy Policy on
                   this page and updating the "Last updated" date. You are
@@ -280,44 +336,38 @@ export default function PrivacyPolicyPage() {
                   changes.
                 </p>
               </section>
-              <section className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              <section>
+                <h2 id="contact-us">
                   contact us
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p>
                   If you have any questions about this Privacy Policy or our
                   privacy practices, please contact us at:
                 </p>
-                <div className="bg-gray-50 p-6 rounded-lg">
-                  <p className="text-gray-700 font-semibold mb-2">
+                <div className="mt-6 rounded-2xl border border-white/[0.08] bg-card p-6 [&_p]:my-1">
+                  <p className="font-semibold text-foreground">
                     prism agency
                   </p>
-                  <p className="text-gray-600">
+                  <p>
                     Email:{' '}
                     <a
                       href="mailto:support@design-prism.com"
-                      className={linkClassName}
                     >
                       support@design-prism.com
                     </a>
                   </p>
-                  <p className="text-gray-600">
-                    Phone:{' '}
-                    <a href="tel:+1234567890" className={linkClassName}>
-                      (123) 456-7890
-                    </a>
-                  </p>
-                  <p className="text-gray-600">
+                  <p>
                     Website:{' '}
-                    <Link href="/" className={linkClassName}>
+                    <Link href="/">
                       design-prism.com
                     </Link>
                   </p>
                 </div>
               </section>
+</article>
             </div>
           </div>
-        </div>
+        </section>
       </main>
       <Footer />
       <WebPageSchema
@@ -327,6 +377,6 @@ export default function PrivacyPolicyPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

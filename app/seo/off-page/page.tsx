@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
-import Link from "next/link"
+import { Link2, MapPinned, Megaphone, MousePointerClick, Newspaper, Star } from "lucide-react"
 
+import { BulletList } from "@/components/landing/seo/bullet-list"
+import { LinkPills } from "@/components/landing/seo/link-pills"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Reveal } from "@/components/prism/reveal"
+import { Section, SectionHeader } from "@/components/prism/section"
+import { SpotlightCard } from "@/components/prism/spotlight-card"
 import { SeoHero } from "@/components/seo/seo-hero"
 import { SeoSection } from "@/components/seo/seo-section"
 import VideoPlayer from "@/components/video-player"
@@ -10,10 +16,21 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Off-page SEO systems',
-  description: 'Prism tightens listings, review flows, backlinks, and real-world engagement so search engines trust your brand and keep surfacing it locally.',
+  description: 'Prism tightens listings, review flows, backlinks, and real-world engagement so search engines and customers can verify your business.',
   path: "/seo/off-page",
   ogImage: "/prism-opengraph.png",
 })
+
+const LEVER_ICONS = [Link2, MapPinned, Star, MousePointerClick, Megaphone, Newspaper] as const
+
+const RELATED_LINKS = [
+  { label: "Back to the SEO overview", href: "/seo" },
+  { label: "Review on-page SEO", href: "/seo/on-page" },
+  { label: "SEO audit service", href: "/seo/audit" },
+  { label: "Dentist SEO", href: "/dental-practice-seo-expert" },
+  { label: "AI SEO services", href: "/ai-seo-services" },
+  { label: "How dental practices rank higher in Google", href: "/blog/dental-practice-rank-higher-google-search" },
+] as const
 
 export default function SeoOffPagePage() {
   const { hero, intro, levers, closing } = seoOffPageContent
@@ -22,12 +39,19 @@ export default function SeoOffPagePage() {
 
   return (
     <>
-      <SeoHero {...hero} />
+      <SeoHero
+        eyebrow="Off-page SEO"
+        title="make your reputation easier to find."
+        subtitle={hero.subtitle}
+        location="seo off-page hero"
+        secondaryCta={{ label: "Review on-page SEO", href: "/seo/on-page" }}
+        glow="violet"
+      />
 
       <SeoSection
         id={video.id}
         eyebrow={video.eyebrow}
-        title={video.title}
+        title="Enzo on your reputation beyond your website."
         description={video.description}
       >
         <VideoPlayer
@@ -50,75 +74,69 @@ export default function SeoOffPagePage() {
         />
       </SeoSection>
 
-      <SeoSection eyebrow="intro" title="build the proof" description={intro}>
-        <p className="text-sm text-neutral-600">
-          you can’t fake these signals, but you can design systems that make them show up consistently, so engines see a steady stream of trust.
-        </p>
-      </SeoSection>
+      <Section aria-labelledby="off-page-intro-title">
+        <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+          <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+          <Reveal className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            <SectionHeader
+              id="off-page-intro-title"
+              eyebrow="intro"
+              title="build the proof."
+              titleClassName="max-w-[12ch]"
+            />
+            <div className="space-y-5 self-end">
+              <p className="text-lead text-pretty text-foreground/90">{intro}</p>
+              <p className="text-pretty text-[15px] leading-7 text-muted-foreground">
+                You can’t fake these signals, but you can build systems that make them show up consistently, so search engines see a steady record of trust.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
 
-      {levers.map((lever) => (
-        <SeoSection key={lever.title} title={lever.title} description={lever.description}>
-          <ul className="space-y-3 text-sm text-neutral-700">
-            {lever.bullets?.map((bullet) => (
-              <li key={bullet} className="flex gap-3">
-                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-neutral-900" aria-hidden />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </SeoSection>
-      ))}
+      <Section aria-labelledby="off-page-levers-title">
+        <Reveal>
+          <SectionHeader
+            id="off-page-levers-title"
+            eyebrow="the levers"
+            title="six signals beyond your site."
+            description="Each one tells search engines and customers the same thing: this business is real, active, and trusted."
+          />
+        </Reveal>
+        <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
+          {levers.map((lever, index) => {
+            const Icon = LEVER_ICONS[index % LEVER_ICONS.length]
+            return (
+              <Reveal key={lever.title} delay={(index % 3) * 70}>
+                <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-7">
+                  <div className="flex items-center justify-between">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                  </div>
+                  <h3 className="text-heading mt-6 text-foreground">{lever.title}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{lever.description}</p>
+                  {lever.bullets ? <BulletList items={lever.bullets} marker="dot" className="mt-6" /> : null}
+                </SpotlightCard>
+              </Reveal>
+            )
+          })}
+        </div>
+      </Section>
 
-      <SeoSection
-        eyebrow="closing"
-        title="tighten the entire ecosystem"
-        description={closing}
-      >
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/seo"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            back to seo overview
-          </Link>
-          <Link
-            href="/seo/on-page"
-            className="inline-flex items-center rounded-full border border-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-neutral-900"
-          >
-            review on-page seo
-          </Link>
-          <Link
-            href="/seo/audit"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            seo audit service
-          </Link>
-          <Link
-            href="/dental-practice-seo-expert"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            dentist seo
-          </Link>
-          <Link
-            href="/ai-seo-services"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            ai seo services
-          </Link>
-          <Link
-            href="/blog/dental-practice-rank-higher-google-search"
-            className="inline-flex items-center rounded-full border border-neutral-200 px-6 py-3 text-sm font-semibold lowercase text-neutral-700"
-          >
-            rank higher in google
-          </Link>
-          <Link
-            href="/waitlist"
-            className="inline-flex items-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold lowercase text-white"
-          >
-            talk with prism
-          </Link>
+      <SeoSection eyebrow="closing" title="tighten the entire ecosystem." description={closing}>
+        <div>
+          <p className="text-eyebrow text-subtle">keep exploring</p>
+          <LinkPills links={RELATED_LINKS} label="Related SEO pages" className="mt-4" />
         </div>
       </SeoSection>
+
+      <FinalCta
+        location="seo off-page final cta"
+        title="proof everywhere they look."
+        secondary={{ label: "See the SEO audit", href: "/seo/audit" }}
+      />
 
       <ServiceSchema
         serviceId="seo-off-page"

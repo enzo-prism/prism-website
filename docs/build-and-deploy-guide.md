@@ -25,7 +25,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 2. `pnpm lint` – catch ESLint/Tailwind issues early.
 3. `pnpm typecheck` – required before shipping.
 4. `pnpm test` – recommended before touching shared components or hooks.
-5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, `/waitlist`, the navbar, the footer, or homepage offers/products. Update snapshots with `pnpm test:visual:locked:update` before merging to `main`.
+5. `pnpm test:visual:locked` – required when touching `/`, `/about`, `/pricing`, `/waitlist`, the navbar, the footer, or any homepage section (the spec guards the homepage h1 and snapshots the numbers, services, and how-to-get-in sections). Update snapshots with `pnpm test:visual:locked:update` before merging to `main`.
 6. `pnpm test:mobile-navbar` – required when touching header chrome or the mobile sheet.
 7. `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx __tests__/llms.test.ts __tests__/blog-canonical.test.ts --runInBand` – required when changing indexability, sitemap, blog visibility, RSS/latest-post behavior, or `llms.txt`.
 8. `pnpm seo:inventory && pnpm seo:lint` – required when changing metadata, route search visibility, or blog curation.
@@ -70,7 +70,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - Public chrome frames three services (Website, Content, Ads) plus Products. `/pricing` compares the four packaged offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
+  - The header Services menu links the three public services (Website, Content, Ads) plus Dental OS and Prism Infinity; Products stay in the footer and homepage. `/pricing` compares the four packaged offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
   - `/websites` publishes the PRO website offer (no form, no price, waitlist CTAs); `/waitlist` is the only live sales form
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces, as are retired fixed-plan language such as `Website Overhaul` and the retired `BOOK_A_CALL_CTA` / `WEBSITE_START_CTA` constants — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content`; other legacy pricing routes resolve to `/pricing`
@@ -104,7 +104,7 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Home, Clients → `/case-studies`, Wall of Love; the same three direct links on desktop and mobile), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the five services in the mobile panel), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 
@@ -119,7 +119,7 @@ Spot-check robots tags on both sides of the search policy:
 - **Dynamic imports and `"use client"` boundaries** – shared hook-using components still need client boundaries.
 - **Third-party build scripts** – Vercel ignores install scripts unless you approve them with `pnpm approve-builds`.
 - **Environment variables** – keep the canonical env list in `docs/environment-setup.md` and `.env.example` small and current.
-- **Framer Motion drift** – we are on `framer-motion@12`; older snippet APIs may fail typecheck.
+- **Framer Motion drift** – `framer-motion@12` is still installed but the redesigned marketing surfaces use CSS motion and `components/prism/reveal.tsx`; older snippet APIs may fail typecheck.
 
 ## Final pre-merge checklist
 

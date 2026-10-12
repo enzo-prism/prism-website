@@ -59,13 +59,12 @@ export const config = {
   // should be pure CDN hits.
   //
   // Only list a directory here when it holds assets the extension alternative
-  // below cannot cover (public/animations ships extensionless frame files) AND
-  // no page route shares its name. `case-studies/` used to be listed, which
-  // silently exempted the 20 indexable /case-studies/<slug> pages from the
-  // canonical-host redirect — every one of them served 200 on the apex host
-  // instead of 301ing to www. Its assets are all image files, so the extension
-  // alternative already excludes them.
+  // below cannot cover AND no page route shares its name. `case-studies/` used
+  // to be listed, which silently exempted the 20 indexable /case-studies/<slug>
+  // pages from the canonical-host redirect — every one of them served 200 on
+  // the apex host instead of 301ing to www. Its assets are all image files, so
+  // the extension alternative already excludes them.
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|animations/|ascii/|logos/|pixelish/|home-hero/|unicorn/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|logos/|pixelish/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
   ],
 };

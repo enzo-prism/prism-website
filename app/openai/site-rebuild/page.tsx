@@ -1,32 +1,53 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import Footer from '@/components/footer'
 import GuideTableOfContents from '@/components/guide-table-of-contents'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Eyebrow } from '@/components/prism/section'
 import ScrollProgressBar from '@/components/scroll-progress-bar'
 import ScrollToTop from '@/components/scroll-to-top'
 import SiteRebuildDynamicSteps from '@/components/site-rebuild-dynamic-steps'
 import { WebPageSchema } from '@/components/schema-markup'
+import { Button } from '@/components/ui/button'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { WAITLIST_CTA } from '@/lib/waitlist'
 
 const guideSections = [
-  { id: 'overview', label: 'Overview', iconSrc: '/pixelish/lens-plus.svg' },
-  { id: 'step-1', label: 'Step 1', emoji: '1' },
-  { id: 'step-2', label: 'Step 2', emoji: '2' },
-  { id: 'step-3', label: 'Step 3', emoji: '3' },
-  { id: 'step-4', label: 'Step 4', emoji: '4' },
-  { id: 'step-5', label: 'Step 5', emoji: '5' },
-  { id: 'step-6', label: 'Step 6', emoji: '6' },
-  { id: 'step-7', label: 'Step 7', emoji: '7' },
-  {
-    id: 'folder-overview',
-    label: 'Folder layout',
-    iconSrc: '/pixelish/folder.svg',
-  },
-  { id: 'wrap-up', label: 'Wrap up', iconSrc: '/pixelish/checkmark.svg' },
+  { id: 'overview', label: 'Overview' },
+  { id: 'step-1', label: 'Step 1' },
+  { id: 'step-2', label: 'Step 2' },
+  { id: 'step-3', label: 'Step 3' },
+  { id: 'step-4', label: 'Step 4' },
+  { id: 'step-5', label: 'Step 5' },
+  { id: 'step-6', label: 'Step 6' },
+  { id: 'step-7', label: 'Step 7' },
+  { id: 'folder-overview', label: 'Folder layout' },
+  { id: 'wrap-up', label: 'Wrap up' },
 ]
+
+const BENCHMARK_NOTES = [
+  {
+    label: 'Speed',
+    body: '5 minutes 16 seconds from prompt to exported files, captured end-to-end.',
+  },
+  {
+    label: 'Quality',
+    body: 'Deep dive on gradients, icon styling, blog completeness, and mobile breakpoints.',
+  },
+  {
+    label: 'Schema',
+    body: 'Full structured data plus transcript so you can mirror the benchmark exactly.',
+  },
+] as const
+
+const SNAPSHOT_GOALS = [
+  'Create a folder that includes the full download of the current site.',
+  'Extract all readable text and sitemap clues Codex needs for context.',
+  'Run Codex locally so the rebuilt Next.js project is ready to preview on localhost.',
+] as const
 
 const PAGE_TITLE = 'Rebuild any site locally with Codex'
 const PAGE_DESCRIPTION =
@@ -42,237 +63,175 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function OpenAISiteRebuildGuidePage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <ScrollProgressBar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-100 bg-neutral-950 text-white">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_rgba(0,0,0,0.92))]"
-          />
-          <div className="absolute inset-0 opacity-30 mix-blend-screen">
-            <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(236,72,153,0.22),_rgba(76,29,149,0))]" />
-          </div>
-          <div className="relative">
-            <div className="container mx-auto max-w-4xl px-4 py-20 text-center sm:py-24 md:px-6 md:py-28">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
-                prism openai implementation guide
-              </p>
-              <h1 className="mt-5 text-4xl font-semibold lowercase tracking-tight sm:text-5xl md:text-6xl">
-                mirror any website and rebuild it with codex
-              </h1>
-              <p className="mt-5 text-base text-white/80 sm:text-lg">
-                No fluff. Just the commands that work on macOS to download a
-                live site, prep Codex context, and run the rebuild locally so
-                you can ship updates fast.
-              </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/openai"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
-                >
-                  back to openai overview
-                </Link>
-                <Link
-                  href="/waitlist"
-                  className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/70 hover:text-white"
-                >
-                  talk with prism
-                </Link>
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Prism OpenAI implementation guide"
+          title="mirror any website and rebuild it with Codex."
+          description="No fluff. Just the commands that work on macOS to download a live site, prep Codex context, and run the rebuild locally so you can ship updates fast."
+          location="openai site rebuild hero"
+          secondary={{ label: 'Back to OpenAI overview', href: '/openai' }}
+          showStatus={false}
+          glow="green"
+        />
+
+        <section aria-label="Guide" className="pb-20 sm:pb-24">
+          <div className="prism-container">
+            <div className="grid gap-12 border-t border-white/[0.08] pt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,260px)] lg:gap-16">
+              <div className="min-w-0 space-y-16">
+                <article id="overview" className="scroll-mt-28 space-y-8">
+                  <div className="space-y-4">
+                    <Eyebrow>Start here</Eyebrow>
+                    <h2 className="text-title text-gradient max-w-[18ch] text-balance pb-1">
+                      one folder that captures the live site.
+                    </h2>
+                    <p className="text-lead max-w-[60ch] text-pretty text-muted-foreground">
+                      Every step keeps your local rebuild simple: download the
+                      current experience, extract the words that convert, and
+                      hand Codex a clean brief so the regenerated build matches
+                      what&apos;s live today.
+                    </p>
+                  </div>
+                  <div className="spectrum-rule rounded-2xl border border-white/[0.08] bg-card p-6 sm:p-8">
+                    <p className="text-eyebrow text-subtle">Goal</p>
+                    <h3 className="text-heading mt-3 text-foreground">
+                      ship a portable snapshot.
+                    </h3>
+                    <ol className="mt-5 space-y-3 text-base leading-7 text-muted-foreground">
+                      {SNAPSHOT_GOALS.map((goal, index) => (
+                        <li key={goal} className="flex items-start gap-3">
+                          <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border border-white/15 font-mono text-[11px] text-foreground tabular-nums">
+                            {index + 1}
+                          </span>
+                          <span>{goal}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </article>
+
+                <article id="step-1" className="scroll-mt-28 space-y-6">
+                  <div className="space-y-2">
+                    <p className="text-eyebrow text-subtle">step 1</p>
+                    <h3 className="text-heading text-foreground">
+                      create a project folder
+                    </h3>
+                    <p className="text-base leading-7 text-muted-foreground">
+                      Keep everything in one spot so assets, text files, and
+                      Codex context stay organized.
+                    </p>
+                  </div>
+                  <pre className="overflow-x-auto rounded-2xl border border-white/[0.08] bg-card p-5 font-mono text-sm leading-relaxed text-foreground/90 sm:text-base">
+                    <code>
+                      {`cd ~/Desktop
+mkdir site-rebuild && cd site-rebuild`}
+                    </code>
+                  </pre>
+                </article>
+
+                <SiteRebuildDynamicSteps />
+
+                <article id="wrap-up" className="scroll-mt-28">
+                  <div className="rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10">
+                    <p className="text-eyebrow text-subtle">Wrap up</p>
+                    <h3 className="text-heading mt-3 text-foreground">
+                      seven moves, live rebuild.
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+                      You now have a local mirror of the live site, Codex-ready
+                      context, and a running Next.js build on localhost. From
+                      here, you can modernize the design, iterate on copy, or
+                      push the rebuild into your repo.
+                    </p>
+                    <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                      <Button asChild size="lg" className="group/cta">
+                        <Link href="/openai">
+                          Explore more OpenAI systems
+                          <ArrowRight
+                            aria-hidden="true"
+                            className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                          />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+
+                <article aria-labelledby="benchmark-title">
+                  <div className="prism-beam relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10">
+                    <p className="text-eyebrow text-subtle">Next experiment</p>
+                    <h3
+                      id="benchmark-title"
+                      className="text-heading mt-3 text-foreground"
+                    >
+                      watch an archived Codex benchmark.
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+                      In November 2025, we ran the Model Test Key from this
+                      guide through GPT-5.1 Codex (High) and documented the full
+                      run: generation time, UI polish, responsive behavior,
+                      sitemap completeness, and the live video breakdown. This
+                      is a historical test, not a current model recommendation.
+                    </p>
+                    <ul className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                      {BENCHMARK_NOTES.map((note) => (
+                        <li
+                          key={note.label}
+                          className="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6"
+                        >
+                          <span className="w-20 shrink-0 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-subtle sm:pt-1">
+                            {note.label}
+                          </span>
+                          <span className="text-[15px] leading-7 text-muted-foreground">
+                            {note.body}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      <Button asChild size="lg" className="group/cta">
+                        <Link href="/blog/gpt-5-1-codex-test-dentist-website">
+                          Read the benchmark
+                          <ArrowRight
+                            aria-hidden="true"
+                            className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                          />
+                        </Link>
+                      </Button>
+                      <Button asChild size="lg" variant="outline">
+                        <a
+                          href="https://youtu.be/PZnRkuJ9_S0"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Watch the run
+                          <ArrowUpRight aria-hidden="true" />
+                        </a>
+                      </Button>
+                      <Button asChild size="lg" variant="outline">
+                        <a
+                          href="https://developers.openai.com/api/docs/models"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          See current OpenAI models
+                          <ArrowUpRight aria-hidden="true" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div className="min-w-0">
+                <GuideTableOfContents sections={guideSections} />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="border-b border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:px-6 lg:grid-cols-[minmax(0,_1fr)_minmax(0,_260px)] lg:gap-16 lg:py-24">
-            <div className="min-w-0 space-y-16">
-              <article id="overview" className="space-y-8">
-                <div className="space-y-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                    start here
-                  </p>
-                  <h2 className="text-3xl font-semibold lowercase text-neutral-900 sm:text-4xl">
-                    one folder that captures the live site
-                  </h2>
-                  <p className="text-base text-neutral-600 sm:text-lg">
-                    Every step keeps your local rebuild simple: download the
-                    current experience, extract the words that convert, and hand
-                    Codex a clean brief so the regenerated build matches
-                    what&apos;s live today.
-                  </p>
-                </div>
-                <div className="h-px w-full bg-neutral-200" aria-hidden />
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                    goal
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900">
-                    ship a portable snapshot
-                  </h3>
-                  <ol className="mt-4 space-y-3 text-base text-neutral-700 sm:text-lg">
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 h-6 w-6 rounded-full border border-neutral-300 bg-white text-center text-sm font-semibold leading-6 text-neutral-600">
-                        1
-                      </span>
-                      <span>
-                        Create a folder that includes the full download of the
-                        current site.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 h-6 w-6 rounded-full border border-neutral-300 bg-white text-center text-sm font-semibold leading-6 text-neutral-600">
-                        2
-                      </span>
-                      <span>
-                        Extract all readable text and sitemap clues Codex needs
-                        for context.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 h-6 w-6 rounded-full border border-neutral-300 bg-white text-center text-sm font-semibold leading-6 text-neutral-600">
-                        3
-                      </span>
-                      <span>
-                        Run Codex locally so the rebuilt Next.js project is
-                        ready to preview on localhost.
-                      </span>
-                    </li>
-                  </ol>
-                </div>
-              </article>
-
-              <article id="step-1" className="space-y-6">
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                    step 1
-                  </p>
-                  <h3 className="text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                    create a project folder
-                  </h3>
-                  <p className="text-base text-neutral-600">
-                    Keep everything in one spot so assets, text files, and Codex
-                    context stay organized.
-                  </p>
-                </div>
-                <pre className="overflow-x-auto rounded-2xl bg-neutral-950 p-5 text-sm text-white shadow-sm">
-                  <code>
-                    {`cd ~/Desktop
-mkdir site-rebuild && cd site-rebuild`}
-                  </code>
-                </pre>
-              </article>
-
-              <SiteRebuildDynamicSteps />
-
-              <article id="wrap-up" className="space-y-6">
-                <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                    wrap up
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold lowercase text-neutral-900 sm:text-3xl">
-                    seven moves, live rebuild
-                  </h3>
-                  <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                    You now have a local mirror of the live site, Codex-ready
-                    context, and a running Next.js build on localhost. From
-                    here, you can modernize the design, iterate on copy, or push
-                    the rebuild into your repo.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Link
-                      href="/openai"
-                      className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800"
-                    >
-                      explore more openai systems
-                    </Link>
-                    <Link
-                      href={WAITLIST_CTA.href}
-                      className="inline-flex items-center justify-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
-                    >
-                      join the waitlist
-                    </Link>
-                  </div>
-                </div>
-              </article>
-
-              <article className="space-y-6">
-                <div className="rounded-3xl border border-neutral-900 bg-neutral-900 p-6 text-white shadow-lg sm:p-8">
-                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
-                    next experiment
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold lowercase text-white sm:text-3xl">
-                    watch an archived codex benchmark
-                  </h3>
-                  <p className="mt-4 text-base text-white/80 sm:text-lg">
-                    In November 2025, we ran the Model Test Key from this guide
-                    through GPT-5.1 Codex (High) and documented the full run:
-                    generation time, UI polish, responsive behavior, sitemap
-                    completeness, and the live video breakdown. This is a
-                    historical test, not a current model recommendation.
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-white/80 sm:text-base">
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
-                        speed
-                      </span>
-                      <span>
-                        5 minutes 16 seconds from prompt to exported files,
-                        captured end-to-end.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
-                        quality
-                      </span>
-                      <span>
-                        Deep dive on gradients, icon styling, blog completeness,
-                        and mobile breakpoints.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 px-2 text-[10px] font-semibold uppercase text-white">
-                        schema
-                      </span>
-                      <span>
-                        Full structured data plus transcript so you can mirror
-                        the benchmark exactly.
-                      </span>
-                    </li>
-                  </ul>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Link
-                      href="/blog/gpt-5-1-codex-test-dentist-website"
-                      className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-100"
-                    >
-                      read the benchmark
-                    </Link>
-                    <Link
-                      href="https://youtu.be/PZnRkuJ9_S0"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/70"
-                    >
-                      watch the run
-                    </Link>
-                    <Link
-                      href="https://developers.openai.com/api/docs/models"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/70"
-                    >
-                      see current openai models
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div className="min-w-0">
-              <GuideTableOfContents sections={guideSections} />
-            </div>
-          </div>
-        </section>
+        <FinalCta location="openai site rebuild final cta" />
       </main>
       <ScrollToTop />
       <Footer />
@@ -283,6 +242,6 @@ mkdir site-rebuild && cd site-rebuild`}
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

@@ -1,8 +1,7 @@
-"use client"
+import { Target, Users, Zap, MessageCircle, LayoutGrid, Gauge, Scale, Clock } from "lucide-react"
 
-import { motion } from "framer-motion"
-import { Target, Users, Zap, MessageCircle, LayoutGrid, Gauge, Scale } from "lucide-react"
-import { fadeInUp, card3D } from "@/utils/animation-variants"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 interface StrategyCardProps {
   icon: string
@@ -16,6 +15,28 @@ interface StrategyCardProps {
   className?: string
 }
 
+const ICONS = {
+  target: Target,
+  users: Users,
+  zap: Zap,
+  "message-circle": MessageCircle,
+  "layout-grid": LayoutGrid,
+  gauge: Gauge,
+  scale: Scale,
+} as const
+
+const DIFFICULTY_DOT: Record<string, string> = {
+  Easy: "bg-spectrum-green",
+  Medium: "bg-spectrum-yellow",
+  Hard: "bg-spectrum-red",
+}
+
+const IMPACT_DOT: Record<string, string> = {
+  High: "bg-spectrum-blue",
+  Medium: "bg-spectrum-violet",
+  Low: "bg-white/40",
+}
+
 export default function StrategyCard({
   icon,
   title,
@@ -27,110 +48,69 @@ export default function StrategyCard({
   tips = [],
   className = ""
 }: StrategyCardProps) {
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'target': return Target
-      case 'users': return Users
-      case 'zap': return Zap
-      case 'message-circle': return MessageCircle
-      case 'layout-grid': return LayoutGrid
-      case 'gauge': return Gauge
-      case 'scale': return Scale
-      default: return Target
-    }
-  }
-  
-  const Icon = getIcon(icon)
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'Easy': return 'bg-green-100 text-green-800 border-green-200'
-      case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
-      case 'Hard': return 'bg-red-100 text-red-800 border-red-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
-    }
-  }
-
-  const getImpactColor = (impact: string) => {
-    switch (impact) {
-      case 'High': return 'bg-blue-100 text-blue-800 border-blue-200'
-      case 'Medium': return 'bg-purple-100 text-purple-800 border-purple-200'
-      case 'Low': return 'bg-gray-100 text-gray-800 border-gray-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
-    }
-  }
+  const Icon = ICONS[icon as keyof typeof ICONS] ?? Target
 
   return (
-    <motion.div
-      className={`bg-white border-2 border-neutral-200 rounded-lg shadow-sm p-6 mb-6 ${className}`}
-      initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={card3D}
-      whileHover="hover"
-      style={{ transformStyle: "preserve-3d" }}
+    <div
+      className={cn(
+        "my-8 rounded-2xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] transition-colors duration-300 hover:border-white/[0.14] sm:p-7",
+        className,
+      )}
     >
-      <motion.div variants={fadeInUp}>
-        <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0 mx-auto sm:mx-0">
-            <Icon className="w-6 h-6 text-white" />
-          </div>
-          <div className="flex-1 text-center sm:text-left">
-            <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mb-2">{title}</h3>
-            <p className="text-neutral-600 mb-3 leading-relaxed">{description}</p>
-            <div className="flex gap-2 flex-wrap justify-center sm:justify-start">
-              <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(difficulty)}`}>
-                {difficulty}
-              </span>
-              <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getImpactColor(impact)}`}>
-                {impact} Impact
-              </span>
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
-                {timeframe}
-              </span>
-            </div>
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start">
+        <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+          <Icon className="size-5 text-foreground/85" strokeWidth={1.75} aria-hidden="true" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <h3 className="mb-2! mt-0! text-lg! text-foreground sm:text-xl!">{title}</h3>
+          <p className="mb-4! mt-0! text-[15px] leading-7 text-muted-foreground">{description}</p>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline">
+              <span aria-hidden="true" className={cn("size-1.5 rounded-full", DIFFICULTY_DOT[difficulty])} />
+              {difficulty}
+            </Badge>
+            <Badge variant="outline">
+              <span aria-hidden="true" className={cn("size-1.5 rounded-full", IMPACT_DOT[impact])} />
+              {impact} Impact
+            </Badge>
+            <Badge variant="outline">
+              <Clock aria-hidden="true" />
+              {timeframe}
+            </Badge>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div variants={fadeInUp}>
-        <h4 className="font-semibold text-neutral-900 mb-3 text-center sm:text-left">Implementation Steps:</h4>
-        <div className="space-y-3 mb-4">
-          {steps.length === 0 ? (
-            <p className="text-sm text-neutral-600">Steps are being prepared.</p>
-          ) : null}
-          {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="flex items-start gap-3"
-            >
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-xs font-semibold text-blue-700">{index + 1}</span>
-              </div>
-              <p className="text-sm text-neutral-700 leading-relaxed">{step}</p>
-            </motion.div>
-          ))}
+      {steps.length > 0 ? (
+        <div>
+          <p className="text-eyebrow mb-3! mt-0! text-subtle">Implementation Steps</p>
+          <ol className="my-0! flex list-none! flex-col gap-2.5 pl-0!">
+            {steps.map((step, index) => (
+              <li key={index} className="my-0! flex items-start gap-3 pl-0!">
+                <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border border-white/10 font-mono text-[11px] text-muted-foreground">
+                  {index + 1}
+                </span>
+                <span className="text-sm leading-6 text-foreground/85">{step}</span>
+              </li>
+            ))}
+          </ol>
         </div>
-      </motion.div>
+      ) : null}
 
       {tips && tips.length > 0 && (
-        <motion.div 
-          className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500"
-          variants={fadeInUp}
-        >
-          <h5 className="font-semibold text-blue-900 mb-2 text-center sm:text-left">Pro Tips:</h5>
-          <div className="space-y-2">
+        <div className="relative mt-5 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5">
+          <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-blue" />
+          <p className="text-eyebrow mb-2! mt-0! text-subtle">Pro Tips</p>
+          <ul className="my-0! flex list-none! flex-col gap-2 pl-0!">
             {tips.map((tip, index) => (
-              <p key={index} className="text-sm text-blue-800 leading-relaxed">
-                • {tip}
-              </p>
+              <li key={index} className="my-0! flex gap-2.5 pl-0! text-sm leading-6 text-muted-foreground">
+                <span aria-hidden="true" className="mt-2.5 size-1 shrink-0 rounded-full bg-white/40" />
+                {tip}
+              </li>
             ))}
-          </div>
-        </motion.div>
+          </ul>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 }

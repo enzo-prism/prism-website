@@ -1,62 +1,29 @@
 import { expect, test } from '@playwright/test'
 
-async function waitForAsciiLoop(
-  page: import('@playwright/test').Page,
-  scopeSelector = '#homepage-hero',
-) {
-  // Canvas heroes (LCP) and color ASCII sources render <canvas>; monochrome
-  // DOM-mode heroes render <pre>. Both expose data-current-frame. Static
-  // ghost underlays (data-ghost-frame) are not players; skip them.
-  const node = page
-    .locator(
-      `${scopeSelector} pre:not([data-ghost-frame]), ${scopeSelector} canvas`,
-    )
-    .first()
-
-  await expect.poll(async () => await node.count()).toBe(1)
-  await expect(node).toBeVisible()
-
-  await expect
-    .poll(
-      async () =>
-        await node.evaluate((el) => el.getAttribute('data-current-frame')),
-      {
-        timeout: 2500,
-      },
-    )
-    .not.toBeNull()
-
-  const initialFrame = await node.evaluate((el) =>
-    el.getAttribute('data-current-frame'),
-  )
-  await expect
-    .poll(
-      async () =>
-        await node.evaluate((el) => el.getAttribute('data-current-frame')),
-      {
-        timeout: 2500,
-      },
-    )
-    .not.toBe(initialFrame)
-}
-
-test.describe('Hero animation loops', () => {
-  test('homepage ASCII hero loop advances', async ({ page }) => {
+test.describe('Hero motion', () => {
+  test('homepage refraction scene and work wall are in motion', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
     await page.goto('/', { waitUntil: 'domcontentloaded' })
-    // The ASCII hero sits below the full-viewport cover section; its loading
-    // and playback are intersection-gated by design, so scroll it into view
-    // (the same action the cover's scroll cue asks of visitors) first.
-    await page.locator('#homepage-hero').scrollIntoViewIfNeeded()
-    await waitForAsciiLoop(page)
-  })
 
-  test('case studies ASCII planet loop advances', async ({ page }) => {
-    await page.goto('/case-studies', { waitUntil: 'domcontentloaded' })
-    await waitForAsciiLoop(page, '#case-studies-hero')
-  })
+    const scene = page.locator('[data-testid="home-refraction"] svg')
+    await expect(scene).toBeVisible()
+    // The spectrum extends from the glass on load (CSS keyframes).
+    const spectrumAnimations = await page.evaluate(() =>
+      Array.from(
+        document.querySelectorAll('[data-testid="home-refraction"] polygon'),
+      ).map((node) => getComputedStyle(node).animationName),
+    )
+    expect(spectrumAnimations.some((name) => name && name !== 'none')).toBe(
+      true,
+    )
 
-  test('wall of love ASCII heart loop advances', async ({ page }) => {
-    await page.goto('/wall-of-love', { waitUntil: 'domcontentloaded' })
-    await waitForAsciiLoop(page, '#wall-of-love-hero')
+    await page.locator('#work').scrollIntoViewIfNeeded()
+    const track = page.locator('#work .prism-marquee-track').first()
+    const before = await track.evaluate((el) => getComputedStyle(el).transform)
+    await page.waitForTimeout(600)
+    const after = await track.evaluate((el) => getComputedStyle(el).transform)
+    expect(after).not.toBe(before)
   })
 })

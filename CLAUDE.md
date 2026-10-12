@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js 16 App Router marketing website for Prism's business growth systems. **Prism is waitlist-only (since 2026-09-14): every public sales CTA and lead form is the waitlist at `/waitlist` (`lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `components/waitlist/CapacityNotice.tsx`). Booking a call is not a public action; the old intake, get-started, apply, contact, free-analysis, AEO, book-a-shoot, and `/ai` routes 308-redirect to the waitlist and their code is deleted.** Desktop and mobile headers have exactly three direct links: Home (`/`), Clients (`/case-studies`), and Wall of Love (`/wall-of-love`), from `NAV_ITEMS` in `lib/constants.ts`. Services (Website, Content, Ads from `lib/services.ts`) and Products (Midas, zRead from `lib/products.ts`) remain in footer and homepage sections. The website assistant, homepage guide, and floating launcher were removed on 2026-10-09. `/pricing` compares four packaged offers (PRO Website, Content OS, Dental OS, Prism Infinity) modeled in `lib/pricing-model.ts`, with no public prices and waitlist CTAs. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
+Next.js 16 App Router marketing website for Prism's business growth systems. **Prism is waitlist-only (since 2026-09-14): every public sales CTA and lead form is the waitlist at `/waitlist` (`lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `components/prism/waitlist-status.tsx`). Booking a call is not a public action; the old intake, get-started, apply, contact, free-analysis, AEO, book-a-shoot, and `/ai` routes 308-redirect to the waitlist and their code is deleted.** The site runs on the dark **Prism Spectrum System** (2026-10-12 redesign; see `DESIGN.md`): stock shadcn primitives in `components/ui/*` plus the marketing kit in `components/prism/*`. The header shows Work (`/case-studies`), a Services dropdown (Websites, Content, Ads, Dental OS, Prism Infinity), Wall of Love, About, and Pricing (`NAV_ITEMS` + `NAV_SERVICE_ITEMS` in `lib/constants.ts`), with a "Join the waitlist" pill beside the menu. Products (Midas, zRead from `lib/products.ts`) live in the footer and the homepage `#products` section. The website assistant, homepage guide, and floating launcher were removed on 2026-10-09. `/pricing` compares four packaged offers (PRO Website, Content OS, Dental OS, Prism Infinity) modeled in `lib/pricing-model.ts`, with no public prices and waitlist CTAs. Supporting surfaces include SEO/AI search, reviews, ads, tracking, photography, proof, the social link hubs (/tiktok /ig /youtube), and the $100 referral program at /refer. The site is synced with v0.dev and deployed on Vercel through GitHub Actions.
 
 ## Essential Commands
 
@@ -61,10 +61,12 @@ pnpm git:cleanup      # Clean stale branches
 | Search visibility | `lib/seo/search-visibility.ts` |
 | Canonical pricing | `lib/pricing-model.ts` |
 | Waitlist funnel | `lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `app/waitlist/page.tsx` |
-| Header navigation | `lib/constants.ts` `NAV_ITEMS`, `components/navbar.tsx` |
+| Design system | `DESIGN.md`, `components/ui/*` (shadcn), `components/prism/*` (marketing kit), `app/globals.css` (Spectrum utilities) |
+| Homepage | `app/client-page.tsx`, `components/home/*`, copy + numbers in `components/home/homepage-content.ts` |
+| Header navigation | `lib/constants.ts` `NAV_ITEMS` + `NAV_SERVICE_ITEMS`, `components/navbar.tsx` |
 | Service / Product catalogs | `lib/services.ts`, `lib/products.ts` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
-| Case study template | `components/case-study-minimal.tsx`, `components/case-studies/CaseStudyVisualHero.tsx`, `lib/case-study-data.ts` |
+| Case study template | `components/case-study-minimal.tsx`, `components/case-studies/*`, `lib/case-study-data.ts` |
 | MDX processing | `/lib/mdx.tsx` |
 | Image utilities | `/utils/image-utils.ts` |
 | Form validation hook | `/hooks/use-form-validation.ts` |
@@ -78,7 +80,8 @@ pnpm git:cleanup      # Clean stale branches
 - Use type imports: `import type { ... }`
 
 **Components**
-- Use existing UI components from `/components/ui`
+- Use existing UI components from `/components/ui` (stock shadcn) and the marketing kit in `/components/prism`; never reintroduce the retired pixel styling, Pixelish icons, or ASCII heroes
+- UI copy follows the `prism-writing` skill (`prism-brand` pack): lowercase headlines ending with a period, no em dashes, no hype words, no guarantees
 - Use `next/image` for simple route-local images and `CoreImage` for shared marketing surfaces that need fallback/analytics behavior
 - Mobile components in `/components/mobile/`
 - GPU-accelerated animations only (transform, opacity)

@@ -83,26 +83,6 @@ images: {
         ],
       },
       {
-        source: '/animations/:path*',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
-        // frames.json keeps a fixed name across regenerations (pnpm ascii:bundle),
-        // so it must revalidate instead of inheriting the immutable rule above.
-        source: '/animations/:path*/frames.json',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
-        ],
-      },
-      {
-        source: '/ascii/:path*',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
         source: '/logos/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },

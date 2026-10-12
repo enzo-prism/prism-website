@@ -20,11 +20,17 @@ const ALL_OFFER_IDS = [
 ] as const
 
 describe("pricing model", () => {
-  it("exports canonical display labels with no public dollar amounts", () => {
-    expect(WEBSITE_PRICE_LABEL).toBe("Scoped from the waitlist")
-    expect(CONTENT_OS_PRICE_LABEL).toBe("Scoped from the waitlist")
-    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Scoped from the waitlist")
+  it("fills the price slot with each offer's engagement shape, never a dollar amount", () => {
+    expect(WEBSITE_PRICE_LABEL).toBe("One project, scoped to you")
+    expect(CONTENT_OS_PRICE_LABEL).toBe("3-month setup, then monthly")
     expect(DENTAL_OS_PRICE_LABEL).toBe("Built around your practice")
+    expect(PRISM_INFINITY_PRICE_LABEL).toBe("Monthly. Pause or cancel anytime.")
+
+    for (const offerId of ALL_OFFER_IDS) {
+      const { priceLabel } = CANONICAL_PRICING_OFFERS[offerId]
+      expect(priceLabel).not.toMatch(/scoped from the waitlist/i)
+      expect(priceLabel).not.toMatch(/\$|\/mo\b|\bfrom \d|\d+\s*(k|usd)\b/i)
+    }
   })
 
   it("keeps every offer price-free: no public price on any offer", () => {

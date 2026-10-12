@@ -1,701 +1,661 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowRight, CheckCircle2, Handshake, LineChart, ShieldCheck, Sparkles } from "lucide-react"
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { BookOpenCheck, MapPin, ShieldCheck, Star } from 'lucide-react'
 
-import Footer from "@/components/footer"
-import Navbar from "@/components/navbar"
-import ScrollToTop from "@/components/scroll-to-top"
-import ServiceIllustration from "@/components/animated/ServiceIllustration"
-import { Button } from "@/components/ui/button"
-import DentalTrendsChart from "@/components/dental-trends-chart"
-import DentalClientsSection from "@/components/dental-clients-section"
-import VideoCarousel from "@/components/video-carousel"
-import HeroLoopingVideo from "@/components/HeroLoopingVideo"
-import { FAQSchema, ServiceSchema } from "@/components/schema-markup"
-import { WEBSITE_WAITLIST_CTA } from "@/lib/pricing-model"
-import { buildRouteMetadata } from "@/lib/seo/metadata"
+import DentalClientsSection from '@/components/dental-clients-section'
+import Footer from '@/components/footer'
+import HeroLoopingVideo from '@/components/HeroLoopingVideo'
+import {
+  ArrowLink,
+  CheckList,
+  DentalFaq,
+  DentalProofStat,
+  DentalWorkMarquee,
+  StepRail,
+  TextLink,
+} from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
+import Navbar from '@/components/navbar'
+import { BrowserFrame } from '@/components/prism/browser-frame'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
+import { WaitlistButton } from '@/components/prism/waitlist-button'
+import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
+import { Card } from '@/components/ui/card'
+import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
+import { buildRouteMetadata } from '@/lib/seo/metadata'
+
+import {
+  DENTAL_INTERVIEWS,
+  InterviewGrid,
+} from '@/components/landing/dental/interview-grid'
 
 const lovePoints = [
   {
-    title: "clear answers in seconds",
+    title: 'clear answers in seconds',
     description:
-      "treatment pages, insurance info, and provider bios are organized so patients can quickly confirm they’re in the right place."
+      'Treatment pages, insurance info, and provider bios are organized so patients can quickly confirm they’re in the right place.',
   },
   {
-    title: "trust before the first call",
+    title: 'trust before the first call',
     description:
-      "real photos, reviews, and what-to-expect details reduce anxiety and make it easy to choose your practice."
+      'Real photos, reviews, and what-to-expect details ease anxiety and make it easy to choose your practice.',
   },
   {
-    title: "booking feels effortless on mobile",
+    title: 'booking that works on a phone',
     description:
-      "tap-to-call, request forms, and scheduling paths are obvious and fast, so more visits become booked appointments."
-  }
+      'Tap-to-call, request forms, and online booking sit where patients look for them, so the next step takes a few taps.',
+  },
+]
+
+const patientSetup = [
+  'Treatment pages for implant, ortho, and cosmetic consultations, each with its own booking path.',
+  'Short request forms plus call and form tracking, so you can see which pages bring in inquiries.',
+  'A review request step after each visit, connected to the new site.',
 ]
 
 const designEssentials = [
   {
-    title: "clear treatment pages",
+    title: 'clear treatment pages',
     description:
-      "service pages (implants, invisalign, emergency, whitening) written for patient intent, with FAQs, next steps, and financing context.",
+      'Service pages (implants, Invisalign, emergency, whitening) written for patient intent, with FAQs, next steps, and financing context.',
   },
   {
-    title: "trust signals that reduce anxiety",
+    title: 'trust signals that ease anxiety',
     description:
-      "provider bios, reviews, real photos/video, and what-to-expect sections so patients feel confident choosing you.",
+      'Provider bios, reviews, real photos and video, and what-to-expect sections so patients feel confident choosing you.',
   },
   {
-    title: "fast path to booking",
+    title: 'a fast path to booking',
     description:
-      "call + form + online booking designed for mobile, wired to the right team, and measured with conversion tracking.",
+      'Call, form, and online booking designed for mobile, routed to the right person, and measured with conversion tracking.',
   },
   {
-    title: "ada-aware UX",
+    title: 'accessible by design',
     description:
-      "accessible patterns (semantic headings, readable typography, keyboard support, alt text) so more patients can use your site.",
+      'Accessible patterns (semantic headings, readable type, keyboard support, alt text) so more patients can use your site.',
   },
   {
-    title: "seo-ready foundations",
+    title: 'seo-ready foundations',
     description:
-      "clean information architecture, internal linking, and schema so google understands your services and your practice.",
+      'Clean information architecture, internal links, and schema so Google, and AI assistants like ChatGPT, can understand your services.',
   },
   {
-    title: "migration + ownership",
+    title: 'migration and ownership',
     description:
-      "a clean cutover with redirects, analytics, and ownership of your domain and accounts, so you’re not stuck again later.",
+      'A clean cutover with redirects and analytics, with your domain and accounts in your name, so you’re not locked in again.',
   },
 ]
 
 const designExamples = [
   {
-    label: "Dr. Christopher Wong",
-    description: "practice transition + modern rebuild",
-    href: "/case-studies/dr-christopher-wong",
+    label: 'Dr. Christopher Wong',
+    description: 'Practice transition and a modern rebuild',
+    href: '/case-studies/dr-christopher-wong',
   },
   {
-    label: "Mataria Dental Group",
-    description: "multi-location clarity + growth foundation",
-    href: "/case-studies/mataria-dental-group",
+    label: 'Mataria Dental Group',
+    description: 'Multi-location clarity and a growth foundation',
+    href: '/case-studies/mataria-dental-group',
   },
   {
-    label: "Family First Smile Care",
-    description: "patient-first experience + conversion upgrades",
-    href: "/case-studies/family-first-smile-care",
+    label: 'Family First Smile Care',
+    description: 'A patient-first experience and clearer booking',
+    href: '/case-studies/family-first-smile-care',
   },
   {
-    label: "Wine Country Root Canal",
-    description: "specialty positioning + high-trust journey",
-    href: "/case-studies/wine-country-root-canal",
+    label: 'Wine Country Root Canal',
+    description: 'Specialty positioning and a calm patient journey',
+    href: '/case-studies/wine-country-root-canal',
   },
 ]
 
-const revenueHighlights = [
+const treatmentHighlights = [
   {
-    icon: <LineChart className="h-6 w-6" aria-hidden />,
-    title: "boosted case acceptance",
+    icon: <BookOpenCheck className="size-5" aria-hidden />,
+    title: 'treatment explainers',
     description:
-      "interactive treatment explainers and before/after sliders help patients trust premium procedures."
+      'Plain-language treatment pages and before-and-after galleries that help patients understand premium procedures before they call.',
   },
   {
-    icon: <Sparkles className="h-6 w-6" aria-hidden />,
-    title: "local seo coverage",
+    icon: <MapPin className="size-5" aria-hidden />,
+    title: 'local seo coverage',
     description:
-      "schema, reviews, and hyperlocal landing pages push your practice to the top for high-intent searches."
+      'Schema, review profiles, and local landing pages built for high-intent searches like “implants near me”.',
   },
   {
-    icon: <Handshake className="h-6 w-6" aria-hidden />,
-    title: "automated follow-up",
+    icon: <Star className="size-5" aria-hidden />,
+    title: 'follow-up after the visit',
     description:
-      "email + sms reminders and post-visit review flows keep schedule gaps filled and referrals climbing."
-  }
+      'Review requests and patient follow-up set up with your team, so happy patients have an easy way to say so.',
+  },
 ]
 
 const transferSteps = [
   {
-    step: "01",
-    title: "we coordinate the handoff",
-    description: "our team contacts your old provider, secures domains, hosting, and access without adding to your plate."
+    step: '01',
+    title: 'we coordinate the handoff',
+    description:
+      'We contact your old provider and secure your domain, hosting, and access, without adding to your plate.',
   },
   {
-    step: "02",
-    title: "content & compliance audit",
-    description: "we migrate forms, HIPAA-sensitive assets, and redirects so no appointment requests are lost."
+    step: '02',
+    title: 'content and forms audit',
+    description:
+      'We move your content and patient forms, set up redirects, and test every form before launch.',
   },
   {
-    step: "03",
-    title: "zero-downtime launch",
-    description: "cutover happens overnight with performance monitoring, uptime alerts, and instant rollback safeguards."
-  }
+    step: '03',
+    title: 'a planned launch',
+    description:
+      'We schedule the cutover for a quiet window, then watch the site, forms, and analytics closely after launch.',
+  },
 ]
 
 const integrationPoints = [
-  "instant sync with practice management tools (dentrix, open dental, eaglesoft).",
-  "secure patient forms and payment links connected to HIPAA-aware workflows.",
-  "custom email setup so hello@yourpractice.com routes to the right team members.",
-  "advanced analytics dashboards that show calls, bookings, and top-performing services."
+  'Booking links, request forms, and tap-to-call built around the scheduling your practice already uses.',
+  'Patient intake forms planned around HIPAA requirements.',
+  'Custom email, so hello@yourpractice.com reaches the right people on your team.',
+  'Analytics that show calls, form requests, and which service pages patients visit.',
 ]
 
 const faqs = [
   {
-    question: "will search rankings drop when we migrate?",
+    question: 'will search rankings drop when we migrate?',
     answer:
-      "no. We map every legacy URL, keep metadata intact, and submit the new structure to search engines so visibility only improves."
+      'We map every old URL, keep your page details, and resubmit the new structure so search engines can follow the move.',
   },
   {
-    question: "what should a dental practice website include?",
+    question: 'what should a dental practice website include?',
     answer:
-      "clear treatment pages, provider bios, reviews, and a simple booking path, plus fast performance, accessibility, and seo-ready structure so patients (and google) understand you quickly.",
+      'Clear treatment pages, provider bios, reviews, and a simple booking path, plus fast performance, accessibility, and an SEO-ready structure so patients (and Google) understand you quickly.',
   },
   {
-    question: "how much does a dental practice website cost?",
+    question: 'how much does a dental practice website cost?',
     answer:
-      "it depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. We scope around what will actually move calls and bookings, not a one-size template.",
+      'It depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. A dental website is scoped as a PRO Website or as part of Dental OS. Prism is fully booked, so we agree on scope when we reach out from the waitlist.',
   },
   {
-    question: "can you integrate specialty services like ortho or implants?",
+    question: 'can you integrate specialty services like ortho or implants?',
     answer:
-      "yes. We build dedicated funnels with financing options, smile simulations, and testimonial blocks tailored to each specialty."
+      'Yes. We build a dedicated page for each specialty with financing details, before-and-after galleries, and patient reviews.',
   },
   {
-    question: "how quickly can we switch?",
+    question: 'how quickly can we switch?',
     answer:
-      "most practices launch in 3-4 weeks. urgent transitions are possible when an old provider is unresponsive or access is expiring."
-  }
+      'We agree on the launch date after reviewing your current website, access, and content. Urgent transitions are possible when an old provider is unresponsive or access is expiring.',
+  },
+]
+
+const buildSteps = [
+  {
+    step: '01',
+    title: 'intent + site map',
+    description:
+      'We map treatments, locations, and common questions into a structure patients and search engines can follow.',
+  },
+  {
+    step: '02',
+    title: 'copy + conversion plan',
+    description:
+      'We clarify your offer, write patient-first pages, and define the booking paths (call, form, online scheduling).',
+  },
+  {
+    step: '03',
+    title: 'design + build',
+    description:
+      'Mobile-first design, fast pages, and technical SEO foundations (headings, internal links, schema).',
+  },
+  {
+    step: '04',
+    title: 'launch + redirects',
+    description:
+      'We migrate content, set up redirects, and verify analytics and forms during the switch.',
+  },
+  {
+    step: '05',
+    title: 'measure + iterate',
+    description:
+      'We track calls and forms, ship improvements, and expand content over time.',
+  },
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Dental websites',
-  description: 'Fast, mobile-first dental websites that build trust and turn more visitors into booked appointments.',
-  path: "/dental-website",
-  ogImage: "/prism-opengraph.png",
+  description:
+    'Fast, mobile-first dental websites that earn patient trust and make booking an appointment easy.',
+  path: '/dental-website',
+  ogImage: '/prism-opengraph.png',
 })
 
 export default function DentalWebsitePage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900">
-        <section className="relative overflow-hidden border-b border-neutral-200 bg-neutral-950 text-white">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(76,201,240,0.15),_transparent_55%)]" aria-hidden />
-          <div className="container relative mx-auto px-4 py-24 md:py-28">
-            <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-              <div className="flex max-w-4xl flex-col items-center text-center md:items-start md:text-left">
-                <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.28em] text-neutral-200">
-                  dental practice website blueprint
-                </span>
-                <h1 className="text-4xl font-semibold tracking-tight md:text-5xl lg:text-6xl">
-                  dental practice websites that get found, trusted, and chosen.
-                </h1>
-                <p className="mt-6 max-w-2xl text-base text-neutral-200 md:text-lg">
-                  prism builds modern dental practice websites that earn trust quickly, rank for local intent, and turn visits into booked
-                  appointments. every launch includes a stress-free transfer from your previous provider.
-                </p>
-                <p className="mt-4 max-w-2xl text-sm text-neutral-300 md:text-base">
-                  prism is fully booked right now. join the waitlist and get first pick of new spots as they open.
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
-                  <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                    <Link href={WEBSITE_WAITLIST_CTA.href}>
-                      {WEBSITE_WAITLIST_CTA.label}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                    <Link href="/why-dental-practices-love-prism">
-                      why dentists pick prism
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <div
-                tabIndex={0}
-                role="group"
-                className="group mx-auto flex h-64 w-full max-w-[18rem] items-center justify-center rounded-3xl border border-white/20 bg-white/10 p-4 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-orange-300/70 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-orange-300/60"
-              >
-                <ServiceIllustration
-                  variant="local"
-                  className="h-full w-full text-neutral-200 transition-colors group-hover:text-orange-200 group-focus-visible:text-orange-200 group-active:text-orange-100"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-center">
-              <div className="space-y-6">
-                <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">crafted for dental growth</p>
-                <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  what patients expect from a dental practice website
-                </h2>
-                <p className="text-base leading-relaxed text-neutral-600">
-                  before patients choose a dentist, they want clarity, proof, and an easy next step. a great website removes friction and answers questions the way people actually search.
-                </p>
-                <div className="space-y-4">
-                  {lovePoints.map((item) => (
-                    <div key={item.title} className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                      <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
-                      <div>
-                        <h3 className="text-base font-semibold text-neutral-900">{item.title}</h3>
-                        <p className="text-sm text-neutral-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-sm text-neutral-600">
-                  who wrote this: the prism design + engineering team. How we build: patient-first structure, fast performance, and measurement tied to calls/forms. why: so your website compounds trust and bookings over time.
-                </p>
-                <p className="text-sm text-neutral-600">
-                  want the dentist-specific ai overviews checklist? read{" "}
-                  <Link
-                    href="/blog/ai-search-for-dental-practice"
-                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
-                  >
-                    ai search for dental practice
-                  </Link>
-                  . want the step-by-step checklist to rank higher in google? read{" "}
-                  <Link
-                    href="/blog/dental-practice-rank-higher-google-search"
-                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
-                  >
-                    dental practice rank higher in google search
-                  </Link>
-                  . want the website checklist? read{" "}
-                  <Link
-                    href="/blog/dentist-website-design-checklist"
-                    className="font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4"
-                  >
-                    dentist website design checklist
-                  </Link>
-                  .
-                </p>
-              </div>
-              <div className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm">
-                <h3 className="text-lg font-semibold text-neutral-900">dentists see results within weeks</h3>
-                <ul className="mt-4 space-y-3 text-sm text-neutral-600">
-                  <li>• more booked implant, ortho, and cosmetic consultations driven by tailored landing pages.</li>
-                  <li>• measurable lift in phone calls and online bookings through simplified forms and tracking.</li>
-                  <li>• improved review velocity thanks to automated requests wired into the new site.</li>
-                </ul>
-                <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4">
-                  <Link href="/why-dental-practices-love-prism">see full dentist success stories</Link>
-                  <ArrowRight className="h-4 w-4" aria-hidden />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">what we build</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                what we build (and why it works)
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                the goal isn’t “a prettier site.” it’s a calmer, clearer experience patients trust, and a structure google can understand.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {designEssentials.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
-                  <p className="mt-3 text-sm text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">proof</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                dental website examples and case studies
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                explore real dental launches: how we structure pages, clarify services, and improve booking paths.
-              </p>
-            </div>
-
-            <div className="mt-12 rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm sm:p-8">
-              <div className="mt-2 grid gap-4 sm:grid-cols-2">
-                {designExamples.map((example) => (
-                  <Link
-                    key={example.href}
-                    href={example.href}
-                    className="block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md focus:outline-hidden focus-visible:ring-2 focus-visible:ring-neutral-400"
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">case study</p>
-                    <h3 className="mt-2 text-lg font-semibold text-neutral-900">{example.label}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{example.description}</p>
-                  </Link>
-                ))}
-              </div>
-              <p className="mt-6 text-sm text-neutral-600">
-                want the full transformation story? read{" "}
-                <Link
-                  href="/blog/from-broken-to-beautiful-dental-website-transformation"
-                  className="font-semibold text-neutral-900 underline decoration-neutral-200 underline-offset-4"
-                >
-                  from broken to beautiful: dental website transformation
-                </Link>
-                .
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-neutral-100 bg-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">our process</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">our build process</h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                a clear plan, a fast build, and a launch that protects what already works, so your new website performs on day one.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  step: "01",
-                  title: "intent + site map",
-                  description:
-                    "we map treatments, locations, and common questions into a structure patients and search engines can follow.",
-                },
-                {
-                  step: "02",
-                  title: "copy + conversion plan",
-                  description:
-                    "we clarify your offer, write patient-first pages, and define the booking paths (call, form, online scheduling).",
-                },
-                {
-                  step: "03",
-                  title: "design + build",
-                  description:
-                    "mobile-first design, fast pages, and technical seo foundations (headings, internal links, schema).",
-                },
-                {
-                  step: "04",
-                  title: "launch + redirects",
-                  description:
-                    "we migrate content, set up redirects, and verify analytics so you don’t lose calls during the switch.",
-                },
-                {
-                  step: "05",
-                  title: "measure + iterate",
-                  description:
-                    "we track calls and forms, ship improvements, and expand content so results compound over time.",
-                },
-              ].map((item) => (
-                <div key={item.step} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-600">
-                  <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">{item.step}</span>
-                  <h3 className="mt-3 text-base font-semibold text-neutral-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">revenue levers</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">sites designed to grow production</h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                from emergency dentistry to full-smile makeovers, every page guides patients from first impression to scheduled visit. here&apos;s how we turn design into dependable revenue.
-              </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {revenueHighlights.map((item) => (
-                <div key={item.title} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100 text-neutral-800">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-neutral-900">{item.title}</h3>
-                  <p className="mt-3 text-sm text-neutral-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-              <div className="mt-10 flex justify-center">
-                <Button asChild variant="outline" className="rounded-full px-8">
-                <Link href="/dental-practice-seo-expert">see our dentist seo playbook</Link>
-                </Button>
-              </div>
-          </div>
-        </section>
-
-        <section className="bg-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl grid gap-10 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-center">
-            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
-              <HeroLoopingVideo
-                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1762028676/scheduling-dental-website_nehxuw.mp4"
-                posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028718/scheduling-dental-website_dnebtj.webp"
-                alt="Preview of a dental practice website scheduling flow"
-                className="border-none shadow-none"
-                aspectClassName="aspect-[16/9]"
-                videoClassName="object-cover"
-              />
-            </div>
-            <div className="space-y-5">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">frictionless scheduling</p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                booking flows that feel effortless for every patient
-              </h2>
-              <p className="text-base leading-relaxed text-neutral-600">
-                prism wires real-time availability, reminders, and two-way updates into your site so new and returning
-                patients can confirm visits without a phone call.
-              </p>
-              <ul className="space-y-3 text-sm text-neutral-600">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
-                  <span>synced with dentrix, open dental, and leading practice management tools.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
-                  <span>automatic confirmations, reminders, and follow-up emails + sms when patients book.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" aria-hidden />
-                  <span>availability updates instantly reflected across specialty landing pages and paid campaigns.</span>
-                </li>
-              </ul>
-              <div className="pt-2">
-                <Button asChild className="rounded-full px-6">
-                  <Link href={WEBSITE_WAITLIST_CTA.href}>
-                    {WEBSITE_WAITLIST_CTA.label}
-                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl space-y-10">
-            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50 shadow-md">
-              <HeroLoopingVideo
-                videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1762028436/dental-website_axxdfz.mp4"
-                posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028473/dental-website-thumbnail_bpbzex.webp"
-                alt="Preview of a modern dental practice website design"
-                className="border-none shadow-none"
-                aspectClassName="aspect-[16/9]"
-                videoClassName="object-cover"
-              />
-            </div>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                hear from the dentists we work with
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                interviews with enzo and our dental partners
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                founders and front office teams share, in their own words, how prism reshaped their digital presence,
-                schedules, and patient experience.
-              </p>
-            </div>
-            <VideoCarousel
-              items={[
-                { videoId: "wCQrUajsnk8", title: "Dr. teagan Willes Interview" },
-                { videoId: "HrksJeYb02Q", title: "Dr. Christopher Wong Interview" },
-                { videoId: "WIWxwdZflzo", title: "Dr. Ahmed Mataria Interview" },
-                { videoId: "IQJoQt4b2ls", title: "Dental Practice Success Story" },
-                { videoId: "FxuzACT-o2Q", title: "Dr. Katie Lee Interview" },
-                { videoId: "zL4Ax2bs9pU", title: "Dr. A Interview" },
-                { videoId: "jE6YAimUxMQ", title: "Melissa Front Desk Interview" },
-                { videoId: "5eB4Y27zkE8", title: "Ludmila Office Manager Interview" },
-              ]}
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Dental practice websites"
+          title="dental practice websites that get found, trusted, and chosen."
+          description="Prism builds dental practice websites that answer patient questions, are structured for local search, and make booking the obvious next step. Every launch includes a managed handoff from your previous provider."
+          location="dental website hero"
+          ctaHref={WEBSITE_WAITLIST_CTA.href}
+          secondary={{
+            label: 'Why dentists pick Prism',
+            href: '/why-dental-practices-love-prism',
+          }}
+          glow="blue"
+          titleClassName="max-w-[17ch]"
+        >
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] lg:items-end">
+            <BrowserFrame
+              src="/case-studies/dr-christopher-wong-home-desktop.jpg"
+              alt="Dr. Christopher B. Wong dental practice homepage built by Prism"
+              url="chriswongdds.com"
+              priority
+              sizes="(min-width: 1024px) 760px, 92vw"
             />
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+              <DentalProofStat />
+              <BrowserFrame
+                src="/case-studies/exquisite-dentistry-home-desktop.jpg"
+                alt="Exquisite Dentistry homepage built by Prism"
+                url="exquisitedentistryla.com"
+                sizes="(min-width: 1024px) 440px, 46vw"
+                className="hidden sm:block"
+              />
+            </div>
           </div>
-        </section>
+        </LandingHero>
 
-        <section className="border-y border-neutral-100 bg-neutral-900 text-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-xl space-y-4">
-              <p className="text-xs font-medium uppercase tracking-[0.32em] text-white/60">beyond the website</p>
-              <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-                grow every channel your practice depends on
-              </h2>
-              <p className="text-sm leading-relaxed text-white/70">
-                prism handles more than beautiful dental sites. We run the ads, local listings, and review workflows that
-                keep chairs filled. curious how the full system works together?
-              </p>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
-                  <span>
-                    hyper-local google ads and meta campaigns tied to actual booked treatment. see{" "}
-                    <Link href="/facebook-ads-for-dentists" className="font-semibold text-white underline underline-offset-4">
-                      facebook ads for dentists
-                    </Link>
-                    .
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
-                  <span>50+ directories and ai search surfaced with accurate hours, services, and reviews.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
-                  <span>ongoing optimization so your practice stays ahead of algorithm shifts.</span>
-                </li>
+        <Section aria-labelledby="dw-expect-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
+            <Reveal className="flex flex-col gap-8">
+              <SectionHeader
+                id="dw-expect-title"
+                eyebrow="Built for dental practices"
+                title="what patients expect from a dental practice website."
+                description="Before patients choose a dentist, they want clarity, proof, and an easy next step. A great website removes friction and answers questions the way people actually search."
+              />
+              <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06]">
+                {lovePoints.map((item) => (
+                  <li key={item.title} className="bg-card p-5 sm:p-6">
+                    <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </li>
+                ))}
               </ul>
-            </div>
-            <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/80 shadow-[0_30px_120px_-70px_rgba(15,23,42,0.8)] md:max-w-sm">
-              <p className="text-base font-semibold text-white">ready to see the whole growth engine?</p>
-              <p>
-                explore how prism helps dentists win more patients with ads, listings, and automated follow-up built on
-                top of your website.
+              <p className="text-[14px] leading-6 text-subtle">
+                Who wrote this: the Prism design and engineering team. How we
+                build: patient-first structure, fast performance, and
+                measurement tied to calls and forms. Why: so your website earns
+                patient trust from the first visit.
               </p>
-              <Button asChild className="h-auto min-h-11 w-full whitespace-normal rounded-full bg-white px-5 py-3 text-center text-neutral-900 hover:bg-neutral-100">
-                <Link href="/why-dental-practices-love-prism">
-                  see why dental practices love prism
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+            </Reveal>
+            <Reveal delay={120} className="flex flex-col gap-5 lg:pt-24">
+              <SpotlightCard className="p-6 sm:p-8">
+                <h3 className="text-heading text-foreground">
+                  what we set up for patients.
+                </h3>
+                <CheckList className="mt-6" items={patientSetup} />
+                <ArrowLink
+                  href="/why-dental-practices-love-prism"
+                  className="mt-6"
+                >
+                  See why dentists pick Prism
+                </ArrowLink>
+              </SpotlightCard>
+              <Card className="p-6">
+                <p className="text-eyebrow text-subtle">Further reading</p>
+                <ul className="mt-4 space-y-3 text-[15px] leading-6 text-muted-foreground">
+                  <li>
+                    Want the dentist-specific AI Overviews checklist? Read{' '}
+                    <TextLink href="/blog/ai-search-for-dental-practice">
+                      AI search for dental practices
+                    </TextLink>
+                    .
+                  </li>
+                  <li>
+                    Want the step-by-step Google checklist? Read{' '}
+                    <TextLink href="/blog/dental-practice-rank-higher-google-search">
+                      how a dental practice can rank higher in Google Search
+                    </TextLink>
+                    .
+                  </li>
+                  <li>
+                    Want the website checklist? Read{' '}
+                    <TextLink href="/blog/dentist-website-design-checklist">
+                      the dentist website design checklist
+                    </TextLink>
+                    .
+                  </li>
+                </ul>
+              </Card>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="dw-build-title" className="pt-0 sm:pt-0">
+          <Reveal>
+            <SectionHeader
+              id="dw-build-title"
+              eyebrow="What we build"
+              title="what we build, and why it works."
+              description="The goal isn’t “a prettier site.” It’s a calmer, clearer experience patients trust, and a structure Google can understand."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {designEssentials.map((item, index) => (
+              <Reveal key={item.title} delay={index * 60}>
+                <Card className="h-full p-6 transition-colors hover:border-white/[0.16]">
+                  <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="mt-4 text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
+                    {item.description}
+                  </p>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          aria-labelledby="dw-proof-title"
+          bleed
+          className="overflow-hidden"
+        >
+          <div className="prism-container">
+            <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeader
+                id="dw-proof-title"
+                eyebrow="Proof"
+                title="dental website examples and case studies."
+                description="Explore real dental launches: how we structure pages, clarify services, and simplify booking paths."
+              />
+              <ArrowLink href="/case-studies" className="shrink-0">
+                See every case study
+              </ArrowLink>
+            </Reveal>
+          </div>
+          <div className="mt-12">
+            <DentalWorkMarquee />
+          </div>
+          <div className="prism-container mt-12">
+            <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4">
+              {designExamples.map((example) => (
+                <Link
+                  key={example.href}
+                  href={example.href}
+                  className="group/example flex flex-col gap-2 bg-card p-5 transition-colors hover:bg-white/[0.03] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:p-6"
+                >
+                  <span className="text-eyebrow text-subtle">Case study</span>
+                  <span className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                    {example.label}
+                  </span>
+                  <span className="text-[14px] leading-6 text-muted-foreground">
+                    {example.description}
+                  </span>
                 </Link>
-              </Button>
+              ))}
             </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl space-y-10">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">
-                research-led decisions
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                we monitor real search demand weekly
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-neutral-600">
-                prism keeps a pulse on traditional google trends and ai overview coverage so your website matches the
-                searches patients already make. here&apos;s a live snapshot of the keywords we optimize most often.
-              </p>
-            </div>
-            <DentalTrendsChart />
-            <div className="mx-auto max-w-3xl text-center text-sm text-neutral-600">
-              <p>
-                we pair trend data with answer engine optimization, so whether patients ask claude, chatgpt, or google
-                for treatments, your pages surface with the right messaging.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-center">
-              <div className="space-y-4">
-                <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">no-stress migration</p>
-                <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
-                  we do the heavy lifting when you leave your old provider
-                </h2>
-                <p className="text-base leading-relaxed text-neutral-600">
-                  dentists often feel trapped by agencies that own their domain or hosting. prism handles every detail so the transition is invisible to your patients and internal team.
-                </p>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-3">
-                {transferSteps.map((item) => (
-                  <div key={item.step} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm text-neutral-600">
-                    <span className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-400">{item.step}</span>
-                    <h3 className="mt-3 text-base font-semibold text-neutral-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-neutral-600">{item.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4">
-              <Link href="/custom-email-for-dental-practices">secure communications with custom email</Link>
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </div>
-          </div>
-        </section>
-
-        <DentalClientsSection />
-
-        <section className="border-t border-neutral-100 bg-white px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-4xl">
-            <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-8 shadow-sm">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start">
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <ShieldCheck className="h-8 w-8 text-neutral-800" aria-hidden />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">connected systems</p>
-                  <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">all of your patient touchpoints in sync</h2>
-                  <ul className="grid gap-3 text-sm text-neutral-600 sm:grid-cols-2">
-                    {integrationPoints.map((point) => (
-                      <li key={point} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-emerald-500" aria-hidden />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="inline-flex items-center gap-2 text-sm font-medium text-neutral-900 underline decoration-neutral-200 underline-offset-4">
-                    <Link href="/custom-email-for-dental-practices">learn more about custom email for dental teams</Link>
-                    <ArrowRight className="h-4 w-4" aria-hidden />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-neutral-50 px-4 py-16 sm:py-20">
-          <div className="container mx-auto max-w-5xl">
-            <div className="grid gap-6 md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] md:items-start">
-              <div className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <h2 className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white">
-                  FAQ
-                </h2>
-                <p className="mt-4 text-sm text-neutral-600">
-                  the questions we hear from practice owners preparing to switch providers.
-                </p>
-              </div>
-              <div className="space-y-6">
-                {faqs.map((faq) => (
-                  <div key={faq.question} className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold text-neutral-900">{faq.question}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">{faq.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="px-4 pb-20 pt-16 sm:pb-24">
-          <div className="container mx-auto max-w-4xl text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.32em] text-neutral-500">ready for a practice website that performs?</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">next step</h2>
-            <p className="mt-4 text-base text-neutral-600">
-              Prism is fully booked right now. Join the waitlist, tell us what the practice needs, and we will reach out to scope the build when your intake opens.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button asChild size="lg" className="rounded-full px-8 py-3 text-base lowercase">
-                <Link href={WEBSITE_WAITLIST_CTA.href}>
-                  {WEBSITE_WAITLIST_CTA.label}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <p className="mt-4 text-sm text-neutral-500">
-              want pricing details? view{" "}
-              <Link href="/pricing" className="font-semibold text-neutral-900 underline underline-offset-4">
-                prism pricing
-              </Link>
+            <p className="mt-6 text-[15px] text-muted-foreground">
+              Want the full transformation story? Read{' '}
+              <TextLink href="/blog/from-broken-to-beautiful-dental-website-transformation">
+                From broken to beautiful: a dental website transformation
+              </TextLink>
               .
             </p>
           </div>
-        </section>
+        </Section>
+
+        <Section aria-labelledby="dw-process-title">
+          <Reveal>
+            <SectionHeader
+              id="dw-process-title"
+              eyebrow="Our process"
+              title="our build process."
+              description="A clear plan, a careful build, and a launch that protects what already works."
+            />
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <StepRail steps={buildSteps} columns={5} />
+          </Reveal>
+        </Section>
+
+        <Section aria-labelledby="dw-treatments-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div
+              aria-hidden="true"
+              className="bg-grid absolute inset-0 -z-10 opacity-40"
+            />
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+              <Reveal>
+                <SectionHeader
+                  id="dw-treatments-title"
+                  eyebrow="Treatments and search"
+                  title="pages built around the care you provide."
+                  description="From emergency dentistry to full-smile makeovers, every page walks patients from first impression to a scheduled visit. Here’s what we add on top of the core site."
+                >
+                  <ArrowLink href="/dental-practice-seo-expert">
+                    See our dentist SEO playbook
+                  </ArrowLink>
+                </SectionHeader>
+              </Reveal>
+              <ul className="grid gap-4">
+                {treatmentHighlights.map((item, index) => (
+                  <Reveal key={item.title} as="li" delay={index * 80}>
+                    <div className="flex gap-5 rounded-2xl border border-white/[0.08] bg-background/60 p-5 sm:p-6">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
+                        {item.icon}
+                      </span>
+                      <div>
+                        <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="dw-scheduling-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16">
+            <Reveal>
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-popover shadow-[0_30px_80px_-30px_oklch(0_0_0/90%)]">
+                <HeroLoopingVideo
+                  videoSrc="https://res.cloudinary.com/dhqpqfw6w/video/upload/q_auto,vc_auto/v1762028676/scheduling-dental-website_nehxuw.mp4"
+                  posterSrc="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1762028718/scheduling-dental-website_dnebtj.webp"
+                  alt="Preview of a dental practice website scheduling flow"
+                  className="rounded-none border-none shadow-none"
+                  aspectClassName="aspect-[16/9]"
+                  videoClassName="object-cover"
+                  priority={false}
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={100} className="flex flex-col gap-7">
+              <SectionHeader
+                id="dw-scheduling-title"
+                eyebrow="Simple scheduling"
+                title="booking that feels easy for every patient."
+                description="We design the booking path around how your practice schedules today: online booking where you have it, short request forms where you don’t, and tap-to-call everywhere."
+              />
+              <CheckList
+                items={[
+                  'The booking step sits on every treatment page, not just the contact page.',
+                  'Form requests go to the right inbox, with call and form tracking.',
+                  'The same path carries through to specialty landing pages and ad landing pages.',
+                ]}
+              />
+              <div>
+                <WaitlistButton
+                  location="dental website scheduling"
+                  href={WEBSITE_WAITLIST_CTA.href}
+                />
+              </div>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="dw-interviews-title">
+          <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              id="dw-interviews-title"
+              eyebrow="In their own words"
+              title="conversations with dentists and their teams."
+              description="Dentists and front office teams sit down with Enzo to talk about patients, operations, and the work of running a practice."
+            />
+            <ArrowLink
+              href="/why-dental-practices-love-prism"
+              className="shrink-0"
+            >
+              Why dentists pick Prism
+            </ArrowLink>
+          </Reveal>
+          <Reveal delay={100} className="mt-12">
+            <InterviewGrid
+              interviews={DENTAL_INTERVIEWS}
+              location="dental website interviews"
+            />
+          </Reveal>
+        </Section>
+
+        <Section aria-labelledby="dw-beyond-title">
+          <div className="grid gap-8 rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center lg:gap-14 lg:p-14">
+            <div className="flex flex-col gap-6">
+              <Eyebrow>Beyond the website</Eyebrow>
+              <h2
+                id="dw-beyond-title"
+                className="text-title text-gradient max-w-[16ch] text-balance pb-1"
+              >
+                one team for every channel your practice uses.
+              </h2>
+              <p className="max-w-[56ch] text-[15px] leading-7 text-muted-foreground">
+                Prism does more than dental websites. We also run the ads, local
+                listings, and review workflows that sit on top of the site.
+                Curious how the full system fits together?
+              </p>
+              <CheckList
+                items={[
+                  <>
+                    Local Google Ads and Meta campaigns, measured against calls
+                    and booked appointments. See{' '}
+                    <TextLink href="/facebook-ads-for-dentists">
+                      Facebook ads for dentists
+                    </TextLink>
+                    .
+                  </>,
+                  'Google, Apple, Yelp, and other listings kept accurate for hours, services, and reviews.',
+                  'Monthly reporting and updates as search and AI results change.',
+                ]}
+              />
+            </div>
+            <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-background/60 p-6">
+              <p className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                see the whole system.
+              </p>
+              <p className="text-[15px] leading-7 text-muted-foreground">
+                Explore how Prism supports dentists with ads, listings, and
+                follow-up built on top of the website.
+              </p>
+              <ArrowLink href="/why-dental-practices-love-prism">
+                See why dental practices love Prism
+              </ArrowLink>
+            </div>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="dw-migration-title">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="dw-migration-title"
+                eyebrow="Stress-free migration"
+                title="we do the heavy lifting when you leave your old provider."
+                description="Dentists often feel trapped by agencies that own their domain or hosting. Prism handles the details so the switch is smooth for your patients and your team."
+              >
+                <ArrowLink href="/custom-email-for-dental-practices">
+                  Set up custom email for your practice
+                </ArrowLink>
+              </SectionHeader>
+            </Reveal>
+            <Reveal delay={100}>
+              <ol className="relative flex flex-col gap-4 before:absolute before:bottom-6 before:left-[19px] before:top-6 before:w-px before:bg-white/10">
+                {transferSteps.map((item) => (
+                  <li key={item.step} className="relative flex gap-5">
+                    <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full border border-white/10 bg-card font-mono text-[12px] text-foreground">
+                      {item.step}
+                    </span>
+                    <div className="flex-1 rounded-2xl border border-white/[0.08] bg-card p-5">
+                      <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+          </div>
+        </Section>
+
+        <DentalClientsSection />
+
+        <Section aria-labelledby="dw-systems-title">
+          <Card className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-12">
+            <span className="grid size-14 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-foreground">
+              <ShieldCheck className="size-6" aria-hidden />
+            </span>
+            <div className="flex flex-col gap-6">
+              <Eyebrow>Connected systems</Eyebrow>
+              <h2
+                id="dw-systems-title"
+                className="text-heading max-w-[24ch] text-foreground sm:text-[2rem]"
+              >
+                every patient touchpoint, connected.
+              </h2>
+              <CheckList
+                className="grid gap-x-10 gap-y-3 space-y-0 sm:grid-cols-2"
+                items={integrationPoints}
+              />
+              <ArrowLink href="/custom-email-for-dental-practices">
+                Learn about custom email for dental teams
+              </ArrowLink>
+            </div>
+          </Card>
+        </Section>
+
+        <DentalFaq
+          idPrefix="dental-website"
+          title="switching providers, answered."
+          description="The questions we hear from practice owners preparing to switch providers."
+          items={faqs}
+        />
+
+        <FinalCta
+          location="dental website final cta"
+          title="your practice, next."
+          href={WEBSITE_WAITLIST_CTA.href}
+          secondary={{ label: 'See how pricing works', href: '/pricing' }}
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -706,15 +666,15 @@ export default function DentalWebsitePage() {
         serviceType="Website design"
         areaServed="United States"
         offerDetails={{
-          name: "Dental practice website design",
+          name: 'Dental practice website design',
           description:
-            "Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is fully booked; scope is agreed when we reach out from the waitlist.",
-          businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          availability: "https://schema.org/InStock",
-          url: "https://www.design-prism.com/pricing",
+            'Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is fully booked; scope is agreed when we reach out from the waitlist.',
+          businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
+          availability: 'https://schema.org/InStock',
+          url: 'https://www.design-prism.com/pricing',
         }}
       />
       <FAQSchema questions={faqs} />
-    </>
+    </div>
   )
 }

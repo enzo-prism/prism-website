@@ -1,76 +1,36 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts'
+import { PieChart, Pie, Cell, Tooltip } from 'recharts'
 import { ChartResponsiveContainer } from '@/components/ui/chart'
-import { fadeInUp, springScale } from '@/utils/animation-variants'
+import { cn } from '@/lib/utils'
 
 const data = [
   {
     name: 'Traditional Organic',
     value: 70,
-    color: '#10b981',
+    color: 'var(--spectrum-green)',
     description: 'Standard search results',
   },
   {
     name: 'Google AI Overviews',
     value: 25,
-    color: '#8b5cf6',
+    color: 'var(--spectrum-violet)',
     description: 'AI-generated summaries',
   },
   {
     name: 'ChatGPT Search',
     value: 3,
-    color: '#f59e0b',
+    color: 'var(--spectrum-orange)',
     description: 'Direct AI queries',
   },
   {
     name: 'Other AI Tools',
     value: 2,
-    color: '#ef4444',
+    color: 'var(--spectrum-red)',
     description: 'Perplexity, Claude, etc.',
   },
 ]
-
-const RADIAN = Math.PI / 180
-interface PieChartLabelProps {
-  cx?: number
-  cy?: number
-  midAngle?: number
-  innerRadius?: number
-  outerRadius?: number
-  percent?: number
-}
-
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-}: PieChartLabelProps) => {
-  if (!cx || !cy || !midAngle || !innerRadius || !outerRadius || !percent)
-    return null
-
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-  const x = cx + radius * Math.cos(-midAngle * RADIAN)
-  const y = cy + radius * Math.sin(-midAngle * RADIAN)
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="white"
-      textAnchor={x > cx ? 'start' : 'end'}
-      dominantBaseline="central"
-      className="text-xs font-semibold"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  )
-}
 
 export default function AITrafficDistributionChart() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
@@ -84,64 +44,60 @@ export default function AITrafficDistributionChart() {
   }
 
   return (
-    <motion.div
-      className="w-full bg-white border border-neutral-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      animate="animate"
-      variants={springScale}
-    >
-      <motion.div className="mb-6" variants={fadeInUp}>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+    <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+      <div className="mb-6">
+        <p className="text-eyebrow mb-3! mt-0! text-subtle">Chart</p>
+        <h3 className="mb-2! mt-0! text-xl! text-foreground">
           Search Traffic Distribution in 2025
         </h3>
-        <p className="text-neutral-600 text-sm">
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           Where users are finding information and how it impacts your business
         </p>
-      </motion.div>
+      </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        <motion.div variants={fadeInUp}>
-          <div className="h-64 sm:h-72 md:h-80 chart-container">
+      <div className="grid items-center gap-6 lg:grid-cols-2">
+        <div className="relative">
+          <div className="relative h-64 sm:h-72">
             <ChartResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={data}
                   cx="50%"
                   cy="50%"
-                  labelLine={false}
-                  label={renderCustomizedLabel}
-                  outerRadius={70}
-                  fill="#8884d8"
+                  innerRadius={62}
+                  outerRadius={96}
+                  paddingAngle={2}
+                  cornerRadius={4}
                   dataKey="value"
+                  stroke="var(--card)"
+                  strokeWidth={2}
                   onMouseEnter={onPieEnter}
                   onMouseLeave={onPieLeave}
-                  animationDuration={1500}
+                  isAnimationActive={false}
                 >
                   {data.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={entry.color}
-                      stroke={activeIndex === index ? '#374151' : 'none'}
-                      strokeWidth={activeIndex === index ? 2 : 0}
-                      style={{
-                        filter:
-                          activeIndex === index ? 'brightness(1.1)' : 'none',
-                        cursor: 'pointer',
-                      }}
+                      fillOpacity={
+                        activeIndex === null || activeIndex === index ? 0.9 : 0.35
+                      }
+                      style={{ cursor: 'pointer', transition: 'fill-opacity 200ms' }}
                     />
                   ))}
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    backgroundColor: 'var(--popover)',
+                    border: '1px solid oklch(1 0 0 / 10%)',
+                    borderRadius: '12px',
+                    fontSize: '13px',
+                    color: 'var(--foreground)',
+                    boxShadow: '0 16px 40px -16px oklch(0 0 0 / 80%)',
                     zIndex: 9999,
                   }}
-                  labelStyle={{ color: '#374151', fontWeight: 'bold' }}
-                  itemStyle={{ color: '#374151' }}
+                  labelStyle={{ color: 'var(--foreground)', fontWeight: 600 }}
+                  itemStyle={{ color: 'var(--muted-foreground)' }}
                   formatter={(value, _name, item) => {
                     const description =
                       item.payload?.description ?? 'No description available'
@@ -153,60 +109,72 @@ export default function AITrafficDistributionChart() {
               </PieChart>
             </ChartResponsiveContainer>
           </div>
-        </motion.div>
-
-        <motion.div className="space-y-3" variants={fadeInUp}>
-          {data.map((item, index) => (
-            <motion.button
-              key={item.name}
-              type="button"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`p-4 rounded-lg border-2 transition-colors cursor-pointer touch-feedback ${
-                activeIndex === index
-                  ? 'border-neutral-300 bg-neutral-50'
-                  : 'border-neutral-200 hover:border-neutral-300'
-              }`}
-              onMouseEnter={() => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex(null)}
-              onClick={() =>
-                setActiveIndex(activeIndex === index ? null : index)
-              }
-              aria-pressed={activeIndex === index}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
-                <div className="flex items-center gap-3 flex-1">
-                  <div
-                    className="w-4 h-4 rounded-full shrink-0"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <h4 className="font-semibold text-neutral-900 text-sm sm:text-base">
-                    {item.name}
-                  </h4>
-                </div>
-                <span className="text-sm font-bold text-neutral-600 ml-7 sm:ml-0">
-                  {item.value}%
-                </span>
-              </div>
-              <p className="text-sm text-neutral-600 leading-relaxed">
-                {item.description}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 grid place-items-center"
+          >
+            <div className="text-center">
+              <p className="my-0! font-mono text-2xl font-semibold tabular-nums text-foreground">
+                {activeIndex === null ? '100%' : `${data[activeIndex].value}%`}
               </p>
-            </motion.button>
-          ))}
-        </motion.div>
+              <p className="mb-0! mt-1! max-w-[9rem] text-xs leading-4 text-subtle">
+                {activeIndex === null ? 'of search traffic' : data[activeIndex].name}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ul className="my-0! flex list-none! flex-col gap-2 pl-0!">
+          {data.map((item, index) => {
+            const isActive = activeIndex === index
+            return (
+              <li key={item.name} className="my-0! pl-0!">
+                <button
+                  type="button"
+                  className={cn(
+                    'w-full rounded-2xl border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                    isActive
+                      ? 'border-white/20 bg-white/[0.05]'
+                      : 'border-white/[0.08] bg-background/50 hover:border-white/15',
+                  )}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                  onClick={() => setActiveIndex(isActive ? null : index)}
+                  aria-pressed={isActive}
+                >
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="size-2 shrink-0 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="text-sm font-medium text-foreground sm:text-base">
+                        {item.name}
+                      </span>
+                    </span>
+                    <span className="font-mono text-sm tabular-nums text-foreground">
+                      {item.value}%
+                    </span>
+                  </span>
+                  <span className="mt-1.5 block pl-5 text-sm leading-6 text-muted-foreground">
+                    {item.description}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
       </div>
 
-      <motion.div
-        className="mt-6 p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500"
-        variants={fadeInUp}
-      >
-        <p className="text-sm text-purple-800">
+      <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-4 pl-5">
+        <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-spectrum-violet" />
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           <strong>Strategic Takeaway:</strong> Google's AI Overviews are the
           biggest disruptor, not ChatGPT. Focus your optimization efforts on
           appearing in Google's AI summaries.
         </p>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

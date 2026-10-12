@@ -246,7 +246,7 @@ function buildLinkNode(href: string, matchText: string, phrase: string, index: n
   const safeText = matchText.replace(/</g, "&lt;").replace(/>/g, "&gt;")
   const safeHref = href.replace(/"/g, "&quot;")
   const safePhrase = phrase.replace(/"/g, "&quot;")
-  return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="blog-inline-link" data-blog-link-index="${index}" data-blog-link-phrase="${safePhrase}">${safeText}<span class="sr-only"> (opens in a new tab)</span></a>`
+  return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer" className="blog-inline-link" data-blog-link-index="${index}" data-blog-link-phrase="${safePhrase}">${safeText}<span className="sr-only"> (opens in a new tab)</span></a>`
 }
 
 function splitProtectedSegments(content: string) {

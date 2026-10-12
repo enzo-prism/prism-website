@@ -2,24 +2,42 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
-  ArrowRight,
+  ArrowUpRight,
   BarChart3,
   ChartNoAxesColumnIncreasing,
-  CheckCircle2,
-  ClipboardList,
+  CircleAlert,
+  CircleCheck,
+  CircleX,
   Layers,
+  PhoneCall,
+  Search,
+  Settings2,
   ShieldCheck,
+  Stethoscope,
   Target,
 } from 'lucide-react'
 
 import Footer from '@/components/footer'
+import {
+  ArrowLink,
+  Callout,
+  CheckList,
+  TextLink,
+} from '@/components/landing/dental/primitives'
+import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
-import ScrollToTop from '@/components/scroll-to-top'
+import { BrowserFrame } from '@/components/prism/browser-frame'
+import { FinalCta } from '@/components/prism/final-cta'
+import { Reveal } from '@/components/prism/reveal'
+import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
+import { SpotlightCard } from '@/components/prism/spotlight-card'
+import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WebPageSchema } from '@/components/schema-markup'
+import ScrollToTop from '@/components/scroll-to-top'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import PixelishIcon from '@/components/pixelish/PixelishIcon'
+import { Card } from '@/components/ui/card'
 import { FREE_AUDIT_CTA_TEXT } from '@/lib/constants'
-import { pixelishForEmoji } from '@/lib/pixelish-emoji'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
@@ -43,7 +61,7 @@ const servicesHighlights = [
     title: 'compliant campaign architecture',
     description:
       'we review campaign structure, landing pages, audiences, and measurement against Google’s current health advertising policies. eligibility and enforcement remain Google’s decision.',
-    ctaLabel: 'Learn About Policy Compliance',
+    ctaLabel: 'Learn about policy compliance',
     href: `#${POLICY_SECTION_ID}`,
     icon: ShieldCheck,
     external: false,
@@ -52,7 +70,7 @@ const servicesHighlights = [
     title: 'smart tracking & reporting',
     description:
       'we configure privacy-aware measurement for calls, forms, and appointment requests where supported, then report attribution limits alongside performance.',
-    ctaLabel: 'See Sample Reports',
+    ctaLabel: 'See sample reports',
     href: `#${REPORTS_SECTION_ID}`,
     icon: BarChart3,
     external: false,
@@ -61,31 +79,31 @@ const servicesHighlights = [
 
 const structurePillars = [
   {
-    emoji: '🦷',
+    icon: Stethoscope,
     title: 'split by service type',
     description:
       'campaigns are separated by service and landing-page intent. targeting eligibility is reviewed against the page content, account, market, and Google’s current sensitive-interest rules.',
   },
   {
-    emoji: '🔍',
+    icon: Search,
     title: 'keyword-driven search',
     description:
       'we target high-intent searches like “dentist near me,” “invisalign dentist san jose,” and “dental implants consultation.”',
   },
   {
-    emoji: '⚙️',
+    icon: Settings2,
     title: 'no guesswork targeting',
     description:
       'we avoid advertiser-curated audiences for sensitive health campaigns and lean on search intent and appropriate location targeting. Google determines final eligibility.',
   },
   {
-    emoji: '📞',
+    icon: PhoneCall,
     title: 'conversion optimization',
     description:
       'landing pages built for action with clear calls to call, text, or book online, plus matched tracking for every lead source.',
   },
   {
-    emoji: '📊',
+    icon: BarChart3,
     title: 'continuous optimization',
     description:
       'weekly search-term audits, negative keyword updates, and monthly performance reports to keep your spend efficient.',
@@ -110,6 +128,7 @@ const restrictedItems = [
 const caseStudies = [
   {
     name: 'Dr. Christopher Wong (Palo Alto)',
+    slug: 'dr-christopher-wong',
     outcomes: [
       'Search and conversion tracking connected to the practice website',
       'Campaign structure aligned with high-intent dental services',
@@ -117,6 +136,7 @@ const caseStudies = [
   },
   {
     name: 'Wine Country Root Canal (Santa Rosa)',
+    slug: 'wine-country-root-canal',
     outcomes: [
       'High-intent landing pages built around endodontic services',
       'Measurement tied to calls and appointment requests',
@@ -124,6 +144,7 @@ const caseStudies = [
   },
   {
     name: 'Grace Dental (Santa Rosa)',
+    slug: 'grace-dental-santa-rosa',
     outcomes: ['Local dental campaign structure and conversion measurement'],
   },
 ]
@@ -170,89 +191,43 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function GoogleDentalAdsPage() {
   return (
-    <>
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="bg-white text-neutral-900 lowercase">
-        <section className="relative overflow-hidden rounded-b-[3rem] bg-neutral-950 text-white">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_rgba(0,0,0,0.88))]"
-          />
-          <div className="absolute inset-0 opacity-35 mix-blend-screen">
-            <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.25),_rgba(30,64,175,0))]" />
+      <main id="main-content" tabIndex={-1} className="flex-1">
+        <LandingHero
+          eyebrow="Prism × Google Ads for dentists"
+          title="prism + google ads: growing dental practices with precision."
+          description="we help dental practices attract more high-value patients with google ads structured around current policy, clear landing paths, and measurable search intent."
+          location="google dental ads hero"
+          ctaHref={GET_FREE_AUDIT_HREF}
+          ctaLabel={FREE_AUDIT_CTA_TEXT}
+          secondary={{ label: 'See how we run dental ads', href: `#${STRUCTURE_SECTION_ID}` }}
+          glow="blue"
+          titleClassName="max-w-[18ch]"
+        >
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center text-[15px] text-muted-foreground">
+            <p>
+              want to add paid social too? see{' '}
+              <TextLink href="/tiktok-ads-for-dentists">tiktok ads for dentists</TextLink>.
+            </p>
+            <p>
+              need a HIPAA-aware intake workflow? see our{' '}
+              <TextLink href="/google/dental-patient-forms">google workspace patient forms guide</TextLink>.
+            </p>
           </div>
-          <div className="relative">
-            <div className="container mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-24 text-center lowercase md:gap-8 md:px-6 md:py-32">
-              <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.32em] text-white/70">
-                prism × google ads for dentists
-              </span>
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-                prism + google ads: growing dental practices with precision
-              </h1>
-              <p className="max-w-3xl text-base text-white/80 sm:text-lg">
-                we help dental practices attract more high-value patients with
-                google ads structured around current policy, clear landing
-                paths, and measurable search intent.
-              </p>
-              <p className="max-w-3xl text-sm text-white/70">
-                want to add paid social too? see{' '}
-                <Link
-                  href="/tiktok-ads-for-dentists"
-                  className="font-semibold text-white underline underline-offset-4"
-                >
-                  tiktok ads for dentists
-                </Link>
-                .
-              </p>
-              <p className="max-w-3xl text-sm text-white/70">
-                need a HIPAA-aware intake workflow? see our{' '}
-                <Link
-                  href="/google/dental-patient-forms"
-                  className="font-semibold text-white underline underline-offset-4"
-                >
-                  google workspace patient forms guide
-                </Link>
-                .
-              </p>
-              <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  asChild
-                  size="lg"
-                  variant="inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href={GET_FREE_AUDIT_HREF} className="lowercase">
-                    {FREE_AUDIT_CTA_TEXT}{' '}
-                    <ArrowRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline-inverted"
-                  className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-                >
-                  <Link href={`#${STRUCTURE_SECTION_ID}`} className="lowercase">
-                    see how we run dental ads{' '}
-                    <ArrowRight className="h-5 w-5" aria-hidden />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+        </LandingHero>
 
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto flex flex-col gap-8 px-4 py-16 md:flex-row md:gap-12 md:px-6 lg:py-24">
-            <div className="md:w-1/2">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                Why Google Ads matter for dentists
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Meet patients while they are actively searching on Google.
-              </h2>
-            </div>
-            <div className="flex flex-col gap-6 text-base text-neutral-600 sm:text-lg md:w-1/2">
+        <Section aria-labelledby="gda-why-title">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="gda-why-title"
+                eyebrow="Why Google Ads matter for dentists"
+                title="meet patients while they are actively searching on google."
+                titleClassName="max-w-[16ch]"
+              />
+            </Reveal>
+            <Reveal delay={100} className="space-y-5 text-lead text-muted-foreground lg:pt-12">
               <p>
                 When someone searches “dentist near me” or “dental implants San
                 Jose,” Google decides which practices appear first. That top
@@ -268,285 +243,179 @@ export default function GoogleDentalAdsPage() {
                 with policy-aware structure, useful measurement, and ongoing
                 optimization. results vary by market, budget, and practice.
               </p>
-            </div>
+            </Reveal>
           </div>
-        </section>
-
-        <section className="border-t border-neutral-100 bg-white px-4 py-12 sm:py-14">
-          <div className="container mx-auto max-w-4xl px-4 md:px-6">
-            <div className="rounded-3xl border border-neutral-200 bg-neutral-50 p-6 text-center shadow-sm">
-              <p className="text-sm text-neutral-700">
+          <Reveal delay={150} className="mt-12">
+            <Card className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+              <p className="max-w-[64ch] text-[15px] leading-7 text-muted-foreground">
                 want compounding organic visibility too? work with our{' '}
-                <Link
-                  href="/dental-practice-seo-expert"
-                  className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                >
-                  dental seo
-                </Link>{' '}
-                playbook to improve maps + organic rankings. for facebook &amp;
-                instagram campaigns, see{' '}
-                <Link
-                  href="/facebook-ads-for-dentists"
-                  className="font-semibold text-neutral-900 underline decoration-neutral-300 underline-offset-4"
-                >
-                  facebook ads for dentists
-                </Link>
-                .
+                <TextLink href="/dental-practice-seo-expert">dental seo</TextLink> playbook to improve maps + organic
+                rankings. for facebook &amp; instagram campaigns, see{' '}
+                <TextLink href="/facebook-ads-for-dentists">facebook ads for dentists</TextLink>.
               </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-3">
-                <Button asChild variant="outline" className="rounded-full px-8">
-                  <Link href="/dental-practice-seo-expert">see dental seo</Link>
-                </Button>
-                <Button asChild className="rounded-full px-8">
-                  <Link href={GET_FREE_AUDIT_HREF}>join the waitlist</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
+              <ArrowLink href="/dental-practice-seo-expert" className="shrink-0">
+                see dental seo
+              </ArrowLink>
+            </Card>
+          </Reveal>
+        </Section>
 
-        <section className="bg-neutral-950 text-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
-                The current landscape
-              </p>
-              <h2 className="text-3xl font-semibold md:text-4xl">
-                What’s changed, and how to stay ahead.
-              </h2>
-            </div>
-            <div className="space-y-6 text-base text-white/80 sm:text-lg">
-              <p>
-                Google has tightened its Health in Personalized Advertising
-                policies, affecting how dental practices, especially those
-                advertising implants, oral surgery, and gum disease treatment,
-                can target patients.
-              </p>
-              <p className="font-semibold text-white">
-                Here’s the short version:
-              </p>
-              <ul className="space-y-3 text-sm text-white/80 sm:text-base">
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/circle-checkmark.svg"
-                    alt=""
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  <span>
-                    You can advertise dental services, including implants,
-                    Invisalign, and whitening.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/circle-exclamation.svg"
-                    alt=""
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  <span>
-                    You can’t target people based on health conditions (like
-                    “missing teeth” or “gum problems”).
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <PixelishIcon
-                    src="/pixelish/close.svg"
-                    alt=""
-                    size={16}
-                    aria-hidden="true"
-                  />
-                  <span>
-                    Some targeting features, like remarketing or custom
-                    audiences, are restricted for health-related campaigns.
-                  </span>
-                </li>
-              </ul>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur">
-                <Image
-                  src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761753033/Google_Ads_notification_qzgj35.png"
-                  alt="Google Ads health policy notification"
-                  width={1200}
-                  height={716}
-                  className="h-auto w-full rounded-2xl object-contain"
-                  sizes="(min-width: 1024px) 480px, (min-width: 768px) 70vw, 100vw"
+        <Section aria-labelledby="gda-landscape-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-40" />
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+              <div className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
+                <SectionHeader
+                  id="gda-landscape-title"
+                  eyebrow="The current landscape"
+                  title="what’s changed, and how to stay ahead."
+                  description="Google has tightened its Health in Personalized Advertising policies, affecting how dental practices, especially those advertising implants, oral surgery, and gum disease treatment, can target patients."
                 />
               </div>
-              <p>
-                We build your campaigns with these rules in mind, so you stay
-                compliant while reaching the right patients through search
-                intent, location targeting, and high-performing landing pages.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                What we do
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Google Ads built for real dental growth.
-              </h2>
-            </div>
-            <div className="grid gap-6 text-neutral-900 sm:grid-cols-2 lg:grid-cols-3">
-              {servicesHighlights.map((service) => {
-                const Icon = service.icon
-                return (
-                  <div
-                    key={service.title}
-                    className="flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    <div className="space-y-4">
-                      <Icon className="h-6 w-6 text-neutral-400" aria-hidden />
-                      <h3 className="text-xl font-semibold text-neutral-900">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-neutral-600">
-                        {service.description}
-                      </p>
-                    </div>
-                    <Link
-                      href={service.href}
-                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.3em] text-neutral-900 transition-colors hover:text-neutral-700"
-                    >
-                      {service.ctaLabel}{' '}
-                      <ArrowRight className="h-4 w-4" aria-hidden />
-                    </Link>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id={STRUCTURE_SECTION_ID}
-          className="border-t border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                How we structure dental ads
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                A policy-aware structure built for useful measurement.
-              </h2>
-            </div>
-            <div className="grid gap-6">
-              {structurePillars.map((item) => (
-                <div
-                  key={item.title}
-                  className="flex items-start gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-100"
-                    aria-hidden="true"
-                  >
-                    <PixelishIcon
-                      src={pixelishForEmoji(item.emoji).src}
-                      alt=""
-                      size={22}
-                      invert={false}
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-neutral-900">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-neutral-600">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id={POLICY_SECTION_ID}
-          className="border-t border-neutral-200 bg-white"
-        >
-          <div className="container mx-auto flex flex-col gap-8 px-4 py-16 md:flex-row md:gap-12 md:px-6 lg:py-24">
-            <div className="md:w-1/2">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                What’s allowed vs. restricted
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Simple guide: what’s okay, what’s not.
-              </h2>
-              <p className="mt-4 text-base text-neutral-600 sm:text-lg">
-                We translate Google’s Health in Personalized Advertising
-                policies into practical guardrails. Google controls approvals,
-                eligibility, and enforcement.
-              </p>
-            </div>
-            <div className="grid gap-6 md:w-1/2 md:grid-cols-2">
-              <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
-                <h3 className="flex items-center gap-2 text-lg font-semibold text-emerald-900">
-                  <PixelishIcon
-                    src="/pixelish/checkmark.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
+              <div className="flex flex-col gap-6">
+                <figure className="overflow-hidden rounded-2xl border border-white/10 bg-background/60 p-3">
+                  <Image
+                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761753033/Google_Ads_notification_qzgj35.png"
+                    alt="Google Ads health policy notification"
+                    width={1200}
+                    height={716}
+                    className="h-auto w-full rounded-xl object-contain"
+                    sizes="(min-width: 1024px) 560px, (min-width: 768px) 70vw, 100vw"
                   />
-                  <span>Allowed</span>
-                </h3>
-                <ul className="mt-4 space-y-3 text-sm text-emerald-900/80">
-                  {allowedItems.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-3xl border border-red-200 bg-red-50 p-6">
-                <h3 className="flex items-center gap-2 text-lg font-semibold text-red-900">
-                  <PixelishIcon
-                    src="/pixelish/close.svg"
-                    alt=""
-                    size={16}
-                    invert={false}
-                    aria-hidden="true"
-                  />
-                  <span>Restricted / Not Allowed</span>
-                </h3>
-                <ul className="mt-4 space-y-3 text-sm text-red-900/80">
-                  {restrictedItems.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-0.5 text-base" aria-hidden>
-                        •
+                </figure>
+                <div>
+                  <p className="text-[15px] font-semibold text-foreground">Here’s the short version:</p>
+                  <ul className="mt-4 space-y-3 text-[15px] leading-7 text-muted-foreground">
+                    <li className="flex items-start gap-3">
+                      <CircleCheck className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
+                      <span>
+                        You can advertise dental services, including implants,
+                        Invisalign, and whitening.
                       </span>
-                      <span>{item}</span>
                     </li>
-                  ))}
-                </ul>
+                    <li className="flex items-start gap-3">
+                      <CircleAlert className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
+                      <span>
+                        You can’t target people based on health conditions (like
+                        “missing teeth” or “gum problems”).
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CircleX className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
+                      <span>
+                        Some targeting features, like remarketing or custom
+                        audiences, are restricted for health-related campaigns.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <p className="text-[15px] leading-7 text-muted-foreground">
+                  We build your campaigns with these rules in mind, so you stay
+                  compliant while reaching the right patients through search
+                  intent, location targeting, and high-performing landing pages.
+                </p>
               </div>
             </div>
           </div>
-        </section>
+        </Section>
 
-        <section
-          id={LSA_SECTION_ID}
-          className="border-t border-neutral-200 bg-neutral-900 text-white"
-        >
-          <div className="container mx-auto flex flex-col gap-8 px-4 py-16 md:flex-row md:gap-12 md:px-6 lg:py-24">
-            <div className="md:w-1/2">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
-                Local Services Ads (LSA)
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold md:text-4xl">
-                Show up first with Google’s new “Verified” badge.
+        <Section aria-labelledby="gda-services-title">
+          <Reveal>
+            <SectionHeader
+              id="gda-services-title"
+              eyebrow="What we do"
+              title="google ads built for real dental growth."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {servicesHighlights.map((service, index) => {
+              const Icon = service.icon
+              return (
+                <Reveal key={service.title} delay={index * 80}>
+                  <Card className="flex h-full flex-col p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon className="size-5 text-foreground" aria-hidden />
+                    </span>
+                    <h3 className="mt-6 text-[19px] font-semibold tracking-[-0.02em] text-foreground">{service.title}</h3>
+                    <p className="mt-2 flex-1 text-[15px] leading-7 text-muted-foreground">{service.description}</p>
+                    <ArrowLink href={service.href} className="mt-6 self-start">
+                      {service.ctaLabel}
+                    </ArrowLink>
+                  </Card>
+                </Reveal>
+              )
+            })}
+          </div>
+        </Section>
+
+        <Section id={STRUCTURE_SECTION_ID} aria-labelledby="gda-structure-title" className="scroll-mt-20">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+            <Reveal className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeader
+                id="gda-structure-title"
+                eyebrow="How we structure dental ads"
+                title="a policy-aware structure built for useful measurement."
+                titleClassName="max-w-[15ch]"
+              />
+            </Reveal>
+            <Reveal delay={100}>
+              <ol className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
+                {structurePillars.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <li key={item.title} className="flex items-start gap-5 p-5 sm:p-7">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <Icon className="size-[18px] text-foreground" aria-hidden />
+                      </span>
+                      <div>
+                        <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
+                        <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section id={POLICY_SECTION_ID} aria-labelledby="gda-policy-title" className="scroll-mt-20">
+          <Reveal>
+            <SectionHeader
+              id="gda-policy-title"
+              eyebrow="What’s allowed vs. restricted"
+              title="simple guide: what’s okay, what’s not."
+              description="We translate Google’s Health in Personalized Advertising policies into practical guardrails. Google controls approvals, eligibility, and enforcement."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            <Reveal>
+              <Callout tone="good" title="Allowed" icon={<CircleCheck className="size-4" aria-hidden />} className="h-full">
+                <CheckList className="mt-1" items={allowedItems} />
+              </Callout>
+            </Reveal>
+            <Reveal delay={100}>
+              <Callout
+                tone="warn"
+                title="Restricted / Not Allowed"
+                icon={<CircleX className="size-4" aria-hidden />}
+                className="h-full"
+              >
+                <CheckList marker="dot" className="mt-1" items={restrictedItems} />
+              </Callout>
+            </Reveal>
+          </div>
+        </Section>
+
+        <Section id={LSA_SECTION_ID} aria-labelledby="gda-lsa-title" className="scroll-mt-20">
+          <SpotlightCard className="grid gap-10 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14">
+            <div className="flex flex-col gap-6">
+              <Eyebrow>Local Services Ads (LSA)</Eyebrow>
+              <h2 id="gda-lsa-title" className="text-title text-gradient max-w-[14ch] text-balance pb-1">
+                show up first with google’s new “verified” badge.
               </h2>
             </div>
-            <div className="space-y-6 text-base text-white/80 sm:text-lg md:w-1/2">
+            <div className="space-y-5 text-[15px] leading-7 text-muted-foreground">
               <p>
                 Google Verified is now the single verification badge for
                 eligible Local Services Ads advertisers. Existing eligible
@@ -564,222 +433,130 @@ export default function GoogleDentalAdsPage() {
                 We can support LSA setup, verification steps, and lead tracking;
                 Google makes the final eligibility and badge decisions.
               </p>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="h-auto w-full rounded-full px-8 py-4 text-base font-semibold text-white sm:w-auto"
-              >
+              <Button asChild size="lg" variant="outline">
                 <Link
                   href="https://support.google.com/localservices/answer/16498018?hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Read Google&apos;s Badge Guide{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
+                  Read Google&apos;s badge guide
+                  <ArrowUpRight aria-hidden />
                 </Link>
               </Button>
             </div>
-          </div>
-        </section>
+          </SpotlightCard>
+        </Section>
 
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="max-w-3xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                Case studies
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Proven results with dental clients across California.
-              </h2>
-            </div>
-            <div className="mt-10 grid gap-6 lg:grid-cols-3">
-              {caseStudies.map((study) => (
-                <div
-                  key={study.name}
-                  className="flex h-full flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
+        <Section aria-labelledby="gda-cases-title">
+          <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              id="gda-cases-title"
+              eyebrow="Case studies"
+              title="our work with dental clients across California."
+              titleClassName="max-w-[16ch]"
+            />
+            <ArrowLink href="/case-studies" className="shrink-0">
+              See full case studies
+            </ArrowLink>
+          </Reveal>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {caseStudies.map((study, index) => (
+              <Reveal key={study.name} delay={index * 80}>
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  className="group/case flex h-full flex-col rounded-2xl border border-white/[0.08] bg-card p-3 transition-colors hover:border-white/[0.16] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
                 >
-                  <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-neutral-900">
-                      {study.name}
-                    </h3>
-                    <ul className="space-y-2 text-sm text-neutral-600">
+                  <BrowserFrame
+                    src={`/case-studies/${study.slug}-home-desktop.jpg`}
+                    alt={`${study.name} website built by Prism`}
+                    sizes="(min-width: 768px) 360px, 92vw"
+                  />
+                  <div className="flex flex-1 flex-col p-3 pt-5">
+                    <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{study.name}</h3>
+                    <ul className="mt-3 space-y-2 text-[14px] leading-6 text-muted-foreground">
                       {study.outcomes.map((outcome) => (
-                        <li key={outcome} className="flex items-start gap-2">
-                          <ChartNoAxesColumnIncreasing
-                            className="mt-0.5 h-4 w-4 text-neutral-400"
-                            aria-hidden
-                          />
+                        <li key={outcome} className="flex items-start gap-2.5">
+                          <ChartNoAxesColumnIncreasing className="mt-1 size-3.5 shrink-0 text-subtle" aria-hidden />
                           <span>{outcome}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </div>
-              ))}
-            </div>
-            <Button
-              asChild
-              size="lg"
-              variant="ghost"
-              className="mt-10 h-auto rounded-full px-8 py-4 text-base font-semibold text-neutral-900 hover:text-neutral-700"
-            >
-              <Link href="/case-studies">
-                See Full Case Studies{' '}
-                <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
-              </Link>
-            </Button>
+                </Link>
+              </Reveal>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section
-          id={REPORTS_SECTION_ID}
-          className="border-t border-neutral-200 bg-neutral-50"
-        >
-          <div className="container mx-auto px-4 py-16 md:px-6 lg:py-24">
-            <div className="max-w-3xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                Management scopes
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Example Google Ads management scopes.
-              </h2>
-              <p className="mt-3 text-sm text-neutral-600">
+        <Section id={REPORTS_SECTION_ID} aria-labelledby="gda-scopes-title" className="scroll-mt-20">
+          <Reveal>
+            <SectionHeader
+              id="gda-scopes-title"
+              eyebrow="Management scopes"
+              title="example google ads management scopes."
+            >
+              <p className="max-w-[58ch] text-[15px] leading-7 text-muted-foreground">
                 Final scope and pricing depend on budget, locations, services,
                 tracking, and account condition. For core offers, see{' '}
-                <Link
-                  href="/pricing"
-                  className="font-semibold text-neutral-900 underline underline-offset-4"
-                >
-                  Prism pricing
-                </Link>
-                .
+                <TextLink href="/pricing">Prism pricing</TextLink>.
               </p>
-            </div>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {pricingPlans.map((plan) => (
-                <div
-                  key={plan.plan}
-                  className="flex h-full flex-col gap-4 rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm"
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold text-neutral-900">
-                      {plan.plan}
-                    </h3>
-                    <span className="text-lg font-semibold text-neutral-900">
-                      {plan.fee}
-                    </span>
-                  </div>
-                  <p className="text-sm text-neutral-500">{plan.idealFor}</p>
-                  <div className="space-y-2 text-sm text-neutral-600">
-                    {plan.includes.map((item) => (
-                      <div key={item} className="flex items-start gap-2">
-                        <Layers
-                          className="mt-0.5 h-4 w-4 text-neutral-400"
-                          aria-hidden
-                        />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
+            </SectionHeader>
+          </Reveal>
+          <div className="mt-12 grid overflow-hidden rounded-2xl border border-white/[0.08] bg-card md:grid-cols-3">
+            {pricingPlans.map((plan) => (
+              <div
+                key={plan.plan}
+                className="-mb-px -mr-px flex flex-col gap-4 border-b border-r border-white/[0.07] p-6 sm:p-8"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-heading text-foreground">{plan.plan}</h3>
+                  <Badge variant="outline">{plan.fee}</Badge>
                 </div>
-              ))}
-            </div>
-            <Button
-              asChild
-              size="lg"
-              className="mt-10 h-auto rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white"
-            >
-              <Link href={GET_FREE_AUDIT_HREF}>
-                {WAITLIST_CTA.label}{' '}
-                <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
-              </Link>
-            </Button>
+                <p className="text-[14px] text-subtle">{plan.idealFor}</p>
+                <ul className="space-y-2 text-[15px] text-muted-foreground">
+                  {plan.includes.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <Layers className="mt-1 size-3.5 shrink-0 text-subtle" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </section>
+        </Section>
 
-        <section className="border-t border-neutral-200 bg-white">
-          <div className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-[minmax(0,_320px)_1fr] md:px-6 lg:py-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-neutral-500">
-                Why partner with Prism
-              </p>
-              <h2 className="text-3xl font-semibold text-neutral-900 md:text-4xl">
-                Google Ads expertise shaped around dental workflows.
-              </h2>
-            </div>
-            <div className="space-y-6 text-base text-neutral-600 sm:text-lg">
-              <p>
+        <Section aria-labelledby="gda-partner-title">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+            <Reveal>
+              <SectionHeader
+                id="gda-partner-title"
+                eyebrow="Why partner with Prism"
+                title="google ads expertise shaped around dental workflows."
+                titleClassName="max-w-[15ch]"
+              />
+            </Reveal>
+            <Reveal delay={100} className="flex flex-col gap-6 lg:pt-12">
+              <p className="text-lead text-muted-foreground">
                 Our team works inside the Google ecosystem every day, building
                 campaigns, landing paths, and measurement for dental teams.
               </p>
-              <p>When you partner with Prism, you’re getting:</p>
-              <ul className="space-y-4">
-                {partnershipPoints.map((point) => (
-                  <li
-                    key={point}
-                    className="flex items-start gap-3 text-sm text-neutral-700 sm:text-base"
-                  >
-                    <ClipboardList
-                      className="mt-0.5 h-4 w-4 text-neutral-400"
-                      aria-hidden
-                    />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button
-                asChild
-                size="lg"
-                className="h-auto w-full rounded-full bg-neutral-900 px-8 py-4 text-base font-semibold text-white sm:w-auto"
-              >
-                <Link href={GET_FREE_AUDIT_HREF}>
-                  {WAITLIST_CTA.label}{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-            </div>
+              <p className="text-[15px] text-muted-foreground">When you partner with Prism, you’re getting:</p>
+              <CheckList items={partnershipPoints} />
+              <div>
+                <WaitlistButton location="google dental ads partner" href={GET_FREE_AUDIT_HREF} label={WAITLIST_CTA.label} />
+              </div>
+            </Reveal>
           </div>
-        </section>
+        </Section>
 
-        <section className="border-t border-neutral-200 bg-neutral-950">
-          <div className="container mx-auto flex flex-col items-center gap-6 px-4 py-16 text-center text-white md:px-6 md:py-24">
-            <h2 className="text-3xl font-semibold md:text-4xl">
-              Let’s grow your dental practice with Google Ads.
-            </h2>
-            <p className="max-w-2xl text-base text-white/80 sm:text-lg">
-              If you want a clearer path from search intent to calls and
-              appointment requests, join the waitlist. When we can take on your
-              practice, we’ll audit your existing setup, identify measurement and
-              spend gaps, and recommend the next campaign changes. Results vary
-              by market and budget.
-            </p>
-            <div className="flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
-              <Button
-                asChild
-                size="lg"
-                variant="inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <Link href={GET_FREE_AUDIT_HREF}>
-                  {FREE_AUDIT_CTA_TEXT}{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline-inverted"
-                className="h-auto rounded-full px-8 py-4 text-base font-semibold"
-              >
-                <Link href="/case-studies">
-                  See case studies{' '}
-                  <ArrowRight className="h-5 w-5" aria-hidden />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <FinalCta
+          location="google dental ads final cta"
+          href={GET_FREE_AUDIT_HREF}
+          title="let’s grow your dental practice with google ads."
+          description="If you want a clearer path from search intent to calls and appointment requests, join the waitlist. When we can take on your practice, we’ll audit your existing setup, identify measurement and spend gaps, and recommend the next campaign changes. Results vary by market and budget."
+          secondary={{ label: 'See case studies', href: '/case-studies' }}
+        />
       </main>
       <Footer />
       <ScrollToTop />
@@ -790,6 +567,6 @@ export default function GoogleDentalAdsPage() {
         image="https://www.design-prism.com/prism-opengraph.png"
         isPartOfId="https://www.design-prism.com/#website"
       />
-    </>
+    </div>
   )
 }

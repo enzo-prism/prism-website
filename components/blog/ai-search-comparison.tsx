@@ -1,204 +1,180 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { User, Bot, ArrowRight, Search, Globe, Sparkles } from "lucide-react"
-import { fadeInUp, staggerContainer } from "@/utils/animation-variants"
+import type { LucideIcon } from "lucide-react"
 
-const traditionalFlow = [
+type FlowStep = {
+  step: number
+  title: string
+  description: string
+  icon: LucideIcon
+}
+
+const traditionalFlow: FlowStep[] = [
   {
     step: 1,
     title: "User Query",
     description: "User searches for \"best coffee roasters\"",
     icon: Search,
-    color: "bg-blue-500"
   },
   {
     step: 2,
     title: "Search Results",
     description: "Google shows 10 blue links",
     icon: Globe,
-    color: "bg-green-500"
   },
   {
     step: 3,
     title: "Click Through",
     description: "User clicks on your website",
     icon: ArrowRight,
-    color: "bg-purple-500"
   },
   {
     step: 4,
     title: "Engagement",
     description: "User reads your content",
     icon: User,
-    color: "bg-orange-500"
-  }
+  },
 ]
 
-const aiFlow = [
+const aiFlow: FlowStep[] = [
   {
     step: 1,
     title: "User Query",
     description: "User searches for \"best coffee roasters\"",
     icon: Search,
-    color: "bg-blue-500"
   },
   {
     step: 2,
     title: "AI Processing",
     description: "AI analyzes multiple sources",
     icon: Bot,
-    color: "bg-purple-500"
   },
   {
     step: 3,
     title: "Direct Answer",
     description: "AI provides summary on results page",
     icon: Sparkles,
-    color: "bg-yellow-500"
   },
   {
     step: 4,
     title: "No Click",
     description: "User gets answer without visiting sites",
     icon: User,
-    color: "bg-red-500"
-  }
+  },
 ]
+
+function FlowColumn({
+  label,
+  caption,
+  icon: LabelIcon,
+  accentClass,
+  steps,
+  result,
+}: {
+  label: string
+  caption: string
+  icon: LucideIcon
+  accentClass: string
+  steps: FlowStep[]
+  result: string
+}) {
+  return (
+    <div className="flex flex-col">
+      <div className="mb-5 flex flex-col items-start gap-2">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[13px] font-medium text-foreground">
+          <span aria-hidden="true" className={`size-1.5 rounded-full ${accentClass}`} />
+          <LabelIcon aria-hidden="true" className="size-3.5 text-muted-foreground" />
+          {label}
+        </span>
+        <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-subtle">
+          {caption}
+        </span>
+      </div>
+
+      <ol className="my-0! flex list-none! flex-col gap-2 pl-0!">
+        {steps.map((step) => {
+          const Icon = step.icon
+          return (
+            <li
+              key={step.step}
+              className="my-0! flex items-center gap-4 rounded-2xl border border-white/[0.06] bg-background/50 p-4 pl-4!"
+            >
+              <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                <Icon aria-hidden="true" className="size-4 text-foreground/85" strokeWidth={1.75} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-foreground">{step.title}</span>
+                <span className="mt-0.5 block text-[13px] leading-5 text-muted-foreground">
+                  {step.description}
+                </span>
+              </span>
+              <span className="font-mono text-[11px] tabular-nums text-subtle">
+                0{step.step}
+              </span>
+            </li>
+          )
+        })}
+      </ol>
+
+      <div className="relative mt-3 overflow-hidden rounded-2xl border border-white/[0.08] bg-background/50 p-3 pl-4">
+        <span aria-hidden="true" className={`absolute inset-y-0 left-0 w-0.5 ${accentClass}`} />
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
+          <strong>Result:</strong> {result}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function AISearchComparison() {
   return (
-    <motion.div
-      className="w-full bg-gradient-to-br from-neutral-50 to-white border border-neutral-200 rounded-lg shadow-sm p-6 mb-8"
-      initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={staggerContainer}
-    >
-      <motion.div className="mb-8 text-center" variants={fadeInUp}>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2">
+    <div className="my-10 w-full rounded-3xl border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] sm:p-8">
+      <div className="mb-8">
+        <p className="text-eyebrow mb-3! mt-0! text-subtle">Comparison</p>
+        <h3 className="mb-2! mt-0! text-xl! text-foreground">
           The Search Experience Evolution
         </h3>
-        <p className="text-neutral-600 text-sm">
+        <p className="my-0! text-sm leading-6 text-muted-foreground">
           How AI is changing the way users find and consume information
         </p>
-      </motion.div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Traditional Search */}
-        <motion.div variants={fadeInUp}>
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-green-800 font-medium">
-              <User className="w-4 h-4" />
-              Traditional Search
-            </div>
-            <p className="text-sm text-neutral-600 mt-2">The old way (pre-AI)</p>
-          </div>
-          
-          <div className="space-y-4">
-            {traditionalFlow.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <motion.div
-                  key={step.step}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="flex items-center gap-4 p-4 bg-white rounded-lg border border-neutral-200 shadow-sm"
-                >
-                  <div className={`w-10 h-10 rounded-full ${step.color} flex items-center justify-center shrink-0`}>
-                    <Icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-neutral-900">{step.title}</h4>
-                    <p className="text-sm text-neutral-600">{step.description}</p>
-                  </div>
-                  <div className="text-xs font-bold text-neutral-400">
-                    {step.step}
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-          
-          <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-            <p className="text-sm text-green-800">
-              <strong>Result:</strong> Your website gets traffic and engagement
-            </p>
-          </div>
-        </motion.div>
-
-        {/* AI Search */}
-        <motion.div variants={fadeInUp}>
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-full text-purple-800 font-medium">
-              <Bot className="w-4 h-4" />
-              AI-Powered Search
-            </div>
-            <p className="text-sm text-neutral-600 mt-2">The new reality (2024+)</p>
-          </div>
-          
-          <div className="space-y-4">
-            {aiFlow.map((step, index) => {
-              const Icon = step.icon
-              return (
-                <motion.div
-                  key={step.step}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="flex items-center gap-4 p-4 bg-white rounded-lg border border-neutral-200 shadow-sm"
-                >
-                  <div className={`w-10 h-10 rounded-full ${step.color} flex items-center justify-center shrink-0`}>
-                    <Icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-neutral-900">{step.title}</h4>
-                    <p className="text-sm text-neutral-600">{step.description}</p>
-                  </div>
-                  <div className="text-xs font-bold text-neutral-400">
-                    {step.step}
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-          
-          <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
-            <p className="text-sm text-red-800">
-              <strong>Result:</strong> Your website loses traffic and visibility
-            </p>
-          </div>
-        </motion.div>
       </div>
 
-      <motion.div 
-        className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-dashed border-blue-200"
-        variants={fadeInUp}
-      >
-        <div className="text-center">
-          <h4 className="font-bold text-neutral-900 mb-2">The Solution: AI-First Optimization</h4>
-          <p className="text-sm text-neutral-600 mb-4">
-            Instead of fighting AI, work with it. Make your brand the obvious choice for AI to mention.
-          </p>
-          <div className="flex justify-center gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-green-700">Consistent branding</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-blue-700">Quality content</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-              <span className="text-purple-700">Authority building</span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+      <div className="grid gap-8 md:grid-cols-2 md:gap-6">
+        <FlowColumn
+          label="Traditional Search"
+          caption="The old way (pre-AI)"
+          icon={User}
+          accentClass="bg-spectrum-green"
+          steps={traditionalFlow}
+          result="Your website gets traffic and engagement"
+        />
+        <FlowColumn
+          label="AI-Powered Search"
+          caption="The new reality (2024+)"
+          icon={Bot}
+          accentClass="bg-spectrum-red"
+          steps={aiFlow}
+          result="Your website loses traffic and visibility"
+        />
+      </div>
+
+      <div className="mt-8 rounded-2xl border border-dashed border-white/15 p-5 text-center sm:p-6">
+        <h4 className="mb-2! mt-0! text-base! text-foreground">The Solution: AI-First Optimization</h4>
+        <p className="mx-auto mb-4! mt-0! max-w-[52ch] text-sm leading-6 text-muted-foreground">
+          Instead of fighting AI, work with it. Make your brand the obvious choice for AI to mention.
+        </p>
+        <ul className="my-0! flex list-none! flex-wrap justify-center gap-x-5 gap-y-2 pl-0! text-sm">
+          {[
+            { label: "Consistent branding", accent: "bg-spectrum-green" },
+            { label: "Quality content", accent: "bg-spectrum-blue" },
+            { label: "Authority building", accent: "bg-spectrum-violet" },
+          ].map((item) => (
+            <li key={item.label} className="my-0! flex items-center gap-2 pl-0! text-muted-foreground">
+              <span aria-hidden="true" className={`size-1.5 rounded-full ${item.accent}`} />
+              {item.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   )
 }

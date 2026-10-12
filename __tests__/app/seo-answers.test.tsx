@@ -14,10 +14,6 @@ jest.mock('@/components/video-player', () => ({
   __esModule: true,
   default: () => null,
 }))
-jest.mock('@/components/animated/ServiceIllustration', () => ({
-  __esModule: true,
-  default: () => null,
-}))
 
 describe('SEO answers', () => {
   it('renders every structured answer in readable server HTML with relevant next steps', async () => {
@@ -36,7 +32,8 @@ describe('SEO answers', () => {
         (details) =>
           details.querySelector('summary')?.textContent === question.name,
       )
-      expect(answer?.querySelector('p')?.textContent).toBe(
+      // FaqList keeps every answer in the server HTML, right after its summary.
+      expect(answer?.querySelector('summary + div')?.textContent).toBe(
         question.acceptedAnswer.text,
       )
     }
@@ -48,5 +45,33 @@ describe('SEO answers', () => {
         document.querySelector(`#seo-questions a[href="${href}"]`),
       ).not.toBeNull()
     }
+  })
+
+  it('keeps the page free of tier language and guarantees, with verified proof', async () => {
+    const html = renderToStaticMarkup(await SeoPage())
+    const document = new DOMParser().parseFromString(html, 'text/html')
+    const text = document.body.textContent ?? ''
+
+    expect(text).not.toMatch(/higher-tier|package/i)
+    // The only "guarantee" on the page is the disclaimer that none exists.
+    expect(
+      text
+        .replaceAll('No one can guarantee a ranking', '')
+        .replaceAll('Neither guarantees a ranking', ''),
+    ).not.toMatch(/guarantee|only improves|#1|top of google/i)
+    expect(text).toContain('No one can guarantee a ranking or an AI citation')
+    for (const label of ['SEO', 'AEO', 'GEO']) {
+      expect(text).toContain(label)
+    }
+
+    // Case-study hosts come from lib/case-study-data, never hand-typed.
+    expect(text).toContain('chriswongdds.com')
+    expect(text).not.toContain('drchriswong.com')
+    expect(text).toContain('+49%')
+    expect(text).toContain('+60%')
+    expect(text).toContain('Source: Google Search Console')
+
+    const finalCta = document.querySelector('#final-cta-heading')
+    expect(finalCta?.textContent).toBe('get found next.')
   })
 })

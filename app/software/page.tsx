@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
-import AsciiHeroCard from "@/components/ascii/AsciiHeroCard"
 import Footer from "@/components/footer"
 import Navbar from "@/components/navbar"
+import { LandingHero } from "@/components/landing/landing-hero"
+import { FinalCta } from "@/components/prism/final-cta"
+import { Section } from "@/components/prism/section"
 import { ItemListSchema } from "@/components/schema-markup"
-import { Badge } from "@/components/ui/badge"
 import SoftwareAppCards from "@/components/software/SoftwareAppCards"
 import { PRISM_APPS } from "@/lib/software-apps"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
@@ -17,37 +18,24 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function SoftwarePage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1">
-        <section className="px-4 py-10 md:py-14">
-          <div className="container mx-auto px-4 sm:px-6">
-            <AsciiHeroCard
-              animationName="wave"
-              frameCount={300}
-              fps={18}
-              eyebrow="software"
-              title="Tools to Help You Grow"
-              description="Free software to help you increase leads, conversions, and customer LTV"
-              preEyebrow={
-                <Badge variant="secondary" className="w-fit">
-                  Apps developed by Prism
-                </Badge>
-              }
-              ariaLabel="Wave ASCII animation behind the Software page hero"
-            />
-          </div>
-        </section>
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <LandingHero
+          location="software hero"
+          showStatus={false}
+          hideCta
+          eyebrow="Apps developed by Prism"
+          title="tools to help you grow."
+          description="Free software to help you increase leads, conversions, and customer LTV."
+          glow="green"
+          className="pb-10 sm:pb-14"
+        />
 
-        <section className="py-12 sm:py-16 bg-muted/20">
-          <div className="container mx-auto px-4 sm:px-6">
-            <SoftwareAppCards
-              apps={PRISM_APPS}
-              cardClassName="bg-card/35 backdrop-blur-sm"
-              buttonClassName="rounded-lg"
-            />
-          </div>
-        </section>
+        <Section aria-label="Prism software tools" className="pt-0 sm:pt-0">
+          <SoftwareAppCards apps={PRISM_APPS} />
+        </Section>
+        <FinalCta location="software final cta" secondary={{ label: "See the work", href: "/case-studies" }} />
       </main>
       <Footer />
       <ItemListSchema

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
+/** Thin spectrum reading-progress hairline pinned to the top of long guides. */
 const SMOOTHING_FACTOR = 0.18
 
 export default function ScrollProgressBar() {
@@ -71,12 +72,13 @@ export default function ScrollProgressBar() {
   }, [])
 
   return (
-      <div className="fixed top-0 left-0 right-0 z-[60] h-1 w-full bg-border/60 shadow-sm">
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2px] overflow-hidden"
+    >
       <div
-        className="h-full origin-left bg-foreground will-change-transform transform-gpu"
-        style={{
-          transform: `scaleX(${scrollProgress / 100})`,
-        }}
+        className="bg-spectrum h-full origin-left opacity-90 will-change-transform transform-gpu"
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
     </div>
   )

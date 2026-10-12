@@ -131,6 +131,29 @@ export const WAITLIST_FOCUS_HREFS: Record<WaitlistFocus, string> = {
   ads: getWaitlistHref('ads'),
 }
 
+/**
+ * "Not sure yet" (2026-10-12): a focus answer for owners who want Prism to
+ * recommend the mix. It is a form answer only, never a service hand-off, so it
+ * stays out of `WaitlistFocus`, `WAITLIST_FOCUS_HREFS`, and `?focus=` parsing.
+ * The form treats it as exclusive with the service focuses, and it reaches
+ * Formspree in the same `focus[]` field.
+ */
+export const WAITLIST_FOCUS_NOT_SURE = 'not-sure'
+
+export const WAITLIST_FOCUS_CHOICES = [
+  ...WAITLIST_FOCUS_OPTIONS,
+  { value: WAITLIST_FOCUS_NOT_SURE, label: 'Not sure yet' },
+] as const
+
+export type WaitlistFocusChoice =
+  (typeof WAITLIST_FOCUS_CHOICES)[number]['value']
+
+export function isWaitlistFocusChoice(
+  value: unknown,
+): value is WaitlistFocusChoice {
+  return value === WAITLIST_FOCUS_NOT_SURE || isWaitlistFocus(value)
+}
+
 export const WAITLIST_TIMING_OPTIONS = [
   { value: 'asap', label: 'As soon as possible' },
   { value: '1_3_months', label: 'In 1–3 months' },
@@ -159,6 +182,14 @@ export type WaitlistStepId = (typeof WAITLIST_STEPS)[number]['id']
 export const WAITLIST_STEP_IDS: readonly WaitlistStepId[] = WAITLIST_STEPS.map(
   (step) => step.id,
 )
+
+/**
+ * Links-step escape hatch (2026-10-12): an owner with no website yet (the
+ * person who most needs one) checks this instead of adding a link. Submitted
+ * to Formspree as `no_website=yes`, only when checked.
+ */
+export const WAITLIST_NO_WEBSITE_FIELD = 'no_website'
+export const WAITLIST_NO_WEBSITE_VALUE = 'yes'
 
 export const WAITLIST_DRAFT_STORAGE_KEY = 'prism_waitlist_draft_v1'
 export const WAITLIST_DRAFT_TTL_MS = 24 * 60 * 60 * 1000

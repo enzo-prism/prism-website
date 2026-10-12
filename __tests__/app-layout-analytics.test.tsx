@@ -9,12 +9,6 @@ jest.mock("geist/font/mono", () => ({
 jest.mock("geist/font/sans", () => ({
   GeistSans: { variable: "geist-sans" },
 }))
-// Decorative pixel fonts now come from @/lib/fonts (next/font/local), which jest
-// cannot evaluate without the SWC font transform — mock the variables.
-jest.mock("@/lib/fonts", () => ({
-  geistPixelGrid: { variable: "geist-pixel-grid" },
-  geistPixelSquare: { variable: "geist-pixel-square" },
-}))
 
 jest.mock("@/components/skip-to-content", () => ({
   __esModule: true,

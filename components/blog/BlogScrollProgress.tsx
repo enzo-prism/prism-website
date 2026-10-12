@@ -71,21 +71,12 @@ export default function BlogScrollProgress() {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(scrollProgress)}
-      className="fixed inset-x-0 z-40 h-1.5 overflow-hidden rounded-full bg-border/80"
-      style={{
-        top: "calc(var(--prism-header-height, 4rem) - 1px)",
-        pointerEvents: "none",
-      }}
+      className="pointer-events-none fixed inset-x-0 z-40 h-[2px] overflow-hidden"
+      style={{ top: "calc(var(--prism-header-height, 4rem) - 1px)" }}
     >
       <div
-        className="h-full origin-left rounded-full bg-gradient-to-r from-cyan-200 via-sky-300 to-blue-300 shadow-[0_0_22px_rgba(56,189,248,0.7)] ring-1 ring-cyan-200/55 will-change-transform transform-gpu motion-reduce:transition-none"
-        style={{
-          transform: `scaleX(${scrollProgress / 100})`,
-        }}
-      />
-      <div
-        className="absolute left-0 right-0 top-full h-6 opacity-0"
-        aria-hidden
+        className="bg-spectrum h-full origin-left opacity-90 will-change-transform transform-gpu"
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
     </div>
   )

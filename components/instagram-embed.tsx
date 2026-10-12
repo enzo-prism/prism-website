@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo } from 'react'
 
 declare global {
   interface Window {
@@ -17,18 +17,21 @@ type InstagramEmbedProps = {
   className?: string
 }
 
-const SCRIPT_ID = "instagram-embed-script"
+const SCRIPT_ID = 'instagram-embed-script'
 
-export default function InstagramEmbed({ url, className }: InstagramEmbedProps) {
+export default function InstagramEmbed({
+  url,
+  className,
+}: InstagramEmbedProps) {
   const permalink = useMemo(() => {
     try {
       const parsed = new URL(url)
-      const trailingSlashPath = parsed.pathname.endsWith("/")
+      const trailingSlashPath = parsed.pathname.endsWith('/')
         ? parsed.pathname
         : `${parsed.pathname}/`
       return `${parsed.origin}${trailingSlashPath}`
     } catch (error) {
-      console.error("[InstagramEmbed] invalid URL provided:", url, error)
+      console.error('[InstagramEmbed] invalid URL provided:', url, error)
       return url
     }
   }, [url])
@@ -37,34 +40,40 @@ export default function InstagramEmbed({ url, className }: InstagramEmbedProps) 
     const processEmbeds = () => {
       try {
         const processFn = window.instgrm?.Embeds?.process
-        if (typeof processFn === "function") {
+        if (typeof processFn === 'function') {
           processFn()
         }
       } catch (error) {
-        console.error("[InstagramEmbed] failed to process embeds", error)
+        console.error('[InstagramEmbed] failed to process embeds', error)
       }
     }
 
-    const existingScript = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null
+    const existingScript = document.getElementById(
+      SCRIPT_ID,
+    ) as HTMLScriptElement | null
 
     if (existingScript) {
-      if (existingScript.getAttribute("data-loaded") === "true") {
+      if (existingScript.getAttribute('data-loaded') === 'true') {
         processEmbeds()
       } else {
-        existingScript.addEventListener("load", processEmbeds, { once: true })
+        existingScript.addEventListener('load', processEmbeds, { once: true })
       }
       return
     }
 
-    const script = document.createElement("script")
+    const script = document.createElement('script')
     script.id = SCRIPT_ID
     script.async = true
-    script.src = "https://www.instagram.com/embed.js"
-    script.setAttribute("data-loaded", "false")
-    script.addEventListener("load", () => {
-      script.setAttribute("data-loaded", "true")
-      processEmbeds()
-    }, { once: true })
+    script.src = 'https://www.instagram.com/embed.js'
+    script.setAttribute('data-loaded', 'false')
+    script.addEventListener(
+      'load',
+      () => {
+        script.setAttribute('data-loaded', 'true')
+        processEmbeds()
+      },
+      { once: true },
+    )
     document.body.appendChild(script)
   }, [permalink])
 
@@ -75,9 +84,20 @@ export default function InstagramEmbed({ url, className }: InstagramEmbedProps) 
         data-instgrm-captioned
         data-instgrm-permalink={permalink}
         data-instgrm-version="14"
-        style={{ background: "#fff", border: 0, margin: "0 auto", maxWidth: "540px", width: "100%" }}
+        style={{
+          background: 'transparent',
+          border: 0,
+          margin: '0 auto',
+          maxWidth: '540px',
+          width: '100%',
+        }}
       >
-        <a href={url} rel="noopener noreferrer" target="_blank">
+        <a
+          href={url}
+          rel="noopener noreferrer"
+          target="_blank"
+          className="flex min-h-40 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.02] text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
           View this post on Instagram
         </a>
       </blockquote>

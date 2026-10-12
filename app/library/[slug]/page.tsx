@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { ArrowUpRight } from 'lucide-react'
 import { notFound } from 'next/navigation'
 
 import Breadcrumbs from '@/components/breadcrumbs'
@@ -82,8 +83,8 @@ export default async function LibraryDetailPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex-1">
-        <div className="container mx-auto px-4 md:px-6">
+      <main className="flex-1" id="main-content" tabIndex={-1}>
+        <div className="prism-container pt-6">
           <Breadcrumbs
             items={[
               { name: 'home', url: '/' },
@@ -93,15 +94,16 @@ export default async function LibraryDetailPage({ params }: PageProps) {
           />
         </div>
 
-        <section className="py-10 md:py-16">
-          <div className="container mx-auto px-4 md:px-6">
+        <section className="pb-20 pt-6 sm:pb-24 sm:pt-10">
+          <div className="prism-container">
             <div className="mx-auto max-w-3xl space-y-10">
               <header className="space-y-3">
-                <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                <p className="text-eyebrow text-subtle">Prism Library</p>
+                <h1 className="text-title text-gradient max-w-[20ch] text-balance pb-1">
                   {post.title}
                 </h1>
                 {post.editorial?.speaker?.name ? (
-                  <p className="text-sm font-semibold text-muted-foreground">
+                  <p className="text-base font-medium text-foreground">
                     {post.editorial.speaker.name}
                   </p>
                 ) : null}
@@ -112,7 +114,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
                 ) : null}
               </header>
 
-              <div className="rounded-2xl border border-border/60 bg-card/95 p-4">
+              <div className="rounded-2xl border border-white/[0.08] bg-card p-3 sm:p-4">
                 {post.platform === 'tiktok' ? (
                   tikTokVideoId ? (
                     <div className="flex justify-center">
@@ -153,9 +155,9 @@ export default async function LibraryDetailPage({ params }: PageProps) {
                 )}
               </div>
 
-              <section className="space-y-6 text-sm text-muted-foreground">
+              <section className="grid gap-8 text-[0.95rem] leading-7 text-muted-foreground sm:grid-cols-2">
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                  <p className="text-eyebrow text-subtle">
                     Speaker
                   </p>
                   {post.editorial?.speaker ? (
@@ -163,7 +165,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
                       <p className="text-base font-semibold text-foreground">
                         {post.editorial.speaker.name}
                       </p>
-                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-subtle">
                         {post.editorial.speaker.type}
                       </p>
                       {post.editorial.speaker.subtitle ? (
@@ -194,7 +196,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                  <p className="text-eyebrow text-subtle">
                     Key takeaways
                   </p>
                   {post.editorial?.takeaways?.length ? (
@@ -214,9 +216,10 @@ export default async function LibraryDetailPage({ params }: PageProps) {
                   href={post.permalink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-foreground underline underline-offset-4"
+                  className="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70 sm:col-span-2"
                 >
                   Watch the original post
+                  <ArrowUpRight aria-hidden="true" className="size-4" />
                 </a>
               </section>
             </div>
