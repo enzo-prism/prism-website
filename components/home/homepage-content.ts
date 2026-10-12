@@ -5,6 +5,8 @@ import {
   CONNECTED_CLIENT_TRAFFIC,
   PROOF_METRICS_VERIFIED_AT,
   SOCIAL_PROOF,
+  SOCIAL_PROOF_CHANNELS,
+  TOP_REELS,
 } from '@/lib/proof-metrics'
 
 /*
@@ -50,15 +52,12 @@ const formerClientSlugs = new Set<string>(FORMER_CLIENT_SLUGS)
 const CURRENT_CASE_STUDIES = CASE_STUDIES.filter(
   (study) => !formerClientSlugs.has(study.slug),
 )
-const CURRENT_CLIENT_LOCATIONS = new Set(
-  CURRENT_CASE_STUDIES.map((study) => study.location),
-)
 
 export const HOMEPAGE_HERO = {
-  titleLead: 'make your business',
-  titleAccent: 'impossible to ignore.',
+  titleLead: 'impossible is',
+  titleAccent: 'temporary.',
   subheading:
-    'Websites, content, and ads from one team. Built so the right people find you, trust you, and choose you.',
+    'Websites, content, and ads that make your business shine online, turn visitors into customers, and reach people who have never heard of you.',
   primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
   secondaryCta: { label: 'See the work', href: '#work' },
   /** Labels for the refracted bands, top to bottom. */
@@ -70,14 +69,8 @@ export const HOMEPAGE_HERO = {
     'ai answers',
     'reviews',
   ],
-  proof: [
-    { value: `${CURRENT_CASE_STUDIES.length}`, label: 'client case studies' },
-    { value: `${CURRENT_CLIENT_LOCATIONS.size}`, label: 'cities' },
-    {
-      value: SOCIAL_PROOF.combinedAudience,
-      label: 'followers on our own channels',
-    },
-  ],
+  /** Client logo rail under the refraction scene. */
+  logosLabel: 'Loved by B2B and consumer brands',
 } as const
 
 export const HOMEPAGE_NUMBERS = {
@@ -85,49 +78,266 @@ export const HOMEPAGE_NUMBERS = {
   title: 'numbers, not adjectives.',
   description:
     'We publish results we can source and date. Here is what that looks like right now.',
-  note: `Verified ${PROOF_METRICS_VERIFIED_AT}. Search results from Google Search Console, latest complete 90 days vs the same window a year earlier. New users from ${CONNECTED_CLIENT_TRAFFIC.source}, summed across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites for ${CONNECTED_CLIENT_TRAFFIC.month}. Lifetime views from YouTube Studio, including earlier channel content.`,
+  note: `Verified ${PROOF_METRICS_VERIFIED_AT}. Search results from Google Search Console, latest complete 90 days vs the same window a year earlier. New users from ${CONNECTED_CLIENT_TRAFFIC.source}, summed across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites for ${CONNECTED_CLIENT_TRAFFIC.month}. Case studies count current clients only.`,
   stats: [
     {
       value: DR_WONG_SEARCH_METRIC.value,
       label: 'Google Search impressions for Dr. Wong, year over year',
+      source: DR_WONG_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       href: '/case-studies/dr-christopher-wong',
     },
     {
       value: BELIZE_SEARCH_METRIC.value,
       label: 'Google Search impressions for Belize Kids, year over year',
+      source: BELIZE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
       href: '/case-studies/belize-kids-foundation',
     },
     {
       value: CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US'),
-      label: `new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} client sites we track, ${CONNECTED_CLIENT_TRAFFIC.month}`,
+      label: `new users in ${CONNECTED_CLIENT_TRAFFIC.month} across the client sites we track`,
+      source: CONNECTED_CLIENT_TRAFFIC.source,
       href: '/case-studies',
     },
     {
-      value: SOCIAL_PROOF.youtube.activity,
-      label: 'lifetime views on the Prism YouTube channel',
-      href: '/content',
+      value: `${CURRENT_CASE_STUDIES.length}`,
+      label: 'live client sites, each with a published case study',
+      source: 'Prism case studies',
+      href: '/case-studies',
     },
   ],
 } as const
 
 export const HOMEPAGE_SERVICES = {
   eyebrow: 'what we do',
-  title: 'one team. every channel.',
+  title: 'shine. convert. get seen.',
   description:
-    'Your website, content, and ads, built together so each one makes the others work harder.',
+    'Everything your business needs online, from one team, built so each piece makes the others work harder.',
+  pillars: [
+    {
+      key: 'shine',
+      title: 'shine.',
+      lead: 'A website and brand people remember.',
+      body: 'Custom-coded sites, brand, photo, and video that look as good as your work is.',
+      items: ['Custom-coded websites', 'Brand and identity', 'Photo and video'],
+      links: [{ label: 'Websites', href: '/websites' }],
+    },
+    {
+      key: 'convert',
+      title: 'convert.',
+      lead: 'Built so more visitors call, book, and buy.',
+      body: 'Pages, booking, reviews, and tracking designed around the moment someone decides.',
+      items: [
+        'Conversion-first pages',
+        'Booking and forms',
+        'Reviews and proof',
+        'Call and form tracking',
+      ],
+      links: [{ label: 'See the results', href: '/case-studies' }],
+    },
+    {
+      key: 'reach',
+      title: 'get seen.',
+      lead: 'Fresh eyes on your business.',
+      body: 'Content people watch, ads that land on a page worth landing on, and answers in search and AI.',
+      items: [
+        'Short-form content',
+        'Google, Meta, and TikTok ads',
+        'Search and AI answers',
+        'Google Business Profile',
+      ],
+      links: [
+        { label: 'Content', href: '/content' },
+        { label: 'Ads', href: '/ads' },
+      ],
+    },
+  ],
 } as const
 
+export type HomepageStory = {
+  /** Case study slug; the panel links to /case-studies/<slug>. */
+  slug: string
+  company: string
+  /** Who the client sells to. Drives the B2C / B2B label. */
+  sellsTo: 'consumers' | 'businesses'
+  industry: string
+  location: string
+  /** Host shown in the browser chrome. */
+  host: string
+  /** The thing that felt out of reach before Prism (our framing, not a quote). */
+  impossible: string
+  /** What Prism built, as short chips. */
+  built: readonly string[]
+  /** What is live now, paraphrasing the published case study result. */
+  now: string
+  /** Tall full-page captures that scroll inside the frames. */
+  desktopImage: string
+  mobileImage: string
+}
+
+/**
+ * The five featured stories (2026-10 v2). Every line paraphrases the
+ * published case study in lib/case-study-data.ts; nothing here is a client
+ * quote or a number. `slugs` mirrors the stories for the former-client guard.
+ */
 export const HOMEPAGE_CASE_STUDIES = {
-  eyebrow: 'up close',
-  title: 'real clients. real launches.',
+  eyebrow: 'the work',
+  title: 'every business has an impossible.',
   description:
-    'Four businesses, four different problems, one team behind every pixel.',
+    'Five businesses, each with something that felt out of reach. Here is what is live now.',
+  /** The line above the mid-page waitlist invitation after the deck. */
+  nextLine: 'your business could be the next story.',
   slugs: [
-    'dr-christopher-wong',
-    'belize-kids-foundation',
     'exquisite-dentistry',
+    'canary-cove',
+    'practice-transitions-institute',
     'olympic-bootworks',
+    'roseville-dental-academy',
   ],
+  stories: [
+    {
+      slug: 'exquisite-dentistry',
+      company: 'Exquisite Dentistry',
+      sellsTo: 'consumers',
+      industry: 'High-end dentistry',
+      location: 'Los Angeles, CA',
+      host: 'exquisitedentistryla.com',
+      impossible:
+        'A website as refined as the chair-side experience, without risking the search traffic that already brought patients in.',
+      built: ['Site rebuild', 'Booking flow', 'SEO protection', 'Attribution'],
+      now: 'Premium positioning patients can feel online, cleaner paths to book, and the measurement to keep improving.',
+      desktopImage: '/case-studies/scroll/exquisite-dentistry-desktop.webp',
+      mobileImage: '/case-studies/scroll/exquisite-dentistry-mobile.webp',
+    },
+    {
+      slug: 'canary-cove',
+      company: 'Canary Cove',
+      sellsTo: 'consumers',
+      industry: 'Private beachfront estate',
+      location: 'San Pedro, Belize',
+      host: 'canarycove.com',
+      impossible:
+        'Making a guest feel the beach on Ambergris Caye before they ever book a flight.',
+      built: ['Immersive visuals', 'Concierge inquiries', 'Analytics'],
+      now: 'A site that sells the stay the way the place does, with clean inquiry paths and measurement behind it.',
+      desktopImage: '/case-studies/scroll/canary-cove-desktop.webp',
+      mobileImage: '/case-studies/scroll/canary-cove-mobile.webp',
+    },
+    {
+      slug: 'practice-transitions-institute',
+      company: 'Practice Transitions Institute',
+      sellsTo: 'businesses',
+      industry: 'Dental transition advisory',
+      location: 'San Mateo, CA',
+      host: 'practicetransitionsinstitute.com',
+      impossible:
+        'Earning a dentist’s trust for the biggest decision of their career before the first call.',
+      built: [
+        'Six-stage process',
+        'Client testimonials',
+        'Search content',
+        'Funnel analytics',
+      ],
+      now: 'Their authority is visible before a conversation starts, with measurable paths from quiet research to consultation.',
+      desktopImage:
+        '/case-studies/scroll/practice-transitions-institute-desktop.webp',
+      mobileImage:
+        '/case-studies/scroll/practice-transitions-institute-mobile.webp',
+    },
+    {
+      slug: 'olympic-bootworks',
+      company: 'Olympic Bootworks',
+      sellsTo: 'consumers',
+      industry: 'Boot fitting and Fantic e-bikes',
+      location: 'Tahoe, CA',
+      host: 'olympicbootworks.com',
+      impossible:
+        'Turning a legendary fitting room into a store riders can shop from hours away.',
+      built: [
+        'Site rebuild',
+        'Fantic e-bike catalog',
+        'Test-ride requests',
+        'Owned email + domain',
+      ],
+      now: 'Riders compare Fantic models and current pricing, request a test ride, and reach the shop directly.',
+      desktopImage: '/case-studies/scroll/olympic-bootworks-desktop.webp',
+      mobileImage: '/case-studies/scroll/olympic-bootworks-mobile.webp',
+    },
+    {
+      slug: 'roseville-dental-academy',
+      company: 'Roseville Dental Academy',
+      sellsTo: 'consumers',
+      industry: 'Dental assisting school',
+      location: 'Roseville, CA',
+      host: 'rosevilledentalacademy.com',
+      impossible:
+        'Turning a stock template site into an admissions system the school can actually measure.',
+      built: [
+        'Modern web platform',
+        'Analytics + search setup',
+        'Enrollment forms',
+        'AI assistant',
+      ],
+      now: 'Clear paths for every program, cleaner lead capture, and the analytics to keep improving enrollment.',
+      desktopImage:
+        '/case-studies/scroll/roseville-dental-academy-desktop.webp',
+      mobileImage: '/case-studies/scroll/roseville-dental-academy-mobile.webp',
+    },
+  ] satisfies readonly HomepageStory[],
+} as const
+
+const FEATURED_STORY_HREFS = new Set<string>(
+  HOMEPAGE_CASE_STUDIES.slugs.map((slug) => `/case-studies/${slug}`),
+)
+
+export const HOMEPAGE_MORE_WORK = {
+  eyebrow: 'more work',
+  /** Current clients beyond the five featured stories. */
+  count: CURRENT_CASE_STUDIES.length - FEATURED_STORY_HREFS.size,
+  description:
+    'Dentists in Palo Alto. A kids’ foundation in Belize. An IT firm in Bengaluru. Each one has its own case study.',
+} as const
+
+export const HOMEPAGE_AUDIENCE = {
+  eyebrow: 'reach',
+  title: 'we built our own audience from zero.',
+  description:
+    'Before we grew anyone else’s reach, we grew our own. The same playbook goes to work on your business.',
+  combined: {
+    value: SOCIAL_PROOF.combinedAudience,
+    label: 'followers and subscribers across YouTube, Instagram, and TikTok',
+  },
+  highlights: [
+    {
+      value: SOCIAL_PROOF.youtube.activity,
+      label: 'lifetime views on YouTube',
+    },
+    {
+      value: SOCIAL_PROOF.tiktok.activity,
+      label: 'likes on TikTok',
+    },
+  ],
+  channels: SOCIAL_PROOF_CHANNELS.map((channel) => ({
+    platform: channel.platform,
+    audience: channel.audience,
+    audienceLabel: channel.audienceLabel,
+    url: channel.url,
+  })),
+  /** Single-reel receipts from Prism's own Instagram insights. */
+  receipts: {
+    eyebrow: 'the receipts',
+    title: 'one reel reached 1.6 million accounts.',
+    items: TOP_REELS.map((reel) => ({
+      id: reel.id,
+      views: reel.views,
+      accountsReached: reel.accountsReached,
+      posted: reel.posted,
+      image: reel.image,
+      width: reel.width,
+      height: reel.height,
+      label: `views on one Instagram Reel, posted ${reel.posted}`,
+    })),
+  },
+  note: `Audience as of ${SOCIAL_PROOF.youtube.verifiedAt}. Channel totals, not deduplicated people. YouTube views come from YouTube Studio and include earlier channel content. Reel numbers come from Instagram Reel insights on Prism’s own account, as of each screenshot.`,
 } as const
 
 const COMMUNITY_HANDLES = [
@@ -143,6 +353,8 @@ const COMMUNITY_HANDLES = [
 export const HOMEPAGE_TESTIMONIALS = {
   eyebrow: 'wall of love',
   title: 'in their words.',
+  /** The line above the mid-page waitlist invitation under the wall. */
+  nextLine: 'be the next note on this wall.',
   description:
     'From the owners we build for, and from the people who watch what we make.',
   clientQuotes: quotesData.filter(
@@ -196,6 +408,10 @@ export const HOMEPAGE_PRODUCTS = {
   title: 'built for our team. free for yours.',
   description:
     'We make our own tools to work faster. Two of them are free and open source.',
+} as const
+
+export const HOMEPAGE_FINAL_CTA = {
+  title: 'tell us your impossible.',
 } as const
 
 export const HOMEPAGE_FAQ = {
@@ -345,6 +561,20 @@ export const HOMEPAGE_CLIENT_WINS = {
       href: '/case-studies/leadership-retreat',
       contextLabel: 'Events + education',
       image: '/case-studies/leadership-retreat-home-mobile.jpg',
+    },
+    {
+      company: 'Waikiki Dental',
+      location: 'Roseville, CA',
+      href: '/case-studies/waikiki-dental',
+      contextLabel: 'Dental growth',
+      image: '/case-studies/waikiki-dental-home-mobile.jpg',
+    },
+    {
+      company: 'Sacramento Dental Medicine',
+      location: 'Antelope, CA',
+      href: '/case-studies/sacramento-dental-medicine',
+      contextLabel: 'Dental growth',
+      image: '/case-studies/sacramento-dental-medicine-home-mobile.jpg',
     },
     {
       company: 'Mataria Dental Group',

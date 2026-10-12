@@ -5,6 +5,7 @@ import {
   HOMEPAGE_NUMBERS,
 } from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import { CASE_STUDY_NAV_ITEMS } from '@/lib/case-study-nav-data'
 import { CLIENTS } from '@/lib/clients'
 import { websiteProjects } from '@/lib/website-projects'
@@ -160,7 +161,12 @@ describe('case study data freshness', () => {
       getStudy('dr-christopher-wong').structured?.results?.[0]?.value,
       getStudy('belize-kids-foundation').structured?.results?.[0]?.value,
       '5,310',
-      '5.8M',
+      String(
+        CASE_STUDIES.filter(
+          (study) =>
+            !(FORMER_CLIENT_SLUGS as readonly string[]).includes(study.slug),
+        ).length,
+      ),
     ])
   })
 })

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 
 import HomeCountUp from '@/components/home/HomeCountUp'
+import { ClientLogo } from '@/components/prism/client-logo'
 import { Marquee } from '@/components/prism/marquee'
 import TrackedLink from '@/components/tracked-link'
 import {
@@ -9,6 +10,7 @@ import {
   WAITLIST_PROOF_SITES,
 } from '@/components/waitlist/waitlist-proof-sites'
 import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
+import { CLIENT_LOGOS } from '@/lib/client-logos'
 import {
   CONNECTED_CLIENT_TRAFFIC,
   PROOF_METRICS_VERIFIED_AT,
@@ -24,6 +26,10 @@ const clientQuote = quotesData.find(
   (quote) =>
     quote.id === CLIENT_QUOTE_ID && isClientQuote(quote) && !quote.requiresConsent,
 )
+
+// A compact wall of standalone logos (marks that need a name beside them
+// stay in the wider rails).
+const GRID_LOGOS = CLIENT_LOGOS.filter((logo) => logo.file && !logo.withName).slice(0, 8)
 
 const channelList = new Intl.ListFormat('en-US', {
   style: 'long',
@@ -102,6 +108,24 @@ export default function WaitlistProofStrip({ className }: { className?: string }
             Source: {CONNECTED_CLIENT_TRAFFIC.source}
           </p>
         </li>
+      </ul>
+
+      <ul
+        aria-label="Prism clients"
+        className="mt-4 grid grid-cols-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]"
+      >
+        {GRID_LOGOS.map((logo, index) => (
+          <li
+            key={logo.slug}
+            className={cn(
+              'flex h-[4.5rem] items-center justify-center border-white/[0.06] px-2 text-white/55',
+              index % 4 !== 3 && 'border-r',
+              index < 4 && 'border-b',
+            )}
+          >
+            <ClientLogo logo={logo} area={2100} maxWidth={104} maxHeight={40} />
+          </li>
+        ))}
       </ul>
 
       {clientQuote ? (

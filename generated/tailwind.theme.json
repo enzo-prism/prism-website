@@ -21,6 +21,9 @@
         "spectrum-violet": "#946aee"
       },
       "fontFamily": {
+        "hero": [
+          "Geist Sans"
+        ],
         "display": [
           "Geist Sans"
         ],
@@ -41,6 +44,13 @@
         ]
       },
       "fontSize": {
+        "hero": [
+          "164px",
+          {
+            "letterSpacing": "-0.062em",
+            "fontWeight": "600"
+          }
+        ],
         "display": [
           "104px",
           {

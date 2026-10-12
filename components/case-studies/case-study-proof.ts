@@ -89,6 +89,13 @@ const QUOTE_SPEAKERS: Record<string, { name: string; role: string }> = {
 
 const FORMER = new Set<string>(FORMER_CLIENT_SLUGS)
 
+/** The business a named client quote is tied to, when the case study says so. */
+export function getClientQuoteBusiness(name: string): string | undefined {
+  return Object.entries(QUOTE_SPEAKERS).find(
+    ([slug, speaker]) => speaker.name === name && !FORMER.has(slug),
+  )?.[1].role
+}
+
 export type CaseStudyQuotes = {
   speaker: { name: string; role: string }
   quotes: Quote[]

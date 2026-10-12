@@ -1,0 +1,965 @@
+/*
+ * Homepage "shine. convert. get seen." pillar visuals.
+ *
+ * Contract (same as HomeRefraction.module.css): every base style below is the
+ * finished still frame. Loops only run under prefers-reduced-motion:
+ * no-preference, and they animate transform and opacity only. The locked
+ * screenshot run disables animations, so nothing here may depend on an
+ * animation to become visible or positioned.
+ *
+ * Easing: cubic-bezier(0.16, 1, 0.3, 1), "light moving through glass".
+ */
+
+/* ---- Shared stage ------------------------------------------------------ */
+
+.stage {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid oklch(1 0 0 / 6%);
+  background:
+    radial-gradient(
+      110% 80% at 50% 0%,
+      oklch(1 0 0 / 5.5%),
+      transparent 62%
+    ),
+    oklch(0.135 0.003 286);
+  box-shadow: inset 0 1px 0 0 oklch(1 0 0 / 5%);
+  container-type: inline-size;
+  isolation: isolate;
+}
+
+/* Tablet: the card lays out side by side; the stage centers in its column. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .stage {
+    height: 280px;
+    align-self: center;
+  }
+}
+
+/* Faint dot field that fades out toward the edges. */
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(oklch(1 0 0 / 9%) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: 8px 8px;
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 10%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 10%, transparent 78%);
+  pointer-events: none;
+}
+
+/* ---- shine: a website composing itself --------------------------------- */
+
+.browser {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: min(84%, 300px);
+  bottom: -28px;
+  margin-left: calc(min(84%, 300px) / -2);
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid oklch(1 0 0 / 11%);
+  background: oklch(0.165 0.004 286);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 7%),
+    0 30px 60px -24px oklch(0 0 0 / 90%),
+    0 0 0 6px oklch(1 0 0 / 1.5%);
+  mask-image: linear-gradient(to bottom, black 62%, transparent 98%);
+  -webkit-mask-image: linear-gradient(to bottom, black 62%, transparent 98%);
+}
+
+/* A real client site under the light; the still frame shows it. */
+.realSite {
+  position: absolute;
+  inset: 20px 0 0;
+  overflow: hidden;
+}
+
+.realSiteImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chrome {
+  display: flex;
+  height: 20px;
+  align-items: center;
+  gap: 4px;
+  padding-inline: 9px;
+  border-bottom: 1px solid oklch(1 0 0 / 6%);
+  background: oklch(1 0 0 / 2%);
+}
+
+.chromeDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 16%);
+}
+
+.url {
+  height: 9px;
+  width: 38%;
+  margin-inline: auto;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 6%);
+  transform: translateX(-9px);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 11px 13px 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: oklch(1 0 0 / 80%);
+}
+
+.logoWord {
+  width: 26px;
+  height: 4px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 40%);
+}
+
+.navLinks {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.navLink {
+  width: 13px;
+  height: 3px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 22%);
+}
+
+.navCta {
+  width: 28px;
+  height: 10px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 88%);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bar {
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 22%);
+  transform-origin: left center;
+}
+
+.eyebrowBar {
+  width: 34%;
+  height: 3px;
+  margin-bottom: 3px;
+  background: oklch(1 0 0 / 26%);
+}
+
+.headline {
+  height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, oklch(1 0 0 / 92%), oklch(1 0 0 / 74%));
+}
+
+.headlineA {
+  width: 96%;
+}
+
+.headlineB {
+  width: 70%;
+  margin-bottom: 4px;
+}
+
+.textA {
+  width: 88%;
+}
+
+.textB {
+  width: 62%;
+}
+
+.ctas {
+  display: flex;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.btnPrimary,
+.btnGhost {
+  width: 30px;
+  height: 11px;
+  border-radius: 999px;
+}
+
+.btnPrimary {
+  background: oklch(1 0 0 / 90%);
+}
+
+.btnGhost {
+  border: 1px solid oklch(1 0 0 / 22%);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 1 / 0.84;
+  overflow: hidden;
+  border-radius: 7px;
+  border: 1px solid oklch(1 0 0 / 8%);
+  background:
+    radial-gradient(90% 70% at 70% 20%, oklch(1 0 0 / 16%), transparent 70%),
+    linear-gradient(160deg, oklch(0.3 0.004 286), oklch(0.19 0.004 286));
+}
+
+.mediaScene {
+  position: absolute;
+  inset: 0;
+  transform-origin: 70% 30%;
+}
+
+.mediaSun {
+  position: absolute;
+  top: 20%;
+  right: 22%;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 70%);
+  box-shadow: 0 0 18px 4px oklch(1 0 0 / 22%);
+}
+
+.mediaHill {
+  position: absolute;
+  inset: auto -20% -38% -10%;
+  height: 70%;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(180deg, oklch(0.34 0.004 286), oklch(0.22 0.004 286));
+  transform: rotate(-8deg);
+}
+
+.mediaHillBack {
+  position: absolute;
+  inset: auto -30% -30% 30%;
+  height: 72%;
+  border-radius: 50% 50% 0 0;
+  background: oklch(0.27 0.004 286);
+  transform: rotate(10deg);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.miniCard {
+  display: flex;
+  height: 44px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px;
+  border-radius: 6px;
+  border: 1px solid oklch(1 0 0 / 7%);
+  background: oklch(1 0 0 / 3%);
+}
+
+.miniCardIcon {
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+  background: oklch(1 0 0 / 34%);
+  margin-bottom: 2px;
+}
+
+.miniCardLine {
+  width: 80%;
+  height: 3px;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 18%);
+}
+
+.miniCardLineShort {
+  width: 55%;
+}
+
+/* Light moving through glass. In the still frame it rests as a soft
+   reflection across the right half; motion carries it corner to corner. */
+.sweep {
+  position: absolute;
+  top: -60%;
+  left: 0;
+  width: 54%;
+  height: 220%;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      oklch(1 0 0 / 0%) 26%,
+      oklch(1 0 0 / 9%) 48%,
+      oklch(1 0 0 / 0%) 70%,
+      transparent 100%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 66%,
+      color-mix(in oklch, var(--spectrum-blue) 16%, transparent) 70%,
+      color-mix(in oklch, var(--spectrum-violet) 11%, transparent) 74%,
+      transparent 79%
+    );
+  transform: translateX(96%) rotate(22deg);
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+/* ---- convert: a live event feed ---------------------------------------- */
+
+.feed {
+  --row: 46px;
+  position: absolute;
+  inset: 18px 18px -1px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid oklch(1 0 0 / 10%);
+  border-bottom: 0;
+  background: oklch(0.155 0.004 286);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 6%),
+    0 30px 60px -24px oklch(0 0 0 / 90%);
+}
+
+.feedHeader {
+  display: flex;
+  height: 32px;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-inline: 12px;
+  border-bottom: 1px solid oklch(1 0 0 / 6%);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--subtle-foreground);
+  white-space: nowrap;
+}
+
+.feedHeaderLead {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted-foreground);
+}
+
+.feedViewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  padding: 6px;
+  mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 58%, transparent 100%);
+}
+
+/* The slot the newest event lands in. It stays put while rows move. */
+.feedSlot {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  height: var(--row);
+  border-radius: 8px;
+  border: 1px solid oklch(1 0 0 / 9%);
+  background: oklch(1 0 0 / 4%);
+  box-shadow: inset 0 1px 0 0 oklch(1 0 0 / 5%);
+}
+
+.feedTrack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(0);
+}
+
+.feedRow {
+  display: flex;
+  height: var(--row);
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding-inline: 8px 12px;
+}
+
+.feedIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid oklch(1 0 0 / 10%);
+  background: oklch(1 0 0 / 4%);
+  color: var(--foreground);
+}
+
+.feedText {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.2;
+}
+
+.feedTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.feedSource {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+  color: var(--subtle-foreground);
+}
+
+.feedDot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 70%);
+  box-shadow: 0 0 10px oklch(1 0 0 / 45%);
+}
+
+.feedDot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  opacity: 0;
+}
+
+.feedHeaderDot {
+  width: 5px;
+  height: 5px;
+}
+
+/* Sits exactly under the dot of the row in the slot, so its ping reads as
+   the newest event's dot. */
+.feedSlotDot {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 999px;
+}
+
+.feedSlotDot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: oklch(1 0 0 / 75%);
+  opacity: 0;
+}
+
+/* ---- get seen: discovery orbit ----------------------------------------- */
+
+.orbit {
+  --rx-outer: min(41cqw, 168px);
+  --rx-inner: min(26.5cqw, 108px);
+  --squash-outer: 0.62;
+  --squash-inner: 0.5;
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(to right, transparent 0%, black 9%, black 91%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 9%, black 91%, transparent 100%);
+}
+
+.orbitLift {
+  position: absolute;
+  inset: 0;
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px solid oklch(1 0 0 / 8%);
+  transform: translate(-50%, -50%);
+}
+
+.ringOuter {
+  width: calc(var(--rx-outer) * 2);
+  height: calc(var(--rx-outer) * 2 * var(--squash-outer));
+}
+
+.ringInner {
+  width: calc(var(--rx-inner) * 2);
+  height: calc(var(--rx-inner) * 2 * var(--squash-inner));
+  border-style: dashed;
+  border-color: oklch(1 0 0 / 7%);
+}
+
+/* Planes squash the circular path into an ellipse; each satellite counter-
+   scales so the logo tiles stay round and upright. */
+.plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: scaleY(var(--squash));
+}
+
+.satellite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: var(--o);
+  transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1))
+    scale(var(--k));
+}
+
+.planeOuter {
+  --squash: var(--squash-outer);
+  --r: var(--rx-outer);
+}
+
+.planeInner {
+  --squash: var(--squash-inner);
+  --r: var(--rx-inner);
+}
+
+.unsquash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleY(calc(1 / var(--squash)));
+}
+
+.logoTile {
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid oklch(1 0 0 / 11%);
+  background: oklch(0.18 0.004 286);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 8%),
+    0 12px 24px -10px oklch(0 0 0 / 90%);
+}
+
+.logoTile img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px 7px 7px;
+  border-radius: 999px;
+  border: 1px solid oklch(1 0 0 / 16%);
+  background: oklch(0.2 0.004 286);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 10%),
+    0 0 0 5px oklch(1 0 0 / 2.5%),
+    0 18px 40px -16px oklch(0 0 0 / 95%);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--foreground);
+  transform: translate(-50%, -50%);
+}
+
+.coreIcon {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: oklch(1 0 0 / 92%);
+  color: var(--primary-foreground);
+}
+
+.halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 130px;
+  margin: -65px 0 0 -130px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, oklch(1 0 0 / 9%), transparent);
+  pointer-events: none;
+}
+
+/* Sonar ring: hidden in the still frame, it only exists in motion. */
+.pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 46px;
+  margin: -23px 0 0 -75px;
+  border-radius: 999px;
+  border: 1px solid oklch(1 0 0 / 22%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- Card hover --------------------------------------------------------
+   Applied to the SpotlightCard. The scenes lift 2px toward the pointer. */
+.card {
+  --pillar-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Motion ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .browser,
+  .feed,
+  .orbitLift {
+    transition: transform 700ms var(--pillar-ease, ease);
+  }
+
+  .card:hover .browser,
+  .card:hover .feed,
+  .card:hover .orbitLift {
+    transform: translateY(-2px);
+  }
+
+  /* shine: blocks settle in, bars draw from the left, light crosses, page
+     dissolves, repeat. 11s cycle, staggered by --i. */
+  .compose,
+  .draw {
+    animation-duration: 11s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+
+  .compose {
+    animation-name: pillar-compose;
+  }
+
+  .draw {
+    animation-name: pillar-draw;
+  }
+
+  .mediaScene {
+    animation: pillar-settle 11s infinite both;
+    animation-delay: 330ms;
+  }
+
+  .sweep {
+    animation: pillar-sweep 11s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+
+  .realSite {
+    animation: pillar-real 11s infinite both;
+  }
+
+  /* convert: a new event lands in the slot every 3s. */
+  .feedTrack {
+    animation: pillar-feed 12s infinite;
+  }
+
+  .feedSlot {
+    animation: pillar-slot 12s infinite;
+  }
+
+  .feedSlotDot::after {
+    animation: pillar-ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* get seen: two slow orbits, nearer tiles larger and brighter. */
+  .planeOuter .satellite {
+    animation: pillar-orbit 84s linear infinite;
+    animation-delay: calc(var(--a-num) / 360 * -84s);
+  }
+
+  .planeInner .satellite {
+    animation: pillar-orbit 56s linear infinite;
+    animation-delay: calc(var(--a-num) / 360 * -56s);
+  }
+
+  .pulse {
+    animation: pillar-pulse 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  .halo {
+    animation: pillar-halo 4.8s ease-in-out infinite;
+  }
+}
+
+@keyframes pillar-compose {
+  0% {
+    opacity: 0;
+    transform: translateY(7px);
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  11%,
+  84% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes pillar-draw {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.08);
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  2% {
+    opacity: 1;
+  }
+  12%,
+  84% {
+    opacity: 1;
+    transform: scaleX(1);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pillar-real {
+  0%,
+  42% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+  52%,
+  84% {
+    opacity: 1;
+    transform: scale(1);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+  }
+  92%,
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes pillar-settle {
+  0% {
+    transform: scale(1.14);
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  24%,
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pillar-sweep {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translateX(-150%) rotate(22deg);
+  }
+  25% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+    transform: translateX(250%) rotate(22deg);
+  }
+  77%,
+  100% {
+    opacity: 0;
+    transform: translateX(250%) rotate(22deg);
+  }
+}
+
+@keyframes pillar-feed {
+  0% {
+    transform: translateY(calc(var(--row) * -4));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  7%,
+  25% {
+    transform: translateY(calc(var(--row) * -3));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  32%,
+  50% {
+    transform: translateY(calc(var(--row) * -2));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  57%,
+  75% {
+    transform: translateY(calc(var(--row) * -1));
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  82%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pillar-slot {
+  0%,
+  25%,
+  50%,
+  75% {
+    opacity: 0.55;
+  }
+  4%,
+  29%,
+  54%,
+  79% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes pillar-ping {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  60%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+/* Absolute angle keyframes. Each satellite starts at its own angle through a
+   negative delay, so the still frame and the loop agree. Scale and opacity
+   give the ellipse depth: bottom (90deg) is near, top (270deg) is far. */
+@keyframes pillar-orbit {
+  0% {
+    transform: rotate(0deg) translateX(var(--r)) rotate(0deg) scale(0.94);
+    opacity: 0.85;
+  }
+  12.5% {
+    transform: rotate(45deg) translateX(var(--r)) rotate(-45deg) scale(0.98);
+    opacity: 0.96;
+  }
+  25% {
+    transform: rotate(90deg) translateX(var(--r)) rotate(-90deg) scale(1.00);
+    opacity: 1.00;
+  }
+  37.5% {
+    transform: rotate(135deg) translateX(var(--r)) rotate(-135deg) scale(0.98);
+    opacity: 0.96;
+  }
+  50% {
+    transform: rotate(180deg) translateX(var(--r)) rotate(-180deg) scale(0.94);
+    opacity: 0.85;
+  }
+  62.5% {
+    transform: rotate(225deg) translateX(var(--r)) rotate(-225deg) scale(0.90);
+    opacity: 0.74;
+  }
+  75% {
+    transform: rotate(270deg) translateX(var(--r)) rotate(-270deg) scale(0.88);
+    opacity: 0.70;
+  }
+  87.5% {
+    transform: rotate(315deg) translateX(var(--r)) rotate(-315deg) scale(0.90);
+    opacity: 0.74;
+  }
+  100% {
+    transform: rotate(360deg) translateX(var(--r)) rotate(-360deg) scale(0.94);
+    opacity: 0.85;
+  }
+}
+
+@keyframes pillar-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
+
+@keyframes pillar-halo {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}

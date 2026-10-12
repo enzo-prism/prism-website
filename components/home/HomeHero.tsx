@@ -1,5 +1,6 @@
 import { ArrowDown } from 'lucide-react'
 
+import HomeLogoRail from '@/components/home/HomeLogoRail'
 import HomeRefraction from '@/components/home/HomeRefraction'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
@@ -8,9 +9,10 @@ import TrackedAnchor from '@/components/tracked-anchor'
 import { Button } from '@/components/ui/button'
 
 /**
- * Homepage hero: live capacity, the promise, one primary action, and the
+ * Homepage hero: live capacity, the tagline, one primary action, the
  * refraction scene that shows what Prism does in one picture (your business
- * goes in as plain light, leaves as every channel at once).
+ * goes in as plain light, leaves as every channel at once), and the client
+ * logo rail.
  */
 export default function HomeHero() {
   return (
@@ -33,13 +35,17 @@ export default function HomeHero() {
 
         <h1
           id="home-hero-title"
-          className="text-display prism-rise mt-7 max-w-[13ch] text-balance pb-2 [--rise-delay:140ms] sm:max-w-[15ch]"
+          className="text-hero prism-rise mt-8 pb-3 [--rise-delay:140ms] sm:mt-10"
         >
-          <span className="text-gradient">{HOMEPAGE_HERO.titleLead}</span>{' '}
-          <span className="text-refract">{HOMEPAGE_HERO.titleAccent}</span>
+          <span className="text-gradient block whitespace-nowrap">
+            {HOMEPAGE_HERO.titleLead}
+          </span>{' '}
+          <span className="prism-glint block whitespace-nowrap">
+            {HOMEPAGE_HERO.titleAccent}
+          </span>
         </h1>
 
-        <p className="text-lead prism-rise mt-5 max-w-[36rem] text-pretty text-muted-foreground [--rise-delay:240ms]">
+        <p className="text-lead prism-rise mt-6 max-w-[43rem] text-pretty text-muted-foreground [--rise-delay:240ms] sm:mt-8">
           {HOMEPAGE_HERO.subheading}
         </p>
 
@@ -72,26 +78,7 @@ export default function HomeHero() {
         className="mt-0 sm:-mt-4 lg:-mt-5"
       />
 
-      <div className="prism-container relative -mt-6 pb-4 sm:-mt-16 lg:-mt-24">
-        <ul
-          aria-label="Prism at a glance"
-          className="mx-auto grid max-w-3xl grid-cols-3 divide-x divide-white/[0.08]"
-        >
-          {HOMEPAGE_HERO.proof.map((item) => (
-            <li
-              key={item.label}
-              className="flex flex-col items-center gap-1 px-4 sm:px-7"
-            >
-              <span className="text-xl font-semibold tracking-[-0.03em] text-foreground sm:text-2xl">
-                {item.value}
-              </span>
-              <span className="max-w-[12ch] text-[12px] leading-snug text-subtle sm:max-w-none sm:text-[13px]">
-                {item.label}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <HomeLogoRail />
     </section>
   )
 }

@@ -1,0 +1,65 @@
+/*
+ * Homepage wall of love (#love). The base styles are the finished still
+ * frame: columns sit at their resting offsets and the marquee loops (from
+ * components/prism/marquee.tsx, gated behind prefers-reduced-motion) only
+ * translate the tracks. Transform and opacity only.
+ */
+
+/* Fixed-height window into the wall. */
+.window {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  /* Paint containment only: content-visibility would blank the wall in
+     full-page captures (locked screenshots) and print. */
+  contain: paint;
+}
+
+@media (min-width: 640px) {
+  .window {
+    height: 700px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .window {
+    height: 740px;
+  }
+}
+
+/* Each column starts at its own resting offset so cards never line up. */
+.column {
+  --love-offset: 0px;
+  min-width: 0;
+  height: calc(100% + var(--love-offset));
+  margin-top: calc(var(--love-offset) * -1);
+}
+
+.column:nth-child(2) {
+  --love-offset: 84px;
+}
+
+.column:nth-child(3) {
+  --love-offset: 36px;
+}
+
+/* Desktop: a soft falloff toward the outer edges, so the wall reads as a
+   window onto something wider than the container. */
+@media (min-width: 1024px) {
+  .vignette {
+    mask-image: linear-gradient(
+      to right,
+      rgb(0 0 0 / 45%),
+      black 16%,
+      black 84%,
+      rgb(0 0 0 / 45%)
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      rgb(0 0 0 / 45%),
+      black 16%,
+      black 84%,
+      rgb(0 0 0 / 45%)
+    );
+  }
+}

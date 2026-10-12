@@ -1,11 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
-import { HOMEPAGE_CLIENT_WINS } from '@/components/home/homepage-content'
+import {
+  HOMEPAGE_CASE_STUDIES,
+  HOMEPAGE_CLIENT_WINS,
+  HOMEPAGE_MORE_WORK,
+} from '@/components/home/homepage-content'
 import { Marquee } from '@/components/prism/marquee'
 import { Reveal } from '@/components/prism/reveal'
-import { SectionHeader } from '@/components/prism/section'
+import { SectionHeader, SplitTitle } from '@/components/prism/section'
 import TrackedLink from '@/components/tracked-link'
 
 type WallShot = {
@@ -16,13 +20,13 @@ type WallShot = {
 }
 
 /**
- * Current clients whose desktop captures read well at thumbnail size. Former
- * clients never appear here (HOMEPAGE_CLIENT_WINS is already current-only).
+ * Every current client beyond the five featured stories, so the wall shows
+ * exactly the "<n> more" its title counts. Former clients never appear here
+ * (HOMEPAGE_CLIENT_WINS is already current-only).
  */
-const WALL_EXCLUDE = new Set([
-  '/case-studies/mataria-dental-group',
-  '/case-studies/leadership-retreat',
-])
+const WALL_EXCLUDE = new Set(
+  HOMEPAGE_CASE_STUDIES.slugs.map((slug) => `/case-studies/${slug}`),
+)
 
 const WALL_SHOTS: WallShot[] = HOMEPAGE_CLIENT_WINS.slides
   .filter((slide) => !WALL_EXCLUDE.has(slide.href))
@@ -70,7 +74,7 @@ function WallCard({ shot }: { shot: WallShot }) {
             {shot.location}
           </span>
         </span>
-        <ArrowUpRight
+        <ArrowRight
           aria-hidden="true"
           className="size-4 shrink-0 text-foreground"
         />
@@ -84,17 +88,21 @@ export default function HomeWorkWall() {
 
   return (
     <section
-      id="work"
-      aria-labelledby="home-work-title"
+      id="more-work"
+      aria-labelledby="home-more-work-title"
       className="relative scroll-mt-[calc(var(--prism-header-height,64px)+1rem)] py-20 sm:py-24"
     >
       <div className="prism-container">
         <Reveal>
           <SectionHeader
-            id="home-work-title"
-            eyebrow={HOMEPAGE_CLIENT_WINS.eyebrow}
-            title={HOMEPAGE_CLIENT_WINS.title}
-            description={HOMEPAGE_CLIENT_WINS.description}
+            id="home-more-work-title"
+            eyebrow={HOMEPAGE_MORE_WORK.eyebrow}
+            title={
+              <SplitTitle
+                text={`${HOMEPAGE_MORE_WORK.count} more. every one is live.`}
+              />
+            }
+            description={HOMEPAGE_MORE_WORK.description}
             align="center"
           />
         </Reveal>
@@ -150,9 +158,9 @@ export default function HomeWorkWall() {
             className="group/all inline-flex h-11 items-center gap-2 rounded-full border border-white/12 bg-background/70 px-5 text-sm font-medium text-foreground backdrop-blur-md transition-colors hover:border-white/25 hover:bg-background/90 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             See every case study
-            <ArrowUpRight
+            <ArrowRight
               aria-hidden="true"
-              className="size-4 transition-transform duration-200 group-hover/all:-translate-y-0.5 group-hover/all:translate-x-0.5"
+              className="size-4 transition-transform duration-200 group-hover/all:translate-x-0.5"
             />
           </TrackedLink>
         </div>

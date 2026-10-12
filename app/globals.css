@@ -581,6 +581,15 @@ select {
   font-weight: 600;
 }
 
+/* The tagline ("impossible is temporary."). One step above display; used
+   once, on the homepage hero. */
+@utility text-hero {
+  font-size: clamp(3.05rem, 0.75rem + 10.6vw, 10.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.062em;
+  font-weight: 600;
+}
+
 @utility text-title {
   font-size: clamp(2.2rem, 1.45rem + 3vw, 4rem);
   line-height: 0.98;
@@ -776,7 +785,8 @@ select {
     animation-direction: reverse;
   }
 
-  .prism-marquee[data-pause-on-hover='true']:hover .prism-marquee-track {
+  .prism-marquee[data-pause-on-hover='true']:hover .prism-marquee-track,
+  .prism-marquee:focus-within .prism-marquee-track {
     animation-play-state: paused;
   }
 }
@@ -942,6 +952,132 @@ select {
   .prism-rise {
     animation: prism-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-delay: var(--rise-delay, 0ms);
+  }
+}
+
+/* ---- Hero glint -----------------------------------------------------------
+   A band of white light crosses the hero accent word just as the spectrum
+   leaves the prism, then twice more. Two clipped background
+   layers: the glint (parked off the right edge in the still frame) over the
+   refraction gradient. */
+.prism-glint {
+  background-image:
+    linear-gradient(
+      100deg,
+      transparent 0 44%,
+      oklch(1 0 0 / 85%) 50%,
+      transparent 56% 100%
+    ),
+    linear-gradient(
+      100deg,
+      oklch(1 0 0) 0%,
+      oklch(0.93 0.05 29) 7%,
+      var(--spectrum-red) 20%,
+      var(--spectrum-orange) 36%,
+      var(--spectrum-yellow) 52%,
+      var(--spectrum-green) 68%,
+      var(--spectrum-blue) 84%,
+      var(--spectrum-violet) 100%
+    );
+  background-size:
+    250% 100%,
+    100% 100%;
+  background-position:
+    0% 0,
+    0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@keyframes prism-glint-pass {
+  0% {
+    background-position:
+      100% 0,
+      0 0;
+  }
+  22%,
+  100% {
+    background-position:
+      0% 0,
+      0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .prism-glint {
+    /* Three passes, then the word rests (the glint repaints the clipped
+       text, so it is the one background-position loop on the page besides
+       prism-spectrum-pan). */
+    animation: prism-glint-pass 9s cubic-bezier(0.45, 0, 0.2, 1) 2.1s 3 both;
+  }
+}
+
+/* ---- Intake pass (components/prism/intake-pass.tsx) -----------------------
+   A ticket: perforated stub with punched notches, plus a faint holographic
+   foil (a transformed layer) that drifts while the pass is hovered. The
+   still frame keeps the foil parked. */
+.prism-pass-sheen {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.prism-pass-sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 -100%;
+  width: 300%;
+  background: linear-gradient(
+    115deg,
+    transparent 36%,
+    oklch(0.66 0.21 29 / 9%) 43%,
+    oklch(0.86 0.15 90 / 8%) 47%,
+    oklch(0.76 0.17 145 / 8%) 50%,
+    oklch(0.66 0.16 258 / 10%) 53%,
+    oklch(0.63 0.19 295 / 9%) 57%,
+    transparent 64%
+  );
+  transform: translate3d(8%, 0, 0);
+}
+
+@keyframes prism-pass-foil {
+  0%,
+  100% {
+    transform: translate3d(-14%, 0, 0);
+  }
+  50% {
+    transform: translate3d(14%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .prism-pass:hover .prism-pass-sheen::before {
+    animation: prism-pass-foil 7s ease-in-out infinite;
+  }
+}
+
+@media (min-width: 640px) {
+  .prism-pass-stub::before,
+  .prism-pass-stub::after {
+    content: '';
+    position: absolute;
+    left: -11px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--background);
+    border: 1px solid oklch(1 0 0 / 10%);
+  }
+
+  .prism-pass-stub::before {
+    top: -12px;
+  }
+
+  .prism-pass-stub::after {
+    bottom: -12px;
   }
 }
 

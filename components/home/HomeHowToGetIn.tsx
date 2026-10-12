@@ -1,8 +1,7 @@
 import { HOMEPAGE_HOW_IT_WORKS } from '@/components/home/homepage-content'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader, SplitTitle } from '@/components/prism/section'
-import { WaitlistButton } from '@/components/prism/waitlist-button'
-import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
+import { IntakePass } from '@/components/prism/intake-pass'
 
 const STEP_COLORS = [
   'var(--spectrum-red)',
@@ -21,14 +20,8 @@ export default function HomeHowToGetIn() {
             title={<SplitTitle text={HOMEPAGE_HOW_IT_WORKS.title} />}
           />
         </Reveal>
-        <Reveal
-          delay={100}
-          className="flex flex-col items-start gap-3 lg:items-end"
-        >
-          <WaitlistButton location="homepage how it works" />
-          <p className="text-[13px] text-subtle">
-            Next intake: <WaitlistIntakeMonth />
-          </p>
+        <Reveal delay={100} className="w-full lg:max-w-[40rem]">
+          <IntakePass location="homepage how it works" />
         </Reveal>
       </div>
 

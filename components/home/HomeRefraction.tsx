@@ -1,12 +1,15 @@
 import type { CSSProperties } from 'react'
 
+import RefractionPointer from '@/components/home/RefractionPointer'
 import styles from '@/components/home/HomeRefraction.module.css'
 import { cn } from '@/lib/utils'
 
 /**
  * The Prism refraction scene: white light (your business) enters the glass
  * and leaves as a six-band spectrum, one band per channel Prism runs.
- * Server-rendered SVG with CSS-only choreography; zero client JS.
+ * Server-rendered SVG with CSS-only choreography. The only client JS is
+ * RefractionPointer, which swings the light a few degrees with a fine
+ * pointer (motion-safe only), like turning a real prism in your hand.
  */
 
 type Point = { x: number; y: number }
@@ -209,6 +212,7 @@ export default function HomeRefraction({
           </mask>
         </defs>
 
+        <g className={styles.swingOut}>
         {/* Soft colored light pooling under the spectrum. It only appears
             once the beam has reached the glass. */}
         <g mask="url(#refraction-bottom-fade)" opacity="0.45" className={styles.pool}>
@@ -289,6 +293,9 @@ export default function HomeRefraction({
           className={styles.exitHot}
         />
 
+        </g>
+
+        <g className={styles.swingIn}>
         {/* Incoming white beam. */}
         <g mask="url(#refraction-edge-fade)">
           <line
@@ -332,6 +339,8 @@ export default function HomeRefraction({
           {sourceLabel.toUpperCase()}
         </text>
 
+        </g>
+
         <circle
           cx={BEAM_END.x}
           cy={BEAM_END.y}
@@ -372,6 +381,7 @@ export default function HomeRefraction({
           strokeOpacity="0.95"
         />
       </svg>
+      <RefractionPointer />
     </div>
   )
 }

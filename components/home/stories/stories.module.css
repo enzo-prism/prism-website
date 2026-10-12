@@ -1,0 +1,207 @@
+/* Homepage stories (#work). Visual styling lives in Tailwind classes on the
+   components; this module owns the parts Tailwind cannot express cleanly:
+   the sticky deck, the recede, and the in-frame browse loop.
+
+   Base styles are the finished frame: no sticky below lg or on short
+   viewports, no transform, every capture parked at the top of its site.
+   Motion is transform/opacity only and sits behind
+   prefers-reduced-motion: no-preference. */
+
+.deck {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .deck {
+    gap: 1.5rem;
+  }
+}
+
+.item {
+  position: relative;
+}
+
+.panel {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Dims a panel as the next one slides over it. Invisible by default. */
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  border-radius: inherit;
+  background: oklch(0.08 0.004 286);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- Frames ------------------------------------------------------------- */
+
+/* The visible window of a site. Size containment lets the capture read the
+   window height (100cqh) so the loop always ends exactly at the bottom. */
+.viewport {
+  position: relative;
+  overflow: hidden;
+  container-type: size;
+}
+
+.viewportDesktop {
+  aspect-ratio: 16 / 10;
+}
+
+/* Phone screen: a status bar band over the page, so the island never sits on
+   the site header. The page viewport takes the rest of the 390x844 screen. */
+.phoneScreen {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+}
+
+.phoneStatus {
+  flex: none;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.viewportPhone {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.capture {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+/* ---- Stacked deck (lg+, tall enough viewports) --------------------------
+   Rows share one height (the tallest story, never less than the preferred
+   panel height) so a covered card never peeks out below the next one. The
+   island sets data-fit="false" when that height cannot fit under the
+   header (big text settings, odd window sizes). Sticky only switches on once
+   the island confirms the fit (data-fit="true"), so no-JS visitors get the
+   plain stack, and sticky never changes layout, so nothing shifts. */
+
+@media (min-width: 1024px) and (min-height: 760px) {
+  .deck {
+    grid-auto-rows: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* A runway after every card, so it holds fully readable (and its case
+     study link clickable) before the next card arrives to cover it; the
+     last card's runway is the hold before the deck leaves. Every item gets
+     the same margin on purpose: rows are 1fr, so an item without it would
+     stretch its panel and flip the island's fit check. */
+  .deck[data-fit='true'] .item {
+    margin-bottom: 24vh;
+  }
+
+  /* Keyboard focus inside a covered card brings that card forward. */
+  .deck[data-fit='true'] .item:focus-within {
+    z-index: 10;
+  }
+
+  .deck[data-fit='true'] .item:focus-within .shade {
+    opacity: 0;
+  }
+
+  .deck[data-fit='true'] .item {
+    position: sticky;
+    /* Keep in sync with STACK_* in StoriesDeck.tsx. */
+    top: calc(
+      var(--prism-header-height, 64px) + 1.25rem + var(--story-index, 0) *
+        0.875rem
+    );
+  }
+
+  .panel {
+    height: 100%;
+    min-height: clamp(
+      34rem,
+      calc(100svh - var(--prism-header-height, 64px) - 9rem),
+      40rem
+    );
+  }
+
+  .deck[data-fit='true'] .panel {
+    /* The next card casts a soft shadow up onto the one it covers. */
+    box-shadow:
+      0 1px 0 0 oklch(1 0 0 / 6%) inset,
+      0 -28px 60px -32px oklch(0 0 0 / 85%);
+  }
+
+  /* Covered cards dim (also with reduced motion: it is not movement). */
+  .shade {
+    opacity: calc(
+      var(--recede, 0) * 0.5 + max(var(--depth, 0) - var(--recede, 0), 0) * 0.08
+    );
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+  .panel {
+    transform-origin: 50% 0;
+    /* First cover: 5% back. Each card stacked above that: 1.5% more. */
+    transform: scale(
+      calc(
+        1 - min(var(--recede, 0), 1) * 0.05 -
+          max(var(--depth, 0) - var(--recede, 0), 0) * 0.015
+      )
+    );
+  }
+}
+
+/* ---- Browse loop -------------------------------------------------------
+   Someone reading the live site: hold at the top, scroll a screen-ish step,
+   pause, again, linger at the bottom, then glide back up. Each step eases
+   in and out. Paused until the deck island marks the panel as playing. */
+
+@keyframes browse {
+  0%,
+  8% {
+    transform: translate3d(0, 0, 0);
+  }
+  19%,
+  27% {
+    transform: translate3d(0, calc((100cqh - 100%) * 0.26), 0);
+  }
+  38%,
+  46% {
+    transform: translate3d(0, calc((100cqh - 100%) * 0.5), 0);
+  }
+  57%,
+  65% {
+    transform: translate3d(0, calc((100cqh - 100%) * 0.76), 0);
+  }
+  75%,
+  84% {
+    transform: translate3d(0, calc(100cqh - 100%), 0);
+  }
+  96%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .capture {
+    animation: browse var(--browse-duration, 22s) cubic-bezier(0.65, 0, 0.35, 1)
+      var(--browse-delay, 0s) infinite both;
+    animation-play-state: paused;
+  }
+
+  .item[data-playing='true'] .capture {
+    animation-play-state: running;
+    will-change: transform;
+  }
+}

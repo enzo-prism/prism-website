@@ -58,6 +58,8 @@ export function Marquee({
         <div
           key={copy}
           aria-hidden={copy === 1 ? true : undefined}
+          // The duplicate exists only to close the loop: never a tab stop.
+          inert={copy === 1 ? true : undefined}
           data-axis={vertical ? 'y' : 'x'}
           className={cn(
             'prism-marquee-track flex shrink-0 [will-change:transform]',

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 import { HOMEPAGE_FOUNDER } from '@/components/home/homepage-content'
 import { PrismMark } from '@/components/prism/prism-logo'
@@ -61,19 +61,19 @@ export default function HomeFounder() {
             ))}
           </ul>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-white/[0.07] pt-6">
-            <p className="text-refract text-2xl font-semibold tracking-[-0.04em]">
+            <p className="text-gradient text-2xl font-semibold tracking-[-0.04em]">
               {HOMEPAGE_FOUNDER.motto}
             </p>
             <TrackedLink
               href="/about"
               label="read enzo's story"
               location="homepage founder"
-              className="group/about inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="group/about inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
               Read Enzo’s story
-              <ArrowUpRight
+              <ArrowRight
                 aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover/about:-translate-y-0.5 group-hover/about:translate-x-0.5"
+                className="size-4 transition-transform duration-200 group-hover/about:translate-x-0.5"
               />
             </TrackedLink>
           </div>

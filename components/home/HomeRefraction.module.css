@@ -35,6 +35,21 @@
   opacity: 0.55;
 }
 
+/* Pointer swing (components/home/RefractionPointer.tsx writes --swing in
+   -1..1). Without JS, with a coarse pointer, or with reduced motion the
+   variable stays 0 and the scene is the finished still frame. */
+.swingOut {
+  transform-box: view-box;
+  transform-origin: 802px 206px;
+  transform: rotate(calc(var(--swing, 0) * 2.6deg));
+}
+
+.swingIn {
+  transform-box: view-box;
+  transform-origin: 646px 193px;
+  transform: rotate(calc(var(--swing, 0) * -1.4deg));
+}
+
 .spectrum {
   transform-box: view-box;
   transform-origin: 800px 208px;

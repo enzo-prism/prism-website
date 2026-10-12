@@ -6,6 +6,7 @@ import {
   HOMEPAGE_CLIENT_WINS,
   HOMEPAGE_TESTIMONIALS,
 } from '@/components/home/homepage-content'
+import { CLIENT_LOGOS } from '@/lib/client-logos'
 import { CLIENTS } from '@/lib/clients'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import { websiteProjects } from '@/lib/website-projects'
@@ -15,8 +16,10 @@ import { websiteProjects } from '@/lib/website-projects'
 const FEATURED_FILES = [
   'components/home/homepage-content.ts',
   'components/home/HomeWorkWall.tsx',
-  'components/home/HomeCaseStudies.tsx',
-  'components/home/HomeServicesBento.tsx',
+  'components/home/HomeStories.tsx',
+  'components/home/HomeLove.tsx',
+  'components/home/love/love-wall.ts',
+  'public/clients/logos/manifest.json',
   'components/schema-markup.tsx',
   'components/dental-client-carousel.tsx',
   'app/websites/page.tsx',
@@ -48,9 +51,11 @@ describe('former clients stay off current-client proof surfaces', () => {
     }
   })
 
-  it('keeps former clients out of the homepage case study tabs', () => {
+  it('keeps former clients out of the homepage stories and logo rails', () => {
+    const logoSlugs = CLIENT_LOGOS.map((logo) => logo.slug)
     for (const slug of FORMER_CLIENT_SLUGS) {
       expect(HOMEPAGE_CASE_STUDIES.slugs).not.toContain(slug)
+      expect(logoSlugs).not.toContain(slug)
     }
   })
 

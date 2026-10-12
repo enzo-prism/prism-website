@@ -1,0 +1,422 @@
+/*
+ * Homepage #audience: "the receipts" rig.
+ *
+ * Contract (same as the other homepage modules): every base style below is
+ * the finished still frame. Entrances, the reach ping and the
+ * pointer parallax only run under prefers-reduced-motion: no-preference, and
+ * they move transform, translate, rotate and opacity only. The locked
+ * screenshot run disables animations, so nothing here depends on an
+ * animation to be visible or positioned.
+ *
+ * Geometry lives in cqw (the rig is an inline-size container), so the fan
+ * keeps its composition at any column width. Wide rigs float the view chips
+ * and comments over the fan; narrow rigs (phones) set them in flow under it.
+ */
+
+.rig {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --mx: 0;
+  --my: 0;
+  position: relative;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  container: audience-rig / inline-size;
+  isolation: isolate;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 1 / 1.06;
+}
+
+/* ---- Backdrop ---------------------------------------------------------- */
+
+.grid {
+  position: absolute;
+  inset: -4% -8% 0;
+  z-index: -2;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* The one spectrum accent in the section: light pooling behind the glass. */
+.glow {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  z-index: -1;
+  width: 80cqw;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 999px;
+  background: conic-gradient(
+    from 210deg,
+    var(--spectrum-red),
+    var(--spectrum-orange),
+    var(--spectrum-yellow),
+    var(--spectrum-green),
+    var(--spectrum-blue),
+    var(--spectrum-violet),
+    var(--spectrum-red)
+  );
+  filter: blur(80px);
+  opacity: 0.44;
+  pointer-events: none;
+}
+
+/* A soft pool of light on the "floor" under the fan. */
+.floor {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: -1;
+  width: 92cqw;
+  height: 16cqw;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, oklch(1 0 0 / 7%), transparent);
+  pointer-events: none;
+}
+
+/* ---- Phones ------------------------------------------------------------ */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Positioned layer. Parallax rides on `translate` so it never fights the
+   entrance or drift transforms on the inner wrappers. */
+.slot {
+  position: absolute;
+  translate: calc(var(--mx) * var(--depth, 6) * 1px)
+    calc(var(--my) * var(--depth, 6) * 1px);
+}
+
+.front {
+  --depth: 10;
+  z-index: 3;
+  left: 27cqw;
+  top: 6cqw;
+  width: 46cqw;
+}
+
+.left {
+  --depth: 5;
+  z-index: 1;
+  left: 1cqw;
+  top: 2cqw;
+  width: 37cqw;
+}
+
+.right {
+  --depth: 7;
+  z-index: 2;
+  left: 62cqw;
+  top: 17cqw;
+  width: 37cqw;
+}
+
+.phone {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* The device frame's corner, measured from the screenshots. */
+  border-radius: 18.3% / 8.85%;
+  box-shadow:
+    0 2px 0 0 oklch(1 0 0 / 6%),
+    0 60px 110px -36px oklch(0 0 0 / 95%),
+    0 28px 48px -28px oklch(0 0 0 / 85%);
+  transform: perspective(1400px) rotateY(var(--turn, 0deg))
+    rotateZ(var(--tilt, 0deg));
+}
+
+.left .phone {
+  --turn: 14deg;
+  --tilt: -4deg;
+}
+
+.right .phone {
+  --turn: -14deg;
+  --tilt: 4deg;
+}
+
+.front .phone {
+  --turn: -2deg;
+}
+
+/* Back phones sit in shadow so the front reel reads first. */
+.left .phone::after,
+.right .phone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(0.115 0.003 286 / 26%),
+    oklch(0.115 0.003 286 / 50%)
+  );
+  pointer-events: none;
+}
+
+.shot {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  user-select: none;
+}
+
+/* Telestrator mark around the "accounts reached" figure on the front reel.
+   Box is a share of the phone, measured from the screenshot. */
+.mark {
+  position: absolute;
+  left: var(--mark-x);
+  top: var(--mark-y);
+  width: var(--mark-w);
+  height: var(--mark-h);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 1.5px oklch(0.145 0.003 286 / 88%),
+    0 0 0 5px oklch(0.145 0.003 286 / 10%);
+  pointer-events: none;
+}
+
+.mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 1.5px oklch(0.145 0.003 286 / 60%);
+  opacity: 0;
+}
+
+/* ---- Chips and comments: in flow (narrow rigs) ------------------------- */
+
+.chips {
+  margin-top: 1.75rem;
+  overflow: hidden;
+  border: 1px solid oklch(1 0 0 / 8%);
+  border-radius: 1.25rem;
+  background: var(--card);
+  box-shadow: inset 0 1px 0 0 oklch(1 0 0 / 6%);
+}
+
+.chip + .chip {
+  border-top: 1px solid oklch(1 0 0 / 7%);
+}
+
+.chip {
+  position: static;
+  translate: none;
+}
+
+.chipCard {
+  display: grid;
+  grid-template-columns: 6.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.comment {
+  position: static;
+  translate: none;
+  width: min(100%, 21rem);
+}
+
+.comment2 {
+  align-self: flex-end;
+}
+
+.glass {
+  border: 1px solid oklch(1 0 0 / 12%);
+  border-radius: 1rem;
+  background: oklch(0.16 0.004 286 / 96%);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 8%),
+    0 30px 60px -24px oklch(0 0 0 / 90%);
+}
+
+/* ---- Chips and comments: floating (wide rigs) -------------------------- */
+
+@container audience-rig (min-width: 540px) {
+  .stage {
+    aspect-ratio: 1 / 1.04;
+  }
+
+  .front {
+    left: 30.5cqw;
+    top: 9cqw;
+    width: 39cqw;
+  }
+
+  .left {
+    left: 6cqw;
+    top: 5cqw;
+    width: 32cqw;
+  }
+
+  .right {
+    left: 62cqw;
+    top: 21cqw;
+    width: 32cqw;
+  }
+
+  .chips,
+  .comments {
+    display: contents;
+  }
+
+  .chip,
+  .comment {
+    position: absolute;
+    translate: calc(var(--mx) * var(--depth, 6) * 1px)
+      calc(var(--my) * var(--depth, 6) * 1px);
+  }
+
+  .chip {
+    z-index: 5;
+    width: 32cqw;
+  }
+
+  .chip + .chip {
+    border-top: 0;
+  }
+
+  .chipLabel {
+    margin-top: 0.5rem;
+  }
+
+  .chipCard {
+    display: block;
+    padding: 0.8rem 1rem 0.9rem;
+    border: 1px solid oklch(1 0 0 / 12%);
+    border-radius: 1rem;
+    background: oklch(0.16 0.004 286 / 96%);
+    box-shadow:
+      inset 0 1px 0 0 oklch(1 0 0 / 8%),
+      0 30px 60px -24px oklch(0 0 0 / 90%);
+  }
+
+  /* Lower thirds: each chip hangs off the foot of its phone. */
+  .chipFront {
+    --depth: 16;
+    left: 35cqw;
+    top: 87cqw;
+  }
+
+  .chipLeft {
+    --depth: 12;
+    left: 0;
+    top: 71cqw;
+  }
+
+  .chipRight {
+    --depth: 13;
+    right: 0;
+    top: 84cqw;
+  }
+
+  .comment {
+    z-index: 6;
+    width: 41cqw;
+  }
+
+  /* Comments sit in the open corners, clear of every phone's numbers. */
+  .comment1 {
+    --depth: 22;
+    right: -2cqw;
+    top: -4cqw;
+    width: 41cqw;
+  }
+
+  .comment2 {
+    --depth: 20;
+    left: -3cqw;
+    top: 89cqw;
+    width: 37cqw;
+  }
+}
+
+/* ---- Motion ------------------------------------------------------------ */
+
+@keyframes fan-left {
+  from {
+    opacity: 0;
+    transform: translate3d(42%, 8%, 0) rotate(4deg) scale(0.9);
+  }
+}
+
+@keyframes fan-right {
+  from {
+    opacity: 0;
+    transform: translate3d(-42%, -6%, 0) rotate(-4deg) scale(0.9);
+  }
+}
+
+@keyframes fan-front {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8%, 0) scale(0.95);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.97);
+  }
+}
+
+@keyframes ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.35, 1.9);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .slot,
+  .chip,
+  .comment {
+    transition: translate 1.4s var(--ease);
+  }
+
+  .mark::after {
+    animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) 1.2s infinite;
+  }
+
+  :global([data-reveal='shown']) .left .fan {
+    animation: fan-left 1.1s var(--ease) 0.08s both;
+  }
+
+  :global([data-reveal='shown']) .right .fan {
+    animation: fan-right 1.1s var(--ease) 0.08s both;
+  }
+
+  :global([data-reveal='shown']) .front .fan {
+    animation: fan-front 1s var(--ease) both;
+  }
+
+  :global([data-reveal='shown']) .chip .fan,
+  :global([data-reveal='shown']) .comment .fan {
+    animation: pop 0.8s var(--ease) var(--pop-delay, 0.4s) both;
+  }
+}
+
+/* No idle drift: once the fan lands, the receipts hold still so the numbers
+   are easy to read (pointer parallax still answers a mouse). */

@@ -1,6 +1,10 @@
 import { render, screen, within } from '@testing-library/react'
 
 import ClientPage from '@/app/client-page'
+import {
+  HOMEPAGE_CASE_STUDIES,
+  HOMEPAGE_MORE_WORK,
+} from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import { SOCIAL_PROOF } from '@/lib/proof-metrics'
@@ -54,13 +58,13 @@ describe('ClientPage homepage flow', () => {
     jest.clearAllMocks()
   })
 
-  it('tells the story in order: promise, work, proof, services, love, founder, how to get in', () => {
+  it('tells the story in order: promise, work, proof, reach, services, love, founder, how to get in', () => {
     render(<ClientPage />)
 
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^make your business impossible to ignore\.$/i,
+        name: /^impossible is temporary\.$/i,
       }),
     ).toBeInTheDocument()
 
@@ -69,16 +73,17 @@ describe('ClientPage homepage flow', () => {
       .map((heading) => heading.textContent?.trim())
 
     expect(headings).toEqual([
-      'proof you can click.',
+      'every business has an impossible.',
+      `${HOMEPAGE_MORE_WORK.count} more. every one is live.`,
       'numbers, not adjectives.',
-      'one team. every channel.',
-      'real clients. real launches.',
+      'we built our own audience from zero.',
+      'shine. convert. get seen.',
       'in their words.',
       'built by a founder chasing LA 2028.',
-      'built for our team. free for yours.',
       'fully booked. here’s how to get in.',
       'questions, answered.',
-      `get on the list for ${getWaitlistIntakeMonth().month}.`,
+      'built for our team. free for yours.',
+      'tell us your impossible.',
     ])
   })
 
@@ -141,17 +146,35 @@ describe('ClientPage homepage flow', () => {
     expect(document.body).toHaveTextContent(/Verified October 4, 2026/)
   })
 
-  it('features real client work and never former clients', () => {
+  it('features the five client stories, the client logos, and never former clients', () => {
     render(<ClientPage />)
 
     const work = document.getElementById('work') as HTMLElement
-    const workLinks = within(work)
+    const workHrefs = within(work)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href') ?? '')
+    for (const slug of HOMEPAGE_CASE_STUDIES.slugs) {
+      expect(workHrefs).toContain(`/case-studies/${slug}`)
+    }
+    expect(
+      within(work).getAllByRole('link', { name: /read the case study/i }),
+    ).toHaveLength(HOMEPAGE_CASE_STUDIES.slugs.length)
+    expect(work).toHaveTextContent('Sells to businesses')
+    expect(work).toHaveTextContent('Sells to consumers')
+
+    const moreWork = document.getElementById('more-work') as HTMLElement
+    const moreHrefs = within(moreWork)
       .getAllByRole('link')
       .map((link) => link.getAttribute('href') ?? '')
     expect(
-      workLinks.filter((href) => href.startsWith('/case-studies/')).length,
+      moreHrefs.filter((href) => href.startsWith('/case-studies/')).length,
     ).toBeGreaterThanOrEqual(8)
-    expect(workLinks).toContain('/case-studies')
+    expect(moreHrefs).toContain('/case-studies')
+
+    const logos = within(
+      document.getElementById('clients') as HTMLElement,
+    ).getAllByRole('img')
+    expect(logos.length).toBeGreaterThanOrEqual(15)
 
     const allHrefs = Array.from(document.querySelectorAll('a')).map(
       (link) => link.getAttribute('href') ?? '',
@@ -159,10 +182,6 @@ describe('ClientPage homepage flow', () => {
     for (const slug of FORMER_CLIENT_SLUGS) {
       expect(allHrefs).not.toContain(`/case-studies/${slug}`)
     }
-
-    expect(
-      screen.getByRole('link', { name: /read the case study/i }),
-    ).toHaveAttribute('href', '/case-studies/dr-christopher-wong')
   })
 
   it('separates client quotes from community comments', () => {
@@ -179,12 +198,12 @@ describe('ClientPage homepage flow', () => {
     ).toHaveAttribute('href', '/wall-of-love')
   })
 
-  it('links the services bento and products', () => {
+  it('links the three service pillars and products', () => {
     render(<ClientPage />)
 
     const services = document.getElementById('services') as HTMLElement
     expect(services.querySelectorAll('[data-home-service-card]')).toHaveLength(
-      6,
+      3,
     )
     for (const href of ['/websites', '/content', '/ads']) {
       expect(services.querySelector(`a[href="${href}"]`)).not.toBeNull()

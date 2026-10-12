@@ -18,6 +18,7 @@ import {
 import Footer from '@/components/footer'
 import HomeCountUp from '@/components/home/HomeCountUp'
 import Navbar from '@/components/navbar'
+import { ClientLogoRail } from '@/components/prism/client-logo-rail'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Marquee } from '@/components/prism/marquee'
 import { Reveal } from '@/components/prism/reveal'
@@ -279,6 +280,11 @@ export default function CaseStudiesPage() {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/60 to-transparent" />
             </div>
           ) : null}
+
+          <ClientLogoRail
+            label="Loved by B2B and consumer brands"
+            className="pt-14 sm:pt-16"
+          />
         </section>
 
         <Section

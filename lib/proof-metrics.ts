@@ -60,3 +60,47 @@ export const SOCIAL_PROOF_CHANNELS = [
   SOCIAL_PROOF.instagram,
   SOCIAL_PROOF.tiktok,
 ] as const
+
+/**
+ * Single-reel Instagram insights, read from Prism's own Reel insights
+ * screenshots in public/growth/. Counts are as of when each screenshot was
+ * taken, not live totals, so always print them with the reel's post date.
+ * The reels clip third-party interviews; show the insights screen only,
+ * never the footage.
+ */
+export const TOP_REELS = [
+  {
+    id: 'C8ulpLrvSCl',
+    platform: 'Instagram',
+    posted: 'June 27, 2024',
+    views: '2.7M',
+    accountsReached: '1,626,261',
+    image: '/growth/instagram-hormozi.png',
+    width: 490,
+    height: 951,
+    source: 'Instagram Reel insights screenshot (public/growth/instagram-hormozi.png)',
+  },
+  {
+    id: 'C483wd1SFB6',
+    platform: 'Instagram',
+    posted: 'March 25, 2024',
+    views: '2.3M',
+    accountsReached: '1,620,342',
+    image: '/growth/instagram-nvidia-stanford.png',
+    width: 520,
+    height: 974,
+    source:
+      'Instagram Reel insights screenshot (public/growth/instagram-nvidia-stanford.png)',
+  },
+  {
+    id: 'C7CD7TArrBt',
+    platform: 'Instagram',
+    posted: 'May 16, 2024',
+    views: '950K',
+    accountsReached: '599,064',
+    image: '/growth/instagram-stats-6.png',
+    width: 1000,
+    height: 1000,
+    source: 'Instagram Reel insights screenshot (public/growth/instagram-stats-6.png)',
+  },
+] as const

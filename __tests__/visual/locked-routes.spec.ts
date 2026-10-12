@@ -122,9 +122,10 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /^make your business impossible to ignore\.$/i,
+    readyHeading: /^impossible is temporary\.$/i,
     mustContain: [
-      /websites, content, and ads from one team\./i,
+      /websites, content, and ads that make your business shine online/i,
+      /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
       /join the waitlist to work with us in [a-z]+\./i,
@@ -258,7 +259,7 @@ test('home numbers section snapshot stays stable', async ({ page }) => {
 test('home services section snapshot stays stable', async ({ page }) => {
   await snapshotHomeSection(
     page,
-    /one team\. every channel\./i,
+    /shine\. convert\. get seen\./i,
     'home-services-section.png',
   )
 })
@@ -291,9 +292,9 @@ test('home cards stay contained across responsive breakpoints', async ({
 
   const sections = [
     {
-      heading: /one team\. every channel\./i,
+      heading: /shine\. convert\. get seen\./i,
       cardSelector: '[data-home-service-card]',
-      expectedCount: 6,
+      expectedCount: 3,
     },
     {
       heading: /fully booked\. here’s how to get in\./i,
@@ -398,7 +399,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /^make your business impossible to ignore\.$/i,
+        name: /^impossible is temporary\.$/i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
