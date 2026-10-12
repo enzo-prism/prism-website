@@ -21,6 +21,12 @@ colors:
   spectrum-blue: "#4F91F2"
   spectrum-violet: "#946AEE"
 typography:
+  hero:
+    fontFamily: "Geist Sans"
+    fontSize: 164px
+    fontWeight: 600
+    lineHeight: 0.86
+    letterSpacing: "-0.062em"
   display:
     fontFamily: "Geist Sans"
     fontSize: 104px
@@ -135,15 +141,22 @@ Prism should feel:
 The mental model is **near-black canvas + stock shadcn components + Geist
 type + real client work + one rationed spectrum**.
 
+The brand tagline is **"impossible is temporary."** It is the homepage h1
+(v2, 2026-10-12) and the footer eyebrow. Every business has something that
+feels out of reach; the site shows Prism making it temporary: the client's
+"impossible" in each featured story, the founder's motto, and the closing
+"tell us your impossible." Use the tagline as written, never paraphrased.
+
 ## Code anchors
 
 - `app/globals.css`: tokens (`:root` and `.dark` carry the same dark values),
-  Spectrum utilities (`text-display`, `text-title`, `text-heading`,
+  Spectrum utilities (`text-hero`, `text-display`, `text-title`, `text-heading`,
   `text-lead`, `text-eyebrow`, `text-gradient`, `text-spectrum`,
   `bg-spectrum`, `spectrum-rule`, `bg-grid`, `bg-dots`, `bg-noise`,
   `mask-fade-x|y|b`, `prism-container`) and motion classes
   (`prism-marquee`, `prism-live-dot`, `prism-beam`, `prism-spotlight`,
-  `prism-rise`, `data-reveal`).
+  `prism-rise`, `data-reveal`, `prism-glint`, and the intake pass's
+  `prism-pass-sheen` / `prism-pass-stub`).
 - `tailwind.config.cjs`: semantic colors (`background`, `card`, `muted`,
   `subtle-foreground`, `live`, `spectrum-*`), radius scale.
 - `components/ui/*`: stock shadcn primitives restyled for the dark canvas.
@@ -160,8 +173,15 @@ type + real client work + one rationed spectrum**.
   - `PrismLogo` / `PrismMark`
   - `FinalCta` (the closing waitlist band on every core route)
   - `BrowserFrame` (window chrome around real client screenshots)
+  - `ClientLogo` / `ClientLogoRail` (real client logos from
+    `lib/client-logos.ts`, tinted through a CSS mask, sized by equal optical
+    area)
+  - `IntakePass` (the next intake as a perforated ticket)
+  - `InlineWaitlistCta` (one line, the waitlist button, and the status pill
+    where a long proof section ends)
 - `components/navbar.tsx`, `components/footer.tsx`: shared chrome.
-- `components/home/*`: homepage sections.
+- `components/home/*`: homepage sections. Larger sections keep their parts
+  and CSS modules in a folder (`stories/`, `audience/`, `pillars/`, `love/`).
 
 ## Color
 
@@ -188,8 +208,9 @@ type + real client work + one rationed spectrum**.
 
 - Geist Sans for everything people read. Geist Mono for eyebrows, metadata,
   and small labels. Geist Pixel is retired and no longer loaded.
-- Scale utilities: `text-display` (hero h1), `text-title` (section h2),
-  `text-heading` (card titles), `text-lead` (subheads). Display and title use
+- Scale utilities: `text-hero` (the tagline only, homepage h1),
+  `text-display` (other hero h1s), `text-title` (section h2), `text-heading`
+  (card titles), `text-lead` (subheads). Display and title use
   `text-gradient` (white fading to mist) by default.
 - Headlines are **lowercase** (Prism house style, see the prism-writing
   skill), short, and end with a period. Proper nouns keep their capitals.
@@ -222,8 +243,32 @@ and inert handling.
 
 One dominant idea: status pill, lowercase display headline, one sentence of
 subhead, primary CTA plus one secondary, compact proof row. The homepage hero
-carries the refraction scene (`components/home/HomeHero.tsx`), the only place
-the full spectrum fan appears.
+sets the tagline in `text-hero` on two lines ("impossible is" in
+`text-gradient`, "temporary." in `prism-glint`), carries the refraction scene
+(`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
+appears, and closes with the client logo rail. With a fine pointer the beam
+and fan turn a few degrees toward the cursor (`RefractionPointer`).
+
+### Client logos
+
+Real logos only, from each client's own site or repo, stored in
+`public/clients/logos/` with a manifest that records the source. Never redraw,
+recolor creatively, or invent a mark. On the dark canvas every logo is one
+quiet tone (`text-white/50`, brightening on hover) through `ClientLogo`'s
+mask, sized by equal optical area so square seals and long wordmarks weigh
+the same. Nameless marks and unreadable seals get the client name beside
+them; a client without a logo shows its name. Former clients never appear.
+
+### Featured stories
+
+The homepage `#work` deck: five large panels (`rounded-[2rem]`, hairline,
+`bg-card`) that stack as a sticky deck on tall desktop screens, with covered
+panels receding (scale and dim, transform and opacity only). Each panel pairs
+a browser frame and a phone showing tall real captures that browse slowly
+while on screen, a "Sells to consumers" or "Sells to businesses" chip, "The
+impossible" (Prism's framing, never quote marks), the chips of what was
+built, and "Now live". Each panel owns one spectrum band as a soft glow behind
+its media, so the five read as one beam of light split five ways.
 
 ### Proof
 
@@ -236,28 +281,50 @@ never appear on proof surfaces.
 ### CTAs
 
 Two grammars only: the white pill (`Button` default, or `WaitlistButton`)
-and the outline pill (`Button variant="outline"`). Inline text links use an
+and the outline pill (`Button variant="outline"`). The white pill is for the
+waitlist; secondary actions such as "Read the case study" use the outline
+pill. Long pages never go more than a section or two without a way onto the
+waitlist (`InlineWaitlistCta`). Internal links use `ArrowRight`;
+`ArrowUpRight` means the link leaves the site. Inline text links use an
 arrow icon. Every core route ends with `FinalCta`.
 
 ### Status
 
-`WaitlistStatus` and the footer capacity line are the only urgency devices.
-The month is always the live `<WaitlistIntakeMonth />`. Never invent spot
-counts, countdowns, or deadlines.
+`WaitlistStatus`, the footer capacity line, and the `IntakePass` ticket are
+the only urgency devices. The pass shows standing policy only ("<Month>
+intake", Fully booked, Waitlist open, First pick: waitlist members) with a
+faint holographic foil. The month is always the live `<WaitlistIntakeMonth />`.
+Never invent spot counts, countdowns, or deadlines.
+
+### Audience proof
+
+Prism's own reach is proof that it can put fresh eyes on a client. Show
+channel totals from `SOCIAL_PROOF` and the dated Reel insights in
+`TOP_REELS` (`lib/proof-metrics.ts`) as phone screenshots of the analytics
+screen only, never the third-party footage the reels clip. Keep the YouTube
+caveat (lifetime views include earlier channel content) visible wherever 5.8M
+appears.
 
 ## Motion
 
 Motion should feel like light moving through glass: smooth, purposeful, and
 quiet enough that text stays readable.
 
-- Allowed: the hero refraction choreography, marquees, scroll reveals
-  (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights, the slow
-  spectrum beam, the live dot ping, hover lifts of 1 to 2px.
+- Allowed: the hero refraction choreography and pointer swing, the tagline
+  glint, marquees (logo rail, work wall, the vertical wall of love), scroll
+  reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights and
+  parallax, the slow spectrum beam, the live dot ping, the story deck recede
+  and capture browsing, the service pillar micro scenes, the intake pass foil,
+  hover lifts of 1 to 2px.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base
   style is always the finished frame, so reduced-motion, no-JS, and
   screenshot runs see complete content.
 - No autoplaying video outside `HeroBackgroundLoop` and `HeroLoopingVideo`.
+  "Live" site previews are tall still captures moved with transforms, not
+  video.
+- Never use `content-visibility` on content that must appear in full-page
+  captures (locked screenshots, print): it blanks off-screen sections.
 
 ## Copy
 
