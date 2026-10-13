@@ -16,6 +16,7 @@ import { notFound } from 'next/navigation'
 
 import CaseStudyMoreWork from '@/components/case-studies/CaseStudyMoreWork'
 import CaseStudySnapshotStats from '@/components/case-studies/CaseStudySnapshotStats'
+import CaseStudyTwoProblems from '@/components/case-studies/CaseStudyTwoProblems'
 import CaseStudyVisualHero from '@/components/case-studies/CaseStudyVisualHero'
 import { CaseStudyWorkHighlights } from '@/components/case-studies/CaseStudyWorkHighlights'
 import Footer from '@/components/footer'
@@ -28,6 +29,7 @@ import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { CaseStudySchema } from '@/components/schema-markup'
 import { Card } from '@/components/ui/card'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { getCaseStudyFraming } from '@/lib/case-study-framing'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const SLUG = 'roseville-dental-academy'
@@ -150,6 +152,8 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
     notFound()
   }
 
+  const framing = getCaseStudyFraming(SLUG)
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Navbar />
@@ -173,6 +177,10 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
         />
 
         <CaseStudySnapshotStats facts={facts} />
+
+        {framing ? (
+          <CaseStudyTwoProblems clientName={caseStudy.client} framing={framing} />
+        ) : null}
 
         <Section aria-labelledby="roseville-shift-title" className="pt-16 sm:pt-20">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-14">
