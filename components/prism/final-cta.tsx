@@ -62,7 +62,7 @@ export function FinalCta({
             aria-hidden="true"
             className="grid size-12 place-items-center rounded-2xl border border-white/10 bg-background/60 shadow-[0_0_40px_-8px_oklch(0.66_0.16_258/55%)]"
           >
-            <PrismMark className="size-6" />
+            <PrismMark className="size-8" />
           </span>
           <h2
             id={headingId}
