@@ -70,10 +70,10 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - The header Services menu links the three public services (Website, Content, Ads) plus Dental OS and Prism Infinity; Products stay in the footer and homepage. `/pricing` compares the four packaged offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
+  - The header Services menu links exactly the three services (Websites, Content, Ads) plus "All services"; Products stay in the footer and homepage. `/pricing` compares the same three as offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
   - `/websites` publishes the PRO website offer (no form, no price, waitlist CTAs); `/waitlist` is the only live sales form
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces, as are retired fixed-plan language such as `Website Overhaul` and the retired `BOOK_A_CALL_CTA` / `WEBSITE_START_CTA` constants — `pnpm verify:pricing-consistency` enforces this
-  - `/founder-os` redirects to `/content`; other legacy pricing routes resolve to `/pricing`
+  - `/founder-os` redirects to `/content`; the retired `/dental-os` redirects to `/dental-website` and `/prism-infinity` to `/content`; other legacy pricing routes resolve to `/pricing`
   - `/ads` ships a price-free offer schema pointing at `/ads`; `/seo` and `/local-listings` ship price-free offer schemas pointing at `/pricing`; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
@@ -104,7 +104,7 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the five services in the mobile panel), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the three services and "All services" in the mobile panel), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 

@@ -2,9 +2,8 @@ import {
   ArrowRight,
   Camera,
   Check,
-  Infinity as InfinityIcon,
   LayoutTemplate,
-  Smile,
+  Megaphone,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -33,15 +32,14 @@ export type PricingPlan = {
 
 export const PRICING_PLAN_ICONS: Record<PricingOfferId, LucideIcon> = {
   website: LayoutTemplate,
-  content_os: Camera,
-  dental_os: Smile,
-  prism_infinity: InfinityIcon,
+  content: Camera,
+  ads: Megaphone,
 }
 
 /** shadcn-style plan cards without prices. One featured card carries the beam. */
 export function PricingPlans({ plans }: { plans: readonly PricingPlan[] }) {
   return (
-    <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <ul className="grid gap-4 lg:grid-cols-3">
       {plans.map((plan, index) => {
         const Icon = PRICING_PLAN_ICONS[plan.offerId]
         return (
@@ -70,16 +68,18 @@ export function PricingPlans({ plans }: { plans: readonly PricingPlan[] }) {
                 </div>
 
                 <h3 className="text-heading mt-6 text-foreground">{plan.name}</h3>
-                <p className="mt-2 text-pretty text-sm leading-6 text-muted-foreground xl:min-h-[4.5rem]">
+                <p className="mt-2 text-pretty text-sm leading-6 text-muted-foreground lg:min-h-[4.5rem]">
                   {plan.audience}
                 </p>
 
                 <div className="mt-6 border-t border-white/[0.08] pt-6">
-                  <p className="text-[1.3rem] font-semibold leading-tight tracking-[-0.03em] text-foreground">
+                  {/* Between lg and xl the labels can wrap to two lines; reserve
+                      both so the CTAs stay level across the three cards. */}
+                  <p className="text-[1.3rem] font-semibold leading-tight tracking-[-0.03em] text-foreground lg:max-xl:min-h-[3.25rem]">
                     {plan.priceLabel}
                   </p>
                   {plan.priceSubLabel ? (
-                    <p className="mt-1.5 text-[13px] leading-5 text-subtle xl:min-h-10">
+                    <p className="mt-1.5 text-[13px] leading-5 text-subtle lg:min-h-10">
                       {plan.priceSubLabel}
                     </p>
                   ) : null}

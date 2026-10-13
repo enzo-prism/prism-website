@@ -52,8 +52,8 @@ export default function PricingHero() {
           className="text-lead prism-rise mt-5 max-w-[58ch] text-pretty text-muted-foreground"
           style={rise(160)}
         >
-          Four ways to work with Prism, from one custom website to an endless
-          queue of creative. Every plan starts on the waitlist.
+          A custom website, steady content, and ads built around better
+          leads. Every plan is scoped to you and starts on the waitlist.
         </p>
 
         <div

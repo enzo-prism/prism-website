@@ -264,9 +264,10 @@ export function GlobalSchemaGraph() {
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism',
     ],
-    // Canonical offers so AI/search engines see Prism's core products. Values
-    // come from lib/pricing-model.ts — do not hardcode here. Every offer is
-    // scoped on a call, so all Offer nodes stay price-free by policy.
+    // Prism's three services (Websites, Content, Ads) as canonical offers so
+    // AI/search engines see the core products. Values come from
+    // lib/pricing-model.ts; do not hardcode here. Every offer is scoped from
+    // the waitlist, so all Offer nodes stay price-free by policy.
     makesOffer: [
       {
         '@type': 'Offer',
@@ -277,24 +278,17 @@ export function GlobalSchemaGraph() {
       },
       {
         '@type': 'Offer',
-        name: CANONICAL_PRICING_OFFERS.content_os.name,
-        description: CANONICAL_PRICING_OFFERS.content_os.description,
+        name: CANONICAL_PRICING_OFFERS.content.name,
+        description: CANONICAL_PRICING_OFFERS.content.description,
         availability: 'https://schema.org/InStock',
         url: 'https://www.design-prism.com/content',
       },
       {
         '@type': 'Offer',
-        name: CANONICAL_PRICING_OFFERS.dental_os.name,
-        description: CANONICAL_PRICING_OFFERS.dental_os.description,
+        name: CANONICAL_PRICING_OFFERS.ads.name,
+        description: CANONICAL_PRICING_OFFERS.ads.description,
         availability: 'https://schema.org/InStock',
-        url: 'https://www.design-prism.com/dental-os',
-      },
-      {
-        '@type': 'Offer',
-        name: CANONICAL_PRICING_OFFERS.prism_infinity.name,
-        description: CANONICAL_PRICING_OFFERS.prism_infinity.description,
-        availability: 'https://schema.org/InStock',
-        url: 'https://www.design-prism.com/prism-infinity',
+        url: 'https://www.design-prism.com/ads',
       },
     ],
   }

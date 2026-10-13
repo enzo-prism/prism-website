@@ -52,7 +52,7 @@ for (const width of [1024, 1280, 1440]) {
   })
 }
 
-test('Services menu opens and links every service', async ({
+test('Services menu opens and links exactly the three services', async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -63,17 +63,23 @@ test('Services menu opens and links every service', async ({
   await page.goto('/about')
   const nav = page.getByRole('navigation', { name: 'Main', exact: true })
   await nav.getByRole('button', { name: /services/i }).click()
+  const menu = page.locator('[data-slot="navigation-menu-content"]')
+  await expect(menu).toBeVisible()
+  // Three services, then "All services" and the featured waitlist card.
+  await expect(menu.locator('ul > li a')).toHaveCount(4)
   for (const [name, href] of [
     ['Websites', '/websites'],
     ['Content', '/content'],
     ['Ads', '/ads'],
-    ['Dental OS', '/dental-os'],
-    ['Prism Infinity', '/prism-infinity'],
+    ['All services', '/services'],
   ]) {
     await expect(
-      page.getByRole('link', { name: new RegExp(`^${name}`) }).first(),
+      menu.getByRole('link', { name: new RegExp(`^${name}`) }).first(),
     ).toHaveAttribute('href', href)
   }
+  await expect(
+    page.locator('a[href="/dental-os"], a[href="/prism-infinity"]'),
+  ).toHaveCount(0)
 })
 
 for (const width of [390, 768, 1280]) {

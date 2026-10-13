@@ -79,6 +79,9 @@ describe('SEO indexability guards', () => {
       '/checkout/launch',
       '/checkout/grow',
       '/checkout/scale',
+      // Retired packaged offers (2026-10-12); Prism offers three services.
+      '/dental-os',
+      '/prism-infinity',
     ]
 
     legacyRedirectedPaths.forEach((path) => {
@@ -112,6 +115,8 @@ describe('SEO indexability guards', () => {
       'https://www.design-prism.com/software',
       'https://www.design-prism.com/tiktok',
       'https://www.design-prism.com/website-intake',
+      'https://www.design-prism.com/dental-os',
+      'https://www.design-prism.com/prism-infinity',
       'https://www.design-prism.com/waitlist/thank-you',
       'https://www.design-prism.com/youtube',
     ]

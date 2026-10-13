@@ -22,8 +22,9 @@ export type PrismService = {
 }
 
 /**
- * Public service framing: Prism helps with three things.
- * Packaged offers (Dental OS, Infinity) stay on /pricing, not in the header.
+ * Public service framing: Prism offers exactly three services (2026-10-12).
+ * The same three are the packaged offers on /pricing (lib/pricing-model.ts)
+ * and the header Services menu (NAV_SERVICE_ITEMS in lib/constants.ts).
  * Every primary CTA is the waitlist (Prism is at capacity); the focus param
  * pre-selects the service on /waitlist.
  */

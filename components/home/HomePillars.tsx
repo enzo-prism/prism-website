@@ -3,10 +3,8 @@ import {
   ArrowRight,
   Camera,
   Check,
-  Infinity as InfinityIcon,
   LayoutTemplate,
   Megaphone,
-  Smile,
 } from 'lucide-react'
 
 import { HOMEPAGE_SERVICES } from '@/components/home/homepage-content'
@@ -38,8 +36,6 @@ const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
-  dental: Smile,
-  infinity: InfinityIcon,
 }
 
 const FOCUS_RING =

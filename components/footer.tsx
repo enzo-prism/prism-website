@@ -49,8 +49,6 @@ const footerColumns: FooterColumn[] = [
     links: [
       { label: 'About', href: '/about' },
       { label: 'Pricing', href: '/pricing' },
-      { label: 'Dental OS', href: '/dental-os' },
-      { label: 'Prism Infinity', href: '/prism-infinity' },
       { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Refer a friend ($100)', href: '/refer' },

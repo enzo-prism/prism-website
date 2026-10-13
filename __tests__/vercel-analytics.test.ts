@@ -75,8 +75,8 @@ describe('Vercel analytics URL normalization', () => {
         cta_text: 'website',
         cta_location: 'instagram landing actions',
         platform: 'threads',
-        service: 'infinity',
-        destination: '/prism-infinity',
+        service: 'seo',
+        destination: '/seo',
       }),
     ).toEqual({
       name: 'CTA Clicked',

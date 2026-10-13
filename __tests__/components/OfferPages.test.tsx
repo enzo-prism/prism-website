@@ -1,10 +1,8 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import PricingPageClient from '@/app/pricing/client-page'
-import DentalOsPage from '@/app/dental-os/page'
 import ServicesPage from '@/app/services/page'
 import FAQPage from '@/app/faq/page'
-import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import {
   CANONICAL_PRICING_OFFERS,
   PRICING_OFFER_ORDER,
@@ -77,6 +75,7 @@ jest.mock('@/utils/analytics', () => ({
 }))
 
 const PRICE_PATTERN = /\$\s?\d/
+const RETIRED_OFFER_PATTERN = /dental os|prism infinity/i
 
 describe('/pricing', () => {
   beforeEach(() => jest.mocked(trackLinkInteraction).mockClear())
@@ -94,6 +93,8 @@ describe('/pricing', () => {
     expect(text).toMatch(/Prism is fully booked right now\./)
     expect(text).toMatch(/Join the waitlist to work with us in [A-Z][a-z]+\./)
     expect(text).not.toMatch(PRICE_PATTERN)
+    expect(text).not.toMatch(RETIRED_OFFER_PATTERN)
+    expect(container.innerHTML).not.toMatch(/\/dental-os|\/prism-infinity/)
 
     const care = screen.getByText('What is Website Care?').closest('details') as HTMLElement
     expect(within(care).getByText(/Optional ongoing care/)).toBeInTheDocument()
@@ -104,9 +105,10 @@ describe('/pricing', () => {
 
     const plansHeading = screen.getByRole('heading', {
       level: 2,
-      name: /four ways to work with prism\./i,
+      name: /three ways to work with prism\./i,
     })
     const plans = plansHeading.closest('section') as HTMLElement
+    expect(within(plans).getAllByRole('heading', { level: 3 })).toHaveLength(3)
 
     for (const offerId of PRICING_OFFER_ORDER) {
       const offer = CANONICAL_PRICING_OFFERS[offerId]
@@ -129,6 +131,8 @@ describe('/pricing', () => {
     render(<PricingPageClient />)
 
     const table = screen.getByRole('table')
+    // One "What's included" header plus one column per service.
+    expect(within(table).getAllByRole('columnheader')).toHaveLength(4)
     for (const offerId of PRICING_OFFER_ORDER) {
       expect(
         within(table).getByRole('columnheader', {
@@ -152,37 +156,9 @@ describe('/pricing', () => {
   })
 })
 
-describe('/dental-os', () => {
-  it('leads with the patient promise and source-attributed proof from current clients', () => {
-    const { container } = render(<DentalOsPage />)
-
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /be the easy yes for new patients\./i,
-      }),
-    ).toBeInTheDocument()
-    // The subhead keeps the promise: patients find and contact the practice.
-    expect(
-      screen.getByText(/so patients can find your practice, understand your care, and contact your team\./),
-    ).toBeInTheDocument()
-    expect(screen.getAllByText('+49%').length).toBeGreaterThan(0)
-    expect(screen.getByText(/Source: Google Search Console/)).toBeInTheDocument()
-
-    const html = container.innerHTML.toLowerCase()
-    for (const slug of FORMER_CLIENT_SLUGS) {
-      expect(html).not.toContain(slug)
-    }
-    expect(container.textContent ?? '').not.toMatch(PRICE_PATTERN)
-    for (const link of screen.getAllByRole('link', { name: /join the waitlist/i })) {
-      expect(link).toHaveAttribute('href', '/waitlist')
-    }
-  })
-})
-
 describe('/services', () => {
   it('lists the three services with their waitlist focus links', () => {
-    render(<ServicesPage />)
+    const { container } = render(<ServicesPage />)
 
     expect(
       screen.getByRole('heading', { level: 1, name: /website\. content\. ads\./i }),
@@ -196,6 +172,16 @@ describe('/services', () => {
         screen.getAllByRole('link', { name: new RegExp(service.homeCta, 'i') })[0],
       ).toHaveAttribute('href', service.href)
     }
+    expect(PRISM_SERVICES.map((service) => service.href)).toEqual([
+      '/websites',
+      '/content',
+      '/ads',
+    ])
+    expect(
+      screen.getByRole('link', { name: /compare all three on pricing/i }),
+    ).toHaveAttribute('href', '/pricing')
+    expect(container.textContent ?? '').not.toMatch(RETIRED_OFFER_PATTERN)
+    expect(container.innerHTML).not.toMatch(/\/dental-os|\/prism-infinity/)
   })
 })
 

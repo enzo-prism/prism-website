@@ -64,8 +64,7 @@ async function expectOpenMenuGeometry(page: Page) {
     'Websites',
     'Content',
     'Ads',
-    'Dental OS',
-    'Prism Infinity',
+    'All services',
     'Join the waitlist',
   ])
   for (const [name, href] of [
@@ -73,6 +72,10 @@ async function expectOpenMenuGeometry(page: Page) {
     ['Wall of Love', '/wall-of-love'],
     ['About', '/about'],
     ['Pricing', '/pricing'],
+    ['Websites', '/websites'],
+    ['Content', '/content'],
+    ['Ads', '/ads'],
+    ['All services', '/services'],
     ['Join the waitlist', '/waitlist'],
   ]) {
     await expect(

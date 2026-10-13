@@ -110,12 +110,18 @@ images: {
       { source: '/aeo', destination: '/waitlist', permanent: true },
       { source: '/book-a-shoot', destination: '/waitlist', permanent: true },
       { source: '/ai', destination: '/waitlist', permanent: true },
-      // Content is the public service page. Content OS remains the packaged
-      // offer name on /pricing. Founder OS stays retired.
+      // Content is the public service page and the offer name on /pricing.
+      // Founder OS stays retired.
       { source: '/content-os', destination: '/content', permanent: true },
       { source: '/founder-os', destination: '/content', permanent: true },
       { source: '/founder-os/apply', destination: '/content', permanent: true },
       { source: '/website', destination: '/websites', permanent: true },
+      // Three services only (2026-10-12): Websites, Content, Ads. The two
+      // retired packaged offers had no subpaths. The dental offer lands on the
+      // dental website lander (indexable, waitlist CTA with focus=website);
+      // the creative subscription lands on Content.
+      { source: '/dental-os', destination: '/dental-website', permanent: true },
+      { source: '/prism-infinity', destination: '/content', permanent: true },
       // Specific legacy mappings
       { source: '/dr-chris-wong', destination: '/case-studies/dr-christopher-wong', permanent: true },
       { source: '/our-work/chris-wong-case-study', destination: '/case-studies/dr-christopher-wong', permanent: true },

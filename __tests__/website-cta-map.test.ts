@@ -56,8 +56,6 @@ describe('waitlist CTA map', () => {
       'app/websites/page.tsx',
       'app/content/page.tsx',
       'app/ads/page.tsx',
-      'app/dental-os/page.tsx',
-      'app/prism-infinity/page.tsx',
       'app/dental-website/page.tsx',
       'lib/services.ts',
       'lib/pricing-model.ts',

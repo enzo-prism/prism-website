@@ -170,7 +170,8 @@ feels out of reach; the site shows Prism making it temporary: the client's
     reduced-motion visitors)
   - `WaitlistStatus` (live dot, "Fully booked", next intake month)
   - `WaitlistButton` (the primary CTA, tracked)
-  - `PrismLogo` / `PrismMark`
+  - `PrismLogo` / `PrismMark` (the official logo artwork from
+    `/brand/prism-mark.png`, never redrawn)
   - `FinalCta` (the closing waitlist band on every core route)
   - `BrowserFrame` (window chrome around real client screenshots)
   - `ClientLogo` / `ClientLogoRail` (real client logos from
@@ -236,8 +237,11 @@ feels out of reach; the site shows Prism making it temporary: the client's
 Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
 logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
 About, Pricing), then the white "Join the waitlist" pill with the live dot.
+The Services menu lists exactly three services (Websites, Content, Ads) with
+icon tiles, an "All services" link, and the featured waitlist card.
 Mobile keeps the portaled full-height panel with focus, Escape, scroll-lock
-and inert handling.
+and inert handling; its services sit in a 2x2 grid (the three services plus
+"All services").
 
 ### Hero
 
@@ -248,6 +252,19 @@ sets the tagline in `text-hero` on two lines ("impossible is" in
 (`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
 appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
+
+### Prism logo
+
+The mark is the official 2024 logo: a white chevron with a magenta fringe on
+its right edges and a cyan fringe at the base, on black. Every on-site mark
+renders that artwork (`public/brand/prism-mark.png`, the logo file with the
+black keyed to transparency) through `PrismMark`, so the colors match the
+original exactly on any dark surface. The header and footer lockup
+(`PrismLogo`) sets it in a black rounded tile, the way the logo square
+reads, beside the "Prism" wordmark in Geist. Do not redraw, recolor, or
+trace the mark; the favicons (`favicon-rounded.png`, `favicon-large.png`,
+`favicon-small.png`, `favicon.ico`) are the same artwork on black, scaled so
+the chevron fills about two thirds of the square.
 
 ### Client logos
 

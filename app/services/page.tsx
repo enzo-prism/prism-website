@@ -5,10 +5,8 @@ import {
   ArrowUpRight,
   Camera,
   Check,
-  Infinity as InfinityIcon,
   LayoutTemplate,
   Megaphone,
-  Smile,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -26,9 +24,7 @@ import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
 import { WAITLIST_CTA } from '@/lib/waitlist'
@@ -42,11 +38,18 @@ const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
 }
 
 // Navigation-style labels for the three services ("Websites", matching the
-// header's Services menu; "the PRO website" is the product line).
+// header's Services menu and the offer names on /pricing).
 const SERVICE_LABELS: Record<PrismServiceId, string> = {
   website: 'Websites',
   content: 'Content',
   ads: 'Ads',
+}
+
+// Schema.org serviceType for each of the three services.
+const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
+  website: 'Website design and development',
+  content: 'Content and social media marketing',
+  ads: 'Paid advertising management',
 }
 
 /** Card titles: lowercase, no closing period ("a site that makes choosing you easy"). */
@@ -71,25 +74,8 @@ const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
   ],
 }
 
-// The packaged offers that bundle the services (canonical copy lives in
-// lib/pricing-model.ts; no public prices).
-const PACKAGED_OFFERS = [
-  {
-    offer: CANONICAL_PRICING_OFFERS.dental_os,
-    icon: Smile,
-    badge: 'For dental practices',
-    featured: false,
-  },
-  {
-    offer: CANONICAL_PRICING_OFFERS.prism_infinity,
-    icon: InfinityIcon,
-    badge: 'Unlimited requests',
-    featured: true,
-  },
-] as const
-
 type CoreService = {
-  /** Schema name (Title Case). */
+  /** Stable list key (Title Case). */
   name: string
   /** Card title shown on the page (lowercase, sentence style). */
   title: string
@@ -99,8 +85,8 @@ type CoreService = {
   learnMoreLinks?: { label: string; href: string }[]
 }
 
-// How the supporting work fits around the three services. Also feeds the
-// ServiceSchema entries below.
+// How the supporting work fits around the three services. (The ServiceSchema
+// entries below describe the three services themselves.)
 const coreServices: CoreService[] = [
   {
     name: 'Websites & Experience Design',
@@ -298,7 +284,7 @@ const faqItems = [
   {
     question: 'What does an engagement look like month to month?',
     answer:
-      'It depends on the offer. A website is one project with optional care after launch. Content OS, Dental OS, and Prism Infinity are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
+      'It depends on the service. A website is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
   },
   {
     question: 'How do I start?',
@@ -306,12 +292,6 @@ const faqItems = [
       'Join the waitlist. Prism is fully booked, so new work starts in monthly intakes, and waitlist members get first pick.',
   },
 ] as const
-
-const slugify = (value: string) =>
-  value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '')
 
 const rise = (delay: number) =>
   ({ '--rise-delay': `${delay}ms` }) as CSSProperties
@@ -426,14 +406,28 @@ export default function ServicesPage() {
 
         {/* The three services */}
         <Section aria-labelledby="services-core-heading" className="pt-0 sm:pt-0">
-          <Reveal>
-            <SectionHeader
-              id="services-core-heading"
-              eyebrow="Three services"
-              title="one team for the whole path to a customer."
-              titleClassName="max-w-[17ch]"
-            />
-          </Reveal>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <Reveal>
+              <SectionHeader
+                id="services-core-heading"
+                eyebrow="Three services"
+                title="one team for the whole path to a customer."
+                titleClassName="max-w-[17ch]"
+              />
+            </Reveal>
+            <TrackedLink
+              href="/pricing"
+              label="compare all three on pricing"
+              location="services core"
+              className={`${inlineLinkClassName} lg:mb-3`}
+            >
+              Compare all three on pricing
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
+              />
+            </TrackedLink>
+          </div>
           <ul className="mt-12 grid gap-4 lg:grid-cols-3">
             {PRISM_SERVICES.map((service, index) => {
               const Icon = SERVICE_ICONS[service.id]
@@ -493,78 +487,6 @@ export default function ServicesPage() {
                 </li>
               )
             })}
-          </ul>
-        </Section>
-
-        {/* Packaged offers */}
-        <Section aria-labelledby="services-offers-heading" className="pt-0 sm:pt-0">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <Reveal>
-              <SectionHeader
-                id="services-offers-heading"
-                eyebrow="Packaged offers"
-                title="or take it all as one plan."
-                titleClassName="max-w-[14ch]"
-              />
-            </Reveal>
-            <TrackedLink
-              href="/pricing"
-              label="compare all four offers"
-              location="services packaged offers"
-              className={`${inlineLinkClassName} lg:mb-3`}
-            >
-              Compare all four offers on pricing
-              <ArrowRight
-                aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
-              />
-            </TrackedLink>
-          </div>
-          <ul className="mt-12 grid gap-4 md:grid-cols-2">
-            {PACKAGED_OFFERS.map(({ offer, icon: Icon, badge, featured }, index) => (
-              <li key={offer.offerId} className="min-w-0">
-                <Reveal delay={index * 90} className="h-full">
-                  <SpotlightCard
-                    beam={featured}
-                    className={featured ? 'flex h-full flex-col overflow-visible bg-popover p-7 sm:p-10' : 'flex h-full flex-col p-7 sm:p-10'}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <OfferIconTile>
-                        <Icon aria-hidden="true" className="size-[18px]" />
-                      </OfferIconTile>
-                      <Badge variant="outline">{badge}</Badge>
-                    </div>
-                    <h3 className="text-title mt-10 text-foreground">{offer.name}</h3>
-                    <p className="mt-2 text-sm text-subtle">{offer.priceLabel}</p>
-                    <p className="mt-5 max-w-[52ch] text-pretty text-[15px] leading-7 text-muted-foreground">
-                      {offer.description}
-                    </p>
-                    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-9">
-                      <WaitlistButton
-                        location={`services packaged · ${offer.name}`}
-                        href={offer.primaryCta.href}
-                        label={offer.primaryCta.label}
-                        variant={featured ? 'default' : 'outline'}
-                      />
-                      {offer.secondaryCta ? (
-                        <TrackedLink
-                          href={offer.secondaryCta.href}
-                          label={offer.secondaryCta.label.toLowerCase()}
-                          location={`services packaged · ${offer.name}`}
-                          className={inlineLinkClassName}
-                        >
-                          {offer.secondaryCta.label}
-                          <ArrowRight
-                            aria-hidden="true"
-                            className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
-                          />
-                        </TrackedLink>
-                      ) : null}
-                    </div>
-                  </SpotlightCard>
-                </Reveal>
-              </li>
-            ))}
           </ul>
         </Section>
 
@@ -767,13 +689,13 @@ export default function ServicesPage() {
         />
       </main>
       <Footer />
-      {coreServices.map((service) => (
+      {PRISM_SERVICES.map((service) => (
         <ServiceSchema
-          key={`service-schema-${slugify(service.name)}`}
-          serviceId={slugify(service.name)}
-          name={service.name}
-          description={service.summary}
-          serviceType={service.name}
+          key={`service-schema-${service.id}`}
+          serviceId={`services-${service.id}`}
+          name={SERVICE_LABELS[service.id]}
+          description={service.description}
+          serviceType={SERVICE_SCHEMA_TYPES[service.id]}
           areaServed="United States"
         />
       ))}

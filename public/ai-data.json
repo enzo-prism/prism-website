@@ -14,23 +14,18 @@
   },
   "offers": [
     {
-      "name": "PRO Website",
+      "name": "Websites",
       "url": "https://www.design-prism.com/websites",
       "pricing": "Custom, scoped after a waitlist application is reviewed"
     },
     {
-      "name": "Content OS",
+      "name": "Content",
       "url": "https://www.design-prism.com/content",
       "pricing": "Custom, scoped after a waitlist application is reviewed"
     },
     {
-      "name": "Dental OS",
-      "url": "https://www.design-prism.com/dental-os",
-      "pricing": "Custom, scoped after a waitlist application is reviewed"
-    },
-    {
-      "name": "Prism Infinity",
-      "url": "https://www.design-prism.com/prism-infinity",
+      "name": "Ads",
+      "url": "https://www.design-prism.com/ads",
       "pricing": "Custom, scoped after a waitlist application is reviewed"
     }
   ],

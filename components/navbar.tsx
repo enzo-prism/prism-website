@@ -9,10 +9,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   Camera,
-  Infinity as InfinityIcon,
   LayoutTemplate,
   Megaphone,
-  Smile,
 } from 'lucide-react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
@@ -45,8 +43,6 @@ const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
-  dental: Smile,
-  infinity: InfinityIcon,
 }
 
 function getCaseStudyBreadcrumbs(
@@ -124,18 +120,20 @@ function ServicesMenu({
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <div className="grid w-[min(92vw,640px)] grid-cols-[1.35fr_1fr] gap-2 p-1.5">
-          <ul className="grid gap-1">
+          {/* The three services are equal tiles that share the featured
+              card's height; "All services" keeps its natural height. */}
+          <ul className="flex flex-col gap-1.5">
             {NAV_SERVICE_ITEMS.map((item) => {
               const Icon = SERVICE_ICONS[item.icon]
               return (
-                <li key={item.href}>
+                <li key={item.href} className="flex-1">
                   <NavigationMenuLink asChild>
                     <Link
                       href={item.href}
                       onClick={() => onNavigate(item.label, item.href)}
-                      className="group/item flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-white/[0.05]"
+                      className="group/item flex h-full items-center gap-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-colors hover:border-white/[0.14] hover:bg-white/[0.05]"
                     >
-                      <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-foreground transition-colors group-hover/item:border-white/20">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-foreground transition-colors group-hover/item:border-white/20">
                         <Icon className="size-4" aria-hidden="true" />
                       </span>
                       <span className="flex min-w-0 flex-col gap-0.5">
@@ -430,6 +428,20 @@ export default function Navbar() {
               </li>
             )
           })}
+          {/* Three services plus "All services" keep the grid an even 2x2. */}
+          <li>
+            <Link
+              href="/services"
+              onClick={() => handleNavigate('All services', '/services')}
+              className="group/all flex min-h-12 items-center justify-between gap-2.5 rounded-xl border border-white/[0.08] px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
+            >
+              All services
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover/all:translate-x-0.5"
+              />
+            </Link>
+          </li>
         </ul>
 
         <div className="mt-auto pt-10">

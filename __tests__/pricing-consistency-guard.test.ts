@@ -36,7 +36,7 @@ describe('pricing consistency guard', () => {
   it('flags retired public prices for the call-first offers on strict surfaces', () => {
     const violations = collectPricingConsistencyViolations(
       'app/pricing/client-page.tsx',
-      'Content OS is $5,000 then $1,000/month, Prism Infinity is $2,000/month.',
+      'Content was $5,000 then $1,000/month, the creative subscription was $2,000/month.',
     )
 
     expect(violations.map((violation) => violation.label)).toEqual(
@@ -79,6 +79,42 @@ describe('pricing consistency guard', () => {
         expect.stringContaining('$100/month'),
       ]),
     )
+  })
+
+  it('flags the retired packaged offers on strict surfaces but allows redirect sources', () => {
+    const labels = collectPricingConsistencyViolations(
+      'app/pricing/client-page.tsx',
+      [
+        "name: 'Dental OS',",
+        "title: 'Prism Infinity',",
+        "href: '/dental-os',",
+        "url: 'https://www.design-prism.com/prism-infinity',",
+      ].join('\n'),
+    ).map((violation) => violation.label)
+
+    expect(labels).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('Dental OS retired offer name'),
+        expect.stringContaining('Prism Infinity retired offer name'),
+        expect.stringContaining('retired offer route'),
+      ]),
+    )
+    expect(
+      labels.filter((label) => label.includes('retired offer route')),
+    ).toHaveLength(2)
+
+    expect(
+      collectPricingConsistencyViolations(
+        'next.config.mjs',
+        "{ source: '/dental-os', destination: '/dental-website', permanent: true },\n{ source: '/prism-infinity', destination: '/content', permanent: true },",
+      ),
+    ).toEqual([])
+    expect(
+      collectPricingConsistencyViolations(
+        'next.config.mjs',
+        "{ source: '/old', destination: '/dental-os', permanent: true },",
+      ).map((violation) => violation.label),
+    ).toEqual([expect.stringContaining('retired offer route')])
   })
 
   it('accepts contextual non-core prices when context labels are present', () => {

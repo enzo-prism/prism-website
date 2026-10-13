@@ -1,10 +1,12 @@
 # Redirect Report
 
-> **Historical report (March 2026).** Pricing has since moved to the four packaged
-> offers modeled in `lib/pricing-model.ts` (Website, Content OS, Dental OS, Prism
-> Infinity; no public prices, waitlist-only since 2026-09-14) — see README/AGENTS. The redirect tables below remain accurate; the
-> pricing-policy notes and validation steps reflect the retired ladder and are kept
-> only as a record of that migration.
+> **Historical report (March 2026).** Pricing has since moved to the three offers
+> modeled in `lib/pricing-model.ts`, one per service (Websites, Content, Ads; no
+> public prices, waitlist-only since 2026-09-14) — see README/AGENTS. On
+> 2026-10-12 the retired Dental OS and Prism Infinity offers began redirecting:
+> `/dental-os` → `/dental-website` and `/prism-infinity` → `/content` (308). The
+> redirect tables below remain accurate; the pricing-policy notes and validation
+> steps reflect the retired ladder and are kept only as a record of that migration.
 
 ## Pricing Unification Redirects (March 2026)
 

@@ -176,7 +176,7 @@ const faqs = [
   {
     question: 'how much does a dental practice website cost?',
     answer:
-      'It depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. A dental website is scoped as a PRO Website or as part of Dental OS. Prism is fully booked, so we agree on scope when we reach out from the waitlist.',
+      'It depends on scope: number of locations, services, integrations, content needs, and whether you’re migrating from an old provider. A dental website is scoped as a Prism website, and content or ads can be added when the practice is ready. Prism is fully booked, so we agree on scope when we reach out from the waitlist.',
   },
   {
     question: 'can you integrate specialty services like ortho or implants?',

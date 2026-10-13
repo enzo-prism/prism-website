@@ -9,8 +9,6 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/services',
   '/websites',
   '/content',
-  '/dental-os',
-  '/prism-infinity',
   '/ads',
   '/chatgpt-ads',
   '/local-listings',

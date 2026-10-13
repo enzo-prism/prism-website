@@ -54,13 +54,23 @@ describe('GlobalSchemaGraph', () => {
       ]),
     )
 
-    expect(organization.makesOffer).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          name: 'Dental OS',
-          url: 'https://www.design-prism.com/dental-os',
-        }),
+    // Exactly the three services, price-free.
+    expect(
+      organization.makesOffer.map((offer: { name: string; url: string }) => [
+        offer.name,
+        offer.url,
       ]),
+    ).toEqual([
+      ['Websites', 'https://www.design-prism.com/websites'],
+      ['Content', 'https://www.design-prism.com/content'],
+      ['Ads', 'https://www.design-prism.com/ads'],
+    ])
+    for (const offer of organization.makesOffer) {
+      expect(offer.price).toBeUndefined()
+      expect(offer.priceSpecification).toBeUndefined()
+    }
+    expect(JSON.stringify(nodes)).not.toMatch(
+      /dental os|prism infinity|\/dental-os|\/prism-infinity/i,
     )
     expect(localBusiness).toBeUndefined()
   })

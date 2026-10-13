@@ -41,7 +41,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 
 const CANONICAL_URL = 'https://www.design-prism.com/content'
-const CONTENT_OS_OFFER = CANONICAL_PRICING_OFFERS.content_os
+const CONTENT_OFFER = CANONICAL_PRICING_OFFERS.content
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Content',
@@ -395,11 +395,11 @@ export default function ContentOsPage() {
       <ServiceSchema
         serviceId="content"
         name="Prism Content"
-        description={CONTENT_OS_OFFER.description}
+        description={CONTENT_OFFER.description}
         serviceType="Content and social media marketing"
         areaServed="United States"
         offerDetails={{
-          name: CONTENT_OS_OFFER.name,
+          name: CONTENT_OFFER.name,
           description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Prism is fully booked; scope is agreed when we reach out from the waitlist.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',

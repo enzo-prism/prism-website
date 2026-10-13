@@ -8,6 +8,7 @@ import {
 } from '@testing-library/react'
 
 import Navbar from '@/components/navbar'
+import { NAV_SERVICE_ITEMS } from '@/lib/constants'
 
 const mockUsePathname = jest.fn()
 
@@ -139,6 +140,16 @@ describe('Navbar', () => {
     ).toBeInTheDocument()
   })
 
+  it('offers exactly three services: Websites, Content, and Ads', () => {
+    expect(
+      NAV_SERVICE_ITEMS.map((item) => [item.label, item.href, item.icon]),
+    ).toEqual([
+      ['Websites', '/websites', 'website'],
+      ['Content', '/content', 'content'],
+      ['Ads', '/ads', 'ads'],
+    ])
+  })
+
   it('puts the waitlist CTA beside the menu, never a booking CTA', () => {
     mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
@@ -214,8 +225,7 @@ describe('Navbar', () => {
       '/websites',
       '/content',
       '/ads',
-      '/dental-os',
-      '/prism-infinity',
+      '/services',
       '/waitlist',
     ])
     expect(

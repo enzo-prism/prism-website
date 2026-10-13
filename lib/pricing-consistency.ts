@@ -27,8 +27,6 @@ export const PRICING_STRICT_FILES = [
   'components/home/homepage-content.ts',
   'components/prism/final-cta.tsx',
   'app/content/page.tsx',
-  'app/dental-os/page.tsx',
-  'app/prism-infinity/page.tsx',
   'app/dental-website/page.tsx',
   'app/waitlist/page.tsx',
   'lib/services.ts',
@@ -111,7 +109,7 @@ export const LEGACY_PRICING_TOKEN_RULES: PricingTokenRule[] = [
     pattern: /\$1,000\/month\b/i,
   },
   {
-    label: '$2,000/month retired public Prism Infinity price',
+    label: '$2,000/month retired public creative subscription price',
     pattern: /\$2,000\/month\b/i,
   },
   {
@@ -154,6 +152,22 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
 }
 
 /**
+ * Three services only (2026-10-12): Websites, Content, and Ads are the only
+ * offers. The two retired packaged offers must not be named, linked, or used
+ * as a redirect destination on pricing-sensitive surfaces. Redirect *sources*
+ * in next.config.mjs may name the old routes.
+ */
+export const RETIRED_OFFER_TOKEN_RULES: PricingTokenRule[] = [
+  { label: 'Dental OS retired offer name', pattern: /\bDental OS\b/i },
+  { label: 'Prism Infinity retired offer name', pattern: /\bPrism Infinity\b/i },
+  {
+    label: 'retired offer route used as a link or destination',
+    pattern:
+      /(?:href|destination|url)\s*[=:]\s*[{"'`]+(?:https:\/\/www\.design-prism\.com)?\/(?:dental-os|prism-infinity)\b/,
+  },
+]
+
+/**
  * Waitlist funnel (2026-09-14): booking a call is no longer a public primary
  * action. These tokens must not reappear on pricing-sensitive surfaces.
  */
@@ -184,7 +198,11 @@ export function collectPricingConsistencyViolations(
     : false
 
   const tokenRules = isStrictFile
-    ? [...LEGACY_PRICING_TOKEN_RULES, ...RETIRED_CTA_TOKEN_RULES]
+    ? [
+        ...LEGACY_PRICING_TOKEN_RULES,
+        ...RETIRED_CTA_TOKEN_RULES,
+        ...RETIRED_OFFER_TOKEN_RULES,
+      ]
     : LEGACY_PRICING_TOKEN_RULES
 
   if (isStrictFile || contextChecks) {

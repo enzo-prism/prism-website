@@ -261,7 +261,7 @@ const AI_IMPACT: PrismImpactConfig = {
       href: "/pricing",
       kind: "internal",
       reason:
-        "Compare the Website, Content OS, Dental OS, and Prism Infinity offers.",
+        "Compare the Websites, Content, and Ads offers.",
     },
     {
       label: WAITLIST_CTA.label,
@@ -388,7 +388,7 @@ const DARK_FACTORY_OVERRIDE: PrismImpactConfig = {
       href: "/pricing",
       kind: "internal",
       reason:
-        "Compare the Website, Content OS, Dental OS, and Prism Infinity offers.",
+        "Compare the Websites, Content, and Ads offers.",
     },
     {
       label: "AI agents",

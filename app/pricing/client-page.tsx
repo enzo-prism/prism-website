@@ -3,8 +3,8 @@ import {
   ArrowUpRight,
   Camera,
   Hammer,
-  Infinity as InfinityIcon,
   ListPlus,
+  Megaphone,
   MessagesSquare,
   Wrench,
 } from 'lucide-react'
@@ -26,10 +26,10 @@ import TrackedLink from '@/components/tracked-link'
 import { Badge } from '@/components/ui/badge'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import {
+  ADS_PRICE_LABEL,
   CANONICAL_PRICING_OFFERS,
-  CONTENT_OS_PRICE_LABEL,
+  CONTENT_PRICE_LABEL,
   PRICING_OFFER_ORDER,
-  PRISM_INFINITY_PRICE_LABEL,
   type PricingOfferId,
 } from '@/lib/pricing-model'
 
@@ -63,13 +63,15 @@ const growthPathSteps = [
 ] as const
 
 // Who each plan is for and what it includes. Copy stays inside what
-// lib/pricing-model.ts and the offer pages already promise.
+// lib/pricing-model.ts and the service pages (/websites, /content, /ads)
+// already promise.
 const PLAN_DETAILS: Record<
   PricingOfferId,
   Pick<PricingPlan, 'badge' | 'audience' | 'includes' | 'featured'>
 > = {
   website: {
     badge: 'Custom build',
+    featured: true,
     audience: 'For businesses whose website should make choosing them easy.',
     includes: [
       'Custom design and development',
@@ -80,7 +82,7 @@ const PLAN_DETAILS: Record<
       'The finished site is yours',
     ],
   },
-  content_os: {
+  content: {
     badge: 'Ongoing',
     audience:
       'For owners who want to show up every week without running content themselves.',
@@ -92,33 +94,21 @@ const PLAN_DETAILS: Record<
       'Three-month setup, then ongoing production',
     ],
   },
-  dental_os: {
-    badge: 'Dental practices',
+  ads: {
+    badge: 'Paid campaigns',
     audience:
-      'For dental practices that want more patients to find, trust, and contact them.',
+      'For businesses that want ads aimed at calls, inquiries, and booked appointments.',
     includes: [
-      'Practice website',
-      'SEO and AI search',
-      'Google Maps and local listings',
-      'Review requests and response support',
-      'Google and Meta ads with call and inquiry tracking',
-    ],
-  },
-  prism_infinity: {
-    badge: 'Unlimited requests',
-    featured: true,
-    audience: 'For teams with a steady stream of creative work to ship.',
-    includes: [
-      'Landing pages and websites',
-      'Ad creative and video edits',
-      'Photoshoots and content',
-      'Unlimited requests, one active at a time',
-      'Pause or cancel anytime',
+      'Google, Meta, TikTok, and Yelp campaigns',
+      'Ad creative: images, video, and copy',
+      'A clear landing page after the click',
+      'Call, form, and booking tracking',
+      'Weekly tuning and plain-English reports',
     ],
   },
 }
 
-// The four productized offers as plan cards. (Identifier kept for the
+// The three offers (one per service) as plan cards. (Identifier kept for the
 // pricing-consistency required-snippet guard.)
 const pricingSnapshot: PricingPlan[] = PRICING_OFFER_ORDER.map((offerId) => {
   const offer = CANONICAL_PRICING_OFFERS[offerId]
@@ -138,54 +128,48 @@ const comparisonRows: ComparisonRow[] = [
     label: 'Custom website with search foundations',
     values: {
       website: true,
-      content_os: false,
-      dental_os: true,
-      prism_infinity: 'New sites and updates',
+      content: false,
+      ads: false,
     },
   },
   {
     label: 'Video, social, and website content',
     values: {
       website: false,
-      content_os: true,
-      dental_os: false,
-      prism_infinity: true,
+      content: true,
+      ads: 'Ad creative',
     },
   },
   {
-    label: 'Google Maps and local listings',
+    label: 'Google, Meta, TikTok, and Yelp campaigns',
     values: {
       website: false,
-      content_os: false,
-      dental_os: true,
-      prism_infinity: false,
+      content: false,
+      ads: true,
     },
   },
   {
-    label: 'Review requests and responses',
+    label: 'Pages that lead to an inquiry',
     values: {
-      website: false,
-      content_os: false,
-      dental_os: true,
-      prism_infinity: false,
+      website: 'Service pages and inquiry forms',
+      content: 'Landing pages and articles',
+      ads: 'A clear page after the click',
     },
   },
   {
-    label: 'Ads',
+    label: 'How results are reviewed',
     values: {
-      website: false,
-      content_os: false,
-      dental_os: 'Google and Meta campaigns',
-      prism_infinity: 'Ad creative',
+      website: 'Analytics set up at launch',
+      content: 'Monthly review of what worked',
+      ads: 'Weekly, with call and form tracking',
     },
   },
   {
     label: 'How it runs',
     values: {
       website: 'One project, optional care after launch',
-      content_os: 'Three-month setup, then month-to-month',
-      dental_os: 'Ongoing, scoped to each practice',
-      prism_infinity: 'Monthly, pause or cancel anytime',
+      content: 'Three-month setup, then month-to-month',
+      ads: 'Launch, then weekly tuning',
     },
   },
 ]
@@ -202,20 +186,20 @@ const partnerLevels = [
       'Hosting, updates, and ongoing edits for your Prism website once it is live. Optional, and only after delivery.',
   },
   {
-    title: 'Content OS',
-    price: CONTENT_OS_PRICE_LABEL,
+    title: 'Content',
+    price: CONTENT_PRICE_LABEL,
     icon: Camera,
     href: '/content',
     description:
       'A plan for consistent content across your website and selected social channels. We handle production, publishing, and ongoing improvements.',
   },
   {
-    title: 'Prism Infinity',
-    price: PRISM_INFINITY_PRICE_LABEL,
-    icon: InfinityIcon,
-    href: '/prism-infinity',
+    title: 'Ads',
+    price: ADS_PRICE_LABEL,
+    icon: Megaphone,
+    href: '/ads',
     description:
-      'Ongoing landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime.',
+      'Campaigns reviewed every week: spend moves toward what works, the next test goes live, and you get the results in plain English.',
   },
 ] as const
 
@@ -243,7 +227,7 @@ const faqs = [
       'Prism is fully booked right now, so every engagement starts on the waitlist. For each monthly intake we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
   },
   {
-    question: 'What does the PRO website include?',
+    question: 'What does a Prism website include?',
     answer:
       'Custom design, engineering, analytics, and foundations for Google and AI search. We agree on the pages, features, and integrations with you before building. The finished site is yours.',
   },
@@ -253,19 +237,19 @@ const faqs = [
       'Optional ongoing care: hosting, updates, and ongoing edits after your site is live. It is scoped with your build, added only once the site is delivered, and you can cancel anytime.',
   },
   {
-    question: 'How does Content OS pricing work?',
+    question: 'How is Content priced?',
     answer:
       'Pricing reflects the content, channels, and production your business needs. Join the waitlist and we will scope the setup and ongoing work together when we reach out.',
   },
   {
-    question: 'What is Prism Infinity?',
+    question: 'How are Ads priced?',
     answer:
-      'A monthly subscription for landing pages, ad creative, websites, video, and photoshoots, delivered one request at a time. Pause or cancel anytime. Join the waitlist and we will scope your plan when your intake opens.',
+      'The work is scoped when we reach out from the waitlist, based on your channels and goals. Your ad budget is set separately: we recommend a starting budget by channel and market size, and spend scales only when performance supports it.',
   },
   {
-    question: 'How is Dental OS priced?',
+    question: 'Do you work with dental practices?',
     answer:
-      'Dental OS brings together your practice website, search visibility, Google Maps, reviews, and ads. We scope the work around your practice goals once we reach out from the waitlist.',
+      'Yes. Dental is one of our deepest specialties. Practices work with Prism through the same three services: a practice website, content, and ads, scoped to their locations and goals.',
   },
 ] as const
 
@@ -283,7 +267,7 @@ export default function PricingPageClient() {
         <SectionHeader
           id="pricing-offers-heading"
           eyebrow="The plans"
-          title="four ways to work with Prism."
+          title="three ways to work with Prism."
           titleClassName="max-w-none"
         />
         <div className="mt-10">
@@ -432,7 +416,7 @@ export default function PricingPageClient() {
               id="pricing-support-heading"
               eyebrow="Ongoing systems"
               title="support after launch."
-              description="Keep your website maintained, your content consistent, or your next project moving."
+              description="Keep your website maintained, your content consistent, and your campaigns tuned."
               titleClassName="max-w-[12ch]"
             />
           </Reveal>
@@ -514,9 +498,7 @@ export default function PricingPageClient() {
 }
 
 function PricingStructuredData() {
-  const website = CANONICAL_PRICING_OFFERS.website
-  const contentOs = CANONICAL_PRICING_OFFERS.content_os
-  const infinity = CANONICAL_PRICING_OFFERS.prism_infinity
+  const { website, content, ads } = CANONICAL_PRICING_OFFERS
 
   return (
     <>
@@ -535,31 +517,31 @@ function PricingStructuredData() {
         }}
       />
       <ServiceSchema
-        serviceId="pricing-content-os"
-        name={contentOs.name}
-        description={contentOs.description}
-        serviceType="Content and advertising automation"
+        serviceId="pricing-content"
+        name={content.name}
+        description={content.description}
+        serviceType="Content and social media marketing"
         areaServed="United States"
         offerDetails={{
-          name: contentOs.name,
-          description: contentOs.description,
+          name: content.name,
+          description: content.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
           url: 'https://www.design-prism.com/content',
         }}
       />
       <ServiceSchema
-        serviceId="pricing-prism-infinity"
-        name={infinity.name}
-        description={infinity.description}
-        serviceType="Creative and growth subscription"
+        serviceId="pricing-ads"
+        name={ads.name}
+        description={ads.description}
+        serviceType="Paid advertising management"
         areaServed="United States"
         offerDetails={{
-          name: infinity.name,
-          description: infinity.description,
+          name: ads.name,
+          description: ads.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/InStock',
-          url: 'https://www.design-prism.com/prism-infinity',
+          url: 'https://www.design-prism.com/ads',
         }}
       />
       <FAQSchema

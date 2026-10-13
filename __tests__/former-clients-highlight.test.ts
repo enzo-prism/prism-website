@@ -25,7 +25,6 @@ const FEATURED_FILES = [
   'app/websites/page.tsx',
   'app/pricing/client-page.tsx',
   'app/services/page.tsx',
-  'app/dental-os/page.tsx',
   'app/dental-website/page.tsx',
   'app/models/client-page.tsx',
   'lib/website-projects.ts',

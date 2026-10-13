@@ -1,10 +1,9 @@
 import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from './waitlist'
 
-export type PricingOfferId =
-  | 'website'
-  | 'content_os'
-  | 'dental_os'
-  | 'prism_infinity'
+// Prism sells exactly three services, and each one is a packaged offer on
+// /pricing with the same plain name (2026-10-12). Ids match PrismServiceId in
+// lib/services.ts.
+export type PricingOfferId = 'website' | 'content' | 'ads'
 
 export type PricingBillingPeriod =
   | 'ONE_TIME'
@@ -50,9 +49,8 @@ export type PricingOffer = {
 // The price slot shows each offer's engagement shape instead, using only
 // facts the offer pages already state.
 export const WEBSITE_PRICE_LABEL = 'One project, scoped to you'
-export const CONTENT_OS_PRICE_LABEL = '3-month setup, then monthly'
-export const DENTAL_OS_PRICE_LABEL = 'Built around your practice'
-export const PRISM_INFINITY_PRICE_LABEL = 'Monthly. Pause or cancel anytime.'
+export const CONTENT_PRICE_LABEL = '3-month setup, then monthly'
+export const ADS_PRICE_LABEL = 'Launch, then weekly tuning'
 
 /** Service-specific waitlist entry points (prefill the focus checkboxes). */
 export const WEBSITE_WAITLIST_CTA = {
@@ -80,78 +78,56 @@ export const PRICING_SECONDARY_CTA = {
 export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
   website: {
     offerId: 'website',
-    name: 'Website',
+    name: 'Websites',
     price: 0,
     priceCurrency: 'USD',
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: WEBSITE_PRICE_LABEL,
-    priceSubLabel: 'The PRO website, with optional care after launch',
+    priceSubLabel: 'Custom build, with optional care after launch',
     description:
       'A custom website with clear service pages, mobile-friendly design, inquiry forms, and analytics. Built to help customers understand your business and take the next step.',
     primaryCta: WEBSITE_WAITLIST_CTA,
     secondaryCta: {
-      label: 'Explore the PRO website',
+      label: 'Explore websites',
       href: '/websites',
     },
   },
-  content_os: {
-    offerId: 'content_os',
-    name: 'Content OS',
+  content: {
+    offerId: 'content',
+    name: 'Content',
     price: 0,
     priceCurrency: 'USD',
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
-    priceLabel: CONTENT_OS_PRICE_LABEL,
+    priceLabel: CONTENT_PRICE_LABEL,
     priceSubLabel: 'Month-to-month after the setup',
     description:
       'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
     primaryCta: CONTENT_WAITLIST_CTA,
     secondaryCta: {
-      label: 'Explore Content',
+      label: 'Explore content',
       href: '/content',
     },
   },
-  dental_os: {
-    offerId: 'dental_os',
-    name: 'Dental OS',
+  ads: {
+    offerId: 'ads',
+    name: 'Ads',
     price: 0,
     priceCurrency: 'USD',
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
-    priceLabel: DENTAL_OS_PRICE_LABEL,
-    priceSubLabel: 'Scoped to your locations and goals',
+    priceLabel: ADS_PRICE_LABEL,
+    priceSubLabel: 'Ad budget set by channel and market',
     description:
-      'Website, search, Google Maps, review support, and ads coordinated for your practice. Help patients understand your care and make it easier to call or request an appointment.',
-    primaryCta: WAITLIST_CTA,
+      'Google, Meta, TikTok, and Yelp campaigns with ad creative, landing pages, and call and inquiry tracking. We launch with a focused budget, tune it every week, and report results in plain English.',
+    primaryCta: ADS_WAITLIST_CTA,
     secondaryCta: {
-      label: 'Explore Dental OS',
-      href: '/dental-os',
-    },
-  },
-  prism_infinity: {
-    offerId: 'prism_infinity',
-    name: 'Prism Infinity',
-    price: 0,
-    priceCurrency: 'USD',
-    billingPeriod: 'CUSTOM',
-    priceKind: 'custom',
-    priceLabel: PRISM_INFINITY_PRICE_LABEL,
-    priceSubLabel: 'One active request at a time',
-    description:
-      'One monthly subscription for landing pages, ad creative, websites, video, photoshoots, and content. Add unlimited requests to your queue; we work through them one at a time. Pause or cancel anytime.',
-    primaryCta: WAITLIST_CTA,
-    secondaryCta: {
-      label: 'Explore Prism Infinity',
-      href: '/prism-infinity',
+      label: 'Explore ads',
+      href: '/ads',
     },
   },
 }
 
 /** Offers in the order they should appear across pricing surfaces. */
-export const PRICING_OFFER_ORDER: PricingOfferId[] = [
-  'website',
-  'content_os',
-  'dental_os',
-  'prism_infinity',
-]
+export const PRICING_OFFER_ORDER: PricingOfferId[] = ['website', 'content', 'ads']

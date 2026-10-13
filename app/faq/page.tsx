@@ -83,7 +83,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'Do you provide ongoing support?',
         answer:
-          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content OS supports ongoing content work, and Prism Infinity handles a queue of creative and growth requests, one at a time. We scope the right plan with you.',
+          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content covers ongoing content work, and Ads covers ongoing campaign management with weekly tuning. We scope the right plan with you.',
       },
     ],
   },

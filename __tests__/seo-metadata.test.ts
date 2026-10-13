@@ -73,7 +73,7 @@ describe("SEO metadata rules", () => {
   })
 
   it("does not repeat the brand in brand-led titles", () => {
-    expect(buildAbsoluteTitle("Prism Infinity")).toBe("Prism Infinity")
+    expect(buildAbsoluteTitle("Prism Proof")).toBe("Prism Proof")
     expect(buildAbsoluteTitle("Prism")).toBe("Prism")
   })
 
