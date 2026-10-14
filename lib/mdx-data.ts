@@ -371,9 +371,43 @@ export type GetAllPostsOptions = {
   includeNoindex?: boolean
 }
 
+type AllPostsResult = Array<{ slug: string } & BlogFrontmatter> | null
+
+// Blog content ships inside the deployment bundle (content/blog/**), so in
+// production it cannot change between requests on a warm instance. Cache the
+// parsed frontmatter list instead of re-reading and re-parsing every .mdx
+// file on every /blog, sitemap, feed, and latest-posts request. Development
+// stays uncached so content edits keep hot-reloading. Callers receive a
+// shallow copy of the array so their sorting/slicing can never mutate the
+// cached list.
+const allPostsCache = new Map<boolean, Promise<AllPostsResult>>()
+
 export async function getAllPosts(
   options: GetAllPostsOptions = {},
-): Promise<Array<{ slug: string } & BlogFrontmatter> | null> {
+): Promise<AllPostsResult> {
+  if (process.env.NODE_ENV !== 'production') {
+    return loadAllPosts(options)
+  }
+
+  const includeNoindex = Boolean(options.includeNoindex)
+  let pending = allPostsCache.get(includeNoindex)
+  if (!pending) {
+    pending = loadAllPosts(options)
+    allPostsCache.set(includeNoindex, pending)
+  }
+
+  const posts = await pending
+  if (!posts) {
+    // Never pin a transient read failure for the life of the instance.
+    allPostsCache.delete(includeNoindex)
+    return posts
+  }
+  return [...posts]
+}
+
+async function loadAllPosts(
+  options: GetAllPostsOptions = {},
+): Promise<AllPostsResult> {
   try {
     const files = await fs.readdir(BLOG_PATH)
     const mdxFiles = files.filter((fileName) => fileName.endsWith('.mdx'))

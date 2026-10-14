@@ -18,10 +18,10 @@ typescript: {
     root: configRoot,
   },
   experimental: {
-    // Next already tree-shakes lucide-react / recharts / date-fns by default.
-    // Add the heavy barrels it does NOT cover so per-route bundles only pull the
-    // pieces they use (framer-motion is imported across ~40 files).
-    optimizePackageImports: ['framer-motion'],
+    // Next already tree-shakes lucide-react / date-fns by default. List the
+    // heavy barrels explicitly so per-route bundles only pull the pieces
+    // they use.
+    optimizePackageImports: ['framer-motion', 'recharts'],
   },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],
@@ -31,7 +31,11 @@ outputFileTracingIncludes: {
 },
 // Enhanced image optimization configuration
 images: {
-  formats: ['image/webp', 'image/avif'], // Enable modern image formats
+  // AVIF first: at the same quality settings it is typically ~20% smaller
+  // than WebP, and every current browser that matters for this audience
+  // negotiates it via Accept. Browsers without AVIF still get WebP, then the
+  // original format. Order only; quality values and sizes are unchanged.
+  formats: ['image/avif', 'image/webp'], // Enable modern image formats
   qualities: [75, 90],
   deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840], // Responsive breakpoints
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Icon sizes
@@ -79,6 +83,25 @@ images: {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+          },
+        ],
+      },
+      {
+        // Static media served from /public (photos, posters, videos) that is
+        // NOT covered by the immutable rule below. Files here are
+        // occasionally overwritten under the same filename, so a year-long
+        // immutable cache could pin stale art; instead cache for an hour and
+        // serve stale-while-revalidate for a day. Repeat visitors skip the
+        // per-image 304 round trips the platform default (max-age=0) forces,
+        // while a same-name overwrite self-heals within an hour. This rule
+        // comes first so the directory-specific immutable rule below
+        // overrides it where both match.
+        source:
+          '/:path*.(png|jpg|jpeg|webp|avif|gif|svg|mp4|webm|mp3|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
           },
         ],
       },

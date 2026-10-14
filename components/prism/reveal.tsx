@@ -19,6 +19,39 @@ type RevealProps = {
   as?: ElementType
 }
 
+// Every Reveal instance uses the same observer options, so one shared
+// IntersectionObserver can drive them all. (Pages render hundreds of
+// Reveals; an observer per instance wastes memory and main-thread time
+// without changing when anything is revealed.)
+const REVEAL_OBSERVER_OPTIONS: IntersectionObserverInit = {
+  rootMargin: '0px 0px -8% 0px',
+  threshold: 0.08,
+}
+
+let sharedObserver: IntersectionObserver | null = null
+const sharedCallbacks = new WeakMap<Element, () => void>()
+
+function observeReveal(node: Element, onIntersect: () => void) {
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue
+        sharedCallbacks.get(entry.target)?.()
+        sharedCallbacks.delete(entry.target)
+        sharedObserver?.unobserve(entry.target)
+      }
+    }, REVEAL_OBSERVER_OPTIONS)
+  }
+
+  sharedCallbacks.set(node, onIntersect)
+  sharedObserver.observe(node)
+
+  return () => {
+    sharedCallbacks.delete(node)
+    sharedObserver?.unobserve(node)
+  }
+}
+
 /**
  * Scroll reveal for redesigned routes. Server HTML is the finished frame:
  * nothing is hidden until hydration, and only elements that start below the
@@ -44,17 +77,7 @@ export function Reveal({
     if (node.getBoundingClientRect().top < window.innerHeight * 0.92) return
 
     setState('hidden')
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setState('shown')
-          observer.disconnect()
-        }
-      },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
-    )
-    observer.observe(node)
-    return () => observer.disconnect()
+    return observeReveal(node, () => setState('shown'))
   }, [])
 
   return (
