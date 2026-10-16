@@ -36,13 +36,13 @@ Each MDX file must define:
 
 The current blog index and article layout are text-first: the article does not render a hero image from frontmatter. Place explanatory artwork inline in the MDX with `<figure>`, an `<img>` carrying descriptive alt text, explicit width/height, `loading="lazy"`, and `decoding="async"`, and a `<figcaption>`. Store optimized assets under `public/images/blog/<topic>/`. The globally registered `<YouTubeVideoEmbed videoId="..." title="..." />` needs no import and can be the final body element for a video-led article. For a complete example, see `content/blog/build-ai-business-system-you-own.mdx`. Legacy image consumers still use the shared featured-image fallback.
 
-Social previews default to `public/prism-opengraph.png` for both Open Graph and Twitter. A post can explicitly opt into custom 1200×630 artwork with `socialImage` and descriptive `socialImageAlt` frontmatter. Legacy `image`, `openGraph.images`, and `twitter.images` fields do not change that default.
+Social previews resolve per post: explicit `socialImage` (with descriptive `socialImageAlt`) wins, then the first usable authored `openGraph.images` entry, then the featured `image` when it is a real per-post asset rather than the shared fallback, and finally `public/prism-opengraph.png`. Local files must exist under `public/`, entries pointing at the deleted `/api/og/blog/...` route are skipped as dead, and external image URLs are used as-is. Custom artwork should be 1200×630.
 
 `lib/mdx.tsx` automatically derives `categorySlug` from the `category` label by lowercasing and replacing non-alphanumeric characters with hyphens. Stick to meaningful labels; the slug keeps filters URL-safe.
 
-Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` use `socialImage` when supplied and otherwise `/prism-opengraph.png`. The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
+Open Graph and Twitter metadata in `app/blog/[slug]/page.tsx` share the resolved social image described above (`socialImage` → authored `openGraph.images` → featured `image` → `/prism-opengraph.png`). The date-based `getBlogOpenGraphImage()` helper remains only for legacy callers and does not control page metadata.
 
-The old `app/api/og/blog/[slug]` image route was deleted on 2026-10-07: no page referenced it, and it exposed `next/og` `ImageResponse` publicly. Legacy `openGraph.images` entries pointing at `/api/og/blog/...` in post frontmatter are ignored (blog metadata always overrides them). `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
+The old `app/api/og/blog/[slug]` image route was deleted on 2026-10-07: no page referenced it, and it exposed `next/og` `ImageResponse` publicly. Legacy `openGraph.images` entries pointing at `/api/og/blog/...` in post frontmatter are skipped during social-image resolution because that route no longer exists. `/api/latest-posts` revalidates hourly, and the homepage uses that normal cache.
 
 `components/blog/copy-blog-markdown-button.tsx` powers the header "Copy markdown" action on blog post routes (`/blog/[slug]`). It fetches the raw MDX source from `app/api/blog/[slug]/markdown/route.ts` on demand, then copies the full post (frontmatter + body) for use in AI tools without inflating initial page payloads.
 

@@ -53,12 +53,14 @@ describe('mdx helpers', () => {
     expect(ogImage).toBe('https://www.design-prism.com/blog/brand-strategy.png')
   })
 
-  test('generateMetadata sets the site-wide OG image for every post date', async () => {
-    const oldPostMetadata = await generateMetadata({
+  test('generateMetadata skips dead /api/og/blog images and falls back to the site-wide OG image', async () => {
+    // This post's only authored OG image points at the deleted
+    // /api/og/blog route, and its featured image is the shared fallback.
+    const metadata = await generateMetadata({
       params: Promise.resolve({ slug: 'how-to-choose-local-seo-agency' }),
     })
 
-    expect(oldPostMetadata.openGraph?.images).toEqual([
+    expect(metadata.openGraph?.images).toEqual([
       {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
@@ -66,12 +68,43 @@ describe('mdx helpers', () => {
         alt: DEFAULT_OG_IMAGE_ALT,
       },
     ])
+  })
 
-    const newPostMetadata = await generateMetadata({
+  test('generateMetadata honors authored external openGraph images without rewriting the host', async () => {
+    const metadata = await generateMetadata({
       params: Promise.resolve({ slug: 'openclaw-manus-codex-scaling-business' }),
     })
 
-    expect(newPostMetadata.openGraph?.images).toEqual([
+    expect(metadata.openGraph?.images).toEqual([
+      {
+        url: 'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1770782009/Skier_xzs8az.png',
+        width: 1200,
+        height: 630,
+        alt: 'Modern website infrastructure tooling',
+      },
+    ])
+  })
+
+  test('generateMetadata prefers explicit socialImage over authored images', async () => {
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ slug: '10-ways-dgx-spark-improve-online-business' }),
+    })
+
+    expect(metadata.openGraph?.images).toEqual([
+      expect.objectContaining({
+        url: 'https://www.design-prism.com/images/blog/dgx-spark/opengraph-local-ai-v1.jpg',
+      }),
+    ])
+  })
+
+  test('generateMetadata falls back when the authored local OG file is missing', async () => {
+    // The swamp post declares /blog/dental-practice-swamp.png, which does
+    // not exist under public/, and uses the shared featured fallback.
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ slug: 'dental-practice-1-3m-swamp' }),
+    })
+
+    expect(metadata.openGraph?.images).toEqual([
       {
         url: DEFAULT_OG_IMAGE,
         width: 1200,

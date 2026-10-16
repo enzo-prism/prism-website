@@ -1,7 +1,11 @@
+import { access } from 'node:fs/promises'
+import path from 'node:path'
+
 import BlogPostLayout from '@/components/blog-post-layout'
 import type { BlogCardPost } from '@/components/blog/blog-post-cards'
 import { estimateReadingMinutes } from '@/components/blog/blog-utils'
 import { getBlogFilterFromCategory } from '@/lib/blog-topic-filters'
+import { DEFAULT_BLOG_FEATURED_IMAGE } from '@/lib/blog-images'
 import { getAllPosts, getPost } from '@/lib/mdx-data'
 import { getMdxToc } from '@/lib/mdx-toc'
 import { canonicalUrl } from '@/lib/canonical'
@@ -73,6 +77,102 @@ async function getRelatedPosts(slug: string, category: string): Promise<BlogCard
   return [...sameTopic, ...others].slice(0, 3)
 }
 
+type SocialImageCandidate = {
+  url: string
+  width?: number
+  height?: number
+  alt?: string
+}
+
+const normalizeSocialImageCandidate = (
+  entry: unknown,
+): SocialImageCandidate | null => {
+  if (typeof entry === 'string') {
+    const url = entry.trim()
+    return url ? { url } : null
+  }
+  if (!entry || typeof entry !== 'object') return null
+  const raw = entry as Record<string, unknown>
+  if (typeof raw.url !== 'string' || !raw.url.trim()) return null
+  return {
+    url: raw.url.trim(),
+    width: typeof raw.width === 'number' ? raw.width : undefined,
+    height: typeof raw.height === 'number' ? raw.height : undefined,
+    alt: typeof raw.alt === 'string' ? raw.alt : undefined,
+  }
+}
+
+async function publicFileExists(localPath: string): Promise<boolean> {
+  const clean = localPath.split(/[?#]/, 1)[0].replace(/^\/+/, '')
+  if (!clean || clean.split('/').includes('..')) return false
+  try {
+    await access(path.join(process.cwd(), 'public', clean))
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Social image precedence: explicit `socialImage`, then authored
+ * `openGraph.images`, then the featured `image` when it is a real per-post
+ * asset (not the shared fallback), then the site-wide default. Local files
+ * must exist under public/; entries pointing at the deleted
+ * /api/og/blog route are dead and skipped. External URLs pass through
+ * untouched because canonicalUrl() rewrites any host to the site host.
+ */
+async function resolveSocialImage(frontmatter: {
+  socialImage?: string
+  socialImageAlt?: string
+  title?: string
+  image?: string
+  openGraph?: Record<string, any>
+}): Promise<{ url: string; width: number; height: number; alt: string }> {
+  const candidates: SocialImageCandidate[] = []
+
+  const explicit = normalizeSocialImageCandidate(frontmatter.socialImage)
+  if (explicit) candidates.push({ ...explicit, alt: frontmatter.socialImageAlt })
+
+  const authored = Array.isArray(frontmatter.openGraph?.images)
+    ? frontmatter.openGraph.images
+    : []
+  for (const entry of authored) {
+    const candidate = normalizeSocialImageCandidate(entry)
+    if (candidate) candidates.push(candidate)
+  }
+
+  if (frontmatter.image && frontmatter.image !== DEFAULT_BLOG_FEATURED_IMAGE) {
+    candidates.push({ url: frontmatter.image })
+  }
+
+  for (const candidate of candidates) {
+    if (/^https?:\/\//i.test(candidate.url)) {
+      return {
+        url: candidate.url,
+        width: candidate.width ?? 1200,
+        height: candidate.height ?? 630,
+        alt: candidate.alt || frontmatter.title || DEFAULT_OG_IMAGE_ALT,
+      }
+    }
+    if (!candidate.url.startsWith('/')) continue
+    if (candidate.url.startsWith('/api/og/blog/')) continue
+    if (!(await publicFileExists(candidate.url))) continue
+    return {
+      url: canonicalUrl(candidate.url),
+      width: candidate.width ?? 1200,
+      height: candidate.height ?? 630,
+      alt: candidate.alt || frontmatter.title || DEFAULT_OG_IMAGE_ALT,
+    }
+  }
+
+  return {
+    url: DEFAULT_OG_IMAGE,
+    width: 1200,
+    height: 630,
+    alt: DEFAULT_OG_IMAGE_ALT,
+  }
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -81,17 +181,7 @@ export async function generateMetadata({
   if (!post) notFound()
   const { frontmatter } = post
 
-  const socialImage = frontmatter.socialImage
-    ? canonicalUrl(frontmatter.socialImage)
-    : DEFAULT_OG_IMAGE
-  const ogImages = [
-    {
-      url: socialImage,
-      width: 1200,
-      height: 630,
-      alt: frontmatter.socialImageAlt || DEFAULT_OG_IMAGE_ALT,
-    },
-  ]
+  const ogImages = [await resolveSocialImage(frontmatter)]
   const twitterImages = ogImages
 
   const canonical = canonicalUrl(frontmatter.canonical || `/blog/${slug}`)
