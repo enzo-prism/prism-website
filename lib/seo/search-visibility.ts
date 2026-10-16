@@ -112,7 +112,6 @@ export const INDEXABLE_BLOG_SLUGS = [
   'claude-opus-4-8-what-it-means-for-small-business-owners',
   'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',
-  'dental-practice-1-3m-swamp',
   'dental-practice-rank-higher-google-search',
   'dental-seo-guide',
   'dental-website-cost-guide-2026',
@@ -154,6 +153,13 @@ export const INDEXABLE_BLOG_SLUGS = [
   'who-prism-is-for',
   'winning-ai-search-game',
 ] as const
+
+/**
+ * Machine-readable files that llms.txt may reference for answer engines.
+ * Deliberately separate from INDEXABLE_STATIC_ROUTES: these are not HTML
+ * pages, must never enter the sitemap, and carry no indexing meaning.
+ */
+export const LLMS_MACHINE_READABLE_PATHS = ['/ai-data.json'] as const
 
 const INDEXABLE_STATIC_ROUTE_SET = new Set<string>(INDEXABLE_STATIC_ROUTES)
 const NOINDEX_ROUTE_SET = new Set<string>(NOINDEX_ROUTES)
