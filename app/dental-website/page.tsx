@@ -670,7 +670,7 @@ export default function DentalWebsitePage() {
           description:
             'Dental practice website design, copy, and development built to earn trust, load fast, and support long-term local visibility. Prism is fully booked; scope is agreed when we reach out from the waitlist.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/pricing',
         }}
       />

@@ -402,7 +402,7 @@ export default function ContentOsPage() {
           name: CONTENT_OFFER.name,
           description: `A content system that plans, produces, and publishes across your social channels and your website. Implemented over 3 months, then optimized every month. Prism is fully booked; scope is agreed when we reach out from the waitlist.`,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: CANONICAL_URL,
         }}
       />

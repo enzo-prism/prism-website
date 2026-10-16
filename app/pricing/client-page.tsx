@@ -512,7 +512,7 @@ function PricingStructuredData() {
           name: website.name,
           description: website.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/websites',
         }}
       />
@@ -526,7 +526,7 @@ function PricingStructuredData() {
           name: content.name,
           description: content.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/content',
         }}
       />
@@ -540,7 +540,7 @@ function PricingStructuredData() {
           name: ads.name,
           description: ads.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/ads',
         }}
       />

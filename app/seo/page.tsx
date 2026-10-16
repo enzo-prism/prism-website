@@ -622,7 +622,7 @@ export default async function SeoPage() {
           description:
             "On-page structure, off-page authority, content, and tracking delivered under Prism's productized offers.",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          availability: "https://schema.org/InStock",
+          availability: "https://schema.org/LimitedAvailability",
           url: "https://www.design-prism.com/pricing",
         }}
       />

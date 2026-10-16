@@ -495,7 +495,7 @@ export default function WebsitesPage() {
           description:
             'A custom website with clear copy, mobile-friendly pages, inquiry forms, analytics, and search foundations. Scoped to your business when we reach out from the waitlist.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: CANONICAL_URL,
         }}
       />

@@ -463,7 +463,7 @@ export default async function ChatGptAdsPage({
           description:
             'Prism-managed ChatGPT ads strategy and setup for eligible advertisers, scoped on a 30-minute call. OpenAI separately controls platform access and approval. No public price.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/pricing',
         }}
       />

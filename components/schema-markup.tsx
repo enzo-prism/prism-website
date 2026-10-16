@@ -266,28 +266,29 @@ export function GlobalSchemaGraph() {
     ],
     // Prism's three services (Websites, Content, Ads) as canonical offers so
     // AI/search engines see the core products. Values come from
-    // lib/pricing-model.ts; do not hardcode here. Every offer is scoped from
-    // the waitlist, so all Offer nodes stay price-free by policy.
+    // lib/pricing-model.ts; do not hardcode here. Prism is at capacity and
+    // every offer is scoped from the waitlist, so availability stays
+    // LimitedAvailability and all Offer nodes stay price-free by policy.
     makesOffer: [
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.website.name,
         description: CANONICAL_PRICING_OFFERS.website.description,
-        availability: 'https://schema.org/InStock',
+        availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/websites',
       },
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.content.name,
         description: CANONICAL_PRICING_OFFERS.content.description,
-        availability: 'https://schema.org/InStock',
+        availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/content',
       },
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.ads.name,
         description: CANONICAL_PRICING_OFFERS.ads.description,
-        availability: 'https://schema.org/InStock',
+        availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/ads',
       },
     ],
