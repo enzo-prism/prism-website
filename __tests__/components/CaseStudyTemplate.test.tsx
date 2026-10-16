@@ -54,7 +54,7 @@ beforeAll(() => {
 })
 
 function moreWorkHrefs() {
-  const region = screen.getByRole('region', { name: 'more sites we built.' })
+  const region = screen.getByRole('region', { name: 'more businesses. same two problems.' })
   return within(region)
     .getAllByRole('link')
     .map((link) => link.getAttribute('href'))
@@ -186,6 +186,35 @@ describe('case study template', () => {
       expect(container.querySelector('blockquote')).toBeNull()
     },
   )
+
+  it('frames the client with the same two problems, before the story', () => {
+    render(<MinimalCaseStudyPage slug="belize-kids-foundation" />)
+
+    const section = screen.getByRole('region', {
+      name: 'different market. same two problems.',
+    })
+    for (const name of ['be found.', 'be chosen.']) {
+      expect(within(section).getByRole('heading', { level: 3, name })).toBeInTheDocument()
+    }
+    // The verified search metric is the receipt under "be found."
+    const metric = CASE_STUDIES.find((study) => study.slug === 'belize-kids-foundation')!
+      .structured!.results![0]
+    expect(section.textContent).toContain(metric.value)
+    expect(section.textContent).toContain(metric.sourceName!)
+
+    const story = screen.getByRole('heading', { level: 3, name: 'the challenge.' })
+    expect(
+      section.compareDocumentPosition(story) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
+
+  it('does not frame former clients as proof', () => {
+    render(<MinimalCaseStudyPage slug="saorsa-growth-partners" />)
+
+    expect(
+      screen.queryByRole('region', { name: 'different market. same two problems.' }),
+    ).not.toBeInTheDocument()
+  })
 
   it('renders the published story as challenge, approach, and result', () => {
     render(<MinimalCaseStudyPage slug="belize-kids-foundation" />)
