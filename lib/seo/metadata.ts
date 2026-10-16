@@ -40,6 +40,22 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
     description,
     alternates: {
       canonical,
+      // Indexable routes advertise the machine-readable company/proof
+      // snapshot so AI answer engines can ingest entity facts directly.
+      // (Page-level alternates replace the root layout's, so this must
+      // live here to survive on routes built with this helper.)
+      ...(index
+        ? {
+            types: {
+              "application/json": [
+                {
+                  url: "/ai-data.json",
+                  title: "Prism company and proof data (JSON)",
+                },
+              ],
+            },
+          }
+        : {}),
     },
     openGraph: {
       title,

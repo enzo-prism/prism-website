@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import {
+  LLMS_MACHINE_READABLE_PATHS,
   isBlogPostIndexable,
   isRouteIndexable,
 } from '@/lib/seo/search-visibility'
@@ -64,6 +65,12 @@ describe('llms.txt', () => {
       const { pathname } = new URL(url)
       if (pathname.startsWith('/blog/')) {
         expect(isBlogPostIndexable(pathname.replace('/blog/', ''))).toBe(true)
+      } else if (
+        (LLMS_MACHINE_READABLE_PATHS as readonly string[]).includes(pathname)
+      ) {
+        // Machine-readable snapshots (e.g. /ai-data.json) are agent
+        // references, not indexable pages or sitemap entries.
+        continue
       } else {
         expect(isRouteIndexable(url)).toBe(true)
       }

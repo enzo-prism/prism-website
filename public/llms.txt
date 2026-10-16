@@ -28,6 +28,7 @@ Important notes for LLMs and agents:
 - [Pricing](https://www.design-prism.com/pricing)
 - [Join the waitlist](https://www.design-prism.com/waitlist)
 - [FAQ](https://www.design-prism.com/faq)
+- [Machine-readable company and proof snapshot (JSON)](https://www.design-prism.com/ai-data.json)
 
 ## Growth services and dental specialties
 
