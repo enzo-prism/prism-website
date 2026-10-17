@@ -217,6 +217,13 @@ feels out of reach; the site shows Prism making it temporary: the client's
   skill), short, and end with a period. Proper nouns keep their capitals.
   Body copy uses normal sentence case.
 - Balance display headlines (`text-balance`), `text-pretty` for body.
+- Gradient text fills (`text-gradient`, `text-spectrum`, `text-refract`,
+  `prism-glint`) reserve `0.12em` of bottom paint clearance on the colored
+  element itself. Geist descenders extend beyond the tight line boxes;
+  parent padding and `overflow: visible` cannot extend a clipped background.
+  The homepage's two block fills offset that padding with equal negative
+  bottom margins to preserve the tagline's baseline rhythm. Keep the
+  existing type scale and line heights.
 
 ## Layout
 

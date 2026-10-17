@@ -5,7 +5,7 @@ const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`
 
 export default defineConfig({
   testDir: "__tests__/visual",
-  testMatch: ["locked-routes.spec.ts"],
+  testMatch: ["locked-routes.spec.ts", "heading-descenders.spec.ts"],
   fullyParallel: true,
   timeout: 60_000,
   // Absorb the occasional CI-only mobile navigation timeout without hiding

@@ -623,6 +623,24 @@ select {
   color: var(--subtle-foreground);
 }
 
+/* Background-clipped text only paints inside its own box, even with visible
+   overflow. Geist's descenders extend below our tight display line boxes.
+   Keep this outside @layer utilities so fixed pb-1/pb-2 spacing cannot shrink
+   the font-relative paint clearance at large sizes. Inline fills gain paint
+   area without changing line height. */
+.text-gradient,
+.text-spectrum,
+.text-refract,
+.prism-glint {
+  padding-bottom: 0.12em;
+}
+
+/* Give each hero fill its own paint clearance while preserving the original
+   baseline spacing and the parent heading's existing bottom gap. */
+#home-hero-title > span {
+  margin-bottom: -0.12em;
+}
+
 /* White-to-mist fill for display headlines. */
 @utility text-gradient {
   background-image: linear-gradient(

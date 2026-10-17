@@ -49,6 +49,7 @@
     "test:visual:update": "pnpm build && playwright test --update-snapshots",
     "test:mobile-navbar": "pnpm build && PLAYWRIGHT_PORT=3330 pnpm exec playwright test -c playwright.mobile-navbar.config.ts",
     "test:visual:animations": "pnpm build && PLAYWRIGHT_PORT=3320 pnpm exec playwright test -c playwright.animations.config.ts",
+    "test:visual:headings": "pnpm build && PLAYWRIGHT_PORT=3340 pnpm exec playwright test -c playwright.headings.config.ts",
     "test:visual:locked": "pnpm build && PLAYWRIGHT_PORT=3300 pnpm exec playwright test -c playwright.locked.config.ts",
     "test:visual:locked:update": "pnpm build && PLAYWRIGHT_PORT=3300 pnpm exec playwright test -c playwright.locked.config.ts --update-snapshots",
     "test:performance:smoke": "node scripts/performance-smoke.mjs",
