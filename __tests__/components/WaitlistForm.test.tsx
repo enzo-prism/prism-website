@@ -133,6 +133,12 @@ describe('WaitlistForm (stepped flow)', () => {
       expect(checkbox.closest('label')).toBeInTheDocument()
     }
     expect(screen.getByRole('checkbox', { name: 'Content' })).toBeChecked()
+    // AEO leads the list, then the other services, then "Not sure yet".
+    expect(
+      screen
+        .getAllByRole('checkbox')
+        .map((checkbox) => checkbox.getAttribute('value')),
+    ).toEqual(['aeo', 'website', 'content', 'ads', 'not-sure'])
     // "Not sure yet" sits after the services with its own one-liner.
     const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
     expect(notSure).toHaveAttribute('value', 'not-sure')
