@@ -318,6 +318,7 @@ Quick reference for the pages we edit most often.
 ## About (`app/about/client-page.tsx`)
 
 - Structure (2026-10-12, components in `components/about/*`): `AboutHero` (`Eyebrow`, H1 "built by Enzo Sison.", `WaitlistButton`, `ScrollToTimelineButton` → `#timeline`, the external profile link, headshot, `PrismMark`), `AboutManifesto`, `OlympicJourney` (`#olympic-journey`), `Section#timeline` with `components/scrolling-timeline.tsx`, `WhatPrismBuilds` (`lib/services.ts`), and `FinalCta` ("build the next chapter with us."), plus Breadcrumb and Person schemas. Timeline thumbnails share one 4:3 `object-cover` frame; no third-party logos that could imply endorsement (the Olympic Committee logo was replaced with a neutral tile). `/about` is a locked route (h1 guard + screenshot).
+- The About hero describes Enzo’s Apple work through CarPlay, GymKit, AirPlay, HomeKit, and Find My. Keep internship status, position titles, and team names out of that hero description.
 - The Olympic journey carousel (`components/pole-vault-carousel.tsx`) uses local Vimeo poster images, deferred SDK loading, accessible playback/retry controls, and pauses offscreen. Autoplay is optional; reduced-motion and data-saving visitors start playback explicitly.
 - Scroll reveals use `components/prism/reveal.tsx`, so server-rendered content remains visible without JavaScript or IntersectionObserver.
 
