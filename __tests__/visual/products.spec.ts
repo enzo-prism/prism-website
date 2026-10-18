@@ -65,13 +65,18 @@ test('Services menu opens and links exactly the four services', async ({
   await nav.getByRole('button', { name: /services/i }).click()
   const menu = page.locator('[data-slot="navigation-menu-content"]')
   await expect(menu).toBeVisible()
-  // Four services, then "All services" and the featured waitlist card.
+  // Four services (AEO leads), then "All services" and the featured
+  // waitlist card.
   await expect(menu.locator('ul > li a')).toHaveCount(5)
+  await expect(menu.locator('ul > li a').first()).toHaveAttribute(
+    'href',
+    '/aeo',
+  )
   for (const [name, href] of [
+    ['AEO', '/aeo'],
     ['Websites', '/websites'],
     ['Content', '/content'],
     ['Ads', '/ads'],
-    ['AEO', '/aeo'],
     ['All services', '/services'],
   ]) {
     await expect(

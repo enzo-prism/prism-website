@@ -144,5 +144,15 @@ export const NAV_SERVICE_ITEMS: NavServiceItem[] = [
   },
 ]
 
+/**
+ * The header Services menu (desktop dropdown and mobile panel) leads with
+ * AEO (2026-10-18). Other surfaces, like the homepage pill row, keep the
+ * catalog order above.
+ */
+export const NAV_MENU_SERVICE_ITEMS: NavServiceItem[] = [
+  ...NAV_SERVICE_ITEMS.filter((item) => item.icon === 'aeo'),
+  ...NAV_SERVICE_ITEMS.filter((item) => item.icon !== 'aeo'),
+]
+
 /** @deprecated Contact lives in the footer. Kept for any leftover imports. */
 export const CONTACT_NAV_ITEM: NavItem = { label: 'contact', href: '/contact' }

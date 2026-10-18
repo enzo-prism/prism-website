@@ -244,11 +244,11 @@ feels out of reach; the site shows Prism making it temporary: the client's
 Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
 logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
 About, Pricing), then the white "Join the waitlist" pill with the live dot.
-The Services menu lists exactly four services (Websites, Content, Ads, AEO)
-with icon tiles, an "All services" link, and the featured waitlist card.
-Mobile keeps the portaled full-height panel with focus, Escape, scroll-lock
-and inert handling; its four services sit in a 2x2 grid with "All services"
-spanning a full row beneath.
+The Services menu lists exactly four services, AEO first (AEO, Websites,
+Content, Ads), with icon tiles, an "All services" link, and the featured
+waitlist card. Mobile keeps the portaled full-height panel with focus,
+Escape, scroll-lock and inert handling; its four services sit in a 2x2 grid
+in the same order, with "All services" spanning a full row beneath.
 
 ### Hero
 
