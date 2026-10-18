@@ -47,7 +47,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'What makes Prism different?',
         answer:
-          'We bring website design, engineering, content, and ads together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
+          'We bring website design, engineering, content, ads, and AEO together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
       },
       {
         question: 'Do you work with small businesses?',
@@ -62,7 +62,12 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'How do your marketing services work together?',
         answer:
-          'Your website explains the offer, content helps people understand and trust your business, and ads bring it to a relevant audience. We help you decide which part needs attention first and what to measure.',
+          'Your website explains the offer, content helps people understand and trust your business, ads bring it to a relevant audience, and AEO helps AI assistants find and cite you. We help you decide which part needs attention first and what to measure.',
+      },
+      {
+        question: 'Can Prism help my business show up in ChatGPT and AI search?',
+        answer:
+          'Yes. AEO, or answer engine optimization, is one of Prism’s four services. We check which customer questions you appear in across ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity, fix what those engines can read about you, and re-check every month. No one can guarantee a citation, so we report what we see in dated checks.',
       },
     ],
   },
@@ -83,7 +88,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'Do you provide ongoing support?',
         answer:
-          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content covers ongoing content work, and Ads covers ongoing campaign management with weekly tuning. We scope the right plan with you.',
+          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content covers ongoing content work, Ads covers ongoing campaign management with weekly tuning, and AEO re-checks your customer questions across the answer engines every month. We scope the right plan with you.',
       },
     ],
   },

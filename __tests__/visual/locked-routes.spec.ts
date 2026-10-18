@@ -124,7 +124,7 @@ const lockedRoutes = [
     path: '/',
     readyHeading: /^impossible is temporary\.$/i,
     mustContain: [
-      /websites, content, and ads that make your business shine online/i,
+      /websites, content, ads, and AEO that make your business shine online/i,
       /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
@@ -140,7 +140,7 @@ const lockedRoutes = [
     mustContain: [
       /prism is fully booked right now\./i,
       /join the waitlist to work with us in [a-z]+\./i,
-      /three ways to work with prism\./i,
+      /four ways to work with prism\./i,
     ],
   },
   {
@@ -161,8 +161,9 @@ const lockedRoutes = [
 // maxDiffPixelRatio needed for macOS<->Linux font drift. These text guards
 // catch what pixel tolerance absorbs: retired public pricing reappearing,
 // waitlist copy disappearing, the retired booking/intake CTAs coming back, or
-// the two packaged offers retired on 2026-10-12 reappearing (Prism offers three
-// services: Websites, Content, Ads). Mirrors lib/pricing-consistency.ts policy.
+// the two packaged offers retired on 2026-10-12 reappearing (Prism offers four
+// services: Websites, Content, Ads, AEO). Mirrors lib/pricing-consistency.ts
+// policy.
 const retiredPricingTokens = [
   /\$1,000 one-time/i,
   /\$1,000(?:\/| per )month/i,

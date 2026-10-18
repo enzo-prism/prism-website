@@ -28,6 +28,8 @@ const DESCRIPTION_CLAUSE_END_PATTERN = /[,;:](?=\s|$)/g
 const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bai\b/gi, "AI"],
   [/\bseo\b/gi, "SEO"],
+  [/\baeo\b/gi, "AEO"],
+  [/\bgeo\b/gi, "GEO"],
   [/\bppc\b/gi, "PPC"],
   [/\bcro\b/gi, "CRO"],
   [/\bui\b/gi, "UI"],

@@ -2,6 +2,7 @@ import type React from 'react'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import SocialLinkHub from '@/components/social-link-hub'
+import { getService, PRISM_SERVICES } from '@/lib/services'
 import { getWaitlistIntakeMonth, WAITLIST_FOCUS_HREFS } from '@/lib/waitlist'
 
 const trackCTAClick = jest.fn()
@@ -69,24 +70,32 @@ jest.mock('@/utils/analytics', () => ({
     trackExternalLinkClick(...args),
 }))
 
+// Names are anchored to the card title: an unanchored /ads/i would also
+// match "leads" in the Ads detail line.
 const HUB_ACTIONS = [
   {
-    name: /website/i,
+    name: /^website\b/i,
     href: WAITLIST_FOCUS_HREFS.website,
     ctaText: 'website',
     service: 'website',
   },
   {
-    name: /content/i,
+    name: /^content\b/i,
     href: WAITLIST_FOCUS_HREFS.content,
     ctaText: 'content',
     service: 'content',
   },
   {
-    name: /ads/i,
+    name: /^ads\b/i,
     href: WAITLIST_FOCUS_HREFS.ads,
     ctaText: 'ads',
     service: 'ads',
+  },
+  {
+    name: /^aeo\b/i,
+    href: WAITLIST_FOCUS_HREFS.aeo,
+    ctaText: 'aeo',
+    service: 'aeo',
   },
 ] as const
 
@@ -95,7 +104,7 @@ describe('SocialLinkHub', () => {
     jest.clearAllMocks()
   })
 
-  it('frames the page around business growth with exactly three service actions', () => {
+  it('frames the page around business growth with exactly four service actions', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
@@ -127,7 +136,8 @@ describe('SocialLinkHub', () => {
     const nav = screen.getByRole('navigation', {
       name: /tiktok page actions/i,
     })
-    expect(within(nav).getAllByRole('link')).toHaveLength(3)
+    expect(within(nav).getAllByRole('link')).toHaveLength(4)
+    expect(PRISM_SERVICES).toHaveLength(4)
     expect(
       within(nav).queryByRole('link', { name: /refer a friend/i }),
     ).not.toBeInTheDocument()
@@ -187,7 +197,7 @@ describe('SocialLinkHub', () => {
       )
     }
 
-    expect(trackCTAClick).toHaveBeenCalledTimes(3)
+    expect(trackCTAClick).toHaveBeenCalledTimes(HUB_ACTIONS.length)
     expect(trackExternalLinkClick).not.toHaveBeenCalled()
   })
 
@@ -202,6 +212,12 @@ describe('SocialLinkHub', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByText('Ads built around better leads.'),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(getService('aeo').navDescription),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('Websites · Content · Ads · AEO'),
     ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()
@@ -239,7 +255,7 @@ describe('SocialLinkHub', () => {
     )
   })
 
-  it('keeps every platform free of audience and view stats while sharing three service actions', () => {
+  it('keeps every platform free of audience and view stats while sharing four service actions', () => {
     const { unmount } = render(<SocialLinkHub platform="instagram" />)
     expect(
       screen.getByRole('heading', {
@@ -252,7 +268,7 @@ describe('SocialLinkHub', () => {
     const instagramNav = screen.getByRole('navigation', {
       name: /instagram page actions/i,
     })
-    expect(within(instagramNav).getAllByRole('link')).toHaveLength(3)
+    expect(within(instagramNav).getAllByRole('link')).toHaveLength(4)
     expect(
       within(instagramNav).getByRole('link', { name: /^website\b/i }),
     ).toHaveAttribute('href', '/waitlist?focus=website')
@@ -262,6 +278,9 @@ describe('SocialLinkHub', () => {
     expect(
       within(instagramNav).getByRole('link', { name: /^ads\b/i }),
     ).toHaveAttribute('href', '/waitlist?focus=ads')
+    expect(
+      within(instagramNav).getByRole('link', { name: /^aeo\b/i }),
+    ).toHaveAttribute('href', '/waitlist?focus=aeo')
     unmount()
 
     render(<SocialLinkHub platform="youtube" />)
@@ -276,7 +295,7 @@ describe('SocialLinkHub', () => {
     const youtubeNav = screen.getByRole('navigation', {
       name: /youtube page actions/i,
     })
-    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(3)
+    expect(within(youtubeNav).getAllByRole('link')).toHaveLength(4)
     expect(
       within(youtubeNav).getByRole('link', { name: /^website\b/i }),
     ).toHaveAttribute('href', '/waitlist?focus=website')
@@ -286,6 +305,9 @@ describe('SocialLinkHub', () => {
     expect(
       within(youtubeNav).getByRole('link', { name: /^ads\b/i }),
     ).toHaveAttribute('href', '/waitlist?focus=ads')
+    expect(
+      within(youtubeNav).getByRole('link', { name: /^aeo\b/i }),
+    ).toHaveAttribute('href', '/waitlist?focus=aeo')
     expect(
       within(youtubeNav).queryByRole('link', { name: /refer a friend/i }),
     ).not.toBeInTheDocument()

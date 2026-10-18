@@ -10,7 +10,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Refer a friend to Prism'
 const PAGE_DESCRIPTION =
-  'Refer a friend to Prism and get $100 when they become a client for Websites, Content, or Ads.'
+  'Refer a friend to Prism and get $100 when they become a client for Websites, Content, Ads, or AEO.'
 const CANONICAL_URL = 'https://www.design-prism.com/refer'
 
 export const metadata: Metadata = buildRouteMetadata({
@@ -66,7 +66,7 @@ export default function ReferPage() {
                 </h1>
                 <p className="text-lead mt-6 max-w-[46ch] text-pretty text-muted-foreground">
                   Tell us about someone who could use Prism. If they become a
-                  client for Websites, Content, or Ads, we send you $100.
+                  client for Websites, Content, Ads, or AEO, we send you $100.
                   Every time.
                 </p>
 
@@ -144,7 +144,7 @@ export default function ReferPage() {
               <p className="mt-6 rounded-2xl border border-white/[0.08] bg-card px-5 py-4 text-pretty text-[0.85rem] leading-6 text-subtle">
                 $100 is a referral payout, not service pricing. It is paid
                 after the referred business becomes a paying Prism client for
-                Websites, Content, or Ads.
+                Websites, Content, Ads, or AEO.
                 Self-referrals don&apos;t count. No cap. Every referral that
                 closes pays $100.
               </p>

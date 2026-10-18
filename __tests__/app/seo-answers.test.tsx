@@ -40,11 +40,13 @@ describe('SEO answers', () => {
     expect(document.querySelector('#seo-questions')?.textContent).toContain(
       'Neither guarantees a ranking or an AI citation',
     )
-    for (const href of ['/seo/audit', '/ai-seo-services', '/waitlist']) {
+    for (const href of ['/seo/audit', '/aeo', '/waitlist']) {
       expect(
         document.querySelector(`#seo-questions a[href="${href}"]`),
       ).not.toBeNull()
     }
+    // The retired AI search lander 308s to /aeo; link the service directly.
+    expect(document.querySelector('a[href="/ai-seo-services"]')).toBeNull()
   })
 
   it('keeps the page free of tier language and guarantees, with verified proof', async () => {

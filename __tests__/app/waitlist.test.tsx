@@ -156,6 +156,15 @@ describe('/waitlist', () => {
   it('offers "Not sure yet" but never accepts it as a ?focus= hand-off', async () => {
     await renderPage('not-sure')
 
+    for (const name of ['Website', 'Content', 'Ads', 'AEO', 'Not sure yet']) {
+      expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
+    }
+  })
+
+  it('hands ?focus=aeo through to the form', async () => {
+    await renderPage('aeo')
+
+    expect(screen.getByRole('checkbox', { name: 'AEO' })).toBeChecked()
     for (const name of ['Website', 'Content', 'Ads', 'Not sure yet']) {
       expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
     }

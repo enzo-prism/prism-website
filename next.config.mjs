@@ -130,9 +130,15 @@ images: {
       { source: '/apply', destination: '/waitlist', permanent: true },
       { source: '/free-analysis', destination: '/waitlist', permanent: true },
       { source: '/contact', destination: '/waitlist', permanent: true },
-      { source: '/aeo', destination: '/waitlist', permanent: true },
       { source: '/book-a-shoot', destination: '/waitlist', permanent: true },
-      { source: '/ai', destination: '/waitlist', permanent: true },
+      // AEO is a service again (2026-10-18): /aeo is the canonical page, and
+      // the AI search shortpaths and the retired /ai-seo-services lander
+      // consolidate there so one page owns the topic.
+      { source: '/ai', destination: '/aeo', permanent: true },
+      { source: '/ai-seo-services', destination: '/aeo', permanent: true },
+      { source: '/answer-engine-optimization', destination: '/aeo', permanent: true },
+      { source: '/generative-engine-optimization', destination: '/aeo', permanent: true },
+      { source: '/aeo-services', destination: '/aeo', permanent: true },
       // Content is the public service page and the offer name on /pricing.
       // Founder OS stays retired.
       { source: '/content-os', destination: '/content', permanent: true },
@@ -180,9 +186,9 @@ images: {
       { source: '/local-seo-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
       { source: '/dentist-website-design', destination: '/dental-website', permanent: true },
       { source: '/dental-website-design', destination: '/dental-website', permanent: true },
-      { source: '/ai-seo', destination: '/ai-seo-services', permanent: true },
-      { source: '/ai-search-optimization', destination: '/ai-seo-services', permanent: true },
-      { source: '/llm-seo-services', destination: '/ai-seo-services', permanent: true },
+      { source: '/ai-seo', destination: '/aeo', permanent: true },
+      { source: '/ai-search-optimization', destination: '/aeo', permanent: true },
+      { source: '/llm-seo-services', destination: '/aeo', permanent: true },
       { source: '/seo-audit', destination: '/seo/audit', permanent: true },
       { source: '/seo-audit-service', destination: '/seo/audit', permanent: true },
       { source: '/seo-audit-services', destination: '/seo/audit', permanent: true },

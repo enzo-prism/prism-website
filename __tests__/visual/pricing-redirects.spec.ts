@@ -23,8 +23,9 @@ test.describe("legacy pricing redirects", () => {
   }
 })
 
-// 2026-10-12: Prism offers three services (Websites, Content, Ads). The two
-// retired packaged offers redirect permanently to their closest live page.
+// 2026-10-12: Prism offered three services (Websites, Content, Ads); AEO joined
+// as the fourth on 2026-10-18. The two retired packaged offers redirect
+// permanently to their closest live page.
 const retiredOfferRedirects = [
   { route: "/dental-os", destination: "/dental-website" },
   { route: "/prism-infinity", destination: "/content" },
@@ -42,4 +43,30 @@ test.describe("retired offer redirects", () => {
       expect(landed.status()).toBe(200)
     })
   }
+})
+
+// 2026-10-18: AEO is a service page again. The AI search shortpaths and the
+// retired /ai-seo-services lander land on /aeo in one permanent hop, and /aeo
+// itself serves the page.
+const aeoRedirectSources = [
+  "/ai",
+  "/ai-seo-services",
+  "/ai-seo",
+  "/answer-engine-optimization",
+] as const
+
+test.describe("AEO redirects", () => {
+  for (const route of aeoRedirectSources) {
+    test(`${route} permanently redirects to /aeo`, async ({ request }) => {
+      const response = await request.fetch(route, { maxRedirects: 0 })
+      expect([301, 308]).toContain(response.status())
+      const location = response.headers()["location"] ?? ""
+      expect(new URL(location, "http://localhost").pathname).toBe("/aeo")
+    })
+  }
+
+  test("/aeo serves the service page without redirecting", async ({ request }) => {
+    const response = await request.fetch("/aeo", { maxRedirects: 0 })
+    expect(response.status()).toBe(200)
+  })
 })

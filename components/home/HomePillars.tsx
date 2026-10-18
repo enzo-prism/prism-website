@@ -5,6 +5,7 @@ import {
   Check,
   LayoutTemplate,
   Megaphone,
+  MessageSquareQuote,
 } from 'lucide-react'
 
 import { HOMEPAGE_SERVICES } from '@/components/home/homepage-content'
@@ -36,6 +37,7 @@ const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
 }
 
 const FOCUS_RING =
@@ -216,7 +218,9 @@ export default function HomePillars() {
             location={LOCATION}
             className={cn(
               PILL,
-              'justify-between font-medium text-foreground sm:w-auto sm:justify-center sm:gap-1.5 lg:border-transparent lg:bg-transparent lg:px-4 lg:hover:border-transparent lg:hover:bg-transparent lg:hover:text-foreground/80',
+              // Four service pills fill a 2x2 grid on phones; this one spans
+              // the row beneath them.
+              'col-span-2 justify-between font-medium text-foreground sm:w-auto sm:justify-center sm:gap-1.5 lg:border-transparent lg:bg-transparent lg:px-4 lg:hover:border-transparent lg:hover:bg-transparent lg:hover:text-foreground/80',
               FOCUS_RING,
             )}
           >

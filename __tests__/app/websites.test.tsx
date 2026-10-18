@@ -230,7 +230,7 @@ describe('WebsitesPage sections', () => {
     ).toBeInTheDocument()
   })
 
-  it('cross-links the other two services, not the current one', () => {
+  it('cross-links the other three services, not the current one', () => {
     render(<WebsitesPage />)
 
     const siblings = screen
@@ -239,7 +239,7 @@ describe('WebsitesPage sections', () => {
     const hrefs = within(siblings)
       .getAllByRole('link')
       .map((link) => link.getAttribute('href'))
-    expect(hrefs).toEqual(['/content', '/ads'])
+    expect(hrefs).toEqual(['/content', '/ads', '/aeo'])
   })
 
   it('ends with the website-focused final CTA', () => {

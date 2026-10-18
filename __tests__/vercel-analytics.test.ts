@@ -69,6 +69,27 @@ describe('Vercel analytics URL normalization', () => {
     })
   })
 
+  it('keeps the AEO social-hub CTA service and focused destination', () => {
+    expect(
+      buildVercelCustomEvent('cta_click', {
+        cta_text: 'aeo',
+        cta_location: 'tiktok landing actions',
+        platform: 'tiktok',
+        service: 'aeo',
+        destination: '/waitlist?focus=aeo',
+      }),
+    ).toEqual({
+      name: 'CTA Clicked',
+      properties: {
+        cta_text: 'aeo',
+        cta_location: 'tiktok landing actions',
+        platform: 'tiktok',
+        service: 'aeo',
+        destination: '/waitlist?focus=aeo',
+      },
+    })
+  })
+
   it('drops unallowlisted social-hub CTA dimensions from Vercel CTA events', () => {
     expect(
       buildVercelCustomEvent('cta_click', {
@@ -375,6 +396,25 @@ describe('Vercel analytics URL normalization', () => {
           form_location: 'waitlist_page',
           focus_count: 2,
         },
+      })
+      // Four services can be chosen, so 4 is the top of the focus_count range.
+      expect(
+        buildVercelCustomEvent('waitlist_submit_success', {
+          form_name: 'waitlist',
+          focus_count: 4,
+        }),
+      ).toEqual({
+        name: 'Waitlist Submit Succeeded',
+        properties: { form_name: 'waitlist', focus_count: 4 },
+      })
+      expect(
+        buildVercelCustomEvent('waitlist_submit_success', {
+          form_name: 'waitlist',
+          focus_count: 5,
+        }),
+      ).toEqual({
+        name: 'Waitlist Submit Succeeded',
+        properties: { form_name: 'waitlist' },
       })
       expect(
         buildVercelCustomEvent('waitlist_submit_error', {

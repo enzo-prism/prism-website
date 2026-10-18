@@ -465,8 +465,8 @@ export default function ProofPage() {
                   next monthly intake. There are no public Proof tiers or one-size-fits-all promises.
                 </p>
                 <p className="mt-6 border-l-2 border-white/20 pl-5 text-[15px] leading-7 text-foreground">
-                  <strong className="font-semibold">Proof</strong> can support any of Prism&apos;s three services:
-                  Websites, Content, or Ads.
+                  <strong className="font-semibold">Proof</strong> can support any of Prism&apos;s four services:
+                  Websites, Content, Ads, or AEO.
                 </p>
               </SpotlightCard>
             </Reveal>

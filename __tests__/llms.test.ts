@@ -45,6 +45,7 @@ describe('llms.txt', () => {
         'https://www.design-prism.com/local-seo-services',
         'https://www.design-prism.com/local-listings',
         'https://www.design-prism.com/ads',
+        'https://www.design-prism.com/aeo',
         'https://www.design-prism.com/chatgpt-ads',
         'https://www.design-prism.com/why-consulting-companies-love-prism',
         'https://www.design-prism.com/why-local-shop-owners-love-prism',
@@ -82,6 +83,8 @@ describe('llms.txt', () => {
     expect(llms).not.toContain('https://www.design-prism.com/apps')
     expect(llms).not.toContain('https://www.design-prism.com/podcast')
     expect(llms).not.toContain('https://www.design-prism.com/openai')
+    // The AI search lander folded into the /aeo service page (2026-10-18).
+    expect(llms).not.toContain('https://www.design-prism.com/ai-seo-services')
     expect(llms).not.toContain('podcasts.apple.com')
   })
 })

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
+  ArrowRight,
   ArrowUpRight,
   BarChart3,
   FileText,
@@ -37,6 +38,7 @@ import {
   TechStackIcon,
   WEBSITE_SURFACE_ICONS,
 } from '@/components/tech-stack-icons'
+import TrackedLink from '@/components/tracked-link'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
@@ -370,6 +372,18 @@ export default function WebsitesPage() {
                   what you do. Useful answers and accurate details support
                   discovery; rankings and recommendations are never guaranteed.
                 </p>
+                <TrackedLink
+                  href="/aeo"
+                  label="go further with aeo"
+                  location="websites visibility"
+                  className="group/aeo inline-flex min-h-10 w-fit items-center gap-1.5 rounded-sm text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                >
+                  Go further with Prism AEO
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-200 group-hover/aeo:translate-x-0.5"
+                  />
+                </TrackedLink>
               </div>
               <ul
                 aria-label="Search and answer surfaces"

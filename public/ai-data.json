@@ -27,6 +27,11 @@
       "name": "Ads",
       "url": "https://www.design-prism.com/ads",
       "pricing": "Custom, scoped after a waitlist application is reviewed"
+    },
+    {
+      "name": "AEO",
+      "url": "https://www.design-prism.com/aeo",
+      "pricing": "Custom, scoped after a waitlist application is reviewed"
     }
   ],
   "products": [

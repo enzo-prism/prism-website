@@ -197,8 +197,8 @@ const DEFAULT_IMPACT: Omit<PrismImpactConfig, "title"> = {
       reason: "Prism reviews the waitlist for each monthly intake.",
     },
     {
-      label: "AI SEO services",
-      href: "/ai-seo-services",
+      label: "AEO (answer engine optimization)",
+      href: "/aeo",
       kind: "internal",
       reason: "Built for citations, trust signals, and AI-discovery readiness.",
     },
@@ -230,8 +230,8 @@ const SEO_IMPACT: PrismImpactConfig = {
       reason: "Listings, maps, and trust layer upgrades for local demand.",
     },
     {
-      label: "AI SEO services",
-      href: "/ai-seo-services",
+      label: "AEO (answer engine optimization)",
+      href: "/aeo",
       kind: "internal",
       reason: "AI visibility execution for search and assistant surfaces.",
     },

@@ -64,6 +64,7 @@ async function expectOpenMenuGeometry(page: Page) {
     'Websites',
     'Content',
     'Ads',
+    'AEO',
     'All services',
     'Join the waitlist',
   ])
@@ -75,6 +76,7 @@ async function expectOpenMenuGeometry(page: Page) {
     ['Websites', '/websites'],
     ['Content', '/content'],
     ['Ads', '/ads'],
+    ['AEO', '/aeo'],
     ['All services', '/services'],
     ['Join the waitlist', '/waitlist'],
   ]) {

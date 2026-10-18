@@ -1,0 +1,75 @@
+/* /aeo hero micro-motion (components/services/AeoHeroVisual.tsx).
+   The base styles are the finished frame. Entrance start states live in the
+   keyframes, behind prefers-reduced-motion, so reduced-motion, no-JS, and the
+   screenshot runs always see the complete answer. Transform and opacity
+   only. */
+
+@keyframes aeo-enter {
+  from {
+    opacity: 0.001;
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+@keyframes aeo-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes aeo-cell {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+/* The engine re-asking the questions: a soft band of light that sweeps the
+   question map, then rests off-canvas. */
+@keyframes aeo-scan {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -55%, 0);
+  }
+  12%,
+  70% {
+    opacity: 1;
+  }
+  82%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 55%, 0);
+  }
+}
+
+.scan {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 38%,
+    oklch(1 0 0 / 5.5%) 50%,
+    transparent 62%
+  );
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: aeo-enter 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(640ms + var(--i, 0) * 120ms);
+  }
+
+  .draw {
+    transform-origin: left center;
+    animation: aeo-draw 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(980ms + var(--i, 0) * 110ms);
+  }
+
+  .cell {
+    animation: aeo-cell 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(1100ms + var(--i, 0) * 38ms);
+  }
+
+  .scan {
+    animation: aeo-scan 7.5s cubic-bezier(0.45, 0, 0.25, 1) 2.6s infinite;
+  }
+}

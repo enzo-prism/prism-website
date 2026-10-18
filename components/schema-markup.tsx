@@ -264,7 +264,7 @@ export function GlobalSchemaGraph() {
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism',
     ],
-    // Prism's three services (Websites, Content, Ads) as canonical offers so
+    // Prism's four services (Websites, Content, Ads, AEO) as canonical offers so
     // AI/search engines see the core products. Values come from
     // lib/pricing-model.ts; do not hardcode here. Prism is at capacity and
     // every offer is scoped from the waitlist, so availability stays
@@ -290,6 +290,13 @@ export function GlobalSchemaGraph() {
         description: CANONICAL_PRICING_OFFERS.ads.description,
         availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/ads',
+      },
+      {
+        '@type': 'Offer',
+        name: CANONICAL_PRICING_OFFERS.aeo.name,
+        description: CANONICAL_PRICING_OFFERS.aeo.description,
+        availability: 'https://schema.org/LimitedAvailability',
+        url: 'https://www.design-prism.com/aeo',
       },
     ],
   }
