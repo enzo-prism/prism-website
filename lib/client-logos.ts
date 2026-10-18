@@ -44,6 +44,7 @@ const SELLS_TO: Record<string, ClientLogo['sellsTo']> = {
   'leadership-retreat': 'businesses',
   'belize-kids-foundation': 'nonprofit',
   'canary-foundation': 'nonprofit',
+  'mach-1': 'businesses',
 }
 
 /** Rail order: the featured clients first, then everyone else. */
@@ -53,6 +54,7 @@ const LEAD_SLUGS = [
   'practice-transitions-institute',
   'olympic-bootworks',
   'roseville-dental-academy',
+  'mach-1',
 ]
 
 /** Seals whose built-in type is too small to read at rail size. */

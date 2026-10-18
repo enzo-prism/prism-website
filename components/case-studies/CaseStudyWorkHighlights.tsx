@@ -31,6 +31,7 @@ import {
   Sparkles,
   Store,
   Video,
+  Wrench,
   X,
 } from 'lucide-react'
 
@@ -91,6 +92,7 @@ const SERVICE_ICON_MAP: Record<string, LucideIcon> = {
   'AI assistant setup': BotMessageSquare,
   'Enterprise analytics setup and optimization': ChartLine,
   'Video editing': Video,
+  'Custom internal tools': Wrench,
 }
 
 const TECH_ICON_MAP: Record<string, LucideIcon> = {
@@ -104,6 +106,7 @@ const TECH_ICON_MAP: Record<string, LucideIcon> = {
   'Gemini 3.1': Radar,
   'Google Analytics': ChartLine,
   'Next.js': Globe,
+  Netlify: Rocket,
   Replit: Rocket,
   Git: GitBranch,
   Cursor: Sparkles,
@@ -248,6 +251,13 @@ const WORK_HIGHLIGHT_COPY: Record<
     whyPrism:
       'Prism produces high-impact content that communicates authority quickly and supports both organic and paid channel performance.',
   },
+  'Custom internal tools': {
+    type: 'service',
+    whatItIs:
+      'Private web apps built around how a growth team already works: content calendars and analytics, interview libraries, ad review rooms, and planning sites.',
+    whyPrism:
+      'Prism builds them so the team stops stitching spreadsheets and drives together, and spends its time on the work that grows the business.',
+  },
   Codex: {
     type: 'tech',
     whatItIs:
@@ -317,6 +327,13 @@ const WORK_HIGHLIGHT_COPY: Record<
       'A React framework for production websites that need routing, metadata, performance controls, and reliable deployment behavior.',
     whyPrism:
       'Prism uses it to make marketing sites maintainable as software instead of leaving them trapped in one-off page builders.',
+  },
+  Netlify: {
+    type: 'tech',
+    whatItIs:
+      'A hosting and deployment platform with branch previews, edge headers, and redirects for static and hybrid sites.',
+    whyPrism:
+      'Prism ships on the client’s own platform when they already run there, with separate preview and production sites so changes are checked before launch.',
   },
   Replit: {
     type: 'tech',

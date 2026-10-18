@@ -49,7 +49,7 @@ When the user asks to "analyze the project" or "update the project docs", do a s
 4. Update existing docs in place. Do not add a new top-level doc unless the user explicitly asks for one.
 5. For docs-only changes, run the nearest cheap validation (`pnpm design:lint` if the design contract moved, focused Jest if public machine-readable files changed, or a targeted `rg` stale-term check when only prose changed).
 
-Homepage proof reminder (2026-10-12 v2, "impossible is temporary."): client proof on `/` is the client logo rail (`#clients`, `lib/client-logos.ts`), the five featured stories (`HomeStories`, `#work`), and `HomeWorkWall` (`#more-work`, a tilted marquee of the other current-client screenshots from `HOMEPAGE_CLIENT_WINS`). Former clients stay off all three (`__tests__/former-clients-highlight.test.ts`). The old Cover Flow deck and its abstract-art predecessor are retired; do not bring them back. UI work follows `DESIGN.md` (stock shadcn in `components/ui`, the `components/prism` kit) and copy follows the prism-writing skill (`prism-brand` pack).
+Homepage proof reminder (2026-10-12 v2, "impossible is temporary."): client proof on `/` is the client logo rail (`#clients`, `lib/client-logos.ts`), the six featured stories (`HomeStories`, `#work`), and `HomeWorkWall` (`#more-work`, a tilted marquee of the other current-client screenshots from `HOMEPAGE_CLIENT_WINS`). Former clients stay off all three (`__tests__/former-clients-highlight.test.ts`). The old Cover Flow deck and its abstract-art predecessor are retired; do not bring them back. UI work follows `DESIGN.md` (stock shadcn in `components/ui`, the `components/prism` kit) and copy follows the prism-writing skill (`prism-brand` pack).
 
 ## 2. Dental photography surfaces
 

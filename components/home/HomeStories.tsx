@@ -13,11 +13,11 @@ import { SectionHeader } from '@/components/prism/section'
 const SELLS_TO_ORDER: HomepageStory['sellsTo'][] = ['consumers', 'businesses']
 
 /**
- * #work: five client stories, each told as the impossible, what we built,
+ * #work: six client stories, each told as the impossible, what we built,
  * and what is live now. On lg+ the panels stack like a deck as you scroll
  * (each one recedes as the next slides over it); below lg they are simple
  * cards. Each panel carries one band of the prism behind its live site, so
- * the five stories read as five bands of the same light.
+ * the six stories read as the six bands of the same light.
  */
 export default function HomeStories() {
   const { eyebrow, title, description } = HOMEPAGE_CASE_STUDIES

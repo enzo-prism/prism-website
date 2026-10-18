@@ -150,7 +150,7 @@ describe('ClientPage homepage flow', () => {
     expect(document.body).toHaveTextContent(/Verified October 4, 2026/)
   })
 
-  it('features the five client stories, the client logos, and never former clients', () => {
+  it('features the six client stories, the client logos, and never former clients', () => {
     render(<ClientPage />)
 
     const work = document.getElementById('work') as HTMLElement

@@ -17,6 +17,7 @@ export type CaseStudyNavItem = {
 }
 
 export const CASE_STUDY_NAV_ITEMS: readonly CaseStudyNavItem[] = [
+  { slug: 'mach-1', client: 'Mach 1' },
   { slug: 'dr-christopher-wong', client: 'Dr. Christopher B. Wong' },
   { slug: 'exquisite-dentistry', client: 'Exquisite Dentistry' },
   { slug: 'olympic-bootworks', client: 'Olympic Bootworks' },

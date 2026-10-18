@@ -176,7 +176,8 @@ export type HomepageStory = {
 }
 
 /**
- * The five featured stories (2026-10 v2). Every line paraphrases the
+ * The six featured stories (2026-10 v2; Mach 1 joined 2026-10-18 as the
+ * violet band, completing the spectrum). Every line paraphrases the
  * published case study in lib/case-study-data.ts; nothing here is a client
  * quote or a number. `slugs` mirrors the stories for the former-client guard.
  */
@@ -184,7 +185,7 @@ export const HOMEPAGE_CASE_STUDIES = {
   eyebrow: 'the work',
   title: 'every business has an impossible.',
   description:
-    'Five businesses, each with something that felt out of reach. Here is what is live now.',
+    'Six businesses, each with something that felt out of reach. Here is what is live now.',
   /** The line above the mid-page waitlist invitation after the deck. */
   nextLine: 'your business could be the next story.',
   slugs: [
@@ -193,6 +194,7 @@ export const HOMEPAGE_CASE_STUDIES = {
     'practice-transitions-institute',
     'olympic-bootworks',
     'roseville-dental-academy',
+    'mach-1',
   ],
   stories: [
     {
@@ -283,6 +285,25 @@ export const HOMEPAGE_CASE_STUDIES = {
         '/case-studies/scroll/roseville-dental-academy-desktop.webp',
       mobileImage: '/case-studies/scroll/roseville-dental-academy-mobile.webp',
     },
+    {
+      slug: 'mach-1',
+      company: 'Mach 1',
+      sellsTo: 'businesses',
+      industry: 'AI agent platform',
+      location: 'Austin, TX',
+      host: 'mach1ai.com',
+      impossible:
+        'Showing a buyer what an AI agent does for a team, in the words of the teams already running one.',
+      built: [
+        'Site rebuild',
+        'Customer films',
+        'Content engine',
+        'Campaign review',
+      ],
+      now: 'A site led by customers’ own words and sourced results, with private tools behind it for content, interviews, and campaigns.',
+      desktopImage: '/case-studies/scroll/mach-1-desktop.webp',
+      mobileImage: '/case-studies/scroll/mach-1-mobile.webp',
+    },
   ] satisfies readonly HomepageStory[],
 } as const
 
@@ -292,7 +313,7 @@ const FEATURED_STORY_HREFS = new Set<string>(
 
 export const HOMEPAGE_MORE_WORK = {
   eyebrow: 'more work',
-  /** Current clients beyond the five featured stories. */
+  /** Current clients beyond the six featured stories. */
   count: CURRENT_CASE_STUDIES.length - FEATURED_STORY_HREFS.size,
   description:
     'Dentists in Palo Alto. A kids’ foundation in Belize. An IT firm in Bengaluru. Each one has its own case study.',
