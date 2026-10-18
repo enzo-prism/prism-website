@@ -61,10 +61,10 @@ async function expectOpenMenuGeometry(page: Page) {
     'Wall of Love',
     'About',
     'Pricing',
+    'AEO',
     'Websites',
     'Content',
     'Ads',
-    'AEO',
     'All services',
     'Join the waitlist',
   ])
@@ -73,10 +73,10 @@ async function expectOpenMenuGeometry(page: Page) {
     ['Wall of Love', '/wall-of-love'],
     ['About', '/about'],
     ['Pricing', '/pricing'],
+    ['AEO', '/aeo'],
     ['Websites', '/websites'],
     ['Content', '/content'],
     ['Ads', '/ads'],
-    ['AEO', '/aeo'],
     ['All services', '/services'],
     ['Join the waitlist', '/waitlist'],
   ]) {

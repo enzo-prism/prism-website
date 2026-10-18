@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react'
 
 import Navbar from '@/components/navbar'
-import { NAV_SERVICE_ITEMS } from '@/lib/constants'
+import { NAV_MENU_SERVICE_ITEMS, NAV_SERVICE_ITEMS } from '@/lib/constants'
 
 const mockUsePathname = jest.fn()
 
@@ -155,6 +155,21 @@ describe('Navbar', () => {
     }
   })
 
+  it('leads the header Services menu with AEO, then the catalog order', () => {
+    expect(NAV_MENU_SERVICE_ITEMS.map((item) => item.href)).toEqual([
+      '/aeo',
+      '/websites',
+      '/content',
+      '/ads',
+    ])
+    // Same four items as the catalog, just reordered for the menu.
+    expect(
+      [...NAV_MENU_SERVICE_ITEMS].sort((a, b) => a.href.localeCompare(b.href)),
+    ).toEqual(
+      [...NAV_SERVICE_ITEMS].sort((a, b) => a.href.localeCompare(b.href)),
+    )
+  })
+
   it('puts the waitlist CTA beside the menu, never a booking CTA', () => {
     mockUsePathname.mockReturnValue('/about')
     render(<Navbar />)
@@ -227,10 +242,10 @@ describe('Navbar', () => {
       '/wall-of-love',
       '/about',
       '/pricing',
+      '/aeo',
       '/websites',
       '/content',
       '/ads',
-      '/aeo',
       '/services',
       '/waitlist',
     ])

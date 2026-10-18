@@ -26,7 +26,11 @@ import {
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
 import { findCaseStudyNavItem } from '@/lib/case-study-nav-data'
-import { NAV_ITEMS, NAV_SERVICE_ITEMS } from '@/lib/constants'
+import {
+  NAV_ITEMS,
+  NAV_MENU_SERVICE_ITEMS,
+  NAV_SERVICE_ITEMS,
+} from '@/lib/constants'
 import type { NavItem, NavServiceItem } from '@/lib/constants'
 import { WAITLIST_CTA } from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
@@ -125,7 +129,7 @@ function ServicesMenu({
           {/* The four services are equal tiles that share the featured
               card's height; "All services" keeps its natural height. */}
           <ul className="flex flex-col gap-1.5">
-            {NAV_SERVICE_ITEMS.map((item) => {
+            {NAV_MENU_SERVICE_ITEMS.map((item) => {
               const Icon = SERVICE_ICONS[item.icon]
               return (
                 <li key={item.href} className="flex-1">
@@ -412,7 +416,7 @@ export default function Navbar() {
 
         <p className="mt-8 text-eyebrow text-subtle">Services</p>
         <ul className="mt-3 grid grid-cols-2 gap-2">
-          {NAV_SERVICE_ITEMS.map((item) => {
+          {NAV_MENU_SERVICE_ITEMS.map((item) => {
             const Icon = SERVICE_ICONS[item.icon]
             return (
               <li key={item.href}>
