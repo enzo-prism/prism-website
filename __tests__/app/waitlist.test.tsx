@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 
 import WaitlistPage from '@/app/waitlist/page'
 import WaitlistThankYouPage from '@/app/waitlist/thank-you/page'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { getWaitlistIntakeMonth } from '@/lib/waitlist'
 
 jest.mock('next/navigation', () => ({
@@ -237,7 +237,7 @@ describe('/waitlist/thank-you', () => {
       within(follow).getByRole('heading', { level: 3, name: /follow along\./i }),
     ).toBeInTheDocument()
     expect(follow).toHaveTextContent(`${SOCIAL_PROOF.combinedAudience} followers`)
-    expect(follow).toHaveTextContent(`Audience verified ${PROOF_METRICS_VERIFIED_AT}`)
+    expect(follow).toHaveTextContent(`Audience verified ${SOCIAL_PROOF_VERIFIED_AT}`)
 
     const channels = [
       SOCIAL_PROOF.instagram,

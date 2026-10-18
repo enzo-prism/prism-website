@@ -9,7 +9,7 @@ import {
   communityComments,
   getMarqueeRows,
 } from '@/components/wall-of-love/wall-of-love-feed'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 
 const socialStats = [
   SOCIAL_PROOF.instagram,
@@ -84,7 +84,7 @@ export function WallOfLoveHero() {
             ))}
           </dl>
           <p className="mt-3 text-xs text-subtle">
-            Audience as of {PROOF_METRICS_VERIFIED_AT}. Channel totals, not
+            Audience as of {SOCIAL_PROOF_VERIFIED_AT}. Channel totals, not
             deduplicated people.
           </p>
         </div>

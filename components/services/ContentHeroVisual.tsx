@@ -3,7 +3,7 @@ import { MessageCircle } from 'lucide-react'
 
 import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import { getCommunityComments } from '@/components/services/community-comments'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { cn } from '@/lib/utils'
 
 // Instagram comments on Prism's own videos (community, not clients).
@@ -123,7 +123,7 @@ export function ContentHeroVisual() {
             </span>
           </div>
           <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-muted-foreground">
-            As of {PROOF_METRICS_VERIFIED_AT}
+            As of {SOCIAL_PROOF_VERIFIED_AT}
           </span>
         </div>
 
@@ -139,7 +139,7 @@ export function ContentHeroVisual() {
             glowClassName="bg-spectrum-red/25"
             large
             className="col-span-2 lg:col-span-5"
-            note="Lifetime views include legacy gaming content."
+            note="Channel views include legacy gaming content."
           />
           <ChannelCard
             brand="instagram"
@@ -238,9 +238,9 @@ export function ContentHeroVisual() {
         </div>
       </div>
       <figcaption className="mx-auto mt-5 max-w-3xl text-pretty text-center text-xs leading-5 text-subtle">
-        Prism&apos;s own channels, verified {PROOF_METRICS_VERIFIED_AT}. Not
-        client campaign results. YouTube totals include legacy gaming content
-        and every public, private, unlisted, and deleted video. Followers and
+        Prism&apos;s own channels, verified {SOCIAL_PROOF_VERIFIED_AT}. Not
+        client campaign results. YouTube channel views include legacy gaming
+        content and use the channel total returned by Ayrshare. Followers and
         subscribers are counted per channel, not as unique people.
       </figcaption>
     </figure>

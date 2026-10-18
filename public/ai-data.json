@@ -45,28 +45,30 @@
       "youtube": {
         "subscribers": "24.7K",
         "views": "5.8M",
-        "source": "YouTube Studio, verified October 4, 2026",
-        "subscribers_exact": 24718,
-        "lifetime_views_exact": 5839447,
-        "views_through": "2026-10-03",
-        "methodology": "Lifetime channel views since June 5, 2013, including legacy gaming content and public/private/unlisted/deleted videos; not agency campaign views or current reach."
+        "source": "Ayrshare YouTube account analytics, verified October 17, 2026",
+        "methodology": "YouTube channel viewCount via Ayrshare, including legacy gaming content; not agency campaign views or current reach. Different measurement basis from the prior Studio lifetime total. Subscriber count is API-rounded, not exact.",
+        "subscribers_api_rounded": 24700,
+        "channel_views": 5807904,
+        "views_as_of": "2026-10-17"
       },
       "instagram": {
-        "followers": "37K",
-        "posts": 645,
-        "source": "Ayrshare Instagram account analytics, verified October 4, 2026",
-        "followers_exact": 37019
+        "followers": "36.9K",
+        "posts": 647,
+        "source": "Ayrshare Instagram account analytics, verified October 17, 2026",
+        "followers_exact": 36884
       },
       "tiktok": {
-        "followers": "11.7K",
-        "followers_exact": 11728,
-        "followers_through": "2026-10-03",
-        "likes": "421.3K",
-        "source": "Followers: Ayrshare through October 3, 2026. Rounded profile likes: account owner supplied October 4, 2026."
+        "followers": "12.3K",
+        "followers_exact": 12300,
+        "followers_through": "2026-10-17",
+        "likes": "437K",
+        "source": "Ayrshare TikTok account analytics, verified October 17, 2026; provider backfilled from 2026-10-17T17:00:49.304Z.",
+        "likes_exact": 436991
       },
       "combined_audience": "73K+",
-      "combined_audience_exact": 73465,
-      "combined_audience_methodology": "Sum of channel subscriptions/followers; not deduplicated people."
+      "combined_audience_methodology": "Sum of channel subscriptions/followers using the API-rounded YouTube subscriber count; not an exact audience count or deduplicated people.",
+      "verified_at": "2026-10-17",
+      "combined_audience_api_sum": 73884
     }
   },
   "case_studies": [

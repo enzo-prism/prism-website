@@ -309,7 +309,7 @@ export const HOMEPAGE_AUDIENCE = {
   highlights: [
     {
       value: SOCIAL_PROOF.youtube.activity,
-      label: 'lifetime views on YouTube',
+      label: 'channel views on YouTube',
     },
     {
       value: SOCIAL_PROOF.tiktok.activity,
@@ -337,7 +337,7 @@ export const HOMEPAGE_AUDIENCE = {
       label: `views on one Instagram Reel, posted ${reel.posted}`,
     })),
   },
-  note: `Audience as of ${SOCIAL_PROOF.youtube.verifiedAt}. Channel totals, not deduplicated people. YouTube views come from YouTube Studio and include earlier channel content. Reel numbers come from Instagram Reel insights on Prism’s own account, as of each screenshot.`,
+  note: `Audience as of ${SOCIAL_PROOF.youtube.verifiedAt}. Channel totals, not deduplicated people. Channel totals come from Ayrshare. YouTube subscribers are API-rounded; channel views include earlier content. Reel numbers come from Instagram Reel insights on Prism’s own account, as of each screenshot.`,
 } as const
 
 const COMMUNITY_HANDLES = [

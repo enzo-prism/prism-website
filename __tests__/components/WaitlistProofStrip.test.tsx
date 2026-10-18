@@ -12,7 +12,7 @@ import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import {
   CONNECTED_CLIENT_TRAFFIC,
-  PROOF_METRICS_VERIFIED_AT,
+  SOCIAL_PROOF_VERIFIED_AT,
   SOCIAL_PROOF,
 } from '@/lib/proof-metrics'
 
@@ -72,7 +72,7 @@ describe('WaitlistProofStrip', () => {
     expect(strip).toHaveTextContent(
       `${CONNECTED_CLIENT_TRAFFIC.newUsers.toLocaleString('en-US')} new users across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites in ${CONNECTED_CLIENT_TRAFFIC.month}`,
     )
-    expect(strip).toHaveTextContent(`Verified ${PROOF_METRICS_VERIFIED_AT}`)
+    expect(strip).toHaveTextContent(`Verified ${SOCIAL_PROOF_VERIFIED_AT}`)
     expect(strip).toHaveTextContent(`Source: ${CONNECTED_CLIENT_TRAFFIC.source}`)
     expect(
       screen.getByRole('heading', { level: 2, name: /worth the wait/i }),

@@ -6,6 +6,7 @@
  * not drift apart.
  */
 export const PROOF_METRICS_VERIFIED_AT = 'October 4, 2026'
+export const SOCIAL_PROOF_VERIFIED_AT = 'October 17, 2026'
 
 export const CONNECTED_CLIENT_TRAFFIC = {
   month: 'September 2026',
@@ -22,37 +23,37 @@ export const SOCIAL_PROOF = {
     audience: '24.7K',
     audienceLabel: 'subscribers',
     activity: '5.8M',
-    activityLabel: 'lifetime views',
+    activityLabel: 'channel views',
     url: 'https://www.youtube.com/@the_design_prism',
     source:
-      'YouTube Studio: 24,718 subscribers; 5,839,447 lifetime views through October 3, 2026. Includes legacy gaming content and public/private/unlisted/deleted videos; not agency campaign views or current reach.',
-    verifiedAt: 'October 4, 2026',
+      'YouTube account analytics via Ayrshare: 24,700 subscribers (API-rounded); 5,807,904 channel views. Includes legacy gaming content; not agency campaign views or current reach. Channel viewCount differs from the previous YouTube Studio lifetime metric.',
+    verifiedAt: SOCIAL_PROOF_VERIFIED_AT,
   },
   instagram: {
     platform: 'Instagram',
-    audience: '37K',
+    audience: '36.9K',
     audienceLabel: 'followers',
-    activity: '645',
+    activity: '647',
     activityLabel: 'posts',
     url: 'https://www.instagram.com/the_design_prism/',
     source: 'Instagram account analytics via Ayrshare',
-    verifiedAt: 'October 4, 2026',
+    verifiedAt: SOCIAL_PROOF_VERIFIED_AT,
   },
   tiktok: {
     platform: 'TikTok',
-    audience: '11.7K',
-    audienceAsOf: 'October 3, 2026',
+    audience: '12.3K',
+    audienceAsOf: 'October 17, 2026',
     audienceLabel: 'followers',
-    activity: '421.3K',
+    activity: '437K',
     activityLabel: 'likes',
     url: 'https://www.tiktok.com/@the_design_prism',
     source:
-      'TikTok followers via Ayrshare through October 3, 2026; rounded profile likes (421.3K) supplied by the account owner on October 4, 2026',
-    verifiedAt: 'October 4, 2026',
+      'TikTok account analytics via Ayrshare: 12,300 followers; 436,991 likes. Provider backfilled the account snapshot from October 17, 2026 at 17:00 UTC.',
+    verifiedAt: SOCIAL_PROOF_VERIFIED_AT,
   },
   combinedAudience: '73K+',
   combinedAudienceMethodology:
-    'Sum of channel subscriptions and followers; not deduplicated people.',
+    'Sum of channel subscriptions and followers, including the API-rounded YouTube subscriber count; not deduplicated people.',
 } as const
 
 export const SOCIAL_PROOF_CHANNELS = [

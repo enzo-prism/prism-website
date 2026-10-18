@@ -21,7 +21,7 @@ import { quotesData, takeawaysData } from '@/content/wall-of-love-data'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { isCuratedComment } from '@/lib/community-comments'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { trackLinkInteraction } from '@/utils/analytics'
 
 jest.mock('next/link', () => ({
@@ -100,7 +100,7 @@ describe('WallOfLoveClientPage hero', () => {
       expect(stats).toHaveTextContent(channel.audience)
       expect(stats).toHaveTextContent(channel.audienceLabel)
     }
-    expect(hero).toHaveTextContent(`Audience as of ${PROOF_METRICS_VERIFIED_AT}`)
+    expect(hero).toHaveTextContent(`Audience as of ${SOCIAL_PROOF_VERIFIED_AT}`)
   })
 
   it('quotes the curated counts in the hero pill', () => {

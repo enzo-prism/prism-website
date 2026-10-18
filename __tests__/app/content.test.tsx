@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 
 import ContentOsPage from '@/app/content/page'
 import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { trackLinkInteraction } from '@/utils/analytics'
 
 jest.mock('next/link', () => ({
@@ -107,7 +107,7 @@ describe('ContentOsPage creator-dashboard hero', () => {
     }
 
     expect(
-      hero.getByText(`As of ${PROOF_METRICS_VERIFIED_AT}`),
+      hero.getByText(`As of ${SOCIAL_PROOF_VERIFIED_AT}`),
     ).toBeInTheDocument()
     const heroText = container.querySelector('main section')?.textContent ?? ''
     expect(heroText).toContain('legacy gaming content')

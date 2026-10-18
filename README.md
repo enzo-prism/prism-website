@@ -28,6 +28,10 @@ The repo assumes pnpm; npm/yarn installs will fall out of sync.
 - UI copy follows the `prism-writing` skill (`prism-brand` pack): lowercase headlines ending with a period, no em dashes, no banned hype words, no guarantees.
 - `/generated/tailwind.theme.json` and `/generated/tokens.json` are exported from `DESIGN.md` and should be preferred over ad hoc values when implementing new UI.
 
+### Social proof data
+
+`lib/proof-metrics.ts` owns the shared social snapshot; keep `public/ai-data.json` aligned. The October 17, 2026 Ayrshare refresh uses `SOCIAL_PROOF_VERIFIED_AT` separately from client-data verification. YouTube subscribers are API-rounded, and channel views differ from the older Studio lifetime measurement. Source details and validation are in [`docs/data-verification-2026-10-04.md`](./docs/data-verification-2026-10-04.md#social-only-refresh--october-17-2026).
+
 ### Stack guardrails
 
 - **Runtime** – Node 22.x LTS. Vercel now requires 22, so pin local dev here to avoid deploy failures.

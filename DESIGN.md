@@ -326,7 +326,7 @@ Prism's own reach is proof that it can put fresh eyes on a client. Show
 channel totals from `SOCIAL_PROOF` and the dated Reel insights in
 `TOP_REELS` (`lib/proof-metrics.ts`) as phone screenshots of the analytics
 screen only, never the third-party footage the reels clip. Keep the YouTube
-caveat (lifetime views include earlier channel content) visible wherever 5.8M
+caveat (channel views include earlier channel content) visible wherever 5.8M
 appears.
 
 ## Motion
