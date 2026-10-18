@@ -86,6 +86,10 @@ test('all shared fills paint descenders at the tightest heading leading', async 
       // Include existing fixed padding utilities to catch cascade regressions.
       line.className = `text-hero ${fill} pb-1`
       line.style.whiteSpace = 'nowrap'
+      // Under reduced motion, globals.css gives every element a 0.01ms
+      // transition, so a style change is still mid-transition when measured
+      // in the same frame. Fixtures opt out so both measurements are exact.
+      line.style.setProperty('transition', 'none', 'important')
       line.textContent = 'agjpqy.'
       fixture.append(line)
     }
@@ -99,8 +103,12 @@ test('all shared fills paint descenders at the tightest heading leading', async 
   }
 
   // Prove this check detects the original bug, including g's deeper descender.
-  await page.addStyleTag({
-    content: '#descender-fixtures > div { padding-bottom: 0 !important; }',
+  await page.evaluate(() => {
+    for (const line of document.querySelectorAll<HTMLElement>(
+      '#descender-fixtures > div',
+    )) {
+      line.style.setProperty('padding-bottom', '0', 'important')
+    }
   })
   const clipped = await measureDescenders(page, '#descender-fixtures > div')
   expect(
