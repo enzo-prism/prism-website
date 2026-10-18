@@ -8,6 +8,7 @@ import CaseStudySnapshotStats, {
   type SnapshotFact,
 } from '@/components/case-studies/CaseStudySnapshotStats'
 import CaseStudyStory from '@/components/case-studies/CaseStudyStory'
+import CaseStudyTwoProblems from '@/components/case-studies/CaseStudyTwoProblems'
 import CaseStudyVisualHero, {
   type CaseStudyHeroBadge,
 } from '@/components/case-studies/CaseStudyVisualHero'
@@ -30,6 +31,7 @@ import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
 import { CaseStudySchema } from '@/components/schema-markup'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { getCaseStudyFraming } from '@/lib/case-study-framing'
 import {
   getCaseStudyWorkProfile,
   normalizeCaseStudyWorkProfile,
@@ -43,6 +45,7 @@ type MinimalCaseStudyPageProps = {
  * Shared case study template (23 pages). A launch page for the client: the
  * live site in the hero, a stats band of verified metrics or delivered-work
  * facts, the client's own voice when a verified video or quote exists, the
+ * same two problems every client shares (be found, be chosen), the
  * published story, outcomes, the work highlights, three more current-client
  * stories, and the waitlist close.
  */
@@ -66,6 +69,10 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
   const workProfile = normalizeCaseStudyWorkProfile(getCaseStudyWorkProfile(slug))
   const video = getCaseStudyVideo(caseStudy)
   const quotes = getCaseStudyQuotes(caseStudy.slug)
+  // Former clients keep their archive story but are not framed as proof.
+  const framing = archived ? undefined : getCaseStudyFraming(caseStudy.slug)
+  // Only a search metric is a receipt for "be found."
+  const foundMetric = metric && /search/i.test(metric.label) ? metric : undefined
 
   const resultsSentence =
     results.length > 0
@@ -156,6 +163,14 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
           video={video}
           quotes={quotes}
         />
+
+        {framing ? (
+          <CaseStudyTwoProblems
+            clientName={caseStudy.client}
+            framing={framing}
+            metric={foundMetric}
+          />
+        ) : null}
 
         {story ? <CaseStudyStory clientName={caseStudy.client} story={story} /> : null}
 

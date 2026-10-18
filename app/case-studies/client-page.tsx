@@ -4,6 +4,8 @@ import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck } from 'lucide-react'
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
 import { PhoneFrame } from '@/components/case-studies/PhoneFrame'
 import { WorkCard } from '@/components/case-studies/WorkCard'
+import WorkPattern from '@/components/case-studies/WorkPattern'
+import WorkWithPrism from '@/components/case-studies/WorkWithPrism'
 import {
   CURRENT_CASE_STUDIES,
   WORK_GROUPS,
@@ -202,17 +204,17 @@ export default function CaseStudiesPage() {
                 </div>
                 <h1
                   id="work-hero-title"
-                  className="prism-rise text-display text-gradient mt-8 max-w-[12ch] text-balance pb-2 [--rise-delay:80ms]"
+                  className="prism-rise text-display text-gradient mt-8 max-w-[18ch] text-balance pb-2 [--rise-delay:80ms]"
                 >
-                  real businesses.{' '}
-                  <span className="text-spectrum prism-spectrum-pan">
-                    live sites.
+                  <span className="block">different markets.</span>{' '}
+                  <span className="text-spectrum prism-spectrum-pan block">
+                    same two problems.
                   </span>
                 </h1>
                 <p className="prism-rise text-lead mt-6 max-w-[48ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-                  Dental practices, founders, nonprofits, and local shops. Open
-                  any project to see the live site, the story, and exactly what
-                  we built.
+                  A dentist in Palo Alto, a kids’ foundation in Belize, a boot
+                  fitter in Tahoe. Every one needed more people to find them,
+                  and more of those people to choose them.
                 </p>
                 <div className="prism-rise mt-9 flex flex-col gap-3 sm:flex-row [--rise-delay:240ms]">
                   <WaitlistButton location="case studies hero" size="xl" />
@@ -287,6 +289,8 @@ export default function CaseStudiesPage() {
           />
         </section>
 
+        <WorkPattern />
+
         <Section
           id="case-studies-list"
           aria-labelledby="work-gallery-title"
@@ -296,8 +300,8 @@ export default function CaseStudiesPage() {
             <SectionHeader
               id="work-gallery-title"
               eyebrow={`${ledger.stories} client stories`}
-              title="proof you can click."
-              description="Filter by industry. Every card opens the full story: the live site, the challenge, the approach, and what we delivered."
+              title="one standard. every market."
+              description="Filter by industry. Every story opens on the live site, then shows who they needed to reach and how we got them found and chosen."
             />
           </Reveal>
 
@@ -311,9 +315,11 @@ export default function CaseStudiesPage() {
 
         </Section>
 
+        <WorkWithPrism />
+
         <FinalCta
           location="case studies final cta"
-          title="your business could be the next case study."
+          title="love your business again."
           secondary={{ label: 'Read what clients say', href: '/wall-of-love' }}
         />
       </main>
@@ -326,7 +332,7 @@ export default function CaseStudiesPage() {
       />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Live websites and verified results from Prism's current clients across dental, founder-led, nonprofit, community, retail, and hospitality work."
+        description="Different markets, same two problems: getting found and getting chosen. Live websites and verified results from Prism's current clients across dental, founder-led, nonprofit, community, retail, and hospitality work."
         url={`${SITE}/case-studies`}
         isPartOfId={`${SITE}/#website`}
       />

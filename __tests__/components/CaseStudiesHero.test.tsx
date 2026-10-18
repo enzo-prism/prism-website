@@ -68,7 +68,7 @@ describe('Work index (/case-studies)', () => {
     const { hero } = renderHero()
 
     expect(
-      hero.getByRole('heading', { level: 1, name: 'real businesses. live sites.' }),
+      hero.getByRole('heading', { level: 1, name: 'different markets. same two problems.' }),
     ).toBeInTheDocument()
 
     const cta = hero.getByRole('link', { name: /Join the waitlist/ })
@@ -168,12 +168,37 @@ describe('Work index (/case-studies)', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'your business could be the next case study.',
+        name: 'love your business again.',
       }),
     ).toBeInTheDocument()
 
     const reviews = screen.getByRole('link', { name: /Read what clients say/ })
     expect(reviews).toHaveAttribute('href', '/wall-of-love')
+  })
+
+  it('names the two shared problems with examples from different markets', () => {
+    render(<CaseStudiesPage />)
+
+    const pattern = screen.getByRole('region', { name: 'be found. be chosen.' })
+    for (const name of ['be found.', 'be chosen.']) {
+      expect(within(pattern).getByRole('heading', { level: 3, name })).toBeInTheDocument()
+    }
+    const hrefs = within(pattern)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href'))
+    expect(hrefs.length).toBeGreaterThanOrEqual(4)
+    for (const href of hrefs) {
+      const slug = href?.replace('/case-studies/', '')
+      expect(currentStudies.map((study) => study.slug)).toContain(slug)
+    }
+  })
+
+  it('closes on how working with Prism feels before the waitlist', () => {
+    render(<CaseStudiesPage />)
+
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'your team, amplified.' }),
+    ).toBeInTheDocument()
   })
 
   it('keeps hero copy free of em dashes', () => {
