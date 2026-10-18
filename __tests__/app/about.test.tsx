@@ -171,14 +171,19 @@ describe('AboutClientPage', () => {
     expect(screen.getByText('new clark city, philippines')).toBeInTheDocument()
   })
 
-  it('links what Prism builds to the three service pages', () => {
+  it('links what Prism builds to the four service pages', () => {
     render(<AboutClientPage />)
 
-    for (const href of ['/websites', '/content', '/ads']) {
+    for (const href of ['/websites', '/content', '/ads', '/aeo']) {
       expect(
         screen.getAllByRole('link').some((link) => link.getAttribute('href') === href),
       ).toBe(true)
     }
+    // Lowercase house headings, but the AEO acronym keeps its capitals.
+    const aeo = screen
+      .getAllByRole('link')
+      .find((link) => link.getAttribute('href') === '/aeo') as HTMLElement
+    expect(aeo).toHaveTextContent(/^AEO/)
   })
 
   it('keeps the person and breadcrumb schema and avoids em dashes', () => {

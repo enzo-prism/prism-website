@@ -90,6 +90,7 @@ export const WAITLIST_FOCUS_OPTIONS = [
   { value: 'website', label: 'Website' },
   { value: 'content', label: 'Content' },
   { value: 'ads', label: 'Ads' },
+  { value: 'aeo', label: 'AEO' },
 ] as const
 
 export type WaitlistFocus = (typeof WAITLIST_FOCUS_OPTIONS)[number]['value']
@@ -104,7 +105,7 @@ export function isWaitlistFocus(value: unknown): value is WaitlistFocus {
   )
 }
 
-/** Parse `?focus=website,content` (or repeated params) into known values. */
+/** Parse `?focus=website,aeo` (or repeated params) into known values. */
 export function parseWaitlistFocus(
   raw: string | string[] | null | undefined,
 ): WaitlistFocus[] {
@@ -129,6 +130,7 @@ export const WAITLIST_FOCUS_HREFS: Record<WaitlistFocus, string> = {
   website: getWaitlistHref('website'),
   content: getWaitlistHref('content'),
   ads: getWaitlistHref('ads'),
+  aeo: getWaitlistHref('aeo'),
 }
 
 /**

@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils'
 type InlineWaitlistCtaProps = {
   /** Analytics location for the CTA. */
   location: string
+  /** Service-focused waitlist href, e.g. /waitlist?focus=aeo. */
+  href?: string
   /** One short line (sentence case or lowercase house headline). */
   title: string
   className?: string
@@ -17,6 +19,7 @@ type InlineWaitlistCtaProps = {
  */
 export function InlineWaitlistCta({
   location,
+  href,
   title,
   className,
 }: InlineWaitlistCtaProps) {
@@ -29,7 +32,11 @@ export function InlineWaitlistCta({
     >
       <p className="text-heading text-balance text-foreground">{title}</p>
       <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row sm:gap-4">
-        <WaitlistButton location={location} className="w-full sm:w-auto" />
+        <WaitlistButton
+          location={location}
+          href={href}
+          className="w-full sm:w-auto"
+        />
         <WaitlistStatus asLink={false} />
       </div>
     </div>

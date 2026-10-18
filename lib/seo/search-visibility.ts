@@ -10,11 +10,11 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/websites',
   '/content',
   '/ads',
+  '/aeo',
   '/chatgpt-ads',
   '/local-listings',
   '/seo',
   '/seo/audit',
-  '/ai-seo-services',
   '/proof',
   '/wall-of-love',
   '/case-studies',
@@ -43,7 +43,6 @@ export const INDEXABLE_STATIC_ROUTES = [
 
 export const NOINDEX_ROUTES = [
   // Retired lead funnels (2026-09-14). Each 308-redirects to /waitlist.
-  '/aeo',
   '/apply',
   '/book-a-shoot',
   '/contact',
@@ -51,7 +50,9 @@ export const NOINDEX_ROUTES = [
   '/get-started',
   '/analysis-thank-you',
   '/aeo-thank-you',
+  // AI search shortpaths, consolidated on /aeo (2026-10-18).
   '/ai',
+  '/ai-seo-services',
   '/ai-agents',
   '/ai-website-launch',
   '/apps',

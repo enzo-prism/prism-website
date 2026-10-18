@@ -6,9 +6,10 @@ import { PRICING_OFFER_ORDER } from '@/lib/pricing-model'
 import { isRouteIndexable } from '@/lib/seo/search-visibility'
 import { PRISM_SERVICES } from '@/lib/services'
 
-// 2026-10-12: Prism offers exactly three services (Websites, Content, Ads).
-// The two retired packaged offers redirect permanently; dental stays a
-// specialty and proof cluster (dental landers and case studies remain).
+// 2026-10-12: Prism offers exactly three services (Websites, Content, Ads),
+// and AEO joined as the fourth on 2026-10-18. The two retired packaged offers
+// redirect permanently; dental stays a specialty and proof cluster (dental
+// landers and case studies remain).
 const RETIRED_REDIRECTS = [
   { source: '/dental-os', destination: '/dental-website' },
   { source: '/prism-infinity', destination: '/content' },
@@ -35,12 +36,12 @@ function collectTextFiles(dir: string): string[] {
   })
 }
 
-describe('three services only', () => {
-  it('keeps the header, catalog, and pricing on the same three services', () => {
-    const hrefs = ['/websites', '/content', '/ads']
+describe('four services only', () => {
+  it('keeps the header, catalog, and pricing on the same four services', () => {
+    const hrefs = ['/websites', '/content', '/ads', '/aeo']
     expect(NAV_SERVICE_ITEMS.map((item) => item.href)).toEqual(hrefs)
     expect(PRISM_SERVICES.map((service) => service.href)).toEqual(hrefs)
-    expect(PRICING_OFFER_ORDER).toEqual(['website', 'content', 'ads'])
+    expect(PRICING_OFFER_ORDER).toEqual(['website', 'content', 'ads', 'aeo'])
   })
 
   it('permanently redirects the retired offer routes and deletes their pages', () => {

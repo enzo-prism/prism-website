@@ -18,6 +18,7 @@ export const PRICING_STRICT_FILES = [
   'app/services/page.tsx',
   'app/websites/page.tsx',
   'app/ads/page.tsx',
+  'app/aeo/page.tsx',
   'app/chatgpt-ads/page.tsx',
   'app/seo/page.tsx',
   'app/local-listings/page.tsx',
@@ -147,13 +148,18 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     'WEBSITE_WAITLIST_CTA',
     'Support discovery on Google and in AI.',
   ],
+  'app/aeo/page.tsx': [
+    'Prism AEO',
+    'AEO_WAITLIST_CTA',
+    'no one can',
+  ],
   'components/social-link-hub.tsx': ['WAITLIST_FOCUS_HREFS'],
   'components/footer.tsx': ['WAITLIST_CTA'],
 }
 
 /**
- * Three services only (2026-10-12): Websites, Content, and Ads are the only
- * offers. The two retired packaged offers must not be named, linked, or used
+ * Four services (2026-10-12, AEO added 2026-10-18): Websites, Content, Ads,
+ * and AEO are the only offers. The two retired packaged offers must not be named, linked, or used
  * as a redirect destination on pricing-sensitive surfaces. Redirect *sources*
  * in next.config.mjs may name the old routes.
  */

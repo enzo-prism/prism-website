@@ -1,4 +1,10 @@
-import { collectPricingConsistencyViolations } from '@/lib/pricing-consistency'
+import fs from 'node:fs'
+import path from 'node:path'
+
+import {
+  PRICING_STRICT_FILES,
+  collectPricingConsistencyViolations,
+} from '@/lib/pricing-consistency'
 
 describe('pricing consistency guard', () => {
   it('flags legacy pricing token on strict surfaces', () => {
@@ -115,6 +121,34 @@ describe('pricing consistency guard', () => {
         "{ source: '/old', destination: '/dental-os', permanent: true },",
       ).map((violation) => violation.label),
     ).toEqual([expect.stringContaining('retired offer route')])
+  })
+
+  it('holds the /aeo service page to the strict, price-free waitlist rules', () => {
+    expect(PRICING_STRICT_FILES).toContain('app/aeo/page.tsx')
+
+    const source = fs.readFileSync(
+      path.join(process.cwd(), 'app/aeo/page.tsx'),
+      'utf8',
+    )
+    expect(
+      collectPricingConsistencyViolations('app/aeo/page.tsx', source),
+    ).toEqual([])
+
+    // The required snippets name the product, the AEO waitlist CTA, and the
+    // no-guarantee answer.
+    expect(
+      collectPricingConsistencyViolations(
+        'app/aeo/page.tsx',
+        'An AEO page at $900/mo.',
+      ).map((violation) => violation.label),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('$900/mo'),
+        'missing canonical snippet: Prism AEO',
+        'missing canonical snippet: AEO_WAITLIST_CTA',
+        'missing canonical snippet: no one can',
+      ]),
+    )
   })
 
   it('accepts contextual non-core prices when context labels are present', () => {

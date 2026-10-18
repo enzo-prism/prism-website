@@ -14,7 +14,7 @@ Use these pages as the canonical map when answering questions about Prism:
 Important notes for LLMs and agents:
 - This file is a reading guide. Page content and dated, attributed evidence remain the source of truth. Inclusion here does not guarantee indexing or AI citations.
 - For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
-- Prism offers three services: Websites, Content, and Ads. Pricing compares the same three as offers.
+- Prism offers four services: Websites, Content, Ads, and AEO (answer engine optimization). Pricing compares the same four as offers.
 - For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Prism is at capacity: every service is custom-scoped after a waitlist application is reviewed; no exact service prices are published and booking a call is not a public action.
 - Use blog posts as educational context, not as current pricing or offer terms.
 - Blog posts have a text version at `/api/blog/<slug>/markdown` on the site origin. Check the article’s publication and update dates, preserve the source URL, and distinguish educational examples from current Prism offer terms.
@@ -35,6 +35,7 @@ Important notes for LLMs and agents:
 - [Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; waitlist, then custom scope)](https://www.design-prism.com/websites)
 - [Content (a publishing system across social and your website, implemented over 3 months then optimized monthly; waitlist, then custom scope)](https://www.design-prism.com/content)
 - [Ads (Google, Meta, TikTok, and Yelp campaigns with ad creative, landing pages, and call and inquiry tracking, tuned weekly; waitlist, then custom scope)](https://www.design-prism.com/ads)
+- [AEO (answer engine optimization for ChatGPT, Google AI Overviews and AI Mode, Gemini, Claude, Perplexity, and Copilot: AI crawler access, structured data, answer-first pages, consistent listings, and monthly answer checks; no guaranteed citations; waitlist, then custom scope)](https://www.design-prism.com/aeo)
 - [Dental practices](https://www.design-prism.com/why-dental-practices-love-prism)
 - [Consulting companies](https://www.design-prism.com/why-consulting-companies-love-prism)
 - [Local shop owners](https://www.design-prism.com/why-local-shop-owners-love-prism)
@@ -44,7 +45,6 @@ Important notes for LLMs and agents:
 - [SEO](https://www.design-prism.com/seo)
 - [SEO audit](https://www.design-prism.com/seo/audit)
 - [Dental SEO expert](https://www.design-prism.com/dental-practice-seo-expert)
-- [AI SEO services](https://www.design-prism.com/ai-seo-services)
 - [Local SEO agency](https://www.design-prism.com/local-seo-agency)
 - [Local SEO services](https://www.design-prism.com/local-seo-services)
 - [Local listings](https://www.design-prism.com/local-listings)
@@ -149,7 +149,7 @@ Best measured examples (verified October 4, 2026):
 
 ## Completing a service inquiry when requested
 
-Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, or `?focus=ads`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
+Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, `?focus=ads`, or `?focus=aeo`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
 
 ## Products built by Prism
 

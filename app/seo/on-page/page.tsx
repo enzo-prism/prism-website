@@ -29,7 +29,7 @@ const RELATED_LINKS = [
   { label: "Explore off-page SEO", href: "/seo/off-page" },
   { label: "SEO audit service", href: "/seo/audit" },
   { label: "SEO for dentists", href: "/dental-practice-seo-expert" },
-  { label: "AI SEO services", href: "/ai-seo-services" },
+  { label: "AEO (AI search)", href: "/aeo" },
   { label: "How dental practices rank higher in Google", href: "/blog/dental-practice-rank-higher-google-search" },
 ] as const
 

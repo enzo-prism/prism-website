@@ -117,6 +117,7 @@ for (const path of [
   '/websites',
   '/content',
   '/ads',
+  '/aeo',
   '/case-studies',
   '/case-studies/exquisite-dentistry',
   '/blog',

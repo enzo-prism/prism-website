@@ -6,7 +6,7 @@ import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_TITLE = 'Prism on Instagram'
 const PAGE_DESCRIPTION =
-  'Start Website, Content, or Ads from our Instagram studio.'
+  'Start Website, Content, Ads, or AEO from our Instagram studio.'
 const CANONICAL_URL = 'https://www.design-prism.com/ig'
 
 export const metadata: Metadata = buildRouteMetadata({

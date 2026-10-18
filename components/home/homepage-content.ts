@@ -57,7 +57,7 @@ export const HOMEPAGE_HERO = {
   titleLead: 'impossible is',
   titleAccent: 'temporary.',
   subheading:
-    'Websites, content, and ads that make your business shine online, turn visitors into customers, and reach people who have never heard of you.',
+    'Websites, content, ads, and AEO that make your business shine online, turn visitors into customers, and reach people who have never heard of you.',
   primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
   secondaryCta: { label: 'See the work', href: '#work' },
   /** Labels for the refracted bands, top to bottom. */
@@ -148,6 +148,7 @@ export const HOMEPAGE_SERVICES = {
       links: [
         { label: 'Content', href: '/content' },
         { label: 'Ads', href: '/ads' },
+        { label: 'AEO', href: '/aeo' },
       ],
     },
   ],

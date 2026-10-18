@@ -83,11 +83,12 @@ describe('CAPACITY_MESSAGE', () => {
 })
 
 describe('waitlist focus choices', () => {
-  it('adds "Not sure yet" after the three services without changing them', () => {
-    expect(WAITLIST_FOCUS_OPTIONS.map((option) => option.value)).toEqual([
-      'website',
-      'content',
-      'ads',
+  it('adds "Not sure yet" after the four services without changing them', () => {
+    expect(WAITLIST_FOCUS_OPTIONS).toEqual([
+      { value: 'website', label: 'Website' },
+      { value: 'content', label: 'Content' },
+      { value: 'ads', label: 'Ads' },
+      { value: 'aeo', label: 'AEO' },
     ])
     expect(WAITLIST_FOCUS_CHOICES).toEqual([
       ...WAITLIST_FOCUS_OPTIONS,
@@ -102,7 +103,20 @@ describe('waitlist focus choices', () => {
     expect(isWaitlistFocusChoice('bogus')).toBe(false)
     expect(isWaitlistFocus('not-sure')).toBe(false)
     expect(parseWaitlistFocus('not-sure,ads')).toEqual(['ads'])
-    expect(Object.keys(WAITLIST_FOCUS_HREFS)).toEqual(['website', 'content', 'ads'])
+    expect(Object.keys(WAITLIST_FOCUS_HREFS)).toEqual([
+      'website',
+      'content',
+      'ads',
+      'aeo',
+    ])
+  })
+
+  it('accepts AEO as a service focus from the query string', () => {
+    expect(isWaitlistFocus('aeo')).toBe(true)
+    expect(isWaitlistFocusChoice('aeo')).toBe(true)
+    expect(parseWaitlistFocus('website,aeo')).toEqual(['website', 'aeo'])
+    expect(parseWaitlistFocus(['aeo', 'bogus'])).toEqual(['aeo'])
+    expect(WAITLIST_FOCUS_HREFS.aeo).toBe('/waitlist?focus=aeo')
   })
 
   it('names the no-website Formspree field', () => {

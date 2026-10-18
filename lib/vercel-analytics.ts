@@ -46,7 +46,7 @@ function getWaitlistStep(value: unknown) {
 }
 
 const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
-const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads'])
+const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads', 'aeo'])
 const SOCIAL_HUB_DESTINATIONS = new Set([
   WAITLIST_PATH,
   ...Object.values(WAITLIST_FOCUS_HREFS),
@@ -301,7 +301,7 @@ export function buildVercelCustomEvent(
             eventParams.form_location,
             WAITLIST_FORM_LOCATIONS,
           ),
-          focus_count: getBoundedCount(eventParams.focus_count, 3),
+          focus_count: getBoundedCount(eventParams.focus_count, 4),
         }),
       }
     case 'waitlist_submit_error':

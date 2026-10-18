@@ -1,9 +1,9 @@
 import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from './waitlist'
 
-// Prism sells exactly three services, and each one is a packaged offer on
-// /pricing with the same plain name (2026-10-12). Ids match PrismServiceId in
-// lib/services.ts.
-export type PricingOfferId = 'website' | 'content' | 'ads'
+// Prism sells four services, and each one is a packaged offer on /pricing
+// with the same plain name (three since 2026-10-12; AEO joined 2026-10-18).
+// Ids match PrismServiceId in lib/services.ts.
+export type PricingOfferId = 'website' | 'content' | 'ads' | 'aeo'
 
 export type PricingBillingPeriod =
   | 'ONE_TIME'
@@ -51,6 +51,7 @@ export type PricingOffer = {
 export const WEBSITE_PRICE_LABEL = 'One project, scoped to you'
 export const CONTENT_PRICE_LABEL = '3-month setup, then monthly'
 export const ADS_PRICE_LABEL = 'Launch, then weekly tuning'
+export const AEO_PRICE_LABEL = 'Audit, then monthly checks'
 
 /** Service-specific waitlist entry points (prefill the focus checkboxes). */
 export const WEBSITE_WAITLIST_CTA = {
@@ -66,6 +67,11 @@ export const CONTENT_WAITLIST_CTA = {
 export const ADS_WAITLIST_CTA = {
   label: WAITLIST_CTA.label,
   href: WAITLIST_FOCUS_HREFS.ads,
+} as const
+
+export const AEO_WAITLIST_CTA = {
+  label: WAITLIST_CTA.label,
+  href: WAITLIST_FOCUS_HREFS.aeo,
 } as const
 
 export const PRICING_PRIMARY_CTA = WAITLIST_CTA
@@ -127,7 +133,29 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
       href: '/ads',
     },
   },
+  aeo: {
+    offerId: 'aeo',
+    name: 'AEO',
+    price: 0,
+    priceCurrency: 'USD',
+    billingPeriod: 'CUSTOM',
+    priceKind: 'custom',
+    priceLabel: AEO_PRICE_LABEL,
+    priceSubLabel: 'Fixes scoped to the questions that matter',
+    description:
+      'Answer engine optimization for ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity. We audit where you appear, fix what AI search can read about you, and re-check your customer questions every month.',
+    primaryCta: AEO_WAITLIST_CTA,
+    secondaryCta: {
+      label: 'Explore AEO',
+      href: '/aeo',
+    },
+  },
 }
 
 /** Offers in the order they should appear across pricing surfaces. */
-export const PRICING_OFFER_ORDER: PricingOfferId[] = ['website', 'content', 'ads']
+export const PRICING_OFFER_ORDER: PricingOfferId[] = [
+  'website',
+  'content',
+  'ads',
+  'aeo',
+]

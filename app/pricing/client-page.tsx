@@ -5,6 +5,7 @@ import {
   Hammer,
   ListPlus,
   Megaphone,
+  MessageSquareQuote,
   MessagesSquare,
   Wrench,
 } from 'lucide-react'
@@ -27,6 +28,7 @@ import { Badge } from '@/components/ui/badge'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import {
   ADS_PRICE_LABEL,
+  AEO_PRICE_LABEL,
   CANONICAL_PRICING_OFFERS,
   CONTENT_PRICE_LABEL,
   PRICING_OFFER_ORDER,
@@ -63,8 +65,8 @@ const growthPathSteps = [
 ] as const
 
 // Who each plan is for and what it includes. Copy stays inside what
-// lib/pricing-model.ts and the service pages (/websites, /content, /ads)
-// already promise.
+// lib/pricing-model.ts and the service pages (/websites, /content, /ads,
+// /aeo) already promise.
 const PLAN_DETAILS: Record<
   PricingOfferId,
   Pick<PricingPlan, 'badge' | 'audience' | 'includes' | 'featured'>
@@ -106,9 +108,21 @@ const PLAN_DETAILS: Record<
       'Weekly tuning and plain-English reports',
     ],
   },
+  aeo: {
+    badge: 'AI search',
+    audience:
+      'For businesses that want to be found, understood, and cited when customers ask AI.',
+    includes: [
+      'An audit across ChatGPT, AI Overviews, Gemini, Claude, and Perplexity',
+      'AI crawler access and structured data',
+      'Answer-first pages and FAQs',
+      'Consistent listings and business facts',
+      'Monthly answer checks and plain-English reports',
+    ],
+  },
 }
 
-// The three offers (one per service) as plan cards. (Identifier kept for the
+// The four offers (one per service) as plan cards. (Identifier kept for the
 // pricing-consistency required-snippet guard.)
 const pricingSnapshot: PricingPlan[] = PRICING_OFFER_ORDER.map((offerId) => {
   const offer = CANONICAL_PRICING_OFFERS[offerId]
@@ -130,6 +144,7 @@ const comparisonRows: ComparisonRow[] = [
       website: true,
       content: false,
       ads: false,
+      aeo: 'Fixes to your current site',
     },
   },
   {
@@ -138,6 +153,7 @@ const comparisonRows: ComparisonRow[] = [
       website: false,
       content: true,
       ads: 'Ad creative',
+      aeo: 'Answer-first pages',
     },
   },
   {
@@ -146,6 +162,16 @@ const comparisonRows: ComparisonRow[] = [
       website: false,
       content: false,
       ads: true,
+      aeo: false,
+    },
+  },
+  {
+    label: 'Visibility in ChatGPT, AI Overviews, and Perplexity',
+    values: {
+      website: 'Search and AI foundations',
+      content: 'Articles that answer questions',
+      ads: false,
+      aeo: true,
     },
   },
   {
@@ -154,6 +180,7 @@ const comparisonRows: ComparisonRow[] = [
       website: 'Service pages and inquiry forms',
       content: 'Landing pages and articles',
       ads: 'A clear page after the click',
+      aeo: 'Pages assistants can quote',
     },
   },
   {
@@ -162,6 +189,7 @@ const comparisonRows: ComparisonRow[] = [
       website: 'Analytics set up at launch',
       content: 'Monthly review of what worked',
       ads: 'Weekly, with call and form tracking',
+      aeo: 'Monthly answer checks',
     },
   },
   {
@@ -170,6 +198,7 @@ const comparisonRows: ComparisonRow[] = [
       website: 'One project, optional care after launch',
       content: 'Three-month setup, then month-to-month',
       ads: 'Launch, then weekly tuning',
+      aeo: AEO_PRICE_LABEL,
     },
   },
 ]
@@ -200,6 +229,14 @@ const partnerLevels = [
     href: '/ads',
     description:
       'Campaigns reviewed every week: spend moves toward what works, the next test goes live, and you get the results in plain English.',
+  },
+  {
+    title: 'AEO',
+    price: AEO_PRICE_LABEL,
+    icon: MessageSquareQuote,
+    href: '/aeo',
+    description:
+      'Your customer questions re-asked across the answer engines every month, with the next fixes chosen from what changed.',
   },
 ] as const
 
@@ -247,9 +284,14 @@ const faqs = [
       'The work is scoped when we reach out from the waitlist, based on your channels and goals. Your ad budget is set separately: we recommend a starting budget by channel and market size, and spend scales only when performance supports it.',
   },
   {
+    question: 'How is AEO priced?',
+    answer:
+      'AEO is scoped when we reach out from the waitlist, based on the questions, engines, and fixes your business needs. It starts with an audit across the answer engines, then monthly checks.',
+  },
+  {
     question: 'Do you work with dental practices?',
     answer:
-      'Yes. Dental is one of our deepest specialties. Practices work with Prism through the same three services: a practice website, content, and ads, scoped to their locations and goals.',
+      'Yes. Dental is one of our deepest specialties. Practices work with Prism through the same four services: a practice website, content, ads, and AEO, scoped to their locations and goals.',
   },
 ] as const
 
@@ -267,7 +309,7 @@ export default function PricingPageClient() {
         <SectionHeader
           id="pricing-offers-heading"
           eyebrow="The plans"
-          title="three ways to work with Prism."
+          title="four ways to work with Prism."
           titleClassName="max-w-none"
         />
         <div className="mt-10">
@@ -416,7 +458,7 @@ export default function PricingPageClient() {
               id="pricing-support-heading"
               eyebrow="Ongoing systems"
               title="support after launch."
-              description="Keep your website maintained, your content consistent, and your campaigns tuned."
+              description="Keep your website maintained, your content consistent, your campaigns tuned, and your answers checked."
               titleClassName="max-w-[12ch]"
             />
           </Reveal>
@@ -498,7 +540,7 @@ export default function PricingPageClient() {
 }
 
 function PricingStructuredData() {
-  const { website, content, ads } = CANONICAL_PRICING_OFFERS
+  const { website, content, ads, aeo } = CANONICAL_PRICING_OFFERS
 
   return (
     <>
@@ -542,6 +584,20 @@ function PricingStructuredData() {
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/ads',
+        }}
+      />
+      <ServiceSchema
+        serviceId="pricing-aeo"
+        name={aeo.name}
+        description={aeo.description}
+        serviceType="Answer engine optimization"
+        areaServed="United States"
+        offerDetails={{
+          name: aeo.name,
+          description: aeo.description,
+          businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
+          availability: 'https://schema.org/LimitedAvailability',
+          url: 'https://www.design-prism.com/aeo',
         }}
       />
       <FAQSchema

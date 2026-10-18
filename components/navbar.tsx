@@ -11,6 +11,7 @@ import {
   Camera,
   LayoutTemplate,
   Megaphone,
+  MessageSquareQuote,
 } from 'lucide-react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
@@ -43,6 +44,7 @@ const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
 }
 
 function getCaseStudyBreadcrumbs(
@@ -120,7 +122,7 @@ function ServicesMenu({
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <div className="grid w-[min(92vw,640px)] grid-cols-[1.35fr_1fr] gap-2 p-1.5">
-          {/* The three services are equal tiles that share the featured
+          {/* The four services are equal tiles that share the featured
               card's height; "All services" keeps its natural height. */}
           <ul className="flex flex-col gap-1.5">
             {NAV_SERVICE_ITEMS.map((item) => {
@@ -428,8 +430,9 @@ export default function Navbar() {
               </li>
             )
           })}
-          {/* Three services plus "All services" keep the grid an even 2x2. */}
-          <li>
+          {/* The four services fill a 2x2 grid; "All services" spans the row
+              beneath them. */}
+          <li className="col-span-2">
             <Link
               href="/services"
               onClick={() => handleNavigate('All services', '/services')}

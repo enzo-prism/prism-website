@@ -7,6 +7,7 @@ const keyPages = [
   "/services",
   "/websites",
   "/ads",
+  "/aeo",
   "/seo",
   "/local-listings",
 ] as const

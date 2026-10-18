@@ -177,7 +177,7 @@ describe('ContentOsPage sections', () => {
     expect(within(cancel).getByText(/month-to-month/)).toBeInTheDocument()
   })
 
-  it('cross-links websites and ads, then ends with the content final CTA', () => {
+  it('cross-links websites, ads, and AEO, then ends with the content final CTA', () => {
     render(<ContentOsPage />)
 
     const siblings = screen
@@ -187,7 +187,7 @@ describe('ContentOsPage sections', () => {
       within(siblings)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/ads'])
+    ).toEqual(['/websites', '/ads', '/aeo'])
 
     const finalCta = screen
       .getByRole('heading', { level: 2, name: 'your content, next.' })

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import Footer from '@/components/footer'
 import { getWaitlistIntakeMonth } from '@/lib/waitlist'
@@ -45,7 +45,9 @@ describe('Footer', () => {
     render(<Footer />)
 
     expect(
-      screen.getByText(/websites, content, and ads that help customers find and choose your business\./i),
+      screen.getByText(
+        /websites, content, ads, and AEO that help customers find and choose your business\./i,
+      ),
     ).toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: /book call/i }),
@@ -69,6 +71,24 @@ describe('Footer', () => {
       '/pricing',
     )
     expect(screen.queryByText(/book a 30-min call/i)).not.toBeInTheDocument()
+  })
+
+  it('lists the four services, then All services, in the Services column', () => {
+    render(<Footer />)
+
+    const column = screen.getByText('Services', { selector: 'p' })
+      .parentElement as HTMLElement
+    expect(
+      within(column)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['Websites', '/websites'],
+      ['Content', '/content'],
+      ['Ads', '/ads'],
+      ['AEO', '/aeo'],
+      ['All services', '/services'],
+    ])
   })
 
   it('routes every conversion path to the waitlist and keeps support reachable', () => {
