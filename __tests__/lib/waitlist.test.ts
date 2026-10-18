@@ -83,12 +83,12 @@ describe('CAPACITY_MESSAGE', () => {
 })
 
 describe('waitlist focus choices', () => {
-  it('adds "Not sure yet" after the four services without changing them', () => {
+  it('adds "Not sure yet" after the four services, AEO first', () => {
     expect(WAITLIST_FOCUS_OPTIONS).toEqual([
+      { value: 'aeo', label: 'AEO' },
       { value: 'website', label: 'Website' },
       { value: 'content', label: 'Content' },
       { value: 'ads', label: 'Ads' },
-      { value: 'aeo', label: 'AEO' },
     ])
     expect(WAITLIST_FOCUS_CHOICES).toEqual([
       ...WAITLIST_FOCUS_OPTIONS,

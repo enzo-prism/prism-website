@@ -86,11 +86,13 @@ export const CAPACITY_MESSAGE = {
   nextIntakeLead: 'Our next intake starts in',
 } as const
 
+// Display order on the waitlist focus step. AEO leads (2026-10-18), matching
+// the header Services menu.
 export const WAITLIST_FOCUS_OPTIONS = [
+  { value: 'aeo', label: 'AEO' },
   { value: 'website', label: 'Website' },
   { value: 'content', label: 'Content' },
   { value: 'ads', label: 'Ads' },
-  { value: 'aeo', label: 'AEO' },
 ] as const
 
 export type WaitlistFocus = (typeof WAITLIST_FOCUS_OPTIONS)[number]['value']
