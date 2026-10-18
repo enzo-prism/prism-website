@@ -15,10 +15,16 @@ import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
  * from what the detail pages publish.
  */
 
-export type WorkGroupKey = 'dental' | 'founders' | 'community' | 'retail'
+export type WorkGroupKey =
+  | 'dental'
+  | 'software'
+  | 'founders'
+  | 'community'
+  | 'retail'
 
 export const WORK_GROUPS: ReadonlyArray<{ key: WorkGroupKey; label: string }> = [
   { key: 'dental', label: 'Dental' },
+  { key: 'software', label: 'Software & AI' },
   { key: 'founders', label: 'Founders & consulting' },
   { key: 'community', label: 'Nonprofit & community' },
   { key: 'retail', label: 'Retail & hospitality' },
@@ -34,6 +40,7 @@ const CATEGORY_GROUP: Record<CaseStudyMeta['category'], WorkGroupKey> = {
   education: 'community',
   retail: 'retail',
   'private estate': 'retail',
+  software: 'software',
 }
 
 const FORMER = new Set<string>(FORMER_CLIENT_SLUGS)

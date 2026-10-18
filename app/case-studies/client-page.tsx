@@ -210,9 +210,9 @@ export default function CaseStudiesPage() {
                   </span>
                 </h1>
                 <p className="prism-rise text-lead mt-6 max-w-[48ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-                  Dental practices, founders, nonprofits, and local shops. Open
-                  any project to see the live site, the story, and exactly what
-                  we built.
+                  Dental practices, software companies, founders, nonprofits,
+                  and local shops. Open any project to see the live site, the
+                  story, and exactly what we built.
                 </p>
                 <div className="prism-rise mt-9 flex flex-col gap-3 sm:flex-row [--rise-delay:240ms]">
                   <WaitlistButton location="case studies hero" size="xl" />
@@ -326,7 +326,7 @@ export default function CaseStudiesPage() {
       />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Live websites and verified results from Prism's current clients across dental, founder-led, nonprofit, community, retail, and hospitality work."
+        description="Live websites and verified results from Prism's current clients across dental, software, founder-led, nonprofit, community, retail, and hospitality work."
         url={`${SITE}/case-studies`}
         isPartOfId={`${SITE}/#website`}
       />

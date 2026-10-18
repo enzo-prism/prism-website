@@ -7,6 +7,9 @@
 //   node scripts/capture-case-study-screenshots.mjs --force --mobile-only
 //   node scripts/capture-case-study-screenshots.mjs --force --mobile-only olympic-bootworks
 //
+// Recipes may set `colorScheme` ('light' by default, which is what Playwright
+// emulated before the option existed) for sites that follow the system theme.
+//
 // Flags:
 //   --force         overwrite existing files
 //   --mobile-only   capture only the 390×844 mobile JPEG
@@ -63,6 +66,11 @@ const HIDE_WIDGET_CSS = `
  * Do not click generic Close — Belize Typeform uses that label to OPEN the form.
  */
 const MOBILE_RECIPES = {
+  'mach-1': {
+    colorScheme: 'dark',
+    dismissButtons: [/reject optional/i],
+    settleMs: 1200,
+  },
   'olympic-bootworks': {
     dismissButtons: [/allow analytics/i],
     dismissSelectors: [
@@ -185,6 +193,13 @@ const MOBILE_RECIPES = {
  * lands mid-crossfade (Mataria's headline garbled over a dissolve).
  */
 const DESKTOP_RECIPES = {
+  'mach-1': {
+    // The site follows the system theme; its dark theme is the one that sits
+    // on Prism's canvas. "Reject optional" keeps the client's analytics off.
+    colorScheme: 'dark',
+    dismissButtons: [/reject optional/i],
+    settleMs: 1200,
+  },
   'olympic-bootworks': {
     // "Essential only" so the capture never fires the client's analytics.
     dismissButtons: [/essential only/i],
@@ -392,6 +407,7 @@ async function captureOne(browser, entry) {
 
   if (!skipDesktop) {
     const desktopCtx = await browser.newContext({
+      colorScheme: DESKTOP_RECIPES[entry.slug]?.colorScheme ?? 'light',
       viewport: { width: 1440, height: 900 },
       deviceScaleFactor: 2,
       userAgent:
@@ -435,6 +451,7 @@ async function captureOne(browser, entry) {
 
   if (!skipMobile) {
     const mobileCtx = await browser.newContext({
+      colorScheme: MOBILE_RECIPES[entry.slug]?.colorScheme ?? 'light',
       viewport: { width: 390, height: 844 },
       deviceScaleFactor: 2,
       isMobile: true,

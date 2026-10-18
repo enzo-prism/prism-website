@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { notFound } from 'next/navigation'
 import { Archive, BadgeCheck, Briefcase, MapPin, Play } from 'lucide-react'
 
@@ -37,16 +38,24 @@ import {
 
 type MinimalCaseStudyPageProps = {
   slug: string
+  /** Muted looping recording of the live site, played in the hero frame. */
+  heroFilm?: string
+  /** Bespoke sections placed after the story (flagship case studies). */
+  afterStory?: ReactNode
 }
 
 /**
- * Shared case study template (23 pages). A launch page for the client: the
+ * Shared case study template (24 pages). A launch page for the client: the
  * live site in the hero, a stats band of verified metrics or delivered-work
  * facts, the client's own voice when a verified video or quote exists, the
  * published story, outcomes, the work highlights, three more current-client
  * stories, and the waitlist close.
  */
-export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps) {
+export default function MinimalCaseStudyPage({
+  slug,
+  heroFilm,
+  afterStory,
+}: MinimalCaseStudyPageProps) {
   const caseStudy = CASE_STUDIES.find((item) => item.slug === slug)
 
   if (!caseStudy) {
@@ -146,6 +155,7 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
           homeDesktopAlt={`${caseStudy.client} homepage built by Prism`}
           homeMobileSrc={mobileShot}
           homeMobileAlt={`Mobile view of the ${caseStudy.client} site`}
+          homeDesktopFilm={heroFilm}
         />
 
         <CaseStudySnapshotStats metric={metric} facts={facts} />
@@ -158,6 +168,8 @@ export default function MinimalCaseStudyPage({ slug }: MinimalCaseStudyPageProps
         />
 
         {story ? <CaseStudyStory clientName={caseStudy.client} story={story} /> : null}
+
+        {afterStory}
 
         {caseStudy.explainerVideo ? (
           <CaseStudyExplainerVideo

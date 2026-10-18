@@ -287,14 +287,28 @@ them; a client without a logo shows its name. Former clients never appear.
 
 ### Featured stories
 
-The homepage `#work` deck: five large panels (`rounded-[2rem]`, hairline,
+The homepage `#work` deck: six large panels (`rounded-[2rem]`, hairline,
 `bg-card`) that stack as a sticky deck on tall desktop screens, with covered
 panels receding (scale and dim, transform and opacity only). Each panel pairs
 a browser frame and a phone showing tall real captures that browse slowly
 while on screen, a "Sells to consumers" or "Sells to businesses" chip, "The
 impossible" (Prism's framing, never quote marks), the chips of what was
 built, and "Now live". Each panel owns one spectrum band as a soft glow behind
-its media, so the five read as one beam of light split five ways.
+its media, in spectrum order (red to violet), so the six read as one beam
+of light split six ways.
+
+### Flagship case studies
+
+A flagship case study (Mach 1) keeps the shared template and adds bespoke
+sections after the story through `MinimalCaseStudyPage`'s `afterStory` slot.
+Its hero may play a muted screen recording of the live site
+(`heroFilm`, through `HeroLoopingVideo` inside the `BrowserFrame` `media`
+slot, poster = the still capture at the same viewport). Private client tools
+are never shown as screenshots: they are drawn as illustrations in the
+Prism system (`components/case-studies/mach-1/scenes.tsx`), each card marked
+"Illustrative", with made-up labels and no client data, and a note under the
+section saying so. Scenes loop only while on screen (`SceneViewport`), and
+their base style is the finished frame.
 
 ### Proof
 
@@ -341,14 +355,16 @@ quiet enough that text stays readable.
   reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights and
   parallax, the slow spectrum beam, the live dot ping, the story deck recede
   and capture browsing, the service pillar micro scenes, the intake pass foil,
-  hover lifts of 1 to 2px.
+  the flagship case-study tool scenes and their sticky crossfade, hover lifts
+  of 1 to 2px.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base
   style is always the finished frame, so reduced-motion, no-JS, and
   screenshot runs see complete content.
 - No autoplaying video outside `HeroBackgroundLoop` and `HeroLoopingVideo`.
-  "Live" site previews are tall still captures moved with transforms, not
-  video.
+  "Live" site previews are tall still captures moved with transforms; a
+  flagship case study may play a short muted screen recording of the live
+  site through `HeroLoopingVideo` (poster first, paused off screen).
 - Never use `content-visibility` on content that must appear in full-page
   captures (locked screenshots, print): it blanks off-screen sections.
 

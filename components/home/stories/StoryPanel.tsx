@@ -18,6 +18,7 @@ export const STORY_BANDS = [
   'var(--spectrum-yellow)',
   'var(--spectrum-green)',
   'var(--spectrum-blue)',
+  'var(--spectrum-violet)',
 ] as const
 
 export function storyAnchorId(slug: string) {

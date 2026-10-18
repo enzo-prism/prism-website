@@ -128,6 +128,7 @@ for (const path of [
   '/aeo',
   '/case-studies',
   '/case-studies/exquisite-dentistry',
+  '/case-studies/mach-1',
   '/blog',
   '/dental-website',
 ]) {

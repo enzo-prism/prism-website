@@ -45,6 +45,9 @@ const CAPTURE_SIZES: Record<string, CaptureSize> = {
     width: 600,
     height: 8026,
   },
+  // Dark theme, captured 2026-10-18 (top of page down to #possible).
+  '/case-studies/scroll/mach-1-desktop.webp': { width: 1280, height: 3485 },
+  '/case-studies/scroll/mach-1-mobile.webp': { width: 600, height: 6482 },
 }
 
 /** Typical sizes for a capture that is not in the table yet. */

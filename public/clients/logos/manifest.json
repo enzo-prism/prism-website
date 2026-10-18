@@ -1,5 +1,18 @@
 [
   {
+    "slug": "mach-1",
+    "name": "Mach 1",
+    "file": "/clients/logos/mach-1.png",
+    "format": "png",
+    "width": 554,
+    "height": 160,
+    "aspect": 3.46,
+    "kind": "lockup",
+    "source": "https://mach1ai.com/assets/brand/mach1-logo.png (live header logo; same file as flight-ai assets/brand/mach1-logo.png)",
+    "quality": "great",
+    "notes": "Three-stroke M1 mark + MACH 1 wordmark. Black-on-transparent PNG (2187x632) trimmed, scaled to 160px tall, and filled white keeping the original alpha. Not redrawn."
+  },
+  {
     "slug": "dr-christopher-wong",
     "name": "Dr. Christopher B. Wong",
     "file": "/clients/logos/dr-christopher-wong.svg",

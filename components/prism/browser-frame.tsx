@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
@@ -14,6 +15,11 @@ type BrowserFrameProps = {
   /** Intrinsic size of the screenshot (defaults to the 2880x1800 captures). */
   width?: number
   height?: number
+  /**
+   * Replaces the screenshot with other media in the same chrome (a looping
+   * site film). `src` stays required: it is the poster the media starts on.
+   */
+  media?: ReactNode
 }
 
 /**
@@ -30,6 +36,7 @@ export function BrowserFrame({
   priority = false,
   width = 2880,
   height = 1800,
+  media,
 }: BrowserFrameProps) {
   return (
     <figure
@@ -51,15 +58,17 @@ export function BrowserFrame({
           </span>
         ) : null}
       </div>
-      <Image
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        sizes={sizes}
-        priority={priority}
-        className={cn('block h-auto w-full', imageClassName)}
-      />
+      {media ?? (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          sizes={sizes}
+          priority={priority}
+          className={cn('block h-auto w-full', imageClassName)}
+        />
+      )}
     </figure>
   )
 }
