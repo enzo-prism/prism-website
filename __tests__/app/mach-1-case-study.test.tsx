@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import { render, screen, within } from '@testing-library/react'
 
-import Mach1CaseStudyPage from '@/app/case-studies/mach-1/page'
+import Mach1CaseStudyPage, { metadata } from '@/app/case-studies/mach-1/page'
 import { MACH1_LAUNCH, MACH1_STACK } from '@/components/case-studies/mach-1/content'
 import { HOMEPAGE_CASE_STUDIES } from '@/components/home/homepage-content'
 import { getCaptureSize } from '@/components/home/stories/capture-sizes'
@@ -82,6 +82,14 @@ describe('Mach 1 case study', () => {
     ]) {
       expect(publicFile(src)).toBe(true)
     }
+  })
+
+  it('shares its own approved card as the link preview', () => {
+    const og = metadata.openGraph?.images
+    const first = Array.isArray(og) ? og[0] : og
+    expect(first).toMatchObject({ url: '/case-studies/mach-1/og.jpg', width: 1200, height: 630 })
+    expect(metadata.twitter?.images).toEqual(['/case-studies/mach-1/og.jpg'])
+    expect(publicFile('/case-studies/mach-1/og.jpg')).toBe(true)
   })
 
   it('keeps the copy in house style', () => {

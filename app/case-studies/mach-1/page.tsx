@@ -10,8 +10,8 @@ export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Mach 1 case study',
   description:
     'How Prism relaunched mach1ai.com around customers’ own words and built the private growth tools its team runs on, from content to campaigns.',
+  // Its share card comes from SOCIAL_IMAGE_EXCEPTIONS (lib/seo/rules.ts).
   path: '/case-studies/mach-1',
-  ogImage: '/case-studies/mach-1/og.jpg',
 })
 
 const LOCATION = 'mach-1 case study'
