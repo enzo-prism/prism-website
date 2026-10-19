@@ -12,6 +12,21 @@ export const DESCRIPTION_MAX_LENGTH = 155
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 export const DEFAULT_OG_IMAGE_ALT = "Prism logo on a black background"
 
+export type SocialImage = { url: string; alt: string }
+
+/**
+ * The only routes allowed to replace the site-wide social image, keyed by
+ * path. Each entry is a deliberate, approved exception (1200x630 JPEG or
+ * PNG under public/); every other route keeps DEFAULT_OG_IMAGE.
+ */
+export const SOCIAL_IMAGE_EXCEPTIONS: Readonly<Record<string, SocialImage>> = {
+  // Approved 2026-10-19: the flagship Mach 1 case study shares its own card.
+  "/case-studies/mach-1": {
+    url: "/case-studies/mach-1/og.jpg",
+    alt: "Prism × Mach 1 case study: the Mach 1 homepage on a laptop and a phone",
+  },
+}
+
 export const BLOG_MANUAL_OVERRIDE_KEYWORDS = /(dental|seo|ads|local|website|agency|consultant|checklist|playbook)/i
 
 const TERMINAL_BRAND_PATTERN = /\s*(?:\||-|–|—|:)\s*(?:design\s+)?prism(?:\s+((?:agency|blog|careers|podcast|services|openai\s+guide|case\s+study)))?\s*$/i
