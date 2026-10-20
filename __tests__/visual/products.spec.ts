@@ -74,7 +74,7 @@ test('Services menu opens and links exactly the four services', async ({
   )
   for (const [name, href] of [
     ['AEO', '/aeo'],
-    ['Websites', '/websites'],
+    ['Website Design', '/website-design'],
     ['Content', '/content'],
     ['Ads', '/ads'],
     ['All services', '/services'],

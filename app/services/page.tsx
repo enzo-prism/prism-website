@@ -43,18 +43,9 @@ const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
   aeo: MessageSquareQuote,
 }
 
-// Navigation-style labels for the four services ("Websites", matching the
-// header's Services menu and the offer names on /pricing).
-const SERVICE_LABELS: Record<PrismServiceId, string> = {
-  website: 'Websites',
-  content: 'Content',
-  ads: 'Ads',
-  aeo: 'AEO',
-}
-
 // Schema.org serviceType for each of the four services.
 const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
-  website: 'Website design and development',
+  website: 'Website design',
   content: 'Content and social media marketing',
   ads: 'Paid advertising management',
   aeo: 'Answer engine optimization',
@@ -63,8 +54,8 @@ const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
 // What each core service includes, in plain terms.
 const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
   website: [
-    'Custom design and development',
-    'Search foundations and analytics',
+    'Custom design for your brand',
+    'Page copy and a mobile-first build',
     'Clear paths to call, book, or inquire',
   ],
   content: [
@@ -99,11 +90,11 @@ type CoreService = {
 // entries below describe the four services themselves.)
 const coreServices: CoreService[] = [
   {
-    name: 'Websites & Experience Design',
-    title: 'websites and experience design',
+    name: 'Website & Experience Design',
+    title: 'website and experience design',
     summary:
-      'Design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
-    learnMoreLinks: [{ label: 'Website design services', href: '/websites' }],
+      'Brand-led design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
+    learnMoreLinks: [{ label: 'Website design', href: '/website-design' }],
     outcomes: [
       'Custom design, UX, and development',
       'Editable components and content management',
@@ -269,7 +260,7 @@ const faqItems = [
   {
     question: 'Do I need every service to work with Prism?',
     answer:
-      'No. Most clients start with one foundation, usually a website or local presence, and add content or ads once the core is stable.',
+      'No. Most clients start with one foundation, usually website design or local presence, and add content or ads once the core is stable.',
   },
   {
     question: 'How do you decide what to prioritize first?',
@@ -294,7 +285,7 @@ const faqItems = [
   {
     question: 'What does an engagement look like month to month?',
     answer:
-      'It depends on the service. A website is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
+      'It depends on the service. Website Design is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
   },
   {
     question: 'How do I start?',
@@ -312,7 +303,7 @@ const inlineLinkClassName =
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Services',
   description:
-    'Website, content, ads, and AEO: the four Prism services that help your business get found, trusted, and chosen, on Google and in AI answers.',
+    'Website design, content, ads, and AEO: the four Prism services that help your business get found, trusted, and chosen, on Google and in AI answers.',
   path: '/services',
   ogImage: '/prism-opengraph.png',
 })
@@ -344,13 +335,13 @@ export default function ServicesPage() {
                 className="text-display text-gradient prism-rise mt-6 max-w-[11ch] pb-2"
                 style={rise(80)}
               >
-                website. content. ads. AEO.
+                website design. content. ads. AEO.
               </h1>
               <p
                 className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
                 style={rise(160)}
               >
-                Prism helps with four things. The website makes choosing you
+                Prism helps with four things. Website design makes choosing you
                 easy. Content keeps you found and trusted. Ads bring the right
                 customers. AEO makes you the answer when they ask AI.
                 Everything else supports those four.
@@ -396,7 +387,7 @@ export default function ServicesPage() {
                         </OfferIconTile>
                         <span className="flex min-w-0 flex-1 flex-col">
                           <span className="text-[1.15rem] font-semibold tracking-[-0.025em] text-foreground">
-                            {SERVICE_LABELS[service.id]}
+                            {service.name}
                           </span>
                           <span className="text-pretty text-sm text-muted-foreground">
                             {service.navDescription}
@@ -455,7 +446,7 @@ export default function ServicesPage() {
                           <OfferIconTile className="size-9 rounded-lg">
                             <Icon aria-hidden="true" className="size-4" />
                           </OfferIconTile>
-                          <p className="text-eyebrow text-subtle">{SERVICE_LABELS[service.id]}</p>
+                          <p className="text-eyebrow text-subtle">{service.name}</p>
                         </div>
                         <h3 className="text-heading mt-5 text-foreground">
                           {toServiceCardTitle(service.homeTitle)}
@@ -704,7 +695,7 @@ export default function ServicesPage() {
         <ServiceSchema
           key={`service-schema-${service.id}`}
           serviceId={`services-${service.id}`}
-          name={SERVICE_LABELS[service.id]}
+          name={service.name}
           description={service.description}
           serviceType={SERVICE_SCHEMA_TYPES[service.id]}
           areaServed="United States"

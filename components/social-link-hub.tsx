@@ -5,7 +5,7 @@ import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRight,
   Clapperboard,
-  Globe,
+  LayoutTemplate,
   Megaphone,
   MessageSquareQuote,
 } from 'lucide-react'
@@ -56,7 +56,7 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
 const HUB_ACTION_HREFS: Record<PrismServiceId, string> = WAITLIST_FOCUS_HREFS
 
 const HUB_ACTION_ICONS: Record<PrismServiceId, LucideIcon> = {
-  website: Globe,
+  website: LayoutTemplate,
   content: Clapperboard,
   ads: Megaphone,
   aeo: MessageSquareQuote,
@@ -244,9 +244,9 @@ export default function SocialLinkHub({
           </nav>
         </main>
 
-        <footer className="flex items-center justify-between gap-4 border-t border-white/[0.08] py-6 text-[12px] text-subtle">
-          <span className="font-mono uppercase tracking-[0.18em] text-[10px]">
-            Websites · Content · Ads · AEO
+        <footer className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/[0.08] py-6 text-[12px] text-subtle">
+          <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em]">
+            Website Design · Content · Ads · AEO
           </span>
           <span className="shrink-0">© Prism</span>
         </footer>

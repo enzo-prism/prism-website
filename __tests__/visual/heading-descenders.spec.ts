@@ -122,7 +122,7 @@ for (const path of [
   '/about',
   '/pricing',
   '/waitlist',
-  '/websites',
+  '/website-design',
   '/content',
   '/ads',
   '/aeo',

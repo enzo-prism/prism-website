@@ -56,7 +56,7 @@ describe('waitlist CTA map', () => {
       'components/pricing/PricingHero.tsx',
       'components/social-link-hub.tsx',
       'app/pricing/client-page.tsx',
-      'app/websites/page.tsx',
+      'app/website-design/page.tsx',
       'app/content/page.tsx',
       'app/ads/page.tsx',
       'app/aeo/page.tsx',

@@ -164,7 +164,7 @@ const retentionBenefits = [
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Consulting websites & lead generation',
-  description: 'Websites, authority content, automation, and conversion systems that help consulting firms attract, qualify, and win better clients.',
+  description: 'Website design, authority content, automation, and conversion systems that help consulting firms attract, qualify, and win better clients.',
   path: "/why-consulting-companies-love-prism",
 })
 

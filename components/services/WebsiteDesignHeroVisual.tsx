@@ -1,4 +1,4 @@
-import { BarChart3, Search } from 'lucide-react'
+import { Gauge, Palette } from 'lucide-react'
 
 import { BrowserFrame } from '@/components/prism/browser-frame'
 import { PhoneFrame } from '@/components/services/PhoneFrame'
@@ -17,7 +17,7 @@ function FloatingChip({
   children,
   className,
 }: {
-  icon: typeof Search
+  icon: typeof Palette
   children: string
   className: string
 }) {
@@ -34,10 +34,10 @@ function FloatingChip({
 }
 
 /**
- * /websites hero: a fan of live client sites in browser chrome, with the
- * mobile build of a fourth site in a phone shell at the front.
+ * /website-design hero: a fan of live client sites in browser chrome, with
+ * the mobile build of a fourth site in a phone shell at the front.
  */
-export function WebsitesHeroVisual() {
+export function WebsiteDesignHeroVisual() {
   return (
     <div className="group/fan relative mx-auto h-[270px] max-w-6xl sm:h-[420px] lg:h-[560px]">
       <div
@@ -87,17 +87,17 @@ export function WebsitesHeroVisual() {
         />
       ) : null}
 
-      <FloatingChip icon={BarChart3} className="bottom-[18%] left-[6%]">
-        Analytics wired in at launch
+      <FloatingChip icon={Palette} className="bottom-[18%] left-[6%]">
+        Designed for your brand
       </FloatingChip>
       <FloatingChip
-        icon={Search}
+        icon={Gauge}
         className="right-[4%] top-[6%] lg:right-[10%]"
       >
-        Search foundations built in
+        Built to load fast
       </FloatingChip>
     </div>
   )
 }
 
-export default WebsitesHeroVisual
+export default WebsiteDesignHeroVisual

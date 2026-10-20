@@ -354,7 +354,7 @@ export default function WaitlistThankYouPage() {
                         <span aria-hidden="true" className="px-1.5 text-subtle">
                           ·
                         </span>
-                        Website client
+                        Website Design client
                       </span>
                     </span>
                   </span>

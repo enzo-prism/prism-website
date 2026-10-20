@@ -59,7 +59,7 @@ import {
 
 // Services with a dedicated marketing page get a deep link in the dialog.
 const SERVICE_ROUTE_MAP: Record<string, { href: string; label: string }> = {
-  'Website design': { href: '/websites', label: 'Explore Prism websites' },
+  'Website design': { href: '/website-design', label: 'Explore Prism website design' },
   'SEO/AEO': { href: '/aeo', label: 'Explore Prism AEO' },
   'Google Ads': { href: '/ads', label: 'Explore Prism ads' },
   'Local listing optimization': {

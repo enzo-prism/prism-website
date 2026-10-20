@@ -42,7 +42,7 @@ export default function ScholarshipPage() {
                 Email <a className="text-foreground underline underline-offset-4" href="mailto:support@design-prism.com">support@design-prism.com</a> with your name, how you heard about Prism, and a short description of the site you need. We will confirm your submission and include it in the next monthly review.
               </p>
               <p>
-                You can also explore example builds at <a className="text-foreground underline underline-offset-4" href="https://www.design-prism.com/websites">design-prism.com/websites</a>.
+                You can also explore example builds at <a className="text-foreground underline underline-offset-4" href="https://www.design-prism.com/website-design">design-prism.com/website-design</a>.
               </p>
             </div>
           </section>

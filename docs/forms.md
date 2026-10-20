@@ -10,7 +10,7 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 **Stepped flow (2026-09-15; page layout 2026-10-12).** From `lg` up the page has two columns: the left holds the `WaitlistStatus` pill, the headline ("join the waitlist"), one context line ("Prism is fully booked. Join the waitlist to work with us in <next month>."), "What happens next" (`components/waitlist/WaitlistNextSteps.tsx`), and `WaitlistProofStrip`; the right holds the form card (sticky on tall viewports). Below `lg` the form follows the header. The form is one client island with five screens from `WAITLIST_STEPS` in `lib/waitlist.ts`, each a `fieldset` with an `sr-only` legend, a lucide icon, and a slim "Step x of 5" progress row:
 
-1. `focus` — AEO / Website / Content / Ads icon cards (AEO since 2026-10-18 and listed first, in `WAITLIST_FOCUS_OPTIONS` order; multi-select, optional; kept optional so the first tap-only step never blocks; each card's line is the service's `navDescription` from `lib/services.ts`), then an "or" divider and a "Not sure yet" card (2026-10-12) that submits `focus[]=not-sure` and is exclusive with the four services (picking it clears them and vice versa). Prefilled from `?focus=website|content|ads|aeo` (`?focus=not-sure` is ignored). No free-text "something else" field (removed 2026-09-15).
+1. `focus` — AEO / Website Design / Content / Ads icon cards (the Website Design card was labeled "Website" until 2026-10-19; its value is still `website`, so Formspree submissions keep `focus[]=website`) (AEO since 2026-10-18 and listed first, in `WAITLIST_FOCUS_OPTIONS` order; multi-select, optional; kept optional so the first tap-only step never blocks; each card's line is the service's `navDescription` from `lib/services.ts`), then an "or" divider and a "Not sure yet" card (2026-10-12) that submits `focus[]=not-sure` and is exclusive with the four services (picking it clears them and vice versa). Prefilled from `?focus=website|content|ads|aeo` (`?focus=not-sure` is ignored). No free-text "something else" field (removed 2026-09-15).
 2. `timing` — five radio cards (`asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`); required.
 3. `about` — first name, last name, email (required), phone (optional).
 4. `links` — website, social profile, anything else; at least one required (custom validity on `link_website`), unless the "I don't have a website yet" checkbox is checked (2026-10-12): it submits `no_website=yes`, disables and clears the website field (sent empty), and satisfies the step.
@@ -111,26 +111,27 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
    - `conversionMode: "immediate"` for confirmed success states that stay on-page.
    - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.
 
-## `/websites`: marketing page + waitlist handoff
+## `/website-design`: marketing page + waitlist handoff
 
-The `/websites` PRO website page has **no on-page form**. The old fullscreen
+The `/website-design` page (Website Design; `/websites` 308s here since
+2026-10-19) has **no on-page form**. The old fullscreen
 order dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
-Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero and final
-CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` → `/waitlist?focus=website`)
-and the hero carries the `WaitlistStatus` pill. There is no booking CTA. The
+Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero, work-rail, and
+final CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` →
+`/waitlist?focus=website`) and the hero carries the `WaitlistStatus` pill. There is no booking CTA. The
 noindex `/checkout/website/thank-you` route remains only as the landing target
 for the legacy live Stripe link and no longer fires any purchase event.
 
 ## `/refer` referral form ($100 program)
 
 - Component: `components/forms/ReferralForm.tsx`, rendered by `app/refer/page.tsx` (dark system; replaced the legacy light page + external Typeform).
-- Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client for Websites, Content, Ads, or AEO. Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
+- Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client for Website Design, Content, Ads, or AEO. Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
 - Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT` ?? `https://formspree.io/f/meebpgaj` (dedicated referral form, wired 2026-07-02). Submissions carry `form_key=referral` / `_subject: "New referral — $100 program"`.
 - Fields: `referrer_name`\*, `referrer_email`\*, `friend_name`\*, `friend_business`, `friend_contact`\* (email or phone, free text), `friend_need`, `note` + standard ops fields (`FormspreeOpsFields formKey="referral"`), `_gotcha` honeypot, hidden `form_name=referral`.
 - Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
-- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only the Website, Content, Ads, and AEO waitlist CTAs. The page intro carries the shared capacity line; the referral program is not a sales CTA and keeps working while Prism is at capacity.
+- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only the Website Design, Content, Ads, and AEO waitlist CTAs. The page intro carries the shared capacity line; the referral program is not a sales CTA and keeps working while Prism is at capacity.
 
 ## Thank-you pages
 

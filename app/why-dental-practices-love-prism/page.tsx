@@ -308,7 +308,7 @@ const segmentFaqItems = [
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Dental marketing',
   description:
-    'Websites, local SEO, Google Business Profile, reviews, and tracking that help dental practices attract new patients.',
+    'Website design, local SEO, Google Business Profile, reviews, and tracking that help dental practices attract new patients.',
   path: '/why-dental-practices-love-prism',
   ogImage: '/prism-opengraph.png',
 })

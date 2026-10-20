@@ -140,11 +140,11 @@ describe('Navbar', () => {
     ).toBeInTheDocument()
   })
 
-  it('offers exactly four services: Websites, Content, Ads, and AEO', () => {
+  it('offers exactly four services: Website Design, Content, Ads, and AEO', () => {
     expect(
       NAV_SERVICE_ITEMS.map((item) => [item.label, item.href, item.icon]),
     ).toEqual([
-      ['Websites', '/websites', 'website'],
+      ['Website Design', '/website-design', 'website'],
       ['Content', '/content', 'content'],
       ['Ads', '/ads', 'ads'],
       ['AEO', '/aeo', 'aeo'],
@@ -158,7 +158,7 @@ describe('Navbar', () => {
   it('leads the header Services menu with AEO, then the catalog order', () => {
     expect(NAV_MENU_SERVICE_ITEMS.map((item) => item.href)).toEqual([
       '/aeo',
-      '/websites',
+      '/website-design',
       '/content',
       '/ads',
     ])
@@ -243,7 +243,7 @@ describe('Navbar', () => {
       '/about',
       '/pricing',
       '/aeo',
-      '/websites',
+      '/website-design',
       '/content',
       '/ads',
       '/services',

@@ -86,7 +86,7 @@ describe('waitlist focus choices', () => {
   it('adds "Not sure yet" after the four services, AEO first', () => {
     expect(WAITLIST_FOCUS_OPTIONS).toEqual([
       { value: 'aeo', label: 'AEO' },
-      { value: 'website', label: 'Website' },
+      { value: 'website', label: 'Website Design' },
       { value: 'content', label: 'Content' },
       { value: 'ads', label: 'Ads' },
     ])

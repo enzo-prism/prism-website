@@ -101,8 +101,9 @@ export type NavItem = { label: string; href: string }
 
 // Header (2026-10 redesign): Work, a Services menu, Wall of Love, About and
 // Pricing, plus the waitlist CTA beside the menu. Desktop and mobile share
-// these lists. Prism offers four services (Websites, Content, Ads, and AEO
-// since 2026-10-18; the retired 2026-10-12 offers redirect in
+// these lists. Prism offers four services (Website Design, renamed from
+// Websites on 2026-10-19, Content, Ads, and AEO since 2026-10-18; the retired
+// 2026-10-12 offers redirect in
 // next.config.mjs). They stay hard-coded here because lib/services.ts must
 // not import this file.
 export const NAV_ITEMS: NavItem[] = [
@@ -119,9 +120,9 @@ export type NavServiceItem = NavItem & {
 
 export const NAV_SERVICE_ITEMS: NavServiceItem[] = [
   {
-    label: 'Websites',
-    href: '/websites',
-    description: 'Fast, custom sites that make choosing you easy.',
+    label: 'Website Design',
+    href: '/website-design',
+    description: 'Custom design that makes choosing you easy.',
     icon: 'website',
   },
   {

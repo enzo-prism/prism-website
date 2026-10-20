@@ -328,8 +328,8 @@ export default async function ReplitPage() {
                 </h2>
                 <p className="mt-4 text-pretty text-[15px] leading-7 text-muted-foreground sm:text-base">
                   Visit our dedicated{' '}
-                  <Link href="/websites" className={linkClassName}>
-                    websites page
+                  <Link href="/website-design" className={linkClassName}>
+                    website design page
                   </Link>{' '}
                   to explore launched projects, performance results, and the
                   design systems powering each build.
@@ -356,8 +356,8 @@ export default async function ReplitPage() {
                     variant="outline"
                     className="group/web"
                   >
-                    <Link href="/websites">
-                      Explore Prism websites
+                    <Link href="/website-design">
+                      Explore Prism website design
                       <ArrowRight
                         aria-hidden="true"
                         className="transition-transform duration-200 group-hover/web:translate-x-0.5"

@@ -23,8 +23,8 @@ import {
   buildMinimalDescription,
 } from "@/lib/seo/rules"
 
-const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
-const DEFAULT_DESCRIPTION = buildMinimalDescription("Websites, SEO + ads")
+const DEFAULT_TITLE = buildAbsoluteTitle("Website design, SEO + ads")
+const DEFAULT_DESCRIPTION = buildMinimalDescription("Website design, SEO + ads")
 
 export const metadata: Metadata = {
   title: DEFAULT_TITLE,

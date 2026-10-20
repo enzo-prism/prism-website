@@ -174,7 +174,7 @@ describe('AboutClientPage', () => {
   it('links what Prism builds to the four service pages', () => {
     render(<AboutClientPage />)
 
-    for (const href of ['/websites', '/content', '/ads', '/aeo']) {
+    for (const href of ['/website-design', '/content', '/ads', '/aeo']) {
       expect(
         screen.getAllByRole('link').some((link) => link.getAttribute('href') === href),
       ).toBe(true)

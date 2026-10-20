@@ -38,7 +38,7 @@ function collectTextFiles(dir: string): string[] {
 
 describe('four services only', () => {
   it('keeps the header, catalog, and pricing on the same four services', () => {
-    const hrefs = ['/websites', '/content', '/ads', '/aeo']
+    const hrefs = ['/website-design', '/content', '/ads', '/aeo']
     expect(NAV_SERVICE_ITEMS.map((item) => item.href)).toEqual(hrefs)
     expect(PRISM_SERVICES.map((service) => service.href)).toEqual(hrefs)
     expect(PRICING_OFFER_ORDER).toEqual(['website', 'content', 'ads', 'aeo'])

@@ -5,12 +5,11 @@ import {
   ArrowUpRight,
   BarChart3,
   FileText,
-  Gauge,
   KeyRound,
   Palette,
   PenLine,
   Rocket,
-  Search,
+  Smartphone,
 } from 'lucide-react'
 
 import Footer from '@/components/footer'
@@ -31,8 +30,9 @@ import {
   ServiceSteps,
   type ServiceStep,
 } from '@/components/services/ServiceSteps'
-import { WebsitesHeroVisual } from '@/components/services/WebsitesHeroVisual'
-import { WebsitesWorkRail } from '@/components/services/WebsitesWorkRail'
+import { WebsiteDesignAnatomy } from '@/components/services/WebsiteDesignAnatomy'
+import { WebsiteDesignHeroVisual } from '@/components/services/WebsiteDesignHeroVisual'
+import { WebsiteDesignWorkRail } from '@/components/services/WebsiteDesignWorkRail'
 import { getClientQuotes } from '@/components/services/community-comments'
 import {
   TechStackIcon,
@@ -43,15 +43,16 @@ import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'PRO websites'
+const PAGE_TITLE = 'Website design'
 const PAGE_DESCRIPTION =
-  'Custom websites with clear service pages, mobile-friendly design, working inquiry forms, and analytics to help you understand what brings customers in.'
-const CANONICAL_URL = 'https://www.design-prism.com/websites'
+  'Custom website design for your brand: pages written around customer questions, mobile-first layouts, inquiry forms, and analytics, built by Prism.'
+const PAGE_PATH = '/website-design'
+const CANONICAL_URL = `https://www.design-prism.com${PAGE_PATH}`
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
-  path: '/websites',
+  path: PAGE_PATH,
   ogImage: '/prism-opengraph.png',
 })
 
@@ -64,25 +65,25 @@ const belizeImpressions = getCaseStudyMetric('belize-kids-foundation')
 const WONG_CLIENT = 'Dr. Christopher Wong'
 const WONG_HREF = '/case-studies/dr-christopher-wong'
 
-// Named website clients, verbatim from content/wall-of-love-data.tsx.
+// Named website design clients, verbatim from content/wall-of-love-data.tsx.
 const CLIENT_QUOTES = getClientQuotes([3, 1])
 
 const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Palette,
     title: 'design that feels like your business',
-    body: 'We define your typography, color, spacing, and motion, then carry them through every page, so your site looks like one business instead of a template.',
+    body: 'We set your typography, color, spacing, and motion as one design system, then carry it through every page, so your site looks like your business and never like a template.',
     className: 'md:col-span-4',
     visual: <DesignSpecimen />,
   },
   {
-    icon: Gauge,
-    title: 'fast, accessible, easy to use',
-    body: 'Built for speed and everyday use on any device, with a clear page structure people and search engines can follow.',
+    icon: Smartphone,
+    title: 'designed for the phone first',
+    body: 'Layouts, tap targets, and contact buttons start on the small screen, then scale up, with a clear structure people and search engines can follow.',
     points: [
-      'Page speed and mobile usability checks',
+      'Mobile-first, responsive layouts',
       'Accessible, semantic page structure',
-      'Technical SEO foundations built in',
+      'Page speed checks before launch',
     ],
   },
   {
@@ -93,14 +94,14 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   },
   {
     icon: PenLine,
-    title: 'pages that answer real questions',
-    body: 'We write and organize your pages around what customers ask before they call, then share a preview for your feedback.',
+    title: 'copy designed in, not pasted in',
+    body: 'We write your pages around what customers ask before they call, and design the layout around the words, then share a preview for your feedback.',
     visual: <QuestionList />,
   },
   {
     icon: KeyRound,
     title: 'yours, completely',
-    body: 'The site and everything in it belongs to you from launch day. No lock-in. Keep Prism running it, or take it in-house.',
+    body: 'The design, the site, and everything in it belong to you from launch day. No lock-in. Keep Prism running it, or take it in-house.',
     visual: <OwnershipList />,
   },
 ]
@@ -110,13 +111,13 @@ const STEPS: readonly ServiceStep[] = [
     icon: FileText,
     title: 'join the waitlist',
     detail: 'First',
-    body: 'Share your links and goals. We review applications for each monthly intake, then reach out to scope your build with a clear plan and a clear price.',
+    body: 'Share your links and goals. We review applications for each monthly intake, then reach out to scope your design with a clear plan and a clear price.',
   },
   {
     icon: Palette,
-    title: 'design and build',
-    detail: 'Build',
-    body: 'We write and design the pages, build the site, and share a preview so you can react to the copy, images, and experience.',
+    title: 'design, then build',
+    detail: 'Design',
+    body: 'We set the design direction from your brand and your customers, write and design the pages, then build them and share a live preview so you can react before launch.',
   },
   {
     icon: Rocket,
@@ -128,14 +129,29 @@ const STEPS: readonly ServiceStep[] = [
 
 const FAQ_ITEMS = [
   {
-    question: 'What makes a Prism PRO website different?',
+    question: 'What is included in Prism website design?',
     answer:
-      'We bring the copy, design, build, forms, and analytics together. Customers can understand your services and contact you easily, while you can see which pages and traffic sources lead to inquiries.',
+      'Custom design for your brand, page copy, a mobile-first build, inquiry forms, and analytics. One team designs and builds the site, so the pages you approve are the pages that launch, and you can see which pages and traffic sources lead to inquiries.',
+  },
+  {
+    question: 'Do you use templates?',
+    answer:
+      'No. Every site starts from your brand and your customers, with its own typography, color, layout, and motion. We set the design system first, then design and build each page from it.',
+  },
+  {
+    question: 'Can you redesign my current website?',
+    answer:
+      'Yes. We start by reviewing what already works, including the pages that bring in search traffic, and plan the new structure and redirects so the redesign builds on what is already working.',
+  },
+  {
+    question: 'Do you only design, or build too?',
+    answer:
+      'Both. Prism writes, designs, builds, and launches the site, then sets up analytics and search information. You do not need a separate developer to turn the design into a working website.',
   },
   {
     question: 'How does pricing work?',
     answer:
-      'Prism is fully booked right now, so every website starts on the waitlist. When we reach out, we scope the pages, features, and support you need and agree on the scope and price before work begins.',
+      'Prism is fully booked right now, so every website design project starts on the waitlist. When we reach out, we scope the pages, features, and support you need and agree on the scope and price before work begins.',
   },
   {
     question: 'How do you support visibility in AI assistants?',
@@ -154,7 +170,8 @@ const FAQ_ITEMS = [
   },
 ] as const
 
-// Where a PRO website has to be understood: classic search AND AI answers.
+// Where a Prism-designed site has to be understood: classic search AND AI
+// answers.
 const SURFACE_NOTES: Record<string, string> = {
   'Google Search': 'Search results',
   'Google Maps': 'Local results',
@@ -286,7 +303,7 @@ function HeroProof() {
   )
 }
 
-export default function WebsitesPage() {
+export default function WebsiteDesignPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
@@ -294,7 +311,7 @@ export default function WebsitesPage() {
         <ServiceHero
           title={
             <>
-              a website that makes choosing you{' '}
+              website design that makes choosing you{' '}
               {/* Positioned spans paint outside the h1's clipped fill, so the
                   word carries its own gradient. */}
               <span className="text-gradient relative whitespace-nowrap">
@@ -310,34 +327,39 @@ export default function WebsitesPage() {
               </span>
             </>
           }
-          titleClassName="max-w-[17ch]"
+          titleClassName="max-w-[19ch]"
           description={
             <>
-              <span className="text-foreground">The PRO website</span>: custom
-              design, fast pages, and a clear path from first visit to inquiry,
-              with analytics and search foundations built in from day one.
+              <span className="text-foreground">Designed and built by Prism</span>
+              : a custom look for your brand, pages written around what
+              customers ask, and a fast, mobile-first build with analytics and
+              search in place from day one.
             </>
           }
           ctaHref={WEBSITE_WAITLIST_CTA.href}
-          location="websites hero"
+          location="website design hero"
           secondary={{
             label: 'See the work',
             href: '#work',
-            trackingLabel: 'see website proof',
+            trackingLabel: 'see website design proof',
           }}
-          visual={<WebsitesHeroVisual />}
+          visual={<WebsiteDesignHeroVisual />}
           footer={<HeroProof />}
           glow="blue"
         />
 
         <ServiceBento
-          idPrefix="websites"
-          title="everything a site needs to win the visit."
-          description="Design, engineering, copy, and analytics in one build, so the site looks right, works everywhere, and shows you what is working."
+          idPrefix="website-design"
+          title="designed to win the visit."
+          description="Brand, layout, copy, and build from one team, so the site looks like your business, works on every phone, and shows you what is working."
           items={WHAT_YOU_GET}
         />
 
-        <Section aria-labelledby="websites-visibility-title">
+        <WebsiteDesignAnatomy />
+
+        <WebsiteDesignWorkRail />
+
+        <Section aria-labelledby="website-design-visibility-title">
           <Reveal>
             <div className="relative isolate grid gap-12 overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-2 lg:items-center lg:gap-16">
               <div
@@ -350,7 +372,7 @@ export default function WebsitesPage() {
               />
               <div className="flex flex-col gap-5">
                 <SectionHeader
-                  id="websites-visibility-title"
+                  id="website-design-visibility-title"
                   eyebrow="Visibility"
                   title={
                     <>
@@ -375,7 +397,7 @@ export default function WebsitesPage() {
                 <TrackedLink
                   href="/aeo"
                   label="go further with aeo"
-                  location="websites visibility"
+                  location="website design visibility"
                   className="group/aeo inline-flex min-h-10 w-fit items-center gap-1.5 rounded-sm text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
                 >
                   Go further with Prism AEO
@@ -412,22 +434,20 @@ export default function WebsitesPage() {
           </Reveal>
         </Section>
 
-        <WebsitesWorkRail />
-
         <ServiceSteps
-          idPrefix="websites"
+          idPrefix="website-design"
           title="it starts on the waitlist."
           description="Prism is fully booked. When your intake opens, you leave the scoping conversation with a clear plan and a clear price."
           steps={STEPS}
         />
 
-        <Section aria-labelledby="websites-results-title">
+        <Section aria-labelledby="website-design-results-title">
           <Reveal>
             <SectionHeader
-              id="websites-results-title"
+              id="website-design-results-title"
               eyebrow="Results"
               title="measured at the source."
-              description="Two published client results, straight from Google Search Console, plus what clients told us in their own words."
+              description="Design is judged by what happens after launch. Two published client results, straight from Google Search Console, plus what clients told us in their own words."
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:mt-16 lg:grid-cols-12">
@@ -473,7 +493,9 @@ export default function WebsitesPage() {
                         aria-hidden="true"
                         className="h-3 w-px bg-white/15"
                       />
-                      <span className="text-subtle">Website client</span>
+                      <span className="text-subtle">
+                        Website Design client
+                      </span>
                     </figcaption>
                   </figure>
                 </Reveal>
@@ -483,7 +505,7 @@ export default function WebsitesPage() {
         </Section>
 
         <ServiceFaq
-          idPrefix="websites"
+          idPrefix="website-design"
           items={FAQ_ITEMS}
           title="before you join."
         />
@@ -491,23 +513,23 @@ export default function WebsitesPage() {
         <ServiceSiblings current="website" />
 
         <FinalCta
-          location="websites final cta"
-          title="your site, next."
+          location="website design final cta"
+          title="let's design your site."
           href={WEBSITE_WAITLIST_CTA.href}
-          headingId="websites-final-cta-title"
+          headingId="website-design-final-cta-title"
         />
       </main>
       <Footer />
       <ServiceSchema
-        serviceId="pro-website"
-        name="Prism PRO website"
-        description="Custom website design and development with service pages, inquiry forms, analytics, and search foundations. Prism is fully booked; scope and price are agreed when we reach out from the waitlist."
-        serviceType="Website design and development"
+        serviceId="website-design"
+        name="Prism Website Design"
+        description="Custom website design and development: brand-led design, page copy, mobile-first layouts, inquiry forms, analytics, and search foundations. Prism is fully booked; scope and price are agreed when we reach out from the waitlist."
+        serviceType="Website design"
         areaServed="United States"
         offerDetails={{
-          name: 'Prism PRO website',
+          name: 'Prism Website Design',
           description:
-            'A custom website with clear copy, mobile-friendly pages, inquiry forms, analytics, and search foundations. Scoped to your business when we reach out from the waitlist.',
+            'Custom website design for your brand, with page copy, mobile-first layouts, inquiry forms, analytics, and search foundations, designed and built by Prism. Scoped to your business when we reach out from the waitlist.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/LimitedAvailability',
           url: CANONICAL_URL,

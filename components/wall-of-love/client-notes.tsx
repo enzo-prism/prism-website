@@ -46,7 +46,7 @@ const textSize = {
 } as const
 
 /**
- * Name plus "Website client", or, only when the repo verifies the business
+ * Name plus "Website Design client", or, only when the repo verifies the business
  * (see VERIFIED_CLIENT_CASE_STUDIES), name and business linking to the case
  * study. The whole row is the link so the tap target clears 44px.
  */
@@ -61,7 +61,7 @@ function ClientAttribution({ note, featured }: { note: ClientNote; featured: boo
         {avatar}
         <span className="flex min-w-0 flex-col">
           <span className="truncate text-[15px] font-medium text-foreground">{note.name}</span>
-          <span className="text-[13px] text-subtle">Website client</span>
+          <span className="text-[13px] text-subtle">Website Design client</span>
         </span>
       </span>
     )

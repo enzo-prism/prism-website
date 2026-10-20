@@ -90,7 +90,7 @@ export const CAPACITY_MESSAGE = {
 // the header Services menu.
 export const WAITLIST_FOCUS_OPTIONS = [
   { value: 'aeo', label: 'AEO' },
-  { value: 'website', label: 'Website' },
+  { value: 'website', label: 'Website Design' },
   { value: 'content', label: 'Content' },
   { value: 'ads', label: 'Ads' },
 ] as const

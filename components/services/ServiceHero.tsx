@@ -15,7 +15,7 @@ type ServiceHeroProps = {
   description: ReactNode
   /** Service-focused waitlist href, e.g. /waitlist?focus=website. */
   ctaHref: string
-  /** Analytics location shared by both hero CTAs, e.g. "websites hero". */
+  /** Analytics location shared by both hero CTAs, e.g. "website design hero". */
   location: string
   secondary: { label: string; href: string; trackingLabel: string }
   /** The product shot under the copy. */
@@ -47,7 +47,7 @@ function rise(delay: number): CSSProperties {
 }
 
 /**
- * Shared launch-page hero for /websites, /content, /ads, and /aeo: live waitlist
+ * Shared launch-page hero for /website-design, /content, /ads, and /aeo: live waitlist
  * status, a lowercase display headline, one subhead that names the product,
  * the service-focused waitlist CTA plus an outline anchor, then the page's
  * own product visual, which starts inside the first viewport.

@@ -25,8 +25,8 @@ import {
   CircleAlert,
   CircleQuestionMark,
   Compass,
-  Globe,
   Hourglass,
+  LayoutTemplate,
   type LucideIcon,
   Megaphone,
   MessageSquareQuote,
@@ -108,7 +108,7 @@ const EMPTY_ANSWERS: WaitlistAnswers = {
 }
 
 const FOCUS_ICONS: Record<WaitlistFocusChoice, LucideIcon> = {
-  website: Globe,
+  website: LayoutTemplate,
   content: PenLine,
   ads: Megaphone,
   aeo: MessageSquareQuote,
