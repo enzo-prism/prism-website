@@ -209,7 +209,7 @@ export function GlobalSchemaGraph() {
     // Keep this definition in sync with public/llms.txt and the about page so
     // search and AI engines see one consistent entity description.
     description:
-      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.',
+      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first website design, Google visibility, reviews, ads, content, tracking, and AI search support.',
     slogan: 'Impossible is temporary',
     foundingDate: '2023',
     founder: {
@@ -264,7 +264,7 @@ export function GlobalSchemaGraph() {
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism',
     ],
-    // Prism's four services (Websites, Content, Ads, AEO) as canonical offers so
+    // Prism's four services (Website Design, Content, Ads, AEO) as canonical offers so
     // AI/search engines see the core products. Values come from
     // lib/pricing-model.ts; do not hardcode here. Prism is at capacity and
     // every offer is scoped from the waitlist, so availability stays
@@ -275,7 +275,7 @@ export function GlobalSchemaGraph() {
         name: CANONICAL_PRICING_OFFERS.website.name,
         description: CANONICAL_PRICING_OFFERS.website.description,
         availability: 'https://schema.org/LimitedAvailability',
-        url: 'https://www.design-prism.com/websites',
+        url: 'https://www.design-prism.com/website-design',
       },
       {
         '@type': 'Offer',

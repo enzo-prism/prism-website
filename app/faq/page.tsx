@@ -76,7 +76,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
     title: 'pricing and payments',
     items: [
       {
-        question: 'How much does a website cost?',
+        question: 'How much does website design cost?',
         answer:
           'Pricing depends on your pages, content, features, and integrations. Join the waitlist and share your goals. When we can take on your project, we confirm the scope and price before work begins, including any optional ongoing care.',
       },
@@ -93,23 +93,23 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
     ],
   },
   {
-    id: 'websites',
-    title: 'websites and builds',
+    id: 'website-design',
+    title: 'website design',
     items: [
       {
-        question: "What's included in a Prism website?",
+        question: "What's included in Prism website design?",
         answer:
-          'Custom design and development, mobile layouts, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before building. Hosting, updates, and ongoing edits are available through optional Website Care.',
+          'Custom design for your brand, page copy, mobile-first layouts, development, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before designing. Hosting, updates, and ongoing edits are available through optional Website Care.',
       },
       {
-        question: 'How long does a website project take?',
+        question: 'How long does a website design project take?',
         answer:
           'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date when you join the waitlist. We will agree on a realistic schedule before work begins.',
       },
       {
-        question: 'Can you improve my existing website?',
+        question: 'Can you redesign my existing website?',
         answer:
-          'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a rebuild if needed.',
+          'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a full redesign that builds on the pages already bringing in search traffic.',
       },
       {
         question: 'Can you add AI features to my website?',

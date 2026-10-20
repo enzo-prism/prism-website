@@ -5,7 +5,7 @@ const keyPages = [
   "/waitlist",
   "/faq",
   "/services",
-  "/websites",
+  "/website-design",
   "/ads",
   "/aeo",
   "/seo",

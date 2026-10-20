@@ -46,7 +46,7 @@ describe('Footer', () => {
 
     expect(
       screen.getByText(
-        /websites, content, ads, and AEO that help customers find and choose your business\./i,
+        /website design, content, ads, and AEO that help customers find and choose your business\./i,
       ),
     ).toBeInTheDocument()
     expect(
@@ -83,7 +83,7 @@ describe('Footer', () => {
         .getAllByRole('link')
         .map((link) => [link.textContent, link.getAttribute('href')]),
     ).toEqual([
-      ['Websites', '/websites'],
+      ['Website Design', '/website-design'],
       ['Content', '/content'],
       ['Ads', '/ads'],
       ['AEO', '/aeo'],

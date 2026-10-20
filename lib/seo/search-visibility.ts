@@ -7,7 +7,7 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/waitlist',
   '/faq',
   '/services',
-  '/websites',
+  '/website-design',
   '/content',
   '/ads',
   '/aeo',
@@ -83,6 +83,8 @@ export const NOINDEX_ROUTES = [
   '/tiktok',
   '/waitlist/thank-you',
   '/website-intake',
+  // Renamed to /website-design on 2026-10-19; 308s there.
+  '/websites',
   '/content-intake',
   '/ads-intake',
   '/youtube',

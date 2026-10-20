@@ -31,14 +31,14 @@ describe('llms.txt', () => {
     }
     expect(llms).toContain('no exact service prices are published')
     expect(llms).toContain('does not guarantee indexing or AI citations')
-    expect(llms).toContain('[Website (')
+    expect(llms).toContain('[Website Design (')
     expect(llms).not.toContain('latest 90 days')
 
     expect(urls).toEqual(
       expect.arrayContaining([
         'https://www.design-prism.com/pricing',
         'https://www.design-prism.com/waitlist',
-        'https://www.design-prism.com/websites',
+        'https://www.design-prism.com/website-design',
         'https://www.design-prism.com/seo',
         'https://www.design-prism.com/seo/audit',
         'https://www.design-prism.com/local-seo-agency',

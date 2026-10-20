@@ -27,7 +27,7 @@ export type LoveClientNote = {
   kind: 'client'
   key: string
   name: string
-  /** The business when a case study ties the person to it, else "Website client". */
+  /** The business when a case study ties the person to it, else "Website Design client". */
   role: string
   initials: string
   text: string
@@ -96,7 +96,7 @@ const toClientNote = (quote: {
   kind: 'client',
   key: `client-${quote.id}`,
   name: quote.client,
-  role: getClientQuoteBusiness(quote.client) ?? 'Website client',
+  role: getClientQuoteBusiness(quote.client) ?? 'Website Design client',
   initials: getInitials(quote.client),
   text: quote.text,
 })

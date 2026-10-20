@@ -57,12 +57,12 @@ export const HOMEPAGE_HERO = {
   titleLead: 'impossible is',
   titleAccent: 'temporary.',
   subheading:
-    'Websites, content, ads, and AEO that make your business shine online, turn visitors into customers, and reach people who have never heard of you.',
+    'Website design, content, ads, and AEO that make your business shine online, turn visitors into customers, and reach people who have never heard of you.',
   primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
   secondaryCta: { label: 'See the work', href: '#work' },
   /** Labels for the refracted bands, top to bottom. */
   spectrumLabels: [
-    'website',
+    'website design',
     'content',
     'ads',
     'search',
@@ -117,9 +117,9 @@ export const HOMEPAGE_SERVICES = {
       key: 'shine',
       title: 'shine.',
       lead: 'A website and brand people remember.',
-      body: 'Custom-coded sites, brand, photo, and video that look as good as your work is.',
-      items: ['Custom-coded websites', 'Brand and identity', 'Photo and video'],
-      links: [{ label: 'Websites', href: '/websites' }],
+      body: 'Custom website design, brand, photo, and video that look as good as your work is.',
+      items: ['Custom website design', 'Brand and identity', 'Photo and video'],
+      links: [{ label: 'Website Design', href: '/website-design' }],
     },
     {
       key: 'convert',

@@ -318,7 +318,7 @@ describe('AeoPage sections', () => {
       within(siblings)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/content', '/ads'])
+    ).toEqual(['/website-design', '/content', '/ads'])
   })
 
   it('sends every waitlist CTA to the AEO focus, from hero, inline, and final CTAs', () => {

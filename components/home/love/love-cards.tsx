@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
  * the wall moves, so nothing inside it is a link or a button.
  *
  * Client notes carry the stronger treatment: a lit surface, larger type, an
- * initials avatar, the name, "Website client" and a mono CLIENT tag.
+ * initials avatar, the name, "Website Design client" and a mono CLIENT tag.
  * Community comments read like Instagram comments (handle, glyph, "on
  * Instagram", a quiet heart) on a fainter surface, so a comment can never be
  * mistaken for a client review.

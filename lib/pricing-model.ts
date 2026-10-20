@@ -1,7 +1,8 @@
 import { WAITLIST_CTA, WAITLIST_FOCUS_HREFS } from './waitlist'
 
 // Prism sells four services, and each one is a packaged offer on /pricing
-// with the same plain name (three since 2026-10-12; AEO joined 2026-10-18).
+// with the same plain name (three since 2026-10-12; AEO joined 2026-10-18;
+// Websites became Website Design on 2026-10-19).
 // Ids match PrismServiceId in lib/services.ts.
 export type PricingOfferId = 'website' | 'content' | 'ads' | 'aeo'
 
@@ -84,19 +85,19 @@ export const PRICING_SECONDARY_CTA = {
 export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
   website: {
     offerId: 'website',
-    name: 'Websites',
+    name: 'Website Design',
     price: 0,
     priceCurrency: 'USD',
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: WEBSITE_PRICE_LABEL,
-    priceSubLabel: 'Custom build, with optional care after launch',
+    priceSubLabel: 'Designed and built, with optional care after launch',
     description:
-      'A custom website with clear service pages, mobile-friendly design, inquiry forms, and analytics. Built to help customers understand your business and take the next step.',
+      'Custom website design for your brand: page copy, mobile-first layouts, inquiry forms, and analytics, designed and built by Prism to help customers understand your business and take the next step.',
     primaryCta: WEBSITE_WAITLIST_CTA,
     secondaryCta: {
-      label: 'Explore websites',
-      href: '/websites',
+      label: 'Explore website design',
+      href: '/website-design',
     },
   },
   content: {

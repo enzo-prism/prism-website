@@ -244,7 +244,7 @@ feels out of reach; the site shows Prism making it temporary: the client's
 Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
 logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
 About, Pricing), then the white "Join the waitlist" pill with the live dot.
-The Services menu lists exactly four services, AEO first (AEO, Websites,
+The Services menu lists exactly four services, AEO first (AEO, Website Design,
 Content, Ads), with icon tiles, an "All services" link, and the featured
 waitlist card. Mobile keeps the portaled full-height panel with focus,
 Escape, scroll-lock and inert handling; its four services sit in a 2x2 grid
@@ -260,7 +260,12 @@ sets the tagline in `text-hero` on two lines ("impossible is" in
 appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
 The service pages share `ServiceHero`, each with one soft spectrum glow:
-blue for Websites, warm for Content, green for Ads, and violet for AEO.
+blue for Website Design, warm for Content, green for Ads, and violet for AEO.
+`/website-design` also carries a drawn page anatomy (four numbered pins on a
+wireframe browser and phone, matching a numbered list of design principles).
+It is an illustration in the Prism system, marked "Illustrative page
+layout", with no client data, and the drawing is decorative to assistive tech
+while the list carries the content.
 
 ### Prism logo
 

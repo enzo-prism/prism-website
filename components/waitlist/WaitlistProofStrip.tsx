@@ -145,7 +145,7 @@ export default function WaitlistProofStrip({ className }: { className?: string }
               <span aria-hidden="true" className="px-1.5 text-subtle">
                 ·
               </span>
-              Website client
+              Website Design client
             </span>
           </figcaption>
         </figure>

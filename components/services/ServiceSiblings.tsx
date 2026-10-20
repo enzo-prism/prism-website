@@ -25,14 +25,6 @@ const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
   aeo: MessageSquareQuote,
 }
 
-// Navigation-style labels ("Websites", as in the header's Services menu).
-const SERVICE_LABELS: Record<PrismServiceId, string> = {
-  website: 'Websites',
-  content: 'Content',
-  ads: 'Ads',
-  aeo: 'AEO',
-}
-
 // The real channels each service runs on, shown as a quiet logo row.
 const SERVICE_MARKS: Record<
   PrismServiceId,
@@ -78,7 +70,7 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
           id="service-siblings-title"
           eyebrow="Prism services"
           title="also from Prism."
-          description="Websites, content, ads, and AEO. One team, so each one makes the others work harder."
+          description="Website design, content, ads, and AEO. One team, so each one makes the others work harder."
         />
       </Reveal>
       {/* Three siblings: a row of three on desktop; on tablets the last card
@@ -109,7 +101,7 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
                     />
                   </div>
                   <p className="text-eyebrow mt-6 text-subtle">
-                    {SERVICE_LABELS[service.id]}
+                    {service.name}
                   </p>
                   <h3 className="text-heading text-foreground">
                     <Link

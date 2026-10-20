@@ -1,11 +1,13 @@
 import { ArrowUpRight } from 'lucide-react'
 
 import { BrowserFrame } from '@/components/prism/browser-frame'
+import { InlineWaitlistCta } from '@/components/prism/inline-waitlist-cta'
 import { Marquee } from '@/components/prism/marquee'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
+import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
 import {
   getClientSites,
   type ClientSite,
@@ -34,7 +36,7 @@ function SiteCard({ site }: { site: ClientSite }) {
     <div className="w-[280px] shrink-0 sm:w-[400px]">
       <BrowserFrame
         src={site.desktop}
-        alt={`${site.client} website built by Prism`}
+        alt={`${site.client} website designed by Prism`}
         url={site.host}
         sizes="(min-width: 640px) 400px, 280px"
       />
@@ -49,25 +51,25 @@ function SiteCard({ site }: { site: ClientSite }) {
 }
 
 /**
- * /websites "#work": two full-bleed rails of live client sites drifting in
- * opposite directions. Rails are decorative motion; the case-study index is
- * the one interactive exit.
+ * /website-design "#work": two full-bleed rails of live client sites
+ * drifting in opposite directions. Rails are decorative motion; the
+ * case-study index and the waitlist line beneath are the interactive exits.
  */
-export function WebsitesWorkRail() {
+export function WebsiteDesignWorkRail() {
   return (
     <Section
       id="work"
       bleed
-      aria-labelledby="websites-work-title"
+      aria-labelledby="website-design-work-title"
       className="scroll-mt-20 overflow-x-clip"
     >
       <div className="prism-container">
         <Reveal className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            id="websites-work-title"
+            id="website-design-work-title"
             eyebrow="The work"
-            title="live sites, built by Prism."
-            description="Practices, retailers, nonprofits, and service businesses. Every site here is a current client, live right now."
+            title="live sites, designed by Prism."
+            description="Practices, retailers, nonprofits, and service businesses, each designed around its own brand. Every site here is a current client, live right now."
           />
           <Button
             asChild
@@ -78,7 +80,7 @@ export function WebsitesWorkRail() {
             <TrackedLink
               href="/case-studies"
               label="browse case studies"
-              location="websites work"
+              location="website design work"
             >
               Browse case studies
               <ArrowUpRight aria-hidden="true" />
@@ -91,7 +93,7 @@ export function WebsitesWorkRail() {
         <Marquee
           duration={70}
           gap="1.25rem"
-          label="Client websites built by Prism"
+          label="Client websites designed by Prism"
         >
           {TOP_ROW.map((site) => (
             <SiteCard key={site.slug} site={site} />
@@ -103,8 +105,19 @@ export function WebsitesWorkRail() {
           ))}
         </Marquee>
       </div>
+
+      <div className="prism-container">
+        <Reveal>
+          <InlineWaitlistCta
+            location="website design work"
+            href={WEBSITE_WAITLIST_CTA.href}
+            title="your business could be next on this wall."
+            className="mt-16 sm:mt-20"
+          />
+        </Reveal>
+      </div>
     </Section>
   )
 }
 
-export default WebsitesWorkRail
+export default WebsiteDesignWorkRail

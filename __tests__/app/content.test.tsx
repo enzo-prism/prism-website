@@ -187,7 +187,7 @@ describe('ContentOsPage sections', () => {
       within(siblings)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/ads', '/aeo'])
+    ).toEqual(['/website-design', '/ads', '/aeo'])
 
     const finalCta = screen
       .getByRole('heading', { level: 2, name: 'your content, next.' })

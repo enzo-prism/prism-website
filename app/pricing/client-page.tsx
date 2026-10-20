@@ -65,23 +65,23 @@ const growthPathSteps = [
 ] as const
 
 // Who each plan is for and what it includes. Copy stays inside what
-// lib/pricing-model.ts and the service pages (/websites, /content, /ads,
+// lib/pricing-model.ts and the service pages (/website-design, /content, /ads,
 // /aeo) already promise.
 const PLAN_DETAILS: Record<
   PricingOfferId,
   Pick<PricingPlan, 'badge' | 'audience' | 'includes' | 'featured'>
 > = {
   website: {
-    badge: 'Custom build',
+    badge: 'Custom design',
     featured: true,
     audience: 'For businesses whose website should make choosing them easy.',
     includes: [
-      'Custom design and development',
-      'Clear service pages and inquiry forms',
-      'Mobile-friendly design',
-      'Foundations for Google and AI search',
+      'Custom design for your brand, no templates',
+      'Page copy written around customer questions',
+      'Mobile-first, responsive layouts',
+      'Built, launched, and ready for Google and AI search',
       'Analytics set up at launch',
-      'The finished site is yours',
+      'The finished design and site are yours',
     ],
   },
   content: {
@@ -139,7 +139,7 @@ const pricingSnapshot: PricingPlan[] = PRICING_OFFER_ORDER.map((offerId) => {
 
 const comparisonRows: ComparisonRow[] = [
   {
-    label: 'Custom website with search foundations',
+    label: 'Custom website design and build',
     values: {
       website: true,
       content: false,
@@ -210,9 +210,9 @@ const partnerLevels = [
     title: 'Website Care',
     price: 'Optional, after launch',
     icon: Wrench,
-    href: '/websites',
+    href: '/website-design',
     description:
-      'Hosting, updates, and ongoing edits for your Prism website once it is live. Optional, and only after delivery.',
+      'Hosting, updates, and ongoing edits for your Prism-designed website once it is live. Optional, and only after delivery.',
   },
   {
     title: 'Content',
@@ -264,14 +264,14 @@ const faqs = [
       'Prism is fully booked right now, so every engagement starts on the waitlist. For each monthly intake we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
   },
   {
-    question: 'What does a Prism website include?',
+    question: 'What does Prism website design include?',
     answer:
-      'Custom design, engineering, analytics, and foundations for Google and AI search. We agree on the pages, features, and integrations with you before building. The finished site is yours.',
+      'Custom design for your brand, page copy, development, analytics, and foundations for Google and AI search. We agree on the pages, features, and integrations with you before designing. The finished site is yours.',
   },
   {
     question: 'What is Website Care?',
     answer:
-      'Optional ongoing care: hosting, updates, and ongoing edits after your site is live. It is scoped with your build, added only once the site is delivered, and you can cancel anytime.',
+      'Optional ongoing care: hosting, updates, and ongoing edits after your site is live. It is scoped with your design project, added only once the site is delivered, and you can cancel anytime.',
   },
   {
     question: 'How is Content priced?',
@@ -548,14 +548,14 @@ function PricingStructuredData() {
         serviceId="pricing-website"
         name={website.name}
         description={website.description}
-        serviceType="Website design and development"
+        serviceType="Website design"
         areaServed="United States"
         offerDetails={{
           name: website.name,
           description: website.description,
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
           availability: 'https://schema.org/LimitedAvailability',
-          url: 'https://www.design-prism.com/websites',
+          url: 'https://www.design-prism.com/website-design',
         }}
       />
       <ServiceSchema

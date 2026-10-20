@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 
-import WebsitesPage from '@/app/websites/page'
+import WebsiteDesignPage from '@/app/website-design/page'
 import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { trackLinkInteraction } from '@/utils/analytics'
 
@@ -78,15 +78,15 @@ beforeEach(() => {
   jest.mocked(trackLinkInteraction).mockClear()
 })
 
-describe('WebsitesPage launch hero', () => {
+describe('WebsiteDesignPage launch hero', () => {
   it('renders the lowercase h1, the website-focused CTA, and the work anchor', () => {
-    const { container } = render(<WebsitesPage />)
+    const { container } = render(<WebsiteDesignPage />)
     const hero = heroScope(container)
 
     expect(
       hero.getByRole('heading', {
         level: 1,
-        name: 'a website that makes choosing you easy.',
+        name: 'website design that makes choosing you easy.',
       }),
     ).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
@@ -97,7 +97,7 @@ describe('WebsitesPage launch hero', () => {
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=website',
       'Join the waitlist',
-      'websites hero',
+      'website design hero',
     )
 
     const secondary = hero.getByRole('link', { name: 'See the work' })
@@ -106,7 +106,7 @@ describe('WebsitesPage launch hero', () => {
   })
 
   it('shows real client sites in the hero visual', () => {
-    const { container } = render(<WebsitesPage />)
+    const { container } = render(<WebsiteDesignPage />)
     const hero = heroScope(container)
 
     expect(
@@ -126,7 +126,7 @@ describe('WebsitesPage launch hero', () => {
   })
 
   it('keeps the Dr. Wong GSC proof verbatim with its source in the hero', () => {
-    const { container } = render(<WebsitesPage />)
+    const { container } = render(<WebsiteDesignPage />)
     const hero = heroScope(container)
 
     const proof = hero.getByRole('link', {
@@ -139,17 +139,25 @@ describe('WebsitesPage launch hero', () => {
     ).toBeInTheDocument()
   })
 
+  it('leads the subhead with design and drops the retired PRO website framing', () => {
+    const { container } = render(<WebsiteDesignPage />)
+    const hero = container.querySelector('main section') as HTMLElement
+
+    expect(hero).toHaveTextContent(/^.*Designed and built by Prism: a custom look for your brand/)
+    expect(container.textContent).not.toMatch(/PRO website/i)
+  })
+
   it('keeps hero copy free of em dashes', () => {
-    const { container } = render(<WebsitesPage />)
+    const { container } = render(<WebsiteDesignPage />)
 
     const hero = container.querySelector('main section')
     expect(hero?.textContent).not.toContain('—')
   })
 })
 
-describe('WebsitesPage sections', () => {
+describe('WebsiteDesignPage sections', () => {
   it('lists the seven search and answer surfaces with decorative icons', () => {
-    render(<WebsitesPage />)
+    render(<WebsiteDesignPage />)
 
     expect(
       screen.getByText('Support discovery on Google and in AI.'),
@@ -177,7 +185,7 @@ describe('WebsitesPage sections', () => {
   })
 
   it('shows both published client results with their source and date range', () => {
-    render(<WebsitesPage />)
+    render(<WebsiteDesignPage />)
 
     const results = screen
       .getByRole('heading', { level: 2, name: 'measured at the source.' })
@@ -205,18 +213,65 @@ describe('WebsitesPage sections', () => {
     expect(
       within(results).getAllByText(new RegExp(wong.dateRange as string)),
     ).toHaveLength(2)
-    expect(within(results).getAllByText('Website client')).toHaveLength(2)
+    expect(within(results).getAllByText('Website Design client')).toHaveLength(2)
+  })
+
+  it('pins four design principles to a drawn page marked illustrative', () => {
+    render(<WebsiteDesignPage />)
+
+    const principles = screen
+      .getByRole('heading', {
+        level: 2,
+        name: 'every design choice has a job.',
+      })
+      .closest('section') as HTMLElement
+
+    expect(
+      within(principles)
+        .getAllByRole('heading', { level: 3 })
+        .map((heading) => heading.textContent),
+    ).toEqual([
+      'say it on the first screen.',
+      'put proof where people decide.',
+      'keep it light enough to load fast.',
+      'make the next step obvious.',
+    ])
+    // The drawing is decorative; the list carries the content.
+    expect(
+      within(principles).getByText('Illustrative page layout'),
+    ).toBeInTheDocument()
+    expect(
+      principles.querySelector('figure > [aria-hidden="true"]'),
+    ).toBeInTheDocument()
+  })
+
+  it('offers the waitlist under the work rail', () => {
+    render(<WebsiteDesignPage />)
+
+    const work = document.getElementById('work') as HTMLElement
+    expect(
+      within(work).getByRole('heading', {
+        level: 2,
+        name: 'live sites, designed by Prism.',
+      }),
+    ).toBeInTheDocument()
+    expect(
+      within(work).getByText('your business could be next on this wall.'),
+    ).toBeInTheDocument()
+    expect(
+      within(work).getByRole('link', { name: 'Join the waitlist' }),
+    ).toHaveAttribute('href', '/waitlist?focus=website')
   })
 
   it('answers FAQs in crawlable disclosures', () => {
-    render(<WebsitesPage />)
+    render(<WebsiteDesignPage />)
 
     expect(
       screen.getByRole('heading', { level: 2, name: 'before you join.' }),
     ).toBeInTheDocument()
 
     const first = screen
-      .getByText('What makes a Prism PRO website different?')
+      .getByText('What is included in Prism website design?')
       .closest('details')
     expect(first).toHaveAttribute('open')
 
@@ -228,10 +283,18 @@ describe('WebsitesPage sections', () => {
     expect(
       within(ownership).getByText(/There is no lock-in of any kind\./),
     ).toBeInTheDocument()
+
+    for (const question of [
+      'Do you use templates?',
+      'Can you redesign my current website?',
+      'Do you only design, or build too?',
+    ]) {
+      expect(screen.getByText(question)).toBeInTheDocument()
+    }
   })
 
   it('cross-links the other three services, not the current one', () => {
-    render(<WebsitesPage />)
+    render(<WebsiteDesignPage />)
 
     const siblings = screen
       .getByRole('heading', { level: 2, name: 'also from Prism.' })
@@ -243,10 +306,10 @@ describe('WebsitesPage sections', () => {
   })
 
   it('ends with the website-focused final CTA', () => {
-    render(<WebsitesPage />)
+    render(<WebsiteDesignPage />)
 
     const finalCta = screen
-      .getByRole('heading', { level: 2, name: 'your site, next.' })
+      .getByRole('heading', { level: 2, name: "let's design your site." })
       .closest('section') as HTMLElement
     const cta = within(finalCta).getByRole('link', {
       name: 'Join the waitlist',
@@ -256,12 +319,12 @@ describe('WebsitesPage sections', () => {
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=website',
       'Join the waitlist',
-      'websites final cta',
+      'website design final cta',
     )
   })
 
   it('keeps the whole page free of em dashes, prices, and former clients', () => {
-    const { container } = render(<WebsitesPage />)
+    const { container } = render(<WebsiteDesignPage />)
     const text = (
       container.querySelector('main')?.textContent ?? ''
     ).toLowerCase()

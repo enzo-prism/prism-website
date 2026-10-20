@@ -124,6 +124,6 @@ describe('WaitlistProofStrip', () => {
     expect(isClientQuote(record!)).toBe(true)
     expect(record!.requiresConsent).toBeFalsy()
     expect(quote.closest('figure')).toHaveTextContent(record!.client)
-    expect(quote.closest('figure')).toHaveTextContent('Website client')
+    expect(quote.closest('figure')).toHaveTextContent('Website Design client')
   })
 })

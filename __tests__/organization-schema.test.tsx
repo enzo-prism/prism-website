@@ -61,7 +61,7 @@ describe('GlobalSchemaGraph', () => {
         offer.url,
       ]),
     ).toEqual([
-      ['Websites', 'https://www.design-prism.com/websites'],
+      ['Website Design', 'https://www.design-prism.com/website-design'],
       ['Content', 'https://www.design-prism.com/content'],
       ['Ads', 'https://www.design-prism.com/ads'],
       ['AEO', 'https://www.design-prism.com/aeo'],

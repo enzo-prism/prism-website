@@ -79,8 +79,9 @@ const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
 
 const MINIMAL_TITLE_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\banswer engine optimization\b/gi, "AEO"],
-  [/\bwebsite design\b/gi, "Websites"],
-  [/\bweb design\b/gi, "Websites"],
+  // "Website design" is the service's name (2026-10-19), so titles keep it
+  // whole; "web design" folds into the same phrase.
+  [/\bweb design\b/gi, "website design"],
   [/\bgoogle maps seo\b/gi, "SEO"],
   [/\blocal seo\b/gi, "SEO"],
   [/\bseo services?\b/gi, "SEO"],

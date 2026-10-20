@@ -74,9 +74,9 @@ jest.mock('@/utils/analytics', () => ({
 // match "leads" in the Ads detail line.
 const HUB_ACTIONS = [
   {
-    name: /^website\b/i,
+    name: /^website design\b/i,
     href: WAITLIST_FOCUS_HREFS.website,
-    ctaText: 'website',
+    ctaText: 'website design',
     service: 'website',
   },
   {
@@ -205,7 +205,7 @@ describe('SocialLinkHub', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
-      screen.getByText('A site that makes choosing you easy.'),
+      screen.getByText('Custom design that makes choosing you easy.'),
     ).toBeInTheDocument()
     expect(
       screen.getByText('Give people a reason to choose you.'),
@@ -217,7 +217,7 @@ describe('SocialLinkHub', () => {
       screen.getByText(getService('aeo').navDescription),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('Websites · Content · Ads · AEO'),
+      screen.getByText('Website Design · Content · Ads · AEO'),
     ).toBeInTheDocument()
     expect(screen.queryByText(/\$5,000/)).not.toBeInTheDocument()
     expect(screen.queryByText(/\$2,000/)).not.toBeInTheDocument()

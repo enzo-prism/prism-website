@@ -405,7 +405,7 @@ describe('WaitlistForm (stepped flow)', () => {
     const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
     fireEvent.click(notSure)
     expect(notSure).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'Website' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Website Design' })).not.toBeChecked()
     expect(screen.getByRole('checkbox', { name: 'Ads' })).not.toBeChecked()
 
     // Picking a service again clears "Not sure yet".
@@ -445,7 +445,7 @@ describe('WaitlistForm (stepped flow)', () => {
     render(<WaitlistForm initialFocus={['aeo']} />)
 
     expect(screen.getByRole('checkbox', { name: 'AEO' })).toBeChecked()
-    for (const name of ['Website', 'Content', 'Ads', 'Not sure yet']) {
+    for (const name of ['Website Design', 'Content', 'Ads', 'Not sure yet']) {
       expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
     }
     expect(trackEvent).toHaveBeenCalledWith(
@@ -453,7 +453,7 @@ describe('WaitlistForm (stepped flow)', () => {
       expect.objectContaining({ form_name: 'waitlist', prefilled_focus: 'aeo' }),
     )
 
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Website' }))
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Website Design' }))
     await completeToGoals()
     fireEvent.change(screen.getByLabelText(/your goals/i), {
       target: { value: 'Show up when patients ask ChatGPT for a dentist.' },

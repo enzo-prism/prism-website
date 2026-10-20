@@ -50,7 +50,7 @@ describe("pricing model", () => {
       [...ALL_OFFER_IDS].sort(),
     )
     expect(PRICING_OFFER_ORDER.map((id) => CANONICAL_PRICING_OFFERS[id].name)).toEqual([
-      "Websites",
+      "Website Design",
       "Content",
       "Ads",
       "AEO",
@@ -94,7 +94,7 @@ describe("pricing model", () => {
 
   it("keeps an internal explore link to each service page", () => {
     expect(CANONICAL_PRICING_OFFERS.website.secondaryCta?.href).toBe(
-      "/websites",
+      "/website-design",
     )
     expect(CANONICAL_PRICING_OFFERS.content.secondaryCta?.href).toBe(
       "/content",

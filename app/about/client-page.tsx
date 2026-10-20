@@ -48,7 +48,7 @@ export default function AboutClientPage() {
         personId="enzo-sison"
         name="Enzo Sison"
         jobTitle="Founder & CEO"
-        description="Founder of Prism, building websites, content, ads, and AEO for small businesses"
+        description="Founder of Prism, designing websites and running content, ads, and AEO for small businesses"
         image="https://www.design-prism.com/enzo-avatar.png"
         url="https://www.design-prism.com/about"
         sameAs={[

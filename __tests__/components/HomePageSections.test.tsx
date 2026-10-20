@@ -125,7 +125,7 @@ describe('ClientPage homepage flow', () => {
     expect(seeWork).toHaveAttribute('href', '#work')
 
     expect(hero).toHaveTextContent(
-      /websites, content, ads, and AEO that make your business shine online/i,
+      /website design, content, ads, and AEO that make your business shine online/i,
     )
   })
 
@@ -191,7 +191,7 @@ describe('ClientPage homepage flow', () => {
   it('separates client quotes from community comments', () => {
     render(<ClientPage />)
 
-    expect(screen.getAllByText('Website client').length).toBeGreaterThanOrEqual(
+    expect(screen.getAllByText('Website Design client').length).toBeGreaterThanOrEqual(
       4,
     )
     expect(screen.getAllByText(/on Instagram$/).length).toBeGreaterThanOrEqual(
@@ -210,7 +210,7 @@ describe('ClientPage homepage flow', () => {
       '[data-home-service-card]',
     )
     expect(cards).toHaveLength(3)
-    for (const href of ['/websites', '/content', '/ads', '/aeo']) {
+    for (const href of ['/website-design', '/content', '/ads', '/aeo']) {
       expect(services.querySelector(`a[href="${href}"]`)).not.toBeNull()
     }
 
@@ -235,7 +235,7 @@ describe('ClientPage homepage flow', () => {
       within(pillRow)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/content', '/ads', '/aeo', '/services'])
+    ).toEqual(['/website-design', '/content', '/ads', '/aeo', '/services'])
 
     const products = document.getElementById('products') as HTMLElement
     expect(

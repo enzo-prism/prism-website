@@ -187,7 +187,7 @@ describe('/services', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^website\. content\. ads\. AEO\.$/i,
+        name: /^website design\. content\. ads\. AEO\.$/i,
       }),
     ).toBeInTheDocument()
     expect(screen.getByText('Four services')).toBeInTheDocument()
@@ -201,7 +201,7 @@ describe('/services', () => {
       ).toHaveAttribute('href', service.href)
     }
     expect(PRISM_SERVICES.map((service) => service.href)).toEqual([
-      '/websites',
+      '/website-design',
       '/content',
       '/ads',
       '/aeo',

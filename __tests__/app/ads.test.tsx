@@ -177,7 +177,7 @@ describe('AdsPage sections', () => {
       within(siblings)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/content', '/aeo'])
+    ).toEqual(['/website-design', '/content', '/aeo'])
 
     const finalCta = screen
       .getByRole('heading', { level: 2, name: 'your next campaign starts here.' })

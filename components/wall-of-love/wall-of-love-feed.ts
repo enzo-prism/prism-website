@@ -67,7 +67,7 @@ export function getHandleMonogram(handle: string): string {
 /**
  * Client name -> case study slug, only where `lib/case-study-data.ts` itself
  * names the person (Grace Dental's story: "led by Dr. Tingjen Ji"). Everyone
- * else stays "Website client": never guess a business.
+ * else stays "Website Design client": never guess a business.
  */
 export const VERIFIED_CLIENT_CASE_STUDIES: Readonly<Record<string, string>> = {
   'Dr. Tingjen Ji': 'grace-dental-santa-rosa',

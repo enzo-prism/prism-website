@@ -144,8 +144,16 @@ images: {
       { source: '/content-os', destination: '/content', permanent: true },
       { source: '/founder-os', destination: '/content', permanent: true },
       { source: '/founder-os/apply', destination: '/content', permanent: true },
-      { source: '/website', destination: '/websites', permanent: true },
-      // Three services only (2026-10-12): Websites, Content, Ads. The two
+      // Website Design is the website service's name and canonical URL
+      // (2026-10-19). The old /websites page and its shortpaths land there in
+      // one hop so link equity consolidates on /website-design.
+      { source: '/websites', destination: '/website-design', permanent: true },
+      { source: '/website', destination: '/website-design', permanent: true },
+      { source: '/web-design', destination: '/website-design', permanent: true },
+      { source: '/website-design-services', destination: '/website-design', permanent: true },
+      { source: '/web-design-services', destination: '/website-design', permanent: true },
+      // Three services only (2026-10-12): Website Design (then Websites),
+      // Content, Ads. The two
       // retired packaged offers had no subpaths. The dental offer lands on the
       // dental website lander (indexable, waitlist CTA with focus=website);
       // the creative subscription lands on Content.

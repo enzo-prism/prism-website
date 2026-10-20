@@ -50,10 +50,10 @@ describe('pricing schema consistency', () => {
 
   it('keeps the websites schema price-free and call-first', () => {
     const content = fs.readFileSync(
-      path.join(process.cwd(), 'app/websites/page.tsx'),
+      path.join(process.cwd(), 'app/website-design/page.tsx'),
       'utf8',
     )
-    expect(content).toContain('Prism PRO website')
+    expect(content).toContain('Prism Website Design')
     expect(content).not.toMatch(/price: ["']\d/)
     expect(content).not.toContain('$300')
     expect(content).toMatch(/url: CANONICAL_URL/)

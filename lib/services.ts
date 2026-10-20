@@ -23,8 +23,10 @@ export type PrismService = {
 }
 
 /**
- * Public service framing: Prism offers four services: Websites, Content, Ads
- * (2026-10-12), and AEO, answer engine optimization (2026-10-18). The same
+ * Public service framing: Prism offers four services: Website Design, Content,
+ * Ads (2026-10-12), and AEO, answer engine optimization (2026-10-18). The
+ * website service was reframed from "Websites" to "Website Design" on
+ * 2026-10-19 (canonical page /website-design; /websites 308s there). The same
  * four are the packaged offers on /pricing (lib/pricing-model.ts) and the
  * header Services menu (NAV_SERVICE_ITEMS in lib/constants.ts).
  * Every primary CTA is the waitlist (Prism is at capacity); the focus param
@@ -33,14 +35,14 @@ export type PrismService = {
 export const PRISM_SERVICES: readonly PrismService[] = [
   {
     id: 'website',
-    label: 'website',
-    name: 'Website',
-    href: '/websites',
-    navDescription: 'A site that makes choosing you easy.',
-    homeTitle: 'A site that makes choosing you easy.',
-    homeCta: 'Explore websites',
+    label: 'website design',
+    name: 'Website Design',
+    href: '/website-design',
+    navDescription: 'Custom design that makes choosing you easy.',
+    homeTitle: 'Custom design that makes choosing you easy.',
+    homeCta: 'Explore website design',
     description:
-      'A fast, custom website that explains your value and makes it easy to call or book. Search foundations and analytics help you understand how people find and use it.',
+      'Custom website design for your brand, written around what customers ask and built to load fast on every phone. We design it, build it, and launch it with search foundations and analytics in place.',
     primaryCta: WEBSITE_WAITLIST_CTA,
   },
   {

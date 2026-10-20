@@ -162,10 +162,10 @@ describe('WallOfLoveClientPage sources', () => {
       if (note?.name === 'Dr. Tingjen Ji') {
         expect(link).toHaveAttribute('href', '/case-studies/grace-dental-santa-rosa')
         expect(link).toHaveTextContent('Dr. Tingjen Ji · Grace Dental Santa Rosa')
-        expect(card).not.toHaveTextContent('Website client')
+        expect(card).not.toHaveTextContent('Website Design client')
       } else {
         expect(link).toBeNull()
-        expect(card).toHaveTextContent('Website client')
+        expect(card).toHaveTextContent('Website Design client')
       }
     }
 
@@ -208,7 +208,7 @@ describe('WallOfLoveClientPage sources', () => {
     }
     for (const card of cards) {
       expect(card).toHaveTextContent('on Instagram')
-      expect(card).not.toHaveTextContent('Website client')
+      expect(card).not.toHaveTextContent('Website Design client')
     }
     expect(community).toHaveTextContent('not client reviews')
     for (const note of clientNotes) {

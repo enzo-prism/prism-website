@@ -44,7 +44,7 @@ function ComparisonCell({ value }: { value: ComparisonValue }) {
 }
 
 /**
- * shadcn Table comparing what each of the four offers (Websites, Content,
+ * shadcn Table comparing what each of the four offers (Website Design, Content,
  * Ads, AEO) includes. The first column stays pinned while the table scrolls
  * sideways on small screens.
  */
