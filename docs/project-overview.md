@@ -6,7 +6,7 @@ Prism is a business growth systems website. **As of 2026-09-14 Prism is at capac
 
 ## Current Shape
 
-- Framework: Next.js 16.3.8 App Router, React 19, TypeScript, Tailwind v4.
+- Framework: Next.js 16.4.2 App Router, React 19, TypeScript, Tailwind v4.
 - Runtime: Node.js 22.x and pnpm 10.x.
 - Production: GitHub Actions publishes to Vercel with source deploys. Vercel Git auto-deploy is disabled for `main`; the locked-route visual job is a blocking gate ahead of deploy. The "Protect main history" ruleset blocks force-push and deletion of `main`; secret scanning, push protection, and Dependabot security updates are on.
 - Design system: the dark **Prism Spectrum System** (2026-10-12). Root `DESIGN.md` is the contract, generated tokens live in `generated/`, stock shadcn primitives in `components/ui/`, the marketing kit in `components/prism/`, and the Spectrum utilities in the "Prism Spectrum system" section of `app/globals.css` (`cn` in `lib/utils.ts` is extended to know them). The pixel styling, Geist Pixel font, Pixelish icons, ASCII heroes, and `components/core-route/` are retired.
