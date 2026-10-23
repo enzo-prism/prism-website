@@ -125,7 +125,7 @@ describe('ClientPage homepage flow', () => {
     expect(seeWork).toHaveAttribute('href', '#work')
 
     expect(hero).toHaveTextContent(
-      /website design, content, ads, and AEO that make your business shine online/i,
+      /website design, content, ads, and AEO that turn strangers into customers/i,
     )
   })
 

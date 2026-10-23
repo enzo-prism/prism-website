@@ -30,7 +30,7 @@ export const WAITLIST_FORM_ENDPOINT =
  * starts in monthly intakes. The waitlist is the line for the NEXT intake,
  * so the month below always resolves from the visitor's clock, never from a
  * hardcoded string. Surfaces that cannot render the live token (metadata,
- * tertiary one-liners) use timeless phrasing like "next month" or "each
+ * tertiary one-liners) use timeless phrasing like "next monthly intake" or "each
  * monthly intake" instead.
  */
 const WAITLIST_INTAKE_MONTH_NAMES = [
@@ -56,13 +56,37 @@ export type WaitlistIntakeMonth = {
 }
 
 /**
+ * Earliest open intake (2026-10-23): October and November 2026 are fully
+ * booked, so the waitlist fills December. Until then every surface names
+ * December; from December on the floor is in the past and the intake rolls
+ * forward to the next month as usual. Move it forward again whenever the
+ * month after the current one is already full.
+ */
+export const WAITLIST_EARLIEST_INTAKE = new Date(2026, 11, 1)
+
+/**
+ * First day of the next open intake from a date (default: now): the next
+ * calendar month, or `WAITLIST_EARLIEST_INTAKE` if that is later.
+ */
+export function getWaitlistIntakeDate(fromDate: Date = new Date()): Date {
+  const next = new Date(fromDate.getFullYear(), fromDate.getMonth() + 1, 1)
+  return next < WAITLIST_EARLIEST_INTAKE
+    ? new Date(WAITLIST_EARLIEST_INTAKE)
+    : next
+}
+
+/**
  * Resolve the next monthly intake from a date (default: now). December
  * correctly rolls over to January of the following year.
  */
 export function getWaitlistIntakeMonth(
   fromDate: Date = new Date(),
 ): WaitlistIntakeMonth {
-  const next = new Date(fromDate.getFullYear(), fromDate.getMonth() + 1, 1)
+  return toWaitlistIntakeMonth(getWaitlistIntakeDate(fromDate))
+}
+
+/** Name a month, e.g. for the intake calendar around the next intake. */
+export function toWaitlistIntakeMonth(next: Date): WaitlistIntakeMonth {
   return {
     month: WAITLIST_INTAKE_MONTH_NAMES[next.getMonth()],
     year: next.getFullYear(),
