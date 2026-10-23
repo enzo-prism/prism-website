@@ -124,7 +124,7 @@ const lockedRoutes = [
     path: '/',
     readyHeading: /^impossible is temporary\.$/i,
     mustContain: [
-      /website design, content, ads, and AEO that make your business shine online/i,
+      /website design, content, ads, and AEO that turn strangers into customers/i,
       /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,

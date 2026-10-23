@@ -3,7 +3,11 @@ import { render, screen, within } from '@testing-library/react'
 import WaitlistPage from '@/app/waitlist/page'
 import WaitlistThankYouPage from '@/app/waitlist/thank-you/page'
 import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
-import { getWaitlistIntakeMonth } from '@/lib/waitlist'
+import {
+  getWaitlistIntakeDate,
+  getWaitlistIntakeMonth,
+  toWaitlistIntakeMonth,
+} from '@/lib/waitlist'
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
@@ -214,9 +218,10 @@ describe('/waitlist/thank-you', () => {
 
   it('shows an honest intake strip with the live next intake highlighted', () => {
     const { container } = render(<WaitlistThankYouPage />)
-    const now = new Date()
-    const thisMonth = getWaitlistIntakeMonth(
-      new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    // The booked slot is the month just before the live intake.
+    const intake = getWaitlistIntakeDate()
+    const bookedMonth = toWaitlistIntakeMonth(
+      new Date(intake.getFullYear(), intake.getMonth() - 1, 1),
     ).month
     const nextIntake = getWaitlistIntakeMonth().month
 
@@ -224,7 +229,7 @@ describe('/waitlist/thank-you', () => {
     expect(strip).toHaveAccessibleName(/intake calendar/i)
     const slots = within(strip).getAllByRole('listitem')
     expect(slots).toHaveLength(4)
-    expect(slots[0]).toHaveTextContent(thisMonth)
+    expect(slots[0]).toHaveTextContent(bookedMonth)
     expect(slots[0]).toHaveTextContent(/fully booked/i)
     expect(slots[1]).toHaveAttribute('aria-current', 'step')
     expect(slots[1]).toHaveTextContent(nextIntake)
