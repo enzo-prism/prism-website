@@ -332,7 +332,7 @@ export default function CaseStudiesPage() {
       />
       <CollectionPageSchema
         name="Prism case studies"
-        description="Different markets, same two problems: getting found and getting chosen. Live websites and verified results from Prism's current clients across dental, founder-led, nonprofit, community, retail, and hospitality work."
+        description="Different markets, same two problems: getting found and getting chosen. Live websites and verified results from Prism's current clients across dental, software, founder-led, nonprofit, community, retail, and hospitality work."
         url={`${SITE}/case-studies`}
         isPartOfId={`${SITE}/#website`}
       />

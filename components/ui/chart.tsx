@@ -1,7 +1,10 @@
 'use client'
 
 import * as React from 'react'
-import * as RechartsPrimitive from 'recharts'
+// Named imports (not `import * as RechartsPrimitive`) so bundlers can
+// tree-shake the rest of Recharts out of the chart chunk; a namespace import
+// forces the whole library in because every property is treated as used.
+import { Legend, ResponsiveContainer, Tooltip } from 'recharts'
 
 import { cn } from '@/lib/utils'
 
@@ -47,7 +50,7 @@ function useChartMounted() {
 function ChartResponsiveContainer({
   children,
   ...props
-}: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>) {
+}: React.ComponentProps<typeof ResponsiveContainer>) {
   const isMounted = useChartMounted()
 
   if (!isMounted) {
@@ -55,13 +58,9 @@ function ChartResponsiveContainer({
   }
 
   return (
-    <RechartsPrimitive.ResponsiveContainer
-      width="100%"
-      height="100%"
-      {...props}
-    >
+    <ResponsiveContainer width="100%" height="100%" {...props}>
       {children}
-    </RechartsPrimitive.ResponsiveContainer>
+    </ResponsiveContainer>
   )
 }
 
@@ -70,7 +69,7 @@ const ChartContainer = React.forwardRef<
   React.ComponentProps<'div'> & {
     config: ChartConfig
     children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
+      typeof ResponsiveContainer
     >['children']
   }
 >(({ id, className, children, config, ...props }, ref) => {
@@ -129,11 +128,11 @@ ${colorConfig
   )
 }
 
-const ChartTooltip = RechartsPrimitive.Tooltip
+const ChartTooltip = Tooltip
 
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+  React.ComponentProps<typeof Tooltip> &
     React.ComponentProps<'div'> & {
       hideLabel?: boolean
       hideIndicator?: boolean
@@ -291,7 +290,7 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = 'ChartTooltip'
 
-const ChartLegend = RechartsPrimitive.Legend
+const ChartLegend = Legend
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,

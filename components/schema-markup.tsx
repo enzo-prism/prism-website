@@ -209,7 +209,7 @@ export function GlobalSchemaGraph() {
     // Keep this definition in sync with public/llms.txt and the about page so
     // search and AI engines see one consistent entity description.
     description:
-      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.',
+      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first website design, Google visibility, reviews, ads, content, tracking, and AI search support.',
     slogan: 'Impossible is temporary',
     foundingDate: '2023',
     founder: {
@@ -264,31 +264,39 @@ export function GlobalSchemaGraph() {
       'https://www.tiktok.com/@the_design_prism',
       'https://www.linkedin.com/company/web-prism',
     ],
-    // Prism's three services (Websites, Content, Ads) as canonical offers so
+    // Prism's four services (Website Design, Content, Ads, AEO) as canonical offers so
     // AI/search engines see the core products. Values come from
-    // lib/pricing-model.ts; do not hardcode here. Every offer is scoped from
-    // the waitlist, so all Offer nodes stay price-free by policy.
+    // lib/pricing-model.ts; do not hardcode here. Prism is at capacity and
+    // every offer is scoped from the waitlist, so availability stays
+    // LimitedAvailability and all Offer nodes stay price-free by policy.
     makesOffer: [
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.website.name,
         description: CANONICAL_PRICING_OFFERS.website.description,
-        availability: 'https://schema.org/InStock',
-        url: 'https://www.design-prism.com/websites',
+        availability: 'https://schema.org/LimitedAvailability',
+        url: 'https://www.design-prism.com/website-design',
       },
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.content.name,
         description: CANONICAL_PRICING_OFFERS.content.description,
-        availability: 'https://schema.org/InStock',
+        availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/content',
       },
       {
         '@type': 'Offer',
         name: CANONICAL_PRICING_OFFERS.ads.name,
         description: CANONICAL_PRICING_OFFERS.ads.description,
-        availability: 'https://schema.org/InStock',
+        availability: 'https://schema.org/LimitedAvailability',
         url: 'https://www.design-prism.com/ads',
+      },
+      {
+        '@type': 'Offer',
+        name: CANONICAL_PRICING_OFFERS.aeo.name,
+        description: CANONICAL_PRICING_OFFERS.aeo.description,
+        availability: 'https://schema.org/LimitedAvailability',
+        url: 'https://www.design-prism.com/aeo',
       },
     ],
   }

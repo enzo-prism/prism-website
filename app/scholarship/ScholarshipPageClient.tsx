@@ -157,10 +157,10 @@ export default function ScholarshipPageClient() {
             ))}
           </ul>
           <Link
-            href="/websites"
+            href="/website-design"
             className="mt-8 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white/70 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
-            See how we approach websites
+            See how we approach website design
             <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>

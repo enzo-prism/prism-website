@@ -719,7 +719,7 @@ export default function AdsPage() {
           description:
             'Paid ads across Google, Meta, TikTok, and Yelp with creative, targeting, landing paths, and tracking.',
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/ads',
         }}
       />

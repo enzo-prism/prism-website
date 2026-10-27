@@ -17,6 +17,7 @@ type CaseStudyCategory =
   | 'event'
   | 'private estate'
   | 'online community'
+  | 'software'
 
 export type CaseStudyExplainerVideo = {
   src: string
@@ -101,6 +102,41 @@ export type CaseStudyMeta = {
 }
 
 export const CASE_STUDIES: CaseStudyMeta[] = [
+  {
+    id: '25',
+    title: 'Mach 1: a customer-led launch and the growth tools behind it',
+    client: 'Mach 1',
+    websiteUrl: 'https://mach1ai.com',
+    category: 'software',
+    industry: 'AI agent platform',
+    location: 'Austin, TX',
+    description:
+      'A new website for an AI agent company, led by its customers’ own words, plus the private growth tools its team runs on.',
+    slug: 'mach-1',
+    segments: ['it'],
+    structured: {
+      datePublished: '2026-10-18T00:00:00.000Z',
+      dateModified: '2026-10-18T00:00:00.000Z',
+      outcomes: [
+        'mach1ai.com relaunched in October 2026 around five customer stories, each told in the customer’s own words with captioned films and sourced results.',
+        'Support, sales, customer success, and operations each have their own page, and five everyday processes link from the homepage straight to the page that shows how they run.',
+        'Tower, the product’s assistant, and the way the team works with customers are shown in illustrated scenes instead of described in jargon.',
+        'A free AEO report gives visitors a useful reason to reach out before they are ready for a sales call.',
+        'Behind the site, the growth team plans and measures content, reviews ads, and finds approved interview clips in private tools Prism built around how they work.',
+      ],
+      story: {
+        situation:
+          'Mach 1 builds AI agents with the teams who use them. Its customers were getting results worth talking about, and many said so on camera. That proof lived in hours of interview footage and scattered files, and the website was not yet the place a buyer could see it.',
+        approach:
+          'Prism rebuilt mach1ai.com around customers’ own words: captioned films, sourced results, a page for every team, and a calm, motion-led design. Behind the site, Prism built the tools the growth team works in: a content engine, an interview vault with checked transcripts, a campaign review room, and a growth plan.',
+        result:
+          'The new site launched in October 2026 with five customer stories, its results told in customers’ own words or sourced reports. The growth team plans, reviews, and measures in tools shaped around how it already works.',
+      },
+      focus: 'Customer-led launch',
+      scope: 'Website, content, ads, internal tools',
+      canonicalUrl: 'https://www.design-prism.com/case-studies/mach-1',
+    },
+  },
   {
     id: '1',
     title: 'Powering a Clear Practice Transition',

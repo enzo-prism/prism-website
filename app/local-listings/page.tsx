@@ -613,7 +613,7 @@ export default async function LocalListingsPage() {
           description:
             "Listings, review flows, local visibility, and reporting delivered under Prism's productized offers.",
           businessFunction: 'http://purl.org/goodrelations/v1#ProvideService',
-          availability: 'https://schema.org/InStock',
+          availability: 'https://schema.org/LimitedAvailability',
           url: 'https://www.design-prism.com/pricing',
         }}
       />

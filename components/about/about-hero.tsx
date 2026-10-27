@@ -31,9 +31,10 @@ export function AboutHero() {
             built by Enzo Sison.
           </h1>
           <p className="prism-rise text-lead mt-7 max-w-[34rem] text-pretty text-foreground/90 [--rise-delay:160ms]">
-            Two Apple internships. A Cal Poly engineering degree. A D1 track
-            career. In May 2023, Enzo left his full-time job, went pro in track
-            and field, and started Prism.
+            Enzo worked on CarPlay, GymKit, AirPlay, HomeKit, and Find My at
+            Apple, earned an engineering degree at Cal Poly, and competed in D1
+            track. In May 2023, he left his full-time job, went pro in track and
+            field, and started Prism.
           </p>
           <p className="prism-rise mt-4 max-w-[34rem] text-pretty text-[15px] leading-7 text-muted-foreground [--rise-delay:200ms]">
             He founded Prism to help small businesses turn a stronger online

@@ -124,7 +124,13 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       trackCTAClick(ctaText, ctaLocation)
     }
 
-    const trackScroll = () => {
+    // Coalesce scroll events to one geometry sample per animation frame:
+    // scrollHeight reads can force layout, and max scroll depth does not
+    // need per-event resolution. The sampled values are the same.
+    let scrollFrame = 0
+
+    const sampleScroll = () => {
+      scrollFrame = 0
       const scrollPosition = window.scrollY + window.innerHeight
       const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
       if (documentHeight <= 0) return
@@ -139,6 +145,10 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
       if (scrollDepth >= 25) {
         engaged = true
       }
+    }
+
+    const trackScroll = () => {
+      if (!scrollFrame) scrollFrame = window.requestAnimationFrame(sampleScroll)
     }
 
     const reportEngagement = () => {
@@ -163,6 +173,12 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
     // duplicate the event. This is visible time at that exit, not GA's native
     // full-session engagement duration.
     const pauseAndReport = () => {
+      // Flush any pending scroll sample so the reported max depth includes
+      // the final scroll position, exactly as the per-event handler did.
+      if (scrollFrame) {
+        window.cancelAnimationFrame(scrollFrame)
+        sampleScroll()
+      }
       if (visibleSince !== null) {
         visibleTimeMs += Math.max(0, Date.now() - visibleSince)
         visibleSince = null
@@ -192,6 +208,7 @@ export default function EnhancedAnalytics({ title }: EnhancedAnalyticsProps) {
 
     return () => {
       pauseAndReport()
+      if (scrollFrame) window.cancelAnimationFrame(scrollFrame)
       window.removeEventListener('scroll', trackScroll)
       window.removeEventListener('click', handleTrackedClick)
       window.removeEventListener('keydown', trackEngagement)

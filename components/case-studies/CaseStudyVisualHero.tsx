@@ -2,6 +2,7 @@ import { Fragment, type ReactNode } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 
 import { PhoneFrame } from '@/components/case-studies/PhoneFrame'
+import HeroLoopingVideo from '@/components/HeroLoopingVideo'
 import { BrowserFrame } from '@/components/prism/browser-frame'
 import { Eyebrow } from '@/components/prism/section'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
@@ -29,6 +30,12 @@ type CaseStudyVisualHeroProps = {
   homeDesktopAlt?: string
   homeMobileSrc?: string
   homeMobileAlt?: string
+  /**
+   * A muted, looping screen recording of the live site that plays inside the
+   * browser frame (poster: `homeDesktopSrc`). Captured at the same 1440x900
+   * viewport as the still, so the crossfade lands on the same frame.
+   */
+  homeDesktopFilm?: string
 }
 
 /**
@@ -85,6 +92,7 @@ export default function CaseStudyVisualHero({
   homeDesktopAlt,
   homeMobileSrc,
   homeMobileAlt,
+  homeDesktopFilm,
 }: CaseStudyVisualHeroProps) {
   const longTitle = title.length > 23
 
@@ -173,7 +181,21 @@ export default function CaseStudyVisualHero({
               url={websiteHost}
               priority
               sizes="(min-width: 1280px) 1152px, calc(100vw - 2.5rem)"
-              className="rounded-2xl"
+              // isolate: the film's layered poster/video stay under the phone.
+              className="isolate rounded-2xl"
+              media={
+                homeDesktopFilm ? (
+                  <HeroLoopingVideo
+                    videoSrc={homeDesktopFilm}
+                    posterSrc={homeDesktopSrc}
+                    alt={homeDesktopAlt ?? `${title} homepage built by Prism`}
+                    posterSizes="(min-width: 1280px) 1152px, calc(100vw - 2.5rem)"
+                    className="rounded-none border-0 bg-transparent shadow-none"
+                    aspectClassName="aspect-[16/10] sm:aspect-[16/10]"
+                    skeletonClassName="bg-white/[0.04]"
+                  />
+                ) : undefined
+              }
             />
             {homeMobileSrc ? (
               <div className="absolute -bottom-6 right-3 w-[27%] max-w-[248px] sm:-bottom-10 sm:right-8 sm:w-[21%] lg:-right-5 lg:w-[19%]">

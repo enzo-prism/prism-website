@@ -50,14 +50,29 @@ describe('pricing schema consistency', () => {
 
   it('keeps the websites schema price-free and call-first', () => {
     const content = fs.readFileSync(
-      path.join(process.cwd(), 'app/websites/page.tsx'),
+      path.join(process.cwd(), 'app/website-design/page.tsx'),
       'utf8',
     )
-    expect(content).toContain('Prism PRO website')
+    expect(content).toContain('Prism Website Design')
     expect(content).not.toMatch(/price: ["']\d/)
     expect(content).not.toContain('$300')
     expect(content).toMatch(/url: CANONICAL_URL/)
     expect(content).not.toContain('60-Day Growth Sprint')
+  })
+
+  it('keeps the AEO schema price-free and pointed at /aeo', () => {
+    const content = fs.readFileSync(
+      path.join(process.cwd(), 'app/aeo/page.tsx'),
+      'utf8',
+    )
+    expect(content).toContain('Prism AEO')
+    expect(content).not.toContain('priceRange')
+    expect(content).not.toMatch(/price: ["']\d/)
+    expect(content).not.toMatch(/\$\d/)
+    expect(content).toMatch(/url: CANONICAL_URL/)
+    expect(content).toMatch(
+      /CANONICAL_URL = ["']https:\/\/www\.design-prism\.com\/aeo["']/,
+    )
   })
 
   it('keeps the custom pricing-page offers price-free', () => {
@@ -67,6 +82,8 @@ describe('pricing schema consistency', () => {
     )
 
     expect(content).not.toContain('price: String(website.price)')
+    expect(content).not.toContain('price: String(aeo.price)')
+    expect(content).toContain('serviceId="pricing-aeo"')
     expect(content).not.toContain("priceCurrency: 'USD'")
     expect(content).not.toContain('priceCurrency: "USD"')
   })

@@ -67,7 +67,8 @@ describe('SEO indexability guards', () => {
       '/founder-os',
       '/founder-os/apply',
       '/ai',
-      '/aeo',
+      // AI search lander retired 2026-10-18; it 308s to the /aeo service.
+      '/ai-seo-services',
       '/apply',
       '/book-a-shoot',
       '/contact',
@@ -79,7 +80,7 @@ describe('SEO indexability guards', () => {
       '/checkout/launch',
       '/checkout/grow',
       '/checkout/scale',
-      // Retired packaged offers (2026-10-12); Prism offers three services.
+      // Retired packaged offers (2026-10-12); Prism offers four services.
       '/dental-os',
       '/prism-infinity',
     ]
@@ -94,6 +95,7 @@ describe('SEO indexability guards', () => {
 
     const excludedUrls = [
       'https://www.design-prism.com/ai',
+      'https://www.design-prism.com/ai-seo-services',
       'https://www.design-prism.com/ai-agents',
       'https://www.design-prism.com/ai-website-launch',
       'https://www.design-prism.com/apps',
@@ -138,6 +140,10 @@ describe('SEO indexability guards', () => {
     expect(isRouteIndexable('/website-intake')).toBe(false)
     expect(isRouteIndexable('/ai')).toBe(false)
     expect(isRouteIndexable('/ai-agents')).toBe(false)
+    // AEO is a service page again (2026-10-18) and owns the AI search topic.
+    expect(isRouteIndexable('/aeo')).toBe(true)
+    expect(isRouteIndexable('/ai-seo-services')).toBe(false)
+    expect(isRouteIndexable('/aeo-thank-you')).toBe(false)
     expect(isRouteIndexable('/apps')).toBe(false)
     expect(isRouteIndexable('/secret-pearl/privacy')).toBe(false)
     expect(isRouteIndexable('/openai/site-rebuild')).toBe(false)

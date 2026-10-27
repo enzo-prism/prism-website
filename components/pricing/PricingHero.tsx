@@ -9,7 +9,7 @@ import { PRICING_PRIMARY_CTA, PRICING_SECONDARY_CTA } from '@/lib/pricing-model'
 
 const HERO_PROMISES = [
   'Scope and price agreed before work begins',
-  'One team for website, content, and ads',
+  'One team for website design, content, ads, and AEO',
   'New spots open every month',
 ] as const
 
@@ -52,8 +52,9 @@ export default function PricingHero() {
           className="text-lead prism-rise mt-5 max-w-[58ch] text-pretty text-muted-foreground"
           style={rise(160)}
         >
-          A custom website, steady content, and ads built around better
-          leads. Every plan is scoped to you and starts on the waitlist.
+          Custom website design, steady content, ads built around better leads,
+          and a place in AI answers. Every plan is scoped to you and starts
+          on the waitlist.
         </p>
 
         <div

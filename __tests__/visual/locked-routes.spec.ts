@@ -18,12 +18,14 @@ async function seedDeterministicRandom(page: Page) {
  * locked screenshots would drift every month ("October" becomes "November").
  * This shifts `new Date()` / `Date.now()` to a fixed mid-September instant
  * (intake: October) while leaving timers and animation frames on real time.
- * The instant sits mid-month so every timezone still reads September.
+ * The instant sits mid-month so every timezone still reads September, and in
+ * 2027 so it is past `WAITLIST_EARLIEST_INTAKE` (December 2026), which would
+ * otherwise turn the frozen October into December.
  */
 async function freezeIntakeMonth(page: Page) {
   await page.addInitScript(() => {
     const RealDate = Date
-    const frozenTime = new RealDate('2026-09-16T12:00:00-07:00').getTime()
+    const frozenTime = new RealDate('2027-09-16T12:00:00-07:00').getTime()
     const shift = frozenTime - RealDate.now()
 
     class ShiftedDate extends RealDate {
@@ -124,7 +126,7 @@ const lockedRoutes = [
     path: '/',
     readyHeading: /^impossible is temporary\.$/i,
     mustContain: [
-      /websites, content, and ads that make your business shine online/i,
+      /website design, content, ads, and AEO that turn strangers into customers/i,
       /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
@@ -140,7 +142,7 @@ const lockedRoutes = [
     mustContain: [
       /prism is fully booked right now\./i,
       /join the waitlist to work with us in [a-z]+\./i,
-      /three ways to work with prism\./i,
+      /four ways to work with prism\./i,
     ],
   },
   {
@@ -161,8 +163,9 @@ const lockedRoutes = [
 // maxDiffPixelRatio needed for macOS<->Linux font drift. These text guards
 // catch what pixel tolerance absorbs: retired public pricing reappearing,
 // waitlist copy disappearing, the retired booking/intake CTAs coming back, or
-// the two packaged offers retired on 2026-10-12 reappearing (Prism offers three
-// services: Websites, Content, Ads). Mirrors lib/pricing-consistency.ts policy.
+// the two packaged offers retired on 2026-10-12 reappearing (Prism offers four
+// services: Websites, Content, Ads, AEO). Mirrors lib/pricing-consistency.ts
+// policy.
 const retiredPricingTokens = [
   /\$1,000 one-time/i,
   /\$1,000(?:\/| per )month/i,

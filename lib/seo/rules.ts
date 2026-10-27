@@ -12,6 +12,21 @@ export const DESCRIPTION_MAX_LENGTH = 155
 export const DEFAULT_OG_IMAGE = "/prism-opengraph.png"
 export const DEFAULT_OG_IMAGE_ALT = "Prism logo on a black background"
 
+export type SocialImage = { url: string; alt: string }
+
+/**
+ * The only routes allowed to replace the site-wide social image, keyed by
+ * path. Each entry is a deliberate, approved exception (1200x630 JPEG or
+ * PNG under public/); every other route keeps DEFAULT_OG_IMAGE.
+ */
+export const SOCIAL_IMAGE_EXCEPTIONS: Readonly<Record<string, SocialImage>> = {
+  // Approved 2026-10-19: the flagship Mach 1 case study shares its own card.
+  "/case-studies/mach-1": {
+    url: "/case-studies/mach-1/og.jpg",
+    alt: "Prism × Mach 1 case study: the Mach 1 homepage on a laptop and a phone",
+  },
+}
+
 export const BLOG_MANUAL_OVERRIDE_KEYWORDS = /(dental|seo|ads|local|website|agency|consultant|checklist|playbook)/i
 
 const TERMINAL_BRAND_PATTERN = /\s*(?:\||-|–|—|:)\s*(?:design\s+)?prism(?:\s+((?:agency|blog|careers|podcast|services|openai\s+guide|case\s+study)))?\s*$/i
@@ -28,6 +43,8 @@ const DESCRIPTION_CLAUSE_END_PATTERN = /[,;:](?=\s|$)/g
 const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\bai\b/gi, "AI"],
   [/\bseo\b/gi, "SEO"],
+  [/\baeo\b/gi, "AEO"],
+  [/\bgeo\b/gi, "GEO"],
   [/\bppc\b/gi, "PPC"],
   [/\bcro\b/gi, "CRO"],
   [/\bui\b/gi, "UI"],
@@ -62,8 +79,9 @@ const COMMON_TERM_REPLACEMENTS: Array<[RegExp, string]> = [
 
 const MINIMAL_TITLE_REPLACEMENTS: Array<[RegExp, string]> = [
   [/\banswer engine optimization\b/gi, "AEO"],
-  [/\bwebsite design\b/gi, "Websites"],
-  [/\bweb design\b/gi, "Websites"],
+  // "Website design" is the service's name (2026-10-19), so titles keep it
+  // whole; "web design" folds into the same phrase.
+  [/\bweb design\b/gi, "website design"],
   [/\bgoogle maps seo\b/gi, "SEO"],
   [/\blocal seo\b/gi, "SEO"],
   [/\bseo services?\b/gi, "SEO"],

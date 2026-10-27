@@ -170,7 +170,7 @@ export default async function SeoPage() {
         "Visibility and leads measured in Search Console, then iterated",
       ],
       links: [
-        { label: "AI SEO services", href: "/ai-seo-services" },
+        { label: "AEO (AI search)", href: "/aeo" },
         { label: "How pricing works", href: "/pricing" },
       ],
     },
@@ -593,8 +593,8 @@ export default async function SeoPage() {
             SEO audit
           </Link>
           , explore{" "}
-          <Link className="font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70" href="/ai-seo-services">
-            AI SEO services
+          <Link className="font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70" href="/aeo">
+            AEO for AI search
           </Link>
           , or{" "}
           <Link className="font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70" href="/waitlist">
@@ -622,7 +622,7 @@ export default async function SeoPage() {
           description:
             "On-page structure, off-page authority, content, and tracking delivered under Prism's productized offers.",
           businessFunction: "http://purl.org/goodrelations/v1#Sell",
-          availability: "https://schema.org/InStock",
+          availability: "https://schema.org/LimitedAvailability",
           url: "https://www.design-prism.com/pricing",
         }}
       />

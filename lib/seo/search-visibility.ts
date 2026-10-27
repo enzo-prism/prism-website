@@ -7,14 +7,14 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/waitlist',
   '/faq',
   '/services',
-  '/websites',
+  '/website-design',
   '/content',
   '/ads',
+  '/aeo',
   '/chatgpt-ads',
   '/local-listings',
   '/seo',
   '/seo/audit',
-  '/ai-seo-services',
   '/proof',
   '/wall-of-love',
   '/case-studies',
@@ -43,7 +43,6 @@ export const INDEXABLE_STATIC_ROUTES = [
 
 export const NOINDEX_ROUTES = [
   // Retired lead funnels (2026-09-14). Each 308-redirects to /waitlist.
-  '/aeo',
   '/apply',
   '/book-a-shoot',
   '/contact',
@@ -51,7 +50,9 @@ export const NOINDEX_ROUTES = [
   '/get-started',
   '/analysis-thank-you',
   '/aeo-thank-you',
+  // AI search shortpaths, consolidated on /aeo (2026-10-18).
   '/ai',
+  '/ai-seo-services',
   '/ai-agents',
   '/ai-website-launch',
   '/apps',
@@ -82,6 +83,8 @@ export const NOINDEX_ROUTES = [
   '/tiktok',
   '/waitlist/thank-you',
   '/website-intake',
+  // Renamed to /website-design on 2026-10-19; 308s there.
+  '/websites',
   '/content-intake',
   '/ads-intake',
   '/youtube',
@@ -112,7 +115,6 @@ export const INDEXABLE_BLOG_SLUGS = [
   'claude-opus-4-8-what-it-means-for-small-business-owners',
   'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',
-  'dental-practice-1-3m-swamp',
   'dental-practice-rank-higher-google-search',
   'dental-seo-guide',
   'dental-website-cost-guide-2026',
@@ -154,6 +156,13 @@ export const INDEXABLE_BLOG_SLUGS = [
   'who-prism-is-for',
   'winning-ai-search-game',
 ] as const
+
+/**
+ * Machine-readable files that llms.txt may reference for answer engines.
+ * Deliberately separate from INDEXABLE_STATIC_ROUTES: these are not HTML
+ * pages, must never enter the sitemap, and carry no indexing meaning.
+ */
+export const LLMS_MACHINE_READABLE_PATHS = ['/ai-data.json'] as const
 
 const INDEXABLE_STATIC_ROUTE_SET = new Set<string>(INDEXABLE_STATIC_ROUTES)
 const NOINDEX_ROUTE_SET = new Set<string>(NOINDEX_ROUTES)

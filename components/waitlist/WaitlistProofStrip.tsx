@@ -13,7 +13,7 @@ import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
 import { CLIENT_LOGOS } from '@/lib/client-logos'
 import {
   CONNECTED_CLIENT_TRAFFIC,
-  PROOF_METRICS_VERIFIED_AT,
+  SOCIAL_PROOF_VERIFIED_AT,
   SOCIAL_PROOF,
   SOCIAL_PROOF_CHANNELS,
 } from '@/lib/proof-metrics'
@@ -91,7 +91,7 @@ export default function WaitlistProofStrip({ className }: { className?: string }
             followers across {channelList}
           </p>
           <p className="mt-auto pt-3 font-mono text-[11px] leading-4 text-subtle">
-            Verified {PROOF_METRICS_VERIFIED_AT}
+            Verified {SOCIAL_PROOF_VERIFIED_AT}
           </p>
         </li>
         <li className="flex flex-col p-4 sm:p-5">
@@ -145,7 +145,7 @@ export default function WaitlistProofStrip({ className }: { className?: string }
               <span aria-hidden="true" className="px-1.5 text-subtle">
                 ·
               </span>
-              Website client
+              Website Design client
             </span>
           </figcaption>
         </figure>

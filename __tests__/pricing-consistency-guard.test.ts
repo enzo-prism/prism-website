@@ -1,4 +1,10 @@
-import { collectPricingConsistencyViolations } from '@/lib/pricing-consistency'
+import fs from 'node:fs'
+import path from 'node:path'
+
+import {
+  PRICING_STRICT_FILES,
+  collectPricingConsistencyViolations,
+} from '@/lib/pricing-consistency'
 
 describe('pricing consistency guard', () => {
   it('flags legacy pricing token on strict surfaces', () => {
@@ -48,18 +54,18 @@ describe('pricing consistency guard', () => {
     )
   })
 
-  it('allows the waitlist PRO website copy on /websites and flags any $ price', () => {
+  it('allows the waitlist Website Design copy on /website-design and flags any $ price', () => {
     expect(
       collectPricingConsistencyViolations(
-        'app/websites/page.tsx',
-        'Prism PRO website. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI.',
+        'app/website-design/page.tsx',
+        'Prism Website Design. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI.',
       ),
     ).toEqual([])
 
     expect(
       collectPricingConsistencyViolations(
-        'app/websites/page.tsx',
-        'Prism PRO website. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI. <a href="/website-intake">Start my website</a> BOOK_A_CALL_CTA',
+        'app/website-design/page.tsx',
+        'Prism Website Design. WEBSITE_WAITLIST_CTA. Support discovery on Google and in AI. <a href="/website-intake">Start my website</a> BOOK_A_CALL_CTA',
       ).map((violation) => violation.label),
     ).toEqual(
       expect.arrayContaining([
@@ -70,8 +76,8 @@ describe('pricing consistency guard', () => {
     )
 
     const violations = collectPricingConsistencyViolations(
-      'app/websites/page.tsx',
-      'Prism PRO website. BOOK_A_CALL_CTA. Support discovery on Google and in AI. A website for $300 flat with $100/month care.',
+      'app/website-design/page.tsx',
+      'Prism Website Design. BOOK_A_CALL_CTA. Support discovery on Google and in AI. A website for $300 flat with $100/month care.',
     )
     expect(violations.map((violation) => violation.label)).toEqual(
       expect.arrayContaining([
@@ -115,6 +121,34 @@ describe('pricing consistency guard', () => {
         "{ source: '/old', destination: '/dental-os', permanent: true },",
       ).map((violation) => violation.label),
     ).toEqual([expect.stringContaining('retired offer route')])
+  })
+
+  it('holds the /aeo service page to the strict, price-free waitlist rules', () => {
+    expect(PRICING_STRICT_FILES).toContain('app/aeo/page.tsx')
+
+    const source = fs.readFileSync(
+      path.join(process.cwd(), 'app/aeo/page.tsx'),
+      'utf8',
+    )
+    expect(
+      collectPricingConsistencyViolations('app/aeo/page.tsx', source),
+    ).toEqual([])
+
+    // The required snippets name the product, the AEO waitlist CTA, and the
+    // no-guarantee answer.
+    expect(
+      collectPricingConsistencyViolations(
+        'app/aeo/page.tsx',
+        'An AEO page at $900/mo.',
+      ).map((violation) => violation.label),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('$900/mo'),
+        'missing canonical snippet: Prism AEO',
+        'missing canonical snippet: AEO_WAITLIST_CTA',
+        'missing canonical snippet: no one can',
+      ]),
+    )
   })
 
   it('accepts contextual non-core prices when context labels are present', () => {

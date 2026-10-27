@@ -27,7 +27,7 @@ import {
 } from '@/components/waitlist/waitlist-proof-sites'
 import { WAITLIST_SOCIAL_CHANNELS } from '@/components/waitlist/waitlist-social-channels'
 import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { cn } from '@/lib/utils'
 import { CAPACITY_MESSAGE, WAITLIST_THANK_YOU_PATH } from '@/lib/waitlist'
@@ -220,7 +220,7 @@ export default function WaitlistThankYouPage() {
                   ))}
                 </ul>
                 <p className="mt-auto pt-5 font-mono text-[11px] leading-4 text-subtle">
-                  Audience verified {PROOF_METRICS_VERIFIED_AT}
+                  Audience verified {SOCIAL_PROOF_VERIFIED_AT}
                 </p>
               </div>
 
@@ -354,7 +354,7 @@ export default function WaitlistThankYouPage() {
                         <span aria-hidden="true" className="px-1.5 text-subtle">
                           ·
                         </span>
-                        Website client
+                        Website Design client
                       </span>
                     </span>
                   </span>

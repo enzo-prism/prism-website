@@ -1,10 +1,17 @@
 import type { ReactNode } from 'react'
-import { Check, Clapperboard, FileText, Images, Phone } from 'lucide-react'
+import {
+  Check,
+  Clapperboard,
+  FileText,
+  Images,
+  MessageSquareQuote,
+  Phone,
+} from 'lucide-react'
 
 import BrowserFrame from '@/components/prism/browser-frame'
 import type { PrismServiceId } from '@/lib/services'
 
-/* Decorative vignettes for the three service cards on /services. Real client
+/* Decorative vignettes for the four service cards on /services. Real client
    screenshots or illustrative UI only; no metrics. */
 
 function WebsiteVisual() {
@@ -88,8 +95,49 @@ function AdsVisual() {
   )
 }
 
+const AEO_SOURCES = [
+  { label: 'yourbusiness.com', own: true },
+  { label: 'Google reviews', own: false },
+  { label: 'Yelp', own: false },
+] as const
+
+function AeoVisual() {
+  return (
+    <div className="flex h-56 flex-col justify-center gap-3 px-6">
+      <p className="ml-auto w-fit max-w-[24ch] rounded-2xl rounded-br-md border border-white/[0.08] bg-white/[0.05] px-3.5 py-2 text-[13px] leading-snug text-foreground/90">
+        Who&apos;s the best family dentist near me?
+      </p>
+      <div className="rounded-xl border border-white/[0.08] bg-popover p-4">
+        <p className="flex items-center gap-1.5 text-[11px] text-subtle">
+          <MessageSquareQuote className="size-3" />
+          Answer
+        </p>
+        <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
+          <span className="font-medium text-foreground">Your business</span>{' '}
+          is a strong fit for nervous kids.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {AEO_SOURCES.map((source, index) => (
+            <span
+              key={source.label}
+              className={
+                source.own
+                  ? 'rounded-full border border-white/20 bg-white/[0.07] px-2 py-0.5 font-mono text-[10px] text-foreground'
+                  : 'rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] text-subtle'
+              }
+            >
+              {index + 1} · {source.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export const SERVICE_VISUALS: Record<PrismServiceId, () => ReactNode> = {
   website: WebsiteVisual,
   content: ContentVisual,
   ads: AdsVisual,
+  aeo: AeoVisual,
 }

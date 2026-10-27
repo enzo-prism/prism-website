@@ -1,12 +1,15 @@
 'use client'
 
-import { getWaitlistIntakeMonth } from '@/lib/waitlist'
+import { getWaitlistIntakeDate, toWaitlistIntakeMonth } from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
 
 /**
- * Honest intake calendar for the thank-you route: this month (fully booked),
- * the live next intake (highlighted, where the visitor is in line), and the
- * two monthly intakes after it. No spot counts, no countdowns.
+ * Honest intake calendar for the thank-you route: the month before the next
+ * intake (fully booked), the live next intake (highlighted, where the visitor
+ * is in line), and the two monthly intakes after it. No spot counts, no
+ * countdowns. Usually the booked slot is the current month; while
+ * `WAITLIST_EARLIEST_INTAKE` pushes the intake further out, it is the last
+ * booked month before it.
  *
  * Months resolve from the visitor's clock, like `<WaitlistIntakeMonth />`.
  * The structure never depends on the clock (the highlight is always the
@@ -14,18 +17,19 @@ import { cn } from '@/lib/utils'
  * and the client, and those text nodes opt out of the hydration warning.
  */
 const SLOTS = [
-  { offset: 0, status: 'Fully booked' },
-  { offset: 1, status: 'You’re in line' },
+  { offset: -1, status: 'Fully booked' },
+  { offset: 0, status: 'You’re in line' },
+  { offset: 1, status: 'Upcoming' },
   { offset: 2, status: 'Upcoming' },
-  { offset: 3, status: 'Upcoming' },
 ] as const
 
 const NEXT_INTAKE_SLOT = 1
 
-/** `getWaitlistIntakeMonth` names the month after its input, so step back one. */
+/** Month name `offset` months from the next intake. */
 function intakeMonthAt(now: Date, offset: number) {
-  return getWaitlistIntakeMonth(
-    new Date(now.getFullYear(), now.getMonth() + offset - 1, 1),
+  const intake = getWaitlistIntakeDate(now)
+  return toWaitlistIntakeMonth(
+    new Date(intake.getFullYear(), intake.getMonth() + offset, 1),
   ).month
 }
 

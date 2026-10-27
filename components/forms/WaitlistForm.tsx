@@ -25,10 +25,11 @@ import {
   CircleAlert,
   CircleQuestionMark,
   Compass,
-  Globe,
   Hourglass,
+  LayoutTemplate,
   type LucideIcon,
   Megaphone,
+  MessageSquareQuote,
   PenLine,
   Zap,
 } from 'lucide-react'
@@ -107,9 +108,10 @@ const EMPTY_ANSWERS: WaitlistAnswers = {
 }
 
 const FOCUS_ICONS: Record<WaitlistFocusChoice, LucideIcon> = {
-  website: Globe,
+  website: LayoutTemplate,
   content: PenLine,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
   [WAITLIST_FOCUS_NOT_SURE]: CircleQuestionMark,
 }
 
@@ -441,7 +443,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
         trackEvent('waitlist_submit_success', {
           form_name: WAITLIST_FORM_NAME,
           form_location: FORM_LOCATION,
-          // Services chosen (0-3); "Not sure yet" counts as none.
+          // Services chosen (0-4); "Not sure yet" counts as none.
           focus_count: answers.focus.filter(isWaitlistFocus).length,
         })
         // Pending mode: /waitlist/thank-you mounts LeadSuccessTracker, which

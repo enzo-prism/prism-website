@@ -5,6 +5,7 @@ import { quotesData, takeawaysData } from '@/content/wall-of-love-data'
 import {
   CONNECTED_CLIENT_TRAFFIC,
   PROOF_METRICS_VERIFIED_AT,
+  SOCIAL_PROOF_VERIFIED_AT,
   SOCIAL_PROOF,
 } from '@/lib/proof-metrics'
 import { CASE_STUDIES } from '@/lib/case-study-data'
@@ -50,8 +51,9 @@ describe('public content data freshness', () => {
 
   it('keeps the shared social snapshot aligned with the live profiles', () => {
     expect(PROOF_METRICS_VERIFIED_AT).toBe('October 4, 2026')
-    expect(SOCIAL_PROOF.instagram.audience).toBe('37K')
-    expect(SOCIAL_PROOF.tiktok.audience).toBe('11.7K')
+    expect(SOCIAL_PROOF_VERIFIED_AT).toBe('October 17, 2026')
+    expect(SOCIAL_PROOF.instagram.audience).toBe('36.9K')
+    expect(SOCIAL_PROOF.tiktok.audience).toBe('12.3K')
     expect(SOCIAL_PROOF.youtube.audience).toBe('24.7K')
     expect(SOCIAL_PROOF.combinedAudience).toBe('73K+')
   })
@@ -62,6 +64,16 @@ describe('public content data freshness', () => {
     )
 
     expect(publicData.last_verified).toBe('2026-10-04')
+    expect(publicData.verified_proof.social.verified_at).toBe('2026-10-17')
+    const social = publicData.verified_proof.social
+    expect(social.youtube.subscribers).toBe(SOCIAL_PROOF.youtube.audience)
+    expect(social.youtube.views).toBe(SOCIAL_PROOF.youtube.activity)
+    expect(social.combined_audience_api_sum).toBe(
+      social.youtube.subscribers_api_rounded +
+        social.instagram.followers_exact + social.tiktok.followers_exact,
+    )
+    expect(social.youtube).not.toHaveProperty('subscribers_exact')
+    expect(social.youtube).not.toHaveProperty('lifetime_views_exact')
     expect(publicData.verified_proof.social.instagram.followers).toBe(
       SOCIAL_PROOF.instagram.audience,
     )

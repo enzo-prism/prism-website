@@ -133,6 +133,12 @@ describe('WaitlistForm (stepped flow)', () => {
       expect(checkbox.closest('label')).toBeInTheDocument()
     }
     expect(screen.getByRole('checkbox', { name: 'Content' })).toBeChecked()
+    // AEO leads the list, then the other services, then "Not sure yet".
+    expect(
+      screen
+        .getAllByRole('checkbox')
+        .map((checkbox) => checkbox.getAttribute('value')),
+    ).toEqual(['aeo', 'website', 'content', 'ads', 'not-sure'])
     // "Not sure yet" sits after the services with its own one-liner.
     const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
     expect(notSure).toHaveAttribute('value', 'not-sure')
@@ -399,7 +405,7 @@ describe('WaitlistForm (stepped flow)', () => {
     const notSure = screen.getByRole('checkbox', { name: 'Not sure yet' })
     fireEvent.click(notSure)
     expect(notSure).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'Website' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Website Design' })).not.toBeChecked()
     expect(screen.getByRole('checkbox', { name: 'Ads' })).not.toBeChecked()
 
     // Picking a service again clears "Not sure yet".
@@ -421,7 +427,7 @@ describe('WaitlistForm (stepped flow)', () => {
     await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/waitlist/thank-you'))
     const [, options] = fetchSpy.mock.calls[0] as [RequestInfo | URL, RequestInit]
     expect((options.body as FormData).getAll('focus[]')).toEqual(['not-sure'])
-    // focus_count stays the number of services (0-3), so "not sure" is 0.
+    // focus_count stays the number of services (0-4), so "not sure" is 0.
     expect(trackEvent).toHaveBeenCalledWith(
       'waitlist_submit_success',
       expect.objectContaining({ form_name: 'waitlist', focus_count: 0 }),
@@ -430,6 +436,37 @@ describe('WaitlistForm (stepped flow)', () => {
     expect(trackEvent).toHaveBeenCalledWith(
       'waitlist_form_view',
       expect.objectContaining({ prefilled_focus: 'website,ads' }),
+    )
+  })
+
+  it('prefills AEO from ?focus=aeo and submits it as a service focus', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    window.history.replaceState({}, '', '/waitlist?focus=aeo')
+    render(<WaitlistForm initialFocus={['aeo']} />)
+
+    expect(screen.getByRole('checkbox', { name: 'AEO' })).toBeChecked()
+    for (const name of ['Website Design', 'Content', 'Ads', 'Not sure yet']) {
+      expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
+    }
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_form_view',
+      expect.objectContaining({ form_name: 'waitlist', prefilled_focus: 'aeo' }),
+    )
+
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Website Design' }))
+    await completeToGoals()
+    fireEvent.change(screen.getByLabelText(/your goals/i), {
+      target: { value: 'Show up when patients ask ChatGPT for a dentist.' },
+    })
+    fireEvent.click(submitButton())
+
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/waitlist/thank-you'))
+    const [, options] = fetchSpy.mock.calls[0] as [RequestInfo | URL, RequestInit]
+    // The prefilled focus first, then the one the visitor added.
+    expect((options.body as FormData).getAll('focus[]')).toEqual(['aeo', 'website'])
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_submit_success',
+      expect.objectContaining({ form_name: 'waitlist', focus_count: 2 }),
     )
   })
 

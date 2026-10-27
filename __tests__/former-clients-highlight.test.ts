@@ -22,7 +22,7 @@ const FEATURED_FILES = [
   'public/clients/logos/manifest.json',
   'components/schema-markup.tsx',
   'components/dental-client-carousel.tsx',
-  'app/websites/page.tsx',
+  'app/website-design/page.tsx',
   'app/pricing/client-page.tsx',
   'app/services/page.tsx',
   'app/dental-website/page.tsx',

@@ -1,4 +1,11 @@
-import { ArrowUpRight, Megaphone, MonitorSmartphone, Clapperboard, type LucideIcon } from 'lucide-react'
+import {
+  ArrowUpRight,
+  Clapperboard,
+  Megaphone,
+  MessageSquareQuote,
+  MonitorSmartphone,
+  type LucideIcon,
+} from 'lucide-react'
 
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
@@ -9,7 +16,12 @@ const ICONS: Record<PrismServiceId, LucideIcon> = {
   website: MonitorSmartphone,
   content: Clapperboard,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
 }
+
+// Lowercase house headings, but acronyms (AEO) keep their capitals.
+const toHeadingName = (name: string) =>
+  /^[A-Z]{2,}$/.test(name) ? name : name.toLowerCase()
 
 export function WhatPrismBuilds() {
   return (
@@ -19,7 +31,7 @@ export function WhatPrismBuilds() {
           id="what-prism-builds-title"
           eyebrow="what we build"
           title="what Prism builds."
-          description="Websites, content, and ads that help customers find and choose your business."
+          description="Website design, content, ads, and AEO that help customers find and choose your business, on Google and in AI answers."
         />
 
         <ul className="border-t border-white/[0.08]">
@@ -37,7 +49,7 @@ export function WhatPrismBuilds() {
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
-                    <span className="text-heading text-foreground">{service.name.toLowerCase()}</span>
+                    <span className="text-heading text-foreground">{toHeadingName(service.name)}</span>
                     <span className="text-pretty text-[15px] leading-6 text-muted-foreground">
                       {service.homeTitle}
                     </span>

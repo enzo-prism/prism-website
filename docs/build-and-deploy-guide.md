@@ -17,7 +17,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - **pnpm** 10.x via `corepack enable`
 - **macOS/Linux shell** – scripts rely on POSIX utilities and may fail on Windows CMD
 
-`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline (2026-10-07, #198) aligns Next.js packages (`next`, `eslint-config-next`, `@next/*`) on 16.3.8 and Sentry packages on 10.68.0, removes the unused `node-notifier` dependency, and pins patched transitive versions (sharp, js-yaml, postcss, fast-uri, brace-expansion, nanoid, source-map-js, and others) through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
+`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline (2026-10-23) aligns Next.js packages (`next`, `eslint-config-next`, `@next/*`) on 16.4.2 (CVE-2026-96889 / GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr, GHSA-p3m5-59mp-jv5r) and Sentry packages on 10.68.0, and pins patched transitive versions (sharp >= 0.35.5, js-yaml, postcss, fast-uri, brace-expansion, nanoid, source-map-js, and others) through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
 
 ## Local build flow
 
@@ -70,19 +70,19 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - The header Services menu links exactly the three services (Websites, Content, Ads) plus "All services"; Products stay in the footer and homepage. `/pricing` compares the same three as offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
-  - `/websites` publishes the PRO website offer (no form, no price, waitlist CTAs); `/waitlist` is the only live sales form
+  - The header Services menu links exactly the four services (Website Design, Content, Ads, AEO) plus "All services"; Products stay in the footer and homepage. `/pricing` compares the same four as offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
+  - `/website-design` publishes the Website Design service (no form, no price, waitlist CTAs; `/websites` 308s there); `/waitlist` is the only live sales form
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces, as are retired fixed-plan language such as `Website Overhaul` and the retired `BOOK_A_CALL_CTA` / `WEBSITE_START_CTA` constants — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content`; the retired `/dental-os` redirects to `/dental-website` and `/prism-infinity` to `/content`; other legacy pricing routes resolve to `/pricing`
-  - `/ads` ships a price-free offer schema pointing at `/ads`; `/seo` and `/local-listings` ship price-free offer schemas pointing at `/pricing`; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
+  - `/ads` and `/aeo` ship price-free offer schemas pointing at their own pages; `/seo` and `/local-listings` ship price-free offer schemas pointing at `/pricing`; `pricing-schema-consistency.test.ts` blocks the retired `$3,500` Growth Sprint schema from returning
 - SEO sign-off when route intent/canonicals changed:
   - `pnpm exec jest __tests__/sitemap.test.ts __tests__/seo-indexability-guards.test.tsx --runInBand`
   - `pnpm seo:inventory && pnpm seo:lint`
 - Search-surface sign-off when growth-first visibility changed:
   - sitemap stays in the expected narrow range and excludes noindex routes
   - `public/llms.txt` includes only canonical growth, specialty, proof, and curated learning URLs
-  - representative broad/utility pages such as `/apps`, `/software`, `/openai`, and `/ai-agents` are noindex (`/ai` now redirects to `/waitlist`)
-  - representative growth and dental pages such as `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, and `/ai-agents/dental` remain indexable
+  - representative broad/utility pages such as `/apps`, `/software`, `/openai`, and `/ai-agents` are noindex (`/ai` and the deleted `/ai-seo-services` now 308 to `/aeo`)
+  - representative growth and dental pages such as `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/ai-agents/dental`, and `/aeo` remain indexable
 
 ## CI parity notes
 
@@ -104,7 +104,7 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/websites`, `/content`, and `/ads`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the three services and "All services" in the mobile panel), and that a retired route such as `/get-started` 308s to `/waitlist`. `curl -sSI https://www.design-prism.com/` should show the security headers.
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/website-design`, `/content`, `/ads`, and `/aeo`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the four services and "All services" in the mobile panel), that a retired route such as `/get-started` 308s to `/waitlist`, and that `/ai` and `/ai-seo-services` 308 to `/aeo`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 

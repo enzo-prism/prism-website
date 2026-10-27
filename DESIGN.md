@@ -217,6 +217,13 @@ feels out of reach; the site shows Prism making it temporary: the client's
   skill), short, and end with a period. Proper nouns keep their capitals.
   Body copy uses normal sentence case.
 - Balance display headlines (`text-balance`), `text-pretty` for body.
+- Gradient text fills (`text-gradient`, `text-spectrum`, `text-refract`,
+  `prism-glint`) reserve `0.12em` of bottom paint clearance on the colored
+  element itself. Geist descenders extend beyond the tight line boxes;
+  parent padding and `overflow: visible` cannot extend a clipped background.
+  The homepage's two block fills offset that padding with equal negative
+  bottom margins to preserve the tagline's baseline rhythm. Keep the
+  existing type scale and line heights.
 
 ## Layout
 
@@ -237,11 +244,11 @@ feels out of reach; the site shows Prism making it temporary: the client's
 Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
 logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
 About, Pricing), then the white "Join the waitlist" pill with the live dot.
-The Services menu lists exactly three services (Websites, Content, Ads) with
-icon tiles, an "All services" link, and the featured waitlist card.
-Mobile keeps the portaled full-height panel with focus, Escape, scroll-lock
-and inert handling; its services sit in a 2x2 grid (the three services plus
-"All services").
+The Services menu lists exactly four services, AEO first (AEO, Website Design,
+Content, Ads), with icon tiles, an "All services" link, and the featured
+waitlist card. Mobile keeps the portaled full-height panel with focus,
+Escape, scroll-lock and inert handling; its four services sit in a 2x2 grid
+in the same order, with "All services" spanning a full row beneath.
 
 ### Hero
 
@@ -252,6 +259,13 @@ sets the tagline in `text-hero` on two lines ("impossible is" in
 (`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
 appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
+The service pages share `ServiceHero`, each with one soft spectrum glow:
+blue for Website Design, warm for Content, green for Ads, and violet for AEO.
+`/website-design` also carries a drawn page anatomy (four numbered pins on a
+wireframe browser and phone, matching a numbered list of design principles).
+It is an illustration in the Prism system, marked "Illustrative page
+layout", with no client data, and the drawing is decorative to assistive tech
+while the list carries the content.
 
 ### Prism logo
 
@@ -278,14 +292,28 @@ them; a client without a logo shows its name. Former clients never appear.
 
 ### Featured stories
 
-The homepage `#work` deck: five large panels (`rounded-[2rem]`, hairline,
+The homepage `#work` deck: six large panels (`rounded-[2rem]`, hairline,
 `bg-card`) that stack as a sticky deck on tall desktop screens, with covered
 panels receding (scale and dim, transform and opacity only). Each panel pairs
 a browser frame and a phone showing tall real captures that browse slowly
 while on screen, a "Sells to consumers" or "Sells to businesses" chip, "The
 impossible" (Prism's framing, never quote marks), the chips of what was
 built, and "Now live". Each panel owns one spectrum band as a soft glow behind
-its media, so the five read as one beam of light split five ways.
+its media, in spectrum order (red to violet), so the six read as one beam
+of light split six ways.
+
+### Flagship case studies
+
+A flagship case study (Mach 1) keeps the shared template and adds bespoke
+sections after the story through `MinimalCaseStudyPage`'s `afterStory` slot.
+Its hero may play a muted screen recording of the live site
+(`heroFilm`, through `HeroLoopingVideo` inside the `BrowserFrame` `media`
+slot, poster = the still capture at the same viewport). Private client tools
+are never shown as screenshots: they are drawn as illustrations in the
+Prism system (`components/case-studies/mach-1/scenes.tsx`), each card marked
+"Illustrative", with made-up labels and no client data, and a note under the
+section saying so. Scenes loop only while on screen (`SceneViewport`), and
+their base style is the finished frame.
 
 ### Proof
 
@@ -319,7 +347,7 @@ Prism's own reach is proof that it can put fresh eyes on a client. Show
 channel totals from `SOCIAL_PROOF` and the dated Reel insights in
 `TOP_REELS` (`lib/proof-metrics.ts`) as phone screenshots of the analytics
 screen only, never the third-party footage the reels clip. Keep the YouTube
-caveat (lifetime views include earlier channel content) visible wherever 5.8M
+caveat (channel views include earlier channel content) visible wherever 5.8M
 appears.
 
 ## Motion
@@ -332,14 +360,16 @@ quiet enough that text stays readable.
   reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights and
   parallax, the slow spectrum beam, the live dot ping, the story deck recede
   and capture browsing, the service pillar micro scenes, the intake pass foil,
-  hover lifts of 1 to 2px.
+  the flagship case-study tool scenes and their sticky crossfade, hover lifts
+  of 1 to 2px.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base
   style is always the finished frame, so reduced-motion, no-JS, and
   screenshot runs see complete content.
 - No autoplaying video outside `HeroBackgroundLoop` and `HeroLoopingVideo`.
-  "Live" site previews are tall still captures moved with transforms, not
-  video.
+  "Live" site previews are tall still captures moved with transforms; a
+  flagship case study may play a short muted screen recording of the live
+  site through `HeroLoopingVideo` (poster first, paused off screen).
 - Never use `content-visibility` on content that must appear in full-page
   captures (locked screenshots, print): it blanks off-screen sections.
 

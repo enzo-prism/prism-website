@@ -167,7 +167,7 @@ describe('AdsPage sections', () => {
     ).toBeInTheDocument()
   })
 
-  it('cross-links websites and content, then ends with the ads final CTA', async () => {
+  it('cross-links websites, content, and AEO, then ends with the ads final CTA', async () => {
     render(await AdsPage())
 
     const siblings = screen
@@ -177,7 +177,7 @@ describe('AdsPage sections', () => {
       within(siblings)
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
-    ).toEqual(['/websites', '/content'])
+    ).toEqual(['/website-design', '/content', '/aeo'])
 
     const finalCta = screen
       .getByRole('heading', { level: 2, name: 'your next campaign starts here.' })

@@ -123,6 +123,10 @@ describe('ClientPage homepage flow', () => {
 
     const seeWork = heroScope.getByRole('link', { name: /see the work/i })
     expect(seeWork).toHaveAttribute('href', '#work')
+
+    expect(hero).toHaveTextContent(
+      /website design, content, ads, and AEO that turn strangers into customers/i,
+    )
   })
 
   it('shows only verified numbers with their sources', () => {
@@ -146,7 +150,7 @@ describe('ClientPage homepage flow', () => {
     expect(document.body).toHaveTextContent(/Verified October 4, 2026/)
   })
 
-  it('features the five client stories, the client logos, and never former clients', () => {
+  it('features the six client stories, the client logos, and never former clients', () => {
     render(<ClientPage />)
 
     const work = document.getElementById('work') as HTMLElement
@@ -187,7 +191,7 @@ describe('ClientPage homepage flow', () => {
   it('separates client quotes from community comments', () => {
     render(<ClientPage />)
 
-    expect(screen.getAllByText('Website client').length).toBeGreaterThanOrEqual(
+    expect(screen.getAllByText('Website Design client').length).toBeGreaterThanOrEqual(
       4,
     )
     expect(screen.getAllByText(/on Instagram$/).length).toBeGreaterThanOrEqual(
@@ -198,16 +202,40 @@ describe('ClientPage homepage flow', () => {
     ).toHaveAttribute('href', '/wall-of-love')
   })
 
-  it('links the three service pillars and products', () => {
+  it('links the three pillars, the four services, and products', () => {
     render(<ClientPage />)
 
     const services = document.getElementById('services') as HTMLElement
-    expect(services.querySelectorAll('[data-home-service-card]')).toHaveLength(
-      3,
+    const cards = services.querySelectorAll<HTMLElement>(
+      '[data-home-service-card]',
     )
-    for (const href of ['/websites', '/content', '/ads']) {
+    expect(cards).toHaveLength(3)
+    for (const href of ['/website-design', '/content', '/ads', '/aeo']) {
       expect(services.querySelector(`a[href="${href}"]`)).not.toBeNull()
     }
+
+    // "get seen." carries the reach services: Content, Ads, and AEO.
+    const reach = Array.from(cards).find((card) =>
+      within(card).queryByRole('heading', { name: 'get seen.' }),
+    ) as HTMLElement
+    expect(reach).toBeDefined()
+    expect(
+      within(reach)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('href')),
+    ).toEqual(['/content', '/ads', '/aeo'])
+
+    // The pill row under the pillars lists every service, then All services.
+    const allServices = within(services).getByRole('link', {
+      name: /all services/i,
+    })
+    expect(allServices).toHaveAttribute('href', '/services')
+    const pillRow = allServices.parentElement as HTMLElement
+    expect(
+      within(pillRow)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('href')),
+    ).toEqual(['/website-design', '/content', '/ads', '/aeo', '/services'])
 
     const products = document.getElementById('products') as HTMLElement
     expect(

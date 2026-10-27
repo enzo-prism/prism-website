@@ -2,7 +2,7 @@ const DEFAULT_ORIGIN = "https://www.design-prism.com";
 const DEFAULT_PATHS = [
   "/",
   "/services",
-  "/websites",
+  "/website-design",
   "/content",
   "/ads",
   "/local-listings",

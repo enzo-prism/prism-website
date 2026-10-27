@@ -2,8 +2,12 @@ import { render, screen, within } from '@testing-library/react'
 
 import WaitlistPage from '@/app/waitlist/page'
 import WaitlistThankYouPage from '@/app/waitlist/thank-you/page'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
-import { getWaitlistIntakeMonth } from '@/lib/waitlist'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import {
+  getWaitlistIntakeDate,
+  getWaitlistIntakeMonth,
+  toWaitlistIntakeMonth,
+} from '@/lib/waitlist'
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
@@ -149,14 +153,23 @@ describe('/waitlist', () => {
     await renderPage('content')
 
     expect(screen.getByRole('checkbox', { name: 'Content' })).toBeChecked()
-    expect(screen.getByRole('checkbox', { name: 'Website' })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: 'Website Design' })).not.toBeChecked()
     expect(screen.getByRole('checkbox', { name: 'Not sure yet' })).not.toBeChecked()
   })
 
   it('offers "Not sure yet" but never accepts it as a ?focus= hand-off', async () => {
     await renderPage('not-sure')
 
-    for (const name of ['Website', 'Content', 'Ads', 'Not sure yet']) {
+    for (const name of ['Website Design', 'Content', 'Ads', 'AEO', 'Not sure yet']) {
+      expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
+    }
+  })
+
+  it('hands ?focus=aeo through to the form', async () => {
+    await renderPage('aeo')
+
+    expect(screen.getByRole('checkbox', { name: 'AEO' })).toBeChecked()
+    for (const name of ['Website Design', 'Content', 'Ads', 'Not sure yet']) {
       expect(screen.getByRole('checkbox', { name })).not.toBeChecked()
     }
   })
@@ -205,9 +218,10 @@ describe('/waitlist/thank-you', () => {
 
   it('shows an honest intake strip with the live next intake highlighted', () => {
     const { container } = render(<WaitlistThankYouPage />)
-    const now = new Date()
-    const thisMonth = getWaitlistIntakeMonth(
-      new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    // The booked slot is the month just before the live intake.
+    const intake = getWaitlistIntakeDate()
+    const bookedMonth = toWaitlistIntakeMonth(
+      new Date(intake.getFullYear(), intake.getMonth() - 1, 1),
     ).month
     const nextIntake = getWaitlistIntakeMonth().month
 
@@ -215,7 +229,7 @@ describe('/waitlist/thank-you', () => {
     expect(strip).toHaveAccessibleName(/intake calendar/i)
     const slots = within(strip).getAllByRole('listitem')
     expect(slots).toHaveLength(4)
-    expect(slots[0]).toHaveTextContent(thisMonth)
+    expect(slots[0]).toHaveTextContent(bookedMonth)
     expect(slots[0]).toHaveTextContent(/fully booked/i)
     expect(slots[1]).toHaveAttribute('aria-current', 'step')
     expect(slots[1]).toHaveTextContent(nextIntake)
@@ -237,7 +251,7 @@ describe('/waitlist/thank-you', () => {
       within(follow).getByRole('heading', { level: 3, name: /follow along\./i }),
     ).toBeInTheDocument()
     expect(follow).toHaveTextContent(`${SOCIAL_PROOF.combinedAudience} followers`)
-    expect(follow).toHaveTextContent(`Audience verified ${PROOF_METRICS_VERIFIED_AT}`)
+    expect(follow).toHaveTextContent(`Audience verified ${SOCIAL_PROOF_VERIFIED_AT}`)
 
     const channels = [
       SOCIAL_PROOF.instagram,

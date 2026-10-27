@@ -6,11 +6,11 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 ## Waitlist
 
-`components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads`, which pre-checks the matching focus card (`parseWaitlistFocus` in `lib/waitlist.ts`).
+`components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads|aeo`, which pre-checks the matching focus card (`parseWaitlistFocus` in `lib/waitlist.ts`).
 
 **Stepped flow (2026-09-15; page layout 2026-10-12).** From `lg` up the page has two columns: the left holds the `WaitlistStatus` pill, the headline ("join the waitlist"), one context line ("Prism is fully booked. Join the waitlist to work with us in <next month>."), "What happens next" (`components/waitlist/WaitlistNextSteps.tsx`), and `WaitlistProofStrip`; the right holds the form card (sticky on tall viewports). Below `lg` the form follows the header. The form is one client island with five screens from `WAITLIST_STEPS` in `lib/waitlist.ts`, each a `fieldset` with an `sr-only` legend, a lucide icon, and a slim "Step x of 5" progress row:
 
-1. `focus` — Website / Content / Ads icon cards (multi-select, optional; kept optional so the first tap-only step never blocks), plus a "Not sure yet" card (2026-10-12) that submits `focus[]=not-sure` and is exclusive with the three services (picking it clears them and vice versa). Prefilled from `?focus=website|content|ads` (`?focus=not-sure` is ignored). No free-text "something else" field (removed 2026-09-15).
+1. `focus` — AEO / Website Design / Content / Ads icon cards (the Website Design card was labeled "Website" until 2026-10-19; its value is still `website`, so Formspree submissions keep `focus[]=website`) (AEO since 2026-10-18 and listed first, in `WAITLIST_FOCUS_OPTIONS` order; multi-select, optional; kept optional so the first tap-only step never blocks; each card's line is the service's `navDescription` from `lib/services.ts`), then an "or" divider and a "Not sure yet" card (2026-10-12) that submits `focus[]=not-sure` and is exclusive with the four services (picking it clears them and vice versa). Prefilled from `?focus=website|content|ads|aeo` (`?focus=not-sure` is ignored). No free-text "something else" field (removed 2026-09-15).
 2. `timing` — five radio cards (`asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`); required.
 3. `about` — first name, last name, email (required), phone (optional).
 4. `links` — website, social profile, anything else; at least one required (custom validity on `link_website`), unless the "I don't have a website yet" checkbox is checked (2026-10-12): it submits `no_website=yes`, disables and clears the website field (sent empty), and satisfies the step.
@@ -28,7 +28,7 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
   - `start_timing` (select: `asap`, `1_3_months`, `3_6_months`, `6_plus_months`, `exploring`)
 - Optional payload fields:
   - `phone`
-  - `focus[]` (checkboxes `website`, `content`, `ads`, any number; or the single value `not-sure`)
+  - `focus[]` (checkboxes `website`, `content`, `ads`, `aeo`, any number; or the single value `not-sure`)
   - `no_website` (`yes` only when the "I don't have a website yet" box is checked)
 - Hidden metadata contract:
   - `_subject` = `New Prism waitlist application`
@@ -44,7 +44,7 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
   - `fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })`
   - On `response.ok`: `trackEvent('waitlist_submit_success')`, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` (pending mode), then `router.push('/waitlist/thank-you')`. The thank-you route is noindex and mounts `LeadSuccessTracker`, which fires `generate_lead` once (`lib/lead-values.ts` `waitlist: 120`).
   - On failure: inline `role="alert"` error, `waitlist_submit_error` with `reason` (`non_ok_response` | `network_failure`) and `status`, visitor stays on the form.
-- Analytics: `waitlist_form_view` (`prefilled_focus`, `resumed_step` when a draft is restored), `waitlist_form_start` (first interaction, once; carries `step`/`step_name`), `waitlist_step_view` and `waitlist_step_complete` (`step` 1–5, `step_name` = `focus|timing|about|links|goals`), `waitlist_validation_error` (`step`, `step_name`, `field_name`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`, which counts services only, so "Not sure yet" counts as 0), `waitlist_submit_error`. No names, emails, phones, URLs, or free text are sent to GA or Vercel.
+- Analytics: `waitlist_form_view` (`prefilled_focus`, `resumed_step` when a draft is restored), `waitlist_form_start` (first interaction, once; carries `step`/`step_name`), `waitlist_step_view` and `waitlist_step_complete` (`step` 1–5, `step_name` = `focus|timing|about|links|goals`), `waitlist_validation_error` (`step`, `step_name`, `field_name`), `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`, 0-4, which counts services only, so "Not sure yet" counts as 0), `waitlist_submit_error`. No names, emails, phones, URLs, or free text are sent to GA or Vercel.
 - Capacity copy lives in `CAPACITY_MESSAGE` (`lib/waitlist.ts`) and renders through `FinalCta`, the footer capacity card, the social hubs, and `/waitlist`; heroes show the `WaitlistStatus` pill (`components/prism/waitlist-status.tsx`). `/waitlist` pairs the one-line context sentence with "What happens next" (`components/waitlist/WaitlistNextSteps.tsx`) and `WaitlistProofStrip`; `/waitlist/thank-you` repeats the next steps as cards.
 - Tests: `pnpm exec jest __tests__/components/WaitlistForm.test.tsx __tests__/website-cta-map.test.ts __tests__/pricing-model.test.ts`.
 
@@ -56,9 +56,9 @@ Submission builds one `FormData` from the hidden ops fields on the form plus the
 | `/get-started`, `/apply` | `GetStartedForm` | `mreroojo` / dashboard intake API | `/thank-you?source=apply` (`ApplySuccessTracker`) stays as a noindex landing target |
 | `/contact` (+ `/contact-us`, `/hours`) | `ContactForm` | `xjkjbpdb` | Was the waitlist fallback until 2026-10-07 (now `xvkzkqqp`) |
 | `/free-analysis`, `/analysis-thank-you` | `FreeAnalysisForm` | — | |
-| `/aeo`, `/aeo-thank-you` | `AeoAssessmentForm` | `xldarokj` | |
+| `/aeo`, `/aeo-thank-you` | `AeoAssessmentForm` | `xldarokj` | Free AEO assessment (Feb 2026). Since 2026-10-18 `/aeo` is the AEO service page again (no form; CTAs go to `/waitlist?focus=aeo`); `/aeo-thank-you` stays deleted |
 | `/book-a-shoot` (+ thank-you) | `BookAShootForm` | `xjkjkggn` | Dental photography pages now link the content waitlist |
-| `/ai` | AI website brief | `xzdpoyer` | |
+| `/ai` | AI website brief | `xzdpoyer` | Now 308s to `/aeo` (2026-10-18) |
 | `/founder-os/apply` (301 → `/content`) | `FounderOsApplicationForm` | `xkoalapv` | Retired before the waitlist |
 | `$300` website order (pre-2026-07-27) | June 2026 website request form | `xpqebnbz` | Historical "Website Customer Request, 2026 June" submissions |
 
@@ -111,26 +111,27 @@ const { handleSubmit, getError, isSubmitting } = useFormValidation({
    - `conversionMode: "immediate"` for confirmed success states that stay on-page.
    - `sendGoogleAdsConversion: false` for scholarship, model, newsletter, community, or other non-sales submissions.
 
-## `/websites`: marketing page + waitlist handoff
+## `/website-design`: marketing page + waitlist handoff
 
-The `/websites` PRO website page has **no on-page form**. The old fullscreen
+The `/website-design` page (Website Design; `/websites` 308s here since
+2026-10-19) has **no on-page form**. The old fullscreen
 order dialog (`WebsiteOrderForm.tsx`), sticky `MobileOrderBar.tsx`, and Stripe
-Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero and final
-CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` → `/waitlist?focus=website`)
-and the hero carries the `WaitlistStatus` pill. There is no booking CTA. The
+Payment Link flow (`lib/payment-links.ts`) stay deleted. Primary hero, work-rail, and
+final CTAs say "Join the waitlist" (`WEBSITE_WAITLIST_CTA` →
+`/waitlist?focus=website`) and the hero carries the `WaitlistStatus` pill. There is no booking CTA. The
 noindex `/checkout/website/thank-you` route remains only as the landing target
 for the legacy live Stripe link and no longer fires any purchase event.
 
 ## `/refer` referral form ($100 program)
 
 - Component: `components/forms/ReferralForm.tsx`, rendered by `app/refer/page.tsx` (dark system; replaced the legacy light page + external Typeform).
-- Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client for Websites, Content, or Ads. Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
+- Offer: a flat `$100` referral payout, paid when the referred business becomes a paying Prism client for Website Design, Content, Ads, or AEO. Fine print lives on the page; keep "referral payout, not service pricing" framing so pricing-consistency context rules stay satisfied if legacy tokens ever reappear.
 - Endpoint: `NEXT_PUBLIC_REFERRAL_FORM_ENDPOINT` ?? `https://formspree.io/f/meebpgaj` (dedicated referral form, wired 2026-07-02). Submissions carry `form_key=referral` / `_subject: "New referral — $100 program"`.
 - Fields: `referrer_name`\*, `referrer_email`\*, `friend_name`\*, `friend_business`, `friend_contact`\* (email or phone, free text), `friend_need`, `note` + standard ops fields (`FormspreeOpsFields formKey="referral"`), `_gotcha` honeypot, hidden `form_name=referral`.
 - Consent: `referral_permission=confirmed` is required before submission. The user-facing checkbox must state that the referrer has permission to share the friend's contact details and that Prism will use them only for referral follow-up.
 - Success: in-page success state with a "Refer another friend" reset (keeps the referrer's name/email, clears the friend fields). No thank-you route.
 - Analytics: `trackFormSubmission('referral', 'referral_form', { conversionMode: 'immediate', sendGoogleAdsConversion: false })` — referral payouts are not sales leads.
-- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only the Website, Content, and Ads waitlist CTAs. The page intro carries the shared capacity line; the referral program is not a sales CTA and keeps working while Prism is at capacity.
+- Entry points: footer Company column plus `/referral` + `/referrals` + `/affiliate` redirects. The focused `/tiktok`, `/ig`, and `/youtube` hubs intentionally offer only the Website Design, Content, Ads, and AEO waitlist CTAs. The page intro carries the shared capacity line; the referral program is not a sales CTA and keeps working while Prism is at capacity.
 
 ## Thank-you pages
 

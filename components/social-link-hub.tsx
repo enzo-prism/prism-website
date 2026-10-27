@@ -2,7 +2,13 @@
 
 import Link from 'next/link'
 import type { LucideIcon } from 'lucide-react'
-import { ArrowRight, Clapperboard, Globe, Megaphone } from 'lucide-react'
+import {
+  ArrowRight,
+  Clapperboard,
+  LayoutTemplate,
+  Megaphone,
+  MessageSquareQuote,
+} from 'lucide-react'
 
 import BrandLogo from '@/components/brand-logo'
 import { PrismLogo } from '@/components/prism/prism-logo'
@@ -16,7 +22,7 @@ import { trackCTAClick, trackExternalLinkClick } from '@/utils/analytics'
  * Link-in-bio hub for Prism's social profiles (/tiktok, /ig, /youtube).
  *
  * Visitors arrive warm (they just watched Prism's content), so the page
- * routes intent instead of thanking them. Prism is fully booked, so the three
+ * routes intent instead of thanking them. Prism is fully booked, so the four
  * service CTAs open the waitlist with that service pre-selected. One quiet,
  * shared template keeps the focus on those actions; no audience stats.
  */
@@ -50,9 +56,10 @@ const PLATFORMS: Record<SocialHubPlatform, PlatformConfig> = {
 const HUB_ACTION_HREFS: Record<PrismServiceId, string> = WAITLIST_FOCUS_HREFS
 
 const HUB_ACTION_ICONS: Record<PrismServiceId, LucideIcon> = {
-  website: Globe,
+  website: LayoutTemplate,
   content: Clapperboard,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
 }
 
 const focusRing =
@@ -237,9 +244,9 @@ export default function SocialLinkHub({
           </nav>
         </main>
 
-        <footer className="flex items-center justify-between gap-4 border-t border-white/[0.08] py-6 text-[12px] text-subtle">
-          <span className="font-mono uppercase tracking-[0.18em] text-[10px]">
-            Websites · Content · Ads
+        <footer className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-white/[0.08] py-6 text-[12px] text-subtle">
+          <span className="whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.14em]">
+            Website Design · Content · Ads · AEO
           </span>
           <span className="shrink-0">© Prism</span>
         </footer>

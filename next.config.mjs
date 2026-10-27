@@ -18,10 +18,10 @@ typescript: {
     root: configRoot,
   },
   experimental: {
-    // Next already tree-shakes lucide-react / recharts / date-fns by default.
-    // Add the heavy barrels it does NOT cover so per-route bundles only pull the
-    // pieces they use (framer-motion is imported across ~40 files).
-    optimizePackageImports: ['framer-motion'],
+    // Next already tree-shakes lucide-react / date-fns by default. List the
+    // heavy barrels explicitly so per-route bundles only pull the pieces
+    // they use.
+    optimizePackageImports: ['framer-motion', 'recharts'],
   },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],
@@ -31,7 +31,11 @@ outputFileTracingIncludes: {
 },
 // Enhanced image optimization configuration
 images: {
-  formats: ['image/webp', 'image/avif'], // Enable modern image formats
+  // AVIF first: at the same quality settings it is typically ~20% smaller
+  // than WebP, and every current browser that matters for this audience
+  // negotiates it via Accept. Browsers without AVIF still get WebP, then the
+  // original format. Order only; quality values and sizes are unchanged.
+  formats: ['image/avif', 'image/webp'], // Enable modern image formats
   qualities: [75, 90],
   deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840], // Responsive breakpoints
   imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Icon sizes
@@ -83,6 +87,25 @@ images: {
         ],
       },
       {
+        // Static media served from /public (photos, posters, videos) that is
+        // NOT covered by the immutable rule below. Files here are
+        // occasionally overwritten under the same filename, so a year-long
+        // immutable cache could pin stale art; instead cache for an hour and
+        // serve stale-while-revalidate for a day. Repeat visitors skip the
+        // per-image 304 round trips the platform default (max-age=0) forces,
+        // while a same-name overwrite self-heals within an hour. This rule
+        // comes first so the directory-specific immutable rule below
+        // overrides it where both match.
+        source:
+          '/:path*.(png|jpg|jpeg|webp|avif|gif|svg|mp4|webm|mp3|ico)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
         source: '/logos/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
@@ -107,16 +130,30 @@ images: {
       { source: '/apply', destination: '/waitlist', permanent: true },
       { source: '/free-analysis', destination: '/waitlist', permanent: true },
       { source: '/contact', destination: '/waitlist', permanent: true },
-      { source: '/aeo', destination: '/waitlist', permanent: true },
       { source: '/book-a-shoot', destination: '/waitlist', permanent: true },
-      { source: '/ai', destination: '/waitlist', permanent: true },
+      // AEO is a service again (2026-10-18): /aeo is the canonical page, and
+      // the AI search shortpaths and the retired /ai-seo-services lander
+      // consolidate there so one page owns the topic.
+      { source: '/ai', destination: '/aeo', permanent: true },
+      { source: '/ai-seo-services', destination: '/aeo', permanent: true },
+      { source: '/answer-engine-optimization', destination: '/aeo', permanent: true },
+      { source: '/generative-engine-optimization', destination: '/aeo', permanent: true },
+      { source: '/aeo-services', destination: '/aeo', permanent: true },
       // Content is the public service page and the offer name on /pricing.
       // Founder OS stays retired.
       { source: '/content-os', destination: '/content', permanent: true },
       { source: '/founder-os', destination: '/content', permanent: true },
       { source: '/founder-os/apply', destination: '/content', permanent: true },
-      { source: '/website', destination: '/websites', permanent: true },
-      // Three services only (2026-10-12): Websites, Content, Ads. The two
+      // Website Design is the website service's name and canonical URL
+      // (2026-10-19). The old /websites page and its shortpaths land there in
+      // one hop so link equity consolidates on /website-design.
+      { source: '/websites', destination: '/website-design', permanent: true },
+      { source: '/website', destination: '/website-design', permanent: true },
+      { source: '/web-design', destination: '/website-design', permanent: true },
+      { source: '/website-design-services', destination: '/website-design', permanent: true },
+      { source: '/web-design-services', destination: '/website-design', permanent: true },
+      // Three services only (2026-10-12): Website Design (then Websites),
+      // Content, Ads. The two
       // retired packaged offers had no subpaths. The dental offer lands on the
       // dental website lander (indexable, waitlist CTA with focus=website);
       // the creative subscription lands on Content.
@@ -157,9 +194,9 @@ images: {
       { source: '/local-seo-for-dentists', destination: '/dental-practice-seo-expert', permanent: true },
       { source: '/dentist-website-design', destination: '/dental-website', permanent: true },
       { source: '/dental-website-design', destination: '/dental-website', permanent: true },
-      { source: '/ai-seo', destination: '/ai-seo-services', permanent: true },
-      { source: '/ai-search-optimization', destination: '/ai-seo-services', permanent: true },
-      { source: '/llm-seo-services', destination: '/ai-seo-services', permanent: true },
+      { source: '/ai-seo', destination: '/aeo', permanent: true },
+      { source: '/ai-search-optimization', destination: '/aeo', permanent: true },
+      { source: '/llm-seo-services', destination: '/aeo', permanent: true },
       { source: '/seo-audit', destination: '/seo/audit', permanent: true },
       { source: '/seo-audit-service', destination: '/seo/audit', permanent: true },
       { source: '/seo-audit-services', destination: '/seo/audit', permanent: true },

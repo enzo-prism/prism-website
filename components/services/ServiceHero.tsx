@@ -6,7 +6,7 @@ import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-export type ServiceHeroGlow = 'blue' | 'warm' | 'green'
+export type ServiceHeroGlow = 'blue' | 'warm' | 'green' | 'violet'
 
 type ServiceHeroProps = {
   /** Lowercase display headline (the page's only h1). */
@@ -15,7 +15,7 @@ type ServiceHeroProps = {
   description: ReactNode
   /** Service-focused waitlist href, e.g. /waitlist?focus=website. */
   ctaHref: string
-  /** Analytics location shared by both hero CTAs, e.g. "websites hero". */
+  /** Analytics location shared by both hero CTAs, e.g. "website design hero". */
   location: string
   secondary: { label: string; href: string; trackingLabel: string }
   /** The product shot under the copy. */
@@ -38,6 +38,8 @@ const GLOWS: Record<ServiceHeroGlow, string> = {
   warm: 'bg-[radial-gradient(40%_50%_at_32%_42%,oklch(0.66_0.21_29/20%),transparent_70%),radial-gradient(36%_46%_at_70%_44%,oklch(0.75_0.17_55/16%),transparent_70%)]',
   green:
     'bg-[radial-gradient(40%_50%_at_30%_42%,oklch(0.76_0.17_145/16%),transparent_70%),radial-gradient(36%_46%_at_72%_44%,oklch(0.66_0.16_258/20%),transparent_70%)]',
+  violet:
+    'bg-[radial-gradient(40%_50%_at_30%_40%,oklch(0.63_0.19_295/22%),transparent_70%),radial-gradient(36%_46%_at_72%_46%,oklch(0.66_0.16_258/16%),transparent_70%)]',
 }
 
 function rise(delay: number): CSSProperties {
@@ -45,7 +47,7 @@ function rise(delay: number): CSSProperties {
 }
 
 /**
- * Shared launch-page hero for /websites, /content, and /ads: live waitlist
+ * Shared launch-page hero for /website-design, /content, /ads, and /aeo: live waitlist
  * status, a lowercase display headline, one subhead that names the product,
  * the service-focused waitlist CTA plus an outline anchor, then the page's
  * own product visual, which starts inside the first viewport.

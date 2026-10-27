@@ -19,10 +19,10 @@ import {
 } from '@/lib/waitlist'
 
 const PAGE_TITLE = 'Join the Prism waitlist'
-// Metadata is static, so the month stays relative here ("next month"). The
-// rendered page below names the live intake month instead.
+// Metadata is static, so it never names a month ("next intake"). The rendered
+// page below names the live intake month instead.
 const PAGE_DESCRIPTION =
-  'Prism is fully booked. Join the waitlist to work with us next month. We review every application for websites, content, and ads.'
+  'Prism is fully booked. Join the waitlist for our next monthly intake. We review every application for websites, content, ads, and AEO.'
 const CANONICAL_URL = `https://www.design-prism.com${WAITLIST_PATH}`
 
 export const metadata: Metadata = buildRouteMetadata({

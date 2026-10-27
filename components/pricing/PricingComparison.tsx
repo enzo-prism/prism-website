@@ -44,14 +44,14 @@ function ComparisonCell({ value }: { value: ComparisonValue }) {
 }
 
 /**
- * shadcn Table comparing what each of the three offers (Websites, Content,
- * Ads) includes. The first column stays pinned while the table scrolls
+ * shadcn Table comparing what each of the four offers (Website Design, Content,
+ * Ads, AEO) includes. The first column stays pinned while the table scrolls
  * sideways on small screens.
  */
 export function PricingComparison({ columns, rows }: PricingComparisonProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]">
-      <Table className="min-w-[38rem] table-fixed">
+      <Table className="min-w-[46rem] table-fixed">
         <caption className="sr-only">
           What each Prism offer includes. No public prices; every plan is scoped from
           the waitlist.

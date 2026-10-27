@@ -1065,7 +1065,7 @@ export function trackPageView(
 }
 
 export type CTAClickContext = {
-  /** Public service id when the CTA opens a Website, Content, or Ads path. */
+  /** Public service id when the CTA opens a Website, Content, Ads, or AEO path. */
   service?: string
   /** Social hub platform when the CTA is on /ig, /tiktok, or /youtube. */
   platform?: string

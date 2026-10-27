@@ -4,6 +4,7 @@ import {
   Camera,
   LayoutTemplate,
   Megaphone,
+  MessageSquareQuote,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -11,19 +12,17 @@ import BrandLogo, { type BrandLogoKey } from '@/components/brand-logo'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
 import { SpotlightCard } from '@/components/prism/spotlight-card'
-import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
+import {
+  PRISM_SERVICES,
+  toServiceCardTitle,
+  type PrismServiceId,
+} from '@/lib/services'
 
 const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
-}
-
-// Navigation-style labels ("Websites", as in the header's Services menu).
-const SERVICE_LABELS: Record<PrismServiceId, string> = {
-  website: 'Websites',
-  content: 'Content',
-  ads: 'Ads',
+  aeo: MessageSquareQuote,
 }
 
 // The real channels each service runs on, shown as a quiet logo row.
@@ -49,11 +48,17 @@ const SERVICE_MARKS: Record<
     { brand: 'tiktok', label: 'TikTok' },
     { brand: 'yelp', label: 'Yelp' },
   ],
+  aeo: [
+    { brand: 'openai', label: 'ChatGPT' },
+    { brand: 'gemini', label: 'Gemini' },
+    { brand: 'claude', label: 'Claude' },
+    { brand: 'perplexity', label: 'Perplexity' },
+  ],
 }
 
 /**
- * Cross-links at the end of each service page: the two other Prism services
- * as large "also from Prism" cards. The current service is left out.
+ * Cross-links at the end of each service page: the three other Prism
+ * services as large "also from Prism" cards. The current service is left out.
  */
 export function ServiceSiblings({ current }: { current: PrismServiceId }) {
   const siblings = PRISM_SERVICES.filter((service) => service.id !== current)
@@ -65,10 +70,12 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
           id="service-siblings-title"
           eyebrow="Prism services"
           title="also from Prism."
-          description="Websites, content, and ads. One team, so each one makes the others work harder."
+          description="Website design, content, ads, and AEO. One team, so each one makes the others work harder."
         />
       </Reveal>
-      <ul className="mt-12 grid gap-4 md:grid-cols-2">
+      {/* Three siblings: a row of three on desktop; on tablets the last card
+          spans both columns so the grid never strands one. */}
+      <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {siblings.map((service, index) => {
           const Icon = SERVICE_ICONS[service.id]
           return (
@@ -76,7 +83,7 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
               as="li"
               key={service.id}
               delay={index * 80}
-              className="flex"
+              className="flex md:max-lg:last:odd:col-span-2"
             >
               <SpotlightCard className="group/sibling relative flex w-full flex-col transition-transform duration-300 hover:-translate-y-0.5">
                 <div className="flex flex-1 flex-col gap-4 p-7 sm:p-9">
@@ -94,14 +101,14 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
                     />
                   </div>
                   <p className="text-eyebrow mt-6 text-subtle">
-                    {SERVICE_LABELS[service.id]}
+                    {service.name}
                   </p>
                   <h3 className="text-heading text-foreground">
                     <Link
                       href={service.href}
                       className="after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:outline-hidden focus-visible:after:ring-[3px] focus-visible:after:ring-ring/50"
                     >
-                      {service.homeTitle.toLowerCase().replace(/\.$/, '')}
+                      {toServiceCardTitle(service.homeTitle)}
                     </Link>
                   </h3>
                   <p className="max-w-[48ch] text-pretty text-[15px] leading-7 text-muted-foreground">

@@ -22,9 +22,11 @@ describe('waitlist CTA map', () => {
       website: '/waitlist?focus=website',
       content: '/waitlist?focus=content',
       ads: '/waitlist?focus=ads',
+      aeo: '/waitlist?focus=aeo',
     })
     expect(getWaitlistHref()).toBe('/waitlist')
     expect(getWaitlistHref('ads')).toBe('/waitlist?focus=ads')
+    expect(getWaitlistHref('aeo')).toBe('/waitlist?focus=aeo')
   })
 
   it('parses focus query values defensively', () => {
@@ -32,6 +34,7 @@ describe('waitlist CTA map', () => {
     expect(parseWaitlistFocus('website')).toEqual(['website'])
     expect(parseWaitlistFocus('Website,ads,ads')).toEqual(['website', 'ads'])
     expect(parseWaitlistFocus(['content', 'bogus'])).toEqual(['content'])
+    expect(parseWaitlistFocus('AEO,ads')).toEqual(['aeo', 'ads'])
     expect(parseWaitlistFocus('<script>')).toEqual([])
   })
 
@@ -53,9 +56,10 @@ describe('waitlist CTA map', () => {
       'components/pricing/PricingHero.tsx',
       'components/social-link-hub.tsx',
       'app/pricing/client-page.tsx',
-      'app/websites/page.tsx',
+      'app/website-design/page.tsx',
       'app/content/page.tsx',
       'app/ads/page.tsx',
+      'app/aeo/page.tsx',
       'app/dental-website/page.tsx',
       'lib/services.ts',
       'lib/pricing-model.ts',
@@ -66,7 +70,7 @@ describe('waitlist CTA map', () => {
       expect(source).not.toMatch(
         /BOOK_A_CALL_CTA|WEBSITE_START_CTA|BOOKING_URL/,
       )
-      expect(source).not.toMatch(/\/(website|content|ads)-intake/)
+      expect(source).not.toMatch(/\/(website|content|ads|aeo)-intake/)
       expect(source).not.toMatch(
         /["'`]\/(get-started|apply|free-analysis|contact)["'`]/,
       )

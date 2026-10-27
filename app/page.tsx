@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Your website, content and ads team',
+  titleStem: 'Website design, content, ads and AEO',
   description:
-    'Websites, content and ads for small businesses. One team to plan, build and improve your marketing.',
+    'Website design, content, ads, and AEO for small businesses. One team to plan, build, and improve your marketing, on Google and in AI answers.',
   path: "/",
 })
 

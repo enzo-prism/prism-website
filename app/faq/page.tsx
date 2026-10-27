@@ -47,7 +47,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'What makes Prism different?',
         answer:
-          'We bring website design, engineering, content, and ads together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
+          'We bring website design, engineering, content, ads, and AEO together around your business goals. You get a team that can build the work and help you understand its performance. Our case studies show dated results and their sources.',
       },
       {
         question: 'Do you work with small businesses?',
@@ -62,7 +62,12 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'How do your marketing services work together?',
         answer:
-          'Your website explains the offer, content helps people understand and trust your business, and ads bring it to a relevant audience. We help you decide which part needs attention first and what to measure.',
+          'Your website explains the offer, content helps people understand and trust your business, ads bring it to a relevant audience, and AEO helps AI assistants find and cite you. We help you decide which part needs attention first and what to measure.',
+      },
+      {
+        question: 'Can Prism help my business show up in ChatGPT and AI search?',
+        answer:
+          'Yes. AEO, or answer engine optimization, is one of Prism’s four services. We check which customer questions you appear in across ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity, fix what those engines can read about you, and re-check every month. No one can guarantee a citation, so we report what we see in dated checks.',
       },
     ],
   },
@@ -71,7 +76,7 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
     title: 'pricing and payments',
     items: [
       {
-        question: 'How much does a website cost?',
+        question: 'How much does website design cost?',
         answer:
           'Pricing depends on your pages, content, features, and integrations. Join the waitlist and share your goals. When we can take on your project, we confirm the scope and price before work begins, including any optional ongoing care.',
       },
@@ -83,28 +88,28 @@ const FAQ_TOPICS: readonly FaqTopic[] = [
       {
         question: 'Do you provide ongoing support?',
         answer:
-          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content covers ongoing content work, and Ads covers ongoing campaign management with weekly tuning. We scope the right plan with you.',
+          'Yes. Website Care covers agreed hosting, updates, and edits after launch. Content covers ongoing content work, Ads covers ongoing campaign management with weekly tuning, and AEO re-checks your customer questions across the answer engines every month. We scope the right plan with you.',
       },
     ],
   },
   {
-    id: 'websites',
-    title: 'websites and builds',
+    id: 'website-design',
+    title: 'website design',
     items: [
       {
-        question: "What's included in a Prism website?",
+        question: "What's included in Prism website design?",
         answer:
-          'Custom design and development, mobile layouts, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before building. Hosting, updates, and ongoing edits are available through optional Website Care.',
+          'Custom design for your brand, page copy, mobile-first layouts, development, search foundations, and analytics. We agree on the pages, features, content, and integrations with you before designing. Hosting, updates, and ongoing edits are available through optional Website Care.',
       },
       {
-        question: 'How long does a website project take?',
+        question: 'How long does a website design project take?',
         answer:
           'Timing depends on the scope, content readiness, integrations, and review process. Tell us your target launch date when you join the waitlist. We will agree on a realistic schedule before work begins.',
       },
       {
-        question: 'Can you improve my existing website?',
+        question: 'Can you redesign my existing website?',
         answer:
-          'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a rebuild if needed.',
+          'Yes. Share your site and what is getting in the way. We can assess the design, speed, search visibility, and path to an inquiry, then recommend focused improvements or a full redesign that builds on the pages already bringing in search traffic.',
       },
       {
         question: 'Can you add AI features to my website?',

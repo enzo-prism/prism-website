@@ -23,8 +23,8 @@ import {
   buildMinimalDescription,
 } from "@/lib/seo/rules"
 
-const DEFAULT_TITLE = buildAbsoluteTitle("Websites, SEO + ads")
-const DEFAULT_DESCRIPTION = buildMinimalDescription("Websites, SEO + ads")
+const DEFAULT_TITLE = buildAbsoluteTitle("Website design, SEO + ads")
+const DEFAULT_DESCRIPTION = buildMinimalDescription("Website design, SEO + ads")
 
 export const metadata: Metadata = {
   title: DEFAULT_TITLE,
@@ -71,6 +71,14 @@ export const metadata: Metadata = {
     },
   },
   generator: "v0.dev",
+  alternates: {
+    // Machine-readable company/proof snapshot for AI answer engines.
+    types: {
+      "application/json": [
+        { url: "/ai-data.json", title: "Prism company and proof data (JSON)" },
+      ],
+    },
+  },
   metadataBase: new URL("https://www.design-prism.com"),
 }
 

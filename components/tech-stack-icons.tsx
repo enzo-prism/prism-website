@@ -6,7 +6,7 @@ import BrandLogo, {
 } from '@/components/brand-logo'
 
 /**
- * Shared tech-icon maps for the Ads launch rail and the Websites proof
+ * Shared tech-icon maps for the Ads launch rail and the Website Design proof
  * ledger. Every entry resolves through the `BrandLogo` registry; entries
  * with no distinct brand mark pair the parent mark with a visible text
  * label, and `fallback` covers a missing or blocked logo file.
@@ -29,7 +29,7 @@ export const ADS_STAGE_ICONS: readonly TechStackIconSpec[] = [
   { label: 'ChatGPT Ads', brand: 'openai', theme: 'dark' },
 ]
 
-// The seven Websites search and answer surfaces. Google Search, AI
+// The seven Website Design search and answer surfaces. Google Search, AI
 // Overviews, and ChatGPT have no standalone marks, so they pair the parent
 // Google / OpenAI mark with the surface name as visible text.
 export const WEBSITE_SURFACE_ICONS: readonly TechStackIconSpec[] = [

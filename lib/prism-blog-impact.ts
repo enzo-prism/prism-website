@@ -197,8 +197,8 @@ const DEFAULT_IMPACT: Omit<PrismImpactConfig, "title"> = {
       reason: "Prism reviews the waitlist for each monthly intake.",
     },
     {
-      label: "AI SEO services",
-      href: "/ai-seo-services",
+      label: "AEO (answer engine optimization)",
+      href: "/aeo",
       kind: "internal",
       reason: "Built for citations, trust signals, and AI-discovery readiness.",
     },
@@ -230,8 +230,8 @@ const SEO_IMPACT: PrismImpactConfig = {
       reason: "Listings, maps, and trust layer upgrades for local demand.",
     },
     {
-      label: "AI SEO services",
-      href: "/ai-seo-services",
+      label: "AEO (answer engine optimization)",
+      href: "/aeo",
       kind: "internal",
       reason: "AI visibility execution for search and assistant surfaces.",
     },
@@ -261,7 +261,7 @@ const AI_IMPACT: PrismImpactConfig = {
       href: "/pricing",
       kind: "internal",
       reason:
-        "Compare the Websites, Content, and Ads offers.",
+        "Compare the Website Design, Content, Ads, and AEO offers.",
     },
     {
       label: WAITLIST_CTA.label,
@@ -331,7 +331,7 @@ const ADS_IMPACT: PrismImpactConfig = {
     },
     {
       label: "Web and campaign integration",
-      href: "/websites",
+      href: "/website-design",
       kind: "internal",
       reason: "Keep acquisition and conversion infrastructure synchronized.",
     },
@@ -352,7 +352,7 @@ const DEVELOPMENT_IMPACT: PrismImpactConfig = {
   serviceLinks: [
     {
       label: "Conversion-focused website builds",
-      href: "/websites",
+      href: "/website-design",
       kind: "internal",
       reason: "Fast, measurable web builds tuned for growth.",
     },
@@ -388,7 +388,7 @@ const DARK_FACTORY_OVERRIDE: PrismImpactConfig = {
       href: "/pricing",
       kind: "internal",
       reason:
-        "Compare the Websites, Content, and Ads offers.",
+        "Compare the Website Design, Content, Ads, and AEO offers.",
     },
     {
       label: "AI agents",

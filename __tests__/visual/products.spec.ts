@@ -52,7 +52,7 @@ for (const width of [1024, 1280, 1440]) {
   })
 }
 
-test('Services menu opens and links exactly the three services', async ({
+test('Services menu opens and links exactly the four services', async ({
   page,
 }, testInfo) => {
   test.skip(
@@ -65,10 +65,16 @@ test('Services menu opens and links exactly the three services', async ({
   await nav.getByRole('button', { name: /services/i }).click()
   const menu = page.locator('[data-slot="navigation-menu-content"]')
   await expect(menu).toBeVisible()
-  // Three services, then "All services" and the featured waitlist card.
-  await expect(menu.locator('ul > li a')).toHaveCount(4)
+  // Four services (AEO leads), then "All services" and the featured
+  // waitlist card.
+  await expect(menu.locator('ul > li a')).toHaveCount(5)
+  await expect(menu.locator('ul > li a').first()).toHaveAttribute(
+    'href',
+    '/aeo',
+  )
   for (const [name, href] of [
-    ['Websites', '/websites'],
+    ['AEO', '/aeo'],
+    ['Website Design', '/website-design'],
     ['Content', '/content'],
     ['Ads', '/ads'],
     ['All services', '/services'],

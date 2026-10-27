@@ -96,3 +96,25 @@ The full case-study mobile check also exposed a long-domain overflow on PTI. The
 ## TikTok homepage activity update
 
 At the account owner’s request, the TikTok secondary homepage stat now shows **421.3K likes** instead of 1,100 videos. The rounded current profile count was supplied by the owner on October 4, 2026; it is not represented as an exact API count. Follower data and the combined audience total are unchanged. Shared proof data and the AI-readable snapshot use the same likes label and value.
+
+## Social-only refresh — October 17, 2026
+
+This section supersedes the social snapshot above. Client traffic, case-study metrics, and dated Reel screenshots were not refreshed. Authenticated Ayrshare `/user` confirmed `the_design_prism` on Instagram and TikTok, and YouTube channel `UCeCUgNesbfaRG2E_ps6gGbw` (`@the_design_prism`). Separate read-only `/analytics/social` requests returned success for all three platforms on October 17 Pacific (October 18 around 06:17 UTC).
+
+| Channel | API audience | Activity | Website display |
+| --- | ---: | ---: | --- |
+| Instagram | 36,884 followers | 647 posts | 36.9K followers; 647 posts |
+| TikTok | 12,300 followers | 436,991 likes | 12.3K followers; 437K likes |
+| YouTube | 24,700 subscribers, API-rounded | 5,807,904 channel views | 24.7K subscribers; 5.8M channel views |
+
+API audience sum: **73,884**, conservatively displayed as **73K+**. This sum includes YouTube's rounded subscriber count and is not an exact or deduplicated audience count. TikTok's response explicitly backfilled from `2026-10-17T17:00:49.304Z`; its valid nonzero snapshot is dated October 17. No rolling-period view or reach claim was added.
+
+YouTube's `viewCount` is a channel total, distinct from the prior YouTube Studio lifetime measurement. The new figure is not evidence of a decline against that older figure. It includes earlier channel content, including legacy gaming, and is not client campaign performance or current reach. The old assertion that the count includes every private, unlisted, and deleted video is removed. [YouTube's channel documentation](https://developers.google.com/youtube/v3/docs/channels/) explains subscriber rounding; [Ayrshare's analytics overview](https://app.ayrshare.com/docs/apis/analytics/overview) describes account analytics.
+
+`SOCIAL_PROOF_VERIFIED_AT` separately dates social proof; `PROOF_METRICS_VERIFIED_AT` and the full-audit `last_verified` remain October 4. `public/ai-data.json` has a social-specific verification date and labels rounded values without claiming exactness. Public pages read the shared social snapshot. The stripped-down social link hubs remain free of stats.
+
+Raw authenticated responses are retained locally in `work/social-stats-2026-10-17/` and are not release files. The user explicitly authorized updating project docs, pushing to `main`, and publishing production in the October 17 session. Use the existing GitHub Actions `Deploy to Vercel` workflow; verify the exact pushed commit, successful run, and live-domain stats before calling the release complete.
+
+Local validation: 51 relevant Jest tests passed; typecheck, production build, pricing consistency, and diff checks passed. Lint completed with 0 errors and 20 warnings outside the changed files. Visual run: 45 passed, 6 skipped, and one mobile synthetic heading negative-control failure; the isolated unchanged test passed on retry (1 passed). No screenshot baselines were changed. These are local checks; release completion is established separately by the production workflow and live readback.
+
+Release preflight: all 95 Jest suites / 561 tests passed. `pnpm design:check` completed with zero errors and existing token-usage warnings; generated tokens did not change. Project README, page overview, and design contract now document Ayrshare channel-view semantics. Raw local evidence remains excluded from Git.

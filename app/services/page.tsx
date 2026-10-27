@@ -7,6 +7,7 @@ import {
   Check,
   LayoutTemplate,
   Megaphone,
+  MessageSquareQuote,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -26,7 +27,11 @@ import { FAQSchema, ServiceSchema } from '@/components/schema-markup'
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
-import { PRISM_SERVICES, type PrismServiceId } from '@/lib/services'
+import {
+  PRISM_SERVICES,
+  toServiceCardTitle,
+  type PrismServiceId,
+} from '@/lib/services'
 import { WAITLIST_CTA } from '@/lib/waitlist'
 
 import { SERVICE_VISUALS } from './service-visuals'
@@ -35,31 +40,22 @@ const SERVICE_ICONS: Record<PrismServiceId, LucideIcon> = {
   website: LayoutTemplate,
   content: Camera,
   ads: Megaphone,
+  aeo: MessageSquareQuote,
 }
 
-// Navigation-style labels for the three services ("Websites", matching the
-// header's Services menu and the offer names on /pricing).
-const SERVICE_LABELS: Record<PrismServiceId, string> = {
-  website: 'Websites',
-  content: 'Content',
-  ads: 'Ads',
-}
-
-// Schema.org serviceType for each of the three services.
+// Schema.org serviceType for each of the four services.
 const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
-  website: 'Website design and development',
+  website: 'Website design',
   content: 'Content and social media marketing',
   ads: 'Paid advertising management',
+  aeo: 'Answer engine optimization',
 }
-
-/** Card titles: lowercase, no closing period ("a site that makes choosing you easy"). */
-const toCardTitle = (value: string) => value.toLowerCase().replace(/\.$/, '')
 
 // What each core service includes, in plain terms.
 const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
   website: [
-    'Custom design and development',
-    'Search foundations and analytics',
+    'Custom design for your brand',
+    'Page copy and a mobile-first build',
     'Clear paths to call, book, or inquire',
   ],
   content: [
@@ -71,6 +67,11 @@ const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
     'Campaigns on the channels that fit',
     'Call and inquiry tracking',
     'Ongoing improvements from the data',
+  ],
+  aeo: [
+    'AI visibility audit across the engines',
+    'Crawler, schema, and answer-first fixes',
+    'Monthly answer checks in plain English',
   ],
 }
 
@@ -85,15 +86,15 @@ type CoreService = {
   learnMoreLinks?: { label: string; href: string }[]
 }
 
-// How the supporting work fits around the three services. (The ServiceSchema
-// entries below describe the three services themselves.)
+// How the supporting work fits around the four services. (The ServiceSchema
+// entries below describe the four services themselves.)
 const coreServices: CoreService[] = [
   {
-    name: 'Websites & Experience Design',
-    title: 'websites and experience design',
+    name: 'Website & Experience Design',
+    title: 'website and experience design',
     summary:
-      'Design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
-    learnMoreLinks: [{ label: 'Website design services', href: '/websites' }],
+      'Brand-led design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
+    learnMoreLinks: [{ label: 'Website design', href: '/website-design' }],
     outcomes: [
       'Custom design, UX, and development',
       'Editable components and content management',
@@ -118,7 +119,7 @@ const coreServices: CoreService[] = [
       { label: 'Local SEO agency', href: '/local-seo-agency' },
       { label: 'Dentist SEO', href: '/dental-practice-seo-expert' },
       { label: 'SEO audit service', href: '/seo/audit' },
-      { label: 'AI SEO services', href: '/ai-seo-services' },
+      { label: 'AEO for AI search', href: '/aeo' },
     ],
     outcomes: [
       'Google, Apple, Yelp, and niche directory management',
@@ -226,7 +227,7 @@ const workflow = [
   {
     title: 'improve and report',
     description:
-      'Content, ads, and automation join as the foundation holds. We review the data with you and plan the next improvement.',
+      'Content, ads, AEO, and automation join as the foundation holds. We review the data with you and plan the next improvement.',
   },
 ] as const
 
@@ -259,7 +260,7 @@ const faqItems = [
   {
     question: 'Do I need every service to work with Prism?',
     answer:
-      'No. Most clients start with one foundation, usually a website or local presence, and add content or ads once the core is stable.',
+      'No. Most clients start with one foundation, usually website design or local presence, and add content or ads once the core is stable.',
   },
   {
     question: 'How do you decide what to prioritize first?',
@@ -284,7 +285,7 @@ const faqItems = [
   {
     question: 'What does an engagement look like month to month?',
     answer:
-      'It depends on the service. A website is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
+      'It depends on the service. Website Design is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
   },
   {
     question: 'How do I start?',
@@ -302,7 +303,7 @@ const inlineLinkClassName =
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Services',
   description:
-    'Website, content, and ads: the three Prism services that help your business get found, trusted, and chosen.',
+    'Website design, content, ads, and AEO: the four Prism services that help your business get found, trusted, and chosen, on Google and in AI answers.',
   path: '/services',
   ogImage: '/prism-opengraph.png',
 })
@@ -334,15 +335,16 @@ export default function ServicesPage() {
                 className="text-display text-gradient prism-rise mt-6 max-w-[11ch] pb-2"
                 style={rise(80)}
               >
-                website. content. ads.
+                website design. content. ads. AEO.
               </h1>
               <p
                 className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
                 style={rise(160)}
               >
-                Prism helps with three things. The website makes choosing you
+                Prism helps with four things. Website design makes choosing you
                 easy. Content keeps you found and trusted. Ads bring the right
-                customers. Everything else supports those three.
+                customers. AEO makes you the answer when they ask AI.
+                Everything else supports those four.
               </p>
               <div
                 className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
@@ -385,7 +387,7 @@ export default function ServicesPage() {
                         </OfferIconTile>
                         <span className="flex min-w-0 flex-1 flex-col">
                           <span className="text-[1.15rem] font-semibold tracking-[-0.025em] text-foreground">
-                            {SERVICE_LABELS[service.id]}
+                            {service.name}
                           </span>
                           <span className="text-pretty text-sm text-muted-foreground">
                             {service.navDescription}
@@ -404,31 +406,31 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* The three services */}
+        {/* The four services */}
         <Section aria-labelledby="services-core-heading" className="pt-0 sm:pt-0">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
               <SectionHeader
                 id="services-core-heading"
-                eyebrow="Three services"
+                eyebrow="Four services"
                 title="one team for the whole path to a customer."
                 titleClassName="max-w-[17ch]"
               />
             </Reveal>
             <TrackedLink
               href="/pricing"
-              label="compare all three on pricing"
+              label="compare all four on pricing"
               location="services core"
               className={`${inlineLinkClassName} lg:mb-3`}
             >
-              Compare all three on pricing
+              Compare all four on pricing
               <ArrowRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-200 group-hover/link:translate-x-0.5"
               />
             </TrackedLink>
           </div>
-          <ul className="mt-12 grid gap-4 lg:grid-cols-3">
+          <ul className="mt-12 grid gap-4 md:grid-cols-2">
             {PRISM_SERVICES.map((service, index) => {
               const Icon = SERVICE_ICONS[service.id]
               const Visual = SERVICE_VISUALS[service.id]
@@ -444,10 +446,10 @@ export default function ServicesPage() {
                           <OfferIconTile className="size-9 rounded-lg">
                             <Icon aria-hidden="true" className="size-4" />
                           </OfferIconTile>
-                          <p className="text-eyebrow text-subtle">{SERVICE_LABELS[service.id]}</p>
+                          <p className="text-eyebrow text-subtle">{service.name}</p>
                         </div>
                         <h3 className="text-heading mt-5 text-foreground">
-                          {toCardTitle(service.homeTitle)}
+                          {toServiceCardTitle(service.homeTitle)}
                         </h3>
                         <p className="mt-3 text-pretty text-[15px] leading-7 text-muted-foreground">
                           {service.description}
@@ -497,7 +499,7 @@ export default function ServicesPage() {
               <SectionHeader
                 id="services-capabilities-heading"
                 eyebrow="What we run for you"
-                title="everything else supports those three."
+                title="everything else supports those four."
                 description="Every engagement starts with the essentials, then adds channels as the foundation holds."
                 titleClassName="max-w-[15ch]"
               />
@@ -693,7 +695,7 @@ export default function ServicesPage() {
         <ServiceSchema
           key={`service-schema-${service.id}`}
           serviceId={`services-${service.id}`}
-          name={SERVICE_LABELS[service.id]}
+          name={service.name}
           description={service.description}
           serviceType={SERVICE_SCHEMA_TYPES[service.id]}
           areaServed="United States"

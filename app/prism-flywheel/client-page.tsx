@@ -14,7 +14,7 @@ import { SpotlightCard } from '@/components/prism/spotlight-card'
 import TrackedAnchor from '@/components/tracked-anchor'
 import TrackedLink from '@/components/tracked-link'
 import { Card } from '@/components/ui/card'
-import { PROOF_METRICS_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
+import { SOCIAL_PROOF_VERIFIED_AT, SOCIAL_PROOF } from '@/lib/proof-metrics'
 
 // Tech stack items with their categories
 const techStackItems = [
@@ -492,7 +492,7 @@ export default function PrismFlywheelClient() {
           {SOCIAL_PROOF.youtube.audienceLabel} on YouTube and{' '}
           {SOCIAL_PROOF.instagram.audience}{' '}
           {SOCIAL_PROOF.instagram.audienceLabel} on Instagram. Audience as of{' '}
-          {PROOF_METRICS_VERIFIED_AT}.
+          {SOCIAL_PROOF_VERIFIED_AT}.
         </p>
       </Section>
     </>

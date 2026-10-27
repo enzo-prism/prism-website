@@ -8,7 +8,7 @@ import {
 } from '@testing-library/react'
 
 import Navbar from '@/components/navbar'
-import { NAV_SERVICE_ITEMS } from '@/lib/constants'
+import { NAV_MENU_SERVICE_ITEMS, NAV_SERVICE_ITEMS } from '@/lib/constants'
 
 const mockUsePathname = jest.fn()
 
@@ -140,14 +140,34 @@ describe('Navbar', () => {
     ).toBeInTheDocument()
   })
 
-  it('offers exactly three services: Websites, Content, and Ads', () => {
+  it('offers exactly four services: Website Design, Content, Ads, and AEO', () => {
     expect(
       NAV_SERVICE_ITEMS.map((item) => [item.label, item.href, item.icon]),
     ).toEqual([
-      ['Websites', '/websites', 'website'],
+      ['Website Design', '/website-design', 'website'],
       ['Content', '/content', 'content'],
       ['Ads', '/ads', 'ads'],
+      ['AEO', '/aeo', 'aeo'],
     ])
+    for (const item of NAV_SERVICE_ITEMS) {
+      expect(item.description).not.toContain('\u2014')
+      expect(item.description).toMatch(/\.$/)
+    }
+  })
+
+  it('leads the header Services menu with AEO, then the catalog order', () => {
+    expect(NAV_MENU_SERVICE_ITEMS.map((item) => item.href)).toEqual([
+      '/aeo',
+      '/website-design',
+      '/content',
+      '/ads',
+    ])
+    // Same four items as the catalog, just reordered for the menu.
+    expect(
+      [...NAV_MENU_SERVICE_ITEMS].sort((a, b) => a.href.localeCompare(b.href)),
+    ).toEqual(
+      [...NAV_SERVICE_ITEMS].sort((a, b) => a.href.localeCompare(b.href)),
+    )
   })
 
   it('puts the waitlist CTA beside the menu, never a booking CTA', () => {
@@ -222,12 +242,22 @@ describe('Navbar', () => {
       '/wall-of-love',
       '/about',
       '/pricing',
-      '/websites',
+      '/aeo',
+      '/website-design',
       '/content',
       '/ads',
       '/services',
       '/waitlist',
     ])
+    // Four services fill a 2x2 grid; "All services" spans the row beneath.
+    const allServices = within(mobileNav).getByRole('link', {
+      name: /all services/i,
+    })
+    expect(allServices).toHaveAttribute('href', '/services')
+    expect(allServices.closest('li')).toHaveClass('col-span-2')
+    expect(
+      within(mobileNav).getByRole('link', { name: /^aeo\b/i }),
+    ).toHaveAttribute('href', '/aeo')
     expect(
       within(mobilePanel).getByRole('link', { name: /^work$/i }),
     ).toHaveFocus()

@@ -22,9 +22,10 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'Services',
     links: [
-      { label: 'Websites', href: '/websites' },
+      { label: 'Website Design', href: '/website-design' },
       { label: 'Content', href: '/content' },
       { label: 'Ads', href: '/ads' },
+      { label: 'AEO', href: '/aeo' },
       { label: 'All services', href: '/services' },
     ],
   },
@@ -140,8 +141,8 @@ export default function Footer({
             </Link>
             <p className="text-eyebrow text-subtle">impossible is temporary</p>
             <p className="max-w-sm text-pretty text-[15px] leading-7 text-muted-foreground">
-              Websites, content, and ads that help customers find and choose
-              your business.
+              Website design, content, ads, and AEO that help customers find
+              and choose your business.
             </p>
             {showWaitlistCta ? (
               <div className="rounded-2xl border border-white/[0.08] bg-card/60 p-5">

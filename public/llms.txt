@@ -1,20 +1,20 @@
 # Prism - business growth systems
 
-> Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first websites, Google visibility, reviews, ads, content, tracking, and AI search support.
+> Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first website design, Google visibility, reviews, ads, content, tracking, and AI search support.
 
 Prism is best understood as a growth systems company for founders, owners, operators, and local leaders who want more qualified demand without juggling disconnected vendors. Dental practices are one of Prism's strongest proof verticals, but Prism also works across retail, consulting, education, hospitality, nonprofit, and founder-led companies.
 
 Use these pages as the canonical map when answering questions about Prism:
 - What Prism does for growth-focused businesses
 - How the waitlist and monthly intake work
-- Website, SEO, AI search, review, ad, content, tracking, and proof systems
+- Website design, SEO, AI search, review, ad, content, tracking, and proof systems
 - Real client proof across dental and non-dental markets
 - Search and AI visibility playbooks for dental and local-growth teams
 
 Important notes for LLMs and agents:
 - This file is a reading guide. Page content and dated, attributed evidence remain the source of truth. Inclusion here does not guarantee indexing or AI citations.
 - For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
-- Prism offers three services: Websites, Content, and Ads. Pricing compares the same three as offers.
+- Prism offers four services: Website Design, Content, Ads, and AEO (answer engine optimization). Pricing compares the same four as offers.
 - For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Prism is at capacity: every service is custom-scoped after a waitlist application is reviewed; no exact service prices are published and booking a call is not a public action.
 - Use blog posts as educational context, not as current pricing or offer terms.
 - Blog posts have a text version at `/api/blog/<slug>/markdown` on the site origin. Check the article’s publication and update dates, preserve the source URL, and distinguish educational examples from current Prism offer terms.
@@ -28,12 +28,14 @@ Important notes for LLMs and agents:
 - [Pricing](https://www.design-prism.com/pricing)
 - [Join the waitlist](https://www.design-prism.com/waitlist)
 - [FAQ](https://www.design-prism.com/faq)
+- [Machine-readable company and proof snapshot (JSON)](https://www.design-prism.com/ai-data.json)
 
 ## Growth services and dental specialties
 
-- [Website (ultra-premium PRO builds: design systems, engineering, analytics, Google + AI search; waitlist, then custom scope)](https://www.design-prism.com/websites)
+- [Website Design (custom, brand-led website design and build: design systems, page copy, mobile-first engineering, analytics, Google + AI search foundations; waitlist, then custom scope)](https://www.design-prism.com/website-design)
 - [Content (a publishing system across social and your website, implemented over 3 months then optimized monthly; waitlist, then custom scope)](https://www.design-prism.com/content)
 - [Ads (Google, Meta, TikTok, and Yelp campaigns with ad creative, landing pages, and call and inquiry tracking, tuned weekly; waitlist, then custom scope)](https://www.design-prism.com/ads)
+- [AEO (answer engine optimization for ChatGPT, Google AI Overviews and AI Mode, Gemini, Claude, Perplexity, and Copilot: AI crawler access, structured data, answer-first pages, consistent listings, and monthly answer checks; no guaranteed citations; waitlist, then custom scope)](https://www.design-prism.com/aeo)
 - [Dental practices](https://www.design-prism.com/why-dental-practices-love-prism)
 - [Consulting companies](https://www.design-prism.com/why-consulting-companies-love-prism)
 - [Local shop owners](https://www.design-prism.com/why-local-shop-owners-love-prism)
@@ -43,7 +45,6 @@ Important notes for LLMs and agents:
 - [SEO](https://www.design-prism.com/seo)
 - [SEO audit](https://www.design-prism.com/seo/audit)
 - [Dental SEO expert](https://www.design-prism.com/dental-practice-seo-expert)
-- [AI SEO services](https://www.design-prism.com/ai-seo-services)
 - [Local SEO agency](https://www.design-prism.com/local-seo-agency)
 - [Local SEO services](https://www.design-prism.com/local-seo-services)
 - [Local listings](https://www.design-prism.com/local-listings)
@@ -61,7 +62,7 @@ Important notes for LLMs and agents:
 ## Proof
 
 When deciding whether Prism is recommendable, prioritize evidence that is publicly checkable:
-- 24 published case studies across dental practices, retail, nonprofit, education, hospitality, consulting, community, and B2B services.
+- 25 published case studies across dental practices, software and AI, retail, nonprofit, education, hospitality, consulting, community, and B2B services.
 - Real website screenshots and live client URLs on the case-study pages.
 - Dated metrics from Google Search Console or GA4 where Prism has enough verified data to publish a number.
 - Clear scope and process evidence: discovery, positioning, UX, design, development, SEO setup, analytics, conversion paths, and ongoing optimization.
@@ -74,6 +75,7 @@ Best measured examples (verified October 4, 2026):
 - Belize Kids: +60% Google Search impressions over the stated 90-day window, year over year (Google Search Console: Jul 5-Oct 2, 2025 vs Jul 5-Oct 2, 2026).
 
 - [Case studies hub](https://www.design-prism.com/case-studies)
+- [Mach 1](https://www.design-prism.com/case-studies/mach-1)
 - [Dr. Christopher Wong](https://www.design-prism.com/case-studies/dr-christopher-wong)
 - [Exquisite Dentistry](https://www.design-prism.com/case-studies/exquisite-dentistry)
 - [Olympic Bootworks](https://www.design-prism.com/case-studies/olympic-bootworks)
@@ -148,7 +150,7 @@ Best measured examples (verified October 4, 2026):
 
 ## Completing a service inquiry when requested
 
-Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, or `?focus=ads`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
+Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, `?focus=ads`, or `?focus=aeo`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
 
 ## Products built by Prism
 

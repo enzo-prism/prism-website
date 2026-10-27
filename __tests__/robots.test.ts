@@ -30,6 +30,8 @@ describe('robots', () => {
         'GPTBot',
         'OAI-SearchBot',
         'ClaudeBot',
+        'Claude-SearchBot',
+        'Claude-User',
         'PerplexityBot',
         'Google-Extended',
       ]),

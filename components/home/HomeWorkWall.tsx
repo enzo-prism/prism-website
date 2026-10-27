@@ -20,7 +20,7 @@ type WallShot = {
 }
 
 /**
- * Every current client beyond the five featured stories, so the wall shows
+ * Every current client beyond the six featured stories, so the wall shows
  * exactly the "<n> more" its title counts. Former clients never appear here
  * (HOMEPAGE_CLIENT_WINS is already current-only).
  */

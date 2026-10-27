@@ -9,8 +9,10 @@ export default function ScrollTracker() {
 
   useEffect(() => {
     const tracked = new Set<number>()
+    let frame = 0
 
-    const handleScroll = () => {
+    const sampleScroll = () => {
+      frame = 0
       const scrollPosition = window.scrollY + window.innerHeight
       const documentHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
       if (documentHeight <= 0) return
@@ -25,10 +27,18 @@ export default function ScrollTracker() {
       }
     }
 
+    // Coalesce scroll events to one geometry sample per animation frame:
+    // scrollHeight reads can force layout, and milestones do not need
+    // per-event resolution. The sampled values and fired events are the same.
+    const handleScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(sampleScroll)
+    }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
+      if (frame) window.cancelAnimationFrame(frame)
     }
   }, [pathname])
 

@@ -70,8 +70,8 @@ describe('CaseStudyWorkHighlights', () => {
     expect(within(dialog).getByText('Why it matters')).toBeInTheDocument()
     expect(dialog.textContent).not.toMatch(/world-class/i)
     expect(
-      within(dialog).getByRole('link', { name: /Explore Prism websites/ }),
-    ).toHaveAttribute('href', '/websites')
+      within(dialog).getByRole('link', { name: /Explore Prism website design/ }),
+    ).toHaveAttribute('href', '/website-design')
 
     fireEvent.click(within(dialog).getByRole('button', { name: 'Close details' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

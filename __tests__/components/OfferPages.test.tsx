@@ -105,10 +105,13 @@ describe('/pricing', () => {
 
     const plansHeading = screen.getByRole('heading', {
       level: 2,
-      name: /three ways to work with prism\./i,
+      name: /four ways to work with prism\./i,
     })
     const plans = plansHeading.closest('section') as HTMLElement
-    expect(within(plans).getAllByRole('heading', { level: 3 })).toHaveLength(3)
+    expect(within(plans).getAllByRole('heading', { level: 3 })).toHaveLength(
+      PRICING_OFFER_ORDER.length,
+    )
+    expect(PRICING_OFFER_ORDER).toHaveLength(4)
 
     for (const offerId of PRICING_OFFER_ORDER) {
       const offer = CANONICAL_PRICING_OFFERS[offerId]
@@ -132,7 +135,10 @@ describe('/pricing', () => {
 
     const table = screen.getByRole('table')
     // One "What's included" header plus one column per service.
-    expect(within(table).getAllByRole('columnheader')).toHaveLength(4)
+    expect(within(table).getAllByRole('columnheader')).toHaveLength(
+      PRICING_OFFER_ORDER.length + 1,
+    )
+    expect(within(table).getAllByRole('columnheader')).toHaveLength(5)
     for (const offerId of PRICING_OFFER_ORDER) {
       expect(
         within(table).getByRole('columnheader', {
@@ -144,6 +150,11 @@ describe('/pricing', () => {
     // there is no separate "Pricing" row.
     expect(within(table).getByRole('rowheader', { name: 'How it runs' })).toBeInTheDocument()
     expect(within(table).queryByRole('rowheader', { name: 'Pricing' })).not.toBeInTheDocument()
+    expect(
+      within(table).getByRole('rowheader', {
+        name: 'Visibility in ChatGPT, AI Overviews, and Perplexity',
+      }),
+    ).toBeInTheDocument()
 
     const finalCta = screen.getByRole('heading', { level: 2, name: /get on the list for/i })
     const finalSection = finalCta.closest('section') as HTMLElement
@@ -156,13 +167,30 @@ describe('/pricing', () => {
   })
 })
 
+describe('/pricing FAQ', () => {
+  it('answers how AEO is priced without a public price', () => {
+    render(<PricingPageClient />)
+
+    const aeo = screen
+      .getByText('How is AEO priced?')
+      .closest('details') as HTMLElement
+    expect(aeo).toBeInTheDocument()
+    expect(aeo.textContent ?? '').toMatch(/waitlist/i)
+    expect(aeo.textContent ?? '').not.toMatch(PRICE_PATTERN)
+  })
+})
+
 describe('/services', () => {
-  it('lists the three services with their waitlist focus links', () => {
+  it('lists the four services with their waitlist focus links', () => {
     const { container } = render(<ServicesPage />)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /website\. content\. ads\./i }),
+      screen.getByRole('heading', {
+        level: 1,
+        name: /^website design\. content\. ads\. AEO\.$/i,
+      }),
     ).toBeInTheDocument()
+    expect(screen.getByText('Four services')).toBeInTheDocument()
     const hrefs = screen
       .getAllByRole('link', { name: /join the waitlist/i })
       .map((link) => link.getAttribute('href'))
@@ -173,13 +201,19 @@ describe('/services', () => {
       ).toHaveAttribute('href', service.href)
     }
     expect(PRISM_SERVICES.map((service) => service.href)).toEqual([
-      '/websites',
+      '/website-design',
       '/content',
       '/ads',
+      '/aeo',
     ])
+    expect(screen.getByRole('link', { name: /explore aeo/i })).toHaveAttribute(
+      'href',
+      '/aeo',
+    )
     expect(
-      screen.getByRole('link', { name: /compare all three on pricing/i }),
+      screen.getByRole('link', { name: /compare all four on pricing/i }),
     ).toHaveAttribute('href', '/pricing')
+    expect(container.textContent ?? '').not.toMatch(/all three|those three/i)
     expect(container.textContent ?? '').not.toMatch(RETIRED_OFFER_PATTERN)
     expect(container.innerHTML).not.toMatch(/\/dental-os|\/prism-infinity/)
   })

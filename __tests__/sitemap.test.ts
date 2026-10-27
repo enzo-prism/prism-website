@@ -33,8 +33,9 @@ describe("sitemap", () => {
       "https://www.design-prism.com",
       "https://www.design-prism.com/services",
       "https://www.design-prism.com/waitlist",
-      "https://www.design-prism.com/websites",
+      "https://www.design-prism.com/website-design",
       "https://www.design-prism.com/ads",
+      "https://www.design-prism.com/aeo",
       "https://www.design-prism.com/local-listings",
       "https://www.design-prism.com/seo/audit",
       "https://www.design-prism.com/ai-agents/dental",
@@ -73,6 +74,7 @@ describe("sitemap", () => {
     expect(urls).not.toContain("https://www.design-prism.com/contact")
     const excludedUrls = [
       "https://www.design-prism.com/ai",
+      "https://www.design-prism.com/ai-seo-services",
       "https://www.design-prism.com/pricing-dental",
       "https://www.design-prism.com/ai-website-launch",
       "https://www.design-prism.com/one-time-fee",

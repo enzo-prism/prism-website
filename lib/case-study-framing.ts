@@ -26,6 +26,15 @@ export type CaseStudyFraming = {
 }
 
 export const CASE_STUDY_FRAMING: Record<string, CaseStudyFraming> = {
+  'mach-1': {
+    who: 'Teams buying AI agents',
+    audience:
+      'Support, sales, customer success, and operations teams weighing an AI agent partner.',
+    found:
+      'SEO and AEO work, a free AEO report that gives visitors a reason to reach out early, and a growth team running content and ads from tools Prism built around how it works.',
+    chosen:
+      'A site led by customers’ own words, with captioned films, sourced results, and a page for every team, so buyers see the proof before the first sales call.',
+  },
   'dr-christopher-wong': {
     who: 'Patients in Palo Alto',
     audience:

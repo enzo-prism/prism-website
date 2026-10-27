@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import {
+  LLMS_MACHINE_READABLE_PATHS,
   isBlogPostIndexable,
   isRouteIndexable,
 } from '@/lib/seo/search-visibility'
@@ -30,20 +31,21 @@ describe('llms.txt', () => {
     }
     expect(llms).toContain('no exact service prices are published')
     expect(llms).toContain('does not guarantee indexing or AI citations')
-    expect(llms).toContain('[Website (')
+    expect(llms).toContain('[Website Design (')
     expect(llms).not.toContain('latest 90 days')
 
     expect(urls).toEqual(
       expect.arrayContaining([
         'https://www.design-prism.com/pricing',
         'https://www.design-prism.com/waitlist',
-        'https://www.design-prism.com/websites',
+        'https://www.design-prism.com/website-design',
         'https://www.design-prism.com/seo',
         'https://www.design-prism.com/seo/audit',
         'https://www.design-prism.com/local-seo-agency',
         'https://www.design-prism.com/local-seo-services',
         'https://www.design-prism.com/local-listings',
         'https://www.design-prism.com/ads',
+        'https://www.design-prism.com/aeo',
         'https://www.design-prism.com/chatgpt-ads',
         'https://www.design-prism.com/why-consulting-companies-love-prism',
         'https://www.design-prism.com/why-local-shop-owners-love-prism',
@@ -64,6 +66,12 @@ describe('llms.txt', () => {
       const { pathname } = new URL(url)
       if (pathname.startsWith('/blog/')) {
         expect(isBlogPostIndexable(pathname.replace('/blog/', ''))).toBe(true)
+      } else if (
+        (LLMS_MACHINE_READABLE_PATHS as readonly string[]).includes(pathname)
+      ) {
+        // Machine-readable snapshots (e.g. /ai-data.json) are agent
+        // references, not indexable pages or sitemap entries.
+        continue
       } else {
         expect(isRouteIndexable(url)).toBe(true)
       }
@@ -75,6 +83,8 @@ describe('llms.txt', () => {
     expect(llms).not.toContain('https://www.design-prism.com/apps')
     expect(llms).not.toContain('https://www.design-prism.com/podcast')
     expect(llms).not.toContain('https://www.design-prism.com/openai')
+    // The AI search lander folded into the /aeo service page (2026-10-18).
+    expect(llms).not.toContain('https://www.design-prism.com/ai-seo-services')
     expect(llms).not.toContain('podcasts.apple.com')
   })
 })

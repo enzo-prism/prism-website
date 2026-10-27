@@ -54,16 +54,17 @@ describe('GlobalSchemaGraph', () => {
       ]),
     )
 
-    // Exactly the three services, price-free.
+    // Exactly the four services, price-free.
     expect(
       organization.makesOffer.map((offer: { name: string; url: string }) => [
         offer.name,
         offer.url,
       ]),
     ).toEqual([
-      ['Websites', 'https://www.design-prism.com/websites'],
+      ['Website Design', 'https://www.design-prism.com/website-design'],
       ['Content', 'https://www.design-prism.com/content'],
       ['Ads', 'https://www.design-prism.com/ads'],
+      ['AEO', 'https://www.design-prism.com/aeo'],
     ])
     for (const offer of organization.makesOffer) {
       expect(offer.price).toBeUndefined()

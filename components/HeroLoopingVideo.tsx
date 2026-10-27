@@ -29,6 +29,8 @@ type HeroLoopingVideoProps = {
   alt?: string
   priority?: boolean
   posterSizes?: string
+  /** Placeholder shown until the poster loads (light by default). */
+  skeletonClassName?: string
   playbackPolicy?: HeroPlaybackPolicyOverride
   onPlaybackStateChange?: (intent: HeroPlaybackIntent) => void
 }
@@ -42,6 +44,7 @@ export default function HeroLoopingVideo({
   alt = 'Surfer looping background preview',
   priority = true,
   posterSizes = '(min-width: 1280px) 1024px, (min-width: 768px) 80vw, 100vw',
+  skeletonClassName,
   playbackPolicy = 'auto',
   onPlaybackStateChange,
 }: HeroLoopingVideoProps) {
@@ -192,7 +195,10 @@ export default function HeroLoopingVideo({
           />
           {!isPosterLoaded && (
             <div
-              className="absolute inset-0 animate-pulse bg-neutral-200"
+              className={cn(
+                'absolute inset-0 animate-pulse bg-neutral-200',
+                skeletonClassName,
+              )}
               aria-hidden
             />
           )}

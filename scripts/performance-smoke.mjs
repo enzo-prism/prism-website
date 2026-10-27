@@ -3,7 +3,7 @@ import { chromium, devices, firefox, webkit } from '@playwright/test'
 const baseUrl = process.env.PERF_BASE_URL ?? 'http://127.0.0.1:3301'
 
 const routes = [
-  { path: '/', heading: /your growth team\./i },
+  { path: '/', heading: /impossible is temporary\./i },
   { path: '/about', heading: /built by enzo sison\./i },
   {
     path: '/pricing',
@@ -24,6 +24,8 @@ const targetProfiles = [
       headingVisibleMs: 5000,
       domContentLoadedMs: 2500,
       loadEventEndMs: 6000,
+      lcpMs: 4000,
+      cls: 0.25,
     },
   },
   {
@@ -65,6 +67,8 @@ const targetProfiles = [
       headingVisibleMs: 9000,
       domContentLoadedMs: 5500,
       loadEventEndMs: 11000,
+      lcpMs: 8000,
+      cls: 0.25,
     },
   },
   {
@@ -116,6 +120,31 @@ async function measureRoute(profile, route) {
     }
   })
 
+  await page.addInitScript(() => {
+    // Core Web Vitals observers. Chromium reports LCP + CLS; Firefox/WebKit
+    // may report neither, in which case those budgets are skipped (same
+    // pattern as the navigation-timing fallbacks below).
+    window.__PRISM_VITALS__ = { lcpMs: null, cls: 0, clsSeen: false }
+    try {
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          window.__PRISM_VITALS__.lcpMs = entry.startTime
+        }
+      }).observe({ type: 'largest-contentful-paint', buffered: true })
+    } catch {}
+    try {
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__PRISM_VITALS__.cls += entry.value
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true })
+      // Registered successfully: CLS is measured even when it stays 0.
+      window.__PRISM_VITALS__.clsSeen = true
+    } catch {}
+  })
+
   const navigationStartedAt = Date.now()
 
   await page.goto(`${baseUrl}${route.path}`, { waitUntil: 'domcontentloaded' })
@@ -134,13 +163,15 @@ async function measureRoute(profile, route) {
 
   const navigationTiming = await page.evaluate(() => {
     const [entry] = performance.getEntriesByType('navigation')
+    const vitals = window.__PRISM_VITALS__ ?? { lcpMs: null, cls: 0, clsSeen: false }
     if (!entry || !('domContentLoadedEventEnd' in entry)) {
-      return null
+      return { domContentLoadedMs: null, loadEventEndMs: null, ...vitals }
     }
 
     return {
       domContentLoadedMs: entry.domContentLoadedEventEnd,
       loadEventEndMs: entry.loadEventEnd,
+      ...vitals,
     }
   })
 
@@ -153,6 +184,8 @@ async function measureRoute(profile, route) {
     headingVisibleMs,
     domContentLoadedMs: navigationTiming?.domContentLoadedMs ?? null,
     loadEventEndMs: navigationTiming?.loadEventEndMs ?? null,
+    lcpMs: navigationTiming?.lcpMs ?? null,
+    cls: navigationTiming?.clsSeen ? navigationTiming.cls : null,
     jsRequestCount,
     jsTransferKb:
       jsTransferBytes > 0 ? Number((jsTransferBytes / 1024).toFixed(1)) : null,
@@ -187,6 +220,24 @@ function evaluateBudgets(profile, result) {
     )
   }
 
+  if (
+    typeof budgets.lcpMs === 'number' &&
+    typeof result.lcpMs === 'number' &&
+    result.lcpMs > budgets.lcpMs
+  ) {
+    failures.push(
+      `LCP ${formatMetric(result.lcpMs)} > ${formatMetric(budgets.lcpMs)}`,
+    )
+  }
+
+  if (
+    typeof budgets.cls === 'number' &&
+    typeof result.cls === 'number' &&
+    result.cls > budgets.cls
+  ) {
+    failures.push(`CLS ${result.cls.toFixed(3)} > ${budgets.cls}`)
+  }
+
   return failures
 }
 
@@ -215,6 +266,8 @@ async function main() {
       profile: result.profile,
       route: result.route,
       heading: formatMetric(result.headingVisibleMs),
+      lcp: formatMetric(result.lcpMs),
+      cls: typeof result.cls === 'number' ? result.cls.toFixed(3) : 'n/a',
       domContentLoaded: formatMetric(result.domContentLoadedMs),
       load: formatMetric(result.loadEventEndMs),
       jsRequests: result.jsRequestCount,

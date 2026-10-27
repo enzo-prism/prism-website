@@ -7,6 +7,26 @@ const toList = (items: readonly string[]) =>
   [...new Set(items.map((item) => item.trim()).filter(Boolean))]
 
 export const CASE_STUDY_WORK_HIGHLIGHTS: Record<string, CaseStudyWorkProfile> = {
+  "mach-1": {
+    services: [
+      "Website design",
+      "SEO/AEO",
+      "Video editing",
+      "Custom internal tools",
+      "Enterprise analytics setup and optimization",
+    ],
+    techStack: [
+      "Codex",
+      "Claude Code",
+      "GPT-5.5 xhigh",
+      "Netlify",
+      "Vercel",
+      "Next.js",
+      "Google Analytics",
+      "Hotjar analytics",
+      "Google Search Console",
+    ],
+  },
   "belize-kids-foundation": {
     services: ["Website design", "Brand design", "SEO/AEO", "Enterprise analytics setup and optimization"],
     techStack: ["Figma", "Vercel", "Google Analytics", "Google Search Console", "Semrush"],

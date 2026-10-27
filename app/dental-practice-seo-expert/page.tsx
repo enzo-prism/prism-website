@@ -576,7 +576,7 @@ export default function DentalPracticeSeoExpertPage() {
           description:
             "Dentist SEO, including Google Maps optimization, listings, reviews, on-page structure, and technical cleanup tied to calls and bookings.",
           businessFunction: "http://purl.org/goodrelations/v1#ProvideService",
-          availability: "https://schema.org/InStock",
+          availability: "https://schema.org/LimitedAvailability",
           url: "https://www.design-prism.com/pricing",
         }}
       />

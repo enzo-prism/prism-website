@@ -29,6 +29,9 @@ describe("SEO metadata rules", () => {
 
   it("preserves useful brand descriptors and common SEO acronyms", () => {
     expect(normalizeTitleStem("ai seo services | prism")).toBe("AI SEO services")
+    expect(normalizeTitleStem("aeo and geo for local business | prism")).toBe(
+      "AEO and GEO for local business",
+    )
     expect(normalizeTitleStem("wine country root canal | prism case study")).toBe(
       "Wine country root canal | Case Study",
     )

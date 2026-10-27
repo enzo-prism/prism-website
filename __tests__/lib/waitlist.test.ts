@@ -1,5 +1,6 @@
 import {
   CAPACITY_MESSAGE,
+  getWaitlistIntakeDate,
   getWaitlistIntakeMonth,
   isWaitlistFocus,
   isWaitlistFocusChoice,
@@ -9,6 +10,7 @@ import {
   WAITLIST_FOCUS_NOT_SURE,
   WAITLIST_FOCUS_OPTIONS,
   WAITLIST_NO_WEBSITE_FIELD,
+  WAITLIST_EARLIEST_INTAKE,
   WAITLIST_NO_WEBSITE_VALUE,
 } from '@/lib/waitlist'
 
@@ -28,15 +30,30 @@ const MONTH_NAMES = [
 ]
 
 describe('getWaitlistIntakeMonth', () => {
-  it('names the next calendar month', () => {
-    expect(getWaitlistIntakeMonth(new Date(2026, 8, 15))).toEqual({
+  it('names the next calendar month once past the booked-through floor', () => {
+    expect(getWaitlistIntakeMonth(new Date(2027, 8, 15))).toEqual({
       month: 'October',
-      year: 2026,
+      year: 2027,
     })
-    expect(getWaitlistIntakeMonth(new Date(2026, 0, 1))).toEqual({
+    expect(getWaitlistIntakeMonth(new Date(2027, 0, 1))).toEqual({
       month: 'February',
-      year: 2026,
+      year: 2027,
     })
+  })
+
+  it('holds at December 2026 while October and November are fully booked', () => {
+    expect(WAITLIST_EARLIEST_INTAKE).toEqual(new Date(2026, 11, 1))
+    for (const date of [
+      new Date(2026, 8, 15),
+      new Date(2026, 9, 1),
+      new Date(2026, 9, 23),
+      new Date(2026, 10, 30, 23, 59, 59),
+    ]) {
+      expect(getWaitlistIntakeMonth(date)).toEqual({
+        month: 'December',
+        year: 2026,
+      })
+    }
   })
 
   it('rolls December over to January of the next year', () => {
@@ -54,19 +71,26 @@ describe('getWaitlistIntakeMonth', () => {
 
   it('maps every month of the year to its successor', () => {
     for (let monthIndex = 0; monthIndex < 12; monthIndex += 1) {
-      const intake = getWaitlistIntakeMonth(new Date(2026, monthIndex, 10))
+      const intake = getWaitlistIntakeMonth(new Date(2027, monthIndex, 10))
       expect(intake.month).toBe(MONTH_NAMES[(monthIndex + 1) % 12])
-      expect(intake.year).toBe(monthIndex === 11 ? 2027 : 2026)
+      expect(intake.year).toBe(monthIndex === 11 ? 2028 : 2027)
     }
   })
 
   it('defaults to the current date', () => {
     const now = new Date()
-    const expected = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+    const next = new Date(now.getFullYear(), now.getMonth() + 1, 1)
+    const expected = next < WAITLIST_EARLIEST_INTAKE ? WAITLIST_EARLIEST_INTAKE : next
     expect(getWaitlistIntakeMonth()).toEqual({
       month: MONTH_NAMES[expected.getMonth()],
       year: expected.getFullYear(),
     })
+  })
+
+  it('returns a copy of the floor, never the shared constant', () => {
+    const intake = getWaitlistIntakeDate(new Date(2026, 9, 23))
+    expect(intake).toEqual(WAITLIST_EARLIEST_INTAKE)
+    expect(intake).not.toBe(WAITLIST_EARLIEST_INTAKE)
   })
 })
 
@@ -83,11 +107,12 @@ describe('CAPACITY_MESSAGE', () => {
 })
 
 describe('waitlist focus choices', () => {
-  it('adds "Not sure yet" after the three services without changing them', () => {
-    expect(WAITLIST_FOCUS_OPTIONS.map((option) => option.value)).toEqual([
-      'website',
-      'content',
-      'ads',
+  it('adds "Not sure yet" after the four services, AEO first', () => {
+    expect(WAITLIST_FOCUS_OPTIONS).toEqual([
+      { value: 'aeo', label: 'AEO' },
+      { value: 'website', label: 'Website Design' },
+      { value: 'content', label: 'Content' },
+      { value: 'ads', label: 'Ads' },
     ])
     expect(WAITLIST_FOCUS_CHOICES).toEqual([
       ...WAITLIST_FOCUS_OPTIONS,
@@ -102,7 +127,20 @@ describe('waitlist focus choices', () => {
     expect(isWaitlistFocusChoice('bogus')).toBe(false)
     expect(isWaitlistFocus('not-sure')).toBe(false)
     expect(parseWaitlistFocus('not-sure,ads')).toEqual(['ads'])
-    expect(Object.keys(WAITLIST_FOCUS_HREFS)).toEqual(['website', 'content', 'ads'])
+    expect(Object.keys(WAITLIST_FOCUS_HREFS)).toEqual([
+      'website',
+      'content',
+      'ads',
+      'aeo',
+    ])
+  })
+
+  it('accepts AEO as a service focus from the query string', () => {
+    expect(isWaitlistFocus('aeo')).toBe(true)
+    expect(isWaitlistFocusChoice('aeo')).toBe(true)
+    expect(parseWaitlistFocus('website,aeo')).toEqual(['website', 'aeo'])
+    expect(parseWaitlistFocus(['aeo', 'bogus'])).toEqual(['aeo'])
+    expect(WAITLIST_FOCUS_HREFS.aeo).toBe('/waitlist?focus=aeo')
   })
 
   it('names the no-website Formspree field', () => {
