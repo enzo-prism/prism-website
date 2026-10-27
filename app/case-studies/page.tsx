@@ -4,7 +4,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Client results',
-  description: 'See how Prism improves visibility, lead flow, and revenue through focused websites, SEO, ads, and analytics.',
+  description: 'Dental practices, nonprofits, founders, and local shops with the same two problems: getting found and getting chosen. See the live sites and verified results.',
   path: "/case-studies",
   ogImage: "/prism-opengraph.png",
 })

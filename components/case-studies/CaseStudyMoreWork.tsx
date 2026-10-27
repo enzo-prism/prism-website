@@ -31,7 +31,7 @@ export default function CaseStudyMoreWork({
           <SectionHeader
             id="case-study-more-work-title"
             eyebrow="More work"
-            title="more sites we built."
+            title="more businesses. same two problems."
           />
           <TrackedLink
             href="/case-studies"
