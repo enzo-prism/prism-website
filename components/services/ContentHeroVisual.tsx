@@ -122,7 +122,7 @@ export function ContentHeroVisual() {
               @the_design_prism
             </span>
           </div>
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-muted-foreground">
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground">
             As of {SOCIAL_PROOF_VERIFIED_AT}
           </span>
         </div>
@@ -220,7 +220,7 @@ export function ContentHeroVisual() {
                   <p className="text-[13px] leading-snug text-foreground/90">
                     &ldquo;{comment.text}&rdquo;
                   </p>
-                  <p className="mt-2 flex items-center gap-1.5 font-mono text-[10px] text-subtle">
+                  <p className="mt-2 flex items-center gap-1.5 font-mono text-[11px] text-subtle">
                     <BrandLogo
                       brand="instagram"
                       decorative

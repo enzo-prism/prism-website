@@ -152,8 +152,9 @@ const FEED_EVENTS = [
 
 /**
  * A live event feed. The track holds the events twice; it steps down one row
- * at a time so each new event lands in the highlighted slot at the top.
- * The still frame shows the first copy at rest.
+ * at a time so each new event lands in the slot at the top, a solid step in
+ * surface that carries the one "New" badge. The still frame shows the first
+ * copy at rest.
  */
 export function ConvertVisual({ className }: { className?: string }) {
   const rows = [...FEED_EVENTS, ...FEED_EVENTS]
@@ -161,15 +162,12 @@ export function ConvertVisual({ className }: { className?: string }) {
     <Stage className={className}>
       <div className={styles.feed}>
         <div className={styles.feedHeader}>
-          <span className={styles.feedHeaderLead}>
-            <span className={cn(styles.feedDot, styles.feedHeaderDot)} />
-            Incoming
-          </span>
-          <span>Example events</span>
+          <span className={styles.feedHeaderLead}>Incoming</span>
+          <span className={styles.feedTag}>Example</span>
         </div>
         <div className={styles.feedViewport}>
           <span className={styles.feedSlot}>
-            <span className={styles.feedSlotDot} />
+            <span className={styles.feedNew}>New</span>
           </span>
           <div className={styles.feedTrack}>
             {rows.map((event, index) => {
@@ -183,7 +181,6 @@ export function ConvertVisual({ className }: { className?: string }) {
                     <span className={styles.feedTitle}>{event.title}</span>
                     <span className={styles.feedSource}>{event.source}</span>
                   </span>
-                  <span className={styles.feedDot} />
                 </div>
               )
             })}

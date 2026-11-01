@@ -25,6 +25,11 @@ import styles from './scenes.module.css'
  * team. They are drawn, not captured: every label, word, and bar below is
  * made up for the drawing, so no real dashboard, customer, or number from
  * those tools appears on the public site.
+ *
+ * Drawn to the stageshow rules for faux product UI: labels in the product's
+ * own sentence case (never tracked mono capitals), 11px type or larger, real
+ * words only on what each story is about with filler bars around it, one
+ * accent on the thing that matters, and no glow standing in for hierarchy.
  */
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>
@@ -43,7 +48,6 @@ function SceneFrame({
       aria-hidden="true"
       className="relative overflow-hidden rounded-2xl border border-white/[0.09] bg-card shadow-[0_40px_90px_-40px_oklch(0_0_0/95%),0_1px_0_0_oklch(1_0_0/6%)_inset]"
     >
-      <div className={styles.glow} />
       <div className="flex h-11 items-center gap-2.5 border-b border-white/[0.06] px-4">
         <span className="flex size-6 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] text-muted-foreground">
           <Icon className="size-3.5" strokeWidth={1.75} />
@@ -51,7 +55,7 @@ function SceneFrame({
         <span className="text-[13px] font-medium tracking-[-0.01em] text-foreground">
           {title}
         </span>
-        <span className="ml-auto rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] tracking-[0.08em] text-subtle">
+        <span className="ml-auto rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-subtle">
           Illustrative
         </span>
       </div>
@@ -86,6 +90,9 @@ const PLANNED: Record<number, number[]> = {
 
 const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
+/** The one post the chart below follows, named where it sits on the calendar. */
+const FOCUS = { cell: 8, channel: 3, label: 'Clip' } as const
+
 export function ContentEngineScene() {
   let order = 0
   return (
@@ -110,7 +117,7 @@ export function ContentEngineScene() {
         {DAYS.map((day, index) => (
           <span
             key={`${day}-${index}`}
-            className="pb-0.5 text-center font-mono text-[10px] text-subtle"
+            className="pb-0.5 text-center text-[11px] text-subtle"
           >
             {day}
           </span>
@@ -126,12 +133,16 @@ export function ContentEngineScene() {
           >
             {(PLANNED[cell] ?? []).map((channel) => {
               const i = order++
+              const focus = cell === FOCUS.cell && channel === FOCUS.channel
               return (
                 <span
                   key={`${cell}-${channel}`}
                   className={cn(
                     styles.chip,
-                    'flex h-3.5 items-center gap-1 rounded-[4px] bg-white/[0.07] px-1',
+                    'flex items-center gap-1 rounded-[4px] px-1',
+                    focus
+                      ? 'h-[18px] bg-white/[0.16] text-[11px] font-medium leading-none text-foreground'
+                      : 'h-3.5 bg-white/[0.06]',
                   )}
                   style={{ '--i': i } as Vars}
                 >
@@ -139,7 +150,12 @@ export function ContentEngineScene() {
                     className="size-1.5 shrink-0 rounded-full"
                     style={{ background: CHANNELS[channel].color }}
                   />
-                  <span className="h-[3px] flex-1 rounded-full bg-white/20" />
+                  {focus ? (
+                    // Narrow cells keep the solid step without a clipped word.
+                    <span className="hidden truncate sm:inline">{FOCUS.label}</span>
+                  ) : (
+                    <span className="h-[3px] flex-1 rounded-full bg-white/15" />
+                  )}
                 </span>
               )
             })}
@@ -163,9 +179,26 @@ export function ContentEngineScene() {
       </div>
 
       <div className="mt-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.08em] text-subtle">
-          <span>VIEWS VS TYPICAL</span>
-          <span>ONE POST</span>
+        <div className="flex items-center justify-between text-[12px]">
+          <span className="font-medium text-foreground/90">Views vs. typical</span>
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 text-subtle">
+              <span
+                className="size-1.5 rounded-full"
+                style={{ background: CHANNELS[FOCUS.channel].color }}
+              />
+              {FOCUS.label}
+            </span>
+            {/* The payoff, said once, as the line reaches its end. */}
+            <span
+              className={cn(
+                styles.aboveLabel,
+                'rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-foreground',
+              )}
+            >
+              Above typical
+            </span>
+          </span>
         </div>
         <div className="relative mt-2">
           {/* Line under a cover that slides away; the band sits on top. */}
@@ -207,16 +240,8 @@ export function ContentEngineScene() {
               strokeWidth="2"
             />
           </svg>
-          <span className="absolute bottom-1 left-1 font-mono text-[9px] tracking-[0.08em] text-subtle">
-            TYPICAL
-          </span>
-          <span
-            className={cn(
-              styles.aboveLabel,
-              'absolute left-[34%] top-0 rounded-full border border-white/10 bg-popover px-2 py-0.5 text-[10px] text-foreground',
-            )}
-          >
-            above typical
+          <span className="absolute left-1 top-[74%] text-[11px] leading-none text-subtle">
+            Typical
           </span>
         </div>
       </div>
@@ -236,6 +261,11 @@ const WAVE = [
 
 const WORDS = ['builds', 'the', 'workflow.']
 
+const CLIPS = [
+  { title: 'Customer interview', meta: '4 clips · captioned', approved: true },
+  { title: 'Support team film', meta: '2 clips · captioned', approved: false },
+] as const
+
 function WordChip({
   children,
   lane,
@@ -251,7 +281,7 @@ function WordChip({
     <span
       className={cn(
         styles.word,
-        'rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[12px] text-foreground/90',
+        'inline-block py-0.5 text-[13px] text-foreground/85',
         className,
       )}
       style={{ '--lane': lane, '--i': i } as Vars}
@@ -281,20 +311,21 @@ export function InterviewVaultScene() {
       <ul className="mt-4 space-y-2">
         {['A', 'B', 'C'].map((engine, lane) => (
           <li key={engine} className="flex items-center gap-3">
-            <span className="w-4 shrink-0 font-mono text-[10px] tracking-[0.08em] text-subtle sm:w-16">
-              <span className="hidden sm:inline">ENGINE </span>
+            <span className="w-4 shrink-0 text-[11px] text-subtle sm:w-16">
+              <span className="hidden sm:inline">Engine </span>
               {engine}
             </span>
-            <span className="flex flex-wrap items-center gap-1">
+            <span className="flex flex-wrap items-center gap-x-[0.3em]">
               {lane === 1 ? (
-                <span className={cn(styles.disputed, 'inline-grid')}>
+                <span className="inline-grid">
                   <WordChip lane={lane} i={0} className="[grid-area:1/1]">
                     <span className={cn(styles.swapNew, 'inline-block')}>Tower</span>
                   </WordChip>
+                  {/* The misheard word, marked where it sits, then corrected. */}
                   <span
                     className={cn(
                       styles.swapOld,
-                      'rounded-md border border-spectrum-orange/60 bg-spectrum-orange/10 px-1.5 py-0.5 text-[12px] text-spectrum-orange [grid-area:1/1]',
+                      '-mx-1 rounded-md bg-spectrum-orange/15 px-1 py-0.5 text-[13px] text-spectrum-orange [grid-area:1/1]',
                     )}
                   >
                     Power
@@ -318,15 +349,17 @@ export function InterviewVaultScene() {
       <div
         className={cn(
           styles.consensus,
-          'mt-4 flex items-center gap-2.5 rounded-lg border border-spectrum-violet/30 bg-spectrum-violet/[0.07] px-3 py-2',
+          'mt-4 flex items-center gap-2.5 rounded-lg bg-white/[0.07] px-3 py-2.5',
         )}
       >
-        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-spectrum-violet/90 text-background">
+        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-spectrum-violet text-background">
           <Check className="size-3" strokeWidth={3} />
         </span>
-        <span className="text-[13px] text-foreground">Tower builds the workflow.</span>
-        <span className="ml-auto shrink-0 font-mono text-[10px] tracking-[0.08em] text-muted-foreground">
-          3 OF 3 AGREE
+        <span className="text-[13px] font-medium text-foreground">
+          Tower builds the workflow.
+        </span>
+        <span className="ml-auto shrink-0 text-[11px] text-muted-foreground">
+          3 of 3 agree
         </span>
       </div>
 
@@ -336,30 +369,27 @@ export function InterviewVaultScene() {
           'mt-4 divide-y divide-white/[0.06] rounded-lg border border-white/[0.06]',
         )}
       >
-        {[
-          ['Customer interview', 0.72],
-          ['Support team film', 0.56],
-        ].map(([title, width]) => (
-          <li
-            key={title as string}
-            className="flex items-center gap-3 px-3 py-2.5"
-          >
+        {CLIPS.map((clip) => (
+          <li key={clip.title} className="flex items-center gap-3 px-3 py-2.5">
             <Lock className="size-3.5 shrink-0 text-subtle" strokeWidth={1.75} />
-            <span className="min-w-0 flex-1">
-              <span className="block truncate text-[12px] text-foreground/90">
-                {title}
+            <span className="min-w-0 flex-1 leading-[1.3]">
+              <span className="block truncate text-[13px] text-foreground/90">
+                {clip.title}
               </span>
-              <span
-                className="mt-1 block h-[3px] rounded-full bg-white/15"
-                style={{ width: `${(width as number) * 100}%` }}
-              />
+              <span className="mt-0.5 block truncate text-[11px] text-subtle">
+                {clip.meta}
+              </span>
             </span>
-            <span className="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-muted-foreground min-[380px]:inline">
-              Captioned
-            </span>
-            <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-muted-foreground">
-              Approved
-            </span>
+            {clip.approved ? (
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/[0.08] px-2 py-0.5 text-[11px] text-foreground">
+                <Check className="size-3" strokeWidth={2.5} />
+                Approved
+              </span>
+            ) : (
+              <span className="rounded-full border border-white/10 px-2 py-0.5 text-[11px] text-muted-foreground">
+                In review
+              </span>
+            )}
           </li>
         ))}
       </ul>
@@ -381,15 +411,17 @@ export function ReviewRoomScene() {
   return (
     <SceneFrame icon={Clapperboard} title="Campaign review">
       <div className="relative aspect-video overflow-hidden rounded-lg border [@media(min-width:1024px)_and_(max-height:880px)]:aspect-[21/9] border-white/[0.08] bg-[radial-gradient(70%_90%_at_70%_30%,oklch(0.63_0.19_295/28%),transparent_70%),radial-gradient(60%_80%_at_15%_90%,oklch(0.66_0.16_258/18%),transparent_70%)] bg-popover">
-        <span className="absolute left-3 top-3 rounded-full border border-white/10 bg-black/40 px-2 py-0.5 font-mono text-[10px] tracking-[0.08em] text-muted-foreground">
-          AD 03 · 16:9
+        <span className="absolute left-3 top-3 rounded-full border border-white/10 bg-black/40 px-2 py-0.5 text-[11px] text-muted-foreground">
+          Ad 03 · 16:9
         </span>
         <span className="absolute left-1/2 top-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
           <Play className="ml-0.5 size-4 fill-current text-foreground" />
         </span>
-        <span className="absolute bottom-3 left-3 right-1/3 space-y-1.5">
-          <span className="block h-2 w-3/4 rounded-full bg-white/30" />
-          <span className="block h-2 w-1/2 rounded-full bg-white/15" />
+        {/* The ad's burned-in caption: the line the notes are about. */}
+        <span className="absolute inset-x-3 bottom-3 text-center">
+          <span className="rounded-md bg-black/55 px-2 py-1 text-[12px] leading-none text-foreground [box-decoration-break:clone] sm:text-[13px]">
+            We built it with the team that runs it.
+          </span>
         </span>
       </div>
 
@@ -408,10 +440,8 @@ export function ReviewRoomScene() {
                 data-at={note.at}
                 className={cn(styles.pin, 'flex flex-col items-center')}
               >
-                <span className="flex size-5 items-center justify-center rounded-full border border-spectrum-violet/50 bg-spectrum-violet/20">
-                  <span className="size-1.5 rounded-full bg-spectrum-violet" />
-                </span>
-                <span className="h-1.5 w-px bg-spectrum-violet/50" />
+                <span className="size-2.5 rounded-full bg-spectrum-violet ring-[3px] ring-card" />
+                <span className="h-2 w-px bg-spectrum-violet/60" />
               </span>
             </span>
           ))}
@@ -419,7 +449,7 @@ export function ReviewRoomScene() {
             <span className="absolute left-0 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground shadow-[0_0_0_4px_oklch(1_0_0/10%)]" />
           </span>
         </div>
-        <div className="mt-2 flex justify-between font-mono text-[10px] text-subtle">
+        <div className="mt-2 flex justify-between font-mono text-[11px] tabular-nums text-subtle">
           <span>0:00</span>
           <span>0:30</span>
         </div>
@@ -436,16 +466,16 @@ export function ReviewRoomScene() {
               index === 2 && '[@media(min-width:1024px)_and_(max-height:880px)]:hidden',
             )}
           >
-            <span className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+            <span className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-mono text-[11px] tabular-nums text-muted-foreground">
               {note.time}
             </span>
-            <span className="truncate text-[12px] text-foreground/90">{note.text}</span>
+            <span className="truncate text-[13px] text-foreground/90">{note.text}</span>
           </li>
         ))}
       </ul>
 
       <div className="mt-4 flex items-center justify-end gap-2">
-        <span className="font-mono text-[10px] tracking-[0.08em] text-subtle">VERDICT</span>
+        <span className="text-[11px] text-subtle">Verdict</span>
         <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-2.5 py-1 text-[11px] text-muted-foreground">
           <RotateCcw className="size-3" />
           Revise
@@ -453,7 +483,7 @@ export function ReviewRoomScene() {
         <span
           className={cn(
             styles.verdict,
-            'inline-flex items-center gap-1 rounded-full border border-spectrum-violet/40 bg-spectrum-violet/15 px-2.5 py-1 text-[11px] text-foreground',
+            'inline-flex items-center gap-1 rounded-full bg-foreground px-2.5 py-1 text-[11px] font-medium text-background',
           )}
         >
           <Check className="size-3" strokeWidth={2.5} />
@@ -486,7 +516,7 @@ const SOURCES = [
 export function GrowthPlanScene() {
   return (
     <SceneFrame icon={Route} title="Growth plan">
-      <p className="font-mono text-[10px] tracking-[0.08em] text-subtle">THE JOURNEY</p>
+      <p className="text-[12px] font-medium text-foreground/90">The journey</p>
       <div className="relative mt-4">
         <span className="absolute left-[10%] right-[10%] top-[18px] h-px bg-gradient-to-r from-white/10 via-white/25 to-spectrum-violet/60" />
         <span className="absolute left-[10%] right-[10%] top-[18px]">
@@ -496,7 +526,7 @@ export function GrowthPlanScene() {
               className={cn(styles.traveler, 'absolute inset-x-0 top-0')}
               style={{ '--i': i } as Vars}
             >
-              <span className="absolute left-0 top-0 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground shadow-[0_0_10px_2px_oklch(0.63_0.19_295/60%)]" />
+              <span className="absolute left-0 top-0 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground ring-2 ring-card" />
             </span>
           ))}
         </span>
@@ -511,13 +541,6 @@ export function GrowthPlanScene() {
                     : 'border-white/15 text-muted-foreground',
                 )}
               >
-                <span
-                  className={cn(
-                    styles.stageRing,
-                    'absolute inset-0 rounded-full border border-spectrum-violet/50 opacity-0',
-                  )}
-                  style={{ '--i': i } as Vars}
-                />
                 <Icon className="size-4" strokeWidth={1.75} />
               </span>
               <span className="mt-2 max-w-[9ch] text-balance text-[11px] leading-tight text-muted-foreground">
@@ -530,7 +553,7 @@ export function GrowthPlanScene() {
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-          <p className="font-mono text-[10px] tracking-[0.08em] text-subtle">AUDIENCES</p>
+          <p className="text-[12px] font-medium text-foreground/90">Audiences</p>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
             {['Support leaders', 'CS leaders', 'Ops leaders', 'Founders'].map((tag) => (
               <span
@@ -543,9 +566,9 @@ export function GrowthPlanScene() {
           </div>
         </div>
         <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-          <p className="flex justify-between font-mono text-[10px] tracking-[0.08em] text-subtle">
-            <span>LEAD SOURCES</span>
-            <span>ESTIMATE</span>
+          <p className="flex justify-between text-[12px]">
+            <span className="font-medium text-foreground/90">Lead sources</span>
+            <span className="text-subtle">Estimate</span>
           </p>
           <ul className="mt-2.5 space-y-1.5">
             {SOURCES.map((source, i) => (
@@ -557,7 +580,8 @@ export function GrowthPlanScene() {
                   <span
                     className={cn(
                       styles.sourceBar,
-                      'block h-full w-full rounded-full bg-gradient-to-r from-white/40 to-spectrum-violet',
+                      'block h-full w-full rounded-full',
+                      i === 0 ? 'bg-spectrum-violet' : 'bg-white/35',
                     )}
                     style={{ '--w': source.w, '--i': i } as Vars}
                   />

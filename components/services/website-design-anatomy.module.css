@@ -1,0 +1,448 @@
+/*
+ * The drawn page on /website-design: a light practice website in a browser
+ * window with its phone version straddling the window's right edge. It is a
+ * still (no motion), so the base style is the whole picture.
+ *
+ * Every size inside the window and the phone is written in design pixels
+ * (`calc(n * var(--u))`), where --u is one design pixel of that surface. The
+ * window is designed 360 wide and the phone 200 wide; container units scale
+ * both to the column, so the drawing keeps its proportions at every width
+ * instead of reflowing into something smaller and busier.
+ *
+ * The site inside is a light document over the dark page, so it carries its
+ * own palette (warm paper, deep sage ink) rather than the Prism tokens.
+ */
+
+.figure {
+  --paper: oklch(0.978 0.006 95);
+  --paper-2: oklch(0.948 0.01 110);
+  --ink: oklch(0.25 0.02 165);
+  --ink-soft: oklch(0.47 0.015 165);
+  --filler: oklch(0.885 0.01 120);
+  --sage: oklch(0.43 0.065 165);
+  position: relative;
+  container: anatomy / inline-size;
+}
+
+/* Compact (narrow columns): the phone alone, at a size whose type reads. */
+.stage {
+  position: relative;
+  aspect-ratio: 300 / 414;
+}
+
+@container anatomy (min-width: 440px) {
+  /* Device pair: window inset top-left, phone a third outside its edge. */
+  .stage {
+    aspect-ratio: 500 / 470;
+  }
+}
+
+/* ---- Window ------------------------------------------------------------ */
+
+.window {
+  --u: calc(100cqw / 360);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 72%;
+  height: 94%;
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow:
+    0 0 0 1px oklch(1 0 0 / 12%),
+    0 40px 90px -40px oklch(0 0 0 / 95%);
+  /* Fade crop: the page dissolves at its foot, over filler only. */
+  mask-image: linear-gradient(to bottom, black 72%, transparent 96%);
+  -webkit-mask-image: linear-gradient(to bottom, black 72%, transparent 96%);
+}
+
+@container anatomy (min-width: 440px) {
+  .window {
+    display: block;
+  }
+}
+
+.chrome {
+  display: flex;
+  height: calc(30 * var(--u));
+  align-items: center;
+  gap: calc(5 * var(--u));
+  padding-inline: calc(12 * var(--u));
+  border-bottom: 1px solid oklch(0.25 0.02 165 / 8%);
+  background: var(--paper-2);
+}
+
+.light {
+  width: calc(8 * var(--u));
+  height: calc(8 * var(--u));
+  border-radius: 999px;
+  background: oklch(0.25 0.02 165 / 16%);
+}
+
+.url {
+  margin-inline: auto;
+  padding: calc(3 * var(--u)) calc(12 * var(--u));
+  border-radius: 999px;
+  background: oklch(1 0 0 / 70%);
+  box-shadow: 0 0 0 1px oklch(0.25 0.02 165 / 8%);
+  font-size: calc(9.5 * var(--u));
+  line-height: 1.3;
+  color: var(--ink-soft);
+  /* Centre the pill on the window, not on the space after the lights. */
+  transform: translateX(calc(-12 * var(--u)));
+}
+
+.site {
+  position: relative;
+  padding: calc(16 * var(--u)) calc(36 * var(--u)) 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  height: calc(18 * var(--u));
+}
+
+.navLinks {
+  display: flex;
+  gap: calc(12 * var(--u));
+  margin-left: auto;
+}
+
+.bar {
+  display: block;
+  height: calc(6 * var(--u));
+  border-radius: 999px;
+  background: var(--filler);
+}
+
+.wordmark {
+  width: calc(58 * var(--u));
+  height: calc(8 * var(--u));
+  background: oklch(0.25 0.02 165 / 30%);
+}
+
+.hero {
+  position: relative;
+  max-width: calc(240 * var(--u));
+  padding-top: calc(26 * var(--u));
+}
+
+.headline {
+  margin: 0;
+  font-size: calc(21 * var(--u));
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: calc(7 * var(--u));
+  margin-top: calc(12 * var(--u));
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  margin-top: calc(16 * var(--u));
+}
+
+.button {
+  display: inline-flex;
+  height: calc(28 * var(--u));
+  align-items: center;
+  gap: calc(5 * var(--u));
+  padding-inline: calc(13 * var(--u));
+  border-radius: 999px;
+  font-size: calc(11 * var(--u));
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.buttonPrimary {
+  background: var(--sage);
+  color: var(--paper);
+}
+
+.buttonSecondary {
+  box-shadow: inset 0 0 0 1px oklch(0.25 0.02 165 / 22%);
+  color: var(--ink);
+}
+
+.proof {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  margin-top: calc(12 * var(--u));
+  font-size: calc(10.5 * var(--u));
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.stars {
+  display: flex;
+  gap: calc(1.5 * var(--u));
+  color: var(--ink);
+}
+
+.star {
+  width: calc(10 * var(--u));
+  height: calc(10 * var(--u));
+  fill: currentColor;
+}
+
+.cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(10 * var(--u));
+  max-width: calc(240 * var(--u));
+  margin-top: calc(26 * var(--u));
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: calc(9 * var(--u));
+  background: var(--paper-2);
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.cardLabel {
+  position: absolute;
+  left: calc(8 * var(--u));
+  bottom: calc(7 * var(--u));
+  padding: calc(2 * var(--u)) calc(7 * var(--u));
+  border-radius: 999px;
+  background: oklch(0.978 0.006 95 / 92%);
+  font-size: calc(10 * var(--u));
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* Filler under the fade: the page carries on. */
+.more {
+  display: flex;
+  flex-direction: column;
+  gap: calc(7 * var(--u));
+  margin-top: calc(24 * var(--u));
+  max-width: calc(250 * var(--u));
+}
+
+/* ---- Phone ------------------------------------------------------------- */
+
+.phone {
+  --u: calc(100cqw / 200);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 66%;
+  container-type: inline-size;
+  transform: translateX(-50%);
+}
+
+@container anatomy (min-width: 440px) {
+  .phone {
+    top: 13%;
+    left: auto;
+    right: 0;
+    width: 40%;
+    transform: none;
+  }
+}
+
+.phoneBody {
+  padding: calc(6 * var(--u));
+  border-radius: calc(32 * var(--u));
+  background: oklch(0.09 0.003 286);
+  box-shadow:
+    0 0 0 1px oklch(1 0 0 / 14%),
+    0 40px 80px -30px oklch(0 0 0 / 95%);
+}
+
+.screen {
+  position: relative;
+  display: flex;
+  aspect-ratio: 188 / 400;
+  flex-direction: column;
+  border-radius: calc(26 * var(--u));
+  background: var(--paper);
+}
+
+.island {
+  position: absolute;
+  top: calc(8 * var(--u));
+  left: 50%;
+  width: calc(52 * var(--u));
+  height: calc(15 * var(--u));
+  border-radius: 999px;
+  background: oklch(0.09 0.003 286);
+  transform: translateX(-50%);
+}
+
+.phoneNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: calc(34 * var(--u));
+  padding-inline: calc(14 * var(--u));
+  color: var(--ink);
+}
+
+.menu {
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+}
+
+.phoneContent {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: calc(12 * var(--u)) calc(14 * var(--u)) 0;
+  /* The page scrolls on under the call bar; pins may still overhang. */
+  overflow-x: visible;
+  overflow-y: clip;
+}
+
+.phoneTiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(8 * var(--u));
+  margin-top: calc(16 * var(--u));
+}
+
+.phoneTile {
+  aspect-ratio: 1;
+  border-radius: calc(10 * var(--u));
+  background: var(--paper-2);
+}
+
+.phonePhotoWrap {
+  position: relative;
+  margin-top: calc(14 * var(--u));
+}
+
+.phonePhoto {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: calc(12 * var(--u));
+  background: var(--paper-2);
+}
+
+.phoneHeadline {
+  position: relative;
+  margin: calc(4 * var(--u)) 0 0;
+  font-size: calc(16.5 * var(--u));
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.phoneProof {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(5 * var(--u));
+  margin-top: calc(9 * var(--u));
+  font-size: calc(10.5 * var(--u));
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.phoneLines {
+  display: flex;
+  flex-direction: column;
+  gap: calc(7 * var(--u));
+  margin-top: calc(13 * var(--u));
+}
+
+/* The sticky call bar, in thumb reach. */
+.callBar {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: calc(7 * var(--u));
+  padding: calc(10 * var(--u)) calc(12 * var(--u)) calc(16 * var(--u));
+  border-top: 1px solid oklch(0.25 0.02 165 / 8%);
+  border-radius: 0 0 calc(26 * var(--u)) calc(26 * var(--u));
+  background: var(--paper);
+}
+
+.callBar .button {
+  height: calc(32 * var(--u));
+  justify-content: center;
+  font-size: calc(12 * var(--u));
+}
+
+.icon {
+  width: calc(12 * var(--u));
+  height: calc(12 * var(--u));
+}
+
+/* ---- Pins -------------------------------------------------------------- */
+
+/* A numbered pin matching the list beside the drawing. It sits in the
+   surface's left gutter, centred on the first line of what it marks. */
+.pin {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--foreground);
+  box-shadow:
+    0 0 0 2px oklch(0.09 0.003 286),
+    0 6px 16px -6px oklch(0 0 0 / 80%);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--background);
+}
+
+/* Window: centred in the site's 36px left gutter. */
+.pinGutter {
+  left: calc(-18 * var(--u) - 11px);
+}
+
+/* Phone: centred on the phone's outer edge (6px body + 14px content inset). */
+.pinPhone {
+  left: calc(-20 * var(--u) - 11px);
+}
+
+/* Phone call bar: 6px body + 12px bar inset. */
+.pinCallBar {
+  left: calc(-18 * var(--u) - 11px);
+}
+
+/* Window pins only show with the window; the phone takes all four alone. */
+.compactOnly {
+  display: grid;
+}
+
+@container anatomy (min-width: 440px) {
+  .compactOnly {
+    display: none;
+  }
+}
