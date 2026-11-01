@@ -1,8 +1,12 @@
-import { Phone, Star } from 'lucide-react'
+import type { CSSProperties } from 'react'
+import Image from 'next/image'
+import { Menu, Phone as PhoneIcon, Star } from 'lucide-react'
 
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
 import { cn } from '@/lib/utils'
+
+import styles from './website-design-anatomy.module.css'
 
 /**
  * The four design principles on /website-design. Each number matches a pin
@@ -27,133 +31,184 @@ export const WEBSITE_DESIGN_PRINCIPLES = [
   },
 ] as const
 
-function Pin({ n, className }: { n: number; className?: string }) {
+function Pin({
+  n,
+  className,
+  style,
+}: {
+  n: number
+  className?: string
+  style?: CSSProperties
+}) {
   return (
-    <span
-      className={cn(
-        'absolute z-20 grid size-6 place-items-center rounded-full bg-foreground font-mono text-[11px] font-semibold text-background shadow-[0_0_0_4px_oklch(0.66_0.16_258/22%),0_8px_24px_-8px_oklch(0_0_0/90%)]',
-        className,
-      )}
-    >
+    <span className={cn(styles.pin, className)} style={style}>
       {n}
     </span>
   )
 }
 
-function Bar({ className }: { className?: string }) {
-  return <span className={cn('block h-2 rounded-full bg-white/10', className)} />
+function Bar({ width, className }: { width: string; className?: string }) {
+  return <span className={cn(styles.bar, className)} style={{ width }} />
 }
 
+function Stars() {
+  return (
+    <span className={styles.stars}>
+      {[0, 1, 2, 3, 4].map((star) => (
+        <Star key={star} className={styles.star} strokeWidth={0} />
+      ))}
+    </span>
+  )
+}
+
+/** Centres a pin on a line box of `lineHeight` design pixels. */
+const onLine = (lineHeight: number, offset = 0): CSSProperties => ({
+  top: `calc(${offset + lineHeight / 2} * var(--u) - 11px)`,
+})
+
+const centred: CSSProperties = { top: '50%', marginTop: -11 }
+
+const HEADLINE = 'Family dentistry, without the nerves.'
+const PROOF = 'Loved by local families'
+
 /**
- * A drawn page layout (no client data): hero, proof row, service cards, and
- * a phone with a call bar, each pinned to a principle. Decorative to
- * assistive tech; the ordered list carries the content.
+ * A drawn practice website (made up, no client data): the desktop page in a
+ * browser window and its phone version straddling the window's edge, each
+ * principle pinned to the part of the page it shapes. Real words sit only on
+ * what the pins point at; everything else is filler. Narrow columns show the
+ * phone alone with all four pins. Decorative to assistive tech; the ordered
+ * list carries the content.
  */
 function PageAnatomy() {
   return (
     <figure className="relative mx-auto w-full max-w-[34rem]">
-      <div aria-hidden="true" className="relative pb-10 sm:pb-12">
-        <div className="mr-[14%] overflow-hidden rounded-2xl border border-white/[0.1] bg-background shadow-[0_50px_120px_-50px_oklch(0_0_0/95%)]">
-          <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
-            <span className="flex gap-1.5">
-              <span className="size-2.5 rounded-full bg-white/10" />
-              <span className="size-2.5 rounded-full bg-white/10" />
-              <span className="size-2.5 rounded-full bg-white/10" />
-            </span>
-            <span className="mx-auto rounded-full border border-white/[0.06] bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] text-subtle">
-              yourbusiness.com
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-6 p-5 sm:p-7">
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <span className="size-4 rounded-md bg-white/25" />
-                <Bar className="w-12" />
-              </span>
-              <span className="hidden items-center gap-3 sm:flex">
-                <Bar className="w-8" />
-                <Bar className="w-8" />
-                <Bar className="w-8" />
-                <span className="h-5 w-12 rounded-full bg-white/80" />
-              </span>
+      <div aria-hidden="true" className={styles.figure}>
+        <div className={styles.stage}>
+          <div className={styles.window}>
+            <div className={styles.chrome}>
+              <span className={styles.light} />
+              <span className={styles.light} />
+              <span className={styles.light} />
+              <span className={styles.url}>yourpractice.com</span>
             </div>
+            <div className={styles.site}>
+              <div className={styles.nav}>
+                <span className={cn(styles.bar, styles.wordmark)} />
+                <span className={styles.navLinks}>
+                  <Bar width="calc(30 * var(--u))" />
+                  <Bar width="calc(26 * var(--u))" />
+                  <Bar width="calc(34 * var(--u))" />
+                </span>
+              </div>
 
-            <div className="relative flex flex-col gap-3 pt-2">
-              <Pin n={1} className="-left-3 top-1 sm:-left-4" />
-              <Bar className="h-1.5 w-16 bg-white/15" />
-              <span className="block h-4 w-[82%] rounded-md bg-white/75 sm:h-5" />
-              <span className="block h-4 w-[58%] rounded-md bg-white/75 sm:h-5" />
-              <Bar className="mt-1 w-[70%]" />
-              <div className="mt-2 flex gap-2">
-                <span className="h-7 w-24 rounded-full bg-white/85" />
-                <span className="h-7 w-20 rounded-full border border-white/15" />
+              <div className={styles.hero}>
+                <Pin n={1} className={styles.pinGutter} style={onLine(23.5, 26)} />
+                <p className={styles.headline}>{HEADLINE}</p>
+                <div className={styles.lines}>
+                  <Bar width="92%" />
+                  <Bar width="64%" />
+                </div>
+                <div className={styles.actions}>
+                  <span className={cn(styles.button, styles.buttonPrimary)}>
+                    Book a visit
+                  </span>
+                  <span className={cn(styles.button, styles.buttonSecondary)}>
+                    <PhoneIcon className={styles.icon} />
+                    Call us
+                  </span>
+                </div>
+                <div className={styles.proof}>
+                  <Pin n={2} className={styles.pinGutter} style={centred} />
+                  <Stars />
+                  {PROOF}
+                </div>
+              </div>
+
+              <div className={styles.cards}>
+                <Pin n={3} className={styles.pinGutter} style={onLine(24)} />
+                {CARDS.map((card) => (
+                  <div key={card.label} className={styles.card}>
+                    <Image
+                      src={card.src}
+                      alt=""
+                      fill
+                      sizes="160px"
+                      className={styles.photo}
+                    />
+                    <span className={styles.cardLabel}>{card.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.more}>
+                <Bar width="38%" />
+                <Bar width="86%" />
+                <Bar width="72%" />
               </div>
             </div>
-
-            <div className="relative flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5">
-              <Pin n={2} className="-left-3 -top-3 sm:-left-4" />
-              <span className="flex -space-x-1.5">
-                {['bg-white/30', 'bg-white/20', 'bg-white/[0.14]'].map(
-                  (tone) => (
-                    <span
-                      key={tone}
-                      className={cn(
-                        'size-5 rounded-full border border-background',
-                        tone,
-                      )}
-                    />
-                  ),
-                )}
-              </span>
-              <span className="flex gap-0.5 text-foreground/70">
-                {[0, 1, 2, 3, 4].map((star) => (
-                  <Star key={star} className="size-3 fill-current" />
-                ))}
-              </span>
-              <Bar className="w-16 sm:w-24" />
-            </div>
-
-            <div className="relative grid grid-cols-3 gap-2.5">
-              <Pin n={3} className="-left-3 -top-3 sm:-left-4" />
-              {[
-                'from-[oklch(0.66_0.16_258/30%)]',
-                'from-[oklch(0.76_0.17_145/22%)]',
-                'from-[oklch(0.63_0.19_295/28%)]',
-              ].map((tint) => (
-                <div
-                  key={tint}
-                  className="flex flex-col gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] p-2"
-                >
-                  <span
-                    className={cn(
-                      'block aspect-[4/3] rounded-md bg-gradient-to-br to-transparent',
-                      tint,
-                    )}
-                  />
-                  <Bar className="w-[80%]" />
-                  <Bar className="h-1.5 w-[55%] bg-white/[0.06]" />
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
 
-        <div className="absolute bottom-0 right-0 w-[30%] max-w-[9.5rem] rotate-[3deg]">
-          <div className="overflow-hidden rounded-[1.4rem] border border-white/[0.12] bg-background p-1.5 shadow-[0_30px_80px_-30px_oklch(0_0_0/95%)]">
-            <div className="flex aspect-[9/17] flex-col gap-2 rounded-[1.05rem] bg-card p-2.5">
-              <span className="mx-auto mb-1 h-1 w-8 rounded-full bg-white/10" />
-              <span className="block h-2.5 w-[85%] rounded-sm bg-white/70" />
-              <span className="block h-2.5 w-[60%] rounded-sm bg-white/70" />
-              <Bar className="h-1.5 w-[75%]" />
-              <span className="mt-1 block aspect-[4/3] rounded-md bg-gradient-to-br from-[oklch(0.66_0.16_258/26%)] to-transparent" />
-              <Bar className="h-1.5 w-[65%]" />
-              <div className="relative mt-auto">
-                <Pin n={4} className="-left-4 -top-3 size-5 text-[10px]" />
-                <span className="flex h-7 items-center justify-center gap-1.5 rounded-full bg-white/90 text-[10px] font-semibold text-background">
-                  <Phone className="size-3" />
-                  Call
-                </span>
+          <div className={styles.phone}>
+            <div className={styles.phoneBody}>
+              <div className={styles.screen}>
+                <span className={styles.island} />
+                <div className={styles.phoneNav}>
+                  <span className={cn(styles.bar, styles.wordmark)} />
+                  <Menu className={styles.menu} strokeWidth={2} />
+                </div>
+                <div className={styles.phoneContent}>
+                  <p className={styles.phoneHeadline}>
+                    <Pin
+                      n={1}
+                      className={cn(styles.pinPhone, styles.compactOnly)}
+                      style={onLine(18.8)}
+                    />
+                    {HEADLINE}
+                  </p>
+                  <div className={styles.phoneProof}>
+                    <Pin
+                      n={2}
+                      className={cn(styles.pinPhone, styles.compactOnly)}
+                      style={centred}
+                    />
+                    <Stars />
+                    Loved by families
+                  </div>
+                  <div className={styles.phonePhotoWrap}>
+                    <Pin
+                      n={3}
+                      className={cn(styles.pinPhone, styles.compactOnly)}
+                      style={centred}
+                    />
+                    <div className={styles.phonePhoto}>
+                      <Image
+                        src="/illustrations/website-design/practice-room.webp"
+                        alt=""
+                        fill
+                        sizes="240px"
+                        className={styles.photo}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.phoneLines}>
+                    <Bar width="90%" />
+                    <Bar width="58%" />
+                  </div>
+                  <div className={styles.phoneTiles}>
+                    <span className={styles.phoneTile} />
+                    <span className={styles.phoneTile} />
+                  </div>
+                </div>
+                <div className={styles.callBar}>
+                  <Pin n={4} className={styles.pinCallBar} style={centred} />
+                  <span className={cn(styles.button, styles.buttonSecondary)}>
+                    <PhoneIcon className={styles.icon} />
+                    Call
+                  </span>
+                  <span className={cn(styles.button, styles.buttonPrimary)}>
+                    Book a visit
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -165,6 +220,11 @@ function PageAnatomy() {
     </figure>
   )
 }
+
+const CARDS = [
+  { label: 'Cleanings', src: '/illustrations/website-design/cleanings.webp' },
+  { label: 'Aligners', src: '/illustrations/website-design/aligners.webp' },
+] as const
 
 export function WebsiteDesignAnatomy() {
   return (
