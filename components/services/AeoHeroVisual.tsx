@@ -90,7 +90,7 @@ function StateMark({
 
 function CitationChip({ index }: { index: number }) {
   return (
-    <span className="mx-0.5 inline-grid size-[18px] translate-y-[-1px] place-items-center rounded-md border border-white/15 bg-white/[0.06] align-middle font-mono text-[10px] leading-none text-foreground">
+    <span className="mx-0.5 inline-grid size-[18px] translate-y-[-1px] place-items-center rounded-md border border-white/15 bg-white/[0.06] align-middle font-mono text-[11px] leading-none text-foreground">
       {index}
     </span>
   )
@@ -123,11 +123,7 @@ export function AeoHeroVisual() {
               Example
             </span>
           </div>
-          <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-muted-foreground sm:inline-flex">
-            <span
-              aria-hidden="true"
-              className="size-1.5 rounded-full bg-foreground"
-            />
+          <span className="hidden items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground sm:inline-flex">
             Re-checked every month
           </span>
         </div>
@@ -136,7 +132,7 @@ export function AeoHeroVisual() {
           {/* The answer */}
           <div className="flex min-w-0 flex-col rounded-2xl border border-white/[0.08] bg-background/60 p-4 text-left sm:p-5">
             <div className="flex items-center justify-between gap-3">
-              <p className="text-eyebrow whitespace-nowrap text-subtle">
+              <p className="whitespace-nowrap text-[12px] font-medium tracking-[-0.01em] text-foreground/80">
                 A customer asks
               </p>
               <ul
@@ -219,7 +215,7 @@ export function AeoHeroVisual() {
             </div>
 
             <div className="mt-auto pt-6">
-              <p className="text-eyebrow text-subtle">Sources</p>
+              <p className="text-[12px] font-medium tracking-[-0.01em] text-foreground/80">Sources</p>
               <ul className="mt-2.5 flex flex-wrap gap-1.5">
                 {SOURCES.map((source) => (
                   <li
@@ -233,7 +229,7 @@ export function AeoHeroVisual() {
                     )}
                     style={step(source.index + 2)}
                   >
-                    <span className="grid size-5 place-items-center rounded-full border border-white/10 bg-background font-mono text-[10px] text-foreground">
+                    <span className="grid size-5 place-items-center rounded-full border border-white/10 bg-background font-mono text-[11px] text-foreground">
                       {source.index}
                     </span>
                     {source.label}
@@ -252,7 +248,7 @@ export function AeoHeroVisual() {
                 'pointer-events-none absolute inset-0',
               )}
             />
-            <p className="text-eyebrow text-subtle">Question map</p>
+            <p className="text-[12px] font-medium tracking-[-0.01em] text-foreground/80">Question map</p>
             <table className="mt-3 w-full table-fixed border-collapse text-left">
               <caption className="sr-only">
                 Example: where a business appears for four customer questions

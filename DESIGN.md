@@ -261,11 +261,13 @@ appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
 The service pages share `ServiceHero`, each with one soft spectrum glow:
 blue for Website Design, warm for Content, green for Ads, and violet for AEO.
-`/website-design` also carries a drawn page anatomy (four numbered pins on a
-wireframe browser and phone, matching a numbered list of design principles).
-It is an illustration in the Prism system, marked "Illustrative page
-layout", with no client data, and the drawing is decorative to assistive tech
-while the list carries the content.
+`/website-design` also carries a drawn page anatomy: a made-up family
+dental practice's site, light, in a browser window with its phone version
+straddling the window's edge, and four numbered pins (headline, proof, photos,
+call bar) matching a numbered list of design principles. It is marked
+"Illustrative page layout", uses no client data, and the drawing is
+decorative to assistive tech while the list carries the content (see Faux
+product UI).
 
 ### Prism logo
 
@@ -314,6 +316,43 @@ Prism system (`components/case-studies/mach-1/scenes.tsx`), each card marked
 "Illustrative", with made-up labels and no client data, and a note under the
 section saying so. Scenes loop only while on screen (`SceneViewport`), and
 their base style is the finished frame.
+
+### Faux product UI
+
+Drawn interfaces (the homepage pillar scenes, the service hero windows, the
+`/website-design` page anatomy, the Mach 1 tool scenes) follow the stageshow
+skill's rules for faux product UI, so they read as a real product simplified,
+never as a wireframe or a template:
+
+- **Real words on the subject only.** Count the real strings, usually three
+  to seven: what the story is about (the headline, the thing acted on, the
+  result). Everything around it is filler bars at varied widths. Gray bars
+  never sit where the eye lands, and a gray bar never sits under a real name.
+- **The product's own type.** Labels inside a drawn product are sentence
+  case Geist Sans at 11px or larger. Tracked mono capitals (`text-eyebrow`)
+  are for the page around the drawing, never its controls or panel titles.
+  Mono stays only for identifiers, timestamps and aligned numbers.
+- **Mark the subject with a solid step**, a lighter surface and weight, not
+  an outline, a glow, a translucent wash or a dot with no meaning. Status
+  colors mean status; one accent goes on the thing that matters.
+- **Framing.** One hero surface with at most one satellite that straddles its
+  edge (about a third outside) over chrome or filler, never over the subject.
+  Start flat: no tilt unless it is earned. A window that would stop at an
+  arbitrary line fades out at its foot with a mask, over filler only.
+- **Imagery earns its place.** Real photos, never gradient blobs standing in
+  for them. A made-up business's photos are generated locally and show no
+  real people or clients (`public/illustrations/`).
+- **Compact is a second design.** Below the width where the full drawing
+  reads, recompose (the page anatomy shows only its phone, with every pin)
+  instead of shrinking type below 11px.
+- **Data never rewinds in view.** A scene that adds things (posts landing,
+  bars filling, notes pinned) plays once when it arrives and holds its
+  finished frame; leaving the viewport resets it unseen. Only ambient motion
+  with no data in it loops (an audio wave, people moving along a journey, a
+  feed conveyor whose reset is invisible).
+- **A drawn light site may carry its own palette.** The page anatomy's site
+  is a light document over the dark canvas, so it uses its own paper and
+  sage tokens, scoped to `website-design-anatomy.module.css`.
 
 ### Proof
 

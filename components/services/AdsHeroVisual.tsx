@@ -96,18 +96,14 @@ export function AdsHeroVisual() {
               Example
             </span>
           </div>
-          <span className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] text-muted-foreground sm:inline-flex">
-            <span
-              aria-hidden="true"
-              className="size-1.5 rounded-full bg-foreground"
-            />
+          <span className="hidden items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground sm:inline-flex">
             Ready for launch
           </span>
         </div>
 
         <div className="grid gap-2.5 sm:gap-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
           <div className="rounded-2xl border border-white/[0.08] bg-background/60 p-4 text-left sm:p-5">
-            <p className="text-eyebrow text-subtle">Channels</p>
+            <p className="text-[12px] font-medium tracking-[-0.01em] text-foreground/80">Channels</p>
             <ul
               aria-label="Ad platforms"
               className="mt-3 divide-y divide-white/[0.06]"
@@ -133,7 +129,7 @@ export function AdsHeroVisual() {
                   </span>
                   <span
                     className={cn(
-                      'shrink-0 rounded-full border px-2.5 py-0.5 font-mono text-[11px]',
+                      'shrink-0 rounded-full border px-2.5 py-0.5 text-xs',
                       STATUS_STYLES[channel.status],
                     )}
                   >
@@ -145,7 +141,7 @@ export function AdsHeroVisual() {
           </div>
 
           <div className="flex flex-col rounded-2xl border border-white/[0.08] bg-background/60 p-4 text-left sm:p-5">
-            <p className="text-eyebrow text-subtle">Flight path</p>
+            <p className="text-[12px] font-medium tracking-[-0.01em] text-foreground/80">Flight path</p>
             <ol className="relative mt-4 flex flex-col gap-3">
               <span
                 aria-hidden="true"
