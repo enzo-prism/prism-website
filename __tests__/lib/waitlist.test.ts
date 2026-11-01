@@ -41,30 +41,38 @@ describe('getWaitlistIntakeMonth', () => {
     })
   })
 
-  it('holds at December 2026 while October and November are fully booked', () => {
-    expect(WAITLIST_EARLIEST_INTAKE).toEqual(new Date(2026, 11, 1))
+  it('holds at January 2027 while October through December are fully booked', () => {
+    expect(WAITLIST_EARLIEST_INTAKE).toEqual(new Date(2027, 0, 1))
     for (const date of [
       new Date(2026, 8, 15),
-      new Date(2026, 9, 1),
       new Date(2026, 9, 23),
-      new Date(2026, 10, 30, 23, 59, 59),
+      new Date(2026, 10, 1),
+      new Date(2026, 11, 1),
+      new Date(2026, 11, 31, 23, 59, 59),
     ]) {
       expect(getWaitlistIntakeMonth(date)).toEqual({
-        month: 'December',
-        year: 2026,
+        month: 'January',
+        year: 2027,
       })
     }
   })
 
-  it('rolls December over to January of the next year', () => {
-    expect(getWaitlistIntakeMonth(new Date(2026, 11, 1))).toEqual({
-      month: 'January',
+  it('moves on to February once January arrives', () => {
+    expect(getWaitlistIntakeMonth(new Date(2027, 0, 1))).toEqual({
+      month: 'February',
       year: 2027,
     })
-    expect(getWaitlistIntakeMonth(new Date(2026, 11, 31, 23, 59, 59))).toEqual(
+  })
+
+  it('rolls December over to January of the next year', () => {
+    expect(getWaitlistIntakeMonth(new Date(2027, 11, 1))).toEqual({
+      month: 'January',
+      year: 2028,
+    })
+    expect(getWaitlistIntakeMonth(new Date(2027, 11, 31, 23, 59, 59))).toEqual(
       {
         month: 'January',
-        year: 2027,
+        year: 2028,
       },
     )
   })

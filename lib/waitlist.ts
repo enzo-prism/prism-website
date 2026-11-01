@@ -56,13 +56,13 @@ export type WaitlistIntakeMonth = {
 }
 
 /**
- * Earliest open intake (2026-10-23): October and November 2026 are fully
- * booked, so the waitlist fills December. Until then every surface names
- * December; from December on the floor is in the past and the intake rolls
+ * Earliest open intake (2026-11-01): October through December 2026 are fully
+ * booked, so the waitlist fills January 2027. Until then every surface names
+ * January; from January on the floor is in the past and the intake rolls
  * forward to the next month as usual. Move it forward again whenever the
  * month after the current one is already full.
  */
-export const WAITLIST_EARLIEST_INTAKE = new Date(2026, 11, 1)
+export const WAITLIST_EARLIEST_INTAKE = new Date(2027, 0, 1)
 
 /**
  * First day of the next open intake from a date (default: now): the next

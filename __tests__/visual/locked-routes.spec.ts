@@ -19,8 +19,8 @@ async function seedDeterministicRandom(page: Page) {
  * This shifts `new Date()` / `Date.now()` to a fixed mid-September instant
  * (intake: October) while leaving timers and animation frames on real time.
  * The instant sits mid-month so every timezone still reads September, and in
- * 2027 so it is past `WAITLIST_EARLIEST_INTAKE` (December 2026), which would
- * otherwise turn the frozen October into December.
+ * 2027 so it is past `WAITLIST_EARLIEST_INTAKE` (January 2027), which would
+ * otherwise turn the frozen October into January.
  */
 async function freezeIntakeMonth(page: Page) {
   await page.addInitScript(() => {
