@@ -112,7 +112,9 @@ describe('Navbar', () => {
 
     const banner = screen.getByRole('banner')
     expect(banner.className).toContain('sticky')
-    expect(banner.className).toContain('overflow-x-clip')
+    // Safari clips the Services panel vertically under any overflow clip on
+    // the header, so the header must never clip.
+    expect(banner.className).not.toMatch(/overflow-(x-|y-)?(clip|hidden)/)
     expect(banner).toHaveAttribute('data-solid', 'true')
     expect(screen.getByRole('link', { name: /prism home/i })).toHaveAttribute(
       'href',

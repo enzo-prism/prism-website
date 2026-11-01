@@ -124,7 +124,8 @@ function ServicesMenu({
       >
         Services
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      {/* pr-2 evens out the stock content padding (p-2 pr-2.5). */}
+      <NavigationMenuContent className="pr-2">
         <div className="grid w-[min(92vw,640px)] grid-cols-[1.35fr_1fr] gap-2 p-1.5">
           {/* The four services are equal tiles that share the featured
               card's height; "All services" keeps its natural height. */}
@@ -146,7 +147,7 @@ function ServicesMenu({
                         <span className="text-sm font-medium text-foreground">
                           {item.label}
                         </span>
-                        <span className="text-[13px] leading-snug text-muted-foreground">
+                        <span className="text-pretty text-[13px] leading-snug text-muted-foreground">
                           {item.description}
                         </span>
                       </span>
@@ -177,7 +178,10 @@ function ServicesMenu({
               onClick={() =>
                 onNavigate('Services menu waitlist', WAITLIST_CTA.href)
               }
-              className="group/feature relative flex flex-col justify-end overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(120%_90%_at_100%_0%,oklch(0.66_0.16_258/28%),transparent_55%),radial-gradient(90%_80%_at_0%_100%,oklch(0.66_0.21_29/22%),transparent_60%)] p-5"
+              // items-stretch and gap-0 undo the link primitive's
+              // items-center and gap-1.5: the card reads left-aligned, spaced
+              // only by its own margins.
+              className="group/feature relative flex flex-col items-stretch justify-end gap-0 overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(120%_90%_at_100%_0%,oklch(0.66_0.16_258/28%),transparent_55%),radial-gradient(90%_80%_at_0%_100%,oklch(0.66_0.21_29/22%),transparent_60%)] p-5"
             >
               <span
                 aria-hidden="true"
@@ -208,7 +212,7 @@ function ServicesMenu({
               <span className="relative mt-3 text-lg font-semibold leading-tight tracking-[-0.03em] text-foreground">
                 get on the list for <WaitlistIntakeMonth />.
               </span>
-              <span className="relative mt-2 text-[13px] leading-snug text-muted-foreground">
+              <span className="relative mt-2 text-pretty text-[13px] leading-snug text-muted-foreground">
                 We open new spots every month. Waitlist members get first pick.
               </span>
               <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
@@ -480,8 +484,12 @@ export default function Navbar() {
       <header
         ref={headerRef}
         data-solid={solid ? 'true' : 'false'}
+        // No overflow clip on the header: Safari applies `overflow-x: clip`
+        // to both axes once the Services panel is composited, slicing the
+        // open panel off just below the bar. The body already clips
+        // horizontal overflow, and the breadcrumb row scrolls on its own.
         className={cn(
-          'z-50 w-full overflow-x-clip border-b text-foreground transition-[background-color,border-color,backdrop-filter] duration-300',
+          'z-50 w-full border-b text-foreground transition-[background-color,border-color,backdrop-filter] duration-300',
           isHome || isMobileMenuOpen ? 'fixed inset-x-0 top-0' : 'sticky top-0',
           solid
             ? 'nav-blur border-white/[0.07] bg-background/75 backdrop-blur-xl backdrop-saturate-150'

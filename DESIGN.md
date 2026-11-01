@@ -250,6 +250,15 @@ waitlist card. Mobile keeps the portaled full-height panel with focus,
 Escape, scroll-lock and inert handling; its four services sit in a 2x2 grid
 in the same order, with "All services" spanning a full row beneath.
 
+Never put an overflow clip (`overflow-x-clip`, `overflow-hidden`) on the
+header or any ancestor of the Services menu. Safari applies a one-axis
+`overflow: clip` to both axes once the panel is composited, so the open menu
+shows as a thin strip under the bar. The body already clips horizontal
+overflow, and the breadcrumb row scrolls on its own. The menu panel zooms in
+from its top edge (`origin-top`), and the featured waitlist card reads
+left-aligned: when a link uses the stock `NavigationMenuLink`, override its
+`items-center` and `gap-1.5` rather than inheriting them.
+
 ### Hero
 
 One dominant idea: status pill, lowercase display headline, one sentence of
