@@ -685,7 +685,7 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     slug: 'practice-transitions-institute',
     segments: ['consulting'],
     structured: {
-      dateModified: '2026-08-30T00:00:00.000Z',
+      dateModified: '2026-11-02T00:00:00.000Z',
       story: {
         situation:
           'PTI had deep credibility in dental practice transitions, but its digital footprint did not look as credible as its track record, and dentists quietly researching transitions for months had little reason to stay and return.',
