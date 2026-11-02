@@ -21,15 +21,48 @@ import {
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import { firstSearchParamString, type SearchParamValue } from '@/lib/search-params'
 
-export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Growth insights',
-  description:
-    'Practical lessons on websites, search, AI, ads, and local growth from real Prism work.',
-  path: '/blog',
-  ogImage: '/prism-opengraph.png',
-})
-
 const POSTS_PER_PAGE = 12
+
+type BlogSearchParams = {
+  category?: SearchParamValue
+  q?: SearchParamValue
+  page?: SearchParamValue
+}
+
+// Each listing page canonicalizes to itself. Pointing /blog?page=N at /blog
+// told Google the later pages were duplicates, so posts linked only from
+// them were never crawled.
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<BlogSearchParams>
+}): Promise<Metadata> {
+  const resolvedSearchParams = await searchParams
+  const category = normalizeBlogFilter(
+    firstSearchParamString(resolvedSearchParams?.category, 'all').trim().toLowerCase(),
+  )
+  const requestedPage = Number.parseInt(
+    firstSearchParamString(resolvedSearchParams?.page, '1'),
+    10,
+  )
+  const posts = (await getAllPosts()) ?? []
+  const listed = posts.filter(
+    (post) => category === 'all' || getBlogFilterFromCategory(post.category) === category,
+  )
+  // Page one features the newest post; the grid pages through the rest.
+  const totalPages = Math.max(1, Math.ceil(Math.max(listed.length - 1, 0) / POSTS_PER_PAGE))
+  const page = Number.isFinite(requestedPage)
+    ? Math.min(Math.max(requestedPage, 1), totalPages)
+    : 1
+
+  return buildRouteMetadata({
+    titleStem: page > 1 ? `Growth insights, page ${page}` : 'Growth insights',
+    description:
+      'Practical lessons on websites, search, AI, ads, and local growth from real Prism work.',
+    path: buildPageUrl({ category, page }),
+    ogImage: '/prism-opengraph.png',
+  })
+}
 
 function buildPageUrl({
   category,
@@ -48,11 +81,7 @@ function buildPageUrl({
 export default async function Blog({
   searchParams,
 }: {
-  searchParams: Promise<{
-    category?: SearchParamValue
-    q?: SearchParamValue
-    page?: SearchParamValue
-  }>
+  searchParams: Promise<BlogSearchParams>
 }) {
   const resolvedSearchParams = await searchParams
   const rawCategory = firstSearchParamString(resolvedSearchParams?.category, 'all')

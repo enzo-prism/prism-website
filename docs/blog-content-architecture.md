@@ -69,6 +69,8 @@ Headings (H2/H3) are assigned stable anchor IDs during MDX rendering (`rehype-sl
 
 The index (`app/blog/page.tsx`) leads page one with the newest post in the current topic as a featured card, then pages the rest in a 12-card grid (`components/blog/blog-post-cards.tsx`). Posts with their own cover art render it through `next/image`; posts that only carry the shared Prism placeholder image get a generated cover (`components/blog/blog-cover.tsx`): grid, two-color spectrum light seeded by the slug, and the topic icon.
 
+Every listing URL canonicalizes to itself through `generateMetadata` (2026-11-02): `/blog`, `/blog?page=N`, and `/blog?category=<topic>&page=N` each name their own URL, page 2+ titles add ", page N", out-of-range pages canonicalize to the last real page, and `q` never enters the canonical. Pointing every page at `/blog` had marked pages 2+ as duplicates, so Search Console showed most posts linked only from them as never crawled. `__tests__/blog-canonical.test.ts` guards this.
+
 ---
 
 ## Related Posts
