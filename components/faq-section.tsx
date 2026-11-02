@@ -24,8 +24,8 @@ interface FAQSectionProps {
 
 /**
  * Shared FAQ band for the long-tail landers: a sticky header on the left and
- * a shadcn Accordion on the right, plus FAQPage JSON-LD for every item so
- * each answer stays visible to crawlers.
+ * a shadcn Accordion on the right, plus FAQPage JSON-LD for every item. Every
+ * answer is server-rendered (hidden until opened) so it matches the schema.
  */
 export default function FAQSection({
   title = "frequently asked questions.",
@@ -82,7 +82,12 @@ export default function FAQSection({
               <AccordionTrigger className="min-h-14 gap-6 py-5 text-[17px] text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0 [&>svg]:text-subtle">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="max-w-[64ch] pb-6 text-pretty text-[15px] leading-7 text-muted-foreground">
+              {/* forceMount keeps closed answers in the server HTML (crawlers that
+                  don't run JS read them); the inner div hides while closed. */}
+              <AccordionContent
+                forceMount
+                className="max-w-[64ch] pb-6 text-pretty text-[15px] leading-7 text-muted-foreground [[data-state=closed]>&]:hidden"
+              >
                 <p>{item.answer}</p>
               </AccordionContent>
             </AccordionItem>
