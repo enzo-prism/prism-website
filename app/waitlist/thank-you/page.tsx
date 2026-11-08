@@ -13,7 +13,6 @@ import {
 import HomeCountUp from '@/components/home/HomeCountUp'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
-import LeadSuccessTracker from '@/components/thank-you/LeadSuccessTracker'
 import TrackedAnchor from '@/components/tracked-anchor'
 import TrackedLink from '@/components/tracked-link'
 import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
@@ -380,7 +379,6 @@ export default function WaitlistThankYouPage() {
         </div>
       </main>
       <Footer showWaitlistCta={false} />
-      <LeadSuccessTracker />
     </div>
   )
 }

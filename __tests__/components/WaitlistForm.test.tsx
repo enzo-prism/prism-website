@@ -330,7 +330,10 @@ describe('WaitlistForm (stepped flow)', () => {
     )
     expect(trackFormSubmission).toHaveBeenCalledWith('waitlist', 'waitlist_page', {
       lead_type: 'waitlist',
+      transaction_id: formData.get('submission_id'),
+      conversionMode: 'immediate',
     })
+    expect(formData.get('submission_id')).toMatch(/^waitlist-[a-f0-9-]{36}$/)
     expect(window.sessionStorage.getItem(WAITLIST_DRAFT_STORAGE_KEY)).toBeNull()
   })
 
@@ -351,6 +354,54 @@ describe('WaitlistForm (stepped flow)', () => {
       'waitlist_submit_error',
       expect.objectContaining({ reason: 'non_ok_response', status: 500 }),
     )
+  })
+
+  it('reuses the receipt id on a retry and never reposts after acceptance', async () => {
+    fetchSpy.mockResolvedValueOnce(createMockResponse(false)).mockResolvedValue(createMockResponse(true))
+    render(<WaitlistForm />)
+    await completeToGoals()
+    fireEvent.change(screen.getByLabelText(/your goals/i), { target: { value: 'A new site.' } })
+    fireEvent.click(submitButton())
+    expect(await screen.findByText(/try again/i)).toBeInTheDocument()
+    expect(trackFormSubmission).not.toHaveBeenCalled()
+    const firstId = (fetchSpy.mock.calls[0][1]?.body as FormData).get('submission_id')
+
+    fireEvent.click(submitButton())
+    await waitFor(() => expect(pushMock).toHaveBeenCalled())
+    expect((fetchSpy.mock.calls[1][1]?.body as FormData).get('submission_id')).toBe(firstId)
+    fireEvent.click(submitButton())
+    await waitFor(() => expect(pushMock).toHaveBeenCalledTimes(2))
+    expect(fetchSpy).toHaveBeenCalledTimes(2)
+    expect(trackFormSubmission).toHaveBeenCalledTimes(1)
+    expect(trackFormSubmission.mock.invocationCallOrder[0]).toBeLessThan(pushMock.mock.invocationCallOrder[0])
+  })
+
+  it('retains the receipt id when a failed submission draft is restored', async () => {
+    fetchSpy.mockResolvedValueOnce(createMockResponse(false)).mockResolvedValue(createMockResponse(true))
+    const { unmount } = render(<WaitlistForm />)
+    await completeToGoals()
+    fireEvent.change(screen.getByLabelText(/your goals/i), { target: { value: 'A new site.' } })
+    fireEvent.click(submitButton())
+    expect(await screen.findByText(/try again/i)).toBeInTheDocument()
+    const firstId = (fetchSpy.mock.calls[0][1]?.body as FormData).get('submission_id')
+    unmount()
+    render(<WaitlistForm />)
+    fireEvent.click(submitButton())
+    await waitFor(() => expect(pushMock).toHaveBeenCalled())
+    expect((fetchSpy.mock.calls[1][1]?.body as FormData).get('submission_id')).toBe(firstId)
+  })
+
+  it('does not count network failures as leads', async () => {
+    fetchSpy.mockRejectedValueOnce(new Error('offline'))
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    render(<WaitlistForm />)
+    await completeToGoals()
+    fireEvent.change(screen.getByLabelText(/your goals/i), { target: { value: 'A new site.' } })
+    fireEvent.click(submitButton())
+    expect(await screen.findByText(/try again/i)).toBeInTheDocument()
+    expect(trackFormSubmission).not.toHaveBeenCalled()
+    expect(pushMock).not.toHaveBeenCalled()
+    errorSpy.mockRestore()
   })
 
   it('restores a same-tab draft on reload and reports exactly one step view, for the restored step', async () => {
@@ -481,6 +532,7 @@ describe('WaitlistForm (stepped flow)', () => {
     ).toBeInTheDocument()
     expect(noWebsiteCheckbox()).not.toBeChecked()
 
+    expect(fireEvent.mouseDown(noWebsiteCheckbox().closest('label')!)).toBe(false)
     fireEvent.click(noWebsiteCheckbox())
 
     expect(noWebsiteCheckbox()).toBeChecked()

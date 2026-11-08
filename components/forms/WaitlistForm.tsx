@@ -152,6 +152,7 @@ type StoredDraft = {
   answers: WaitlistAnswers
   stepIndex: number
   savedAt: number
+  submissionId?: string
 }
 
 function isFieldElement(element: Element): element is ValidFieldElement {
@@ -192,6 +193,11 @@ function readDraft(): StoredDraft | null {
       },
       stepIndex,
       savedAt: parsed.savedAt,
+      submissionId:
+        typeof parsed.submissionId === 'string' &&
+        /^waitlist-[a-f0-9-]{36}$/.test(parsed.submissionId)
+          ? parsed.submissionId
+          : undefined,
     }
   } catch {
     return null
@@ -261,6 +267,8 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const hasStartedRef = useRef(false)
   const hasHydratedDraftRef = useRef(false)
+  const submissionIdRef = useRef<string | undefined>(undefined)
+  const acceptedSubmissionRef = useRef(false)
   const [hydrated, setHydrated] = useState(false)
   const viewedStepsRef = useRef<Set<number>>(new Set())
   const [stepIndex, setStepIndex] = useState(0)
@@ -295,6 +303,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     if (hasHydratedDraftRef.current) return
     hasHydratedDraftRef.current = true
     const draft = readDraft()
+    submissionIdRef.current = draft?.submissionId ?? `waitlist-${crypto.randomUUID()}`
     if (draft) {
       setAnswers((current) => ({
         ...draft.answers,
@@ -346,7 +355,9 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
 
   useEffect(() => {
     if (!hydrated) return
-    writeDraft({ answers, stepIndex })
+    if (!acceptedSubmissionRef.current) {
+      writeDraft({ answers, stepIndex, submissionId: submissionIdRef.current })
+    }
   }, [answers, stepIndex, hydrated])
 
   const markStarted = useCallback(() => {
@@ -391,6 +402,11 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     validateFields,
   } = useFormValidation({
       onValidSubmit: async (form) => {
+        // A delayed/failed navigation must not post an accepted application again.
+        if (acceptedSubmissionRef.current) {
+          router.push(WAITLIST_THANK_YOU_PATH)
+          return
+        }
         setSubmitError(null)
         trackEvent('waitlist_submit_attempt', {
           form_name: WAITLIST_FORM_NAME,
@@ -411,6 +427,11 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           formData.delete(WAITLIST_NO_WEBSITE_FIELD)
         }
         appendAttributionToFormData(formData)
+        const submissionId = submissionIdRef.current ?? `waitlist-${crypto.randomUUID()}`
+        submissionIdRef.current = submissionId
+        // Formspree's durable receipt and analytics share an opaque join key.
+        // Reuse it on retries; Formspree does not promise request idempotency.
+        formData.set('submission_id', submissionId)
 
         try {
           const response = await fetch(form.action, {
@@ -439,6 +460,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           return
         }
 
+        acceptedSubmissionRef.current = true
         trackStep('waitlist_step_complete', stepIndex)
         trackEvent('waitlist_submit_success', {
           form_name: WAITLIST_FORM_NAME,
@@ -446,10 +468,12 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
           // Services chosen (0-4); "Not sure yet" counts as none.
           focus_count: answers.focus.filter(isWaitlistFocus).length,
         })
-        // Pending mode: /waitlist/thank-you mounts LeadSuccessTracker, which
-        // consumes this context and fires generate_lead once.
+        // Confirmed acceptance owns the conversion, independent of navigation
+        // or sessionStorage. No pending conversion is left for the thank-you page.
         trackFormSubmission(WAITLIST_FORM_NAME, FORM_LOCATION, {
           lead_type: WAITLIST_FORM_NAME,
+          transaction_id: submissionId,
+          conversionMode: 'immediate',
         })
         clearDraft()
         router.push(WAITLIST_THANK_YOU_PATH)
@@ -617,10 +641,10 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   }
 
   // A blur error grows the step above the footer. If that happened between
-  // mousedown and mouseup on Continue/Back, the button would move out from
-  // under the pointer and the click would be lost. Keeping focus where it is
+  // mousedown and mouseup on Continue/Back or the no-website label, the target
+  // would move out from under the pointer and the click would be lost. Keeping focus
   // until the click lands avoids that; submit validates every field anyway.
-  const keepFieldFocus = (event: MouseEvent<HTMLButtonElement>) => {
+  const keepFieldFocus = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault()
   }
 
@@ -877,7 +901,7 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
             />
             {/* The escape hatch for owners with no site yet: it satisfies
                 the step on its own and ships as no_website=yes. */}
-            <label className="group/nosite -ml-1 flex min-h-10 w-fit cursor-pointer items-center gap-2.5 rounded-lg py-1.5 pl-1 pr-2 text-[14px] leading-5 text-muted-foreground transition-colors duration-200 hover:text-foreground has-[:checked]:text-foreground has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50 motion-reduce:transition-none">
+            <label onMouseDown={keepFieldFocus} className="group/nosite -ml-1 flex min-h-10 w-fit cursor-pointer items-center gap-2.5 rounded-lg py-1.5 pl-1 pr-2 text-[14px] leading-5 text-muted-foreground transition-colors duration-200 hover:text-foreground has-[:checked]:text-foreground has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50 motion-reduce:transition-none">
               <input
                 type="checkbox"
                 name={WAITLIST_NO_WEBSITE_FIELD}

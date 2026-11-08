@@ -218,3 +218,15 @@ If you rebrand or change domains, update the `CANONICAL_HOST` constant to keep f
 - **Broken filters**: ensure the new post’s `category` isn’t blank—empty strings collapse the slug to `general`.
 - **Missing in feed or blog index**: confirm the post is intentionally search-visible. By default, non-allowlisted posts stay live at `/blog/<slug>` but are noindex and excluded from RSS/latest-post/discovery surfaces.
 - **OG gradients**: verify `gradientClass` uses Tailwind utilities recognized by `utils/tailwind-to-css.ts`.
+
+
+## Priority search paths
+
+The Google Ads destination troubleshooting and Prism small-business growth
+articles have complete authored `seoTitle` values within the shared compact
+budget. Preserve the full problem/outcome when editing them; a passing length
+check alone does not establish a meaningful title. Their contextual entry points
+are the Ads service and Services process section, respectively, plus the existing
+lead-magnet article. The troubleshooting and growth articles link back to the
+relevant service/proof pages. These complement blog pagination; do not change
+canonical URLs, expand the index allowlist or add internal UTMs for these paths.

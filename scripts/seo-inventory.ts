@@ -278,6 +278,29 @@ function extractMetadataFromFile(filePath: string, route: string): MetadataInfo 
     }
   })
 
+  // The blog index moved to generateMetadata for pagination. Inventory covers
+  // the queryless /blog entry; do not report its real metadata as missing.
+  // Keep this bounded to the recognized page-one/page-N helper shape rather
+  // than guessing values for arbitrary dynamic route logic.
+  if (!metadataInitializer && route === '/blog') {
+    for (const node of sourceFile.statements) {
+      if (!ts.isFunctionDeclaration(node) || node.name?.text !== 'generateMetadata') continue
+      const returned = node.body?.statements.find(ts.isReturnStatement)?.expression
+      if (!returned || !ts.isCallExpression(returned) || returned.expression.getText(sourceFile) !== 'buildRouteMetadata') continue
+      const arg = returned.arguments[0]
+      if (!arg || !ts.isObjectLiteralExpression(arg)) continue
+      const title = getProp(arg, 'titleStem')
+      if (!title || !ts.isConditionalExpression(title) || title.condition.getText(sourceFile) !== 'page > 1') continue
+      const titleStem = getStringFromExpression(title.whenFalse, constStrings)
+      if (!titleStem) continue
+      return {
+        ...extractMetadataFromHelperCall(returned, constStrings, route),
+        titleStem,
+        finalTitle: buildAbsoluteTitle(titleStem),
+      }
+    }
+  }
+
   if (!metadataInitializer) return {}
 
   if (ts.isObjectLiteralExpression(metadataInitializer)) {
