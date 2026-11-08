@@ -15,6 +15,8 @@ jest.mock("@/lib/mdx-data", () => ({
 }))
 
 import { generateMetadata } from "@/app/blog/page"
+import fs from 'node:fs'
+import path from 'node:path'
 
 async function canonicalFor(searchParams: Record<string, string>) {
   const metadata = await generateMetadata({ searchParams: Promise.resolve(searchParams) })
@@ -22,6 +24,14 @@ async function canonicalFor(searchParams: Record<string, string>) {
 }
 
 describe("blog page canonical", () => {
+  test('the generated SEO inventory matches default blog metadata', async () => {
+    const metadata = await generateMetadata({ searchParams: Promise.resolve({}) })
+    const inventory = fs.readFileSync(path.join(process.cwd(), 'seo/inventory.csv'), 'utf8')
+    const row = inventory.split('\n').find((line) => line.startsWith('"/blog",'))
+    expect(row).toContain('"Growth insights | Prism"')
+    expect(row).toContain(String(metadata.description))
+    expect(row).toContain(String(metadata.alternates?.canonical))
+  })
   test("page one canonicalizes to /blog", async () => {
     expect(await canonicalFor({})).toBe("https://www.design-prism.com/blog")
     expect(await canonicalFor({ page: "1" })).toBe("https://www.design-prism.com/blog")

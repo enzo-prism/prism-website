@@ -53,11 +53,9 @@ The sanitizer drops emails, phone numbers, raw URLs, and anything in
 plus a Google Ads conversion. Two modes:
 
 - `pending` (default) stores context in sessionStorage; the thank-you route
-  mounts `LeadSuccessTracker`, which consumes it and fires. The waitlist is the
-  live first-party case (`/waitlist/thank-you`). Legacy `/thank-you?source=apply`
+  mounts `LeadSuccessTracker`, which consumes it and fires. The waitlist instead uses immediate mode after Formspree accepts; its thank-you page does not emit a lead. Legacy `/thank-you?source=apply`
   keeps `ApplySuccessTracker`, but nothing posts to it anymore.
-- `immediate` fires inline on confirmed submit. Use when the form shows an
-  in-page success screen. Historical users were the retired `/website-intake`
+- `immediate` fires inline on confirmed submit. Use after confirmed acceptance, including before a redirect. The waitlist uses this mode with a stable `transaction_id` shared with the Formspree `submission_id`. Historical users were the retired `/website-intake`
   and `/contact` forms (both now 308 to `/waitlist`).
 
 **`/contact` page-view leak (historical).** `/contact` `generate_lead` once equalled
@@ -286,7 +284,7 @@ have.
 
 ### Waitlist funnel (2026-09-14)
 
-Prism is at capacity, so `/waitlist` is the only live sales form. `WaitlistForm` is a five-step flow (`focus`, `timing`, `about`, `links`, `goals`) and emits `waitlist_form_view` (`prefilled_focus`, which only ever holds services because `parseWaitlistFocus` ignores `?focus=not-sure`; `resumed_step` when a same-tab draft is restored), `waitlist_form_start` (once, on the first interaction; `step`, `step_name`), `waitlist_step_view` (once per step per page load) and `waitlist_step_complete` (on Continue, and on the final submit) with `step` 1–5 and `step_name`, so drop-off per step is `step_view` minus `step_complete` for each `step_name`. Validation failures emit `waitlist_validation_error` (`step`, `step_name`, `field_name` from a bounded allowlist). Then `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`, 0-4, services only: the "Not sure yet" option counts as 0), and `waitlist_submit_error` (`reason` `non_ok_response` | `network_failure`, `status`). The two 2026-10-12 answers stay in the Formspree payload only: "Not sure yet" posts as `focus[]=not-sure` (exclusive with the services) and the "I don't have a website yet" box posts `no_website=yes` with an empty `link_website`; neither is sent to GA or Vercel as its own parameter. After Formspree accepts, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist' })` emits `form_submit_success` and stores a pending lead; `/waitlist/thank-you` mounts `LeadSuccessTracker`, which fires `generate_lead` (and the Google Ads lead conversion) once with `lib/lead-values.ts` `waitlist: 120`. Every "Join the waitlist" CTA in page content fires `cta_click` through `TrackedLink` (usually via `WaitlistButton` or `FinalCta` from `components/prism/*`) with `cta_text: "join the waitlist"` and a `cta_location` such as `homepage hero`, `homepage final cta`, `pricing hero`, `pricing offers · Content`, `pricing offers · Ads`, `pricing offers · AEO`, `pricing final cta`, `websites hero`, `content final cta`, `ads hero`, `aeo hero`, `aeo inline cta`, `services core · Website`, `dental website hero`, or `footer`. The header pill and the Services menu card fire `navigation` (`trackNavigation`, `link_text` `Header waitlist` / `Services menu waitlist`). `/waitlist/thank-you` links (social channels, refer a friend, see the work, wall of love, back to home) fire `cta_click` with `cta_location: "waitlist thank you"`. Vercel custom events map the eight waitlist events (`Waitlist Form Viewed`, `Waitlist Form Started`, `Waitlist Step Viewed`, `Waitlist Step Completed`, `Waitlist Validation Error`, `Waitlist Submit Attempted`, `Waitlist Submit Succeeded`, `Waitlist Submit Error`) in `lib/vercel-analytics.ts`, bound `step` to 1–5, `step_name` to the known ids, and `focus_count` to 0-4, and allowlist `/waitlist` plus the `?focus=` variants as hub destinations. No names, emails, phones, URLs, or free text reach GA or Vercel.
+Prism is at capacity, so `/waitlist` is the only live sales form. `WaitlistForm` is a five-step flow (`focus`, `timing`, `about`, `links`, `goals`) and emits `waitlist_form_view` (`prefilled_focus`, which only ever holds services because `parseWaitlistFocus` ignores `?focus=not-sure`; `resumed_step` when a same-tab draft is restored), `waitlist_form_start` (once, on the first interaction; `step`, `step_name`), `waitlist_step_view` (once per step per page load) and `waitlist_step_complete` (on Continue, and on the final submit) with `step` 1–5 and `step_name`, so drop-off per step is `step_view` minus `step_complete` for each `step_name`. Validation failures emit `waitlist_validation_error` (`step`, `step_name`, `field_name` from a bounded allowlist). Then `waitlist_submit_attempt`, `waitlist_submit_success` (`focus_count`, 0-4, services only: the "Not sure yet" option counts as 0), and `waitlist_submit_error` (`reason` `non_ok_response` | `network_failure`, `status`). The two 2026-10-12 answers stay in the Formspree payload only: "Not sure yet" posts as `focus[]=not-sure` (exclusive with the services) and the "I don't have a website yet" box posts `no_website=yes` with an empty `link_website`; neither is sent to GA or Vercel as its own parameter. After Formspree accepts, `trackFormSubmission('waitlist', 'waitlist_page', { lead_type: 'waitlist', transaction_id: submissionId, conversionMode: 'immediate' })` emits `form_submit_success` and `generate_lead` (plus the Google Ads lead conversion) before navigation. `/waitlist/thank-you` does not mount a conversion tracker. The accepted submission's opaque `submission_id` is sent to Formspree and as the conversion `transaction_id`; it is preserved across retries and same-tab draft restoration. A second click after acceptance only retries navigation. The lead keeps its `lib/lead-values.ts` weight of `waitlist: 120`. Every "Join the waitlist" CTA in page content fires `cta_click` through `TrackedLink` (usually via `WaitlistButton` or `FinalCta` from `components/prism/*`) with `cta_text: "join the waitlist"` and a `cta_location` such as `homepage hero`, `homepage final cta`, `pricing hero`, `pricing offers · Content`, `pricing offers · Ads`, `pricing offers · AEO`, `pricing final cta`, `websites hero`, `content final cta`, `ads hero`, `aeo hero`, `aeo inline cta`, `services core · Website`, `dental website hero`, or `footer`. The header pill and the Services menu card fire `navigation` (`trackNavigation`, `link_text` `Header waitlist` / `Services menu waitlist`). `/waitlist/thank-you` links (social channels, refer a friend, see the work, wall of love, back to home) fire `cta_click` with `cta_location: "waitlist thank you"`. Vercel custom events map the eight waitlist events (`Waitlist Form Viewed`, `Waitlist Form Started`, `Waitlist Step Viewed`, `Waitlist Step Completed`, `Waitlist Validation Error`, `Waitlist Submit Attempted`, `Waitlist Submit Succeeded`, `Waitlist Submit Error`) in `lib/vercel-analytics.ts`, bound `step` to 1–5, `step_name` to the known ids, and `focus_count` to 0-4, and allowlist `/waitlist` plus the `?focus=` variants as hub destinations. No names, emails, phones, URLs, or free text reach GA or Vercel.
 
 Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because their routes 308-redirect to `/waitlist`.
 
@@ -388,3 +386,43 @@ hashed customer-data sharing merely because helper code exists.
 References: [GA SPA measurement](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications),
 [custom definitions](https://support.google.com/analytics/answer/14240153),
 [data retention](https://support.google.com/analytics/answer/7667196).
+
+
+### Receipt reconciliation and first-touch referrers
+
+Formspree's received submissions remain the durable source of truth, independently
+of browser tracking. The waitlist sends an opaque `submission_id` with each
+application and the same value as `transaction_id` on `generate_lead`. Retries
+reuse the ID; Formspree does not promise idempotent POSTs, so repeated receipts
+with that ID must be reviewed/deduplicated in the lead workflow. GA4 does not
+automatically deduplicate arbitrary lead events by transaction ID. Keep these
+IDs out of custom dimensions and never use email/phone as a receipt key.
+
+For a read-only comparison, project exports from the same completed time window
+and timezone into two JSON arrays (no names, emails, phones or free text):
+
+- Receipt rows: `{ "submission_id": "waitlist-<uuid>", "classification": "accepted" }`.
+  Classification defaults to `accepted`; explicitly label `spam`, `test` or
+  `rejected` rows. Older receipts without IDs stay in an unidentified bucket.
+- GA4 rows: `{ "event_name": "generate_lead", "transaction_id": "waitlist-<uuid>", "event_count": 1 }`.
+  Count is a positive integer and defaults to one for event-level exports.
+
+Run `pnpm analytics:reconcile-waitlist --submissions /private/receipts.json --events /private/events.json`.
+It reports identified matches, duplicate IDs, missing events, events without
+receipts and unidentified legacy records. Extra source fields are never printed.
+Do not commit input exports. Missing GA4 events can reflect consent, blocking or
+failed delivery; this report does not manufacture leads or infer a cause. It
+does not fetch or modify either account, configure webhooks, or backfill history.
+
+`first_touch_referrer_host` records only the original external HTTP(S) hostname
+for Formspree attribution. Paths, query strings and fragments are not retained
+in that field and it is not added to analytics events. It remains paired with
+the first landing path and first-touch UTMs; a later campaign does not fill an
+earlier empty first-touch source. Existing attribution entries without a
+referrer remain unknown until expiry, rather than being backfilled from a later
+visit. Latest campaign UTMs retain their existing behavior.
+
+Verification: accepted/failed/network-failure/double-click/retry/draft-restore
+form tests; direct/reloaded confirmation pages must emit no lead. Validate
+browser network events separately from the public tag audit. Run reconciliation
+on real account exports after deployment; local fixtures are not business data.

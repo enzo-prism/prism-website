@@ -584,6 +584,15 @@ export default function ServicesPage() {
               description="We start with the foundation, then bring in more services as your goals expand."
               titleClassName="max-w-[16ch]"
             />
+            <TrackedLink
+              href="/blog/prism-approach-small-business-growth"
+              label="Read the small business growth approach"
+              location="services growth approach"
+              className="mt-6 inline-flex items-center gap-1.5 text-foreground underline underline-offset-4"
+            >
+              Read how the website, ads, and local presence work together
+              <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
+            </TrackedLink>
             <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
               {workflow.map((step, index) => (
                 <li key={step.title} className="min-w-0 bg-card">

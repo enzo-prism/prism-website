@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   ArrowUpRight,
+  ArrowRight,
   BarChart3,
   Clock,
   Compass,
@@ -699,6 +700,16 @@ export default function AdsPage() {
         />
 
         <ServiceSiblings current="ads" />
+
+        <Section aria-label="Google Ads troubleshooting" className="pt-0 sm:pt-0">
+          <p className="max-w-3xl text-muted-foreground">
+            Google Ads paused because the destination will not load?{' '}
+            <Link href="/blog/google-ads-destination-not-working" className="inline-flex items-center gap-1.5 text-foreground underline underline-offset-4">
+              Check the destination troubleshooting guide
+              <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
+            </Link>
+          </p>
+        </Section>
 
         <FinalCta
           location="ads final cta"

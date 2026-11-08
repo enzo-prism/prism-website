@@ -14,6 +14,8 @@ export type AttributionPayload = {
   first_touch_medium?: string
   first_touch_campaign?: string
   first_touch_at?: string
+  /** Hostname only, captured on the original entry, never the submit page. */
+  first_touch_referrer_host?: string
   submission_path?: string
   referrer?: string
   timestamp?: string
@@ -36,6 +38,7 @@ const ATTRIBUTION_FIELDS: Array<keyof AttributionPayload> = [
   'first_touch_medium',
   'first_touch_campaign',
   'first_touch_at',
+  'first_touch_referrer_host',
   'submission_path',
   'referrer',
   'timestamp',
@@ -66,6 +69,22 @@ function parseAttributionFromUrl(): AttributionPayload {
   }
 }
 
+function getExternalReferrerHost(): string | undefined {
+  try {
+    const referrer = new URL(document.referrer)
+    if (!['http:', 'https:'].includes(referrer.protocol)) return undefined
+    const host = referrer.hostname.toLowerCase()
+    const currentHost = window.location.hostname.toLowerCase()
+    // www and apex are the same site, including when development uses localhost.
+    if (host.replace(/^www\./, '') === currentHost.replace(/^www\./, '')) {
+      return undefined
+    }
+    return host
+  } catch {
+    return undefined
+  }
+}
+
 function readStoredAttribution():
   | (AttributionPayload & { savedAt?: number })
   | null {
@@ -91,16 +110,20 @@ function writeStoredAttribution(payload: AttributionPayload) {
   if (typeof window === 'undefined') return
 
   try {
-    const existing = readStoredAttribution() ?? {}
+    const existing = readStoredAttribution()
     const merged: AttributionPayload & { savedAt: number } = {
       ...existing,
       ...payload,
-      landing_path: existing.landing_path ?? window.location.pathname,
-      first_touch_source: existing.first_touch_source ?? payload.utm_source,
-      first_touch_medium: existing.first_touch_medium ?? payload.utm_medium,
+      landing_path: existing?.landing_path ?? window.location.pathname,
+      first_touch_source: existing ? existing.first_touch_source : payload.utm_source,
+      first_touch_medium: existing ? existing.first_touch_medium : payload.utm_medium,
       first_touch_campaign:
-        existing.first_touch_campaign ?? payload.utm_campaign,
-      first_touch_at: existing.first_touch_at ?? new Date().toISOString(),
+        existing ? existing.first_touch_campaign : payload.utm_campaign,
+      first_touch_at: existing?.first_touch_at ?? new Date().toISOString(),
+      // Do not backfill old entries from a later visit's referrer.
+      first_touch_referrer_host: existing
+        ? existing.first_touch_referrer_host
+        : getExternalReferrerHost(),
       savedAt: Date.now(),
     }
 
@@ -147,6 +170,7 @@ export function getAttributionContext(): AttributionPayload {
     first_touch_medium: stored.first_touch_medium,
     first_touch_campaign: stored.first_touch_campaign,
     first_touch_at: stored.first_touch_at,
+    first_touch_referrer_host: stored.first_touch_referrer_host,
   }
 }
 

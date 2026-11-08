@@ -184,14 +184,14 @@ describe('/waitlist', () => {
 })
 
 describe('/waitlist/thank-you', () => {
-  it('celebrates, names the live intake month, and keeps the lead tracker', () => {
+  it('celebrates without emitting a second lead from the confirmation page', () => {
     const { container } = render(<WaitlistThankYouPage />)
     const month = getWaitlistIntakeMonth().month
 
     expect(
       screen.getByRole('heading', { level: 1, name: /you’re on the list\./i }),
     ).toBeInTheDocument()
-    expect(screen.getByTestId('lead-success-tracker')).toBeInTheDocument()
+    expect(screen.queryByTestId('lead-success-tracker')).not.toBeInTheDocument()
 
     const steps = within(
       screen.getByRole('heading', { level: 2, name: /what happens next/i })
