@@ -5,7 +5,7 @@ import PricingPageClient from './client-page'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Pricing',
+  titleStem: 'Pricing for website design, ads and AEO',
   description:
     'Compare Prism plans for websites, content, ads, and AEO. Join the waitlist and agree on the scope and price before work begins.',
   path: '/pricing',

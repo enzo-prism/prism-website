@@ -82,7 +82,7 @@ These improvements follow [Google's AI-search guidance](https://developers.googl
 - Add blog posts to `INDEXABLE_BLOG_SLUGS` only when they strengthen growth, local visibility, AI search, dental, or another deliberate specialty authority.
 - Leave noindex pages crawlable unless the page is private or API-only. Search engines need to see the meta noindex directive.
 - Keep `public/llms.txt` aligned with the same curated growth map. It should not become a sitewide route index.
-- `/local-seo-agency` and `/local-seo-services` are intentional indexable growth-system routes. Broad utility routes like the parent `/ai-agents` stay noindex while `/ai-agents/dental` remains indexable.
+- `/local-seo-agency` is an intentional indexable growth-system route; `/local-seo-services` was merged into it on 2026-11-09 and 308s there. Broad utility routes like the parent `/ai-agents` stay noindex while `/ai-agents/dental` remains indexable.
 
 When search visibility changes, run:
 

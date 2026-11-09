@@ -115,8 +115,7 @@ const coreServices: CoreService[] = [
     summary:
       'Keep your practice or storefront discoverable with accurate listings, review workflows, and local search reporting.',
     learnMoreLinks: [
-      { label: 'Local SEO services', href: '/local-seo-services' },
-      { label: 'Local SEO agency', href: '/local-seo-agency' },
+      { label: 'Local SEO agency and services', href: '/local-seo-agency' },
       { label: 'Dentist SEO', href: '/dental-practice-seo-expert' },
       { label: 'SEO audit service', href: '/seo/audit' },
       { label: 'AEO for AI search', href: '/aeo' },
@@ -301,7 +300,7 @@ const inlineLinkClassName =
   'group/link inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Services',
+  titleStem: 'Marketing services for small businesses',
   description:
     'Website design, content, ads, and AEO: the four Prism services that help your business get found, trusted, and chosen, on Google and in AI answers.',
   path: '/services',

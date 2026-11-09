@@ -32,7 +32,7 @@ type Platform = {
 }
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Local listings',
+  titleStem: 'Local listings management and cleanup',
   description:
     'Keep your business accurate across Google, Apple, Yelp, Bing, Facebook, and other local directories.',
   path: '/local-listings',
@@ -314,11 +314,7 @@ export default async function LocalListingsPage() {
           title="your listing is the first impression."
           description={
             <>
-              Need the full plan beyond listings? Explore our{' '}
-              <Link href="/local-seo-services" className={inlineLink}>
-                local seo services
-              </Link>{' '}
-              or work with Prism as your{' '}
+              Need the full plan beyond listings? Work with Prism as your{' '}
               <Link href="/local-seo-agency" className={inlineLink}>
                 local seo agency
               </Link>

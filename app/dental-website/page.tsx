@@ -224,7 +224,7 @@ const buildSteps = [
 ]
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Dental websites',
+  titleStem: 'Dental website design for practices',
   description:
     'Fast, mobile-first dental websites that earn patient trust and make booking an appointment easy.',
   path: '/dental-website',

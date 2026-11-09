@@ -31,7 +31,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Dental SEO',
+  titleStem: 'Dental SEO agency for dental practices',
   description: 'Improve Google Maps visibility, treatment pages, and organic search with dental SEO tied to patient calls.',
   path: "/dental-practice-seo-expert",
   ogImage: "/prism-opengraph.png",

@@ -48,7 +48,7 @@ import { ADS_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Ads',
+  titleStem: 'Google, Meta and TikTok ads management',
   description:
     'Google, Meta, TikTok, and Yelp ad campaigns with creative, landing pages, and tracking focused on qualified calls, inquiries, and appointments.',
   path: '/ads',

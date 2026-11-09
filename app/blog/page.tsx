@@ -56,7 +56,10 @@ export async function generateMetadata({
     : 1
 
   return buildRouteMetadata({
-    titleStem: page > 1 ? `Growth insights, page ${page}` : 'Growth insights',
+    titleStem:
+      page > 1
+        ? `Blog, page ${page}`
+        : 'Blog: websites, SEO, ads and AI search',
     description:
       'Practical lessons on websites, search, AI, ads, and local growth from real Prism work.',
     path: buildPageUrl({ category, page }),

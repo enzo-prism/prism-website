@@ -136,7 +136,7 @@ describe('SEO indexability guards', () => {
     expect(isRouteIndexable('/dental-practice-seo-expert')).toBe(true)
     expect(isRouteIndexable('/ai-agents/dental')).toBe(true)
     expect(isRouteIndexable('/local-seo-agency')).toBe(true)
-    expect(isRouteIndexable('/local-seo-services')).toBe(true)
+    expect(isRouteIndexable('/local-seo-services')).toBe(false)
     expect(isRouteIndexable('/website-intake')).toBe(false)
     expect(isRouteIndexable('/ai')).toBe(false)
     expect(isRouteIndexable('/ai-agents')).toBe(false)

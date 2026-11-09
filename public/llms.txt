@@ -45,8 +45,7 @@ Important notes for LLMs and agents:
 - [SEO](https://www.design-prism.com/seo)
 - [SEO audit](https://www.design-prism.com/seo/audit)
 - [Dental SEO expert](https://www.design-prism.com/dental-practice-seo-expert)
-- [Local SEO agency](https://www.design-prism.com/local-seo-agency)
-- [Local SEO services](https://www.design-prism.com/local-seo-services)
+- [Local SEO agency and services](https://www.design-prism.com/local-seo-agency)
 - [Local listings](https://www.design-prism.com/local-listings)
 - [ChatGPT Ads strategy and implementation](https://www.design-prism.com/chatgpt-ads)
 - [Google Ads for dentists](https://www.design-prism.com/google/dental-ads)
@@ -142,9 +141,7 @@ Best measured examples (verified October 4, 2026):
 - [Prism's approach to small business growth](https://www.design-prism.com/blog/prism-approach-small-business-growth)
 - [The Prism flywheel for brick-and-mortar growth](https://www.design-prism.com/blog/prism-flywheel-skyrocket-brick-and-mortar-growth)
 - [Who Prism is for](https://www.design-prism.com/blog/who-prism-is-for)
-- [2026 belongs to the founders who can delegate](https://www.design-prism.com/blog/2026-belongs-to-the-founders-who-can-delegate)
 - [AI agents and agentic commerce for local business](https://www.design-prism.com/blog/ai-agents-agentic-commerce-local-business)
-- [Claude Code to Figma](https://www.design-prism.com/blog/claude-code-to-figma-why-this-changes-how-we-build)
 - [Dental software and AI](https://www.design-prism.com/blog/ai-rip-eyes-out-dental-software)
 
 

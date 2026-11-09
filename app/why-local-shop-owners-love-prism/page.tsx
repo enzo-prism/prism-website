@@ -226,8 +226,8 @@ export default function LocalShopOwnersPage() {
           featuredIndex={0}
           footer={
             <p className="max-w-3xl text-pretty text-[15px] leading-relaxed text-muted-foreground">
-              Explore our <InlineLink href="/local-seo-services">local seo services</InlineLink> or work with Prism as
-              your <InlineLink href="/local-seo-agency">local seo agency</InlineLink>.
+              Explore our <InlineLink href="/local-seo-agency">local seo services</InlineLink> and see how Prism
+              works as your local seo agency.
             </p>
           }
         />

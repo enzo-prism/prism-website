@@ -225,7 +225,7 @@ const SEO_IMPACT: PrismImpactConfig = {
     },
     {
       label: "Local SEO services",
-      href: "/local-seo-services",
+      href: "/local-seo-agency",
       kind: "internal",
       reason: "Listings, maps, and trust layer upgrades for local demand.",
     },

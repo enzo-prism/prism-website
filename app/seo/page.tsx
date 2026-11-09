@@ -28,7 +28,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { SearchModesDiagram } from "./search-modes-diagram"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Local SEO',
+  titleStem: 'SEO services for small businesses',
   description: 'Improve local rankings with technical cleanup, clear pages, reviews, listings, and authority building.',
   path: "/seo",
   ogImage: "/prism-opengraph.png",
@@ -153,8 +153,7 @@ export default async function SeoPage() {
         "Reporting tied to calls, forms, and bookings",
       ],
       links: [
-        { label: "Local SEO services", href: "/local-seo-services" },
-        { label: "Local SEO agency", href: "/local-seo-agency" },
+        { label: "Local SEO agency and services", href: "/local-seo-agency" },
       ],
     },
     {
