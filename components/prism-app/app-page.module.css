@@ -1,5 +1,7 @@
-/* /app motion. Transform and opacity only. Base styles are the finished
-   frame; everything that hides or moves content is gated below. */
+/* /app. Motion is transform and opacity only. Base styles are the finished
+   frame; everything that hides or moves content is gated behind
+   prefers-reduced-motion: no-preference or a [data-armed] set after
+   hydration. */
 
 /* ---- Phone --------------------------------------------------------------- */
 
@@ -83,42 +85,44 @@
   height: 11%;
 }
 
-.phoneGlare {
-  display: none;
-}
-
 /* ---- Hero ---------------------------------------------------------------- */
 
-.heroTrack {
-  position: relative;
-}
-
-.heroStage {
-  --p: 0;
-  --e: 0;
-  --s: 0;
-  --lift: 0px;
-  --phone: min(20.5rem, 70vw);
+.hero {
   position: relative;
   isolation: isolate;
-  overflow-x: clip;
-  padding-bottom: 3.5rem;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 7rem;
+  background: linear-gradient(to top, var(--background) 30%, transparent);
+  pointer-events: none;
+}
+
+.heroGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2.5rem;
+  padding-top: clamp(2rem, 5svh, 3.5rem);
 }
 
 .heroCopy {
-  position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: clamp(1.5rem, 4svh, 3.25rem);
   text-align: center;
 }
 
 .heroTitle {
-  margin-top: clamp(0.875rem, 2.2svh, 1.5rem);
   padding-bottom: 0.08em;
-  font-size: min(clamp(2.85rem, 1.55rem + 5.6vw, 6rem), 13svh);
+  font-size: clamp(2.85rem, 1.55rem + 5.6vw, 5.75rem);
   font-weight: 600;
   line-height: 0.96;
   letter-spacing: -0.055em;
@@ -127,95 +131,117 @@
 
 .heroLead {
   max-width: 38ch;
-  margin-top: clamp(0.75rem, 1.9svh, 1.25rem);
-  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.1875rem);
-  line-height: 1.45;
+  margin-top: 1.25rem;
 }
 
 .heroActions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.875rem;
+  gap: 1rem;
   width: 100%;
-  margin-top: clamp(1rem, 2.6svh, 1.75rem);
+  margin-top: 1.75rem;
 }
 
-@media (min-width: 640px) {
-  .heroActions {
-    width: auto;
-  }
+.heroButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
 }
 
-.heroSlot {
-  position: relative;
-  z-index: 3;
-  width: var(--phone);
-  margin: clamp(1.75rem, 4svh, 2.75rem) auto 0;
-}
-
-.heroSideLeft,
-.heroSideRight {
+/* A QR code only helps someone at a desk with a phone beside them. */
+.heroQr {
   display: none;
 }
 
-.heroCenter {
+.heroScene {
+  --phone: min(21rem, 74vw);
   position: relative;
-  z-index: 2;
+  justify-self: center;
+  width: 100%;
+  height: 29rem;
+}
+
+.heroEntrance {
+  position: relative;
+  width: var(--phone);
+  margin: 0 auto;
+}
+
+.heroPhone {
+  width: 100%;
 }
 
 .heroHalo {
-  display: none;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 58rem;
+  height: 58rem;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    oklch(0.66 0.16 258 / 14%) 11deg,
+    transparent 24deg 36deg,
+    oklch(0.63 0.19 295 / 11%) 48deg,
+    transparent 60deg 72deg
+  );
+  -webkit-mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
+  mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .heroNotifications {
   position: absolute;
-  top: 10.5%;
+  top: calc(var(--phone) * 0.62);
   left: 50%;
-  width: min(calc(100vw - 2.5rem), 23.5rem);
-  height: 4rem;
+  width: min(calc(100vw - 2.5rem), 25.5rem);
+  height: 14.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
   transform: translateX(-50%);
 }
 
-.heroNotification {
-  position: absolute;
-  inset: 0;
+.notification {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.625rem 0.875rem 0.625rem 0.75rem;
+  height: 4.5rem;
+  padding: 0 1rem 0 0.75rem;
   border: 1px solid oklch(1 0 0 / 11%);
-  border-radius: 1.3rem;
+  border-radius: 1.4rem;
   background: oklch(0.21 0.005 286);
   box-shadow: 0 22px 44px -16px oklch(0 0 0 / 88%);
-  transform-origin: 50% 0;
+}
+
+/* Newest on top. Each slot is one notification plus its gap (5rem). */
+.heroNotification {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 
 .heroNotification:nth-child(1) {
-  z-index: 1;
-  opacity: 0.5;
-  transform: translate3d(0, 1.625rem, 0) scale(0.88);
+  transform: translate3d(0, 10rem, 0);
 }
 
 .heroNotification:nth-child(2) {
-  z-index: 2;
-  opacity: 0.8;
-  transform: translate3d(0, 0.8125rem, 0) scale(0.94);
-}
-
-.heroNotification:nth-child(3) {
-  z-index: 3;
+  transform: translate3d(0, 5rem, 0);
 }
 
 .heroNote {
-  position: relative;
-  z-index: 2;
-  margin-top: 1.5rem;
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0.75rem;
+  left: 0;
   padding-inline: 1.25rem;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.25rem;
   text-align: center;
   color: var(--subtle-foreground);
@@ -238,56 +264,56 @@
   }
 }
 
-/* Banners land one at a time, each pushing the last down the stack, then
+/* Notifications land one at a time, each pushing the last down a slot, then
    hold. Data never rewinds in view. */
 @keyframes app-note-first {
   0%,
-  8% {
+  6% {
     opacity: 0;
-    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+    transform: translate3d(0, -3rem, 0) scale(0.96);
   }
-  16%,
-  42% {
+  14%,
+  38% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
-  50%,
-  76% {
-    opacity: 0.8;
-    transform: translate3d(0, 0.8125rem, 0) scale(0.94);
+  46%,
+  70% {
+    opacity: 1;
+    transform: translate3d(0, 5rem, 0) scale(1);
   }
-  84%,
+  78%,
   100% {
-    opacity: 0.5;
-    transform: translate3d(0, 1.625rem, 0) scale(0.88);
+    opacity: 1;
+    transform: translate3d(0, 10rem, 0) scale(1);
   }
 }
 
 @keyframes app-note-second {
   0%,
-  42% {
+  38% {
     opacity: 0;
-    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+    transform: translate3d(0, -3rem, 0) scale(0.96);
   }
-  50%,
-  76% {
+  46%,
+  70% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
-  84%,
+  78%,
   100% {
-    opacity: 0.8;
-    transform: translate3d(0, 0.8125rem, 0) scale(0.94);
+    opacity: 1;
+    transform: translate3d(0, 5rem, 0) scale(1);
   }
 }
 
 @keyframes app-note-third {
   0%,
-  76% {
+  70% {
     opacity: 0;
-    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+    transform: translate3d(0, -3rem, 0) scale(0.96);
   }
-  84%,
+  78%,
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
@@ -299,8 +325,12 @@
     animation: app-entrance 1.25s cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
   }
 
+  .heroHalo {
+    animation: app-halo-spin 70s linear infinite;
+  }
+
   .heroNotification {
-    animation: 5.4s cubic-bezier(0.22, 1, 0.36, 1) 900ms both;
+    animation: 4.6s cubic-bezier(0.22, 1, 0.36, 1) 900ms both;
   }
 
   .heroNotification:nth-child(1) {
@@ -316,365 +346,853 @@
   }
 }
 
-/* Pinned scene. Scroll writes --p, --e and --s on the stage. */
-@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
-  .heroTrack {
-    height: calc(100svh - var(--prism-header-height, 4rem) + 95svh);
+@media (min-width: 640px) {
+  .heroButtons {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
   }
+}
 
-  .heroStage {
-    --phone: min(
-      20.5rem,
-      70vw,
-      calc((100svh - var(--prism-header-height, 4rem) - 5.5rem) * 0.46)
-    );
-    position: sticky;
-    top: var(--prism-header-height, 4rem);
-    height: calc(100svh - var(--prism-header-height, 4rem));
-    overflow: hidden;
-    padding-bottom: 0;
+@media (min-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr) 27rem;
+    align-items: center;
+    gap: 3rem;
   }
 
   .heroCopy {
-    opacity: calc(1 - var(--p) * 7);
-    transform: translate3d(0, calc(var(--p) * -9rem), 0);
-    will-change: transform, opacity;
+    align-items: flex-start;
+    padding-bottom: 4rem;
+    text-align: left;
   }
 
-  .heroSlot {
-    perspective: 1500px;
-    perspective-origin: 50% 20%;
+  .heroActions {
+    align-items: flex-start;
   }
 
-  .heroCenter {
-    transform: translate3d(0, calc(var(--lift) * var(--e) * -1), 0)
-      rotateX(calc((1 - var(--e)) * 13deg))
-      scale(calc(0.97 + var(--e) * 0.03));
-    transform-origin: 50% 0;
-    will-change: transform;
-  }
-
-  .heroSideLeft,
-  .heroSideRight {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    display: block;
-    opacity: min(1, calc(var(--s) * 2.4));
-    will-change: transform, opacity;
-  }
-
-  .heroSideLeft {
-    transform: translate3d(
-        calc(var(--s) * -80%),
-        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
-        0
-      )
-      rotateY(calc(var(--s) * 18deg)) scale(0.86);
-  }
-
-  .heroSideRight {
-    transform: translate3d(
-        calc(var(--s) * 80%),
-        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
-        0
-      )
-      rotateY(calc(var(--s) * -18deg)) scale(0.86);
-  }
-
-  .heroNotifications {
-    opacity: calc(1 - var(--e) * 3.2);
-    transform: translate3d(-50%, calc(var(--e) * -3rem), 0);
-  }
-
-  .phoneGlare {
-    position: absolute;
-    z-index: 2;
-    inset: -10% -60%;
-    display: block;
-    background: linear-gradient(
-      105deg,
-      transparent 42%,
-      oklch(1 0 0 / 9%) 49%,
-      oklch(1 0 0 / 3%) 54%,
-      transparent 60%
-    );
-    transform: translate3d(calc(-55% + var(--p) * 110%), 0, 0);
-    pointer-events: none;
-  }
-
-  .heroHalo {
-    position: absolute;
-    z-index: 0;
-    top: 66%;
-    left: 50%;
-    display: block;
-    width: 62rem;
-    height: 62rem;
-    background: repeating-conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      oklch(0.66 0.16 258 / 14%) 11deg,
-      transparent 24deg 36deg,
-      oklch(0.63 0.19 295 / 11%) 48deg,
-      transparent 60deg 72deg
-    );
-    -webkit-mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
-    mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
-    transform: translate(-50%, -50%);
-    animation: app-halo-spin 70s linear infinite;
-  }
-
-  .heroNote {
-    position: absolute;
-    right: 0;
-    bottom: 0.5rem;
-    left: 0;
-    margin-top: 0;
-    opacity: calc(var(--s) * 2 - 1);
+  .heroScene {
+    --phone: 22.5rem;
+    height: 34rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (min-width: 768px) {
-  .heroSideLeft {
-    transform: translate3d(
-        calc(var(--s) * -104%),
-        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
-        0
-      )
-      rotateY(calc(var(--s) * 16deg)) scale(0.88);
-  }
-
-  .heroSideRight {
-    transform: translate3d(
-        calc(var(--s) * 104%),
-        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
-        0
-      )
-      rotateY(calc(var(--s) * -16deg)) scale(0.88);
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .heroQr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    border: 1px solid oklch(1 0 0 / 9%);
+    border-radius: 1.25rem;
+    background: var(--card);
   }
 }
 
-/* ---- Tour ---------------------------------------------------------------- */
+/* ---- Demo ---------------------------------------------------------------- */
 
-.tour {
+.demo {
+  --tone: var(--spectrum-green);
   position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid oklch(1 0 0 / 8%);
+  border-radius: 1.75rem;
+  background: var(--card);
+}
+
+.demoHead {
+  position: relative;
+  order: 1;
+  min-width: 0;
+}
+
+/* On phones the screen sits between the tabs and the copy, so a tap on a
+   tab changes something in view. */
+.demoPanels {
+  order: 3;
+  min-width: 0;
+}
+
+.demoBar {
+  margin-top: 1.75rem;
+}
+
+.demoTabs {
   display: grid;
-  margin-top: 2.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
 }
 
-.tourStage,
-.tourSteps {
-  grid-area: 1 / 1;
-}
-
-.tourStage {
-  --phone: min(56vw, calc((100svh - var(--prism-header-height, 4rem) - 2.5rem) * 0.42));
-  position: sticky;
-  z-index: 0;
-  top: var(--prism-header-height, 4rem);
-  align-self: start;
-  height: calc(100svh - var(--prism-header-height, 4rem));
-  overflow: hidden;
-  padding-top: 0.625rem;
-}
-
-.tourStageInner {
+.demoTab {
   position: relative;
-}
-
-.tourSegments {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.tourSegment {
-  display: block;
-  height: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
   overflow: hidden;
-  border-radius: 2px;
-  background: oklch(1 0 0 / 12%);
+  padding: 0 0.75rem;
+  border: 1px solid oklch(1 0 0 / 10%);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    color 200ms,
+    background-color 200ms,
+    border-color 200ms;
 }
 
-.tourSegmentFill {
-  display: block;
-  height: 100%;
-  background: oklch(0.95 0 0);
-  transform-origin: 0 50%;
+.demoTab:hover {
+  border-color: oklch(1 0 0 / 22%);
+  color: var(--foreground);
 }
 
-.tourScene {
-  position: relative;
+.demoTab:focus-visible,
+.demoPlay:focus-visible {
+  outline: 3px solid color-mix(in oklch, var(--ring) 50%, transparent);
+  outline-offset: 2px;
 }
 
-.tourPhone {
-  z-index: 1;
-  width: var(--phone);
+.demoTab[aria-selected='true'] {
+  border-color: color-mix(in oklch, var(--tone) 55%, transparent);
+  background: color-mix(in oklch, var(--tone) 14%, transparent);
+  color: var(--foreground);
 }
 
-.tourScreen {
+.demoTab svg {
+  flex: none;
+}
+
+.demoTab[aria-selected='true'] svg {
+  color: var(--tone);
+}
+
+.demoTabFill {
   position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: inherit;
-  background: oklch(0 0 0);
-  box-shadow:
-    0 -1px 0 oklch(1 0 0 / 14%),
-    0 -1.5rem 3rem oklch(0 0 0 / 70%);
-  will-change: transform, opacity;
-}
-
-.tourGlow {
-  position: absolute;
-  top: -14%;
-  left: -30%;
-  width: 130%;
-  aspect-ratio: 1;
-  background: radial-gradient(
-    closest-side,
-    color-mix(in oklch, var(--tone) 30%, transparent),
-    transparent
-  );
-  pointer-events: none;
-}
-
-.tourFade {
-  position: absolute;
-  z-index: 2;
   right: 0;
   bottom: 0;
   left: 0;
-  height: 42%;
-  background: linear-gradient(to top, var(--background) 22%, transparent);
-  pointer-events: none;
-}
-
-.tourSteps {
-  position: relative;
-  z-index: 3;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  pointer-events: none;
-}
-
-.tourStep {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: calc(100svh - var(--prism-header-height, 4rem) + 2.5rem);
-}
-
-.tourCard {
-  position: sticky;
-  bottom: max(0.75rem, env(safe-area-inset-bottom));
-  padding: 1.125rem 1.25rem 1.25rem;
-  border: 1px solid oklch(1 0 0 / 10%);
-  border-radius: 1.5rem;
-  background: var(--popover);
-  box-shadow: 0 -18px 48px -16px oklch(0 0 0 / 80%);
-  pointer-events: auto;
-}
-
-.instrument {
-  position: absolute;
-  z-index: 2;
-  top: 12%;
-  left: calc(var(--phone) - 1.25rem);
-  width: min(9.25rem, calc(100% - var(--phone) + 1.25rem));
-  padding: 0.75rem;
-  border: 1px solid oklch(1 0 0 / 11%);
-  border-radius: 1.125rem;
-  background: oklch(0.21 0.005 286);
-  box-shadow: 0 20px 40px -16px oklch(0 0 0 / 88%);
-  will-change: transform, opacity;
-}
-
-.instrumentBars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 2.75rem;
-}
-
-.instrumentBar {
-  flex: 1 1 0;
-  min-width: 0;
-  border-radius: 1.5px;
+  height: 2px;
   background: var(--tone);
-  transform-origin: 50% 100%;
-}
-
-.instrumentWipe {
-  overflow: hidden;
-  height: 2.75rem;
-}
-
-.instrumentWipeInner {
-  height: 100%;
-}
-
-.instrumentTrack {
-  display: block;
-  height: 4px;
-  margin-top: 3px;
-  overflow: hidden;
-  border-radius: 4px;
-  background: oklch(1 0 0 / 9%);
-}
-
-.instrumentFill {
-  display: block;
-  height: 100%;
-  border-radius: 4px;
-  background: var(--tone);
+  transform: scaleX(0);
   transform-origin: 0 50%;
 }
 
-.instrumentLive {
+.demoPlay {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.25rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid oklch(1 0 0 / 10%);
+  border-radius: 50%;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition:
+    color 200ms,
+    border-color 200ms;
+}
+
+.demoPlay:hover {
+  border-color: oklch(1 0 0 / 22%);
+  color: var(--foreground);
+}
+
+.demoPanel {
+  margin-top: 0.5rem;
+}
+
+.demoTakeaway {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin-top: 1.25rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid color-mix(in oklch, var(--tone) 32%, transparent);
+  border-radius: 0.875rem;
+  background: color-mix(in oklch, var(--tone) 10%, transparent);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--foreground);
+  text-wrap: pretty;
+}
+
+.demoTakeawayDot {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--tone);
+  transform: translateY(-0.0625rem);
+}
+
+/* The phone rises out of the card's lower edge, large enough to read. */
+.demoStage {
+  --phone: min(100%, 23rem);
   position: relative;
+  order: 2;
+  display: flex;
+  justify-content: center;
+  height: 29rem;
+  margin-top: 1.75rem;
+  -webkit-mask-image: linear-gradient(to bottom, oklch(0 0 0) 84%, transparent);
+  mask-image: linear-gradient(to bottom, oklch(0 0 0) 84%, transparent);
+}
+
+.demoGlow {
+  position: absolute;
+  z-index: -1;
+  top: -6%;
+  left: 50%;
+  width: 46rem;
+  max-width: 180%;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklch, var(--tone) 26%, transparent),
+    transparent
+  );
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.demoPhone {
+  flex: none;
+  width: var(--phone);
+}
+
+.demoScreen {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.demoScreen[data-current] {
+  visibility: visible;
+  opacity: 1;
+}
+
+@keyframes app-demo-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes app-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .demoTabFill[data-run] {
+    animation: app-demo-fill 6.5s linear forwards;
+  }
+
+  .demo:hover .demoTabFill[data-run],
+  .demo:focus-within .demoTabFill[data-run] {
+    animation-play-state: paused;
+  }
+
+  [data-armed] .demoPanel:not([hidden]) {
+    animation: app-panel-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .demoScreen {
+    transform: translate3d(0, 2.5%, 0) scale(0.985);
+    transition:
+      opacity 280ms ease,
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 280ms;
+  }
+
+  .demoScreen[data-current] {
+    transform: none;
+    transition:
+      opacity 280ms ease,
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s;
+  }
+}
+
+@media (min-width: 1024px) {
+  .demo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 27rem;
+    grid-template-rows: auto auto;
+    align-content: center;
+    column-gap: 3rem;
+    padding: 3rem 3rem 0 3.5rem;
+  }
+
+  .demoHead {
+    grid-area: 1 / 1;
+  }
+
+  .demoPanels {
+    grid-area: 2 / 1;
+    padding-bottom: 3rem;
+  }
+
+  .demoTabs {
+    max-width: 28rem;
+  }
+
+  .demoPanel {
+    min-height: 13.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .demoStage {
+    grid-area: 1 / 2 / span 2;
+    align-self: end;
+    height: 37rem;
+    margin-top: 0;
+  }
+}
+
+/* ---- App screens --------------------------------------------------------- */
+
+/* Sizes are in --u, one iOS point on a 390pt-wide screen. */
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: oklch(0 0 0);
+  color: oklch(0.985 0 0);
+  text-align: left;
+}
+
+.statusBar,
+.screenBody {
+  --u: calc(100cqw / 390);
+  --ios-secondary: oklch(0.69 0.008 286);
+  --ios-card: oklch(0.2 0.004 286);
+  --ios-rule: oklch(1 0 0 / 11%);
+}
+
+.statusBar {
+  position: absolute;
+  z-index: 1;
+  top: calc(19 * var(--u));
+  right: calc(30 * var(--u));
+  left: calc(36 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(16 * var(--u));
+  font-weight: 600;
+}
+
+.statusIcons {
+  display: flex;
+  align-items: center;
+  gap: calc(7 * var(--u));
+}
+
+.statusSignal {
+  display: flex;
+  align-items: flex-end;
+  gap: calc(1.5 * var(--u));
+  height: calc(11 * var(--u));
+}
+
+.statusSignal i {
   display: block;
-  width: 0.4375rem;
-  height: 0.4375rem;
+  width: calc(3 * var(--u));
+  border-radius: calc(1 * var(--u));
+  background: currentColor;
+}
+
+.statusSignal i:nth-child(1) {
+  height: 40%;
+}
+
+.statusSignal i:nth-child(2) {
+  height: 60%;
+}
+
+.statusSignal i:nth-child(3) {
+  height: 80%;
+}
+
+.statusSignal i:nth-child(4) {
+  height: 100%;
+}
+
+.statusBattery {
+  width: calc(25 * var(--u));
+  height: calc(12 * var(--u));
+  border-radius: calc(4 * var(--u));
+  background: var(--spectrum-green);
+}
+
+.screenBody {
+  display: flex;
+  flex-direction: column;
+  padding: calc(60 * var(--u)) calc(16 * var(--u)) 0;
+  font-size: calc(17 * var(--u));
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.secondary {
+  display: block;
+  font-size: calc(15 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.strong {
+  display: block;
+  font-weight: 600;
+}
+
+.card {
+  padding: calc(14 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(24 * var(--u));
+  background: var(--ios-card);
+}
+
+.largeTitleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: calc(6 * var(--u)) calc(2 * var(--u)) calc(12 * var(--u));
+}
+
+.largeTitle {
+  font-size: calc(32 * var(--u));
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.siteName {
+  font-size: calc(12 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: calc(36 * var(--u));
+  height: calc(36 * var(--u));
+  border-radius: 50%;
+  background: var(--ios-card);
+}
+
+.avatar svg {
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+}
+
+.navTitle {
+  margin: calc(2 * var(--u)) 0 calc(20 * var(--u));
+  font-weight: 600;
+  text-align: center;
+}
+
+.live {
+  display: flex;
+  align-items: center;
+  gap: calc(16 * var(--u));
+  padding-left: calc(24 * var(--u));
+}
+
+.liveDot {
+  position: relative;
+  flex: none;
+  width: calc(9 * var(--u));
+  height: calc(9 * var(--u));
   border-radius: 50%;
   background: var(--tone);
 }
 
-/* Scenes play when their step arrives and reset while invisible. */
-[data-armed] .instrumentBar {
+.sectionLabel {
+  margin: calc(18 * var(--u)) calc(16 * var(--u)) calc(8 * var(--u));
+  font-size: calc(15 * var(--u));
+  font-weight: 600;
+  color: var(--ios-secondary);
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: calc(13 * var(--u));
+}
+
+.feedItem {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(12 * var(--u));
+}
+
+.feedItem > p {
+  flex: 1;
+  min-width: 0;
+}
+
+.feed .feedItem + .feedItem {
+  padding-top: calc(13 * var(--u));
+  border-top: 1px solid var(--ios-rule);
+}
+
+.feedIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(27 * var(--u));
+  height: calc(27 * var(--u));
+  border-radius: calc(7 * var(--u));
+  background: var(--tone);
+  color: oklch(1 0 0);
+}
+
+.feedIcon svg {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+}
+
+.feedHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(8 * var(--u));
+}
+
+.feedTime {
+  flex: none;
+  font-size: calc(13 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.feedFrom {
+  display: block;
+  margin-top: calc(2 * var(--u));
+  font-size: calc(13 * var(--u));
+  color: var(--tone);
+}
+
+.metric {
+  display: block;
+  width: 100%;
+  margin-top: calc(10 * var(--u));
+  text-align: left;
+  transition: background-color 200ms;
+}
+
+button.metric {
+  cursor: pointer;
+}
+
+button.metric:hover {
+  background: oklch(0.25 0.004 286);
+}
+
+.metricHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metricLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  font-size: calc(16 * var(--u));
+  font-weight: 600;
+  color: var(--tone);
+}
+
+.metricLabel svg {
+  width: calc(18 * var(--u));
+  height: calc(18 * var(--u));
+}
+
+.metricBody {
+  display: flex;
+  align-items: flex-end;
+  gap: calc(10 * var(--u));
+  margin-top: calc(6 * var(--u));
+}
+
+.metricBody > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.metricValue {
+  display: block;
+  font-size: calc(26 * var(--u));
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.metricNote {
+  display: block;
+  font-size: calc(13 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.metricChevron {
+  flex: none;
+  align-self: center;
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.spark,
+.sparkLine {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  gap: calc(2 * var(--u));
+  width: calc(84 * var(--u));
+  height: calc(38 * var(--u));
+}
+
+.spark i {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  border-radius: calc(1.5 * var(--u));
+  background: var(--tone);
+  transform-origin: 50% 100%;
+}
+
+.chartCard {
+  padding: calc(16 * var(--u));
+}
+
+.segments {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: calc(14 * var(--u));
+  padding: calc(2 * var(--u));
+  border-radius: calc(9 * var(--u));
+  background: oklch(0.27 0.004 286);
+  font-size: calc(13 * var(--u));
+  font-weight: 600;
+  text-align: center;
+}
+
+.segments span {
+  padding: calc(5 * var(--u)) 0;
+  border-radius: calc(7 * var(--u));
+}
+
+.segments span[data-selected] {
+  background: oklch(0.42 0.004 286);
+}
+
+.totalLabel {
+  font-size: calc(12 * var(--u));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ios-secondary);
+}
+
+.totalValue {
+  font-size: calc(32 * var(--u));
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.totalUnit {
+  margin-left: calc(6 * var(--u));
+  font-size: calc(16 * var(--u));
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ios-secondary);
+}
+
+.chart {
+  margin-top: calc(14 * var(--u));
+}
+
+.chartPlot {
+  position: relative;
+  height: calc(150 * var(--u));
+  margin-right: calc(28 * var(--u));
+}
+
+.chartRule {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--ios-rule);
+}
+
+.chartRule b {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 6 * var(--u));
+  font-size: calc(11 * var(--u));
+  font-weight: 400;
+  color: var(--ios-secondary);
+  transform: translateY(-50%);
+}
+
+.chartBars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: calc(2 * var(--u));
+}
+
+.chartBar {
+  flex: 1;
+  min-width: 0;
+  border-radius: calc(2 * var(--u)) calc(2 * var(--u)) 0 0;
+  background: var(--tone);
+  transform-origin: 50% 100%;
+}
+
+.chartWipe {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.chartWipeInner {
+  height: 100%;
+}
+
+.chartDates {
+  display: flex;
+  justify-content: space-around;
+  margin: calc(6 * var(--u)) calc(28 * var(--u)) 0 0;
+  font-size: calc(11 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.footnote {
+  margin: calc(8 * var(--u)) calc(16 * var(--u)) 0;
+  font-size: calc(12 * var(--u));
+  line-height: 1.35;
+  color: var(--ios-secondary);
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+}
+
+.highlightIcon {
+  display: grid;
+  flex: none;
+  color: var(--tone);
+}
+
+.highlightIcon svg {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+}
+
+.rows {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.rows p {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+  padding: calc(12 * var(--u)) 0;
+}
+
+.rows p + p {
+  border-top: 1px solid var(--ios-rule);
+}
+
+.rowValue {
+  color: var(--ios-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lock {
+  background:
+    radial-gradient(120% 55% at 50% 0%, oklch(0.36 0.11 268), transparent 70%),
+    radial-gradient(90% 40% at 80% 100%, oklch(0.3 0.1 300 / 60%), transparent 70%),
+    oklch(0.1 0.02 280);
+}
+
+.lockDate {
+  margin-top: calc(30 * var(--u));
+  font-size: calc(20 * var(--u));
+  font-weight: 500;
+  text-align: center;
+  color: oklch(1 0 0 / 85%);
+}
+
+.lockTime {
+  font-size: calc(96 * var(--u));
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Charts draw when their screen arrives and reset while it is away. */
+[data-armed] .demoScreen:not([data-on]) .chartBar,
+[data-armed] .demoScreen:not([data-on]) .spark i {
   transform: scaleY(0);
 }
 
-[data-armed] .instrumentFill {
-  transform: scaleX(0);
-}
-
-[data-armed] .instrumentWipe {
+[data-armed] .demoScreen:not([data-on]) .chartWipe {
   transform: translate3d(-101%, 0, 0);
 }
 
-[data-armed] .instrumentWipeInner {
+[data-armed] .demoScreen:not([data-on]) .chartWipeInner {
   transform: translate3d(101%, 0, 0);
 }
 
-[data-on] .instrumentBar {
-  transform: scaleY(1);
+[data-armed] .demoScreen:not([data-on]) .feed .feedItem {
+  opacity: 0;
+  transform: translate3d(0, calc(10 * var(--u)), 0);
+}
+
+[data-armed] .demoScreen[data-on] .chartBar,
+[data-armed] .demoScreen[data-on] .spark i {
   transition: transform 620ms cubic-bezier(0.2, 1.15, 0.35, 1)
-    calc(var(--i, 0) * 16ms);
+    calc(140ms + var(--i, 0) * 14ms);
 }
 
-[data-on] .instrumentFill {
-  transform: scaleX(1);
-  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1)
-    calc(var(--i, 0) * 16ms);
+[data-armed] .demoScreen[data-on] .chartWipe,
+[data-armed] .demoScreen[data-on] .chartWipeInner {
+  transition: transform 1s cubic-bezier(0.45, 0, 0.15, 1) 140ms;
 }
 
-[data-on] .instrumentWipe,
-[data-on] .instrumentWipeInner {
-  transform: translate3d(0, 0, 0);
-  transition: transform 1s cubic-bezier(0.45, 0, 0.15, 1);
+[data-armed] .demoScreen[data-on] .feed .feedItem {
+  transition:
+    opacity 420ms ease calc(140ms + var(--i, 0) * 90ms),
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1)
+      calc(140ms + var(--i, 0) * 90ms);
 }
 
 @keyframes app-live {
@@ -689,82 +1207,13 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .instrumentLive::after {
+  .liveDot::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 50%;
     background: var(--tone);
     animation: app-live 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-}
-
-@media (min-width: 1024px) {
-  .tour {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 33rem);
-    gap: 4.5rem;
-    margin-top: 1rem;
-  }
-
-  .tourSteps {
-    grid-area: 1 / 1;
-    pointer-events: auto;
-  }
-
-  .tourStage {
-    --phone: min(21rem, calc((100svh - var(--prism-header-height, 4rem) - 5.5rem) * 0.46));
-    grid-area: 1 / 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    padding-top: 0;
-  }
-
-  .tourStageInner {
-    width: var(--phone);
-  }
-
-  .tourSegments {
-    margin-bottom: 1rem;
-  }
-
-  .tourGlow {
-    top: -4%;
-    left: -55%;
-    width: 210%;
-  }
-
-  .tourFade {
-    display: none;
-  }
-
-  .tourStep {
-    justify-content: center;
-    min-height: 86svh;
-  }
-
-  .tourCard {
-    position: static;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
-  }
-
-  .instrument {
-    top: auto;
-    right: auto;
-    bottom: 13%;
-    left: -8.25rem;
-    width: 12rem;
-    padding: 1rem;
-  }
-
-  .instrumentBars,
-  .instrumentWipe {
-    height: 3.5rem;
   }
 }
 
@@ -854,18 +1303,10 @@
 .stepsLine {
   position: absolute;
   top: 0.75rem;
-  bottom: 3rem;
+  bottom: 2.5rem;
   left: 0.9375rem;
   width: 1px;
-  overflow: hidden;
-  background: oklch(1 0 0 / 12%);
-}
-
-.stepsFill {
-  position: absolute;
-  inset: 0;
-  background: oklch(0.95 0 0);
-  transform-origin: 50% 0;
+  background: oklch(1 0 0 / 14%);
 }
 
 .stepsNumber {

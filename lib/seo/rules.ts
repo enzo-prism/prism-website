@@ -25,6 +25,11 @@ export const SOCIAL_IMAGE_EXCEPTIONS: Readonly<Record<string, SocialImage>> = {
     url: "/case-studies/mach-1/og.jpg",
     alt: "Prism × Mach 1 case study: the Mach 1 homepage on a laptop and a phone",
   },
+  // Approved 2026-11-09: the iPhone app page shares its own card.
+  "/app": {
+    url: "/prism-app/og.jpg",
+    alt: "Prism app for iPhone: three website notifications on a Lock Screen",
+  },
 }
 
 export const BLOG_MANUAL_OVERRIDE_KEYWORDS = /(dental|seo|ads|local|website|agency|consultant|checklist|playbook)/i
