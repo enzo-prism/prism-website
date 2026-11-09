@@ -13,7 +13,7 @@ import { CAPACITY_MESSAGE } from '@/lib/waitlist'
 import FaqExplorer, { type FaqTopic } from './faq-explorer'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'FAQ',
+  titleStem: 'FAQ: services, pricing and the waitlist',
   description:
     'Answers about Prism pricing, timelines, services, and how our website, SEO, ads, and growth work fits together.',
   path: '/faq',

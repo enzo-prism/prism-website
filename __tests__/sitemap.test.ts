@@ -40,7 +40,6 @@ describe("sitemap", () => {
       "https://www.design-prism.com/seo/audit",
       "https://www.design-prism.com/ai-agents/dental",
       "https://www.design-prism.com/local-seo-agency",
-      "https://www.design-prism.com/local-seo-services",
       "https://www.design-prism.com/pricing",
       "https://www.design-prism.com/case-studies",
       "https://www.design-prism.com/case-studies/roseville-dental-academy",

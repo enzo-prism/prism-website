@@ -287,17 +287,10 @@ Quick reference for the pages we edit most often.
 - Hero, benefits grid, platform cards, and the founder VSL render before the audience + FAQ sections.
 - The video mirrors the copy on `/website-design` but points at the local-listings Cloudinary asset—update the `VideoPlayer` block in this file when you need a new transcript or duration.
 
-## Local SEO Services (`app/local-seo-services/page.tsx`)
-
-- Indexable local SEO service page. It supports the growth-system search cluster with concrete deliverables for Google Business Profile, listings, reviews, local pages, technical hygiene, and reporting tied to calls and leads.
-- Cross-links into `/seo` (methodology) and `/local-listings` (listings subsystem) so internal linking reinforces the topical cluster without duplicating content.
-- Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and is included in `lib/seo/search-visibility.ts`, `app/sitemap.ts`, and `public/llms.txt`.
-- Keep it human-first and avoid doorway patterns or keyword stuffing.
-
 ## Local SEO Agency (`app/local-seo-agency/page.tsx`)
 
 - Indexable local SEO agency page. It positions Prism as the execution partner for small businesses that need local search strategy plus implementation.
-- Links to `/local-seo-services` for the deliverables breakdown, and to `/seo` + `/local-listings` for supporting context.
+- Holds the deliverables breakdown (`#included`) that used to live on `/local-seo-services`; that page was merged here on 2026-11-09 and 308s to this route, so one page answers both "local seo agency" and "local seo services". Links to `/seo` + `/local-listings` for supporting context.
 - Includes structured data (`ServiceSchema`, `HowToSchema`, and `FAQSection`) and a “what we won’t do” section to keep messaging aligned with Google spam policies.
 - Keep it included in `lib/seo/search-visibility.ts`, `app/sitemap.ts`, and `public/llms.txt` unless product direction changes.
 

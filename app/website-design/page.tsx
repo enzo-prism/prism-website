@@ -43,14 +43,13 @@ import { getCaseStudyMetric } from '@/lib/case-study-data'
 import { WEBSITE_WAITLIST_CTA } from '@/lib/pricing-model'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
-const PAGE_TITLE = 'Website design'
 const PAGE_DESCRIPTION =
   'Custom website design for your brand: pages written around customer questions, mobile-first layouts, inquiry forms, and analytics, built by Prism.'
 const PAGE_PATH = '/website-design'
 const CANONICAL_URL = `https://www.design-prism.com${PAGE_PATH}`
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: PAGE_TITLE,
+  titleStem: 'Custom website design for small business',
   description: PAGE_DESCRIPTION,
   path: PAGE_PATH,
   ogImage: '/prism-opengraph.png',

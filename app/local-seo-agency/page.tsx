@@ -18,13 +18,25 @@ import SeoTextSection from "@/components/seo-text-section"
 import { Card } from "@/components/ui/card"
 import { HowToSchema, ServiceSchema } from "@/components/schema-markup"
 import { FREE_AUDIT_CTA_TEXT } from "@/lib/constants"
-import { ArrowUpRight, Ban, ClipboardList, Stethoscope, Wrench } from "lucide-react"
+import {
+  ArrowUpRight,
+  Ban,
+  BarChart3,
+  ClipboardList,
+  Code2,
+  FileText,
+  ListChecks,
+  MapPin,
+  Star,
+  Stethoscope,
+  Wrench,
+} from "lucide-react"
 import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Local SEO agency',
-  description: 'Improve Google Maps and local search visibility with listings, reviews, local pages, and clear reporting.',
+  titleStem: 'Local SEO agency for small businesses',
+  description: 'Local SEO services from one agency: Google Business Profile, listings, reviews, local pages, and reporting tied to calls and leads.',
   path: "/local-seo-agency",
   ogImage: "/prism-opengraph.png",
 })
@@ -82,6 +94,36 @@ const processSteps = [
   },
 ]
 
+// Merged from the retired /local-seo-services page (2026-11-09).
+const whatYouGet = [
+  {
+    title: "google business profile + map-pack lift",
+    description: "categories, services, photos, posts, and signals that improve relevance and drive clicks, calls, and directions.",
+  },
+  {
+    title: "local listings + citations",
+    description: "consistent name, address, phone, and business details across Apple, Yelp, Bing, and key directories.",
+  },
+  {
+    title: "reviews + reputation engine",
+    description: "review capture flows, response playbooks, and reporting on volume, recency, and sentiment.",
+  },
+  {
+    title: "local landing pages that convert",
+    description: "service and location pages built like clear answers, with schema, internal links, and conversion-ready layouts.",
+  },
+  {
+    title: "technical + on-page seo cleanup",
+    description: "indexing hygiene, canonical consistency, structured data, and page experience improvements that keep the foundation clean.",
+  },
+  {
+    title: "reporting that ties to revenue",
+    description: "track the actions that matter: calls, form fills, bookings, direction requests, and top queries.",
+  },
+]
+
+const WHAT_YOU_GET_ICONS = [MapPin, ListChecks, Star, FileText, Code2, BarChart3] as const
+
 const whatWeWontDo = [
   "keyword-stuff your business name in google business profile",
   "create dozens of thin, near-duplicate city pages (doorway patterns)",
@@ -113,7 +155,17 @@ const faqItems = [
   {
     question: "What’s included when we hire you as a local SEO agency?",
     answer:
-      "It depends on your locations and goals, but typically includes Google Business Profile optimization, listings/citations, review systems, local service/location pages with schema, technical hygiene, and reporting tied to calls and leads. For a detailed breakdown, see our local SEO services page.",
+      "It depends on your locations and goals, but typically includes Google Business Profile optimization, listings/citations, review systems, local service/location pages with schema, technical hygiene, and reporting tied to calls and leads. The full list is on this page under what you get.",
+  },
+  {
+    question: "Do you work with multi-location businesses?",
+    answer:
+      "Yes. We standardize data across locations, create location-specific pages and reporting, and build review systems that scale without sacrificing local nuance.",
+  },
+  {
+    question: "Do I need a new website for local SEO to work?",
+    answer:
+      "Not always. If your site is technically healthy and clear, we can improve structure and content in place. If the platform is slow or hard to update, rebuilding on a faster stack can accelerate results and improve conversion rate.",
   },
 ]
 
@@ -159,8 +211,8 @@ export default function LocalSeoAgencyPage() {
     {
       icon: ClipboardList,
       lead: "Want a deliverables checklist? See",
-      label: "local seo services",
-      href: "/local-seo-services",
+      label: "what local seo services include",
+      href: "#included",
     },
     {
       icon: Stethoscope,
@@ -215,6 +267,33 @@ export default function LocalSeoAgencyPage() {
             })}
           </ul>
         </LandingHero>
+
+        <Section id="included" aria-labelledby="agency-included-title" className="scroll-mt-20">
+          <Reveal>
+            <SectionHeader
+              id="agency-included-title"
+              eyebrow="local seo services"
+              title="what you get."
+              description="Everything required to be understood, trusted, and chosen across maps, search, and AI answers."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
+            {whatYouGet.map((item, index) => {
+              const Icon = WHAT_YOU_GET_ICONS[index % WHAT_YOU_GET_ICONS.length]
+              return (
+                <Reveal key={item.title} delay={(index % 3) * 70}>
+                  <SpotlightCard className="h-full p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <h3 className="text-heading mt-6 text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  </SpotlightCard>
+                </Reveal>
+              )
+            })}
+          </div>
+        </Section>
 
         <Section aria-labelledby="agency-partner-title">
           <Reveal>
@@ -444,8 +523,8 @@ export default function LocalSeoAgencyPage() {
             accurate listings, steady reviews, useful local pages, and clean technical signals that make crawling and indexing easy.
           </p>
           <p>
-            if you want the scoped deliverables view, start at{" "}
-            <Link href="/local-seo-services">local seo services</Link>
+            the scoped deliverables are listed above under{" "}
+            <Link href="#included">local seo services</Link>
             . if you’re maps-first, explore{" "}
             <Link href="/local-listings">local listing optimization</Link>
             .

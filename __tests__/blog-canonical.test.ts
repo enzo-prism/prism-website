@@ -28,7 +28,7 @@ describe("blog page canonical", () => {
     const metadata = await generateMetadata({ searchParams: Promise.resolve({}) })
     const inventory = fs.readFileSync(path.join(process.cwd(), 'seo/inventory.csv'), 'utf8')
     const row = inventory.split('\n').find((line) => line.startsWith('"/blog",'))
-    expect(row).toContain('"Growth insights | Prism"')
+    expect(row).toContain('"Blog: websites, SEO, ads and AI search | Prism"')
     expect(row).toContain(String(metadata.description))
     expect(row).toContain(String(metadata.alternates?.canonical))
   })

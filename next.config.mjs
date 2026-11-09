@@ -150,6 +150,8 @@ images: {
       // (2026-10-19). The old /websites page and its shortpaths land there in
       // one hop so link equity consolidates on /website-design.
       { source: '/websites', destination: '/website-design', permanent: true },
+      // Merged on 2026-11-09: one page per search intent for local SEO.
+      { source: '/local-seo-services', destination: '/local-seo-agency', permanent: true },
       { source: '/website', destination: '/website-design', permanent: true },
       { source: '/web-design', destination: '/website-design', permanent: true },
       { source: '/website-design-services', destination: '/website-design', permanent: true },

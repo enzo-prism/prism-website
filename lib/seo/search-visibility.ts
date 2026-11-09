@@ -39,7 +39,6 @@ export const INDEXABLE_STATIC_ROUTES = [
   '/tiktok-ads-for-dentists',
   '/ai-agents/dental',
   '/local-seo-agency',
-  '/local-seo-services',
 ] as const
 
 export const NOINDEX_ROUTES = [
@@ -88,6 +87,8 @@ export const NOINDEX_ROUTES = [
   '/website-intake',
   // Renamed to /website-design on 2026-10-19; 308s there.
   '/websites',
+  // Merged into /local-seo-agency on 2026-11-09; 308s there.
+  '/local-seo-services',
   '/content-intake',
   '/ads-intake',
   '/youtube',
@@ -103,9 +104,10 @@ export const NOINDEX_PREFIXES = [
   '/podcast',
 ] as const
 
+// Only posts a likely client would search for. Posts about AI tools, model
+// releases, and founder essays stay readable on the site but are noindex
+// (trimmed 2026-11-09) so the indexed blog matches what Prism sells.
 export const INDEXABLE_BLOG_SLUGS = [
-  '10-ways-dgx-spark-improve-online-business',
-  '2026-belongs-to-the-founders-who-can-delegate',
   'adapting-small-business-ai-search-revolution-2025',
   'ai-ad-stack-2026-practical-guide-for-smb-founders',
   'ai-agents-agentic-commerce-local-business',
@@ -114,8 +116,6 @@ export const INDEXABLE_BLOG_SLUGS = [
   'ai-search-for-dental-practice',
   'build-ai-business-system-you-own',
   'business-visibility-chatgpt',
-  'claude-code-to-figma-why-this-changes-how-we-build',
-  'claude-opus-4-8-what-it-means-for-small-business-owners',
   'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',
   'dental-practice-rank-higher-google-search',
@@ -125,7 +125,6 @@ export const INDEXABLE_BLOG_SLUGS = [
   'facebook-ads-for-dentists-playbook',
   'from-6-impressions-to-hundreds-seo-journey',
   'from-broken-to-beautiful-dental-website-transformation',
-  'founders-playbook-ai-era',
   'from-one-video-to-seo-flywheel',
   'future-of-seo-ai-search',
   'generate-thousands-leads-without-more-ads',
@@ -143,19 +142,13 @@ export const INDEXABLE_BLOG_SLUGS = [
   'how-to-choose-seo-consultant-for-dentists',
   'how-to-grow-an-audience-in-2026',
   'how-to-rank-1-chatgpt',
-  'impossible-seo-bug-claude-code',
   'lovable-ai-review-business-owners',
   'modern-reviews-strategy-2025',
-  'muse-spark-1-3-what-it-means-for-small-business-owners',
   'new-rules-of-visibility-ai-seo',
   'prism-approach-small-business-growth',
   'prism-flywheel-skyrocket-brick-and-mortar-growth',
-  'riding-the-ai-wave',
   'seo-mystery-beverly-hills-dentist-traffic-from-china',
   'turning-your-website-into-an-ai-powered-seo-flywheel',
-  'unlocking-smb-growth-hormozi-100m-leads',
-  'unlocking-smb-growth-hormozi-100m-offers',
-  'vibe-coding-platform-foundation-2026',
   'who-prism-is-for',
   'winning-ai-search-game',
 ] as const

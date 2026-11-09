@@ -82,7 +82,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
   - sitemap stays in the expected narrow range and excludes noindex routes
   - `public/llms.txt` includes only canonical growth, specialty, proof, and curated learning URLs
   - representative broad/utility pages such as `/apps`, `/software`, `/openai`, and `/ai-agents` are noindex (`/ai` and the deleted `/ai-seo-services` now 308 to `/aeo`)
-  - representative growth and dental pages such as `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/ai-agents/dental`, and `/aeo` remain indexable
+  - representative growth and dental pages such as `/local-seo-agency`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/ai-agents/dental`, and `/aeo` remain indexable
 
 ## CI parity notes
 
@@ -108,7 +108,7 @@ Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public ser
 
 Spot-check robots tags on both sides of the search policy:
 
-- Indexable: `/local-seo-agency`, `/local-seo-services`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
+- Indexable: `/local-seo-agency`, `/dental-website`, `/dental-practice-seo-expert`, `/google/dental-ads`, `/blog/dental-seo-guide`
 - Noindex: `/apps`, `/software`, `/openai`, `/ai-agents`, off-theme blog posts
 
 `robots.txt` should not block public noindex pages. It should only keep API routes closed while allowing the `/api/blog/` markdown endpoint.

@@ -24,7 +24,7 @@ import { buildRouteMetadata } from "@/lib/seo/metadata"
 import { WAITLIST_CTA } from "@/lib/waitlist"
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'SEO audit',
+  titleStem: 'Local SEO audit for small businesses',
   description: 'Find the technical, on-page, and trust issues holding back your rankings, then get a clear plan to fix them.',
   path: "/seo/audit",
   ogImage: "/prism-opengraph.png",

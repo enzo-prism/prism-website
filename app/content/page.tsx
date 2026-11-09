@@ -44,7 +44,7 @@ const CANONICAL_URL = 'https://www.design-prism.com/content'
 const CONTENT_OFFER = CANONICAL_PRICING_OFFERS.content
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Content',
+  titleStem: 'Content marketing for small businesses',
   description:
     'Video edits, social posts, scripts, and website content planned and published around your expertise and offers.',
   path: '/content',
