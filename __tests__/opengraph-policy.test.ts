@@ -60,7 +60,10 @@ describe('site-wide Open Graph image policy', () => {
   })
 
   it('limits social image exceptions to approved 1200x630 files', () => {
-    expect(Object.keys(SOCIAL_IMAGE_EXCEPTIONS)).toEqual(['/case-studies/mach-1'])
+    expect(Object.keys(SOCIAL_IMAGE_EXCEPTIONS)).toEqual([
+      '/case-studies/mach-1',
+      '/app',
+    ])
 
     for (const [path, image] of Object.entries(SOCIAL_IMAGE_EXCEPTIONS)) {
       const file = readFileSync(join(process.cwd(), 'public', image.url))

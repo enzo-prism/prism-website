@@ -411,7 +411,7 @@ quiet enough that text stays readable.
   parallax, the slow spectrum beam, the live dot ping, the story deck recede
   and capture browsing, the service pillar micro scenes, the intake pass foil,
   the flagship case-study tool scenes and their sticky crossfade, the `/app`
-  pinned hero and scroll-scrubbed phone tour (`components/prism-app/`), hover
+  Lock Screen notifications and tabbed phone tour (`components/prism-app/`), hover
   lifts of 1 to 2px.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base

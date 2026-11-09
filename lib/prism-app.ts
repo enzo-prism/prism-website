@@ -2,9 +2,11 @@
  * Facts and copy for /app, the page for the Prism iPhone app.
  *
  * Every fact here comes from the App Store listing or the app itself
- * (prism-platform: apps/ios). Screens are real captures of the app's built-in
- * demo, whose practice, Bayview Dental, is fictional. Never swap in a real
- * client's numbers. Page copy stays short on purpose; detail belongs in the FAQ.
+ * (prism-platform: apps/ios). Screens are drawn in HTML from captures of the
+ * app's built-in demo (components/prism-app/AppScreens.tsx), whose practice,
+ * Bayview Dental, is fictional. Never swap in a real client's numbers or draw
+ * a feature the app does not have. Page copy stays short on purpose; detail
+ * belongs in the FAQ.
  */
 
 export const PRISM_APP_ID = '6829975700'
@@ -17,13 +19,21 @@ export const PRISM_APP_NAME = 'Prism by Design Prism'
 export const PRISM_APP_DESCRIPTION =
   'See your website’s visits, leads, Google searches, and AI referrals in the Prism iPhone app for Prism clients. Free on the App Store.'
 
+export type PrismAppScreenId =
+  | 'summary'
+  | 'leads'
+  | 'visits'
+  | 'search'
+  | 'ai'
+  | 'updates'
+
 export type PrismAppTourStep = {
-  id: string
+  id: PrismAppScreenId
   label: string
   title: string
   body: string
-  image: string
-  alt: string
+  /** One plain sentence taken from that screen in the app's demo. */
+  takeaway: string
 }
 
 export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
@@ -32,50 +42,70 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     label: 'Summary',
     title: 'one screen for the whole picture.',
     body: 'Who’s on your site now, plus leads, visits, and searches.',
-    image: '/prism-app/summary.jpg',
-    alt: 'Prism app Summary screen showing people on the site now, a Google first page highlight, and cards for leads, visits, and Google Search.',
+    takeaway: '14 people are on your site right now.',
   },
   {
     id: 'leads',
     label: 'Leads',
     title: 'see when people reach out.',
     body: 'Every form sent through your site, counted.',
-    image: '/prism-app/leads.jpg',
-    alt: 'Prism app Leads screen with a bar chart of forms over the last month and totals by form.',
+    takeaway: 'Your latest form came in 2 hours ago.',
   },
   {
     id: 'visits',
     label: 'Visits',
     title: 'see where visits come from.',
     body: 'Day by day, and by channel.',
-    image: '/prism-app/visits.jpg',
-    alt: 'Prism app Visits screen with a daily chart of visits and details below it.',
+    takeaway: 'Your busiest day was Friday, November 6, with 212 visits.',
   },
   {
     id: 'search',
-    label: 'Google Search',
+    label: 'Google',
     title: 'see what people search to find you.',
     body: 'Clicks, average position, and top searches.',
-    image: '/prism-app/search.jpg',
-    alt: 'Prism app Google Search screen with a chart of clicks and totals for clicks, times shown on Google, and average position.',
+    takeaway: 'You’re on Google’s first page for “emergency dentist.”',
   },
   {
     id: 'ai',
-    label: 'AI Assistants',
+    label: 'AI',
     title: 'see who arrives from AI answers.',
     body: 'Visits from assistants like ChatGPT and Perplexity.',
-    image: '/prism-app/ai.jpg',
-    alt: 'Prism app AI Assistants screen showing total visits and a count for ChatGPT and Perplexity.',
+    takeaway: '17 visits came from ChatGPT and 6 from Perplexity.',
   },
   {
     id: 'updates',
     label: 'Updates',
     title: 'hear when something good happens.',
     body: 'Traffic spikes, new rankings, and your best weeks.',
-    image: '/prism-app/updates.jpg',
-    alt: 'Prism app Updates feed with a traffic spike, a Google first page ranking, a new page from Prism, and a best week note.',
+    takeaway: '64 people on your site, about 3× your usual.',
   },
 ] as const
+
+/**
+ * Lock Screen notifications in the hero, oldest arrival first, shortened from
+ * the demo's Updates feed. The last one lands on top.
+ */
+export const PRISM_APP_NOTIFICATIONS = [
+  {
+    title: 'Your site is busy right now',
+    body: '64 people now, about 3× usual.',
+    time: '1h ago',
+  },
+  {
+    title: 'On Google’s first page',
+    body: 'Now #7 for “emergency dentist.”',
+    time: '12m ago',
+  },
+  {
+    title: 'New appointment request',
+    body: 'A form just came in.',
+    time: 'now',
+  },
+] as const
+
+/** Said once on the page, under the hero. Every screen below uses the demo. */
+export const PRISM_APP_DEMO_NOTE =
+  'Demo data throughout. Bayview Dental is fictional.'
 
 export const PRISM_APP_TRUST = [
   {
@@ -105,11 +135,20 @@ export const PRISM_APP_STEPS = [
     title: 'sign in with your invited email.',
     body: 'Use Google or Apple.',
   },
-  {
-    title: 'or explore the demo.',
-    body: 'No account needed.',
-  },
 ] as const
+
+/** Not a step: the way in for anyone without an invite. */
+export const PRISM_APP_DEMO_BRANCH = {
+  title: 'no invite yet? explore the demo.',
+  body: 'Tap Explore a Demo in the app. No account needed.',
+} as const
+
+/** The band for visitors who are not clients. Facts only: free, for clients. */
+export const PRISM_APP_PROSPECT = {
+  eyebrow: 'Not a client yet',
+  title: 'every Prism client gets this.',
+  body: 'The app is free for Prism clients. Join the waitlist to work with us.',
+} as const
 
 export const PRISM_APP_FAQ = [
   {
