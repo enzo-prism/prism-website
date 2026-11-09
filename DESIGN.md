@@ -379,7 +379,9 @@ waitlist; secondary actions such as "Read the case study" use the outline
 pill. Long pages never go more than a section or two without a way onto the
 waitlist (`InlineWaitlistCta`). Internal links use `ArrowRight`;
 `ArrowUpRight` means the link leaves the site. Inline text links use an
-arrow icon. Every core route ends with `FinalCta`.
+arrow icon. Every core route ends with `FinalCta`. One page-scoped exception:
+on `/app` the App Store link (`AppStoreButton`) takes the white pill, because
+installing is that page's job; it still closes on the waitlist.
 
 ### Status
 

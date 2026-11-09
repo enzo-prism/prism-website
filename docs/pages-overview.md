@@ -363,6 +363,10 @@ Quick reference for the pages we edit most often.
 - Service pages, pricing, FAQs, waitlist messages, case-study introductions, SEO, and local listings follow the same voice. Scope and timing are confirmed before work begins; avoid blanket ranking, turnaround, or automatic-audit promises.
 - Preserve dated case-study evidence, testimonials, canonical offer/CTA rules, form payloads, analytics identifiers, and navigation destinations when editing copy.
 
+## Prism for iPhone (`app/app/page.tsx`)
+
+`/app` is the indexable page for the iPhone app (App Store listing "Prism by Design Prism", id `6829975700`). Copy, facts, and the App Store URL live in `lib/prism-app.ts`; components live in `components/prism-app/` (`AppStoreButton`, the scroll-driven `AppTour`, and the drawn `AppWidgets`). Screens in `public/prism-app/` are Simulator captures of the app's own demo mode (`-demo YES -screen <name>`, dark appearance, resized to 780 wide); Bayview Dental is fictional and the page says so. Never use a real client's numbers. The app is for Prism clients, so the page leads with the install and still closes on the waitlist. `/app/privacy` and `/app/support` (noindex) mirror `apps/api/app/{privacy,support}/page.tsx` in `prism-platform`; change both together. `/prism-app` and `/ios` 308 to `/app`. The footer links it first in Products; it is not in `lib/products.ts`, whose entries are free open-source tools.
+
 ## Prism Products
 
 `lib/products.ts` is the shared catalog for Midas (https://midas-ai.dev) and zRead (https://zread.dev), free open-source tools originally built for Prism’s internal workflow. Products live in the footer and the homepage, not the header. The homepage `#products` section (`HomeProducts`) sits after `HomeFounder` and before `HomeHowToGetIn`. Product links go directly to their own websites and do not enter the service waitlist.
