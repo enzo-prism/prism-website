@@ -4,7 +4,7 @@
  * Every fact here comes from the App Store listing or the app itself
  * (prism-platform: apps/ios). Screens are real captures of the app's built-in
  * demo, whose practice, Bayview Dental, is fictional. Never swap in a real
- * client's numbers.
+ * client's numbers. Page copy stays short on purpose; detail belongs in the FAQ.
  */
 
 export const PRISM_APP_ID = '6829975700'
@@ -17,18 +17,11 @@ export const PRISM_APP_NAME = 'Prism by Design Prism'
 export const PRISM_APP_DESCRIPTION =
   'See your website’s visits, leads, Google searches, and AI referrals in the Prism iPhone app for Prism clients. Free on the App Store.'
 
-export const PRISM_APP_FACTS = [
-  'Free',
-  'iPhone, iOS 18 or later',
-  'United States',
-] as const
-
 export type PrismAppTourStep = {
   id: string
   label: string
   title: string
   body: string
-  points: readonly string[]
   image: string
   alt: string
 }
@@ -38,12 +31,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'summary',
     label: 'Summary',
     title: 'one screen for the whole picture.',
-    body: 'Open Prism and see how many people are on your site right now, then your leads, visits, Google clicks, and visits from AI assistants.',
-    points: [
-      'A live count from the last 30 minutes',
-      'The latest highlight for your site',
-      'Notes on what the Prism team shipped',
-    ],
+    body: 'Who’s on your site now, plus leads, visits, and searches.',
     image: '/prism-app/summary.jpg',
     alt: 'Prism app Summary screen showing people on the site now, a Google first page highlight, and cards for leads, visits, and Google Search.',
   },
@@ -51,12 +39,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'leads',
     label: 'Leads',
     title: 'see when people reach out.',
-    body: 'A count of the forms people send through your website, such as appointment requests, by week, month, or three months.',
-    points: [
-      'Totals for each form on your site',
-      'When the latest form came in',
-      'Prism counts forms and never stores what people wrote',
-    ],
+    body: 'Every form sent through your site, counted.',
     image: '/prism-app/leads.jpg',
     alt: 'Prism app Leads screen with a bar chart of forms over the last month and totals by form.',
   },
@@ -64,12 +47,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'visits',
     label: 'Visits',
     title: 'see where visits come from.',
-    body: 'Your visits by day, your busiest day, and the channels that brought people in, like Google, social, and other sites.',
-    points: [
-      'Week, month, or three-month views',
-      'Engaged visits, explained in plain English',
-      'Where visits came from over the last 28 days',
-    ],
+    body: 'Day by day, and by channel.',
     image: '/prism-app/visits.jpg',
     alt: 'Prism app Visits screen with a daily chart of visits and details below it.',
   },
@@ -77,12 +55,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'search',
     label: 'Google Search',
     title: 'see what people search to find you.',
-    body: 'Clicks from Google, how often your site was shown, your average position, and the searches that brought people in.',
-    points: [
-      'Your top searches, with clicks for each',
-      'What each number means, right under it',
-      'Clear about Google’s reporting delay',
-    ],
+    body: 'Clicks, average position, and top searches.',
     image: '/prism-app/search.jpg',
     alt: 'Prism app Google Search screen with a chart of clicks and totals for clicks, times shown on Google, and average position.',
   },
@@ -90,11 +63,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'ai',
     label: 'AI Assistants',
     title: 'see who arrives from AI answers.',
-    body: 'Visits from people who followed a link in an answer from an AI assistant such as ChatGPT or Perplexity.',
-    points: [
-      'A total for the last 28 days',
-      'A count for each assistant',
-    ],
+    body: 'Visits from assistants like ChatGPT and Perplexity.',
     image: '/prism-app/ai.jpg',
     alt: 'Prism app AI Assistants screen showing total visits and a count for ChatGPT and Perplexity.',
   },
@@ -102,12 +71,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'updates',
     label: 'Updates',
     title: 'hear when something good happens.',
-    body: 'A traffic spike, a new page-one ranking, your best week yet, and what the Prism team just shipped, all in one feed.',
-    points: [
-      'A short summary every Monday',
-      'A few notifications a week at most',
-      'None overnight',
-    ],
+    body: 'Traffic spikes, new rankings, and your best weeks.',
     image: '/prism-app/updates.jpg',
     alt: 'Prism app Updates feed with a traffic spike, a Google first page ranking, a new page from Prism, and a best week note.',
   },
@@ -116,34 +80,34 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
 export const PRISM_APP_TRUST = [
   {
     title: 'read-only access.',
-    body: 'Your numbers come from the Google Analytics and Search Console accounts of the website we manage for you, read with read-only access.',
+    body: 'Prism reads your Google data and never changes it.',
   },
   {
     title: 'totals, not people.',
-    body: 'You see visits, traffic sources, and search terms. They don’t identify the people who visited your website.',
+    body: 'Nothing identifies who visited your site.',
   },
   {
     title: 'no ads or tracking.',
-    body: 'The app uses no advertising or tracking tools, and we don’t sell or share your information.',
+    body: 'We don’t sell or share your information.',
   },
   {
     title: 'delete it anytime.',
-    body: 'Open Account, then Delete Account. Your account, sign-in details, and notification tokens are removed right away.',
+    body: 'Remove your account from inside the app.',
   },
 ] as const
 
 export const PRISM_APP_STEPS = [
   {
     title: 'download Prism.',
-    body: 'It’s free on the App Store for iPhone.',
+    body: 'Free on the App Store.',
   },
   {
     title: 'sign in with your invited email.',
-    body: 'Prism clients choose Continue with Google or Continue with Apple, using the address Prism invited.',
+    body: 'Use Google or Apple.',
   },
   {
     title: 'or explore the demo.',
-    body: 'Tap Explore a Demo on the sign-in screen to look around a fictional practice. No account needed.',
+    body: 'No account needed.',
   },
 ] as const
 
