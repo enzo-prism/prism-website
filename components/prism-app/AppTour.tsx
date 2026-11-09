@@ -60,6 +60,7 @@ export function AppTour({ steps }: AppTourProps) {
   const segmentRefs = useRef<Array<HTMLSpanElement | null>>([])
   const positionRef = useRef(0)
   const playingRef = useRef(-1)
+  const arrivedRef = useRef(false)
 
   useEffect(() => {
     if (!window.matchMedia(REDUCED_QUERY).matches) {
@@ -97,6 +98,17 @@ export function AppTour({ steps }: AppTourProps) {
     const nearest = Math.round(position)
     const settled = Math.abs(position - nearest) < 0.35
 
+    // Step 0 counts as current before the tour is on screen, so hold its
+    // animation until its card has entered the viewport.
+    const firstInstrument = instrumentRefs.current[0]
+    if (
+      firstInstrument &&
+      firstInstrument.getBoundingClientRect().top < viewport * 0.85
+    ) {
+      arrivedRef.current = true
+    }
+    const arrived = arrivedRef.current
+
     steps.forEach((_, k) => {
       const d = position - k
       const away = Math.abs(d)
@@ -128,7 +140,7 @@ export function AppTour({ steps }: AppTourProps) {
         instrument.style.transform = reduced
           ? 'none'
           : `translate3d(0, ${(-d * 26).toFixed(1)}px, 0) scale(${(1 - Math.min(away, 1) * 0.14).toFixed(4)})`
-        instrument.toggleAttribute('data-on', settled && k === nearest)
+        instrument.toggleAttribute('data-on', arrived && settled && k === nearest)
       }
 
       const glow = glowRefs.current[k]
@@ -152,7 +164,7 @@ export function AppTour({ steps }: AppTourProps) {
       }
     })
 
-    if (settled && playingRef.current !== nearest && !reduced) {
+    if (arrived && settled && playingRef.current !== nearest && !reduced) {
       playingRef.current = nearest
       const counter = instrumentRefs.current[nearest]?.querySelector<HTMLElement>(
         '[data-count]',
@@ -181,11 +193,11 @@ export function AppTour({ steps }: AppTourProps) {
             ))}
           </div>
 
-          <div className={styles.tourScene}>
+          {/* Decorative: each step's heading and body describe its screen. */}
+          <div aria-hidden="true" className={styles.tourScene}>
             {steps.map((step, index) => (
               <div
                 key={step.id}
-                aria-hidden="true"
                 ref={(node) => {
                   glowRefs.current[index] = node
                 }}
@@ -211,7 +223,7 @@ export function AppTour({ steps }: AppTourProps) {
                 >
                   <Image
                     src={step.image}
-                    alt={step.alt}
+                    alt=""
                     fill
                     sizes="(min-width: 1024px) 336px, 56vw"
                     className="object-cover object-top"
@@ -223,7 +235,6 @@ export function AppTour({ steps }: AppTourProps) {
             {steps.map((step, index) => (
               <div
                 key={step.id}
-                aria-hidden="true"
                 ref={(node) => {
                   instrumentRefs.current[index] = node
                 }}
