@@ -1,0 +1,886 @@
+/* /app motion. Transform and opacity only. Base styles are the finished
+   frame; everything that hides or moves content is gated below. */
+
+/* ---- Phone --------------------------------------------------------------- */
+
+.phone {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  container-type: inline-size;
+}
+
+.phoneShell {
+  position: relative;
+  padding: 1.05cqw;
+  border-radius: 16.4cqw;
+  background: linear-gradient(
+    142deg,
+    oklch(0.56 0.006 286),
+    oklch(0.26 0.004 286) 24%,
+    oklch(0.2 0.004 286) 68%,
+    oklch(0.5 0.006 286)
+  );
+  box-shadow:
+    0 7cqw 16cqw -3cqw oklch(0 0 0 / 92%),
+    0 0 0 0.16cqw oklch(0 0 0 / 70%);
+}
+
+.phoneBezel {
+  padding: 2cqw;
+  border-radius: 15.4cqw;
+  background: oklch(0.05 0 0);
+  box-shadow: inset 0 0 0 0.2cqw oklch(1 0 0 / 10%);
+}
+
+.phoneScreen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 780 / 1695;
+  border-radius: 13.4cqw;
+  background: oklch(0 0 0);
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+.phoneIsland {
+  position: absolute;
+  z-index: 3;
+  top: 1.45%;
+  left: 50%;
+  width: 28.6cqw;
+  height: 8.3cqw;
+  border-radius: 999px;
+  background: oklch(0 0 0);
+  transform: translateX(-50%);
+}
+
+.phoneButtonLeftTop,
+.phoneButtonLeftBottom,
+.phoneButtonRight {
+  position: absolute;
+  width: 0.9cqw;
+  border-radius: 1cqw;
+  background: oklch(0.34 0.004 286);
+}
+
+.phoneButtonLeftTop {
+  top: 21%;
+  left: -0.5cqw;
+  height: 7%;
+}
+
+.phoneButtonLeftBottom {
+  top: 30%;
+  left: -0.5cqw;
+  height: 7%;
+}
+
+.phoneButtonRight {
+  top: 26%;
+  right: -0.5cqw;
+  height: 11%;
+}
+
+.phoneGlare {
+  display: none;
+}
+
+/* ---- Hero ---------------------------------------------------------------- */
+
+.heroTrack {
+  position: relative;
+}
+
+.heroStage {
+  --p: 0;
+  --e: 0;
+  --s: 0;
+  --lift: 0px;
+  --phone: min(20.5rem, 70vw);
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  padding-bottom: 3.5rem;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: clamp(1.5rem, 4svh, 3.25rem);
+  text-align: center;
+}
+
+.heroTitle {
+  margin-top: clamp(0.875rem, 2.2svh, 1.5rem);
+  padding-bottom: 0.08em;
+  font-size: min(clamp(2.85rem, 1.55rem + 5.6vw, 6rem), 13svh);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.heroLead {
+  max-width: 38ch;
+  margin-top: clamp(0.75rem, 1.9svh, 1.25rem);
+  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.1875rem);
+  line-height: 1.45;
+}
+
+.heroActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  margin-top: clamp(1rem, 2.6svh, 1.75rem);
+}
+
+@media (min-width: 640px) {
+  .heroActions {
+    width: auto;
+  }
+}
+
+.heroSlot {
+  position: relative;
+  z-index: 3;
+  width: var(--phone);
+  margin: clamp(1.75rem, 4svh, 2.75rem) auto 0;
+}
+
+.heroSideLeft,
+.heroSideRight {
+  display: none;
+}
+
+.heroCenter {
+  position: relative;
+  z-index: 2;
+}
+
+.heroHalo {
+  display: none;
+}
+
+.heroNotifications {
+  position: absolute;
+  top: 10.5%;
+  left: 50%;
+  width: min(calc(100vw - 2.5rem), 23.5rem);
+  height: 4.875rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(-50%);
+}
+
+.heroNotification {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem 0.625rem 0.75rem;
+  border: 1px solid oklch(1 0 0 / 11%);
+  border-radius: 1.3rem;
+  background: oklch(0.21 0.005 286);
+  box-shadow: 0 22px 44px -16px oklch(0 0 0 / 88%);
+  transform-origin: 50% 0;
+}
+
+.heroNotification:nth-child(1) {
+  z-index: 1;
+  opacity: 0.5;
+  transform: translate3d(0, 1.625rem, 0) scale(0.88);
+}
+
+.heroNotification:nth-child(2) {
+  z-index: 2;
+  opacity: 0.8;
+  transform: translate3d(0, 0.8125rem, 0) scale(0.94);
+}
+
+.heroNotification:nth-child(3) {
+  z-index: 3;
+}
+
+.heroNote {
+  position: relative;
+  z-index: 2;
+  margin-top: 1.5rem;
+  padding-inline: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  text-align: center;
+  color: var(--subtle-foreground);
+}
+
+@keyframes app-entrance {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 5.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes app-halo-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Banners land one at a time, each pushing the last down the stack, then
+   hold. Data never rewinds in view. */
+@keyframes app-note-first {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+  }
+  16%,
+  42% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50%,
+  76% {
+    opacity: 0.8;
+    transform: translate3d(0, 0.8125rem, 0) scale(0.94);
+  }
+  84%,
+  100% {
+    opacity: 0.5;
+    transform: translate3d(0, 1.625rem, 0) scale(0.88);
+  }
+}
+
+@keyframes app-note-second {
+  0%,
+  42% {
+    opacity: 0;
+    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+  }
+  50%,
+  76% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  84%,
+  100% {
+    opacity: 0.8;
+    transform: translate3d(0, 0.8125rem, 0) scale(0.94);
+  }
+}
+
+@keyframes app-note-third {
+  0%,
+  76% {
+    opacity: 0;
+    transform: translate3d(0, -3.75rem, 0) scale(0.96);
+  }
+  84%,
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroEntrance {
+    animation: app-entrance 1.25s cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+  }
+
+  .heroNotification {
+    animation: 5.4s cubic-bezier(0.22, 1, 0.36, 1) 900ms both;
+  }
+
+  .heroNotification:nth-child(1) {
+    animation-name: app-note-first;
+  }
+
+  .heroNotification:nth-child(2) {
+    animation-name: app-note-second;
+  }
+
+  .heroNotification:nth-child(3) {
+    animation-name: app-note-third;
+  }
+}
+
+/* Pinned scene. Scroll writes --p, --e and --s on the stage. */
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+  .heroTrack {
+    height: calc(100svh - var(--prism-header-height, 4rem) + 95svh);
+  }
+
+  .heroStage {
+    --phone: min(
+      20.5rem,
+      70vw,
+      calc((100svh - var(--prism-header-height, 4rem) - 5.5rem) * 0.46)
+    );
+    position: sticky;
+    top: var(--prism-header-height, 4rem);
+    height: calc(100svh - var(--prism-header-height, 4rem));
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .heroCopy {
+    opacity: calc(1 - var(--p) * 7);
+    transform: translate3d(0, calc(var(--p) * -9rem), 0);
+    will-change: transform, opacity;
+  }
+
+  .heroSlot {
+    perspective: 1500px;
+    perspective-origin: 50% 20%;
+  }
+
+  .heroCenter {
+    transform: translate3d(0, calc(var(--lift) * var(--e) * -1), 0)
+      rotateX(calc((1 - var(--e)) * 13deg))
+      scale(calc(0.97 + var(--e) * 0.03));
+    transform-origin: 50% 0;
+    will-change: transform;
+  }
+
+  .heroSideLeft,
+  .heroSideRight {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+    opacity: min(1, calc(var(--s) * 2.4));
+    will-change: transform, opacity;
+  }
+
+  .heroSideLeft {
+    transform: translate3d(
+        calc(var(--s) * -80%),
+        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
+        0
+      )
+      rotateY(calc(var(--s) * 18deg)) scale(0.86);
+  }
+
+  .heroSideRight {
+    transform: translate3d(
+        calc(var(--s) * 80%),
+        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
+        0
+      )
+      rotateY(calc(var(--s) * -18deg)) scale(0.86);
+  }
+
+  .heroNotifications {
+    opacity: calc(1 - var(--e) * 3.2);
+    transform: translate3d(-50%, calc(var(--e) * -3rem), 0);
+  }
+
+  .phoneGlare {
+    position: absolute;
+    z-index: 2;
+    inset: -10% -60%;
+    display: block;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      oklch(1 0 0 / 9%) 49%,
+      oklch(1 0 0 / 3%) 54%,
+      transparent 60%
+    );
+    transform: translate3d(calc(-55% + var(--p) * 110%), 0, 0);
+    pointer-events: none;
+  }
+
+  .heroHalo {
+    position: absolute;
+    z-index: 0;
+    top: 66%;
+    left: 50%;
+    display: block;
+    width: 62rem;
+    height: 62rem;
+    background: repeating-conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      oklch(0.66 0.16 258 / 14%) 11deg,
+      transparent 24deg 36deg,
+      oklch(0.63 0.19 295 / 11%) 48deg,
+      transparent 60deg 72deg
+    );
+    -webkit-mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
+    mask-image: radial-gradient(closest-side, transparent 16%, oklch(0 0 0) 42%, transparent 100%);
+    transform: translate(-50%, -50%);
+    animation: app-halo-spin 70s linear infinite;
+  }
+
+  .heroNote {
+    position: absolute;
+    right: 0;
+    bottom: 0.5rem;
+    left: 0;
+    margin-top: 0;
+    opacity: calc(var(--s) * 2 - 1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (min-width: 768px) {
+  .heroSideLeft {
+    transform: translate3d(
+        calc(var(--s) * -104%),
+        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
+        0
+      )
+      rotateY(calc(var(--s) * 16deg)) scale(0.88);
+  }
+
+  .heroSideRight {
+    transform: translate3d(
+        calc(var(--s) * 104%),
+        calc(var(--lift) * var(--e) * -1 + (1 - var(--s)) * 1.5rem),
+        0
+      )
+      rotateY(calc(var(--s) * -16deg)) scale(0.88);
+  }
+}
+
+/* ---- Tour ---------------------------------------------------------------- */
+
+.tour {
+  position: relative;
+  display: grid;
+  margin-top: 2.5rem;
+}
+
+.tourStage,
+.tourSteps {
+  grid-area: 1 / 1;
+}
+
+.tourStage {
+  --phone: min(56vw, calc((100svh - var(--prism-header-height, 4rem) - 2.5rem) * 0.42));
+  position: sticky;
+  z-index: 0;
+  top: var(--prism-header-height, 4rem);
+  align-self: start;
+  height: calc(100svh - var(--prism-header-height, 4rem));
+  overflow: hidden;
+  padding-top: 0.625rem;
+}
+
+.tourStageInner {
+  position: relative;
+}
+
+.tourSegments {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.tourSegment {
+  display: block;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: oklch(1 0 0 / 12%);
+}
+
+.tourSegmentFill {
+  display: block;
+  height: 100%;
+  background: oklch(0.95 0 0);
+  transform-origin: 0 50%;
+}
+
+.tourScene {
+  position: relative;
+}
+
+.tourPhone {
+  z-index: 1;
+  width: var(--phone);
+}
+
+.tourScreen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  background: oklch(0 0 0);
+  box-shadow:
+    0 -1px 0 oklch(1 0 0 / 14%),
+    0 -1.5rem 3rem oklch(0 0 0 / 70%);
+  will-change: transform, opacity;
+}
+
+.tourGlow {
+  position: absolute;
+  top: -14%;
+  left: -30%;
+  width: 130%;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklch, var(--tone) 30%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.tourFade {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 42%;
+  background: linear-gradient(to top, var(--background) 22%, transparent);
+  pointer-events: none;
+}
+
+.tourSteps {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.tourStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(100svh - var(--prism-header-height, 4rem) + 2.5rem);
+}
+
+.tourCard {
+  position: sticky;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  padding: 1.125rem 1.25rem 1.25rem;
+  border: 1px solid oklch(1 0 0 / 10%);
+  border-radius: 1.5rem;
+  background: var(--popover);
+  box-shadow: 0 -18px 48px -16px oklch(0 0 0 / 80%);
+  pointer-events: auto;
+}
+
+.instrument {
+  position: absolute;
+  z-index: 2;
+  top: 12%;
+  left: calc(var(--phone) - 1.25rem);
+  width: min(9.25rem, calc(100% - var(--phone) + 1.25rem));
+  padding: 0.75rem;
+  border: 1px solid oklch(1 0 0 / 11%);
+  border-radius: 1.125rem;
+  background: oklch(0.21 0.005 286);
+  box-shadow: 0 20px 40px -16px oklch(0 0 0 / 88%);
+  will-change: transform, opacity;
+}
+
+.instrumentBars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 2.75rem;
+}
+
+.instrumentBar {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 1.5px;
+  background: var(--tone);
+  transform-origin: 50% 100%;
+}
+
+.instrumentWipe {
+  overflow: hidden;
+  height: 2.75rem;
+}
+
+.instrumentWipeInner {
+  height: 100%;
+}
+
+.instrumentTrack {
+  display: block;
+  height: 4px;
+  margin-top: 3px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: oklch(1 0 0 / 9%);
+}
+
+.instrumentFill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--tone);
+  transform-origin: 0 50%;
+}
+
+.instrumentLive {
+  position: relative;
+  display: block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+/* Scenes play when their step arrives and reset while invisible. */
+[data-armed] .instrumentBar {
+  transform: scaleY(0);
+}
+
+[data-armed] .instrumentFill {
+  transform: scaleX(0);
+}
+
+[data-armed] .instrumentWipe {
+  transform: translate3d(-101%, 0, 0);
+}
+
+[data-armed] .instrumentWipeInner {
+  transform: translate3d(101%, 0, 0);
+}
+
+[data-on] .instrumentBar {
+  transform: scaleY(1);
+  transition: transform 620ms cubic-bezier(0.2, 1.15, 0.35, 1)
+    calc(var(--i, 0) * 16ms);
+}
+
+[data-on] .instrumentFill {
+  transform: scaleX(1);
+  transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1)
+    calc(var(--i, 0) * 16ms);
+}
+
+[data-on] .instrumentWipe,
+[data-on] .instrumentWipeInner {
+  transform: translate3d(0, 0, 0);
+  transition: transform 1s cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+@keyframes app-live {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .instrumentLive::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--tone);
+    animation: app-live 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tour {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 33rem);
+    gap: 4.5rem;
+    margin-top: 1rem;
+  }
+
+  .tourSteps {
+    grid-area: 1 / 1;
+    pointer-events: auto;
+  }
+
+  .tourStage {
+    --phone: min(21rem, calc((100svh - var(--prism-header-height, 4rem) - 5.5rem) * 0.46));
+    grid-area: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    padding-top: 0;
+  }
+
+  .tourStageInner {
+    width: var(--phone);
+  }
+
+  .tourSegments {
+    margin-bottom: 1rem;
+  }
+
+  .tourGlow {
+    top: -4%;
+    left: -55%;
+    width: 210%;
+  }
+
+  .tourFade {
+    display: none;
+  }
+
+  .tourStep {
+    justify-content: center;
+    min-height: 86svh;
+  }
+
+  .tourCard {
+    position: static;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .instrument {
+    top: auto;
+    right: auto;
+    bottom: 13%;
+    left: -8.25rem;
+    width: 12rem;
+    padding: 1rem;
+  }
+
+  .instrumentBars,
+  .instrumentWipe {
+    height: 3.5rem;
+  }
+}
+
+/* ---- Widgets ------------------------------------------------------------- */
+
+.widgetPanel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 1.75rem 1.125rem 1.25rem;
+  border: 1px solid oklch(1 0 0 / 8%);
+  border-radius: 1.75rem;
+  background:
+    radial-gradient(70% 60% at 15% 100%, oklch(0.66 0.16 258 / 26%), transparent 70%),
+    radial-gradient(60% 55% at 92% 8%, oklch(0.63 0.19 295 / 20%), transparent 70%),
+    var(--card);
+}
+
+.widgetGrid {
+  display: grid;
+  grid-template-areas:
+    'time time'
+    'small lock'
+    'medium medium';
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.widgetBar {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 2px;
+  background: var(--spectrum-blue);
+  transform-origin: 50% 100%;
+}
+
+[data-armed]:not([data-in]) .widgetDrop {
+  opacity: 0;
+  transform: translate3d(0, 2.25rem, 0) scale(0.88);
+}
+
+[data-armed]:not([data-in]) .widgetBar {
+  transform: scaleY(0);
+}
+
+[data-in] .widgetDrop {
+  transition:
+    opacity 420ms ease var(--d, 0ms),
+    transform 950ms cubic-bezier(0.2, 1.3, 0.35, 1) var(--d, 0ms);
+}
+
+[data-in] .widgetBar {
+  transition: transform 620ms cubic-bezier(0.2, 1.15, 0.35, 1)
+    calc(620ms + var(--i, 0) * 28ms);
+}
+
+@media (min-width: 640px) {
+  .widgetPanel {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .widgetGrid {
+    grid-template-areas:
+      'time time'
+      'lock lock'
+      'small medium';
+    grid-template-columns: auto minmax(0, 22.5rem);
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* ---- Steps --------------------------------------------------------------- */
+
+.steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepsLine {
+  position: absolute;
+  top: 0.75rem;
+  bottom: 3rem;
+  left: 0.9375rem;
+  width: 1px;
+  overflow: hidden;
+  background: oklch(1 0 0 / 12%);
+}
+
+.stepsFill {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.95 0 0);
+  transform-origin: 50% 0;
+}
+
+.stepsNumber {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid oklch(1 0 0 / 16%);
+  border-radius: 50%;
+  background: var(--popover);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}

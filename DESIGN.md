@@ -410,8 +410,9 @@ quiet enough that text stays readable.
   reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights and
   parallax, the slow spectrum beam, the live dot ping, the story deck recede
   and capture browsing, the service pillar micro scenes, the intake pass foil,
-  the flagship case-study tool scenes and their sticky crossfade, hover lifts
-  of 1 to 2px.
+  the flagship case-study tool scenes and their sticky crossfade, the `/app`
+  pinned hero and scroll-scrubbed phone tour (`components/prism-app/`), hover
+  lifts of 1 to 2px.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base
   style is always the finished frame, so reduced-motion, no-JS, and
