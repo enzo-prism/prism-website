@@ -41,6 +41,14 @@ describe('Footer', () => {
     }
   })
 
+  it('links to the Prism iPhone app page on this site', () => {
+    render(<Footer />)
+
+    const link = screen.getByRole('link', { name: 'Prism for iPhone' })
+    expect(link).toHaveAttribute('href', '/app')
+    expect(link).not.toHaveAttribute('target')
+  })
+
   it('uses the homepage footer treatment by default', () => {
     render(<Footer />)
 

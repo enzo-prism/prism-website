@@ -126,6 +126,8 @@ images: {
       { source: '/website-intake', destination: '/waitlist?focus=website', permanent: true },
       { source: '/content-intake', destination: '/waitlist?focus=content', permanent: true },
       { source: '/ads-intake', destination: '/waitlist?focus=ads', permanent: true },
+      { source: '/prism-app', destination: '/app', permanent: true },
+      { source: '/ios', destination: '/app', permanent: true },
       { source: '/get-started', destination: '/waitlist', permanent: true },
       { source: '/apply', destination: '/waitlist', permanent: true },
       { source: '/free-analysis', destination: '/waitlist', permanent: true },
