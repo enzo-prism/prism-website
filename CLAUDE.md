@@ -65,7 +65,7 @@ pnpm git:cleanup      # Clean stale branches
 | Homepage | `app/client-page.tsx`, `components/home/*`, copy + numbers in `components/home/homepage-content.ts`, client logos in `lib/client-logos.ts` |
 | Header navigation | `lib/constants.ts` `NAV_ITEMS` + `NAV_SERVICE_ITEMS`, `components/navbar.tsx` |
 | Service / Product catalogs | `lib/services.ts`, `lib/products.ts` |
-| iPhone app page | `app/app/*`, `components/prism-app/*`, copy + App Store facts in `lib/prism-app.ts`, demo captures in `public/prism-app/` |
+| iPhone app page | `app/app/*`, `components/prism-app/*`, motion in `components/prism-app/app-page.module.css` + `use-frame-loop.ts`, copy + App Store facts in `lib/prism-app.ts`, demo captures in `public/prism-app/` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
 | Case study template | `components/case-study-minimal.tsx`, `components/case-studies/*`, `lib/case-study-data.ts` |
 | MDX processing | `/lib/mdx.tsx` |
