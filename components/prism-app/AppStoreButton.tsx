@@ -1,9 +1,12 @@
+'use client'
+
 import { ArrowUpRight } from 'lucide-react'
 
 import TrackedLink from '@/components/tracked-link'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { PRISM_APP_STORE_URL } from '@/lib/prism-app'
 import { cn } from '@/lib/utils'
+import { trackAppStoreClick } from '@/utils/analytics'
 
 const LABEL = 'Download on the App Store'
 
@@ -19,7 +22,11 @@ type AppStoreButtonProps = {
   className?: string
 }
 
-/** The install action on /app. It leaves the site, so it carries ArrowUpRight. */
+/**
+ * The install action on /app. It leaves the site, so it carries ArrowUpRight.
+ * Besides the generic link events it fires `app_store_click`, the page's own
+ * outcome.
+ */
 export function AppStoreButton({
   location,
   size = 'xl',
@@ -39,6 +46,7 @@ export function AppStoreButton({
         location={location}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackAppStoreClick(location)}
       >
         <svg
           viewBox="0 0 24 24"

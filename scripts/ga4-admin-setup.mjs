@@ -3,9 +3,10 @@
  * GA4 Admin API setup — idempotent.
  *
  * Performs the two GA4-UI-only tasks programmatically:
- *   1. Marks `generate_lead` as a Key Event (conversion).
+ *   1. Marks `generate_lead`, `waitlist_form_start`, and `app_store_click`
+ *      as Key Events.
  *   2. Registers event-scoped custom dimensions for the params the site
- *      already sends: lead_type, lead_source, form_name, budget, primary_goal.
+ *      already sends (see CUSTOM_DIMENSIONS below).
  *
  * Auth — either of:
  *   (a) A pre-minted OAuth access token with the analytics.edit scope, e.g.
@@ -38,13 +39,24 @@ const SCOPE = 'https://www.googleapis.com/auth/analytics.edit'
 const ADMIN_V1BETA = 'https://analyticsadmin.googleapis.com/v1beta'
 const ADMIN_V1ALPHA = 'https://analyticsadmin.googleapis.com/v1alpha'
 
-const KEY_EVENT_NAME = 'generate_lead'
+// generate_lead is the conversion. The other two are outcomes that happen
+// often enough to steer by on a low-traffic site; keep them out of Ads
+// bidding (do not import them as primary conversion actions).
+const KEY_EVENT_NAMES = ['generate_lead', 'waitlist_form_start', 'app_store_click']
 const CUSTOM_DIMENSIONS = [
   { parameterName: 'lead_type', displayName: 'Lead Type' },
   { parameterName: 'lead_source', displayName: 'Lead Source' },
   { parameterName: 'form_name', displayName: 'Form Name' },
   { parameterName: 'budget', displayName: 'Budget' },
   { parameterName: 'primary_goal', displayName: 'Primary Goal' },
+  // Live waitlist funnel (the registered step_id / funnel_step_id belong to
+  // the retired intake forms).
+  { parameterName: 'step_name', displayName: 'Waitlist step' },
+  { parameterName: 'prefilled_focus', displayName: 'Waitlist prefilled focus' },
+  { parameterName: 'focus_count', displayName: 'Waitlist focus count' },
+  // /app demo phone.
+  { parameterName: 'demo_screen', displayName: 'App demo screen' },
+  { parameterName: 'select_method', displayName: 'App demo select method' },
 ]
 
 function parseArgs(argv) {
@@ -130,30 +142,30 @@ async function api(token, url, init = {}) {
   return data
 }
 
-async function ensureKeyEvent(token, property, dryRun) {
+async function ensureKeyEvents(token, property, dryRun) {
   const list = await api(
     token,
     `${ADMIN_V1ALPHA}/${property}/keyEvents?pageSize=200`,
   )
-  const existing = (list.keyEvents || []).find(
-    (k) => k.eventName === KEY_EVENT_NAME,
-  )
-  if (existing) {
-    console.log(`  • key event "${KEY_EVENT_NAME}" already exists — skipped`)
-    return
+  const existing = new Set((list.keyEvents || []).map((k) => k.eventName))
+  for (const eventName of KEY_EVENT_NAMES) {
+    if (existing.has(eventName)) {
+      console.log(`  • key event "${eventName}" already exists — skipped`)
+      continue
+    }
+    if (dryRun) {
+      console.log(`  • [dry-run] would create key event "${eventName}"`)
+      continue
+    }
+    await api(token, `${ADMIN_V1ALPHA}/${property}/keyEvents`, {
+      method: 'POST',
+      body: JSON.stringify({
+        eventName,
+        countingMethod: 'ONCE_PER_EVENT',
+      }),
+    })
+    console.log(`  ✓ created key event "${eventName}"`)
   }
-  if (dryRun) {
-    console.log(`  • [dry-run] would create key event "${KEY_EVENT_NAME}"`)
-    return
-  }
-  await api(token, `${ADMIN_V1ALPHA}/${property}/keyEvents`, {
-    method: 'POST',
-    body: JSON.stringify({
-      eventName: KEY_EVENT_NAME,
-      countingMethod: 'ONCE_PER_EVENT',
-    }),
-  })
-  console.log(`  ✓ created key event "${KEY_EVENT_NAME}"`)
 }
 
 async function ensureCustomDimensions(token, property, dryRun) {
@@ -232,7 +244,7 @@ async function main() {
   console.log('')
 
   console.log('Key events:')
-  await ensureKeyEvent(token, property, args.dryRun)
+  await ensureKeyEvents(token, property, args.dryRun)
 
   console.log('\nCustom dimensions:')
   await ensureCustomDimensions(token, property, args.dryRun)

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { detectAiCrawler, formatAiCrawlerLog } from "@/lib/ai-crawlers";
+
 const CANONICAL_HOSTNAME = "www.design-prism.com";
 
 export function shouldNoindexBlogIndex(searchParams: URLSearchParams): boolean {
@@ -43,6 +45,12 @@ export function proxy(request: NextRequest) {
 
   if (shouldRedirect) {
     return NextResponse.redirect(url, 301);
+  }
+
+  // Which pages do answer engines read? One log line per crawler request.
+  const aiCrawler = detectAiCrawler(request.headers.get("user-agent"));
+  if (aiCrawler) {
+    console.log(formatAiCrawlerLog(aiCrawler, url.pathname));
   }
 
   const response = NextResponse.next();

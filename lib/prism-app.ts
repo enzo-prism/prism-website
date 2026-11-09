@@ -14,6 +14,14 @@ export const PRISM_APP_ID = '6829975700'
 export const PRISM_APP_STORE_URL =
   'https://apps.apple.com/us/app/prism-by-design-prism/id6829975700'
 
+/**
+ * What the QR code on /app encodes. It is a route on this site, not the App
+ * Store URL, so a scan can be counted before the phone is sent on
+ * (app/app/get/route.ts). Regenerate public/prism-app/app-store-qr.svg if
+ * this ever changes.
+ */
+export const PRISM_APP_QR_URL = 'https://www.design-prism.com/app/get'
+
 export const PRISM_APP_NAME = 'Prism by Design Prism'
 
 export const PRISM_APP_DESCRIPTION =
