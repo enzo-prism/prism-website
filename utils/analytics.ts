@@ -8,6 +8,7 @@ import {
   IS_ANALYTICS_ENABLED,
   isAnalyticsReportingHost,
 } from '@/lib/constants'
+import { isInternalTraffic } from '@/lib/internal-traffic'
 import { resolveLeadValue } from '@/lib/lead-values'
 import { getAttributionContext } from '@/lib/marketing-attribution'
 import { buildVercelCustomEvent } from '@/lib/vercel-analytics'
@@ -173,6 +174,8 @@ function getGtag() {
   // without this the live property collects localhost traffic. See
   // isAnalyticsReportingHost.
   if (!isAnalyticsReportingHost()) return null
+  // The team's own browsers opt out with ?internal=1 (lib/internal-traffic).
+  if (isInternalTraffic()) return null
 
   window.dataLayer = window.dataLayer || []
   if (typeof window.gtag !== 'function') {
@@ -460,6 +463,9 @@ export type EventType =
   | 'page_engagement'
   | 'file_download'
   | 'external_link_click'
+  // /app: the install action and manual screen changes in the demo phone.
+  | 'app_store_click'
+  | 'app_demo_screen_select'
   | 'book_call_click'
   | 'contact_action_click'
   | 'video_interaction'
@@ -998,6 +1004,10 @@ export function trackEvent(
     })
   }
 
+  if (isInternalTraffic()) {
+    return
+  }
+
   const vercelEvent = buildVercelCustomEvent(eventName, enhancedParams)
   if (vercelEvent) {
     try {
@@ -1224,6 +1234,22 @@ export function trackExternalLinkClick(url: string, linkText?: string) {
   trackEvent('external_link_click', {
     ...getExternalDestinationContext(url),
     link_text: linkText || 'not specified',
+  })
+}
+
+/** The install action on /app. Kept apart from generic CTA clicks so it can be a key event. */
+export function trackAppStoreClick(location: string) {
+  trackEvent('app_store_click', { cta_location: location })
+}
+
+/** A visitor changed the demo phone's screen themselves (never the auto-advance). */
+export function trackAppDemoScreenSelect(
+  screen: string,
+  method: 'tab' | 'keyboard' | 'screen',
+) {
+  trackEvent('app_demo_screen_select', {
+    demo_screen: screen,
+    select_method: method,
   })
 }
 

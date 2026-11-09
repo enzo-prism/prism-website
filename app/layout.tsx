@@ -149,6 +149,18 @@ export default function RootLayout({
                       || lan) {
                       return;
                     }
+                    // Internal traffic opt-out: ?internal=1 marks this browser,
+                    // ?internal=0 clears it. Keep in sync with
+                    // lib/internal-traffic.ts. Plain string checks, as above.
+                    try {
+                      var q = location.search || '';
+                      if (q.indexOf('internal=1') !== -1) {
+                        localStorage.setItem('prism_internal', '1');
+                      } else if (q.indexOf('internal=0') !== -1) {
+                        localStorage.removeItem('prism_internal');
+                      }
+                      if (localStorage.getItem('prism_internal') === '1') return;
+                    } catch (e) {}
                   window.dataLayer = window.dataLayer || [];
                   // Assign onto window explicitly: this now runs inside the
                   // host-gate IIFE, so a bare function declaration would no
@@ -185,6 +197,12 @@ export default function RootLayout({
           <Script id="hotjar-loader" strategy="afterInteractive">
             {`
               (function(){
+                // No session replays of the team's own browsing. See
+                // lib/internal-traffic.ts.
+                try {
+                  if ((location.search || '').indexOf('internal=1') !== -1
+                    || localStorage.getItem('prism_internal') === '1') return;
+                } catch (e) {}
                 var loaded = false;
                 var queued = false;
                 function loadHotjar(){

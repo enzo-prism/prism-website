@@ -47,6 +47,15 @@ function getWaitlistStep(value: unknown) {
 
 const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
 const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads', 'aeo'])
+const APP_DEMO_SCREENS = new Set([
+  'summary',
+  'leads',
+  'visits',
+  'search',
+  'ai',
+  'updates',
+])
+const APP_DEMO_SELECT_METHODS = new Set(['tab', 'keyboard', 'screen'])
 const SOCIAL_HUB_DESTINATIONS = new Set([
   WAITLIST_PATH,
   ...Object.values(WAITLIST_FOCUS_HREFS),
@@ -709,6 +718,30 @@ export function buildVercelCustomEvent(
             typeof eventParams.destination === 'string'
               ? eventParams.destination
               : undefined,
+        }),
+      }
+    case 'app_store_click':
+      return {
+        name: 'App Store Clicked',
+        properties: compactProperties({
+          cta_location:
+            typeof eventParams.cta_location === 'string'
+              ? eventParams.cta_location
+              : undefined,
+        }),
+      }
+    case 'app_demo_screen_select':
+      return {
+        name: 'App Demo Screen Selected',
+        properties: compactProperties({
+          demo_screen: getAllowedString(
+            eventParams.demo_screen,
+            APP_DEMO_SCREENS,
+          ),
+          select_method: getAllowedString(
+            eventParams.select_method,
+            APP_DEMO_SELECT_METHODS,
+          ),
         }),
       }
     case 'external_link_click':

@@ -20,6 +20,22 @@ without that, preview traffic and QA lead conversions would land in the live
 property. Vercel Web Analytics needs no such gate: its reporting is
 production-only by design, and preview events are segmented out.
 
+## Internal traffic opt-out (2026-11-09)
+
+Open any page once with `?internal=1` and that browser stops reporting to GA4,
+Google Ads, Vercel Web Analytics, and Hotjar. `?internal=0` turns reporting
+back on. The flag is `localStorage.prism_internal` (`lib/internal-traffic.ts`,
+mirrored in the two inline scripts in `app/layout.tsx`). Nothing is sent, so it
+does not depend on the GA4 internal-traffic filter being Active, and it follows
+laptops, phones, and agent browsers in a way IP rules cannot. Do this on every
+browser the team or an agent uses on production. To debug real hits in GA4
+DebugView, clear the flag first.
+
+It does not stop bots: in the 28 days to 2026-11-08 only about 11% of GA4 users
+registered any engagement, with Singapore and data-centre cities leading and
+82% of sessions "Direct". Until bot traffic is blocked at the edge (Vercel bot
+protection), report on engaged sessions, never raw users or sessions.
+
 ## Page views
 
 `gtag('config', ...)` runs with `send_page_view: false`. Page views are sent
@@ -292,6 +308,40 @@ Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because 
 
 The `${service}_intake_*` events and their Vercel mappings are gone with the intake routes. Their `lead-values.ts` entries (`website_intake` 180, `content_intake` 150, `ads_intake` 150) stay for historical events.
 
+### Prism for iPhone page (`/app`, 2026-11-09)
+
+- `app_store_click` (`cta_location`: `prism app hero`, `prism app get started`)
+  fires from `AppStoreButton` alongside the generic `cta_click` and
+  `external_link_click`. It is the page's outcome; mark it a key event in GA4
+  but do not import it into Ads as a primary conversion. Vercel:
+  `App Store Clicked`.
+- `app_demo_screen_select` (`demo_screen`: `summary` | `leads` | `visits` |
+  `search` | `ai` | `updates`; `select_method`: `tab` | `keyboard` | `screen`)
+  fires only when a visitor changes the demo phone's screen themselves, never
+  on the auto-advance. Vercel: `App Demo Screen Selected`.
+- The QR code encodes `https://www.design-prism.com/app/get`
+  (`PRISM_APP_QR_URL`), not the App Store URL. `app/app/get/route.ts` records
+  a server-side Vercel Web Analytics event, `App QR Scanned`, and 307s to the
+  App Store. It is not in GA4 (that would need a Measurement Protocol secret).
+  Installs themselves are only visible in App Store Connect.
+
+### AI crawler log (2026-11-09)
+
+`proxy.ts` writes one structured line per page request from an answer-engine
+crawler (`lib/ai-crawlers.ts`: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot,
+Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Google-Extended,
+Applebot-Extended, CCBot):
+
+```json
+{"event":"ai_crawler_visit","bot":"GPTBot","path":"/aeo"}
+```
+
+Filter Vercel's runtime logs on `ai_crawler_visit` to see which pages the
+assistants read. Path only, no query string or IP. Vercel keeps runtime logs
+for a limited window that depends on the plan; add a log drain if a durable
+history is needed. Static assets and files the proxy matcher skips are not
+logged.
+
 ### Social link-in-bio hubs (`/ig`, `/tiktok`, `/youtube`)
 
 The shared hub (`components/social-link-hub.tsx`) is a noindex converter. Each of the four CTAs fires `cta_click` with:
@@ -323,10 +373,12 @@ Verified authenticated property: **Prism Website**, `508295014`, account
   key-event designation from `form_submit`; keep it as diagnostic telemetry.
 - Event retention: **2 months**; user retention: **14 months**, reset on new
   activity enabled. Proposed event retention: **14 months**, subject to approval.
-- No custom dimensions registered. Internal Traffic exclusion is **Testing**,
+- No custom dimensions registered at audit time (the ten below were registered
+  later the same day; see "Since the audit"). Internal Traffic exclusion is **Testing**,
   not Active. Validate the matching rule before activating; excluded data cannot
   be recovered.
-- No Search Console or BigQuery link configured.
+- No Search Console or BigQuery link configured at audit time (Search Console
+  was linked later the same day).
 - Stream email redaction is active; query-key redaction is inactive. First-party
   URL sanitizers now reject encoded email/phone campaign values and credentials.
   Automatic Google events do not pass through the first-party sanitizer.
@@ -341,6 +393,23 @@ Verified authenticated property: **Prism Website**, `508295014`, account
 - Legacy redirect no longer emits unverified purchases.
 - Public tag audit now fails when automatic `form_submit` is a key event, and
   no longer describes a public-tag-only pass as a complete Admin audit.
+
+### Since the audit (checked 2026-11-09)
+
+- The ten event-scoped dimensions in the table below are registered (dated
+  2026-09-12) and the Search Console link exists (design-prism.com domain
+  property, same date).
+- Key events on the tag: `generate_lead`, `qualify_lead`, `close_convert_lead`,
+  `purchase`. Nothing in this repo fires `qualify_lead` or
+  `close_convert_lead`; they need the CRM follow-up below.
+- Still to do in GA4 Admin: register the live waitlist parameters
+  (`step_name`, `prefilled_focus`, `focus_count`) and the `/app` ones
+  (`demo_screen`, `select_method`), and mark `waitlist_form_start` and
+  `app_store_click` as key events. `node scripts/ga4-admin-setup.mjs` does all
+  of it idempotently given Admin API credentials; the registered `step_id` and
+  `funnel_step_id` belong to the retired intake forms.
+- Not re-checked on 2026-11-09: event retention, the internal-traffic filter
+  state, BigQuery.
 
 ### Proposed reporting definitions
 

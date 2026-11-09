@@ -24,6 +24,7 @@ import {
 
 import type { PrismAppScreenId, PrismAppTourStep } from '@/lib/prism-app'
 import { cn } from '@/lib/utils'
+import { trackAppDemoScreenSelect } from '@/utils/analytics'
 
 import { AppPhone } from './AppPhone'
 import { AppScreen } from './AppScreens'
@@ -136,18 +137,20 @@ export function AppDemo({ steps, header }: AppDemoProps) {
   }, [active, armed, started])
 
   const select = useCallback(
-    (index: number, focus = false) => {
+    (index: number, method: 'tab' | 'keyboard' | 'screen') => {
       setAuto(false)
       setActive(index)
-      if (focus) tabRefs.current[index]?.focus()
+      if (method === 'keyboard') tabRefs.current[index]?.focus()
+      const step = steps[index]
+      if (step) trackAppDemoScreenSelect(step.id, method)
     },
-    [],
+    [steps],
   )
 
   const selectById = useCallback(
     (id: PrismAppScreenId) => {
       const index = steps.findIndex((step) => step.id === id)
-      if (index >= 0) select(index)
+      if (index >= 0) select(index, 'screen')
     },
     [select, steps],
   )
@@ -170,7 +173,7 @@ export function AppDemo({ steps, header }: AppDemoProps) {
               : -1
     if (next < 0) return
     event.preventDefault()
-    select(next, true)
+    select(next, 'keyboard')
   }
 
   const step = steps[active]
@@ -208,7 +211,7 @@ export function AppDemo({ steps, header }: AppDemoProps) {
                   aria-selected={selected}
                   aria-controls={`prism-app-panel-${item.id}`}
                   tabIndex={selected ? 0 : -1}
-                  onClick={() => select(index)}
+                  onClick={() => select(index, 'tab')}
                   className={styles.demoTab}
                   style={{ '--tone': TONES[item.id] } as CSSProperties}
                 >
