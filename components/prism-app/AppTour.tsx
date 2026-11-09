@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, type CSSProperties } from 'react'
 import Image from 'next/image'
-import { Check } from 'lucide-react'
 
 import type { PrismAppTourStep } from '@/lib/prism-app'
 
@@ -270,8 +269,7 @@ export function AppTour({ steps }: AppTourProps) {
               className={styles.tourCard}
             >
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
-                <span className="tabular-nums">0{index + 1}</span>
-                <span className="ml-3">{step.label}</span>
+                {step.label}
               </p>
               <h3 className="mt-3 max-w-[18ch] text-balance text-[clamp(1.625rem,3.5vw,3rem)] font-semibold leading-[1.04] tracking-[-0.04em] text-foreground lg:mt-5">
                 {step.title}
@@ -279,21 +277,6 @@ export function AppTour({ steps }: AppTourProps) {
               <p className="mt-3 max-w-[46ch] text-pretty text-[15px] leading-6 text-muted-foreground lg:mt-5 lg:text-[1.0625rem] lg:leading-7">
                 {step.body}
               </p>
-              <ul className="mt-7 hidden max-w-[46ch] flex-col gap-2.5 lg:flex">
-                {step.points.map((point) => (
-                  <li
-                    key={point}
-                    className="flex items-start gap-2.5 text-[15px] leading-6 text-muted-foreground"
-                  >
-                    <Check
-                      aria-hidden="true"
-                      className="mt-1 size-4 shrink-0"
-                      style={{ color: TONES[step.id] }}
-                    />
-                    {point}
-                  </li>
-                ))}
-              </ul>
             </div>
           </li>
         ))}

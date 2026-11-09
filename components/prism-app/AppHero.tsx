@@ -3,8 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 
-import { Eyebrow } from '@/components/prism/section'
-import { PRISM_APP_FACTS, PRISM_APP_TOUR } from '@/lib/prism-app'
+import { PRISM_APP_TOUR } from '@/lib/prism-app'
 
 import { AppPhone } from './AppPhone'
 import { AppStoreButton } from './AppStoreButton'
@@ -15,19 +14,19 @@ import { clamp01, easeOutCubic, smoothstep, useFrameLoop } from './use-frame-loo
 const PINNED_QUERY =
   '(prefers-reduced-motion: no-preference) and (min-height: 560px)'
 
-/** Demo copy from the app's Updates feed, oldest arrival first. */
+/** Shortened from the app's demo Updates feed, oldest arrival first. */
 const NOTIFICATIONS = [
   {
     title: 'New appointment request',
-    body: 'Someone sent an appointment request through bayviewdental.example.',
+    body: 'A form just came in.',
   },
   {
     title: 'On Google’s first page',
-    body: 'Bayview Dental now ranks #7 for “emergency dentist.”',
+    body: 'Now #7 for “emergency dentist.”',
   },
   {
     title: 'Your site is busy right now',
-    body: '64 people are on Bayview Dental, about 3× your usual for this time.',
+    body: '64 people now, about 3× usual.',
   },
 ] as const
 
@@ -103,17 +102,6 @@ export function AppHero({ demoNote }: { demoNote: string }) {
         <div aria-hidden="true" className={styles.heroHalo} />
 
         <div className={`prism-container ${styles.heroCopy}`}>
-          <div className="prism-rise flex items-center justify-center gap-3">
-            <Image
-              src="/prism-app/app-icon.png"
-              alt=""
-              width={96}
-              height={96}
-              priority
-              className="size-10 rounded-[0.7rem] border border-white/10 sm:size-12 sm:rounded-[0.8rem]"
-            />
-            <Eyebrow>Prism for iPhone</Eyebrow>
-          </div>
           <h1
             id="prism-app-title"
             className={`prism-rise text-gradient ${styles.heroTitle}`}
@@ -127,8 +115,7 @@ export function AppHero({ demoNote }: { demoNote: string }) {
             className={`prism-rise text-pretty text-muted-foreground ${styles.heroLead}`}
             style={{ '--rise-delay': '140ms' } as React.CSSProperties}
           >
-            See how your website is doing in a few seconds, and hear about it
-            when something good happens.
+            Visits, leads, and searches on your iPhone.
           </p>
           <div
             className={`prism-rise ${styles.heroActions}`}
@@ -138,14 +125,9 @@ export function AppHero({ demoNote }: { demoNote: string }) {
               location="prism app hero"
               className="w-full sm:w-auto"
             />
-            <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[13px] text-subtle">
-              {PRISM_APP_FACTS.map((fact) => (
-                <li key={fact}>{fact}</li>
-              ))}
-              <li className="w-full text-center sm:w-auto">
-                For Prism clients. Anyone can explore the demo.
-              </li>
-            </ul>
+            <p className="text-[13px] text-subtle">
+              Free. Built for Prism clients.
+            </p>
           </div>
         </div>
 
@@ -185,7 +167,7 @@ export function AppHero({ demoNote }: { demoNote: string }) {
                           now
                         </span>
                       </p>
-                      <p className="mt-0.5 line-clamp-2 text-[12px] leading-[1.32] text-muted-foreground">
+                      <p className="mt-0.5 truncate text-[12px] leading-[1.32] text-muted-foreground">
                         {item.body}
                       </p>
                     </div>

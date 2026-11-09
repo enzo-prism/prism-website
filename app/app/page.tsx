@@ -33,8 +33,7 @@ import {
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const PAGE_URL = 'https://www.design-prism.com/app'
-const DEMO_NOTE =
-  'Screens show the app’s built-in demo. Bayview Dental is a fictional practice.'
+const DEMO_NOTE = 'Demo data. Bayview Dental is fictional.'
 const TRUST_ICONS = [Eye, UsersRound, ShieldCheck, Trash2] as const
 
 export const metadata: Metadata = {
@@ -78,7 +77,7 @@ export default function PrismAppPage() {
             id="prism-app-inside-title"
             eyebrow="Inside the app"
             title="your numbers, in plain English."
-            description={`Six screens that tell you what happened on your website and what it means. ${DEMO_NOTE} Floating cards are drawn with the demo’s numbers.`}
+            description="Shown with the app’s demo data."
           />
           <AppTour steps={PRISM_APP_TOUR} />
         </Section>
@@ -90,13 +89,13 @@ export default function PrismAppPage() {
                 id="prism-app-widgets-title"
                 eyebrow="Widgets"
                 title="keep an eye on it from your Home Screen."
-                description="Add Prism to your Home Screen or Lock Screen to see your visits and Google clicks without opening the app."
+                description="Visits and clicks, without opening the app."
               />
             </Reveal>
             <div>
               <AppWidgets />
               <p className="mt-4 text-xs leading-5 text-subtle">
-                Illustrative widget layouts with the demo’s numbers.
+                Illustrative, with demo numbers.
               </p>
             </div>
           </div>
@@ -111,7 +110,6 @@ export default function PrismAppPage() {
               <div>
                 <SectionHeader
                   id="prism-app-start-title"
-                  eyebrow="Get started"
                   title="how to get started."
                   titleClassName="max-w-[14ch]"
                 />
@@ -143,7 +141,6 @@ export default function PrismAppPage() {
             id="prism-app-trust-title"
             eyebrow="Privacy"
             title="your data stays simple."
-            description="Prism shows totals from your own accounts and asks for very little from you."
           >
             <Link
               href="/app/privacy"
