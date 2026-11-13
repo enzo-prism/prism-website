@@ -12,13 +12,13 @@ import {
 } from 'react'
 import {
   Bell,
+  FileText,
   LayoutGrid,
   Mail,
   Pause,
   Play,
   Search,
   Sparkles,
-  UsersRound,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -39,8 +39,8 @@ type AppDemoProps = {
 /** The color each section has inside the app. */
 const TONES: Record<PrismAppScreenId, string> = {
   summary: 'var(--spectrum-green)',
-  leads: 'var(--spectrum-green)',
-  visits: 'var(--spectrum-blue)',
+  report: 'var(--spectrum-blue)',
+  forms: 'var(--spectrum-green)',
   search: 'var(--spectrum-orange)',
   ai: 'var(--spectrum-violet)',
   updates: 'var(--spectrum-blue)',
@@ -48,8 +48,8 @@ const TONES: Record<PrismAppScreenId, string> = {
 
 const ICONS: Record<PrismAppScreenId, LucideIcon> = {
   summary: LayoutGrid,
-  leads: Mail,
-  visits: UsersRound,
+  report: FileText,
+  forms: Mail,
   search: Search,
   ai: Sparkles,
   updates: Bell,
@@ -85,8 +85,8 @@ function runCount(node: HTMLElement) {
 
 /**
  * The tour, as one phone you can use. Six labeled tabs change the screen; the
- * Summary cards inside the phone open their screens too, as they do in the
- * app. It plays through on its own once it is in view and stops for good the
+ * Summary cards and its Latest Monthly Report row open their screens too, as
+ * they do in the app. It plays through on its own once it is in view and stops for good the
  * moment someone picks a tab or presses pause. Without JS the first screen is
  * up and every step's copy is in the page. With reduced motion nothing moves
  * by itself.

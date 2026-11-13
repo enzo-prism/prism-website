@@ -813,18 +813,26 @@ export function PodcastEpisodeSchema({
 interface SoftwareApplicationSchemaProps {
   appId: string
   name: string
+  /** Another name people know the app by, such as its Home Screen label. */
+  alternateName?: string
   description: string
   applicationCategory?: string
   operatingSystems?: string[]
+  softwareVersion?: string
+  /** Where to install it, e.g. the App Store listing. */
+  downloadUrl?: string
   url?: string
 }
 
 export function SoftwareApplicationSchema({
   appId,
   name,
+  alternateName,
   description,
   applicationCategory,
   operatingSystems,
+  softwareVersion,
+  downloadUrl,
   url,
 }: SoftwareApplicationSchemaProps) {
   const data = {
@@ -832,9 +840,12 @@ export function SoftwareApplicationSchema({
     '@type': 'SoftwareApplication',
     '@id': `${url || 'https://www.design-prism.com/apps'}#${appId}`,
     name,
+    alternateName,
     description,
     applicationCategory,
     operatingSystem: operatingSystems,
+    softwareVersion,
+    downloadUrl,
     offers: url
       ? {
           '@type': 'Offer',

@@ -1,18 +1,22 @@
 /**
- * Facts and copy for /app, the page for the Prism iPhone app.
+ * Facts and copy for /app, the page for Prism Grow, Prism's iPhone app.
  *
  * Every fact here comes from the App Store listing or the app itself
- * (prism-platform: apps/ios). Screens are drawn in HTML from captures of the
- * app's built-in demo (components/prism-app/AppScreens.tsx), whose practice,
- * Bayview Dental, is fictional. Never swap in a real client's numbers or draw
- * a feature the app does not have. Page copy stays short on purpose; detail
- * belongs in the FAQ.
+ * (prism-platform: apps/ios, version 1.5). Screens are drawn in HTML from
+ * captures of the app's built-in demo (components/prism-app/AppScreens.tsx),
+ * whose practice, Bayview Dental, is fictional. Never swap in a real client's
+ * numbers or draw a feature the app does not have. Page copy stays short on
+ * purpose; detail belongs in the FAQ.
+ *
+ * The app's wording is careful and the page keeps it: "forms submitted", not
+ * leads or bookings; "Ask Prism" reaches a person and sends nothing on its own;
+ * teammates can view but not change anything.
  */
 
 export const PRISM_APP_ID = '6829975700'
 
 export const PRISM_APP_STORE_URL =
-  'https://apps.apple.com/us/app/prism-by-design-prism/id6829975700'
+  'https://apps.apple.com/us/app/prism-grow/id6829975700'
 
 /**
  * What the QR code on /app encodes. It is a route on this site, not the App
@@ -22,15 +26,21 @@ export const PRISM_APP_STORE_URL =
  */
 export const PRISM_APP_QR_URL = 'https://www.design-prism.com/app/get'
 
-export const PRISM_APP_NAME = 'Prism by Design Prism'
+/** The App Store name since version 1.5 (November 2026). */
+export const PRISM_APP_NAME = 'Prism Grow'
+
+/** What the icon is called on the Home Screen. The app was "Prism" before 1.5. */
+export const PRISM_APP_HOME_SCREEN_NAME = 'Prism'
+
+export const PRISM_APP_VERSION = '1.5'
 
 export const PRISM_APP_DESCRIPTION =
-  'See your website’s visits, leads, Google searches, and AI referrals in the Prism iPhone app for Prism clients. Free on the App Store.'
+  'Prism Grow is the free iPhone app for Prism clients: website visits, forms, Google searches, AI visits, and a monthly report to share.'
 
 export type PrismAppScreenId =
   | 'summary'
-  | 'leads'
-  | 'visits'
+  | 'report'
+  | 'forms'
   | 'search'
   | 'ai'
   | 'updates'
@@ -48,29 +58,29 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
   {
     id: 'summary',
     label: 'Summary',
-    title: 'one screen for the whole picture.',
-    body: 'Who’s on your site now, plus leads, visits, and searches.',
-    takeaway: '14 people are on your site right now.',
+    title: 'the whole picture in one screen.',
+    body: 'A one-line takeaway, then forms, visits, Google, and AI over the last 28 days.',
+    takeaway: 'Visits are up 15% over the last 28 days.',
   },
   {
-    id: 'leads',
-    label: 'Leads',
+    id: 'report',
+    label: 'Report',
+    title: 'a monthly report you can share.',
+    body: 'Each finished month against the one before, what changed, and what Prism shipped. Share it as a PDF.',
+    takeaway: 'October had 5,301 visits, up 9% from September.',
+  },
+  {
+    id: 'forms',
+    label: 'Forms',
     title: 'see when people reach out.',
-    body: 'Every form sent through your site, counted.',
+    body: 'Every form submitted through your site, by type. What people wrote is never stored.',
     takeaway: 'Your latest form came in 2 hours ago.',
-  },
-  {
-    id: 'visits',
-    label: 'Visits',
-    title: 'see where visits come from.',
-    body: 'Day by day, and by channel.',
-    takeaway: 'Your busiest day was Friday, November 6, with 212 visits.',
   },
   {
     id: 'search',
     label: 'Google',
     title: 'see what people search to find you.',
-    body: 'Clicks, average position, and top searches.',
+    body: 'Clicks, times shown, average position, and top searches.',
     takeaway: 'You’re on Google’s first page for “emergency dentist.”',
   },
   {
@@ -84,29 +94,30 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'updates',
     label: 'Updates',
     title: 'hear when something good happens.',
-    body: 'Traffic spikes, new rankings, and your best weeks.',
+    body: 'New forms, Google rankings, record weeks, and the work Prism ships.',
     takeaway: '64 people on your site, about 3× your usual.',
   },
 ] as const
 
 /**
  * Lock Screen notifications in the hero, oldest arrival first, shortened from
- * the demo's Updates feed. The last one lands on top.
+ * the app's notification copy (prism-platform: packages/alerts/src/copy.ts)
+ * with the demo's numbers. The last one lands on top.
  */
 export const PRISM_APP_NOTIFICATIONS = [
   {
-    title: 'Your site is busy right now',
-    body: '64 people now, about 3× usual.',
+    title: 'On Google’s first page',
+    body: 'Now #7 for “emergency dentist.”',
+    time: '1d ago',
+  },
+  {
+    title: 'New form submission',
+    body: 'A form came in: Appointment request.',
     time: '1h ago',
   },
   {
-    title: 'On Google’s first page',
-    body: 'Now #7 for “emergency dentist.”',
-    time: '12m ago',
-  },
-  {
-    title: 'New appointment request',
-    body: 'A form just came in.',
+    title: 'Your October report is ready',
+    body: '5,301 visits (up 9%), 32 forms submitted.',
     time: 'now',
   },
 ] as const
@@ -130,67 +141,87 @@ export const PRISM_APP_TRUST = [
   },
   {
     title: 'delete it anytime.',
-    body: 'Remove your account from inside the app.',
+    body: 'Remove your account from inside the app. Your website isn’t affected.',
   },
 ] as const
 
 export const PRISM_APP_STEPS = [
   {
-    title: 'download Prism.',
-    body: 'Free on the App Store.',
+    title: 'download Prism Grow.',
+    body: 'Free on the App Store. On your Home Screen it’s called Prism.',
   },
   {
     title: 'sign in with your invited email.',
-    body: 'Use Google or Apple.',
+    body: 'We email you a 6-digit code, so there’s no password. Google and Apple work too.',
   },
 ] as const
 
 /** Not a step: the way in for anyone without an invite. */
 export const PRISM_APP_DEMO_BRANCH = {
   title: 'no invite yet? explore the demo.',
-  body: 'Tap Explore a Demo in the app. No account needed.',
+  body: 'Tap Other Ways to Get Started, then Explore a Demo. No account needed.',
 } as const
 
 /** The band for visitors who are not clients. Facts only: free, for clients. */
 export const PRISM_APP_PROSPECT = {
   eyebrow: 'Not a client yet',
   title: 'every Prism client gets this.',
-  body: 'The app is free for Prism clients. Join the waitlist to work with us.',
+  body: 'Prism Grow is free for Prism clients. Join the waitlist to work with us.',
 } as const
 
 export const PRISM_APP_FAQ = [
   {
-    question: 'Who is the Prism app for?',
+    question: 'Who is Prism Grow for?',
     answer:
-      'Prism is for Prism clients, so they can see how their website is doing. Anyone can download it and tap Explore a Demo to look around.',
+      'Prism Grow is for Prism clients, so they can see how their website is doing. Anyone can download it and explore the demo without an account.',
+  },
+  {
+    question: 'Is Prism Grow the same as the Prism app?',
+    answer:
+      'Yes. The Prism app was renamed Prism Grow in version 1.5, in November 2026. Your account and numbers carry over, and the icon on your Home Screen is still labeled Prism.',
   },
   {
     question: 'Is the app free?',
-    answer: 'Yes. Prism is free to download on the App Store.',
+    answer: 'Yes. Prism Grow is free on the App Store.',
   },
   {
     question: 'How do I get access to my own numbers?',
     answer:
-      'Ask Prism to invite you, then open the app and choose Continue with Google using the email address we invited. If you use Sign in with Apple, open the invite link we send you first.',
+      'Prism sends you an invitation. Open it on your iPhone to see your business and websites, then tap Continue with Email and enter the 6-digit code we send. Google and Apple work too, and you can type an invitation code under Other Ways to Get Started.',
+  },
+  {
+    question: 'What’s in the monthly report?',
+    answer:
+      'Each finished calendar month compared with the month before: visits, forms submitted, Google clicks and times shown, and visits from AI assistants. It explains what changed, lists what Prism shipped, and includes the next step we agreed on when there is one. Share it as a PDF or as text.',
+  },
+  {
+    question: 'Can my team see our numbers?',
+    answer:
+      'Yes. Business owners can invite teammates from Account › Your Team. Teammates can view the numbers but can’t change anything or invite others.',
+  },
+  {
+    question: 'How do I reach Prism from the app?',
+    answer:
+      'Tap Ask Prism on your Summary or in a report. It shows the topic and website first, and nothing is sent until you choose to text, call, or email us.',
   },
   {
     question: 'Which devices does it work on?',
     answer:
-      'Prism is built for iPhone and requires iOS 18 or later. It is available on the United States App Store.',
+      'Prism Grow is built for iPhone and needs iOS 18 or later. Pin a website to a Home Screen or Lock Screen widget, or ask Siri to open your latest report. It is available on the United States App Store.',
   },
   {
     question: 'Where do the numbers come from?',
     answer:
-      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which reports each day’s numbers a few days later.',
+      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which finalizes each day’s numbers a few days later. Forms are submissions made through your website.',
   },
   {
     question: 'How many notifications will I get?',
     answer:
-      'A few a week at most: traffic spikes, new Google rankings, record weeks, and a Monday summary. None are sent overnight, and you can turn them off in iPhone Settings.',
+      'A few a week at most: wins such as a new Google ranking or a record week, new form submissions, a Monday summary, and a note when your monthly report is ready. None are sent overnight, and you choose which ones you get under Account › Notifications.',
   },
   {
     question: 'Does the app store what people write in my forms?',
     answer:
-      'No. Prism counts the forms people send through your website and never stores what they wrote.',
+      'No. Prism Grow counts the forms people submit through your website and never stores what they wrote. A submitted form isn’t a confirmed booking or a qualified lead.',
   },
 ] as const

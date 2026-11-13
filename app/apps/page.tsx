@@ -23,9 +23,10 @@ export const metadata: Metadata = buildRouteMetadata({
 const appProjects = [
   {
     id: '0',
-    title: 'prism for iphone',
+    title: 'prism grow',
     url: '/app',
-    description: 'website visits, leads, search, and AI referrals for Prism clients',
+    description:
+      'iPhone app for Prism clients: website visits, forms, Google search, AI visits, and monthly reports',
     category: 'business',
     platforms: ['iOS'],
   },

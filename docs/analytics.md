@@ -308,15 +308,16 @@ Retired: the `${service}_intake_*` and `apply_*` funnels no longer fire because 
 
 The `${service}_intake_*` events and their Vercel mappings are gone with the intake routes. Their `lead-values.ts` entries (`website_intake` 180, `content_intake` 150, `ads_intake` 150) stay for historical events.
 
-### Prism for iPhone page (`/app`, 2026-11-09)
+### Prism Grow for iPhone page (`/app`, 2026-11-09)
 
 - `app_store_click` (`cta_location`: `prism app hero`, `prism app get started`)
   fires from `AppStoreButton` alongside the generic `cta_click` and
   `external_link_click`. It is the page's outcome; mark it a key event in GA4
   but do not import it into Ads as a primary conversion. Vercel:
   `App Store Clicked`.
-- `app_demo_screen_select` (`demo_screen`: `summary` | `leads` | `visits` |
-  `search` | `ai` | `updates`; `select_method`: `tab` | `keyboard` | `screen`)
+- `app_demo_screen_select` (`demo_screen`: `summary` | `report` | `forms` |
+  `search` | `ai` | `updates`, since 2026-11-13; before that `leads` and
+  `visits` instead of `report` and `forms`; `select_method`: `tab` | `keyboard` | `screen`)
   fires only when a visitor changes the demo phone's screen themselves, never
   on the auto-advance. Vercel: `App Demo Screen Selected`.
 - The QR code encodes `https://www.design-prism.com/app/get`

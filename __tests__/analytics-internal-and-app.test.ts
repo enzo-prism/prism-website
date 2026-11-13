@@ -95,12 +95,12 @@ describe('/app measurement', () => {
     })
     expect(
       buildVercelCustomEvent('app_demo_screen_select', {
-        demo_screen: 'visits',
+        demo_screen: 'report',
         select_method: 'tab',
       }),
     ).toEqual({
       name: 'App Demo Screen Selected',
-      properties: { demo_screen: 'visits', select_method: 'tab' },
+      properties: { demo_screen: 'report', select_method: 'tab' },
     })
     expect(
       buildVercelCustomEvent('app_demo_screen_select', {

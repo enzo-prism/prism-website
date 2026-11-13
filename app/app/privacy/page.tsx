@@ -8,14 +8,16 @@ import {
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Prism app privacy',
+  titleStem: 'Prism Grow app privacy',
   description:
-    'What the Prism iPhone app collects, where your website data comes from, how it is stored, and how to delete your account.',
+    'What Prism Grow, the Prism iPhone app, collects, where your website data comes from, how it is stored, and how to delete your account.',
   path: '/app/privacy',
 })
 
 // Mirrors the policy published with the app (prism-platform:
-// apps/api/app/privacy/page.tsx). Change both together.
+// apps/api/app/privacy/page.tsx, last updated November 10, 2026). Change both
+// together. The app is called Prism Grow on the App Store and Prism on the
+// Home Screen; the policy's body keeps "Prism" as the app's own page does.
 const SECTIONS: AppPolicySection[] = [
   {
     id: 'what-we-collect',
@@ -26,12 +28,32 @@ const SECTIONS: AppPolicySection[] = [
           <li>
             <strong>Your sign-in.</strong> When you sign in with Google or
             Apple we receive your name, your email address (Apple may give us a
-            private relay address) and an account identifier. We use them only
-            to know which practice’s data to show you.
+            private relay address) and an account identifier. If you sign in
+            with an emailed code, we use the email address you enter. We use
+            these only to know which practice’s data to show you.
+          </li>
+          <li>
+            <strong>Your business access and setup.</strong> We store the
+            businesses linked to your account, website confirmations, linked
+            sign-in methods, and business names or website addresses you submit
+            when requesting missing access. We use this information to set up
+            and support access to your business data.
           </li>
           <li>
             <strong>A notification token</strong>, if you allow notifications,
-            so we can send updates about your website to your device.
+            so we can send updates about your website to your device, and your
+            choices about which notifications and emails you want.
+          </li>
+          <li>
+            <strong>When you use Prism.</strong> We record when you first saw
+            your numbers, first opened a monthly report, last completed a
+            report share, and last opened the app, so we can help clients use
+            Prism. These milestones do not include report contents or a
+            browsing history.
+          </li>
+          <li>
+            <strong>Teammates you invite.</strong> If you invite someone on
+            your team, we store their email address to send the invitation.
           </li>
         </ul>
         <p>
@@ -76,8 +98,26 @@ const SECTIONS: AppPolicySection[] = [
     content: (
       <p>
         Data is stored with our hosting providers, Vercel and Neon, in the
-        United States, and is encrypted in transit. Your app session is kept in
-        your iPhone’s keychain.
+        United States, and is encrypted in transit. Sign-in codes, invitations
+        and any summary emails you choose to receive are delivered by our email
+        provider, Resend. Your app session is kept in your iPhone’s keychain.
+        Recent account, summary and report copies are encrypted on your device
+        for up to six hours of offline access and are cleared when you sign
+        out. Widgets use separate, read-only credentials scoped to an
+        authorized website, and label old data.
+      </p>
+    ),
+  },
+  {
+    id: 'app-diagnostics',
+    title: 'App diagnostics',
+    content: (
+      <p>
+        Apple performance and crash reports are stored locally on your device.
+        Screen diagnostics use broad states such as Summary or Report, without
+        business identifiers, email addresses or report contents. Prism does
+        not automatically upload these files. You can choose to share a
+        diagnostic file with support from Help.
       </p>
     ),
   },
@@ -117,7 +157,7 @@ const SECTIONS: AppPolicySection[] = [
           <Link href="/privacy-policy">Prism website privacy policy</Link>.
         </p>
         <p>
-          <Link href="/app">Prism for iPhone</Link>
+          <Link href="/app">Prism Grow for iPhone</Link>
           {' · '}
           <Link href="/app/support">App support</Link>
         </p>
@@ -129,10 +169,10 @@ const SECTIONS: AppPolicySection[] = [
 export default function PrismAppPrivacyPage() {
   return (
     <AppPolicyPage
-      product="Prism for iPhone"
+      product="Prism Grow for iPhone"
       title="app privacy policy."
-      lead="Prism is an iPhone app from Design Prism that shows our clients how their websites are performing. This policy covers the app and the service behind it."
-      meta={['Design Prism', 'Last updated November 2, 2026']}
+      lead="Prism Grow (Prism on your Home Screen) is an iPhone app from Design Prism that shows our clients how their websites are performing. This policy covers the app and the service behind it."
+      meta={['Design Prism', 'Last updated November 10, 2026']}
       sections={SECTIONS}
     />
   )

@@ -28,7 +28,7 @@ export const SOCIAL_IMAGE_EXCEPTIONS: Readonly<Record<string, SocialImage>> = {
   // Approved 2026-11-09: the iPhone app page shares its own card.
   "/app": {
     url: "/prism-app/og.jpg",
-    alt: "Prism app for iPhone: three website notifications on a Lock Screen",
+    alt: "Prism Grow for iPhone: three website notifications on a Lock Screen",
   },
 }
 

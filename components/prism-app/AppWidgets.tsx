@@ -1,30 +1,37 @@
 'use client'
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
-import { ArrowUp, Search, Users } from 'lucide-react'
+import { ArrowUpRight, ChartColumn, Search, Users } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
 import styles from './app-page.module.css'
 
 /**
- * Drawn from apps/ios/PrismWidget/PrismWidget.swift. Widgets need a signed
- * install to show data, so these are illustrations using the demo's numbers
- * and are labeled as such on the page. Decorative to assistive tech; the
- * section copy carries the content. They land once and hold.
+ * Drawn from apps/ios/PrismWidget/PrismWidget.swift (Prism Grow 1.5): a
+ * pinned website's last 28 days of visits and Google clicks. Widgets need a
+ * signed install to show data, so these are illustrations using the demo's
+ * numbers for November 11 (the same day as the screens above) and are
+ * labeled as such on the page. Decorative to assistive tech; the section copy
+ * carries the content. They land once and hold.
  */
 
 const SITE = 'Bayview Dental'
-const VISITS = '1,223'
+const VISITS = '4,675'
 const CLICKS = '498'
+const VISITS_THROUGH = 'Nov 10'
+const CLICKS_THROUGH = 'Nov 8'
 
-/** Fourteen days of demo visits; the last seven are drawn in full color. */
-const DAILY_VISITS = [64, 70, 74, 78, 82, 50, 46, 66, 76, 80, 84, 90, 54, 48]
+/** 28 days of demo visits, Oct 14 to Nov 10; the last seven in full color. */
+const DAILY_VISITS = [
+  176, 166, 163, 106, 114, 193, 192, 182, 172, 170, 110, 118, 200, 198, 188,
+  178, 176, 114, 122, 206, 204, 194, 184, 182, 118, 126, 212, 211,
+]
 
 function Change({ value }: { value: string }) {
   return (
     <span className="inline-flex items-center gap-0.5">
-      <ArrowUp aria-hidden="true" className="size-3" />
+      <ArrowUpRight aria-hidden="true" className="size-3" />
       {value}
     </span>
   )
@@ -121,27 +128,36 @@ export function AppWidgets() {
           </p>
         </Drop>
 
-        <Drop area="lock" delay={140} className="self-center">
+        {/* Lines truncate the way a Lock Screen widget does in a narrow slot. */}
+        <Drop area="lock" delay={140} className="min-w-0 max-w-full self-center">
           <div className="rounded-2xl bg-white/[0.08] px-3.5 py-2.5 text-xs leading-[1.45] text-foreground/85 sm:px-4">
-            <p className="text-[13px] font-semibold text-foreground">{SITE}</p>
-            <p className="whitespace-nowrap">{VISITS} visits · 7 days</p>
-            <p className="whitespace-nowrap">{CLICKS} clicks · 28 days</p>
+            <p className="truncate text-[13px] font-semibold text-foreground">
+              {SITE}
+            </p>
+            <p className="truncate">Through {VISITS_THROUGH}</p>
+            <p className="truncate">{VISITS} visits · 28 days</p>
+            <p className="truncate">
+              {CLICKS} Google clicks · through {CLICKS_THROUGH}
+            </p>
           </div>
         </Drop>
 
         <Drop area="small" delay={260}>
           <div className={cn(SURFACE, 'flex aspect-square w-36 flex-col sm:w-40')}>
             <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-spectrum-blue">
-              <Users aria-hidden="true" className="size-3.5" />
+              <ChartColumn aria-hidden="true" className="size-3.5" />
               Visits
             </p>
             <p className="mt-auto text-[2.125rem] font-semibold leading-none tracking-[-0.03em] tabular-nums text-foreground sm:text-[2.25rem]">
               {VISITS}
             </p>
             <p className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
-              Last 7 days · <Change value="3%" />
+              28 days · <Change value="15%" />
             </p>
-            <p className="mt-auto text-[11px] font-medium text-muted-foreground">
+            <p className="mt-auto text-[11px] text-muted-foreground">
+              Through {VISITS_THROUGH}
+            </p>
+            <p className="text-[11px] font-medium text-muted-foreground">
               {SITE}
             </p>
           </div>
@@ -151,7 +167,7 @@ export function AppWidgets() {
           <div className={cn(SURFACE, 'w-full')}>
             <div className="flex items-baseline justify-between gap-3">
               <p className="text-xs font-semibold text-foreground">{SITE}</p>
-              <p className="text-[11px] text-muted-foreground">Today</p>
+              <p className="text-[11px] text-muted-foreground">now</p>
             </div>
             <div className="mt-3 flex items-end gap-3 sm:gap-4">
               <Metric
@@ -159,18 +175,18 @@ export function AppWidgets() {
                 title="Visits"
                 tint="text-spectrum-blue"
                 value={VISITS}
-                caption="7 days"
-                change="3%"
+                caption="28 days"
+                change="15%"
               />
               <Metric
                 icon={<Search aria-hidden="true" className="size-3" />}
                 title="Google"
                 tint="text-spectrum-orange"
                 value={CLICKS}
-                caption="28 days"
-                change="16%"
+                caption={`28d to ${CLICKS_THROUGH}`}
+                change="15%"
               />
-              <div className="flex h-14 min-w-0 flex-1 items-end gap-[2px] sm:gap-[3px]">
+              <div className="flex h-14 min-w-0 flex-1 items-end gap-px sm:gap-[2px]">
                 {DAILY_VISITS.map((value, index) => (
                   <span
                     key={index}
@@ -182,7 +198,7 @@ export function AppWidgets() {
                     }
                     className={cn(
                       styles.widgetBar,
-                      index < 7 && 'opacity-30',
+                      index < DAILY_VISITS.length - 7 && 'opacity-30',
                     )}
                   />
                 ))}

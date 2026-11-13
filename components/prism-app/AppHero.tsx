@@ -3,7 +3,7 @@ import { ArrowDown } from 'lucide-react'
 
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
-import { PRISM_APP_NOTIFICATIONS } from '@/lib/prism-app'
+import { PRISM_APP_NAME, PRISM_APP_NOTIFICATIONS } from '@/lib/prism-app'
 
 import { AppPhone } from './AppPhone'
 import { AppLockScreen, AppNotification } from './AppScreens'
@@ -13,8 +13,10 @@ import styles from './app-page.module.css'
 const DEMO_LABEL = 'Explore the demo'
 
 /**
- * The opening: the moment a lead lands on the Lock Screen. Three
- * notifications arrive one at a time and hold, each large enough to read.
+ * The opening: a monthly report lands on the Lock Screen, after a ranking
+ * and a form. Three notifications arrive one at a time and hold, each large
+ * enough to read. The app's name sits above the h1 with its icon, because
+ * the h1 is the App Store subtitle, not the name.
  * Desktop visitors cannot install from a Mac, so the App Store button sits
  * beside a QR code and a way into the demo on this page. The base style is
  * the finished frame.
@@ -29,6 +31,23 @@ export function AppHero({ demoNote }: { demoNote: string }) {
 
       <div className={`prism-container ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
+          <p
+            className={`prism-rise ${styles.heroName}`}
+            style={{ '--rise-delay': '0ms' } as React.CSSProperties}
+          >
+            <Image
+              src="/prism-app/app-icon.png"
+              alt=""
+              width={64}
+              height={64}
+              className="size-8 rounded-[0.5rem]"
+            />
+            <span className="font-medium text-foreground">{PRISM_APP_NAME}</span>
+            <span aria-hidden="true" className="text-subtle">
+              ·
+            </span>
+            <span>for iPhone</span>
+          </p>
           <h1
             id="prism-app-title"
             className={`prism-rise text-gradient ${styles.heroTitle}`}
@@ -42,7 +61,8 @@ export function AppHero({ demoNote }: { demoNote: string }) {
             className={`prism-rise text-lead text-pretty text-muted-foreground ${styles.heroLead}`}
             style={{ '--rise-delay': '140ms' } as React.CSSProperties}
           >
-            Visits, leads, and searches on your iPhone.
+            Visits, forms, Google searches, and a monthly report you can
+            share.
           </p>
 
           <div
@@ -75,7 +95,7 @@ export function AppHero({ demoNote }: { demoNote: string }) {
               <span className="block rounded-xl bg-white p-1.5">
                 <Image
                   src="/prism-app/app-store-qr.svg"
-                  alt="QR code that opens Prism on the App Store"
+                  alt="QR code that opens Prism Grow on the App Store"
                   width={84}
                   height={84}
                   unoptimized

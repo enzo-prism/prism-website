@@ -41,10 +41,10 @@ describe('Footer', () => {
     }
   })
 
-  it('links to the Prism iPhone app page on this site', () => {
+  it('links to the Prism Grow iPhone app page on this site', () => {
     render(<Footer />)
 
-    const link = screen.getByRole('link', { name: 'Prism for iPhone' })
+    const link = screen.getByRole('link', { name: 'Prism Grow' })
     expect(link).toHaveAttribute('href', '/app')
     expect(link).not.toHaveAttribute('target')
   })

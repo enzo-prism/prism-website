@@ -120,6 +120,15 @@
   text-align: center;
 }
 
+.heroName {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--muted-foreground);
+}
+
 .heroTitle {
   padding-bottom: 0.08em;
   font-size: clamp(2.85rem, 1.55rem + 5.6vw, 5.75rem);
@@ -684,6 +693,7 @@
   --ios-secondary: oklch(0.69 0.008 286);
   --ios-card: oklch(0.2 0.004 286);
   --ios-rule: oklch(1 0 0 / 11%);
+  --ios-tint: oklch(0.7 0.14 255);
 }
 
 .statusBar {
@@ -787,40 +797,263 @@
   color: var(--ios-secondary);
 }
 
-.avatar {
-  display: grid;
-  place-items: center;
-  width: calc(36 * var(--u));
-  height: calc(36 * var(--u));
-  border-radius: 50%;
-  background: var(--ios-card);
-}
-
-.avatar svg {
-  width: calc(20 * var(--u));
-  height: calc(20 * var(--u));
-}
-
 .navTitle {
   margin: calc(2 * var(--u)) 0 calc(20 * var(--u));
   font-weight: 600;
   text-align: center;
 }
 
-.live {
+/* Prism Grow 1.5: the toolbar over a large title, Summary's takeaway and
+   report row, and the Monthly Report. */
+
+.toolbar {
   display: flex;
-  align-items: center;
-  gap: calc(16 * var(--u));
-  padding-left: calc(24 * var(--u));
+  justify-content: flex-end;
+  margin-top: calc(2 * var(--u));
 }
 
-.liveDot {
-  position: relative;
+.toolbarPill,
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(44 * var(--u));
+  border: 1px solid var(--ios-rule);
+  border-radius: 999px;
+  background: var(--ios-card);
+  color: var(--ios-tint);
+}
+
+.toolbarPill {
+  gap: calc(22 * var(--u));
+  padding: 0 calc(16 * var(--u));
+}
+
+.navButton {
+  width: calc(44 * var(--u));
+}
+
+.toolbarPill svg,
+.navButton svg {
+  width: calc(22 * var(--u));
+  height: calc(22 * var(--u));
+}
+
+.takeaway {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(14 * var(--u));
+  padding: calc(16 * var(--u)) calc(18 * var(--u));
+}
+
+.takeawayIcon {
+  display: grid;
   flex: none;
-  width: calc(9 * var(--u));
-  height: calc(9 * var(--u));
+  place-items: center;
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+  margin-top: calc(2 * var(--u));
   border-radius: 50%;
   background: var(--tone);
+  color: oklch(1 0 0);
+}
+
+.takeawayIcon svg {
+  width: calc(17 * var(--u));
+  height: calc(17 * var(--u));
+}
+
+.takeawayTitle {
+  display: block;
+  margin-bottom: calc(2 * var(--u));
+  font-size: calc(20 * var(--u));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.linkRow {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  width: 100%;
+  margin-top: calc(10 * var(--u));
+  text-align: left;
+  transition: background-color 200ms;
+}
+
+button.linkRow {
+  cursor: pointer;
+}
+
+button.linkRow:hover {
+  background: oklch(0.25 0.004 286);
+}
+
+.linkRow .strong {
+  flex: 1;
+}
+
+.linkRowIcon {
+  flex: none;
+  width: calc(20 * var(--u));
+  height: calc(20 * var(--u));
+  color: var(--tone);
+}
+
+.inlineArrow {
+  display: inline-block;
+  width: calc(12 * var(--u));
+  height: calc(12 * var(--u));
+  margin-right: calc(3 * var(--u));
+  vertical-align: -0.05em;
+}
+
+.navRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: calc(44 * var(--u));
+  margin: calc(2 * var(--u)) 0 calc(18 * var(--u));
+}
+
+.navRowTitle {
+  position: absolute;
+  left: 50%;
+  font-weight: 600;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.pickerRow {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+  padding-bottom: calc(12 * var(--u));
+  border-bottom: 1px solid var(--ios-rule);
+}
+
+.pickerValue {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(6 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.pickerValue svg {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+}
+
+.reportHeadline {
+  margin-top: calc(14 * var(--u));
+  font-size: calc(19 * var(--u));
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.reportMeta {
+  margin-top: calc(6 * var(--u));
+  font-size: calc(14 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.reportDemo {
+  margin-top: calc(4 * var(--u));
+  font-size: calc(12 * var(--u));
+}
+
+.reportRows {
+  margin-top: calc(14 * var(--u));
+  padding-top: calc(4 * var(--u));
+  padding-bottom: calc(4 * var(--u));
+}
+
+.reportRow {
+  display: flex;
+  align-items: center;
+  gap: calc(14 * var(--u));
+  padding: calc(9 * var(--u)) 0;
+}
+
+/* The rule between rows starts at the text, as in a grouped iOS list. */
+.reportRow + .reportRow {
+  margin-left: calc(38 * var(--u));
+  border-top: 1px solid var(--ios-rule);
+}
+
+.reportRow + .reportRow .reportIcon {
+  margin-left: calc(-38 * var(--u));
+}
+
+.reportRow > p {
+  flex: 1;
+  min-width: 0;
+}
+
+.reportIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(24 * var(--u));
+  color: var(--tone);
+}
+
+.reportIcon svg {
+  width: calc(21 * var(--u));
+  height: calc(21 * var(--u));
+}
+
+.reportLabel {
+  display: block;
+  font-size: calc(14 * var(--u));
+  color: var(--ios-secondary);
+}
+
+.reportValue {
+  display: block;
+  font-size: calc(22 * var(--u));
+  font-weight: 600;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+
+.changePill {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: calc(5 * var(--u));
+  padding: calc(4 * var(--u)) calc(10 * var(--u));
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--spectrum-green) 18%, transparent);
+  font-size: calc(14 * var(--u));
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--spectrum-green);
+}
+
+.changePill svg {
+  width: calc(13 * var(--u));
+  height: calc(13 * var(--u));
+}
+
+.sectionTitle {
+  margin: calc(20 * var(--u)) calc(16 * var(--u)) calc(8 * var(--u));
+  font-size: calc(19 * var(--u));
+  font-weight: 700;
+}
+
+.chartFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: calc(14 * var(--u));
+}
+
+.chartFoot svg {
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
 }
 
 .sectionLabel {
@@ -1193,28 +1426,6 @@ button.metric:hover {
     opacity 420ms ease calc(140ms + var(--i, 0) * 90ms),
     transform 620ms cubic-bezier(0.16, 1, 0.3, 1)
       calc(140ms + var(--i, 0) * 90ms);
-}
-
-@keyframes app-live {
-  from {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(3.2);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .liveDot::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: var(--tone);
-    animation: app-live 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
 }
 
 /* ---- Widgets ------------------------------------------------------------- */

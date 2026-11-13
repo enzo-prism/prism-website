@@ -13,6 +13,7 @@ import {
   PRISM_APP_DESCRIPTION,
   PRISM_APP_FAQ,
   PRISM_APP_ID,
+  PRISM_APP_NAME,
   PRISM_APP_NOTIFICATIONS,
   PRISM_APP_PROSPECT,
   PRISM_APP_STEPS,
@@ -36,8 +37,27 @@ describe('Prism iPhone app page', () => {
     expect(PRISM_APP_STORE_URL).toContain(`id${PRISM_APP_ID}`)
   })
 
+  it('uses the App Store name, Prism Grow', () => {
+    expect(PRISM_APP_NAME).toBe('Prism Grow')
+    expect(PRISM_APP_STORE_URL).toBe(
+      'https://apps.apple.com/us/app/prism-grow/id6829975700',
+    )
+    expect(JSON.stringify(metadata.title)).toContain('Prism Grow')
+    expect(PRISM_APP_TOUR.map((step) => step.id)).toContain('report')
+  })
+
+  it('keeps the app’s wording: forms are submissions, not leads', () => {
+    const copy = JSON.stringify([
+      PRISM_APP_DESCRIPTION,
+      PRISM_APP_TOUR,
+      PRISM_APP_NOTIFICATIONS,
+      PRISM_APP_STEPS,
+    ])
+    expect(copy).not.toMatch(/\bleads?\b/i)
+  })
+
   it('ships the assets the page draws with', () => {
-    for (const file of ['app-icon.png', 'app-store-qr.svg', 'signin.jpg', 'og.jpg']) {
+    for (const file of ['app-icon.png', 'app-store-qr.svg', 'signin-1-5.jpg', 'og.jpg']) {
       expect(existsSync(join(process.cwd(), 'public', 'prism-app', file))).toBe(
         true,
       )
@@ -72,8 +92,8 @@ describe('Prism iPhone app page', () => {
       screen.getByRole('heading', { name: PRISM_APP_TOUR[0].title }),
     ).toBeVisible()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Visits' }))
-    expect(screen.getByRole('tab', { name: 'Visits' })).toHaveAttribute(
+    fireEvent.click(screen.getByRole('tab', { name: 'Forms' }))
+    expect(screen.getByRole('tab', { name: 'Forms' })).toHaveAttribute(
       'aria-selected',
       'true',
     )

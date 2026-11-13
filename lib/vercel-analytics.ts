@@ -49,8 +49,8 @@ const SOCIAL_HUB_PLATFORMS = new Set(['tiktok', 'instagram', 'youtube'])
 const SOCIAL_HUB_SERVICES = new Set(['website', 'content', 'ads', 'aeo'])
 const APP_DEMO_SCREENS = new Set([
   'summary',
-  'leads',
-  'visits',
+  'report',
+  'forms',
   'search',
   'ai',
   'updates',

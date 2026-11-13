@@ -32,7 +32,7 @@ const footerColumns: FooterColumn[] = [
   {
     heading: 'Products',
     links: [
-      { label: 'Prism for iPhone', href: '/app' },
+      { label: 'Prism Grow', href: '/app' },
       ...PRISM_PRODUCTS.map((product) => ({
         label: product.name,
         href: product.href,

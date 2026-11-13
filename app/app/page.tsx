@@ -36,12 +36,15 @@ import {
   PRISM_APP_DEMO_NOTE,
   PRISM_APP_DESCRIPTION,
   PRISM_APP_FAQ,
+  PRISM_APP_HOME_SCREEN_NAME,
   PRISM_APP_ID,
   PRISM_APP_NAME,
   PRISM_APP_PROSPECT,
   PRISM_APP_STEPS,
+  PRISM_APP_STORE_URL,
   PRISM_APP_TOUR,
   PRISM_APP_TRUST,
+  PRISM_APP_VERSION,
 } from '@/lib/prism-app'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
@@ -60,7 +63,7 @@ const clientQuote = quotesData.find(
 
 export const metadata: Metadata = {
   ...buildRouteMetadata({
-    titleStem: 'Prism app for iPhone',
+    titleStem: 'Prism Grow for iPhone',
     description: PRISM_APP_DESCRIPTION,
     path: '/app',
   }),
@@ -75,13 +78,16 @@ export default function PrismAppPage() {
       <SoftwareApplicationSchema
         appId="prism-ios"
         name={PRISM_APP_NAME}
+        alternateName={PRISM_APP_HOME_SCREEN_NAME}
         description={PRISM_APP_DESCRIPTION}
         applicationCategory="BusinessApplication"
         operatingSystems={['iOS 18.0 or later']}
+        softwareVersion={PRISM_APP_VERSION}
+        downloadUrl={PRISM_APP_STORE_URL}
         url={PAGE_URL}
       />
       <WebPageSchema
-        name="Prism app for iPhone"
+        name={`${PRISM_APP_NAME} for iPhone`}
         description={PRISM_APP_DESCRIPTION}
         url={PAGE_URL}
       />
@@ -102,7 +108,7 @@ export default function PrismAppPage() {
                 id="prism-app-inside-title"
                 eyebrow="Inside the app"
                 title="your numbers, in plain English."
-                description="Tap through the app’s six screens."
+                description="Six screens from the app’s demo. Tap through them."
               />
             }
           />
@@ -115,7 +121,7 @@ export default function PrismAppPage() {
                 id="prism-app-widgets-title"
                 eyebrow="Widgets"
                 title="keep an eye on it from your Home Screen."
-                description="Visits and clicks, without opening the app."
+                description="Pin any of your websites to the Home Screen or Lock Screen and see its last 28 days without opening the app."
               />
             </Reveal>
             <AppWidgets />
@@ -156,8 +162,8 @@ export default function PrismAppPage() {
               </div>
               <div className="mx-auto w-[60vw] max-w-[18rem]">
                 <AppPhone
-                  src="/prism-app/signin.jpg"
-                  alt="Prism app sign-in screen with Continue with Apple, Continue with Google, and Explore a Demo."
+                  src="/prism-app/signin-1-5.jpg"
+                  alt="Prism Grow sign-in screen with Continue with Email, Continue with Apple, Continue with Google, and Other Ways to Get Started."
                   sizes="(min-width: 1024px) 288px, 60vw"
                 />
               </div>
