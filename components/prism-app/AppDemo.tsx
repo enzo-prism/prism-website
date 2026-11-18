@@ -28,6 +28,8 @@ import { trackAppDemoScreenSelect } from '@/utils/analytics'
 
 import { AppPhone } from './AppPhone'
 import { AppScreen } from './AppScreens'
+import { AppTilt } from './AppTilt'
+import { motionAllowed, runCount, subscribeToMotion } from './motion'
 import styles from './app-page.module.css'
 
 type AppDemoProps = {
@@ -55,33 +57,8 @@ const ICONS: Record<PrismAppScreenId, LucideIcon> = {
   updates: Bell,
 }
 
-const REDUCED_QUERY = '(prefers-reduced-motion: reduce)'
-
-const canMatchMedia = () =>
-  typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-
-function subscribeToMotion(onChange: () => void) {
-  if (!canMatchMedia()) return () => {}
-  const query = window.matchMedia(REDUCED_QUERY)
-  query.addEventListener('change', onChange)
-  return () => query.removeEventListener('change', onChange)
-}
-
-/** True once hydrated, unless the visitor asked for reduced motion. */
-const motionAllowed = () =>
-  canMatchMedia() && !window.matchMedia(REDUCED_QUERY).matches
-
-function runCount(node: HTMLElement) {
-  const target = Number(node.dataset.count)
-  const start = performance.now()
-  const step = (now: number) => {
-    const t = Math.min(1, (now - start) / 900)
-    const eased = 1 - (1 - t) ** 3
-    node.textContent = Math.round(target * eased).toLocaleString('en-US')
-    if (t < 1) requestAnimationFrame(step)
-  }
-  requestAnimationFrame(step)
-}
+/** One glow per tone, crossfaded with opacity as the tour moves. */
+const GLOW_TONES = Array.from(new Set(Object.values(TONES)))
 
 /**
  * The tour, as one phone you can use. Six labeled tabs change the screen; the
@@ -129,9 +106,8 @@ export function AppDemo({ steps, header }: AppDemoProps) {
   // Count the screen's total up each time it arrives.
   useEffect(() => {
     if (!armed || !started) return
-    const counter = screenRefs.current[active]?.querySelector<HTMLElement>(
-      '[data-count]',
-    )
+    const counter =
+      screenRefs.current[active]?.querySelector<HTMLElement>('[data-count]')
     if (counter) runCount(counter)
   }, [active, armed, started])
 
@@ -274,25 +250,34 @@ export function AppDemo({ steps, header }: AppDemoProps) {
 
       {/* Decorative: each panel's heading, body and takeaway carry it. */}
       <div aria-hidden="true" className={styles.demoStage}>
-        <div className={styles.demoGlow} />
-        <AppPhone className={styles.demoPhone}>
-          {steps.map((item, index) => (
-            <div
-              key={item.id}
-              ref={(node) => {
-                screenRefs.current[index] = node
-              }}
-              className={styles.demoScreen}
-              data-current={index === active ? '' : undefined}
-              data-on={index === active && started ? '' : undefined}
-            >
-              <AppScreen
-                id={item.id}
-                onSelect={index === active ? selectById : undefined}
-              />
-            </div>
-          ))}
-        </AppPhone>
+        {GLOW_TONES.map((tone) => (
+          <div
+            key={tone}
+            className={styles.demoGlow}
+            style={{ '--tone': tone } as CSSProperties}
+            data-on={tone === TONES[step.id] ? '' : undefined}
+          />
+        ))}
+        <AppTilt scope="section" className={styles.demoTilt}>
+          <AppPhone className={cn(styles.demoPhone, styles.tiltPhone)}>
+            {steps.map((item, index) => (
+              <div
+                key={item.id}
+                ref={(node) => {
+                  screenRefs.current[index] = node
+                }}
+                className={styles.demoScreen}
+                data-current={index === active ? '' : undefined}
+                data-on={index === active && started ? '' : undefined}
+              >
+                <AppScreen
+                  id={item.id}
+                  onSelect={index === active ? selectById : undefined}
+                />
+              </div>
+            ))}
+          </AppPhone>
+        </AppTilt>
       </div>
     </div>
   )

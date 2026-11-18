@@ -18,12 +18,16 @@ import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
 import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
+import { AppBento } from '@/components/prism-app/AppBento'
 import { AppDemo } from '@/components/prism-app/AppDemo'
+import { AppFeatureRail } from '@/components/prism-app/AppFeatureRail'
 import { AppHero } from '@/components/prism-app/AppHero'
 import { AppPhone } from '@/components/prism-app/AppPhone'
+import { AppReleases } from '@/components/prism-app/AppReleases'
 import { AppSteps } from '@/components/prism-app/AppSteps'
 import { AppStoreButton } from '@/components/prism-app/AppStoreButton'
-import { AppWidgets } from '@/components/prism-app/AppWidgets'
+import { AppTilt } from '@/components/prism-app/AppTilt'
+import appStyles from '@/components/prism-app/app-page.module.css'
 import {
   FAQSchema,
   SoftwareApplicationSchema,
@@ -33,14 +37,12 @@ import TrackedLink from '@/components/tracked-link'
 import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
 import {
   PRISM_APP_DEMO_BRANCH,
-  DEMO_LEADS,
   PRISM_APP_DESCRIPTION,
   PRISM_APP_FAQ,
   PRISM_APP_HOME_SCREEN_NAME,
   PRISM_APP_ID,
   PRISM_APP_NAME,
   PRISM_APP_PROSPECT,
-  PRISM_APP_RELEASES,
   PRISM_APP_STEPS,
   PRISM_APP_STORE_URL,
   PRISM_APP_TOUR,
@@ -96,6 +98,7 @@ export default function PrismAppPage() {
 
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <AppHero />
+        <AppFeatureRail />
 
         <Section
           id="inside"
@@ -115,97 +118,37 @@ export default function PrismAppPage() {
           />
         </Section>
 
-        <Section aria-labelledby="prism-app-report-title" className="pt-0 sm:pt-0">
-          <div className="grid items-center gap-8 border-t border-white/10 pt-12 lg:grid-cols-2 lg:gap-16">
+        <Section
+          aria-labelledby="prism-app-glance-title"
+          className="pt-4 sm:pt-6"
+        >
+          <Reveal>
             <SectionHeader
-              id="prism-app-report-title"
-              eyebrow="Monthly reports"
-              title="compare leads month to month."
-              description="Bring the numbers to your next team meeting. Each report pairs website inquiries with visits, search activity and the work Prism shipped. Share it as a PDF or text."
+              id="prism-app-glance-title"
+              eyebrow="At a glance"
+              title="your month, in one place."
+              description="Website leads, visits and Google search side by side, with a report you can share and alerts when something happens."
+              className="mb-10 sm:mb-12"
             />
-            <figure className="rounded-3xl border border-white/10 bg-card p-6 sm:p-8">
-              <figcaption className="flex flex-wrap justify-between gap-2 text-sm text-muted-foreground">
-                <span>Bayview Dental · Demo</span><span>Website leads · 2026</span>
-              </figcaption>
-              <dl className="mt-6 space-y-4">
-                {[
-                  { month: 'September', count: DEMO_LEADS.october.previous },
-                  { month: 'October', count: DEMO_LEADS.october.count },
-                ].map(({ month, count }) => (
-                  <div key={month} className="grid grid-cols-[5rem_1fr_2rem] items-center gap-3">
-                    <dt className="text-sm text-muted-foreground">{month}</dt>
-                    <dd className="col-span-2 flex items-center gap-4">
-                      <span aria-hidden="true" className="h-2 flex-1 rounded-full bg-muted">
-                        <span className={month === 'October' ? 'block h-full rounded-full bg-spectrum-green' : 'block h-full rounded-full bg-muted-foreground'}
-                          style={{ width: `${(count / DEMO_LEADS.october.count) * 100}%` }} />
-                      </span>
-                      <span className="w-8 text-right font-mono text-lg">{count}</span>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-6 border-t border-white/10 pt-4 text-body-md">
-                October brought in {DEMO_LEADS.october.count - DEMO_LEADS.october.previous} more inquiries, up {DEMO_LEADS.october.change} from September.
-              </p>
-            </figure>
-          </div>
-          <details className="mt-10 border-y border-white/10 py-5">
-            <summary className="cursor-pointer rounded-sm text-body-md font-medium focus-visible:outline-2 focus-visible:outline-offset-4">
-              See visits and Google clicks in the iPhone widgets
-            </summary>
-            <div className="mt-5 grid items-center gap-6 lg:grid-cols-2">
-              <p className="max-w-prose text-muted-foreground">Pin a website to your Home Screen or Lock Screen to see 28 days of traffic. Open Prism Grow to check the inquiries your forms received.</p>
-              <AppWidgets />
-            </div>
-          </details>
+          </Reveal>
+          <AppBento />
         </Section>
 
         <Section
           id="whats-new"
           aria-labelledby="prism-app-releases-title"
-          className="scroll-mt-16 border-y border-white/[0.08] bg-card"
+          className="scroll-mt-16 border-y border-white/[0.06] bg-white/[0.012]"
         >
-          <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
-            <SectionHeader
-              id="prism-app-releases-title"
-              eyebrow="Release notes"
-              title="what’s new."
-            />
-            <ol className="divide-y divide-white/10">
-              {PRISM_APP_RELEASES.map((release) => (
-                <li
-                  key={release.version}
-                  className="grid gap-4 py-8 first:pt-0 last:pb-0 sm:grid-cols-[6rem_1fr] sm:gap-8"
-                >
-                  <div className="flex items-baseline gap-3 sm:block">
-                    <p className="font-mono text-4xl font-medium tracking-tight text-foreground">
-                      <span className="sr-only">Version </span>
-                      {release.version}
-                    </p>
-                    <time dateTime={release.date} className="mt-2 block font-mono text-xs text-muted-foreground">
-                      {new Intl.DateTimeFormat('en-US', {
-                        month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
-                      }).format(new Date(release.date))}
-                    </time>
-                  </div>
-                  <div>
-                    <p className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                      <span
-                        aria-hidden="true"
-                        className={release.version === PRISM_APP_VERSION
-                          ? 'size-2 rounded-full bg-foreground'
-                          : 'size-2 rounded-full border border-current'}
-                      />
-                      {release.status}
-                    </p>
-                    <h3 className="mt-3 text-heading text-balance">{release.title}</h3>
-                    <ul className="mt-4 list-disc space-y-2 pl-4 text-body-md text-muted-foreground marker:text-subtle">
-                      {release.changes.map((change) => <li key={change}>{change}</li>)}
-                    </ul>
-                  </div>
-                </li>
-              ))}
-            </ol>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeader
+                id="prism-app-releases-title"
+                eyebrow="Release notes"
+                title="what’s new."
+                description="Prism Grow updates through the App Store. Here is what changed recently."
+              />
+            </div>
+            <AppReleases />
           </div>
         </Section>
 
@@ -241,13 +184,17 @@ export default function PrismAppPage() {
                   </span>
                 </p>
               </div>
-              <div className="mx-auto w-[60vw] max-w-[18rem]">
+              <AppTilt
+                scope="section"
+                className="mx-auto w-[60vw] max-w-[18rem]"
+              >
                 <AppPhone
                   src="/prism-app/signin-1-5.jpg"
                   alt="Prism Grow sign-in screen with Continue with Email, Continue with Apple, Continue with Google, and Other Ways to Get Started."
                   sizes="(min-width: 1024px) 288px, 60vw"
+                  className={appStyles.tiltPhone}
                 />
-              </div>
+              </AppTilt>
             </div>
           </SpotlightCard>
         </Section>
@@ -329,21 +276,25 @@ export default function PrismAppPage() {
             {PRISM_APP_TRUST.map((item, index) => {
               const Icon = TRUST_ICONS[index]
               return (
-                <li
+                <Reveal
+                  as="li"
+                  delay={index * 70}
                   key={item.title}
-                  className="border-white/[0.08] p-6 max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(even)]:border-l sm:max-lg:[&:nth-child(n+3)]:border-t lg:[&:not(:first-child)]:border-l"
+                  className="group/trust border-white/[0.08] p-6 max-sm:[&:not(:first-child)]:border-t sm:max-lg:[&:nth-child(even)]:border-l sm:max-lg:[&:nth-child(n+3)]:border-t lg:[&:not(:first-child)]:border-l"
                 >
-                  <h3 className="flex items-center gap-2.5 text-[1.0625rem] font-medium tracking-[-0.015em] text-foreground">
+                  <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.03] transition-colors duration-300 group-hover/trust:border-white/20 group-hover/trust:bg-white/[0.06]">
                     <Icon
                       aria-hidden="true"
-                      className="size-4 shrink-0 text-subtle"
+                      className="size-[18px] text-muted-foreground transition-colors duration-300 group-hover/trust:text-foreground"
                     />
+                  </span>
+                  <h3 className="mt-5 text-[1.0625rem] font-medium tracking-[-0.015em] text-foreground">
                     {item.title}
                   </h3>
                   <p className="mt-2 text-pretty text-[15px] leading-6 text-muted-foreground">
                     {item.body}
                   </p>
-                </li>
+                </Reveal>
               )
             })}
           </ul>
@@ -367,11 +318,18 @@ export default function PrismAppPage() {
                 />
               </Link>
             </SectionHeader>
-            <FaqList items={PRISM_APP_FAQ} name="prism-app-faq" defaultOpen={0} />
+            <FaqList
+              items={PRISM_APP_FAQ}
+              name="prism-app-faq"
+              defaultOpen={0}
+            />
           </div>
         </Section>
 
-        <FinalCta location="prism app final cta" title="track the leads your site brings in." />
+        <FinalCta
+          location="prism app final cta"
+          title="track the leads your site brings in."
+        />
       </main>
       <Footer />
     </div>

@@ -268,6 +268,9 @@ sets the tagline in `text-hero` on two lines ("impossible is" in
 (`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
 appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
+`/app` uses the same `prism-glint` on its one accent word ("leads.") and
+otherwise `text-gradient`, with the drawn Prism Grow phone as its hero
+surface and the demo alert as its single satellite.
 The service pages share `ServiceHero`, each with one soft spectrum glow:
 blue for Website Design, warm for Content, green for Ads, and violet for AEO.
 `/website-design` also carries a drawn page anatomy: a made-up family
@@ -411,8 +414,20 @@ quiet enough that text stays readable.
   parallax, the slow spectrum beam, the live dot ping, the story deck recede
   and capture browsing, the service pillar micro scenes, the intake pass foil,
   the flagship case-study tool scenes and their sticky crossfade, the `/app`
-  tabbed phone tour (`components/prism-app/`), hover
-  lifts of 1 to 2px.
+  tabbed phone tour (`components/prism-app/`), the `/app` hero stage and its
+  play-once tiles (see below), hover lifts of 1 to 2px.
+- `/app` (Prism Grow) is the one product page with a 3D phone. Its hero
+  lines rise out of clipped slots; the phone rises from a backward tilt and
+  settles flat, then floats a few pixels; a blurred spectrum halo (a soft
+  glow, never the homepage fan) turns slowly behind it; the demo's latest
+  alert drops in over the phone's top edge and holds. With a fine pointer
+  the hero, demo and sign-in phones turn up to about 12 degrees toward the
+  cursor (`AppTilt` writes `--tx`/`--ty`; CSS does the rest, with
+  `perspective()` inside each transform). On desktop the hero phone tips
+  back as the page scrolls away and the release timeline's rail fills
+  through view, both as CSS scroll timelines behind `@supports`, so
+  browsers without them keep the finished frame. Bento bars, counts and
+  alerts play once on arrival (`AppArm`) and never rewind in view.
 - Transform and opacity only (plus the CSS `@property` beam angle).
 - Every loop sits behind `prefers-reduced-motion: no-preference`. The base
   style is always the finished frame, so reduced-motion, no-JS, and

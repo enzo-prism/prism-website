@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 
+import { AppArm } from './AppArm'
 import styles from './app-page.module.css'
 
 type AppStepsProps = {
@@ -10,7 +11,7 @@ type AppStepsProps = {
 /** Numbered steps joined by a hairline. */
 export function AppSteps({ steps, className }: AppStepsProps) {
   return (
-    <div className={cn('relative', className)}>
+    <AppArm className={cn('relative', className)}>
       <span aria-hidden="true" className={styles.stepsLine} />
       <ol className={styles.steps}>
         {steps.map((step, index) => (
@@ -27,7 +28,7 @@ export function AppSteps({ steps, className }: AppStepsProps) {
           </li>
         ))}
       </ol>
-    </div>
+    </AppArm>
   )
 }
 

@@ -65,7 +65,7 @@ pnpm git:cleanup      # Clean stale branches
 | Homepage | `app/client-page.tsx`, `components/home/*`, copy + numbers in `components/home/homepage-content.ts`, client logos in `lib/client-logos.ts` |
 | Header navigation | `lib/constants.ts` `NAV_ITEMS` + `NAV_SERVICE_ITEMS`, `components/navbar.tsx` |
 | Service / Product catalogs | `lib/services.ts`, `lib/products.ts` |
-| iPhone app page (Prism Grow) | `app/app/*`, `components/prism-app/*` (`AppDemo` tabbed phone, `AppScreens` HTML screens drawn from the 1.5 demo), motion in `components/prism-app/app-page.module.css`, copy + App Store facts in `lib/prism-app.ts`, demo captures, QR code and share image in `public/prism-app/` |
+| iPhone app page (Prism Grow) | `app/app/*`, `components/prism-app/*` (`AppHeroStage` 3D hero phone, `AppDemo` tabbed phone, `AppBento` month at a glance, `AppReleases` timeline, `AppScreens` HTML screens drawn from the 1.5 demo; `AppTilt`/`AppArm`/`motion.ts` motion islands), motion in `components/prism-app/app-page.module.css`, copy + App Store facts in `lib/prism-app.ts`, demo captures, QR code and share image in `public/prism-app/` |
 | Image guidance | `docs/image-best-practices.md`, `docs/image-configuration.md` |
 | Case study template | `components/case-study-minimal.tsx`, `components/case-studies/*`, `lib/case-study-data.ts` |
 | MDX processing | `/lib/mdx.tsx` |
