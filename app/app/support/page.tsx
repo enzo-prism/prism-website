@@ -72,7 +72,7 @@ const SECTIONS: AppPolicySection[] = [
     content: (
       <p>
         Prism sends a few notifications a week at most: wins such as a new
-        Google ranking, new form submissions, a Monday summary and a note when
+        Google ranking, new leads from website forms, a Monday summary and a note when
         your monthly report is ready. None are sent overnight. Choose which
         ones you get in the app under Account › Notifications.
       </p>
@@ -86,8 +86,8 @@ const SECTIONS: AppPolicySection[] = [
         <p>
           Visits come from Google Analytics and update about every hour. Google
           search clicks come from Google Search Console, which finalizes each
-          day’s numbers a few days later. Forms are submissions made through
-          your website; Prism counts them and never stores what people wrote.
+          day’s numbers a few days later. To see your website leads, open Forms Submitted. Each submission to a
+          tracked form counts once. Prism never stores what people wrote.
         </p>
         <p>
           <Link href="/app">Prism Grow for iPhone</Link>

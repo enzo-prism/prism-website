@@ -8,8 +8,8 @@
  * numbers or draw a feature the app does not have. Page copy stays short on
  * purpose; detail belongs in the FAQ.
  *
- * The app's wording is careful and the page keeps it: "forms submitted", not
- * leads or bookings; "Ask Prism" reaches a person and sends nothing on its own;
+ * Marketing calls inquiries captured through website forms "website leads".
+ * The app labels the count "Forms Submitted"; "Ask Prism" reaches a person and sends nothing on its own;
  * teammates can view but not change anything.
  */
 
@@ -61,7 +61,7 @@ export const PRISM_APP_RELEASES = [
 ] as const
 
 export const PRISM_APP_DESCRIPTION =
-  'Prism Grow is the free iPhone app for Prism clients: website visits, forms, Google searches, AI visits, and a monthly report to share.'
+  'Prism Grow is the free iPhone app for Prism clients: leads from website forms, visits, Google searches, AI traffic, and a monthly report to share.'
 
 export type PrismAppScreenId =
   | 'summary'
@@ -85,7 +85,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'summary',
     label: 'Summary',
     title: 'the whole picture in one screen.',
-    body: 'A one-line takeaway, then forms, visits, Google, and AI over the last 28 days.',
+    body: 'See how many website leads came in over the last 28 days, alongside visits and traffic from Google and AI assistants.',
     takeaway: 'Visits are up 15% over the last 28 days.',
   },
   {
@@ -97,9 +97,9 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
   },
   {
     id: 'forms',
-    label: 'Forms',
-    title: 'see when people reach out.',
-    body: 'Every form submitted through your site, by type. What people wrote is never stored.',
+    label: 'Leads',
+    title: 'see which forms bring in leads.',
+    body: 'See how many inquiries came through each website form, from contact requests to appointment requests. In the app, look for Forms Submitted.',
     takeaway: 'Your latest form came in 2 hours ago.',
   },
   {
@@ -120,7 +120,7 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
     id: 'updates',
     label: 'Updates',
     title: 'hear when something good happens.',
-    body: 'New forms, Google rankings, record weeks, and the work Prism ships.',
+    body: 'New website leads, Google rankings, record weeks, and the work Prism ships.',
     takeaway: '64 people on your site, about 3× your usual.',
   },
 ] as const
@@ -218,7 +218,7 @@ export const PRISM_APP_FAQ = [
   {
     question: 'What’s in the monthly report?',
     answer:
-      'Each finished calendar month compared with the month before: visits, forms submitted, Google clicks and times shown, and visits from AI assistants. It explains what changed, lists what Prism shipped, and includes the next step we agreed on when there is one. Share it as a PDF or as text.',
+      'Compare website leads, visits and Google search activity with the previous month. You can also see visits from AI assistants. It explains what changed, lists what Prism shipped, and includes the next step we agreed on when there is one. Share it as a PDF or as text.',
   },
   {
     question: 'Can my team see our numbers?',
@@ -238,16 +238,16 @@ export const PRISM_APP_FAQ = [
   {
     question: 'Where do the numbers come from?',
     answer:
-      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which finalizes each day’s numbers a few days later. Forms are submissions made through your website.',
+      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which finalizes each day’s numbers a few days later. Prism counts each submission to a tracked website form as one website lead. Two inquiries from the same person count twice.',
   },
   {
     question: 'How many notifications will I get?',
     answer:
-      'A few a week at most: wins such as a new Google ranking or a record week, new form submissions, a Monday summary, and a note when your monthly report is ready. None are sent overnight, and you choose which ones you get under Account › Notifications.',
+      'A few a week at most: wins such as a new Google ranking or a record week, new leads from your website forms, a Monday summary, and a note when your monthly report is ready. None are sent overnight, and you choose which ones you get under Account › Notifications.',
   },
   {
-    question: 'Does the app store what people write in my forms?',
+    question: 'Can I read a lead’s message in the app?',
     answer:
-      'No. Prism Grow counts the forms people submit through your website and never stores what they wrote. A submitted form isn’t a confirmed booking or a qualified lead.',
+      'Prism Grow shows when an inquiry arrived and which form it came through. Prism Grow never stores what people wrote. Follow up in the inbox or tool connected to your form.',
   },
 ] as const

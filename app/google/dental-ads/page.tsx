@@ -69,7 +69,7 @@ const servicesHighlights = [
   {
     title: 'smart tracking & reporting',
     description:
-      'we configure privacy-aware measurement for calls, forms, and appointment requests where supported, then report attribution limits alongside performance.',
+      'we configure privacy-aware measurement for calls, leads from website forms, and appointment requests where supported, then report attribution limits alongside performance.',
     ctaLabel: 'See sample reports',
     href: `#${REPORTS_SECTION_ID}`,
     icon: BarChart3,

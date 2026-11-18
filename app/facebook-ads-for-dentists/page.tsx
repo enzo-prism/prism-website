@@ -168,7 +168,7 @@ const faqItems = [
   {
     question: "How do you track calls and booked consults from Meta ads?",
     answer:
-      "We track calls and forms, then tie those conversions back to campaigns so you can see what produced real inquiries, not just impressions or traffic.",
+      "See which campaigns brought in phone calls and leads from your website forms.",
   },
   {
     question: "Do you guarantee a specific number of leads?",

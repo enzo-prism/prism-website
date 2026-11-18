@@ -26,7 +26,7 @@ const appProjects = [
     title: 'prism grow',
     url: '/app',
     description:
-      'iPhone app for Prism clients: website visits, forms, Google search, AI visits, and monthly reports',
+      'iPhone app for Prism clients: leads from website forms, visits, Google search, AI traffic, and monthly reports',
     category: 'business',
     platforms: ['iOS'],
   },

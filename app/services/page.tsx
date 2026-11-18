@@ -274,7 +274,7 @@ const faqItems = [
   {
     question: 'How do you measure success?',
     answer:
-      'We track the calls, forms, and bookings your tools can report, then explain in plain English what is working and why.',
+      'We track the calls, website leads, and bookings your tools can report, then explain in plain English what is working and why.',
   },
   {
     question: 'Can you collaborate with our internal team?',

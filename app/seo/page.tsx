@@ -150,7 +150,7 @@ export default async function SeoPage() {
         "Citations and NAP consistency across directories",
         "Review requests and reputation management",
         "Service and location pages with schema and internal links",
-        "Reporting tied to calls, forms, and bookings",
+        "Reporting on calls, website leads, and bookings",
       ],
       links: [
         { label: "Local SEO agency and services", href: "/local-seo-agency" },

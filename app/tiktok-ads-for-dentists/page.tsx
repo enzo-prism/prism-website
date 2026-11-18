@@ -60,7 +60,7 @@ const whatYouGet = [
   {
     title: "tracking tied to booked demand",
     description:
-      "we track calls + forms and connect performance to real outcomes so you can scale what works and cut what doesn’t.",
+      "see which campaigns bring in phone calls and leads from your website forms.",
     icon: LineChart,
   },
   {
@@ -135,7 +135,7 @@ const faqItems = [
   {
     question: "how do you track results for tiktok ads?",
     answer:
-      "we track calls and form submissions, and we work backward from booked consults where possible. the goal is simple reporting that ties spend to outcomes, so you know what to scale.",
+      "we track calls and website leads, then connect them to booked consults where possible. the goal is simple reporting that ties spend to outcomes, so you know what to scale.",
   },
   {
     question: "how fast can we get campaigns live?",

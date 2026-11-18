@@ -61,8 +61,8 @@ export function AppHero({ demoNote }: { demoNote: string }) {
             className={`prism-rise text-lead text-pretty text-muted-foreground ${styles.heroLead}`}
             style={{ '--rise-delay': '140ms' } as React.CSSProperties}
           >
-            Visits, forms, Google searches, and a monthly report you can
-            share.
+            Track leads from your website forms, see how people find you on
+            Google, and share the results each month.
           </p>
 
           <div

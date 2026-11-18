@@ -52,7 +52,7 @@ const agencyPillars = [
   },
   {
     title: "proof and reporting",
-    description: "we track calls, forms, bookings, direction requests, and the queries that drive them.",
+    description: "we track calls, leads from website forms, bookings, direction requests, and the searches that drive them.",
   },
   {
     title: "ownership and transparency",
@@ -118,7 +118,7 @@ const whatYouGet = [
   },
   {
     title: "reporting that ties to revenue",
-    description: "track the actions that matter: calls, form fills, bookings, direction requests, and top queries.",
+    description: "see your calls, website leads, bookings, and direction requests alongside your top searches.",
   },
 ]
 

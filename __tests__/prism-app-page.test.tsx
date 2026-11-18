@@ -48,14 +48,11 @@ describe('Prism iPhone app page', () => {
     expect(PRISM_APP_TOUR.map((step) => step.id)).toContain('report')
   })
 
-  it('keeps the app’s wording: forms are submissions, not leads', () => {
-    const copy = JSON.stringify([
-      PRISM_APP_DESCRIPTION,
-      PRISM_APP_TOUR,
-      PRISM_APP_NOTIFICATIONS,
-      PRISM_APP_STEPS,
-    ])
-    expect(copy).not.toMatch(/\bleads?\b/i)
+  it('connects the Leads tour tab to the form count clients see in the app', () => {
+    const leadStep = PRISM_APP_TOUR.find((step) => step.label === 'Leads')
+    expect(leadStep?.id).toBe('forms')
+    expect(leadStep?.body).toContain('Forms Submitted')
+    expect(PRISM_APP_DESCRIPTION).toContain('leads from website forms')
   })
 
   it('ships the assets the page draws with', () => {
@@ -103,8 +100,8 @@ describe('Prism iPhone app page', () => {
       screen.getByRole('heading', { name: PRISM_APP_TOUR[0].title }),
     ).toBeVisible()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Forms' }))
-    expect(screen.getByRole('tab', { name: 'Forms' })).toHaveAttribute(
+    fireEvent.click(screen.getByRole('tab', { name: 'Leads' }))
+    expect(screen.getByRole('tab', { name: 'Leads' })).toHaveAttribute(
       'aria-selected',
       'true',
     )

@@ -159,7 +159,7 @@ const integrationPoints = [
   'Booking links, request forms, and tap-to-call built around the scheduling your practice already uses.',
   'Patient intake forms planned around HIPAA requirements.',
   'Custom email, so hello@yourpractice.com reaches the right people on your team.',
-  'Analytics that show calls, form requests, and which service pages patients visit.',
+  'See your phone calls, leads from website forms, and the service pages patients visit.',
 ]
 
 const faqs = [
@@ -219,7 +219,7 @@ const buildSteps = [
     step: '05',
     title: 'measure + iterate',
     description:
-      'We track calls and forms, ship improvements, and expand content over time.',
+      'We track calls and leads from your website forms, improve the site, and expand its content over time.',
   },
 ]
 
@@ -294,7 +294,7 @@ export default function DentalWebsitePage() {
               <p className="text-[14px] leading-6 text-subtle">
                 Who wrote this: the Prism design and engineering team. How we
                 build: patient-first structure, fast performance, and
-                measurement tied to calls and forms. Why: so your website earns
+                measurement tied to calls and website leads. Why: so your website earns
                 patient trust from the first visit.
               </p>
             </Reveal>

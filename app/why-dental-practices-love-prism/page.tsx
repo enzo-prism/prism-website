@@ -61,7 +61,7 @@ const heroWhatYouGet = [
   'Dental practice website that explains services and drives calls.',
   'Google Business Profile cleanup + local SEO built for map results.',
   'Review system that keeps feedback coming in.',
-  'Tracking for calls, forms, and booked consults.',
+  'Tracking for calls, website leads, and booked consults.',
   'ADA-aware and HIPAA-aware foundation.',
 ] as const
 
@@ -74,7 +74,7 @@ const modernPracticePromises = [
   },
   {
     icon: Cpu,
-    text: 'See clear tracking for calls, forms, and booked visits.',
+    text: 'See clear tracking for calls, website leads, and booked visits.',
   },
 ] as const
 
@@ -99,7 +99,7 @@ const prismMethodPillars = [
       },
       {
         icon: BarChart3,
-        label: 'Tracking for calls, forms, and booked consults',
+        label: 'Tracking for calls, website leads, and booked consults',
       },
     ],
   },
@@ -169,7 +169,7 @@ const connectedPresenceHighlights = [
     bullets: [
       'Reviews workflow that keeps feedback steady.',
       'Fast forms and easy scheduling.',
-      'Ads with call and form tracking.',
+      'Ads with tracking for calls and website leads.',
     ],
   },
 ] as const
@@ -247,7 +247,7 @@ const segmentDeliverables = [
   'Dental practice website with clear service pages and ADA-aware UX.',
   'Local SEO + AEO for treatments, providers, and locations.',
   'Google Business Profile + directory management with reviews workflow.',
-  'Call, form, and booking tracking tied to each channel.',
+  'Calls, website leads, and bookings tracked by channel.',
   'HIPAA-aware hosting setup with forms and email routing.',
   'Photos and video that show real care and real people.',
 ]
@@ -296,7 +296,7 @@ const segmentFaqItems = [
   {
     question: 'How do you measure results for dental practices?',
     answer:
-      'We track calls, forms, referrals, and booked visits against search and ads. We report in plain language.',
+      'We track calls, website leads, referrals, and booked visits against search and ads. We report in plain language.',
   },
   {
     question: 'What if we have multiple locations?',
@@ -408,7 +408,7 @@ export default function DentalPracticesPage() {
                 <p>
                   Prism exists to fix that. We run the dental practice website,
                   dental practice SEO, Google Business Profile, local SEO, and
-                  AEO as one clean system. We set up tracking for calls, forms,
+                  AEO as one clean system. We set up tracking for calls, website leads,
                   and booked consults so you can see what is working. We keep
                   the foundation HIPAA-aware and ADA-aware. Your team stays
                   focused on care while we handle the mess of dental marketing

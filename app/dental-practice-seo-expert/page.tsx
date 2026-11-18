@@ -61,7 +61,7 @@ const whatYouGet = [
   {
     title: "content briefs + on-page upgrades",
     description:
-      "clear service explanations, financing and insurance expectations, and the right next step so traffic turns into calls, forms, and booked demand.",
+      "clear service explanations, financing and insurance expectations, and the right next step so visitors can call, send an inquiry, or book an appointment.",
   },
   {
     title: "maps + google business profile plan",
@@ -76,7 +76,7 @@ const whatYouGet = [
   {
     title: "plain-english reporting tied to outcomes",
     description:
-      "we track visibility against calls and forms so you always know what’s working and what we’re improving next.",
+      "we track search visibility alongside calls and leads from your website forms so you can see what’s working.",
   },
 ]
 
@@ -163,7 +163,7 @@ const faqItems = [
   {
     question: "What should dentists look for in an SEO partner?",
     answer:
-      "A consultant who talks in patient intent (treatments + location), ties work to calls and forms, understands Maps and listings, and can translate strategy into a real implementation backlog, not vague reports.",
+      "A consultant who talks in patient intent (treatments + location), ties work to calls and website leads, understands Maps and listings, and can translate strategy into a real implementation backlog, not vague reports.",
   },
   {
     question: "What’s different about dental SEO vs. generic SEO?",
@@ -432,7 +432,7 @@ export default function DentalPracticeSeoExpertPage() {
                 </div>
                 <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
                   Enzo works directly with dental teams on SEO strategy and implementation: intent-mapped pages, technical cleanup, listings
-                  systems, and reporting tied to calls and forms.
+                  systems, and reporting on calls and website leads.
                 </p>
                 <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
                   <ArrowLink href="/why-dental-practices-love-prism">see dental proof</ArrowLink>
