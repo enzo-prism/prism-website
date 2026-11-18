@@ -1,27 +1,17 @@
 import Image from 'next/image'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, CalendarDays, Mail } from 'lucide-react'
 
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
-import { PRISM_APP_NAME, PRISM_APP_NOTIFICATIONS } from '@/lib/prism-app'
+import { DEMO_LEADS, DEMO_LEAD_TOTAL, PRISM_APP_NAME } from '@/lib/prism-app'
 
-import { AppPhone } from './AppPhone'
-import { AppLockScreen, AppNotification } from './AppScreens'
+import { LeadDayChart } from './LeadDayChart'
 import { AppStoreButton } from './AppStoreButton'
 import styles from './app-page.module.css'
 
-const DEMO_LABEL = 'Explore the demo'
+const DEMO_LABEL = 'Explore the lead demo'
 
-/**
- * The opening: a monthly report lands on the Lock Screen, after a ranking
- * and a form. Three notifications arrive one at a time and hold, each large
- * enough to read. The app's name sits above the h1 with its icon, because
- * the h1 is the App Store subtitle, not the name.
- * Desktop visitors cannot install from a Mac, so the App Store button sits
- * beside a QR code and a way into the demo on this page. The base style is
- * the finished frame.
- */
-export function AppHero({ demoNote }: { demoNote: string }) {
+export function AppHero() {
   return (
     <section aria-labelledby="prism-app-title" className={styles.hero}>
       <div
@@ -53,16 +43,13 @@ export function AppHero({ demoNote }: { demoNote: string }) {
             className={`prism-rise text-gradient ${styles.heroTitle}`}
             style={{ '--rise-delay': '70ms' } as React.CSSProperties}
           >
-            your website,
-            <br />
-            at a glance.
+            track your<br /> website leads.
           </h1>
           <p
             className={`prism-rise text-lead text-pretty text-muted-foreground ${styles.heroLead}`}
             style={{ '--rise-delay': '140ms' } as React.CSSProperties}
           >
-            Track leads from your website forms, see how people find you on
-            Google, and share the results each month.
+            See how many inquiries your website brings in, which forms people use, and how this month compares with the last.
           </p>
 
           <div
@@ -122,29 +109,31 @@ export function AppHero({ demoNote }: { demoNote: string }) {
           </div>
         </div>
 
-        {/* Decorative: the h1 and lead carry the message. */}
-        <div aria-hidden="true" className={styles.heroScene}>
-          <div className={styles.heroHalo} />
-          <div className={styles.heroEntrance}>
-            <AppPhone className={styles.heroPhone}>
-              <AppLockScreen />
-            </AppPhone>
-            <ul className={styles.heroNotifications}>
-              {PRISM_APP_NOTIFICATIONS.map((item) => (
-                <AppNotification
-                  key={item.title}
-                  title={item.title}
-                  body={item.body}
-                  time={item.time}
-                  className={styles.heroNotification}
-                />
-              ))}
-            </ul>
+        <figure className="w-full min-w-0 rounded-3xl border border-white/10 bg-card p-6 text-left shadow-2xl sm:p-8">
+          <figcaption className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/10 pb-4">
+            <span className="font-medium text-foreground">Bayview Dental</span>
+            <span className="font-mono text-xs text-muted-foreground">Demo data</span>
+          </figcaption>
+          <p className="mt-6 text-body-md text-muted-foreground">Website leads</p>
+          <div className="mt-1 flex items-end justify-between gap-6">
+            <strong className="text-display leading-none tabular-nums">{DEMO_LEAD_TOTAL}</strong>
+            <LeadDayChart />
           </div>
-        </div>
+          <p className="mt-3 font-mono text-xs text-muted-foreground">{DEMO_LEADS.period}, 2026 · 28 days</p>
+          <dl className="mt-6 divide-y divide-white/10 border-y border-white/10">
+            {DEMO_LEADS.byForm.map(({ name, count }, index) => {
+              const Icon = index === 0 ? CalendarDays : Mail
+              return (
+                <div key={name} className="flex items-center justify-between gap-4 py-3">
+                  <dt className="flex items-center gap-3 text-body-md"><Icon aria-hidden="true" className="size-4 text-muted-foreground" />{name}</dt>
+                  <dd className="font-mono text-xl tabular-nums">{count}</dd>
+                </div>
+              )
+            })}
+          </dl>
+          <p className="mt-4 text-sm text-muted-foreground">Each submission to a connected form counts as one lead.</p>
+        </figure>
       </div>
-
-      <p className={styles.heroNote}>{demoNote}</p>
     </section>
   )
 }

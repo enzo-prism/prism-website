@@ -6,15 +6,16 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { metadata } from '@/app/app/page'
 import { metadata as privacyMetadata } from '@/app/app/privacy/page'
 import { metadata as supportMetadata } from '@/app/app/support/page'
+import { LeadDayChart } from '@/components/prism-app/LeadDayChart'
 import { AppDemo } from '@/components/prism-app/AppDemo'
 import {
   PRISM_APP_DEMO_BRANCH,
-  PRISM_APP_DEMO_NOTE,
+  DEMO_LEADS,
+  DEMO_LEAD_TOTAL,
   PRISM_APP_DESCRIPTION,
   PRISM_APP_FAQ,
   PRISM_APP_ID,
   PRISM_APP_NAME,
-  PRISM_APP_NOTIFICATIONS,
   PRISM_APP_PROSPECT,
   PRISM_APP_RELEASES,
   PRISM_APP_VERSION,
@@ -53,6 +54,20 @@ describe('Prism iPhone app page', () => {
     expect(leadStep?.id).toBe('forms')
     expect(leadStep?.body).toContain('Forms Submitted')
     expect(PRISM_APP_DESCRIPTION).toContain('leads from website forms')
+  })
+
+  it('reconciles the daily and by-form counts shown in the hero and native tour', () => {
+    expect(DEMO_LEADS.daily).toHaveLength(28)
+    expect(DEMO_LEAD_TOTAL).toBe(30)
+    expect(DEMO_LEADS.byForm.reduce((total, form) => total + form.count, 0)).toBe(DEMO_LEAD_TOTAL)
+  })
+
+  it('shows the date and count selected on the daily leads chart', () => {
+    render(<LeadDayChart />)
+    const slider = screen.getByRole('slider', { name: 'Select a day' })
+    expect(slider).toHaveAttribute('aria-valuetext', 'Nov 11 · 3 leads')
+    fireEvent.change(slider, { target: { value: '0' } })
+    expect(slider).toHaveAttribute('aria-valuetext', 'Oct 15 · 0 leads')
   })
 
   it('ships the assets the page draws with', () => {
@@ -95,13 +110,14 @@ describe('Prism iPhone app page', () => {
     expect(tabs.map((tab) => tab.textContent)).toEqual(
       PRISM_APP_TOUR.map((step) => step.label),
     )
+    expect(tabs[0]).toHaveAccessibleName('Leads')
     expect(tabs[0]).toHaveAttribute('aria-selected', 'true')
     expect(
       screen.getByRole('heading', { name: PRISM_APP_TOUR[0].title }),
     ).toBeVisible()
 
-    fireEvent.click(screen.getByRole('tab', { name: 'Leads' }))
-    expect(screen.getByRole('tab', { name: 'Leads' })).toHaveAttribute(
+    fireEvent.click(screen.getByRole('tab', { name: 'Report' }))
+    expect(screen.getByRole('tab', { name: 'Report' })).toHaveAttribute(
       'aria-selected',
       'true',
     )
@@ -113,7 +129,7 @@ describe('Prism iPhone app page', () => {
     ).toBeVisible()
 
     fireEvent.keyDown(screen.getByRole('tablist'), { key: 'ArrowRight' })
-    expect(screen.getByRole('tab', { name: 'Google' })).toHaveAttribute(
+    expect(screen.getByRole('tab', { name: 'Summary' })).toHaveAttribute(
       'aria-selected',
       'true',
     )
@@ -125,10 +141,8 @@ describe('Prism iPhone app page', () => {
       PRISM_APP_TOUR,
       PRISM_APP_TRUST,
       PRISM_APP_FAQ,
-      PRISM_APP_NOTIFICATIONS,
       PRISM_APP_STEPS,
       PRISM_APP_DEMO_BRANCH,
-      PRISM_APP_DEMO_NOTE,
       PRISM_APP_PROSPECT,
     ])
 

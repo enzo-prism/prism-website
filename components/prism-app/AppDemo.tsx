@@ -86,8 +86,7 @@ function runCount(node: HTMLElement) {
 /**
  * The tour, as one phone you can use. Six labeled tabs change the screen; the
  * Summary cards and its Latest Monthly Report row open their screens too, as
- * they do in the app. It plays through on its own once it is in view and stops for good the
- * moment someone picks a tab or presses pause. Without JS the first screen is
+ * they do in the app. The visitor can play the tour or read a screen at their own pace. Without JS the first screen is
  * up and every step's copy is in the page. With reduced motion nothing moves
  * by itself.
  */
@@ -96,7 +95,7 @@ export function AppDemo({ steps, header }: AppDemoProps) {
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const screenRefs = useRef<Array<HTMLDivElement | null>>([])
   const [active, setActive] = useState(0)
-  const [auto, setAuto] = useState(true)
+  const [auto, setAuto] = useState(false)
   const [inView, setInView] = useState(false)
   const [started, setStarted] = useState(false)
   const armed = useSyncExternalStore(

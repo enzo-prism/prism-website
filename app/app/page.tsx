@@ -33,7 +33,7 @@ import TrackedLink from '@/components/tracked-link'
 import { isClientQuote, quotesData } from '@/content/wall-of-love-data'
 import {
   PRISM_APP_DEMO_BRANCH,
-  PRISM_APP_DEMO_NOTE,
+  DEMO_LEADS,
   PRISM_APP_DESCRIPTION,
   PRISM_APP_FAQ,
   PRISM_APP_HOME_SCREEN_NAME,
@@ -64,7 +64,7 @@ const clientQuote = quotesData.find(
 
 export const metadata: Metadata = {
   ...buildRouteMetadata({
-    titleStem: 'Prism Grow for iPhone',
+    titleStem: 'Prism Grow: website lead tracking for iPhone',
     description: PRISM_APP_DESCRIPTION,
     path: '/app',
   }),
@@ -95,7 +95,7 @@ export default function PrismAppPage() {
       <FAQSchema questions={[...PRISM_APP_FAQ]} />
 
       <main className="flex-1" id="main-content" tabIndex={-1}>
-        <AppHero demoNote={PRISM_APP_DEMO_NOTE} />
+        <AppHero />
 
         <Section
           id="inside"
@@ -107,12 +107,57 @@ export default function PrismAppPage() {
             header={
               <SectionHeader
                 id="prism-app-inside-title"
-                eyebrow="Inside the app"
-                title="your numbers, in plain English."
-                description="Six screens from the app’s demo. Tap through them."
+                eyebrow="Interactive demo"
+                title="follow a website lead."
+                description="Explore Bayview Dental’s fictional website. Start with the forms people used, then open Updates for the latest inquiry or Report for the monthly comparison."
               />
             }
           />
+        </Section>
+
+        <Section aria-labelledby="prism-app-report-title" className="pt-0 sm:pt-0">
+          <div className="grid items-center gap-8 border-t border-white/10 pt-12 lg:grid-cols-2 lg:gap-16">
+            <SectionHeader
+              id="prism-app-report-title"
+              eyebrow="Monthly reports"
+              title="compare leads month to month."
+              description="Bring the numbers to your next team meeting. Each report pairs website inquiries with visits, search activity and the work Prism shipped. Share it as a PDF or text."
+            />
+            <figure className="rounded-3xl border border-white/10 bg-card p-6 sm:p-8">
+              <figcaption className="flex flex-wrap justify-between gap-2 text-sm text-muted-foreground">
+                <span>Bayview Dental · Demo</span><span>Website leads · 2026</span>
+              </figcaption>
+              <dl className="mt-6 space-y-4">
+                {[
+                  { month: 'September', count: DEMO_LEADS.october.previous },
+                  { month: 'October', count: DEMO_LEADS.october.count },
+                ].map(({ month, count }) => (
+                  <div key={month} className="grid grid-cols-[5rem_1fr_2rem] items-center gap-3">
+                    <dt className="text-sm text-muted-foreground">{month}</dt>
+                    <dd className="col-span-2 flex items-center gap-4">
+                      <span aria-hidden="true" className="h-2 flex-1 rounded-full bg-muted">
+                        <span className={month === 'October' ? 'block h-full rounded-full bg-spectrum-green' : 'block h-full rounded-full bg-muted-foreground'}
+                          style={{ width: `${(count / DEMO_LEADS.october.count) * 100}%` }} />
+                      </span>
+                      <span className="w-8 text-right font-mono text-lg">{count}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-6 border-t border-white/10 pt-4 text-body-md">
+                October brought in {DEMO_LEADS.october.count - DEMO_LEADS.october.previous} more inquiries, up {DEMO_LEADS.october.change} from September.
+              </p>
+            </figure>
+          </div>
+          <details className="mt-10 border-y border-white/10 py-5">
+            <summary className="cursor-pointer rounded-sm text-body-md font-medium focus-visible:outline-2 focus-visible:outline-offset-4">
+              See visits and Google clicks in the iPhone widgets
+            </summary>
+            <div className="mt-5 grid items-center gap-6 lg:grid-cols-2">
+              <p className="max-w-prose text-muted-foreground">Pin a website to your Home Screen or Lock Screen to see 28 days of traffic. Open Prism Grow to check the inquiries your forms received.</p>
+              <AppWidgets />
+            </div>
+          </details>
         </Section>
 
         <Section
@@ -164,21 +209,7 @@ export default function PrismAppPage() {
           </div>
         </Section>
 
-        <Section aria-labelledby="prism-app-widgets-title">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-            <Reveal>
-              <SectionHeader
-                id="prism-app-widgets-title"
-                eyebrow="Widgets"
-                title="keep an eye on it from your Home Screen."
-                description="Pin any of your websites to the Home Screen or Lock Screen and see its last 28 days without opening the app."
-              />
-            </Reveal>
-            <AppWidgets />
-          </div>
-        </Section>
-
-        <Section aria-labelledby="prism-app-start-title" className="pt-0 sm:pt-0">
+        <Section aria-labelledby="prism-app-start-title">
           <SpotlightCard
             beam
             className="overflow-hidden rounded-3xl border border-white/[0.08] bg-card p-6 sm:p-10 lg:p-14"
@@ -188,7 +219,7 @@ export default function PrismAppPage() {
                 <SectionHeader
                   id="prism-app-start-title"
                   eyebrow="For Prism clients"
-                  title="how to get started."
+                  title="see your own leads."
                   titleClassName="max-w-[14ch]"
                 />
                 <AppSteps steps={PRISM_APP_STEPS} className="mt-9" />
@@ -281,7 +312,7 @@ export default function PrismAppPage() {
             <SectionHeader
               id="prism-app-trust-title"
               eyebrow="Privacy"
-              title="your data stays simple."
+              title="your leads stay private."
             />
             <Link
               href="/app/privacy"
@@ -323,7 +354,7 @@ export default function PrismAppPage() {
             <SectionHeader
               id="prism-app-faq-title"
               eyebrow="FAQ"
-              title="before you download."
+              title="questions about lead tracking."
             >
               <Link
                 href="/app/support"
@@ -340,7 +371,7 @@ export default function PrismAppPage() {
           </div>
         </Section>
 
-        <FinalCta location="prism app final cta" />
+        <FinalCta location="prism app final cta" title="track the leads your site brings in." />
       </main>
       <Footer />
     </div>

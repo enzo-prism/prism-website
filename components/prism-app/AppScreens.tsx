@@ -1,5 +1,4 @@
 import type { CSSProperties, ReactNode } from 'react'
-import Image from 'next/image'
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -18,7 +17,7 @@ import {
   UsersRound,
 } from 'lucide-react'
 
-import type { PrismAppScreenId } from '@/lib/prism-app'
+import { DEMO_LEADS, DEMO_LEAD_TOTAL, type PrismAppScreenId } from '@/lib/prism-app'
 import { cn } from '@/lib/utils'
 
 import styles from './app-page.module.css'
@@ -37,12 +36,6 @@ import styles from './app-page.module.css'
  */
 
 const SITE = 'bayviewdental.example'
-
-/** Forms per day, Oct 15 to Nov 11. Sums to 30. */
-const FORMS_DAILY = [
-  0, 0, 2, 3, 0, 1, 2, 0, 0, 1, 2, 3, 0, 1, 0, 0, 0, 1, 2, 3, 0, 0, 0, 3, 0, 1,
-  2, 3,
-]
 
 /** Visits per day, Oct 14 to Nov 10. Sums to 4,675; the 28 days before, 4,053. */
 const VISITS_DAILY = [
@@ -471,10 +464,10 @@ function SummaryScreen({
         icon={<Mail />}
         label="Forms Submitted"
         period="Last 28 Days"
-        value={30}
+        value={DEMO_LEAD_TOTAL}
         unit="forms"
         note="About the same as the previous 28 days"
-        viz={<Spark values={FORMS_DAILY} />}
+        viz={<Spark values={DEMO_LEADS.daily} />}
         onSelect={onSelect}
       />
       <MetricCard
@@ -521,7 +514,7 @@ const REPORT_ROWS: ReadonlyArray<{
   change: string
 }> = [
   { icon: <UsersRound />, label: 'Visits', value: 5301, change: '9%' },
-  { icon: <Mail />, label: 'Forms submitted', value: 32, change: '19%' },
+  { icon: <Mail />, label: 'Forms submitted', value: DEMO_LEADS.october.count, change: DEMO_LEADS.october.change },
   { icon: <Search />, label: 'Clicks from Google', value: 558, change: '24%' },
   { icon: <Eye />, label: 'Times shown on Google', value: 17298, change: '24%' },
   {
@@ -594,12 +587,12 @@ function FormsScreen() {
         <Segments />
         <Total
           label="Captured total"
-          value={30}
+          value={DEMO_LEAD_TOTAL}
           unit="forms"
-          range="Oct 15 – Nov 11"
+          range={DEMO_LEADS.period}
         />
         <BarChart
-          values={FORMS_DAILY}
+          values={DEMO_LEADS.daily}
           ceiling={4}
           ticks={[0, 2, 4]}
           dates={['Oct 18', 'Oct 25', 'Nov 1', 'Nov 8']}
@@ -616,10 +609,7 @@ function FormsScreen() {
       </Highlight>
       <p className={styles.sectionLabel}>By Form</p>
       <Rows
-        rows={[
-          ['Appointment request', '21'],
-          ['Contact message', '9'],
-        ]}
+        rows={DEMO_LEADS.byForm.map(({ name, count }) => [name, String(count)] as const)}
       />
       <p className={styles.footnote}>Last 28 days.</p>
     </>
@@ -817,54 +807,5 @@ export function AppScreen({ id, onSelect }: AppScreenProps) {
         {id === 'updates' ? <UpdatesScreen /> : null}
       </div>
     </div>
-  )
-}
-
-/** The Lock Screen behind the hero's notifications. */
-export function AppLockScreen() {
-  return (
-    <div className={cn(styles.screen, styles.lock)}>
-      <StatusBar />
-      <div className={styles.screenBody}>
-        <p className={styles.lockDate}>Wednesday, November 11</p>
-        <p className={styles.lockTime}>9:41</p>
-      </div>
-    </div>
-  )
-}
-
-/** One Lock Screen notification, at page scale so it reads on any screen. */
-export function AppNotification({
-  title,
-  body,
-  time,
-  className,
-}: {
-  title: string
-  body: string
-  time: string
-  className?: string
-}) {
-  return (
-    <li className={cn(styles.notification, className)}>
-      <Image
-        src="/prism-app/app-icon.png"
-        alt=""
-        width={88}
-        height={88}
-        className="size-11 shrink-0 rounded-[0.7rem]"
-      />
-      <div className="min-w-0 flex-1">
-        <p className="flex items-baseline justify-between gap-3">
-          <span className="truncate text-[15px] font-semibold text-foreground">
-            {title}
-          </span>
-          <span className="shrink-0 text-[13px] text-subtle">{time}</span>
-        </p>
-        <p className="mt-0.5 truncate text-[15px] leading-5 text-muted-foreground">
-          {body}
-        </p>
-      </div>
-    </li>
   )
 }

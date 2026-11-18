@@ -43,7 +43,7 @@ export const PRISM_APP_RELEASES = [
     date: '2026-11-13',
     title: 'see what changed this month.',
     changes: [
-      'Your summary opens with a short takeaway and a link to your latest monthly report.',
+      'Your summary puts website leads alongside visits and search activity, with a link to your latest monthly report.',
       'Share the full report as a PDF or text, including what Prism shipped and the next step you agreed on.',
     ],
   },
@@ -61,7 +61,7 @@ export const PRISM_APP_RELEASES = [
 ] as const
 
 export const PRISM_APP_DESCRIPTION =
-  'Prism Grow is the free iPhone app for Prism clients: leads from website forms, visits, Google searches, AI traffic, and a monthly report to share.'
+  'Track leads from website forms with Prism Grow for iPhone. See which forms bring in inquiries, get alerts, and share a monthly report with your team.'
 
 export type PrismAppScreenId =
   | 'summary'
@@ -76,31 +76,38 @@ export type PrismAppTourStep = {
   label: string
   title: string
   body: string
-  /** One plain sentence taken from that screen in the app's demo. */
+  /** One plain-language takeaway supported by the demo screen. */
   takeaway: string
 }
 
 export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
-  {
-    id: 'summary',
-    label: 'Summary',
-    title: 'the whole picture in one screen.',
-    body: 'See how many website leads came in over the last 28 days, alongside visits and traffic from Google and AI assistants.',
-    takeaway: 'Visits are up 15% over the last 28 days.',
-  },
-  {
-    id: 'report',
-    label: 'Report',
-    title: 'a monthly report you can share.',
-    body: 'Each finished month against the one before, what changed, and what Prism shipped. Share it as a PDF.',
-    takeaway: 'October had 5,301 visits, up 9% from September.',
-  },
   {
     id: 'forms',
     label: 'Leads',
     title: 'see which forms bring in leads.',
     body: 'See how many inquiries came through each website form, from contact requests to appointment requests. In the app, look for Forms Submitted.',
     takeaway: 'Your latest form came in 2 hours ago.',
+  },
+  {
+    id: 'updates',
+    label: 'Updates',
+    title: 'know when an inquiry arrives.',
+    body: 'A new form alert tells you which website and form received an inquiry. Open your usual inbox to follow up.',
+    takeaway: 'Bayview Dental received an appointment request.',
+  },
+  {
+    id: 'report',
+    label: 'Report',
+    title: 'a monthly report you can share.',
+    body: 'Compare this month’s inquiries with last month’s, see the work Prism shipped, and share the report as a PDF or text.',
+    takeaway: 'October brought in 32 website leads, up 19% from September.',
+  },
+  {
+    id: 'summary',
+    label: 'Summary',
+    title: 'the whole picture in one screen.',
+    body: 'See how many website leads came in over the last 28 days, alongside visits and traffic from Google and AI assistants.',
+    takeaway: '30 website leads in the last 28 days.',
   },
   {
     id: 'search',
@@ -112,45 +119,25 @@ export const PRISM_APP_TOUR: readonly PrismAppTourStep[] = [
   {
     id: 'ai',
     label: 'AI',
-    title: 'see who arrives from AI answers.',
+    title: 'see visits from AI answers.',
     body: 'Visits from assistants like ChatGPT and Perplexity.',
     takeaway: '17 visits came from ChatGPT and 6 from Perplexity.',
   },
-  {
-    id: 'updates',
-    label: 'Updates',
-    title: 'hear when something good happens.',
-    body: 'New website leads, Google rankings, record weeks, and the work Prism ships.',
-    takeaway: '64 people on your site, about 3× your usual.',
-  },
 ] as const
 
-/**
- * Lock Screen notifications in the hero, oldest arrival first, shortened from
- * the app's notification copy (prism-platform: packages/alerts/src/copy.ts)
- * with the demo's numbers. The last one lands on top.
- */
-export const PRISM_APP_NOTIFICATIONS = [
-  {
-    title: 'On Google’s first page',
-    body: 'Now #7 for “emergency dentist.”',
-    time: '1d ago',
-  },
-  {
-    title: 'New form submission',
-    body: 'A form came in: Appointment request.',
-    time: '1h ago',
-  },
-  {
-    title: 'Your October report is ready',
-    body: '5,301 visits (up 9%), 32 forms submitted.',
-    time: 'now',
-  },
-] as const
+/** Fictional Bayview Dental totals from the November 11 iOS demo. */
+export const DEMO_LEADS = {
+  daily: [0, 0, 2, 3, 0, 1, 2, 0, 0, 1, 2, 3, 0, 1, 0, 0, 0, 1, 2, 3, 0, 0, 0, 3, 0, 1, 2, 3],
+  byForm: [
+    { name: 'Appointment request', count: 21 },
+    { name: 'Contact message', count: 9 },
+  ],
+  firstDay: '2026-10-15T00:00:00Z',
+  period: 'Oct 15 – Nov 11',
+  october: { count: 32, previous: 27, change: '19%' },
+} as const
 
-/** Said once on the page, under the hero. Every screen below uses the demo. */
-export const PRISM_APP_DEMO_NOTE =
-  'Demo data throughout. Bayview Dental is fictional.'
+export const DEMO_LEAD_TOTAL = DEMO_LEADS.daily.reduce<number>((sum, count) => sum + count, 0)
 
 export const PRISM_APP_TRUST = [
   {
@@ -158,11 +145,11 @@ export const PRISM_APP_TRUST = [
     body: 'Prism reads your Google data and never changes it.',
   },
   {
-    title: 'totals, not people.',
-    body: 'Nothing identifies who visited your site.',
+    title: 'private messages.',
+    body: 'Prism counts inquiries. What someone wrote stays in the tool that receives your forms.',
   },
   {
-    title: 'no ads or tracking.',
+    title: 'ad-free reporting.',
     body: 'We don’t sell or share your information.',
   },
   {
@@ -192,10 +179,14 @@ export const PRISM_APP_DEMO_BRANCH = {
 export const PRISM_APP_PROSPECT = {
   eyebrow: 'Not a client yet',
   title: 'every Prism client gets this.',
-  body: 'Prism Grow is free for Prism clients. Join the waitlist to work with us.',
+  body: 'We build your website and connect its forms to Prism Grow so you can see the inquiries it brings in. The app is included for Prism clients.',
 } as const
 
 export const PRISM_APP_FAQ = [
+  {
+    question: 'What counts as a website lead?',
+    answer: 'Each submission to a tracked website form counts as one lead. Two inquiries from the same person count twice. An appointment request counts when someone sends the form. Your team confirms the booking separately.',
+  },
   {
     question: 'Who is Prism Grow for?',
     answer:
@@ -238,7 +229,7 @@ export const PRISM_APP_FAQ = [
   {
     question: 'Where do the numbers come from?',
     answer:
-      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which finalizes each day’s numbers a few days later. Prism counts each submission to a tracked website form as one website lead. Two inquiries from the same person count twice.',
+      'Visits come from Google Analytics and update about every hour. Google search clicks come from Google Search Console, which finalizes each day’s numbers a few days later. Lead counts come from your connected website forms.',
   },
   {
     question: 'How many notifications will I get?',
