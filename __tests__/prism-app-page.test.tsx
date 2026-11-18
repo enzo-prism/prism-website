@@ -16,6 +16,8 @@ import {
   PRISM_APP_NAME,
   PRISM_APP_NOTIFICATIONS,
   PRISM_APP_PROSPECT,
+  PRISM_APP_RELEASES,
+  PRISM_APP_VERSION,
   PRISM_APP_STEPS,
   PRISM_APP_STORE_URL,
   PRISM_APP_TOUR,
@@ -61,6 +63,15 @@ describe('Prism iPhone app page', () => {
       expect(existsSync(join(process.cwd(), 'public', 'prism-app', file))).toBe(
         true,
       )
+    }
+  })
+
+  it('labels the public release consistently with the download metadata', () => {
+    const available = PRISM_APP_RELEASES.filter((entry) => entry.status === 'Available on the App Store')
+    expect(available.map((entry) => entry.version)).toEqual([PRISM_APP_VERSION])
+    for (const entry of PRISM_APP_RELEASES) {
+      expect(entry.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      expect(entry.changes.length).toBeGreaterThan(0)
     }
   })
 

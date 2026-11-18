@@ -40,6 +40,7 @@ import {
   PRISM_APP_ID,
   PRISM_APP_NAME,
   PRISM_APP_PROSPECT,
+  PRISM_APP_RELEASES,
   PRISM_APP_STEPS,
   PRISM_APP_STORE_URL,
   PRISM_APP_TOUR,
@@ -114,7 +115,56 @@ export default function PrismAppPage() {
           />
         </Section>
 
-        <Section aria-labelledby="prism-app-widgets-title" className="pt-0 sm:pt-0">
+        <Section
+          id="whats-new"
+          aria-labelledby="prism-app-releases-title"
+          className="scroll-mt-16 border-y border-white/[0.08] bg-card"
+        >
+          <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <SectionHeader
+              id="prism-app-releases-title"
+              eyebrow="Release notes"
+              title="what’s new."
+            />
+            <ol className="divide-y divide-white/10">
+              {PRISM_APP_RELEASES.map((release) => (
+                <li
+                  key={release.version}
+                  className="grid gap-4 py-8 first:pt-0 last:pb-0 sm:grid-cols-[6rem_1fr] sm:gap-8"
+                >
+                  <div className="flex items-baseline gap-3 sm:block">
+                    <p className="font-mono text-4xl font-medium tracking-tight text-foreground">
+                      <span className="sr-only">Version </span>
+                      {release.version}
+                    </p>
+                    <time dateTime={release.date} className="mt-2 block font-mono text-xs text-muted-foreground">
+                      {new Intl.DateTimeFormat('en-US', {
+                        month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+                      }).format(new Date(release.date))}
+                    </time>
+                  </div>
+                  <div>
+                    <p className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                      <span
+                        aria-hidden="true"
+                        className={release.version === PRISM_APP_VERSION
+                          ? 'size-2 rounded-full bg-foreground'
+                          : 'size-2 rounded-full border border-current'}
+                      />
+                      {release.status}
+                    </p>
+                    <h3 className="mt-3 text-heading text-balance">{release.title}</h3>
+                    <ul className="mt-4 list-disc space-y-2 pl-4 text-body-md text-muted-foreground marker:text-subtle">
+                      {release.changes.map((change) => <li key={change}>{change}</li>)}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        <Section aria-labelledby="prism-app-widgets-title">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
             <Reveal>
               <SectionHeader

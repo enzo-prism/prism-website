@@ -34,6 +34,32 @@ export const PRISM_APP_HOME_SCREEN_NAME = 'Prism'
 
 export const PRISM_APP_VERSION = '1.5'
 
+// Keep the download instructions and softwareVersion on the public release.
+// Source: prism-platform/apps/ios/AppStore/version/<version>/en-US.json.
+export const PRISM_APP_RELEASES = [
+  {
+    version: '1.5',
+    status: 'Available on the App Store',
+    date: '2026-11-13',
+    title: 'see what changed this month.',
+    changes: [
+      'Your summary opens with a short takeaway and a link to your latest monthly report.',
+      'Share the full report as a PDF or text, including what Prism shipped and the next step you agreed on.',
+    ],
+  },
+  {
+    version: '1.6',
+    status: 'Submitted to Apple',
+    date: '2026-11-18',
+    title: 'get started before your site is connected.',
+    changes: [
+      'Create an account with your preferred email, Apple or Google. You can leave and come back to check your connection.',
+      'When your sites are ready, one opens straight to your summary. If you have several, choose which to open first.',
+      'If you delete your Prism account, you can disconnect your Apple sign-in at the same time.',
+    ],
+  },
+] as const
+
 export const PRISM_APP_DESCRIPTION =
   'Prism Grow is the free iPhone app for Prism clients: website visits, forms, Google searches, AI visits, and a monthly report to share.'
 

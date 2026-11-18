@@ -110,9 +110,15 @@ export function AppHero({ demoNote }: { demoNote: string }) {
               </p>
             </div>
 
-            <p className="text-[13px] text-subtle">
-              Free. Built for Prism clients.
-            </p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px]">
+              <p className="text-subtle">Free. Built for Prism clients.</p>
+              <a
+                href="#whats-new"
+                className="inline-flex items-center gap-1 rounded-sm text-muted-foreground underline underline-offset-4 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4"
+              >
+                What’s new <ArrowDown aria-hidden="true" className="size-3" />
+              </a>
+            </div>
           </div>
         </div>
 
