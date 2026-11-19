@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Archive, BadgeCheck, Briefcase, MapPin, Play } from 'lucide-react'
 
 import CaseStudyExplainerVideo from '@/components/case-studies/CaseStudyExplainerVideo'
+import CaseStudyFacts from '@/components/case-studies/CaseStudyFacts'
 import CaseStudyMoreWork from '@/components/case-studies/CaseStudyMoreWork'
 import CaseStudyOutcomesGrid from '@/components/case-studies/CaseStudyOutcomesGrid'
 import CaseStudySnapshotStats, {
@@ -31,6 +32,7 @@ import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
 import { CaseStudySchema } from '@/components/schema-markup'
 import { CASE_STUDIES, datedMetricSummary } from '@/lib/case-study-data'
+import { getCaseStudyFacts } from '@/lib/case-study-facts'
 import {
   getCaseStudyWorkProfile,
   normalizeCaseStudyWorkProfile,
@@ -48,7 +50,7 @@ type MinimalCaseStudyPageProps = {
  * Shared case study template (24 pages). A launch page for the client: the
  * live site in the hero, a stats band of verified metrics or delivered-work
  * facts, the client's own voice when a verified video or quote exists, the
- * published story, outcomes, the work highlights, three more current-client
+ * published story, outcomes, a facts list, the work highlights, three more current-client
  * stories, and the waitlist close.
  */
 export default function MinimalCaseStudyPage({
@@ -184,6 +186,8 @@ export default function MinimalCaseStudyPage({
             outcomes={outcomes}
           />
         ) : null}
+
+        <CaseStudyFacts facts={getCaseStudyFacts(caseStudy)} />
 
         <CaseStudyWorkHighlights caseStudySlug={caseStudy.slug} />
 

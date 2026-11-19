@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck } from 'lucide-react'
 
 import CaseStudiesList from '@/components/case-studies/CaseStudiesList'
+import CaseStudyIndex from '@/components/case-studies/CaseStudyIndex'
 import { PhoneFrame } from '@/components/case-studies/PhoneFrame'
 import { WorkCard } from '@/components/case-studies/WorkCard'
 import {
@@ -310,6 +311,8 @@ export default function CaseStudiesPage() {
           </div>
 
         </Section>
+
+        <CaseStudyIndex />
 
         <FinalCta
           location="case studies final cta"
