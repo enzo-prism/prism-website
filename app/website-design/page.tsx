@@ -71,14 +71,14 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Palette,
     title: 'design that feels like your business',
-    body: 'We set your typography, color, spacing, and motion as one design system, then carry it through every page, so your site looks like your business and never like a template.',
+    body: 'Typography, color, spacing, and motion built as one custom system. Never a template.',
     className: 'md:col-span-4',
     visual: <DesignSpecimen />,
   },
   {
     icon: Smartphone,
     title: 'designed for the phone first',
-    body: 'Layouts, tap targets, and contact buttons start on the small screen, then scale up, with a clear structure people and search engines can follow.',
+    body: 'Layouts, tap targets, and calls to action start on mobile, then scale cleanly to every screen.',
     points: [
       'Mobile-first, responsive layouts',
       'Accessible, semantic page structure',
@@ -88,19 +88,19 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: BarChart3,
     title: 'know what brings people in',
-    body: 'GA4 and conversion tracking are part of the build, so you can see how people find you and where they reach out.',
+    body: 'GA4 and conversion tracking ship at launch so you see every source, form, and call.',
     visual: <TrackingList />,
   },
   {
     icon: PenLine,
     title: 'copy designed in, not pasted in',
-    body: 'We write your pages around what customers ask before they call, and design the layout around the words, then share a preview for your feedback.',
+    body: 'We write around what buyers ask before they call, and shape every layout around the words.',
     visual: <QuestionList />,
   },
   {
     icon: KeyRound,
     title: 'yours, completely',
-    body: 'The design, the site, and everything in it belong to you from launch day. No lock-in. Keep Prism running it, or take it in-house.',
+    body: 'Design, code, content, and analytics belong to you on launch day. Keep Prism running it, or take it in-house.',
     visual: <OwnershipList />,
   },
 ]
@@ -110,19 +110,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: FileText,
     title: 'join the waitlist',
     detail: 'First',
-    body: 'Share your links and goals. We review applications for each monthly intake, then reach out to scope your design with a clear plan and a clear price.',
+    body: 'Share your links and goals. We review applications each monthly intake and reach out with a clear plan and price.',
   },
   {
     icon: Palette,
     title: 'design, then build',
     detail: 'Design',
-    body: 'We set the design direction from your brand and your customers, write and design the pages, then build them and share a live preview so you can react before launch.',
+    body: 'We set the visual direction, write and design every page, build the site, and share a live preview before launch.',
   },
   {
     icon: Rocket,
     title: 'launch and measure',
     detail: 'Launch',
-    body: 'We set up analytics and search information, check every page, form, and contact link, then launch and plan what to improve next.',
+    body: 'We verify analytics, search structure, speed, and every inquiry path, then launch and plan what comes next.',
   },
 ]
 
@@ -130,42 +130,42 @@ const FAQ_ITEMS = [
   {
     question: 'What is included in Prism website design?',
     answer:
-      'Custom design for your brand, page copy, a mobile-first build, inquiry forms, and analytics. One team designs and builds the site, so the pages you approve are the pages that launch, and you can see which pages and traffic sources lead to inquiries.',
+      'Custom design, page copy, mobile-first development, inquiry forms, search foundations, and analytics. One team designs and builds the site, so what you approve is exactly what ships.',
   },
   {
     question: 'Do you use templates?',
     answer:
-      'No. Every site starts from your brand and your customers, with its own typography, color, layout, and motion. We set the design system first, then design and build each page from it.',
+      'No. Every site starts from scratch around your brand and buyers, with its own typography, color system, layout, and motion.',
   },
   {
     question: 'Can you redesign my current website?',
     answer:
-      'Yes. We start by reviewing what already works, including the pages that bring in search traffic, and plan the new structure and redirects so the redesign builds on what is already working.',
+      'Yes. We audit what already performs, protect existing search traffic with clean redirects, and rebuild on a stronger foundation.',
   },
   {
     question: 'Do you only design, or build too?',
     answer:
-      'Both. Prism writes, designs, builds, and launches the site, then sets up analytics and search information. You do not need a separate developer to turn the design into a working website.',
+      'Both. We handle strategy, copy, design, engineering, analytics, and launch under one roof.',
   },
   {
     question: 'How does pricing work?',
     answer:
-      'Prism is fully booked right now, so every website design project starts on the waitlist. When we reach out, we scope the pages, features, and support you need and agree on the scope and price before work begins.',
+      'Prism is fully booked right now, so every website project starts on the waitlist. When your intake opens, we confirm exact scope and price before work begins.',
   },
   {
     question: 'How do you support visibility in AI assistants?',
     answer:
-      'We make your services, locations, team, and business details clear in both the page copy and its search information. Search engines and AI assistants can use that information, but rankings and recommendations remain outside our control.',
+      'We structure your services, locations, and credentials clearly in both copy and schema so Google and AI assistants can read them accurately. Rankings and recommendations are never guaranteed.',
   },
   {
     question: 'Do I own the website?',
     answer:
-      'Completely. From the moment it ships, the website and everything within it belongs to you. There is no lock-in of any kind.',
+      'Completely. From launch day, the website and everything within it belongs to you. There is no lock-in of any kind.',
   },
   {
     question: 'What happens after launch?',
     answer:
-      'That decision is yours. Prism can continue to run the site, covering updates, analytics, search, and AI visibility, or hand it off entirely. Either way, it remains yours.',
+      'Your choice. Keep Prism on for ongoing updates, analytics, search, and AI visibility, or take full handoff in-house.',
   },
 ] as const
 
@@ -330,9 +330,8 @@ export default function WebsiteDesignPage() {
           description={
             <>
               <span className="text-foreground">Designed and built by Prism</span>
-              : a custom look for your brand, pages written around what
-              customers ask, and a fast, mobile-first build with analytics and
-              search in place from day one.
+              : a custom look for your brand, sharp copy, and a fast mobile
+              build with analytics and search ready on day one.
             </>
           }
           ctaHref={WEBSITE_WAITLIST_CTA.href}
@@ -350,7 +349,7 @@ export default function WebsiteDesignPage() {
         <ServiceBento
           idPrefix="website-design"
           title="designed to win the visit."
-          description="Brand, layout, copy, and build from one team, so the site looks like your business, works on every phone, and shows you what is working."
+          description="Brand, copy, design, and engineering from one team. Built to look unmistakable, load fast, and prove what works."
           items={WHAT_YOU_GET}
         />
 
@@ -388,10 +387,10 @@ export default function WebsiteDesignPage() {
                   Support discovery on Google and in AI.
                 </p>
                 <p className="max-w-[52ch] text-pretty text-[15px] leading-7 text-muted-foreground">
-                  We organize service pages, location details, and business
-                  information so search engines and AI assistants can understand
-                  what you do. Useful answers and accurate details support
-                  discovery; rankings and recommendations are never guaranteed.
+                  We structure your services, locations, and credentials so
+                  Google and AI assistants read your business accurately. Clear
+                  facts support discovery; rankings and recommendations are
+                  never guaranteed.
                 </p>
                 <TrackedLink
                   href="/aeo"
@@ -436,7 +435,7 @@ export default function WebsiteDesignPage() {
         <ServiceSteps
           idPrefix="website-design"
           title="it starts on the waitlist."
-          description="Prism is fully booked. When your intake opens, you leave the scoping conversation with a clear plan and a clear price."
+          description="Prism is fully booked. When your intake opens, we align on scope, timeline, and price before a single pixel is drawn."
           steps={STEPS}
         />
 
@@ -446,7 +445,7 @@ export default function WebsiteDesignPage() {
               id="website-design-results-title"
               eyebrow="Results"
               title="measured at the source."
-              description="Design is judged by what happens after launch. Two published client results, straight from Google Search Console, plus what clients told us in their own words."
+              description="Craft is proven after launch. Sourced Google Search Console results and verbatim client notes."
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:mt-16 lg:grid-cols-12">

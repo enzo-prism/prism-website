@@ -9,17 +9,17 @@ const FACTS = [
   {
     value: '2',
     label: 'Apple internships',
-    detail: 'Find My, AirPlay, and more. 2020 and 2021.',
+    detail: 'CarPlay, Find My, AirPlay, and more. 2020 and 2021.',
   },
   {
     value: 'D1',
     label: 'track and field',
-    detail: 'Cal Poly, then a B.S. in engineering in 2022.',
+    detail: 'Cal Poly engineering, B.S. 2022.',
   },
   {
     value: 'May 2023',
     label: 'went pro, started Prism',
-    detail: 'Left the full-time job and burned the ships.',
+    detail: 'Left full-time tech and went all in.',
   },
   {
     value: 'LA 2028',
@@ -52,9 +52,9 @@ export function AboutManifesto() {
           </Reveal>
           <Reveal delay={120}>
             <p className="text-lead mx-auto mt-7 max-w-[40ch] text-pretty text-muted-foreground">
-              In March 2015, at his first pole vault competition, Enzo didn&apos;t
-              clear the bar. Eight years later, he went pro. That is the whole
-              idea behind Prism.
+              At his first pole vault meet in March 2015, Enzo did not clear a
+              single bar. Eight years later, he went pro. Prism is built on the
+              same standard.
             </p>
           </Reveal>
         </div>

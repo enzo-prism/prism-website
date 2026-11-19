@@ -57,9 +57,8 @@ export function WallOfLoveHero() {
         </h1>
 
         <p className="prism-rise text-lead mt-6 max-w-[44ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-          Two kinds of love live here: notes from the clients we build websites
-          for, and comments from people who watch Prism&apos;s videos. Every
-          word is theirs.
+          Notes from the clients we build for, alongside reactions from the
+          audience that follows our work. Every word is verbatim.
         </p>
 
         <div className="prism-rise mt-9 [--rise-delay:240ms]">

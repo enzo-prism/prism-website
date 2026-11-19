@@ -31,15 +31,15 @@ export function AboutHero() {
             built by Enzo Sison.
           </h1>
           <p className="prism-rise text-lead mt-7 max-w-[34rem] text-pretty text-foreground/90 [--rise-delay:160ms]">
-            Enzo worked on CarPlay, GymKit, AirPlay, HomeKit, and Find My at
-            Apple, earned an engineering degree at Cal Poly, and competed in D1
-            track. In May 2023, he left his full-time job, went pro in track and
-            field, and started Prism.
+            At Apple, Enzo worked on CarPlay, GymKit, AirPlay, HomeKit, and Find
+            My. After earning his engineering degree and competing in D1 track
+            at Cal Poly, he left full-time tech in May 2023 to go pro and build
+            Prism.
           </p>
           <p className="prism-rise mt-4 max-w-[34rem] text-pretty text-[15px] leading-7 text-muted-foreground [--rise-delay:200ms]">
-            He founded Prism to help small businesses turn a stronger online
-            presence into more customer conversations. He still pole vaults for
-            the Philippines, on the path to LA 2028.
+            He built Prism to give ambitious businesses a digital presence
+            worthy of their craft. Today he leads the studio while pole vaulting
+            for the Philippines on the road to LA 2028.
           </p>
           <div className="prism-rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center [--rise-delay:240ms]">
             <WaitlistButton location="about hero" size="xl" />

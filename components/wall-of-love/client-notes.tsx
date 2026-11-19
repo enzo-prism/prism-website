@@ -140,7 +140,7 @@ export function ClientNotes() {
           id="from-clients-title"
           eyebrow="from clients"
           title="in their own words."
-          description="Notes from the people Prism builds websites for, with their names on them."
+          description="Direct notes from named Prism clients."
         />
         <p className="text-eyebrow shrink-0 text-subtle lg:pb-3">
           {notes.length} notes · {clientNoteAuthorCount} named clients

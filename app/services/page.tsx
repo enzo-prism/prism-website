@@ -54,24 +54,24 @@ const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
 // What each core service includes, in plain terms.
 const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
   website: [
-    'Custom design for your brand',
-    'Page copy and a mobile-first build',
+    'Custom brand-led design, zero templates',
+    'Sharp copy and a fast mobile build',
     'Clear paths to call, book, or inquire',
   ],
   content: [
-    'Planning and scripts',
-    'Video, photo, and written production',
-    'Publishing on your agreed channels',
+    'Strategy, topics, and scripts',
+    'Video, photo, and editorial production',
+    'Scheduled publishing across your channels',
   ],
   ads: [
-    'Campaigns on the channels that fit',
-    'Call and inquiry tracking',
-    'Ongoing improvements from the data',
+    'Campaigns on the channels buyers use',
+    'Dedicated landing pages and conversion tracking',
+    'Weekly tuning based on lead quality',
   ],
   aeo: [
-    'AI visibility audit across the engines',
-    'Crawler, schema, and answer-first fixes',
-    'Monthly answer checks in plain English',
+    'Visibility audit across major AI engines',
+    'Crawler access, schema, and answer-first pages',
+    'Monthly citation checks in plain English',
   ],
 }
 
@@ -93,11 +93,11 @@ const coreServices: CoreService[] = [
     name: 'Website & Experience Design',
     title: 'website and experience design',
     summary:
-      'Brand-led design, copy, and development for a site that makes choosing you easy, managed end to end by Prism.',
+      'Brand-led design, copy, and engineering built to convert and managed end to end.',
     learnMoreLinks: [{ label: 'Website design', href: '/website-design' }],
     outcomes: [
-      'Custom design, UX, and development',
-      'Editable components and content management',
+      'Custom design, UX, and engineering',
+      'Clean component architecture and content management',
       'Launch support, hosting, and ongoing care',
     ],
     caseStudies: [
@@ -113,7 +113,7 @@ const coreServices: CoreService[] = [
     name: 'Local Presence & Reviews',
     title: 'local presence and reviews',
     summary:
-      'Keep your practice or storefront discoverable with accurate listings, review workflows, and local search reporting.',
+      'Accurate listings, structured review flows, and local search visibility across every map and directory.',
     learnMoreLinks: [
       { label: 'Local SEO agency and services', href: '/local-seo-agency' },
       { label: 'Dentist SEO', href: '/dental-practice-seo-expert' },
@@ -121,8 +121,8 @@ const coreServices: CoreService[] = [
       { label: 'AEO for AI search', href: '/aeo' },
     ],
     outcomes: [
-      'Google, Apple, Yelp, and niche directory management',
-      'Review request flows and response playbooks',
+      'Google, Apple, Yelp, and niche directory alignment',
+      'Review generation and response workflows',
       'Local landing pages, schema, and reporting',
     ],
     caseStudies: [
@@ -137,15 +137,15 @@ const coreServices: CoreService[] = [
     name: 'Paid Media & Creative',
     title: 'paid media and creative',
     summary:
-      'Strategy, creative, and execution for paid search and paid social campaigns.',
+      'Focused search and social campaigns paired with high-converting creative and landing pages.',
     learnMoreLinks: [
       { label: 'Ads', href: '/ads' },
       { label: 'TikTok ads for dentists', href: '/tiktok-ads-for-dentists' },
     ],
     outcomes: [
-      'Campaign setup across Google, Meta, and TikTok',
-      'Ad creative, landing pages, and reporting',
-      'Ongoing optimization and offer testing',
+      'Campaigns across Google, Meta, and TikTok',
+      'Dedicated ad creative, landing pages, and attribution',
+      'Weekly optimization and offer testing',
     ],
     caseStudies: [
       {
@@ -162,7 +162,7 @@ const coreServices: CoreService[] = [
     name: 'Content & Communications',
     title: 'content and communications',
     summary:
-      'Content systems for video, blogs, email, and in-practice storytelling that owners can keep up with.',
+      'Sustainable video, editorial, and email systems built to run without founder burnout.',
     learnMoreLinks: [
       { label: 'Content', href: '/content' },
       {
@@ -171,9 +171,9 @@ const coreServices: CoreService[] = [
       },
     ],
     outcomes: [
-      'Editorial calendars and brand voice guidelines',
-      'Short-form video, blog, and email production',
-      'Asset library and reusable templates',
+      'Editorial calendars and brand voice standards',
+      'Short-form video, articles, and email production',
+      'Reusable asset libraries and formats',
     ],
     caseStudies: [
       {
@@ -187,12 +187,12 @@ const coreServices: CoreService[] = [
     name: 'Analytics, Automation & Support',
     title: 'analytics, automation, and support',
     summary:
-      'One clear view of GA4, ads, and in-office tools, with automations that save your team time.',
+      'Clear attribution across calls, forms, and bookings, paired with practical workflow automation.',
     learnMoreLinks: [{ label: 'App development', href: '/apps' }],
     outcomes: [
-      'Dashboards for leads, calls, and bookings',
+      'Unified tracking for leads, calls, and bookings',
       'Automations for follow-up, reminders, and hand-offs',
-      'Planning and priorities with the Prism team',
+      'Direct quarterly planning with the Prism team',
     ],
     caseStudies: [
       {
@@ -211,22 +211,22 @@ const workflow = [
   {
     title: 'join the waitlist',
     description:
-      'Share your goals and links. For each monthly intake we review applications and reach out to the teams we can take on.',
+      'Share your goals and links. We review applications each monthly intake and reach out as spots open.',
   },
   {
     title: 'map the system',
     description:
-      'We review your site, listings, ads, and analytics so we know where to focus first.',
+      'We audit your site, listings, campaigns, and tracking to pinpoint the highest-leverage work first.',
   },
   {
     title: 'build the core',
     description:
-      'Your website, tracking, and local presence come first, giving every other channel a reliable foundation.',
+      'Website, attribution, and local presence launch first so every channel compounds.',
   },
   {
     title: 'improve and report',
     description:
-      'Content, ads, AEO, and automation join as the foundation holds. We review the data with you and plan the next improvement.',
+      'Content, ads, and AEO layer in cleanly. We review the numbers together and ship the next gain.',
   },
 ] as const
 
@@ -259,37 +259,37 @@ const faqItems = [
   {
     question: 'Do I need every service to work with Prism?',
     answer:
-      'No. Most clients start with one foundation, usually website design or local presence, and add content or ads once the core is stable.',
+      'No. Most clients begin with website design or local visibility, then layer in content, ads, or AEO once the foundation is solid.',
   },
   {
     question: 'How do you decide what to prioritize first?',
     answer:
-      'When we reach out from the waitlist, we review your website, listings, ads, and analytics, then agree on where to start based on your market and goals.',
+      'When your intake opens, we audit your site, listings, campaigns, and analytics, then align on the highest-leverage starting point for your market.',
   },
   {
     question: 'What industries do you work with?',
     answer:
-      'We focus on local and service-based businesses: dental and medical practices, local retail, professional services, nonprofits, and community brands.',
+      'We partner with dental and medical practices, hospitality brands, advisory firms, schools, nonprofits, and ambitious local leaders.',
   },
   {
     question: 'How do you measure success?',
     answer:
-      'We track the calls, website leads, and bookings your tools can report, then explain in plain English what is working and why.',
+      'We track the calls, website inquiries, and bookings your tools report, then walk through what is driving results in plain English.',
   },
   {
     question: 'Can you collaborate with our internal team?',
     answer:
-      'Yes. We work alongside existing marketing, operations, or front-office teams and share the data and plans so execution stays aligned.',
+      'Yes. We work smoothly alongside internal marketing, operations, or front-office teams with shared reporting and clear ownership.',
   },
   {
     question: 'What does an engagement look like month to month?',
     answer:
-      'It depends on the service. Website Design is one project with optional care after launch. Content and Ads are ongoing. We agree on the rhythm, check-ins, and deliverables before work begins.',
+      'Website Design is a scoped project with optional ongoing care. Content, Ads, and AEO run on a monthly cadence. Deliverables and rhythm are confirmed before work begins.',
   },
   {
     question: 'How do I start?',
     answer:
-      'Join the waitlist. Prism is fully booked, so new work starts in monthly intakes, and waitlist members get first pick.',
+      'Join the waitlist. Prism is fully booked, so new partnerships open in monthly intakes and waitlist members get first pick.',
   },
 ] as const
 
@@ -302,7 +302,7 @@ const inlineLinkClassName =
 export const metadata: Metadata = buildRouteMetadata({
   titleStem: 'Marketing services for small businesses',
   description:
-    'Website design, content, ads, and AEO: the four Prism services that help your business get found, trusted, and chosen, on Google and in AI answers.',
+    'Website design, content, ads, and AEO: four disciplines from one senior team built to get your business found, trusted, and chosen.',
   path: '/services',
   ogImage: '/prism-opengraph.png',
 })
@@ -340,10 +340,9 @@ export default function ServicesPage() {
                 className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
                 style={rise(160)}
               >
-                Prism helps with four things. Website design makes choosing you
-                easy. Content keeps you found and trusted. Ads bring the right
-                customers. AEO makes you the answer when they ask AI.
-                Everything else supports those four.
+                Four disciplines, one senior team. Website design earns trust.
+                Content builds demand. Ads capture intent. AEO puts you in AI
+                answers.
               </p>
               <div
                 className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
@@ -497,9 +496,9 @@ export default function ServicesPage() {
             <Reveal className="lg:sticky lg:top-28 lg:self-start">
               <SectionHeader
                 id="services-capabilities-heading"
-                eyebrow="What we run for you"
+                eyebrow="Capabilities"
                 title="everything else supports those four."
-                description="Every engagement starts with the essentials, then adds channels as the foundation holds."
+                description="We build the core first, then layer channels as the foundation holds."
                 titleClassName="max-w-[15ch]"
               />
             </Reveal>
@@ -580,7 +579,7 @@ export default function ServicesPage() {
               id="services-process-heading"
               eyebrow="How it works"
               title="foundation first, then growth."
-              description="We start with the foundation, then bring in more services as your goals expand."
+              description="Get the core right, then scale demand channel by channel."
               titleClassName="max-w-[16ch]"
             />
             <TrackedLink
@@ -620,7 +619,7 @@ export default function ServicesPage() {
                 id="services-proof-heading"
                 eyebrow="Proof"
                 title="proof in the wild."
-                description="Recent launches showing how Prism connects design, engineering, and growth for local brands."
+                description="Live client launches where design, engineering, and acquisition work as one system."
                 titleClassName="max-w-[12ch]"
               />
             </Reveal>

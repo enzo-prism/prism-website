@@ -76,8 +76,7 @@ export const HOMEPAGE_HERO = {
 export const HOMEPAGE_NUMBERS = {
   eyebrow: 'by the numbers',
   title: 'numbers, not adjectives.',
-  description:
-    'We publish results we can source and date. Here is what that looks like right now.',
+  description: 'Every figure sourced, dated, and verifiable.',
   note: `Verified ${PROOF_METRICS_VERIFIED_AT}. Search results from Google Search Console, latest complete 90 days vs the same window a year earlier. New users from ${CONNECTED_CLIENT_TRAFFIC.source}, summed across ${CONNECTED_CLIENT_TRAFFIC.connectedSites} connected client sites for ${CONNECTED_CLIENT_TRAFFIC.month}. Case studies count current clients only.`,
   stats: [
     {
@@ -111,21 +110,21 @@ export const HOMEPAGE_SERVICES = {
   eyebrow: 'what we do',
   title: 'shine. convert. get seen.',
   description:
-    'Everything your business needs online, from one team, built so each piece makes the others work harder.',
+    'One senior team across design, conversion, and reach. Every piece built to compound.',
   pillars: [
     {
       key: 'shine',
       title: 'shine.',
-      lead: 'A website and brand people remember.',
-      body: 'Custom website design, brand, photo, and video that look as good as your work is.',
+      lead: 'A brand and site people remember.',
+      body: 'Custom design, identity, photography, and film that match the caliber of your work.',
       items: ['Custom website design', 'Brand and identity', 'Photo and video'],
       links: [{ label: 'Website Design', href: '/website-design' }],
     },
     {
       key: 'convert',
       title: 'convert.',
-      lead: 'Built so more visitors call, book, and buy.',
-      body: 'Pages, booking, reviews, and tracking designed around the moment someone decides.',
+      lead: 'Designed for the moment someone decides.',
+      body: 'Focused pages, frictionless booking, real proof, and clean attribution from click to call.',
       items: [
         'Conversion-first pages',
         'Booking and forms',
@@ -137,8 +136,8 @@ export const HOMEPAGE_SERVICES = {
     {
       key: 'reach',
       title: 'get seen.',
-      lead: 'Fresh eyes on your business.',
-      body: 'Content people watch, ads that land on a page worth landing on, and answers in search and AI.',
+      lead: 'Consistent demand across every channel.',
+      body: 'Content people finish, ads backed by strong pages, and clear visibility in search and AI.',
       items: [
         'Short-form content',
         'Google, Meta, and TikTok ads',
@@ -184,8 +183,7 @@ export type HomepageStory = {
 export const HOMEPAGE_CASE_STUDIES = {
   eyebrow: 'the work',
   title: 'every business has an impossible.',
-  description:
-    'Six businesses, each with something that felt out of reach. Here is what is live now.',
+  description: 'Six clients. Six hard problems. All live today.',
   /** The line above the mid-page waitlist invitation after the deck. */
   nextLine: 'your business could be the next story.',
   slugs: [
@@ -205,9 +203,9 @@ export const HOMEPAGE_CASE_STUDIES = {
       location: 'Los Angeles, CA',
       host: 'exquisitedentistryla.com',
       impossible:
-        'A website as refined as the chair-side experience, without risking the search traffic that already brought patients in.',
+        'Match the luxury of the chair-side experience online without risking established search traffic.',
       built: ['Site rebuild', 'Booking flow', 'SEO protection', 'Attribution'],
-      now: 'Premium positioning patients can feel online, cleaner paths to book, and the measurement to keep improving.',
+      now: 'Refined positioning patients feel immediately, direct booking paths, and full attribution.',
       desktopImage: '/case-studies/scroll/exquisite-dentistry-desktop.webp',
       mobileImage: '/case-studies/scroll/exquisite-dentistry-mobile.webp',
     },
@@ -219,9 +217,9 @@ export const HOMEPAGE_CASE_STUDIES = {
       location: 'San Pedro, Belize',
       host: 'canarycove.com',
       impossible:
-        'Making a guest feel the beach on Ambergris Caye before they ever book a flight.',
+        'Make guests feel Ambergris Caye before they ever book a flight.',
       built: ['Immersive visuals', 'Concierge inquiries', 'Analytics'],
-      now: 'A site that sells the stay the way the place does, with clean inquiry paths and measurement behind it.',
+      now: 'Editorial visuals that sell the stay, streamlined concierge inquiries, and clean analytics.',
       desktopImage: '/case-studies/scroll/canary-cove-desktop.webp',
       mobileImage: '/case-studies/scroll/canary-cove-mobile.webp',
     },
@@ -240,7 +238,7 @@ export const HOMEPAGE_CASE_STUDIES = {
         'Search content',
         'Funnel analytics',
       ],
-      now: 'Their authority is visible before a conversation starts, with measurable paths from quiet research to consultation.',
+      now: 'Clear authority from the first visit, guiding quiet research straight to consultation.',
       desktopImage:
         '/case-studies/scroll/practice-transitions-institute-desktop.webp',
       mobileImage:
@@ -254,14 +252,14 @@ export const HOMEPAGE_CASE_STUDIES = {
       location: 'Tahoe, CA',
       host: 'olympicbootworks.com',
       impossible:
-        'Turning a legendary fitting room into a store riders can shop from hours away.',
+        'Bring a renowned Tahoe fitting room online for riders hours away.',
       built: [
         'Site rebuild',
         'Fantic e-bike catalog',
         'Test-ride requests',
         'Owned email + domain',
       ],
-      now: 'Riders compare Fantic models and current pricing, request a test ride, and reach the shop directly.',
+      now: 'A browsable Fantic e-bike catalog with direct test-ride requests and owned infrastructure.',
       desktopImage: '/case-studies/scroll/olympic-bootworks-desktop.webp',
       mobileImage: '/case-studies/scroll/olympic-bootworks-mobile.webp',
     },
@@ -273,14 +271,14 @@ export const HOMEPAGE_CASE_STUDIES = {
       location: 'Roseville, CA',
       host: 'rosevilledentalacademy.com',
       impossible:
-        'Turning a stock template site into an admissions system the school can actually measure.',
+        'Replace a stock template with an admissions platform the school can measure.',
       built: [
         'Modern web platform',
         'Analytics + search setup',
         'Enrollment forms',
         'AI assistant',
       ],
-      now: 'Clear paths for every program, cleaner lead capture, and the analytics to keep improving enrollment.',
+      now: 'Clear program pathways, frictionless enrollment capture, and end-to-end analytics.',
       desktopImage:
         '/case-studies/scroll/roseville-dental-academy-desktop.webp',
       mobileImage: '/case-studies/scroll/roseville-dental-academy-mobile.webp',
@@ -293,7 +291,7 @@ export const HOMEPAGE_CASE_STUDIES = {
       location: 'Austin, TX',
       host: 'mach1ai.com',
       impossible:
-        'Showing a buyer what an AI agent does for a team, in the words of the teams already running one.',
+        'Show enterprise buyers what an AI agent delivers, in their peers’ own words.',
       built: [
         'Site rebuild',
         'Customer films',
@@ -316,14 +314,14 @@ export const HOMEPAGE_MORE_WORK = {
   /** Current clients beyond the six featured stories. */
   count: CURRENT_CASE_STUDIES.length - FEATURED_STORY_HREFS.size,
   description:
-    'Dentists in Palo Alto. A kids’ foundation in Belize. An IT firm in Bengaluru. Each one has its own case study.',
+    'Practices in Palo Alto. A foundation in Belize. Engineers in Bengaluru. Every project documented.',
 } as const
 
 export const HOMEPAGE_AUDIENCE = {
   eyebrow: 'reach',
   title: 'we built our own audience from zero.',
   description:
-    'Before we grew anyone else’s reach, we grew our own. The same playbook goes to work on your business.',
+    'We built our own reach before selling it. Your business gets the exact same engine.',
   combined: {
     value: SOCIAL_PROOF.combinedAudience,
     label: 'followers and subscribers across YouTube, Instagram, and TikTok',
@@ -378,7 +376,7 @@ export const HOMEPAGE_TESTIMONIALS = {
   /** The line above the mid-page waitlist invitation under the wall. */
   nextLine: 'be the next note on this wall.',
   description:
-    'From the owners we build for, and from the people who watch what we make.',
+    'Notes from the founders we partner with, and the audience that follows our work.',
   clientQuotes: quotesData.filter(
     (quote) => isClientQuote(quote) && !quote.requiresConsent,
   ),
@@ -400,7 +398,7 @@ export const HOMEPAGE_FOUNDER = {
     'D1 track and field',
     'Pole vaulter for the Philippines',
   ],
-  body: 'Enzo founded Prism in 2023 to help small businesses turn a stronger online presence into more customer conversations. He builds Prism while pole vaulting for the Philippines on the path to LA 2028.',
+  body: 'Enzo founded Prism in 2023 to give ambitious businesses a digital presence worthy of their craft. He leads the studio while pole vaulting professionally for the Philippines toward LA 2028.',
   image:
     'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp',
   motto: 'impossible is temporary.',
@@ -412,15 +410,15 @@ export const HOMEPAGE_HOW_IT_WORKS = {
   steps: [
     {
       title: 'apply in two minutes.',
-      body: 'Tell us what you want help with, share your links, and say what a great year looks like.',
+      body: 'Share your focus, links, and what a strong year looks like.',
     },
     {
       title: 'we review every month.',
-      body: 'Each intake, our team reads every application and looks for the businesses we can help most.',
+      body: 'We read every application and select the teams we can move farthest.',
     },
     {
       title: 'we build together.',
-      body: 'When a spot opens, we reach out, agree on scope, and get to work.',
+      body: 'When a spot opens, we align on scope and price, then get to work.',
     },
   ],
 } as const
@@ -429,7 +427,7 @@ export const HOMEPAGE_PRODUCTS = {
   eyebrow: 'products',
   title: 'built for our team. free for yours.',
   description:
-    'We make our own tools to work faster. Two of them are free and open source.',
+    'Software we built for our own craft, released free and open source.',
 } as const
 
 export const HOMEPAGE_FINAL_CTA = {
@@ -615,7 +613,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'No. We work with retailers, consultants, nonprofits, schools, hospitality brands, and local services. Dental practices are a specialty, and you can explore examples in our case studies.',
+          'No. We partner with consumer brands, advisory firms, schools, hospitality estates, nonprofits, and local leaders. Dental is a deep specialty alongside clients across categories.',
       },
     ],
   },
@@ -625,7 +623,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'We review the links and goals you share: your website, search visibility, reviews, and tracking. We look for what makes your business easy to find, understand, and contact.',
+          'Your site, search visibility, reviews, and tracking. We look for the clearest gaps between the caliber of your business and how it shows up online.',
       },
     ],
   },
@@ -635,7 +633,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'No. Prism handles the strategy and execution behind the scenes, then explains what matters in plain language.',
+          'No. We handle strategy and execution end to end, and report what matters in plain language.',
       },
     ],
   },
@@ -645,7 +643,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Yes. Sometimes the right move is a full rebuild. Sometimes it is fixing visibility, proof, content, speed, calls, forms, or tracking first.',
+          'Yes. Sometimes the right move is a ground-up rebuild. Other times it is fixing positioning, speed, conversion paths, or tracking first.',
       },
     ],
   },
@@ -655,7 +653,7 @@ export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [
       {
         type: 'paragraph',
         content:
-          'Join the waitlist and share your website and goals. For each monthly intake, our team reviews applications and reaches out when we can take on your team. We agree on scope together before any work starts.',
+          'Join the waitlist with your site and goals. We review applications for each monthly intake, reach out when a spot opens, and confirm scope and price before work starts.',
       },
     ],
   },

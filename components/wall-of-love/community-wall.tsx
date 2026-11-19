@@ -136,8 +136,8 @@ export function CommunityWall() {
           title="the comment section."
           description={
             <>
-              Prism posts short videos on Instagram. These are comments people
-              left on them: reactions to our content, not client reviews.
+              Comments left on Prism&apos;s Instagram videos: audience
+              reactions, not client reviews.
             </>
           }
         />

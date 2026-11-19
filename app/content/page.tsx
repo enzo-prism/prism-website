@@ -153,30 +153,30 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Sparkles,
     title: 'posts, scripts, and video ideas',
-    body: 'We turn your footage, expertise, and customer questions into video edits, scripts, captions, and posts, then bring them to you for review.',
+    body: 'Raw footage and buyer questions turned into sharp edits, scripts, and posts ready for quick approval.',
     className: 'md:col-span-4',
     visual: <DraftQueue />,
   },
   {
     icon: Share2,
     title: 'adapted for each channel',
-    body: 'We adjust the cut, caption, and format for every channel in your plan, then publish the approved content.',
+    body: 'Every piece is cut, captioned, and formatted for the platform where it runs, then published on schedule.',
     visual: <ChannelRow />,
   },
   {
     icon: Globe,
     title: 'content on your own site',
-    body: 'Landing pages, blog posts, and search-focused articles give people more ways to find you on the site you own.',
+    body: 'Landing pages and editorial articles that build lasting authority on the domain you own.',
   },
   {
     icon: Megaphone,
     title: 'ready for ads',
-    body: 'Strong organic posts can become creative for paid campaigns. Prism Ads is a separate service when you are ready for paid reach.',
+    body: 'Top organic winners translate directly into paid creative whenever you add Prism Ads.',
   },
   {
     icon: RefreshCw,
     title: 'a system, not a one-off',
-    body: 'Implemented over three months, then optimized every month, so showing up becomes a routine instead of a scramble.',
+    body: 'Built over three months, then refined every month so high-caliber publishing runs like clockwork.',
   },
 ]
 
@@ -185,19 +185,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: CalendarRange,
     title: 'implement',
     detail: '3 months',
-    body: 'We gather your footage and brand references, connect the agreed channels, and set up how you review and approve content.',
+    body: 'We audit your source material, lock in voice and topics, connect channels, and set up a clean approval flow.',
   },
   {
     icon: Rocket,
     title: 'publish approved work',
     detail: 'Go live',
-    body: 'We prepare the first edits and posts, work through your feedback, and settle into a steady publishing routine.',
+    body: 'First edits and articles go through your review and launch into a steady weekly cadence.',
   },
   {
     icon: RefreshCw,
     title: 'review and improve',
     detail: 'Ongoing',
-    body: 'Each month we review what held attention or prompted inquiries, then use it to plan the next batch.',
+    body: 'Every month we review retention and inquiries, doubling down on what performs for the next slate.',
   },
 ]
 
@@ -205,42 +205,42 @@ const FAQ_ITEMS = [
   {
     question: 'What is Prism Content OS?',
     answer:
-      'Content OS is Prism’s service for planning, producing, and publishing content across your website and social channels. It includes a 3-month implementation followed by monthly operation and optimization. Prism is fully booked, so scope is agreed when we reach out from the waitlist.',
+      'Content OS is Prism’s end-to-end system for planning, producing, and publishing across your website and social channels. It starts with a 3-month implementation followed by monthly production and refinement. Scope is confirmed when your waitlist intake opens.',
   },
   {
     question: 'How does website content support SEO and AI discovery?',
     answer:
-      'Useful website content answers customer questions and explains your services with clear, accurate information. It gives search engines and AI assistants relevant pages to find and reference. Content works alongside technical SEO and verifiable business information; publishing alone does not guarantee rankings or citations.',
+      'Clear, authoritative articles answer buyer questions directly and give Google and AI assistants verifiable pages to reference. Content works alongside technical SEO and accurate business data; publishing alone does not guarantee rankings or citations.',
   },
   {
     question: 'How much work will I need to do?',
     answer:
-      'Share existing footage, business updates, and your expertise, then review the drafts. Prism handles planning, editing, formatting, and publishing. We agree on who approves content and how feedback is collected at the start.',
+      'Share your expertise, updates, and raw footage, then approve finished drafts. Prism handles strategy, scripting, editing, formatting, and publishing.',
   },
   {
     question: 'What does the 3-month implementation include?',
     answer:
-      'We organize your source material, define topics and brand voice, connect the agreed channels, and produce the first content. The three-month setup establishes the review and publishing routine for ongoing work.',
+      'We organize your source material, define brand voice and pillars, connect channels, produce the first slate, and establish a repeatable publishing cadence.',
   },
   {
     question: 'What does the monthly optimization cover?',
     answer:
-      'We keep planning, producing, and publishing, then review which topics and formats hold attention or prompt inquiries. Those findings guide the next content batch.',
+      'Ongoing production and publishing guided by performance data. Each month we double down on the topics and formats driving attention and inquiries.',
   },
   {
     question: 'Which platforms do you cover?',
     answer:
-      'We can work with YouTube, Instagram, TikTok, LinkedIn, and your website. We choose the channels and content formats with you when scoping the plan.',
+      'YouTube, Instagram, TikTok, LinkedIn, and your website. We select the right mix when scoping your engagement.',
   },
   {
     question: 'Can I cancel?',
     answer:
-      'Yes. After the 3-month implementation, the monthly optimization is month-to-month. You can pause or cancel anytime.',
+      'Yes. After the 3-month implementation, ongoing production is month-to-month. Pause or cancel anytime.',
   },
   {
     question: 'How much does the content system cost?',
     answer:
-      'Pricing is scoped to your business. Prism is fully booked right now, so join the waitlist; when we reach out we map your channels, goals, and the right system together and you leave with a clear plan and a clear price.',
+      'Pricing is scoped to your channels and production cadence. Join the waitlist and we will confirm exact scope and pricing when your intake opens.',
   },
 ] as const
 
@@ -263,8 +263,9 @@ export default function ContentOsPage() {
           description={
             <>
               <span className="text-foreground">Content OS</span> turns your
-              ideas and offers into videos, posts, scripts, and website
-              content, then handles the planning, production, and publishing.
+              expertise into finished video, social posts, and website
+              editorial. Strategy, production, and publishing handled end to
+              end.
             </>
           }
           ctaHref={CONTENT_WAITLIST_CTA.href}
@@ -281,14 +282,14 @@ export default function ContentOsPage() {
         <ServiceBento
           idPrefix="content"
           title="from the first idea to the published post."
-          description="You bring the expertise and the source material. We turn it into finished content, collect your feedback, and handle publishing."
+          description="You bring the expertise and raw footage. We handle scripting, editing, review, and publishing."
           items={WHAT_YOU_GET}
         />
 
         <ServiceSteps
           idPrefix="content"
           title="set it up. keep showing up."
-          description="Three months to connect your channels and build the system, then monthly reviews that shape every new batch."
+          description="Three months to build the production engine, then monthly cycles sharpened by what performs."
           steps={STEPS}
         />
 
@@ -305,7 +306,7 @@ export default function ContentOsPage() {
                   id="content-proof-title"
                   eyebrow="Proof"
                   title="we run it on ourselves first."
-                  description={`The same system runs Prism's own channels: ${SOCIAL_PROOF.combinedAudience} followers and subscribers across YouTube, Instagram, and TikTok.`}
+                  description={`Built on our own channels first: ${SOCIAL_PROOF.combinedAudience} followers and subscribers across YouTube, Instagram, and TikTok.`}
                 />
                 <p className="mt-4 max-w-[52ch] text-xs leading-5 text-subtle">
                   {SOCIAL_PROOF.combinedAudienceMethodology}

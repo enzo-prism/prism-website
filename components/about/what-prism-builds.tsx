@@ -31,7 +31,7 @@ export function WhatPrismBuilds() {
           id="what-prism-builds-title"
           eyebrow="what we build"
           title="what Prism builds."
-          description="Website design, content, ads, and AEO that help customers find and choose your business, on Google and in AI answers."
+          description="Four disciplines, built under one roof to make your business unmistakable on Google and in AI answers."
         />
 
         <ul className="border-t border-white/[0.08]">

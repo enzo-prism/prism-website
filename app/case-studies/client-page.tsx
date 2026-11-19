@@ -211,9 +211,9 @@ export default function CaseStudiesPage() {
                   </span>
                 </h1>
                 <p className="prism-rise text-lead mt-6 max-w-[48ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-                  Dental practices, software companies, founders, nonprofits,
-                  and local shops. Open any project to see the live site, the
-                  story, and exactly what we built.
+                  Practices, software companies, hospitality estates, and local
+                  leaders. Open any project to inspect the live site and what we
+                  built.
                 </p>
                 <div className="prism-rise mt-9 flex flex-col gap-3 sm:flex-row [--rise-delay:240ms]">
                   <WaitlistButton location="case studies hero" size="xl" />

@@ -242,32 +242,32 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Target,
     title: 'strategy that fits the goal',
-    body: 'Define the customers you want to reach, the action you want them to take, and the budget to test it.',
+    body: 'Target audience, target action, and disciplined test budget defined before launch.',
     visual: <GoalBrief />,
   },
   {
     icon: Sparkles,
     title: 'creative that earns the click',
-    body: 'Images, video, and clear copy built around your offer and the next step you want customers to take.',
+    body: 'Clear offers, sharp visuals, and direct copy built for the buyer you actually want.',
     className: 'md:col-span-4',
     visual: <AdAnatomy />,
   },
   {
     icon: LayoutTemplate,
     title: 'a clear page after the click',
-    body: 'Send visitors to a relevant page with a clear offer and a straightforward way to call, book, or inquire.',
+    body: 'Every click lands on a focused page with one obvious path to call, book, or inquire.',
     visual: <LandingPageShot />,
   },
   {
     icon: Compass,
     title: 'setup and tracking',
-    body: 'We set up the ad accounts, audiences, and conversion events so every campaign can be judged on real inquiries.',
+    body: 'Accounts, audiences, and conversion events wired cleanly so spend is judged on real inquiries.',
     visual: <ConversionEvents />,
   },
   {
     icon: BarChart3,
     title: 'weekly tuning, plain reports',
-    body: 'Shift budget to what works, pause what does not, and review results in plain English.',
+    body: 'Budget moves to what converts, waste gets cut, and results arrive in plain English.',
     visual: <ReportChips />,
   },
 ]
@@ -283,25 +283,25 @@ const PLATFORMS: readonly AdPlatform[] = [
   {
     name: 'Google Ads',
     role: 'Search intent',
-    why: 'High-intent searches when people need you now.',
+    why: 'Capture high-intent buyers actively searching for what you do.',
     logoBrands: ['google'],
   },
   {
     name: 'Facebook & Instagram',
     role: 'Paid social',
-    why: 'Precise audiences plus creative that builds demand and trust.',
+    why: 'Pair precise targeting with creative that builds demand and trust.',
     logoBrands: ['facebook', 'instagram'],
   },
   {
     name: 'TikTok',
     role: 'Short-form video',
-    why: 'Short videos that introduce your offer in a format people expect in their feed.',
+    why: 'Native short-form video that introduces your offer where attention lives.',
     logoBrands: ['tiktok'],
   },
   {
     name: 'Yelp Ads',
     role: 'Local discovery',
-    why: 'Reach people comparing local businesses, services, and reviews.',
+    why: 'Reach local buyers comparing options and reading reviews right before they call.',
     logoBrands: ['yelp'],
   },
 ]
@@ -311,19 +311,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: Compass,
     title: 'plan and build',
     detail: 'First',
-    body: 'Goals, budget, ideal customers, and your local market. Then tracking, audiences, creative, and landing page fixes.',
+    body: 'Audience, market, and budget first. Then tracking, creative, and landing-page readiness.',
   },
   {
     icon: Rocket,
     title: 'launch focused',
     detail: 'Launch',
-    body: 'Start with a focused budget on the right channels and gather real performance data before expanding.',
+    body: 'Start lean on the highest-intent channels and let real conversion data guide expansion.',
   },
   {
     icon: BarChart3,
     title: 'optimize and report',
     detail: 'Weekly',
-    body: 'Review results, move spend toward what works, test the next idea, and walk through it all in plain English.',
+    body: 'Weekly adjustments to bids, targeting, and creative, paired with clear plain-English reporting.',
   },
 ]
 
@@ -335,22 +335,22 @@ const BUDGET_GUARDS: readonly {
   {
     icon: Filter,
     title: 'reduce irrelevant clicks',
-    body: 'Search exclusions and audience filters cut irrelevant traffic, and we review lead quality as campaigns run.',
+    body: 'Tight exclusions and audience filters block low-intent traffic while we audit lead quality.',
   },
   {
     icon: Clock,
     title: 'show up when buyers are ready',
-    body: 'Ad schedules and budget pacing follow when inquiries actually arrive and when you can answer.',
+    body: 'Schedules and pacing match when inquiries convert and when your team can answer.',
   },
   {
     icon: MapPin,
     title: 'right radius, right people',
-    body: 'Ads focus on the areas you serve and exclude locations outside your market.',
+    body: 'Targeting stays locked to the exact markets you serve.',
   },
   {
     icon: FlaskConical,
     title: 'keep testing the details',
-    body: 'Headlines, images, offers, and forms are tested to learn what improves lead quality and cost per lead.',
+    body: 'Structured tests on offers, creative, and forms compound lead quality over time.',
   },
 ]
 
@@ -358,31 +358,31 @@ const AUDIENCE_SEGMENTS = [
   {
     name: 'dental and medical teams',
     description:
-      'Patient-focused ads, clear landing pages, and inquiry tracking.',
+      'High-intent patient campaigns paired with clear landing pages and call tracking.',
     href: '/why-dental-practices-love-prism',
   },
   {
     name: 'local shop owners',
     description:
-      'Hyper-local offers on Google, Meta, and Yelp that turn scrollers into visits.',
+      'Focused local offers across Google, Meta, and Yelp that drive store visits.',
     href: '/why-local-shop-owners-love-prism',
   },
   {
     name: 'consulting and professional services',
     description:
-      'Show your expertise and give prospects a clear way to request a consultation.',
+      'Credible positioning and direct paths to request a consultation.',
     href: '/why-consulting-companies-love-prism',
   },
   {
     name: 'online community founders',
     description:
-      'Paid social and retargeting loops that grow engaged membership.',
+      'Paid social and retargeting built to grow engaged membership.',
     href: '/why-online-community-founders-love-prism',
   },
   {
     name: 'nonprofits and education',
     description:
-      'Programs and fundraising campaigns with tracking for the actions that matter.',
+      'Program and fundraising campaigns with clean tracking on every key action.',
     href: '/why-nonprofits-love-prism',
   },
 ] as const
@@ -391,37 +391,37 @@ const FAQ_ITEMS = [
   {
     question: 'What does Prism’s Ads service include?',
     answer:
-      'Prism manages paid campaigns across Google, Meta, TikTok, and Yelp, connecting strategy, ad creative, targeting, landing pages, and conversion tracking. Prism is fully booked, so campaigns start on the waitlist; when we reach out we review the audience, channels, and starting budget with you before scoping the work.',
+      'End-to-end campaign management across Google, Meta, TikTok, and Yelp: strategy, ad creative, targeting, landing pages, and conversion tracking. Scope and starting media budget are confirmed when your waitlist intake opens.',
   },
   {
     question: 'What is the difference between paid ads and SEO?',
     answer:
-      'Paid ads buy placements through advertising platforms. SEO improves the visibility of your website in unpaid search results. Ads need a media budget and ongoing testing; SEO builds on useful content, technical foundations, and authority. The two can work together, but buying ads does not improve organic rankings.',
+      'Paid ads buy immediate placement on ad platforms. SEO builds unpaid search visibility through technical foundations, content, and authority. They complement each other, though ad spend does not directly raise organic rankings.',
   },
   {
     question: 'How fast will I see results?',
     answer:
-      'Timing depends on your market, budget, offer, and the number of people who respond. We check delivery and tracking first, then use the available data to decide what to change. A launch date is not a promise of leads.',
+      'Timing depends on your market, offer, and budget. We verify delivery and tracking first, then optimize from live data. A launch date is never a guarantee of leads.',
   },
   {
     question: 'What budgets work best?',
     answer:
-      'We recommend a starting budget by channel and market size. Spend scales only when performance proves it can sustain. Pricing for the work itself is scoped when we reach out from the waitlist.',
+      'We recommend a disciplined starting budget matched to your channel and market, and scale only once performance justifies it. Management scope is confirmed when your intake opens.',
   },
   {
     question: 'Can you use my existing accounts?',
     answer:
-      'Yes. We can audit, clean up, and improve your current setup, or build fresh if you need a new start.',
+      'Yes. We can audit, clean up, and improve your current setup, or build fresh when a clean start makes more sense.',
   },
   {
     question: 'What if I already run ads?',
     answer:
-      'We review the account history, tracking, audiences, and creative before recommending changes. Existing results give us a starting point for the next tests.',
+      'We audit your account history, tracking, audiences, and creative first. Past data gives us a sharper baseline for the next round of tests.',
   },
   {
     question: 'Do I need a new website first?',
     answer:
-      'Not necessarily. We check whether the destination page explains the offer, works on mobile, and makes it easy to contact you. If it needs work, we scope those changes before sending paid traffic.',
+      'Not always. We check whether your destination page clearly sells the offer, performs on mobile, and converts smoothly. If it needs fixes, we scope them before sending paid traffic.',
   },
 ] as const
 
@@ -441,10 +441,9 @@ export default function AdsPage() {
           }
           description={
             <>
-              <span className="text-foreground">Prism Ads</span> runs Google,
-              Meta, TikTok, and Yelp campaigns with creative, landing pages, and
-              tracking, aimed at the calls, inquiries, and appointments you
-              actually want.
+              <span className="text-foreground">Prism Ads</span> pairs creative,
+              landing pages, and clean tracking across Google, Meta, TikTok, and
+              Yelp to drive qualified calls and bookings.
             </>
           }
           ctaHref={ADS_WAITLIST_CTA.href}
@@ -461,7 +460,7 @@ export default function AdsPage() {
         <ServiceBento
           idPrefix="ads"
           title="from campaign strategy to the next call."
-          description="Creative, targeting, landing pages, and reporting, all pointed at calls, inquiries, and booked appointments."
+          description="Strategy, creative, landing pages, and attribution built around one outcome: qualified inquiries."
           items={WHAT_YOU_GET}
         />
 
@@ -475,7 +474,7 @@ export default function AdsPage() {
               id="ads-platforms-title"
               eyebrow="Platforms"
               title="where we run, and why."
-              description="Each channel covers a different moment in the buyer journey, so we pick the mix that fits your customers."
+              description="We match the channel mix to how your buyers search, compare, and decide."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -531,9 +530,8 @@ export default function AdsPage() {
                       ChatGPT Ads
                     </h3>
                     <p className="mt-2 max-w-[56ch] text-pretty text-[15px] leading-7 text-muted-foreground">
-                      A new place to show up: inside the conversation. Access is
-                      limited to Prism&apos;s network. If you were invited,
-                      bring your code.
+                      Show up inside the conversation. Invite-only through
+                      Prism&apos;s network.
                     </p>
                   </div>
                   <Button asChild variant="outline" size="lg" className="w-fit">
@@ -555,7 +553,7 @@ export default function AdsPage() {
         <ServiceSteps
           idPrefix="ads"
           title="launch, learn, improve."
-          description="A simple loop from the first brief to weekly optimization, with every decision tied to tracked inquiries."
+          description="A disciplined loop from launch to weekly optimization, tied directly to tracked inquiries."
           steps={STEPS}
         />
 
@@ -566,7 +564,7 @@ export default function AdsPage() {
                 id="ads-budget-title"
                 eyebrow="Budget"
                 title="keep your budget focused."
-                description="Practical checks that cut waste and keep improving the quality of your leads."
+                description="Built-in discipline that protects your spend and raises lead quality."
                 titleClassName="max-w-[13ch]"
               />
             </Reveal>
@@ -614,7 +612,7 @@ export default function AdsPage() {
                   id="ads-founder-title"
                   eyebrow="Hear from our founder"
                   title="how Prism runs ads."
-                  description="Enzo explains how we choose channels, develop creative, and review the calls and inquiries campaigns bring in."
+                  description="Enzo walks through how Prism selects channels, crafts creative, and measures every campaign on real inquiries."
                   titleClassName="max-w-[12ch]"
                 />
               </div>
@@ -643,7 +641,7 @@ export default function AdsPage() {
               id="ads-fit-title"
               eyebrow="Fit"
               title="who we build campaigns for."
-              description="Teams that want more of the right customers and a clear view of what their ad spend delivers."
+              description="Established businesses ready for higher-quality demand and transparent attribution."
             />
           </Reveal>
           <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-16 md:grid-cols-2 lg:grid-cols-3">

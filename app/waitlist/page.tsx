@@ -36,18 +36,18 @@ export const metadata: Metadata = buildRouteMetadata({
 const NEXT_STEPS: readonly WaitlistNextStep[] = [
   {
     icon: Timer,
-    title: 'You apply in about two minutes.',
-    body: 'Five short steps about your business and your goals.',
+    title: 'Apply in about two minutes.',
+    body: 'Five quick steps covering your focus, links, and goals.',
   },
   {
     icon: CalendarCheck,
     title: 'We review every application each month.',
-    body: 'We look at your goals, your links, and your timing.',
+    body: 'We evaluate every submission against upcoming intake capacity.',
   },
   {
     icon: Mail,
     title: 'We reach out when a spot opens.',
-    body: 'If we can take on your team, we email you to scope the work together.',
+    body: 'If we are the right partner for your goals, we email you to scope the engagement.',
   },
 ]
 
