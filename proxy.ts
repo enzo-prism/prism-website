@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { detectCrawler, formatCrawlerLog } from "@/lib/ai-crawlers";
+import {
+  markdownRewritePath,
+  markdownTargetForPage,
+  prefersMarkdown,
+  resolveMarkdownRequest,
+} from "@/lib/seo/markdown-routes";
 
 const CANONICAL_HOSTNAME = "www.design-prism.com";
 
@@ -52,6 +58,19 @@ export function proxy(request: NextRequest) {
   const crawler = detectCrawler(request.headers.get("user-agent"));
   if (crawler) {
     console.log(formatCrawlerLog(crawler, url.pathname));
+  }
+
+  // Markdown copies for agents: /<path>.md, or Accept: text/markdown on the
+  // page URL itself (lib/seo/markdown-routes.ts).
+  const markdownTarget =
+    resolveMarkdownRequest(url.pathname) ??
+    (prefersMarkdown(request.headers.get("accept"))
+      ? markdownTargetForPage(url.pathname)
+      : null);
+  if (markdownTarget) {
+    return NextResponse.rewrite(
+      new URL(markdownRewritePath(markdownTarget), url.origin),
+    );
   }
 
   const response = NextResponse.next();

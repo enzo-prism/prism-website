@@ -10,6 +10,7 @@ import {
   buildAbsoluteTitle,
   buildMinimalDescription,
 } from "@/lib/seo/rules"
+import { markdownPathFor } from "@/lib/seo/markdown-routes"
 import { isRouteIndexable } from "@/lib/seo/search-visibility"
 
 export type RouteSeoInput = {
@@ -53,6 +54,7 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
       // snapshot so AI answer engines can ingest entity facts directly.
       // (Page-level alternates replace the root layout's, so this must
       // live here to survive on routes built with this helper.)
+      // They also advertise their markdown copy (/<path>.md) for agents.
       // Every route also points to the blog feed (/blog/feed.xml).
       types: {
         ...(index
@@ -62,6 +64,9 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
                   url: "/ai-data.json",
                   title: "Prism company and proof data (JSON)",
                 },
+              ],
+              "text/markdown": [
+                { url: markdownPathFor(input.path), title: "Markdown copy" },
               ],
             }
           : {}),

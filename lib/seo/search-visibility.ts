@@ -152,7 +152,7 @@ export const INDEXABLE_BLOG_SLUGS = [
  * Deliberately separate from INDEXABLE_STATIC_ROUTES: these are not HTML
  * pages, must never enter the sitemap, and carry no indexing meaning.
  */
-export const LLMS_MACHINE_READABLE_PATHS = ['/ai-data.json'] as const
+export const LLMS_MACHINE_READABLE_PATHS = ['/ai-data.json', '/llms-full.txt'] as const
 
 const INDEXABLE_STATIC_ROUTE_SET = new Set<string>(INDEXABLE_STATIC_ROUTES)
 const NOINDEX_ROUTE_SET = new Set<string>(NOINDEX_ROUTES)
