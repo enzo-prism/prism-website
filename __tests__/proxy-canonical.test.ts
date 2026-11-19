@@ -34,6 +34,10 @@ describe("proxy canonicalization", () => {
     expect(skipped).toEqual([])
   })
 
+  it("runs on the AI snapshot so crawler reads of it are logged", () => {
+    expect(matchesProxy("/ai-data.json")).toBe(true)
+  })
+
   it("still skips static assets and Next internals", () => {
     for (const asset of [
       "/_next/static/chunk.js",
@@ -41,7 +45,7 @@ describe("proxy canonicalization", () => {
       "/favicon.ico",
       "/case-studies/exquisite-dentistry-home-desktop.jpg",
       "/logos/prism.svg",
-      "/ai-data.json",
+      "/site.webmanifest.json",
     ]) {
       expect(matchesProxy(asset)).toBe(false)
     }

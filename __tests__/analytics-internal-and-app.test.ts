@@ -1,6 +1,11 @@
 /** @jest-environment jsdom */
 import { GET } from '@/app/app/get/route'
-import { detectAiCrawler, formatAiCrawlerLog } from '@/lib/ai-crawlers'
+import {
+  detectAiCrawler,
+  detectCrawler,
+  formatAiCrawlerLog,
+  formatCrawlerLog,
+} from '@/lib/ai-crawlers'
 import {
   INTERNAL_TRAFFIC_STORAGE_KEY,
   isInternalTraffic,
@@ -64,14 +69,44 @@ describe('ai crawler detection', () => {
     expect(detectAiCrawler('Mozilla/5.0 ChatGPT-User/1.0')).toBe('ChatGPT-User')
   })
 
-  it('leaves people and ordinary search crawlers alone', () => {
-    expect(detectAiCrawler(null)).toBeNull()
+  it('names the newer assistant fetchers', () => {
     expect(
       detectAiCrawler(
+        'meta-externalagent/1.1 (+https://developers.facebook.com/docs/sharing/webmasters/crawler)',
+      ),
+    ).toBe('Meta-ExternalAgent')
+    expect(detectAiCrawler('Mozilla/5.0 (compatible; DuckAssistBot/1.2)')).toBe(
+      'DuckAssistBot',
+    )
+    expect(detectAiCrawler('Mozilla/5.0 (compatible; Amazonbot/0.1)')).toBe(
+      'Amazonbot',
+    )
+  })
+
+  it('leaves people alone and keeps search crawlers out of the AI list', () => {
+    expect(detectCrawler(null)).toBeNull()
+    expect(
+      detectCrawler(
         'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) Safari/604.1',
       ),
     ).toBeNull()
     expect(detectAiCrawler('Googlebot/2.1')).toBeNull()
+    expect(detectCrawler('Mozilla/5.0 (compatible; Googlebot/2.1)')).toEqual({
+      name: 'Googlebot',
+      kind: 'search',
+    })
+    expect(
+      detectCrawler('Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)'),
+    ).toEqual({ name: 'Bingbot', kind: 'search' })
+    expect(
+      detectCrawler('Mozilla/5.0 (Macintosh) Version/17.4 Safari/605.1.15 (Applebot/0.1)'),
+    ).toEqual({ name: 'Applebot', kind: 'search' })
+  })
+
+  it('logs search crawlers under their own event', () => {
+    expect(
+      JSON.parse(formatCrawlerLog({ name: 'Bingbot', kind: 'search' }, '/aeo')),
+    ).toEqual({ event: 'search_crawler_visit', bot: 'Bingbot', path: '/aeo' })
   })
 
   it('logs the path only', () => {

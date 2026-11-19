@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { detectAiCrawler, formatAiCrawlerLog } from "@/lib/ai-crawlers";
+import { detectCrawler, formatCrawlerLog } from "@/lib/ai-crawlers";
 
 const CANONICAL_HOSTNAME = "www.design-prism.com";
 
@@ -47,10 +47,11 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // Which pages do answer engines read? One log line per crawler request.
-  const aiCrawler = detectAiCrawler(request.headers.get("user-agent"));
-  if (aiCrawler) {
-    console.log(formatAiCrawlerLog(aiCrawler, url.pathname));
+  // Which pages do answer engines (and the search crawlers behind AI
+  // Overviews, Copilot, and Siri) read? One log line per crawler request.
+  const crawler = detectCrawler(request.headers.get("user-agent"));
+  if (crawler) {
+    console.log(formatCrawlerLog(crawler, url.pathname));
   }
 
   const response = NextResponse.next();
@@ -72,7 +73,12 @@ export const config = {
   // pages from the canonical-host redirect — every one of them served 200 on
   // the apex host instead of 301ing to www. Its assets are all image files, so
   // the extension alternative already excludes them.
+  //
+  // `/ai-data.json` is listed on its own so the crawler log shows whether
+  // answer engines read the machine-readable snapshot (other .json files
+  // stay skipped).
   matcher: [
+    "/ai-data.json",
     "/((?!_next/static|_next/image|favicon.ico|favicon-rounded.png|logos/|pixelish/|.*\\.(?:png|jpg|jpeg|gif|webp|avif|svg|ico|json|js|css|map|woff|woff2|ttf|otf|mp4|webm|mp3)$).*)",
   ],
 };

@@ -326,22 +326,30 @@ The `${service}_intake_*` events and their Vercel mappings are gone with the int
   App Store. It is not in GA4 (that would need a Measurement Protocol secret).
   Installs themselves are only visible in App Store Connect.
 
-### AI crawler log (2026-11-09)
+### AI crawler log (2026-11-09, widened 2026-11-18)
 
-`proxy.ts` writes one structured line per page request from an answer-engine
-crawler (`lib/ai-crawlers.ts`: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot,
-Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Google-Extended,
-Applebot-Extended, CCBot):
+`proxy.ts` writes one structured line per page request from a crawler in
+`lib/ai-crawlers.ts`. Answer-engine crawlers and live assistant fetchers
+(GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot,
+Claude-User, PerplexityBot, Perplexity-User, Meta-ExternalAgent,
+Meta-ExternalFetcher, DuckAssistBot, MistralAI-User, Amazonbot, CCBot) log as
+`ai_crawler_visit`; the search crawlers that feed AI answers without a
+separate bot (Googlebot for AI Overviews, AI Mode, and Gemini; Bingbot for
+Copilot; Applebot for Siri) log as `search_crawler_visit`:
 
 ```json
 {"event":"ai_crawler_visit","bot":"GPTBot","path":"/aeo"}
+{"event":"search_crawler_visit","bot":"Bingbot","path":"/aeo"}
 ```
 
-Filter Vercel's runtime logs on `ai_crawler_visit` to see which pages the
-assistants read. Path only, no query string or IP. Vercel keeps runtime logs
-for a limited window that depends on the plan; add a log drain if a durable
-history is needed. Static assets and files the proxy matcher skips are not
-logged.
+Filter Vercel's runtime logs on `crawler_visit` for both, or on one event
+name. Path only, no query string or IP. Matching is on the user agent, which
+anyone can fake, so treat counts as directional. Google-Extended and
+Applebot-Extended are robots.txt tokens, not user agents, so they never
+appear. The Pro plan keeps runtime logs for one day; add a log drain if a
+durable history is needed. Static assets and files the proxy matcher skips
+are not logged, except `/ai-data.json`, which the matcher includes on purpose
+so reads of the AI snapshot show up (`/llms.txt` was already covered).
 
 ### Social link-in-bio hubs (`/ig`, `/tiktok`, `/youtube`)
 
