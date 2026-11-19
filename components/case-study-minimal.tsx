@@ -30,7 +30,7 @@ import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
 import { CaseStudySchema } from '@/components/schema-markup'
-import { CASE_STUDIES } from '@/lib/case-study-data'
+import { CASE_STUDIES, datedMetricSummary } from '@/lib/case-study-data'
 import {
   getCaseStudyWorkProfile,
   normalizeCaseStudyWorkProfile,
@@ -78,15 +78,13 @@ export default function MinimalCaseStudyPage({
 
   const resultsSentence =
     results.length > 0
-      ? ` Measured results: ${results
-          .map((item) => `${item.value} ${item.label}`)
-          .join('; ')}.`
+      ? ` Measured results: ${results.map(datedMetricSummary).join(' ')}`
       : ''
   const schemaDescription = `Prism case study for ${caseStudy.client} featuring the live website plus the services and tech stack used for the engagement.${resultsSentence}`
   const schemaOutcome =
     results.length > 0
       ? results
-          .map((item) => `${item.value} ${item.label}. Source: ${item.detail}`)
+          .map((item) => `${datedMetricSummary(item)} Source: ${item.detail}`)
           .join(' ')
       : `Live website, service list, and tech stack overview for ${caseStudy.client}.`
 

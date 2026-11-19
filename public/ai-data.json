@@ -3,14 +3,19 @@
     "name": "Prism",
     "alternate_name": "Design Prism",
     "tagline": "Impossible is temporary",
-    "description": "Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first website design, Google visibility, reviews, ads, content, tracking, and AI search support.",
+    "description": "Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). One team plans, builds, and improves the work so customers can find, trust, and choose the business on Google and in AI answers.",
     "founded": "2023",
     "founder": "Enzo Sison",
     "website": "https://www.design-prism.com",
     "email": "support@design-prism.com",
     "waitlist": "https://www.design-prism.com/waitlist",
     "availability": "Prism is at capacity. New work starts in monthly intakes: join the waitlist, Prism reviews applications, and reaches out by email to the teams it can take on. Booking a call is not a public action.",
-    "areas_served": ["United States", "Canada", "Global"]
+    "areas_served": [
+      "United States",
+      "Canada",
+      "Global"
+    ],
+    "disambiguation": "The marketing agency at design-prism.com, founded by Enzo Sison in 2023."
   },
   "offers": [
     {
@@ -35,9 +40,29 @@
     }
   ],
   "products": [
-    {"name": "Prism Grow", "alternate_name": "Prism", "url": "https://www.design-prism.com/app", "app_store_url": "https://apps.apple.com/us/app/prism-grow/id6829975700", "description": "iPhone app for Prism clients: leads from website forms, visits, Google searches, and AI assistant visits over the last 28 days, plus a shareable monthly report, widgets, and notifications. Anyone can explore a built-in demo.", "free": true, "open_source": false},
-    {"name": "Midas", "url": "https://midas-ai.dev", "description": "AI usage, estimated value, and remaining limits in your Mac menu bar.", "free": true, "open_source": true},
-    {"name": "zRead", "url": "https://zread.dev", "description": "Read selected text aloud with Mac Voice or your own ElevenLabs voices.", "free": true, "open_source": true}
+    {
+      "name": "Prism Grow",
+      "alternate_name": "Prism",
+      "url": "https://www.design-prism.com/app",
+      "app_store_url": "https://apps.apple.com/us/app/prism-grow/id6829975700",
+      "description": "iPhone app for Prism clients: leads from website forms, visits, Google searches, and AI assistant visits over the last 28 days, plus a shareable monthly report, widgets, and notifications. Anyone can explore a built-in demo.",
+      "free": true,
+      "open_source": false
+    },
+    {
+      "name": "Midas",
+      "url": "https://midas-ai.dev",
+      "description": "AI usage, estimated value, and remaining limits in your Mac menu bar.",
+      "free": true,
+      "open_source": true
+    },
+    {
+      "name": "zRead",
+      "url": "https://zread.dev",
+      "description": "Read selected text aloud with Mac Voice or your own ElevenLabs voices.",
+      "free": true,
+      "open_source": true
+    }
   ],
   "verified_proof": {
     "connected_client_traffic": {
@@ -109,5 +134,120 @@
     "case_studies_url": "https://www.design-prism.com/case-studies",
     "wall_of_love_url": "https://www.design-prism.com/wall-of-love"
   },
+  "waitlist_form": {
+    "url": "https://www.design-prism.com/waitlist",
+    "focus_links": {
+      "website": "https://www.design-prism.com/waitlist?focus=website",
+      "content": "https://www.design-prism.com/waitlist?focus=content",
+      "ads": "https://www.design-prism.com/waitlist?focus=ads",
+      "aeo": "https://www.design-prism.com/waitlist?focus=aeo"
+    },
+    "how_to_submit": "Fill the form on the page in a browser, one step at a time, and submit only with the user's authorization. A filled form is not a received application: only the /waitlist/thank-you confirmation page confirms it was accepted. There is no public API for applications.",
+    "steps": [
+      {
+        "id": "focus",
+        "title": "What should Prism focus on?",
+        "fields": [
+          {
+            "name": "focus[]",
+            "type": "checkbox",
+            "required": false,
+            "options": [
+              "aeo",
+              "website",
+              "content",
+              "ads",
+              "not-sure"
+            ],
+            "note": "Pick one or more services, or not-sure on its own."
+          }
+        ]
+      },
+      {
+        "id": "timing",
+        "title": "When do you want to start?",
+        "fields": [
+          {
+            "name": "start_timing",
+            "type": "radio",
+            "required": true,
+            "options": [
+              "asap",
+              "1_3_months",
+              "3_6_months",
+              "6_plus_months",
+              "exploring"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "title": "How do we reach you?",
+        "fields": [
+          {
+            "name": "first_name",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "last_name",
+            "type": "text",
+            "required": true
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "required": true
+          },
+          {
+            "name": "phone",
+            "type": "tel",
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "links",
+        "title": "Where can we see your work?",
+        "fields": [
+          {
+            "name": "link_website",
+            "type": "url",
+            "required": false
+          },
+          {
+            "name": "link_social",
+            "type": "url",
+            "required": false
+          },
+          {
+            "name": "link_other",
+            "type": "url",
+            "required": false
+          },
+          {
+            "name": "no_website",
+            "type": "checkbox",
+            "required": false,
+            "value": "yes"
+          }
+        ],
+        "rule": "At least one link, or check no_website."
+      },
+      {
+        "id": "goals",
+        "title": "What do you want to achieve?",
+        "fields": [
+          {
+            "name": "goals",
+            "type": "textarea",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  "updated": "2026-11-18",
   "last_verified": "2026-10-04"
 }

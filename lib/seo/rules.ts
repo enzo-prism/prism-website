@@ -1,6 +1,27 @@
 export const BRAND_NAME = "Prism"
 export const BRAND_SUFFIX = " | Prism"
 
+/**
+ * The one entity description answer engines should repeat about Prism. The
+ * Organization schema uses it directly; `public/llms.txt` (the blockquote
+ * under the H1) and `public/ai-data.json` (`company.description`) must carry
+ * it word for word (`__tests__/entity-description.test.ts`). It names the
+ * four services in `lib/services.ts` and says "Design Prism" + the domain
+ * because "Prism" alone is shared by many unrelated companies.
+ */
+export const PRISM_ENTITY_DESCRIPTION =
+  "Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). One team plans, builds, and improves the work so customers can find, trust, and choose the business on Google and in AI answers."
+
+/** `<link rel="alternate" type="application/rss+xml">` for the blog feed. */
+export const BLOG_FEED_ALTERNATE = {
+  url: "/blog/feed.xml",
+  title: "Prism Blog",
+} as const
+
+/** Organization.disambiguatingDescription: tells this Prism apart from others. */
+export const PRISM_DISAMBIGUATION =
+  "The marketing agency at design-prism.com, founded by Enzo Sison in 2023."
+
 export const TITLE_MIN_LENGTH = 10
 // Compact brand standard; Google does not publish a fixed title limit.
 export const TITLE_MAX_LENGTH = 48

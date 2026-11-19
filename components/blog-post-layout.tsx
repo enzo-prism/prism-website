@@ -14,7 +14,14 @@ import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
 import { PrismMark } from '@/components/prism/prism-logo'
 import { Section, SectionHeader } from '@/components/prism/section'
-import { BlogPostSchema, BreadcrumbSchema, HowToSchema } from '@/components/schema-markup'
+import {
+  BlogPostSchema,
+  BreadcrumbSchema,
+  HowToSchema,
+  VideoObjectSchema,
+} from '@/components/schema-markup'
+import { resolveBlogAuthor } from '@/lib/blog-author'
+import type { BlogVideo } from '@/lib/blog-videos'
 import { Badge } from '@/components/ui/badge'
 import { canonicalUrl } from '@/lib/canonical'
 import { toAbsoluteUrl } from '@/lib/url'
@@ -43,6 +50,8 @@ interface Props {
     authors?: string[]
   }
   canonical?: string
+  /** YouTube videos the post embeds (lib/blog-videos.ts), for VideoObject schema. */
+  videos?: BlogVideo[]
   howTo?: {
     title: string
     description: string
@@ -99,6 +108,7 @@ export default function BlogPostLayout({
   related = [],
   openGraph,
   canonical,
+  videos = [],
   howTo,
 }: Props) {
   const effectiveImageUrl = image
@@ -113,8 +123,9 @@ export default function BlogPostLayout({
       day: 'numeric',
     }).format(new Date(date))
   const updatedLabel = updatedDate || undefined
-  const authorName = author?.trim() || 'Prism'
-  const isEnzoAuthor = authorName.toLowerCase() === 'enzo sison'
+  const resolvedAuthor = resolveBlogAuthor(author, openGraph?.authors?.[0])
+  const authorName = resolvedAuthor.name
+  const isEnzoAuthor = resolvedAuthor.kind === 'founder'
   const publishedIso = (() => {
     const parsed = new Date(date)
     return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString()
@@ -321,8 +332,27 @@ export default function BlogPostLayout({
         imageUrl={effectiveImageUrl}
         datePublished={openGraph?.publishedTime || date}
         dateModified={openGraph?.modifiedTime || date}
-        authorName={author || openGraph?.authors?.[0] || 'Prism'}
+        authorName={authorName}
       />
+      {videos.map((video) => (
+        <VideoObjectSchema
+          key={video.id}
+          videoId={video.id}
+          name={video.title}
+          description={`${video.title}, a video ${
+            video.ownedByPrism ? 'from Prism' : `by ${video.channel}`
+          } on YouTube, embedded in the Prism article "${title}".`}
+          thumbnailUrl={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+          uploadDate={video.uploadDate}
+          embedUrl={`https://www.youtube.com/embed/${video.id}`}
+          contentUrl={`https://www.youtube.com/watch?v=${video.id}`}
+          creatorName={video.ownedByPrism ? 'Prism' : video.channel}
+          creatorType={video.ownedByPrism ? 'Organization' : video.creatorType}
+          creatorId={
+            video.ownedByPrism ? 'https://www.design-prism.com/#organization' : undefined
+          }
+        />
+      ))}
       {howTo ? (
         <HowToSchema
           name={howTo.title}

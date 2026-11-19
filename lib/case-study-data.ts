@@ -896,6 +896,29 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
   },
 ]
 
+/**
+ * The metric label without a relative period ("in the latest 90 days"), for
+ * machine-readable surfaces that are read long after publication. The
+ * visible label keeps its wording; pair this with the date window.
+ */
+export function undatedMetricLabel(metric: CaseStudyResultMetric): string {
+  return metric.label
+    .replace(/\s+in the latest(?: complete)? \d+(?:-day)?(?: days| window)?(?=[,.]|$)/i, '')
+    .trim()
+}
+
+/**
+ * One self-contained sentence for structured data and AI-readable abstracts:
+ * value, label, source, and the exact date window, so an answer engine that
+ * quotes it months later still says when it was measured.
+ */
+export function datedMetricSummary(metric: CaseStudyResultMetric): string {
+  const source = [metric.sourceName, metric.dateRange]
+    .filter(Boolean)
+    .join(': ')
+  return `${metric.value} ${undatedMetricLabel(metric)}${source ? ` (${source})` : ''}.`
+}
+
 export function getCaseStudyMetric(slug: string, metricIndex = 0) {
   const metric = CASE_STUDIES.find((study) => study.slug === slug)?.structured
     ?.results?.[metricIndex]

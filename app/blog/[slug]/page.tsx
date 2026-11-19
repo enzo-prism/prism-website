@@ -11,6 +11,7 @@ import { getMdxToc } from '@/lib/mdx-toc'
 import { canonicalUrl } from '@/lib/canonical'
 import { renderPost } from '@/lib/mdx'
 import {
+  BLOG_FEED_ALTERNATE,
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_ALT,
   buildAbsoluteTitle,
@@ -21,6 +22,7 @@ import {
   type BlogOutboundLinkProfile,
 } from '@/lib/blog-inline-link-rules'
 import { injectOutboundLinks } from '@/lib/blog-inline-link-injector'
+import { getBlogPostVideos } from '@/lib/blog-videos'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -219,6 +221,7 @@ export async function generateMetadata({
             title: `${frontmatter.title} (Markdown)`,
           },
         ],
+        "application/rss+xml": [BLOG_FEED_ALTERNATE],
       },
     },
     robots:
@@ -266,6 +269,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       openGraph={frontmatter.openGraph}
       canonical={canonicalUrl(frontmatter.canonical || `/blog/${slug}`)}
       howTo={frontmatter.howTo}
+      videos={getBlogPostVideos(post.content)}
     >
       {content}
     </BlogPostLayout>

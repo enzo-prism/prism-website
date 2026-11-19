@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 
 import { canonicalUrl } from "@/lib/canonical"
 import {
+  BLOG_FEED_ALTERNATE,
   BRAND_NAME,
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_ALT,
@@ -52,18 +53,20 @@ export function buildRouteMetadata(input: RouteSeoInput): Metadata {
       // snapshot so AI answer engines can ingest entity facts directly.
       // (Page-level alternates replace the root layout's, so this must
       // live here to survive on routes built with this helper.)
-      ...(index
-        ? {
-            types: {
+      // Every route also points to the blog feed (/blog/feed.xml).
+      types: {
+        ...(index
+          ? {
               "application/json": [
                 {
                   url: "/ai-data.json",
                   title: "Prism company and proof data (JSON)",
                 },
               ],
-            },
-          }
-        : {}),
+            }
+          : {}),
+        "application/rss+xml": [BLOG_FEED_ALTERNATE],
+      },
     },
     openGraph: {
       title,

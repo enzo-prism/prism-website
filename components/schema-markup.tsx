@@ -1,7 +1,13 @@
 import React from 'react'
 
 import { CANONICAL_PRICING_OFFERS } from '@/lib/pricing-model'
-import { getCaseStudyMetric } from '@/lib/case-study-data'
+import {
+  datedMetricSummary,
+  getCaseStudyMetric,
+  undatedMetricLabel,
+} from '@/lib/case-study-data'
+import { resolveBlogAuthor } from '@/lib/blog-author'
+import { PRISM_DISAMBIGUATION, PRISM_ENTITY_DESCRIPTION } from '@/lib/seo/rules'
 import {
   schemaEntityId,
   schemaImage,
@@ -129,9 +135,11 @@ export function CaseStudySchema({
     citation: results?.map((metric) => metric.detail),
     mentions: results?.map((metric) => ({
       '@type': 'PropertyValue',
-      name: metric.label,
+      name: undatedMetricLabel(metric),
       value: metric.value,
-      description: metric.detail,
+      description: metric.dateRange
+        ? `${metric.detail} Dates: ${metric.dateRange}.`
+        : metric.detail,
       measurementTechnique: metric.sourceName,
       valueReference: metric.dateRange,
       url: metric.sourceUrl,
@@ -206,10 +214,10 @@ export function GlobalSchemaGraph() {
     '@id': 'https://www.design-prism.com/#organization',
     name: 'Prism',
     alternateName: 'Design Prism',
-    // Keep this definition in sync with public/llms.txt and the about page so
-    // search and AI engines see one consistent entity description.
-    description:
-      'Prism helps growth-focused businesses get found, trusted, and chosen with conversion-first website design, Google visibility, reviews, ads, content, tracking, and AI search support.',
+    // One entity description everywhere: public/llms.txt and
+    // public/ai-data.json carry the same string (entity-description.test.ts).
+    description: PRISM_ENTITY_DESCRIPTION,
+    disambiguatingDescription: PRISM_DISAMBIGUATION,
     slogan: 'Impossible is temporary',
     foundingDate: '2023',
     founder: {
@@ -237,7 +245,7 @@ export function GlobalSchemaGraph() {
           'https://www.design-prism.com/case-studies/dr-christopher-wong#article',
         name: 'Dr. Christopher B. Wong case study',
         url: 'https://www.design-prism.com/case-studies/dr-christopher-wong',
-        abstract: `${wongImpressions.value} ${wongImpressions.label}.`,
+        abstract: datedMetricSummary(wongImpressions),
       },
       {
         '@type': 'Article',
@@ -505,6 +513,7 @@ export function BlogPostSchema({
   dateModified,
   authorName = 'Prism',
 }: BlogPostSchemaProps) {
+  const author = resolveBlogAuthor(authorName)
   const data = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -516,22 +525,20 @@ export function BlogPostSchema({
     datePublished,
     dateModified: dateModified || datePublished,
     author:
-      authorName === 'Prism'
+      author.kind === 'organization'
         ? {
             '@type': 'Organization',
             '@id': 'https://www.design-prism.com/#organization',
             name: 'Prism',
           }
-        : {
-            '@type': 'Person',
-            ...(authorName === 'Enzo Sison'
-              ? {
-                  '@id': 'https://www.design-prism.com/#founder',
-                  url: 'https://www.design-prism.com/about',
-                }
-              : {}),
-            name: authorName,
-          },
+        : author.kind === 'founder'
+          ? {
+              '@type': 'Person',
+              '@id': 'https://www.design-prism.com/#founder',
+              name: author.name,
+              url: 'https://www.design-prism.com/about',
+            }
+          : { '@type': 'Person', name: author.name },
     publisher: {
       '@type': 'Organization',
       '@id': 'https://www.design-prism.com/#organization',
@@ -689,6 +696,10 @@ interface VideoObjectSchemaProps {
   embedUrl?: string
   contentUrl?: string
   creatorName?: string
+  /** Defaults to Person, which is what every MDX caller already means. */
+  creatorType?: 'Person' | 'Organization'
+  /** Links the creator to a known entity, e.g. Prism's #organization. */
+  creatorId?: string
   duration?: string
 }
 
@@ -701,6 +712,8 @@ export function VideoObjectSchema({
   embedUrl,
   contentUrl,
   creatorName,
+  creatorType = 'Person',
+  creatorId,
   duration,
 }: VideoObjectSchemaProps) {
   const data = {
@@ -715,7 +728,8 @@ export function VideoObjectSchema({
     contentUrl: getVideoContentUrl(contentUrl),
     creator: creatorName
       ? {
-          '@type': 'Person',
+          '@type': creatorType,
+          ...(creatorId ? { '@id': creatorId } : {}),
           name: creatorName,
         }
       : undefined,

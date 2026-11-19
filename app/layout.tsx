@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import "./globals.css"
 // Import the schema components
 import { GlobalSchemaGraph } from "@/components/schema-markup"
+import { BLOG_FEED_ALTERNATE } from "@/lib/seo/rules"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -72,11 +73,13 @@ export const metadata: Metadata = {
   },
   generator: "v0.dev",
   alternates: {
-    // Machine-readable company/proof snapshot for AI answer engines.
+    // Machine-readable company/proof snapshot for AI answer engines, and the
+    // blog feed so readers and crawlers can find new posts from any page.
     types: {
       "application/json": [
         { url: "/ai-data.json", title: "Prism company and proof data (JSON)" },
       ],
+      "application/rss+xml": [BLOG_FEED_ALTERNATE],
     },
   },
   metadataBase: new URL("https://www.design-prism.com"),
