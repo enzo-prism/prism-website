@@ -104,3 +104,15 @@ jobs:
             sleep 60
           done
           exit 1
+
+      # Ask Bing and other IndexNow engines to re-crawl the pages this push
+      # changed (scripts/indexnow-ping.ts). Only sitemap URLs are sent, and a
+      # failure here never fails the deploy.
+      - name: Notify IndexNow
+        if: github.event_name == 'push'
+        continue-on-error: true
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BEFORE_SHA" || exit 0
+          pnpm seo:indexnow --base "$BEFORE_SHA" --head "$GITHUB_SHA"

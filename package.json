@@ -70,6 +70,7 @@
     "seo:inventory": "npx ts-node scripts/seo-inventory.ts",
     "seo:lint": "npx ts-node scripts/seo-lint.ts",
     "seo:ai-report": "node scripts/report-ai-visibility.mjs",
+    "seo:indexnow": "node scripts/indexnow-ping.ts",
     "audit:ga4": "node scripts/audit-ga4-config.mjs",
     "analytics:reconcile-waitlist": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' scripts/reconcile-waitlist.ts",
     "canonical:check": "npx ts-node scripts/verify-canonical.ts",

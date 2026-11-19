@@ -88,7 +88,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 
 - Production workflow order is:
   1. `UI Lock Screenshots` (`pnpm test:visual:locked`, then `pnpm test:mobile-navbar`, blocking)
-  2. `Build and Deploy` (`pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`)
+  2. `Build and Deploy` (`pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `vercel pull --environment=production`, `pnpm verify:pricing-consistency`, `vercel deploy --prod --yes`, then the non-blocking `Notify IndexNow` step, `pnpm seo:indexnow --base <before> --head <sha>`, which submits changed sitemap pages to IndexNow; see `docs/development-guide.md`)
 - Keep local troubleshooting aligned with that order.
 - If production deploy fails, reproduce locally with `pnpm build` first. Most failures are deterministic once you mirror the production bundle.
 - After pushing `main`, watch the run with `gh run list --branch main --limit 10` and `gh run watch <run_id> --interval 15`.
