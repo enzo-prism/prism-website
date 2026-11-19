@@ -192,6 +192,67 @@ export const WAITLIST_TIMING_OPTIONS = [
 
 export type WaitlistTiming = (typeof WAITLIST_TIMING_OPTIONS)[number]['value']
 
+export function isWaitlistTiming(value: unknown): value is WaitlistTiming {
+  return (
+    typeof value === 'string' &&
+    WAITLIST_TIMING_OPTIONS.some((option) => option.value === value)
+  )
+}
+
+/**
+ * Prefilled waitlist links (2026-11-18), so a page, an email, or an AI agent
+ * can hand someone a form that already holds their non-personal answers:
+ *
+ *   /waitlist?focus=aeo,website&timing=1_3_months&website=example.com
+ *
+ * Only `focus`, `timing`, and `website` (the business's public site) are
+ * read. Names, email, phone, and goals are never taken from the URL, so
+ * personal details stay out of links, logs, and analytics. The visitor still
+ * reviews every step and submits the form themselves.
+ */
+export type WaitlistPrefill = {
+  focus: WaitlistFocus[]
+  timing?: WaitlistTiming
+  website?: string
+}
+
+export type WaitlistPrefillParams = {
+  focus?: string | string[]
+  timing?: string | string[]
+  website?: string | string[]
+}
+
+const PREFILL_WEBSITE_PATTERN =
+  /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?(\/[^\s<>"]*)?$/i
+
+function firstValue(raw: string | string[] | undefined): string | undefined {
+  const value = Array.isArray(raw) ? raw[0] : raw
+  const trimmed = value?.trim()
+  return trimmed ? trimmed : undefined
+}
+
+export function parseWaitlistPrefill(params: WaitlistPrefillParams): WaitlistPrefill {
+  const timing = firstValue(params.timing)?.toLowerCase()
+  const website = firstValue(params.website)
+  return {
+    focus: parseWaitlistFocus(params.focus),
+    ...(isWaitlistTiming(timing) ? { timing } : {}),
+    ...(website && website.length <= 200 && PREFILL_WEBSITE_PATTERN.test(website)
+      ? { website }
+      : {}),
+  }
+}
+
+/** Waitlist href carrying any prefill answers (empty ones are left out). */
+export function getWaitlistPrefillHref(prefill: Partial<WaitlistPrefill>): string {
+  const params = new URLSearchParams()
+  if (prefill.focus && prefill.focus.length > 0) params.set('focus', prefill.focus.join(','))
+  if (prefill.timing) params.set('timing', prefill.timing)
+  if (prefill.website) params.set('website', prefill.website)
+  const query = params.toString().replace(/%2C/g, ',')
+  return query ? `${WAITLIST_PATH}?${query}` : WAITLIST_PATH
+}
+
 /**
  * Stepped flow (2026-09-15). One question group per screen, validated before
  * advancing, single Formspree submit on the last step. Order is intentional:

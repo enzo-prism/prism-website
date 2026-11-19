@@ -14,8 +14,9 @@ import WaitlistProofStrip from '@/components/waitlist/WaitlistProofStrip'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 import {
   CAPACITY_MESSAGE,
-  parseWaitlistFocus,
+  parseWaitlistPrefill,
   WAITLIST_PATH,
+  type WaitlistPrefillParams,
 } from '@/lib/waitlist'
 
 const PAGE_TITLE = 'Join the Prism waitlist'
@@ -51,7 +52,7 @@ const NEXT_STEPS: readonly WaitlistNextStep[] = [
 ]
 
 type WaitlistPageProps = {
-  searchParams?: Promise<{ focus?: string | string[] }>
+  searchParams?: Promise<WaitlistPrefillParams>
 }
 
 /**
@@ -64,7 +65,7 @@ type WaitlistPageProps = {
  */
 export default async function WaitlistPage({ searchParams }: WaitlistPageProps) {
   const params = searchParams ? await searchParams : {}
-  const initialFocus = parseWaitlistFocus(params.focus)
+  const prefill = parseWaitlistPrefill(params)
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
@@ -105,8 +106,10 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
               className="prism-beam prism-rise rounded-[1.75rem] border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/6%)_inset,0_40px_120px_-40px_oklch(0_0_0/90%)] [--rise-delay:160ms] sm:p-8"
             >
               <WaitlistForm
-                key={initialFocus.join(',')}
-                initialFocus={initialFocus}
+                key={[prefill.focus.join(','), prefill.timing, prefill.website].join('|')}
+                initialFocus={prefill.focus}
+                initialTiming={prefill.timing}
+                initialWebsite={prefill.website}
               />
             </div>
           </div>

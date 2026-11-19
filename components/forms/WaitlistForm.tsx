@@ -259,9 +259,17 @@ const optionTitleClassName =
 type WaitlistFormProps = {
   /** Pre-selected focus from `?focus=` so service pages can hand off intent. */
   initialFocus?: WaitlistFocus[]
+  /** Pre-selected start timing from `?timing=` (lib/waitlist.ts prefill). */
+  initialTiming?: WaitlistTiming
+  /** Business website from `?website=`. Personal details are never prefilled. */
+  initialWebsite?: string
 }
 
-export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
+export default function WaitlistForm({
+  initialFocus = [],
+  initialTiming,
+  initialWebsite,
+}: WaitlistFormProps) {
   const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -275,6 +283,8 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
   const [answers, setAnswers] = useState<WaitlistAnswers>(() => ({
     ...EMPTY_ANSWERS,
     focus: initialFocus,
+    start_timing: initialTiming ?? '',
+    link_website: initialWebsite ?? '',
   }))
   const [stepError, setStepError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -305,10 +315,14 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
     const draft = readDraft()
     submissionIdRef.current = draft?.submissionId ?? `waitlist-${crypto.randomUUID()}`
     if (draft) {
-      setAnswers((current) => ({
+      setAnswers(() => ({
         ...draft.answers,
-        // A fresh `?focus=` hand-off wins over an older stored selection.
+        // A fresh prefilled link wins over an older stored answer.
         focus: initialFocus.length > 0 ? initialFocus : draft.answers.focus,
+        start_timing: initialTiming ?? draft.answers.start_timing,
+        ...(initialWebsite
+          ? { link_website: initialWebsite, no_website: false }
+          : {}),
       }))
       setStepIndex(draft.stepIndex)
       hasStartedRef.current = true
@@ -317,6 +331,15 @@ export default function WaitlistForm({ initialFocus = [] }: WaitlistFormProps) {
       form_name: WAITLIST_FORM_NAME,
       form_location: FORM_LOCATION,
       prefilled_focus: initialFocus.length > 0 ? initialFocus.join(',') : 'none',
+      // Which answers came prefilled (names only, never the website itself).
+      prefilled_fields:
+        [
+          initialFocus.length > 0 ? 'focus' : null,
+          initialTiming ? 'timing' : null,
+          initialWebsite ? 'website' : null,
+        ]
+          .filter(Boolean)
+          .join(',') || 'none',
       resumed_step: draft ? draft.stepIndex + 1 : undefined,
     })
     setHydrated(true)

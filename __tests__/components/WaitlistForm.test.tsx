@@ -596,4 +596,32 @@ describe('WaitlistForm (stepped flow)', () => {
     expect(noWebsiteCheckbox()).toBeChecked()
     expect(screen.getByLabelText(/^website$/i)).toBeDisabled()
   })
+
+  it('prefills timing and the business website from a prefilled link, never personal details', async () => {
+    render(
+      <WaitlistForm
+        initialFocus={['aeo']}
+        initialTiming="1_3_months"
+        initialWebsite="example.com"
+      />,
+    )
+    expect(trackEvent).toHaveBeenCalledWith(
+      'waitlist_form_view',
+      expect.objectContaining({ prefilled_focus: 'aeo', prefilled_fields: 'focus,timing,website' }),
+    )
+    // The visitor still walks every step: focus, then the preselected timing.
+    await advance()
+    expectStep(2)
+    expect(screen.getByRole('radio', { name: /in 1–3 months/i })).toBeChecked()
+    await advance()
+    expectStep(3)
+    expect(screen.getByLabelText(/first name/i)).toHaveValue('')
+    expect(screen.getByLabelText(/^email$/i)).toHaveValue('')
+    fireEvent.change(screen.getByLabelText(/first name/i), { target: { value: 'Jordan' } })
+    fireEvent.change(screen.getByLabelText(/last name/i), { target: { value: 'Ramirez' } })
+    fireEvent.change(screen.getByLabelText(/^email$/i), { target: { value: 'jordan@example.com' } })
+    await advance()
+    expectStep(4)
+    expect(screen.getByLabelText(/^website$/i)).toHaveValue('example.com')
+  })
 })
