@@ -41,10 +41,10 @@ const growthPathSteps = [
   {
     stage: '01',
     title: 'Join the waitlist',
-    meta: 'About two minutes',
+    meta: 'Two minutes',
     icon: ListPlus,
     description:
-      'Share your links, goals, and when you want to start. Prism is fully booked, so this is how every engagement begins right now.',
+      'Share your links, goals, and timeline. Every Prism engagement starts here.',
   },
   {
     stage: '02',
@@ -52,7 +52,7 @@ const growthPathSteps = [
     meta: 'Clear scope and price',
     icon: MessagesSquare,
     description:
-      'For each monthly intake we review applications, reach out to the teams we can take on, and confirm what is included, what it costs, and how the work will run before you commit.',
+      'Each monthly intake, we select the teams we can move farthest and confirm exact scope and price before you commit.',
   },
   {
     stage: '03',
@@ -60,7 +60,7 @@ const growthPathSteps = [
     meta: 'Prism standard',
     icon: Hammer,
     description:
-      'We build the agreed work, review it with you, and prepare it for launch. You always know what is ready and what needs your input.',
+      'We design, build, and refine the work with clear check-ins all the way to launch.',
   },
 ] as const
 
@@ -74,50 +74,50 @@ const PLAN_DETAILS: Record<
   website: {
     badge: 'Custom design',
     featured: true,
-    audience: 'For businesses whose website should make choosing them easy.',
+    audience: 'For businesses ready for a flagship website that earns trust immediately.',
     includes: [
-      'Custom design for your brand, no templates',
-      'Page copy written around customer questions',
-      'Mobile-first, responsive layouts',
-      'Built, launched, and ready for Google and AI search',
-      'Analytics set up at launch',
-      'The finished design and site are yours',
+      'Custom design system, zero templates',
+      'Sharp copy built around buyer questions',
+      'Fast, mobile-first engineering',
+      'Search and AI foundations at launch',
+      'Conversion tracking and GA4 setup',
+      'Full ownership from launch day',
     ],
   },
   content: {
     badge: 'Ongoing',
     audience:
-      'For owners who want to show up every week without running content themselves.',
+      'For leaders who want steady, high-caliber publishing without running production.',
     includes: [
-      'Scripts and video edits',
-      'Social posts for your agreed channels',
-      'Website content',
-      'Planning, review, and publishing',
-      'Three-month setup, then ongoing production',
+      'Strategy, scripts, and video edits',
+      'Channel-native social posts',
+      'Editorial website content',
+      'End-to-end review and publishing',
+      'Three-month setup, then monthly production',
     ],
   },
   ads: {
     badge: 'Paid campaigns',
     audience:
-      'For businesses that want ads aimed at calls, inquiries, and booked appointments.',
+      'For teams investing in paid demand built around qualified calls and bookings.',
     includes: [
       'Google, Meta, TikTok, and Yelp campaigns',
-      'Ad creative: images, video, and copy',
-      'A clear landing page after the click',
-      'Call, form, and booking tracking',
+      'Dedicated creative: visuals, video, and copy',
+      'Focused landing pages built to convert',
+      'Call, form, and booking attribution',
       'Weekly tuning and plain-English reports',
     ],
   },
   aeo: {
     badge: 'AI search',
     audience:
-      'For businesses that want to be found, understood, and cited when customers ask AI.',
+      'For brands building clear visibility across ChatGPT, Google AI Overviews, and Perplexity.',
     includes: [
-      'An audit across ChatGPT, AI Overviews, Gemini, Claude, and Perplexity',
-      'AI crawler access and structured data',
-      'Answer-first pages and FAQs',
-      'Consistent listings and business facts',
-      'Monthly answer checks and plain-English reports',
+      'Visibility audit across major AI engines',
+      'Crawler access and structured data',
+      'Answer-first pages and verifiable FAQs',
+      'Aligned listings and business facts',
+      'Monthly citation checks and reports',
     ],
   },
 }
@@ -212,7 +212,7 @@ const partnerLevels = [
     icon: Wrench,
     href: '/website-design',
     description:
-      'Hosting, updates, and ongoing edits for your Prism-designed website once it is live. Optional, and only after delivery.',
+      'Managed hosting, updates, and ongoing refinements once your site is live. Optional and cancelable anytime.',
   },
   {
     title: 'Content',
@@ -220,7 +220,7 @@ const partnerLevels = [
     icon: Camera,
     href: '/content',
     description:
-      'A plan for consistent content across your website and selected social channels. We handle production, publishing, and ongoing improvements.',
+      'Consistent video, social, and website editorial handled end to end and sharpened every month.',
   },
   {
     title: 'Ads',
@@ -228,7 +228,7 @@ const partnerLevels = [
     icon: Megaphone,
     href: '/ads',
     description:
-      'Campaigns reviewed every week: spend moves toward what works, the next test goes live, and you get the results in plain English.',
+      'Weekly optimization across bids, targeting, and creative, reported clearly on real calls and inquiries.',
   },
   {
     title: 'AEO',
@@ -236,7 +236,7 @@ const partnerLevels = [
     icon: MessageSquareQuote,
     href: '/aeo',
     description:
-      'Your customer questions re-asked across the answer engines every month, with the next fixes chosen from what changed.',
+      'Monthly buyer-question checks across answer engines, with priorities set from what shifted.',
   },
 ] as const
 
@@ -261,37 +261,37 @@ const faqs = [
   {
     question: 'How does Prism pricing work?',
     answer:
-      'Prism is fully booked right now, so every engagement starts on the waitlist. For each monthly intake we review applications, reach out, and confirm the scope, price, and next steps before work begins.',
+      'Prism is fully booked right now, so every engagement begins on the waitlist. When your intake opens, we confirm exact scope, price, and timeline before work starts.',
   },
   {
     question: 'What does Prism website design include?',
     answer:
-      'Custom design for your brand, page copy, development, analytics, and foundations for Google and AI search. We agree on the pages, features, and integrations with you before designing. The finished site is yours.',
+      'Custom design, copy, mobile-first development, analytics, and search and AI foundations. Exact pages and features are confirmed up front, and the finished site is 100% yours.',
   },
   {
     question: 'What is Website Care?',
     answer:
-      'Optional ongoing care: hosting, updates, and ongoing edits after your site is live. It is scoped with your design project, added only once the site is delivered, and you can cancel anytime.',
+      'Optional ongoing care covering hosting, updates, and continuous refinements after launch. Added only once your site ships, and cancelable anytime.',
   },
   {
     question: 'How is Content priced?',
     answer:
-      'Pricing reflects the content, channels, and production your business needs. Join the waitlist and we will scope the setup and ongoing work together when we reach out.',
+      'Pricing matches your channels and production cadence. Join the waitlist and we will scope the setup and ongoing work when your intake opens.',
   },
   {
     question: 'How are Ads priced?',
     answer:
-      'The work is scoped when we reach out from the waitlist, based on your channels and goals. Your ad budget is set separately: we recommend a starting budget by channel and market size, and spend scales only when performance supports it.',
+      'Management is scoped to your channels and goals once your intake opens. Your media budget stays separate and scales only when live performance supports it.',
   },
   {
     question: 'How is AEO priced?',
     answer:
-      'AEO is scoped when we reach out from the waitlist, based on the questions, engines, and fixes your business needs. It starts with an audit across the answer engines, then monthly checks.',
+      'Scoped when your waitlist intake opens based on the buyer questions, engines, and site fixes required. Starts with a full audit, followed by monthly checks.',
   },
   {
     question: 'Do you work with dental practices?',
     answer:
-      'Yes. Dental is one of our deepest specialties. Practices work with Prism through the same four services: a practice website, content, ads, and AEO, scoped to their locations and goals.',
+      'Yes. Dental is one of our deepest specialties, served through the same four disciplines: website design, content, ads, and AEO.',
   },
 ] as const
 
@@ -325,7 +325,7 @@ export default function PricingPageClient() {
               id="pricing-proof-heading"
               eyebrow="Proof"
               title="the work behind the plans."
-              description="Measured search growth from two current clients, straight from Google Search Console."
+              description="Verified search growth from current clients, pulled directly from Google Search Console."
               titleClassName="max-w-[15ch]"
             />
           </Reveal>
@@ -382,7 +382,7 @@ export default function PricingPageClient() {
             id="pricing-compare-heading"
             eyebrow="Compare"
             title="what each plan includes."
-            description="The short version. Your exact scope is agreed with you when your intake opens."
+            description="At a glance. Exact deliverables and pricing are confirmed when your intake opens."
             align="center"
           />
         </Reveal>
@@ -416,8 +416,8 @@ export default function PricingPageClient() {
               titleClassName="max-w-[16ch]"
             />
             <p className="max-w-[38ch] text-pretty text-[15px] leading-7 text-muted-foreground lg:pb-2">
-              Join the waitlist. When we reach out, agree on the scope and price,
-              then give us the go-ahead to build.
+              Join the waitlist. When a spot opens, we align on scope and price,
+              then build.
             </p>
           </div>
 
@@ -458,7 +458,7 @@ export default function PricingPageClient() {
               id="pricing-support-heading"
               eyebrow="Ongoing systems"
               title="support after launch."
-              description="Keep your website maintained, your content consistent, your campaigns tuned, and your answers checked."
+              description="Ongoing care to keep your site sharp, content moving, campaigns tuned, and AI visibility measured."
               titleClassName="max-w-[12ch]"
             />
           </Reveal>

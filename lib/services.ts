@@ -42,7 +42,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Custom design that makes choosing you easy.',
     homeCta: 'Explore website design',
     description:
-      'Custom website design for your brand, written around what customers ask and built to load fast on every phone. We design it, build it, and launch it with search foundations and analytics in place.',
+      'Custom design, sharp copy, and a fast mobile build, launched with search foundations and analytics in place.',
     primaryCta: WEBSITE_WAITLIST_CTA,
   },
   {
@@ -54,7 +54,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Give people a reason to choose you.',
     homeCta: 'Explore content',
     description:
-      'Useful stories, photos, and videos for your website and social channels. We handle planning, production, and publishing so you can show up consistently.',
+      'Video, photo, and editorial content for your site and social channels. Planned, produced, and published end to end.',
     primaryCta: CONTENT_WAITLIST_CTA,
   },
   {
@@ -66,7 +66,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Ads built around better leads.',
     homeCta: 'Explore ads',
     description:
-      'Reach potential customers on the channels that fit your audience. We build campaigns and track available call, inquiry, and booking data to guide the next improvement.',
+      'Targeted campaigns across Google, Meta, TikTok, and Yelp, with landing pages and call and inquiry tracking built in.',
     primaryCta: ADS_WAITLIST_CTA,
   },
   {
@@ -78,7 +78,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Be the answer when they ask AI.',
     homeCta: 'Explore AEO',
     description:
-      'Make your business easy for ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity to find, understand, and cite. We fix what AI search reads about you and track the questions where you show up.',
+      'Make your business clear to ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity, and track where you appear each month.',
     primaryCta: AEO_WAITLIST_CTA,
   },
 ] as const

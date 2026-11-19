@@ -69,7 +69,7 @@ export function WebsiteDesignWorkRail() {
             id="website-design-work-title"
             eyebrow="The work"
             title="live sites, designed by Prism."
-            description="Practices, retailers, nonprofits, and service businesses, each designed around its own brand. Every site here is a current client, live right now."
+            description="Practices, brands, and founders, each designed from scratch. Every site below is a current client, live today."
           />
           <Button
             asChild

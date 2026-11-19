@@ -339,7 +339,7 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Radar,
     title: 'know where you stand',
-    body: 'We ask the engines the questions your customers ask, from first search to final decision, several times each, and record where you are cited, mentioned, or missing.',
+    body: 'We run your real buyer questions across every major engine and map where you are cited, mentioned, or absent.',
     className: 'md:col-span-4',
     visual: <QuestionStages />,
     beam: true,
@@ -347,25 +347,25 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: TextQuote,
     title: 'pages that answer first',
-    body: 'Clear pages that answer real customer questions directly, with the specific facts an assistant can quote.',
+    body: 'Direct, verifiable pages structured so assistants can extract and quote your expertise cleanly.',
     visual: <AnswerFirstPage />,
   },
   {
     icon: FileCode,
     title: 'open to every crawler',
-    body: 'Server-rendered pages, schema, sitemaps, and crawler rules, with no firewall setting quietly blocking AI search bots.',
+    body: 'Server-rendered HTML, schema, sitemaps, and clean crawler rules so no firewall hides your site from AI.',
     visual: <CrawlerRules />,
   },
   {
     icon: BadgeCheck,
     title: 'one story everywhere',
-    body: 'Your name, services, hours, and reviews line up on the profiles and directories assistants check.',
+    body: 'Your name, services, hours, and proof aligned across every directory and profile models verify.',
     visual: <ListingsMatch />,
   },
   {
     icon: BarChart3,
     title: 'reports in plain English',
-    body: 'Each month: how often you appear, what changed, and the AI visits and citations that Google Analytics, Search Console, and Bing report.',
+    body: 'Monthly tracking of citations, shifts, and AI referrals reported by GA4, Search Console, and Bing.',
     visual: <AiReferrals />,
   },
 ]
@@ -441,19 +441,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: Radar,
     title: 'map the questions',
     detail: 'First',
-    body: 'We list the questions customers ask before choosing a business like yours, ask each engine several times, and record where you stand today.',
+    body: 'We define the exact questions buyers ask before hiring you, test them across engines, and baseline your visibility.',
   },
   {
     icon: Wrench,
     title: 'fix what they read',
     detail: 'Build',
-    body: 'Crawler access, schema, answer-first pages, and consistent listings, in the order that opens up the most questions.',
+    body: 'Crawler access, structured data, answer-first pages, and listing consistency shipped in priority order.',
   },
   {
     icon: RefreshCw,
     title: 'ask again',
     detail: 'Monthly',
-    body: 'Every month we re-run the same questions, show you what moved, and choose the next fixes together.',
+    body: 'Every month we re-test the same questions, report what moved, and ship the next set of improvements.',
   },
 ]
 
@@ -610,8 +610,8 @@ export default function AeoPage() {
             <>
               <span className="text-foreground">Prism AEO</span> (answer engine
               optimization) makes your business easy for ChatGPT, Google AI
-              Overviews, Gemini, Claude, and Perplexity to find, understand, and
-              cite, then tracks the questions where you show up.
+              Overviews, Gemini, Claude, and Perplexity to read, verify, and
+              cite.
             </>
           }
           ctaHref={AEO_WAITLIST_CTA.href}
@@ -632,7 +632,7 @@ export default function AeoPage() {
                 id="aeo-shift-title"
                 eyebrow="The shift"
                 title="search is turning into answers."
-                description="More customers ask an assistant and get one reply with a few sources. AEO is the work of becoming one of them."
+                description="Buyers increasingly ask an assistant and get one reply with a handful of sources. AEO is the work of earning a place on that shortlist."
                 titleClassName="max-w-[13ch]"
               />
             </Reveal>
@@ -667,7 +667,7 @@ export default function AeoPage() {
         <ServiceBento
           idPrefix="aeo"
           title="what it takes to be the answer."
-          description="Research, technical fixes, writing, and listings, done together, so assistants can find you, trust what they read, and cite it."
+          description="Audits, technical access, answer-first pages, and consistent facts, executed together so models can trust and cite you."
           items={WHAT_YOU_GET}
         />
 
@@ -681,7 +681,7 @@ export default function AeoPage() {
               id="aeo-engines-title"
               eyebrow="Engines"
               title="where the answers come from."
-              description="Each assistant reads the web its own way. We make sure each one can reach you, then check the answers it gives."
+              description="Every assistant indexes the web differently. We open access to each one and monitor what it says."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -731,7 +731,7 @@ export default function AeoPage() {
         <ServiceSteps
           idPrefix="aeo"
           title="ask, fix, ask again."
-          description="A simple monthly loop. The same questions every time, so you can see what changed and why."
+          description="A repeatable monthly cadence. Same buyer questions, clear changes, next priorities."
           steps={STEPS}
         />
 
@@ -750,7 +750,7 @@ export default function AeoPage() {
                 id="aeo-own-site-title"
                 eyebrow="Proof"
                 title="our own site goes first."
-                description="design-prism.com is built for answer engines. Every file below is live, so you can check the work yourself."
+                description="We test everything on design-prism.com first. Every live file below is open for inspection."
                 titleClassName="max-w-[12ch]"
               />
               <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-background/70 backdrop-blur-sm">
@@ -802,7 +802,7 @@ export default function AeoPage() {
                 id="aeo-honesty-title"
                 eyebrow="How we work"
                 title="no one owns the answer."
-                description="Assistants decide what to say, and the answer can change from one ask to the next. Here is what that means for how we work."
+                description="Assistants control their own outputs, and answers shift over time. That shapes every standard we hold."
                 titleClassName="max-w-[11ch]"
               />
             </Reveal>

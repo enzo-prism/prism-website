@@ -91,9 +91,9 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: WEBSITE_PRICE_LABEL,
-    priceSubLabel: 'Designed and built, with optional care after launch',
+    priceSubLabel: 'Designed and built end to end. Optional care after launch.',
     description:
-      'Custom website design for your brand: page copy, mobile-first layouts, inquiry forms, and analytics, designed and built by Prism to help customers understand your business and take the next step.',
+      'Custom website design, copy, mobile-first development, inquiry forms, and analytics, built to make choosing your business effortless.',
     primaryCta: WEBSITE_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore website design',
@@ -108,9 +108,9 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: CONTENT_PRICE_LABEL,
-    priceSubLabel: 'Month-to-month after the setup',
+    priceSubLabel: 'Month-to-month after setup.',
     description:
-      'Video edits, scripts, social posts, and website content, from planning and review to publishing on your agreed channels. Three-month setup, then ongoing production and improvement.',
+      'Scripts, video edits, social posts, and website editorial, planned, produced, and published. Three-month setup, then ongoing monthly production.',
     primaryCta: CONTENT_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore content',
@@ -125,9 +125,9 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: ADS_PRICE_LABEL,
-    priceSubLabel: 'Ad budget set by channel and market',
+    priceSubLabel: 'Media budget matched to your market.',
     description:
-      'Google, Meta, TikTok, and Yelp campaigns with ad creative, landing pages, and call and inquiry tracking. We launch with a focused budget, tune it every week, and report results in plain English.',
+      'Google, Meta, TikTok, and Yelp campaigns with ad creative, landing pages, and call and inquiry tracking. Tuned weekly, reported clearly.',
     primaryCta: ADS_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore ads',
@@ -142,9 +142,9 @@ export const CANONICAL_PRICING_OFFERS: Record<PricingOfferId, PricingOffer> = {
     billingPeriod: 'CUSTOM',
     priceKind: 'custom',
     priceLabel: AEO_PRICE_LABEL,
-    priceSubLabel: 'Fixes scoped to the questions that matter',
+    priceSubLabel: 'Scoped to the questions that matter.',
     description:
-      'Answer engine optimization for ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity. We audit where you appear, fix what AI search can read about you, and re-check your customer questions every month.',
+      'Answer engine optimization for ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity. Audited, fixed, and re-checked every month.',
     primaryCta: AEO_WAITLIST_CTA,
     secondaryCta: {
       label: 'Explore AEO',

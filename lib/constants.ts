@@ -122,19 +122,19 @@ export const NAV_SERVICE_ITEMS: NavServiceItem[] = [
   {
     label: 'Website Design',
     href: '/website-design',
-    description: 'Custom design that makes choosing you easy.',
+    description: 'Custom sites built to win the client.',
     icon: 'website',
   },
   {
     label: 'Content',
     href: '/content',
-    description: 'Video, photo and posts people actually watch.',
+    description: 'Video, photo, and writing worth watching.',
     icon: 'content',
   },
   {
     label: 'Ads',
     href: '/ads',
-    description: 'Campaigns that point to a page worth landing on.',
+    description: 'Paid campaigns built for qualified inquiries.',
     icon: 'ads',
   },
   {

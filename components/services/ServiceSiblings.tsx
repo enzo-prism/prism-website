@@ -70,7 +70,7 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
           id="service-siblings-title"
           eyebrow="Prism services"
           title="also from Prism."
-          description="Website design, content, ads, and AEO. One team, so each one makes the others work harder."
+          description="Four disciplines, one senior team. Built to compound together."
         />
       </Reveal>
       {/* Three siblings: a row of three on desktop; on tablets the last card
