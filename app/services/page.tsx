@@ -341,8 +341,8 @@ export default function ServicesPage() {
                 style={rise(160)}
               >
                 Four disciplines, one senior team. Website design earns trust.
-                Content builds demand. Ads capture intent. AEO puts you in AI
-                answers.
+                Content builds demand. Ads capture intent. AEO builds visibility
+                in AI answers.
               </p>
               <div
                 className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"

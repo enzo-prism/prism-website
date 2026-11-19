@@ -632,7 +632,7 @@ export default function AeoPage() {
                 id="aeo-shift-title"
                 eyebrow="The shift"
                 title="search is turning into answers."
-                description="Buyers increasingly ask an assistant and get one reply with a handful of sources. AEO puts you in that shortlist."
+                description="Buyers increasingly ask an assistant and get one reply with a handful of sources. AEO is the work of earning a place on that shortlist."
                 titleClassName="max-w-[13ch]"
               />
             </Reveal>
