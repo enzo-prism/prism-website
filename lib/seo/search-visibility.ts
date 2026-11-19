@@ -108,14 +108,12 @@ export const NOINDEX_PREFIXES = [
 // releases, and founder essays stay readable on the site but are noindex
 // (trimmed 2026-11-09) so the indexed blog matches what Prism sells.
 export const INDEXABLE_BLOG_SLUGS = [
-  'adapting-small-business-ai-search-revolution-2025',
   'ai-ad-stack-2026-practical-guide-for-smb-founders',
   'ai-agents-agentic-commerce-local-business',
   'ai-effortlessly-welcome-more-patients-dental-practice',
   'ai-rip-eyes-out-dental-software',
   'ai-search-for-dental-practice',
   'build-ai-business-system-you-own',
-  'business-visibility-chatgpt',
   'content-is-a-power-law-game-now',
   'content-that-converts-give-away-secrets-sell-implementation',
   'dental-practice-rank-higher-google-search',
@@ -126,12 +124,10 @@ export const INDEXABLE_BLOG_SLUGS = [
   'from-6-impressions-to-hundreds-seo-journey',
   'from-broken-to-beautiful-dental-website-transformation',
   'from-one-video-to-seo-flywheel',
-  'future-of-seo-ai-search',
   'generate-thousands-leads-without-more-ads',
   'google-ads-ai-smb-acquisition-playbook',
   'google-ads-destination-not-working',
   'google-ads-health-personalized-warning',
-  'google-ai-search-revolution-small-business',
   'google-io-2026-ai-search-small-business-playbook',
   'google-maps-visibility-playbook-2025',
   'great-content-collapse',
@@ -144,13 +140,11 @@ export const INDEXABLE_BLOG_SLUGS = [
   'how-to-rank-1-chatgpt',
   'lovable-ai-review-business-owners',
   'modern-reviews-strategy-2025',
-  'new-rules-of-visibility-ai-seo',
   'prism-approach-small-business-growth',
   'prism-flywheel-skyrocket-brick-and-mortar-growth',
   'seo-mystery-beverly-hills-dentist-traffic-from-china',
   'turning-your-website-into-an-ai-powered-seo-flywheel',
   'who-prism-is-for',
-  'winning-ai-search-game',
 ] as const
 
 /**

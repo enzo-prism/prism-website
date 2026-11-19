@@ -25,14 +25,13 @@ export type BlogVideo = {
 }
 
 export const BLOG_VIDEOS: readonly BlogVideo[] = [
-  { id: 'hW5ne_14OQg', title: 'AI Just Hijacked 15% of Google Traffic—Win Yours Back', channel: 'AI News & Strategy Daily | Nate B Jones', ownedByPrism: false, creatorType: 'Organization', uploadDate: '2025-07-17' },
   { id: '_hei2C4164Q', title: 'appear in ai search', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-06-05' },
   { id: 'S_Ol7aMNOeU', title: 'AI Agents Ran My TikTok: 1.2M Views', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2026-09-25' },
   { id: 'nC4OWxh_Vvk', title: 'sell the install', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-08-10' },
   { id: 'OJBEk6UQ1Js', title: 'transform your seo results in 2026', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-12-08' },
   { id: 'cK7Su8MlxLw', title: 'ai growth marketing - cursor, codex, claude opus 4 MAX', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-06-10' },
-  { id: 'zUB5A_ezIOU', title: 'Building a frontier AI search experience', channel: 'Google for Developers', ownedByPrism: false, creatorType: 'Organization', uploadDate: '2025-07-23' },
   { id: 'gWNFna6fgS8', title: "How Claude Code Ranked Me FIRST on Google (It's OVER for SEO Agencies)", channel: 'Greg Isenberg', ownedByPrism: false, creatorType: 'Person', uploadDate: '2025-08-04' },
+  { id: 'IwQYVQ3MohE', title: 'AI Broke the Web: The 7 New Rules of the Game + Why YOU Have an Edge vs Big Companies', channel: 'AI News & Strategy Daily | Nate B Jones', ownedByPrism: false, creatorType: 'Organization', uploadDate: '2025-10-31' },
   { id: '0a-o9DZumjE', title: '$30B Founder: SEO is Dead.. Do This Instead', channel: 'My First Million', ownedByPrism: false, creatorType: 'Organization', uploadDate: '2025-09-15' },
   { id: 'KNTY8yYKNAI', title: 'anyone can be rich with this system', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-07-22' },
   { id: 'huJDr7iw6fw', title: 'Founders: The AI SEO Flywheel We Use to Rank on Google', channel: 'design prism', ownedByPrism: true, creatorType: 'Organization', uploadDate: '2025-12-04' },

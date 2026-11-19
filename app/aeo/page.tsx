@@ -537,6 +537,11 @@ const FAQ_ITEMS = [
       'AEO, or answer engine optimization, is the work of making your business easy for AI assistants and AI search to find, understand, and cite. It covers ChatGPT, Google AI Overviews and AI Mode, Gemini, Claude, Perplexity, and Copilot: what they can read on your site, what other sources say about you, and how clearly your pages answer the questions customers ask.',
   },
   {
+    question: 'Who helps businesses show up in ChatGPT and Gemini answers?',
+    answer:
+      'An AEO agency, or a marketer who knows the work. Prism AEO does it for small businesses: we check what ChatGPT, Google AI Overviews and AI Mode, Gemini, Claude, Perplexity, and Copilot can read about you, fix crawler access, structured data, page answers, and listings, then ask the same questions again every month. Nobody controls what an assistant says, so we report what changes instead of promising placement.',
+  },
+  {
     question: 'How is AEO different from SEO?',
     answer:
       'SEO earns a place in a list of search results. AEO aims for a place inside the answer itself. They share one foundation, and Google’s own guidance says optimizing for its AI features is still SEO, so that is where we start: a crawlable site, useful pages, and accurate business information. AEO adds access for AI crawlers, consistent facts across the web, and tracking of AI answers.',

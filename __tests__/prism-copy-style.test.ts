@@ -52,11 +52,6 @@ const ALLOWED_LINES: Array<{ file: string; contains: string; reason: string }> =
   // UI string, and an example prompt or ad reproduced for the reader are records,
   // not prose, and editing them makes the record wrong.
   {
-    file: path.join("lib", "blog-videos.ts"),
-    contains: "AI Just Hijacked 15% of Google Traffic",
-    reason: "A third-party YouTube video's own title, quoted verbatim. Feeds VideoObject schema.",
-  },
-  {
     file: path.join("content", "blog", "gpt-5-1-codex-test-dentist-website.mdx"),
     contains: "build a full dentist website with multiple pages",
     reason: "The control brief, quoted verbatim. It is the benchmark's fixed input.",

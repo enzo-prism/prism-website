@@ -125,13 +125,8 @@ Best measured examples (verified October 4, 2026):
 ### AI search and visibility
 
 - [AI search for dental practices](https://www.design-prism.com/blog/ai-search-for-dental-practice)
-- [Winning the AI search game](https://www.design-prism.com/blog/winning-ai-search-game)
-- [The new rules of visibility (AI SEO)](https://www.design-prism.com/blog/new-rules-of-visibility-ai-seo)
-- [How to rank #1 in ChatGPT](https://www.design-prism.com/blog/how-to-rank-1-chatgpt)
-- [Business visibility in ChatGPT](https://www.design-prism.com/blog/business-visibility-chatgpt)
-- [The future of SEO is AI search](https://www.design-prism.com/blog/future-of-seo-ai-search)
-- [Google AI search revolution for small business](https://www.design-prism.com/blog/google-ai-search-revolution-small-business)
-- [Google I/O 2026 AI search playbook](https://www.design-prism.com/blog/google-io-2026-ai-search-small-business-playbook)
+- [How to show up in ChatGPT answers: an AEO playbook](https://www.design-prism.com/blog/how-to-rank-1-chatgpt)
+- [Small business SEO in the AI search era (Google AI Search)](https://www.design-prism.com/blog/google-io-2026-ai-search-small-business-playbook)
 - [Turning your website into an AI-powered SEO flywheel](https://www.design-prism.com/blog/turning-your-website-into-an-ai-powered-seo-flywheel)
 - [From 6 impressions to hundreds (SEO journey)](https://www.design-prism.com/blog/from-6-impressions-to-hundreds-seo-journey)
 - [How I ranked #1 in Google in 24 hours](https://www.design-prism.com/blog/how-i-ranked-1-google-24-hours-claude-code)

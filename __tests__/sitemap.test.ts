@@ -15,13 +15,13 @@ describe("sitemap", () => {
         date: "2025-12-14",
         openGraph: { modifiedTime: "2026-09-05T00:00:00.000Z" },
       },
-      { slug: "business-visibility-chatgpt", date: "invalid" },
+      { slug: "how-to-rank-1-chatgpt", date: "invalid" },
     ] as Awaited<ReturnType<typeof mdxData.getAllPosts>>)
 
     const entries = await sitemap()
     expect(entries.find((entry) => entry.url.endsWith("/blog/dental-seo-guide"))?.lastModified)
       .toEqual(new Date("2026-09-05T00:00:00.000Z"))
-    expect(entries.find((entry) => entry.url.endsWith("/blog/business-visibility-chatgpt")))
+    expect(entries.find((entry) => entry.url.endsWith("/blog/how-to-rank-1-chatgpt")))
       .not.toHaveProperty("lastModified")
   })
 

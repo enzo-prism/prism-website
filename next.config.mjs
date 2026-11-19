@@ -212,6 +212,14 @@ images: {
       { source: '/instagram-ads-for-dentists', destination: '/facebook-ads-for-dentists', permanent: true },
       { source: '/dental-practice-rank-higher-google-search', destination: '/blog/dental-practice-rank-higher-google-search', permanent: true },
 
+      // AI search posts merged into two cornerstone guides (2026-11-18).
+      { source: '/blog/business-visibility-chatgpt', destination: '/blog/how-to-rank-1-chatgpt', permanent: true },
+      { source: '/blog/winning-ai-search-game', destination: '/blog/how-to-rank-1-chatgpt', permanent: true },
+      { source: '/blog/new-rules-of-visibility-ai-seo', destination: '/blog/how-to-rank-1-chatgpt', permanent: true },
+      { source: '/blog/future-of-seo-ai-search', destination: '/blog/how-to-rank-1-chatgpt', permanent: true },
+      { source: '/blog/google-ai-search-revolution-small-business', destination: '/blog/google-io-2026-ai-search-small-business-playbook', permanent: true },
+      { source: '/blog/adapting-small-business-ai-search-revolution-2025', destination: '/blog/google-io-2026-ai-search-small-business-playbook', permanent: true },
+
       // Old content -> closest current destinations
       { source: '/dr-kris-hamamoto', destination: '/', permanent: true },
       { source: '/dr-ahmed-mataria-dental-care-innovation', destination: '/case-studies', permanent: true },

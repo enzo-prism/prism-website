@@ -475,7 +475,6 @@ const SLUG_OVERRIDES: Record<string, PrismImpactConfig> = {
   "6m-arr-playbook": ADS_IMPACT,
   "differentiation-is-survival": AI_IMPACT,
   "the-ai-shift-already-happened-what-it-means-for-your-business": AI_IMPACT,
-  "new-rules-of-visibility-ai-seo": SEO_IMPACT,
   "gpt-5-2-vs-gpt-5-1-codex-max-dentist-website": DENTISTRY_IMPACT,
   "dental-practice-rank-higher-google-search": SEO_IMPACT,
 }
