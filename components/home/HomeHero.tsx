@@ -1,5 +1,6 @@
 import { ArrowDown } from 'lucide-react'
 
+import { HomeAppCard, HomeAppPill } from '@/components/home/HomeAppCallout'
 import HomeLogoRail from '@/components/home/HomeLogoRail'
 import HomeRefraction from '@/components/home/HomeRefraction'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
@@ -12,7 +13,9 @@ import { Button } from '@/components/ui/button'
  * Homepage hero: live capacity, the tagline, one primary action, the
  * refraction scene that shows what Prism does in one picture (your business
  * goes in as plain light, leaves as every channel at once), and the client
- * logo rail.
+ * logo rail. A pointer to the Prism Grow app sits in negative space
+ * (HomeAppCallout): a card beside the prism on desktop, a pill under the
+ * actions below lg.
  */
 export default function HomeHero() {
   return (
@@ -71,12 +74,14 @@ export default function HomeHero() {
             </TrackedAnchor>
           </Button>
         </div>
+
+        <HomeAppPill />
       </div>
 
-      <HomeRefraction
-        labels={HOMEPAGE_HERO.spectrumLabels}
-        className="mt-0 sm:-mt-4 lg:-mt-5"
-      />
+      <div className="relative mt-0 sm:-mt-4 lg:-mt-5">
+        <HomeRefraction labels={HOMEPAGE_HERO.spectrumLabels} />
+        <HomeAppCard />
+      </div>
 
       <HomeLogoRail />
     </section>

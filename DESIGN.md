@@ -268,6 +268,12 @@ sets the tagline in `text-hero` on two lines ("impossible is" in
 (`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
 appears, and closes with the client logo rail. With a fine pointer the beam
 and fan turn a few degrees toward the cursor (`RefractionPointer`).
+Its pointer to Prism Grow (`components/home/HomeAppCallout.tsx`) never joins
+the tagline column's stack: from `xl` it is a frosted notification card in
+the scene's dark left, level with the prism and clear of the beam, landing
+after the spectrum forms; below `xl` it is a quiet pill under the actions,
+mirroring the status pill above the headline. It never outranks the waitlist
+button.
 `/app` uses the same `prism-glint` on its one accent word ("leads.") and
 otherwise `text-gradient`, with the drawn Prism Grow phone as its hero
 surface and the demo alert as its single satellite.
