@@ -142,6 +142,16 @@
       "ads": "https://www.design-prism.com/waitlist?focus=ads",
       "aeo": "https://www.design-prism.com/waitlist?focus=aeo"
     },
+    "prefill": {
+      "description": "Link to the form with non-personal answers already filled in. The person still reviews every step, types their own name and email, and submits it themselves.",
+      "query_params": {
+        "focus": "Comma-separated services: aeo, website, content, ads.",
+        "timing": "One start_timing value: asap, 1_3_months, 3_6_months, 6_plus_months, exploring.",
+        "website": "The business's public website (a domain or an http(s) URL, up to 200 characters)."
+      },
+      "not_accepted": "Names, email, phone, and goals are never read from the URL, so personal details stay out of links.",
+      "example": "https://www.design-prism.com/waitlist?focus=aeo,website&timing=1_3_months&website=example.com"
+    },
     "how_to_submit": "Fill the form on the page in a browser, one step at a time, and submit only with the user's authorization. A filled form is not a received application: only the /waitlist/thank-you confirmation page confirms it was accepted. There is no public API for applications.",
     "steps": [
       {
@@ -247,6 +257,11 @@
         ]
       }
     ]
+  },
+  "machine_readable": {
+    "llms_txt": "https://www.design-prism.com/llms.txt",
+    "llms_full_txt": "https://www.design-prism.com/llms-full.txt",
+    "markdown_copies": "Every indexable page has a markdown copy at its URL plus .md (homepage: https://www.design-prism.com/index.md; posts: /blog/<slug>.md). Requests that send Accept: text/markdown to the page URL get the same markdown."
   },
   "updated": "2026-11-18",
   "last_verified": "2026-10-04"

@@ -59,6 +59,7 @@ pnpm git:cleanup      # Clean stale branches
 | Project map | `docs/project-overview.md` |
 | Analytics + conversions | `docs/analytics.md`, `utils/analytics.ts`, `lib/lead-values.ts` |
 | Search visibility | `lib/seo/search-visibility.ts` |
+| Agent-readable copies | `lib/seo/markdown-routes.ts` + `app/api/markdown` (`/<path>.md`, `Accept: text/markdown`), `lib/llms-full.ts` (`/llms-full.txt`), `public/llms.txt`, `public/ai-data.json` |
 | Canonical pricing | `lib/pricing-model.ts` |
 | Waitlist funnel | `lib/waitlist.ts`, `components/forms/WaitlistForm.tsx`, `app/waitlist/page.tsx` |
 | Design system | `DESIGN.md`, `components/ui/*` (shadcn), `components/prism/*` (marketing kit), `app/globals.css` (Spectrum utilities) |

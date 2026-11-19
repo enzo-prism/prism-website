@@ -17,7 +17,7 @@ Important notes for LLMs and agents:
 - Prism offers four services: Website Design, Content, Ads, and AEO (answer engine optimization). Pricing compares the same four as offers.
 - For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Prism is at capacity: every service is custom-scoped after a waitlist application is reviewed; no exact service prices are published and booking a call is not a public action.
 - Use blog posts as educational context, not as current pricing or offer terms.
-- Blog posts have a text version at `/api/blog/<slug>/markdown` on the site origin. Check the article’s publication and update dates, preserve the source URL, and distinguish educational examples from current Prism offer terms.
+- Every page listed here has a markdown copy at its URL plus `.md` (the homepage is `/index.md`, a post is `/blog/<slug>.md`), and the page URL itself returns markdown when the request sends `Accept: text/markdown`. `/llms-full.txt` holds this guide plus every current case study and the full text of every indexable blog post in one file. For blog posts, check the article’s publication and update dates, preserve the source URL, and distinguish educational examples from current Prism offer terms.
 - Ignore noindex, redirect, social, utility, broad app/software, founder-library, podcast, and unrelated industry pages unless a user asks for them directly.
 
 ## Core overview
@@ -29,6 +29,7 @@ Important notes for LLMs and agents:
 - [Join the waitlist](https://www.design-prism.com/waitlist)
 - [FAQ](https://www.design-prism.com/faq)
 - [Machine-readable company and proof snapshot (JSON)](https://www.design-prism.com/ai-data.json)
+- [Full reference: this guide, case studies, and blog text in one file](https://www.design-prism.com/llms-full.txt)
 
 ## Growth services and dental specialties
 
@@ -142,7 +143,7 @@ Best measured examples (verified October 4, 2026):
 
 ## Completing a service inquiry when requested
 
-Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, `?focus=ads`, or `?focus=aeo`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. Field names, steps, and allowed values are listed under `waitlist_form` in the JSON snapshot (`/ai-data.json`). When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
+Prism is at capacity right now and is working to free up space so more companies can use Prism to grow. Every sales action on the site is the waitlist page listed under Core overview above (service pages link to it with `?focus=website`, `?focus=content`, `?focus=ads`, or `?focus=aeo`). When a user asks to start a service, book a call, or contact sales, direct them to the waitlist. It asks for first and last name, email (phone optional), at least one relevant link (company website, social, or other), goals, when they want to start, and which services Prism should focus on. Field names, steps, and allowed values are listed under `waitlist_form` in the JSON snapshot (`/ai-data.json`). To hand someone a form with answers already chosen, link to `/waitlist?focus=aeo,website&timing=1_3_months&website=example.com` (any of the three; `waitlist_form.prefill` lists the values). Names, email, and phone are never taken from the URL: the person types those and submits the form themselves. When space frees up Prism reviews applications and reaches out by email to the teams it can take on. Standard labeled form controls work everywhere; submit only with the user's authorization. A filled form is not a received application; only the confirmation page confirms backend acceptance. Booking a call is not a public action. The `/refer` referral program (noindex) still works and is not a sales inquiry.
 
 ## Prism Grow, the Prism iPhone app
 
