@@ -14,7 +14,6 @@ export default function OlympicWalkthrough() {
         id="walkthrough-title"
         eyebrow="The shopper’s view"
         title="from shortlist to test ride."
-        description="Follow a rider from the Fantic catalog to a request for a ride at the Tahoe shop they choose."
       />
       <video
         controls
@@ -37,30 +36,26 @@ export default function OlympicWalkthrough() {
       </video>
       <ol className="mt-8 grid gap-6 border-y border-border py-6 sm:grid-cols-3">
         <li>
-          <strong>Compare.</strong>
-          <p className="mt-2 text-muted-foreground">
-            Trail, enduro and urban models sit in one catalog with prices
-            alongside the bikes.
+          <strong>01 · Compare.</strong>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Trail, enduro, and urban models with live pricing.
           </p>
         </li>
         <li>
-          <strong>Choose.</strong>
-          <p className="mt-2 text-muted-foreground">
-            Open a model to see the terrain and rider it suits, and what else to
-            consider.
+          <strong>02 · Choose.</strong>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Terrain fit and specs at a glance.
           </p>
         </li>
         <li>
-          <strong>Ask the shop.</strong>
-          <p className="mt-2 text-muted-foreground">
-            Choose a location and open a prepared test-ride email. The rider and
-            shop agree on a time directly.
+          <strong>03 · Request a ride.</strong>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Pick a Tahoe shop and send a prepared test-ride request.
           </p>
         </li>
       </ol>
-      <p className="mt-6 max-w-prose text-muted-foreground">
-        The visible result is a shorter path to the shop. A completed ride or
-        sale would need separate confirmation from the shop.
+      <p className="mt-4 font-mono text-xs text-subtle">
+        Live capability verified. Completed rides and sales require shop records.
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-5">
         <WaitlistButton

@@ -276,7 +276,7 @@ describe('AeoPage sections', () => {
 
     const faq = sectionByHeadingId('aeo-faq-title')
     const disclosures = Array.from(faq.querySelectorAll('details'))
-    expect(disclosures[0]).toHaveAttribute('open')
+    expect(disclosures[0]).not.toHaveAttribute('open')
 
     expect(mockFaqSchema).toHaveBeenCalled()
     const questions = mockFaqSchema.mock.calls[0][0].questions

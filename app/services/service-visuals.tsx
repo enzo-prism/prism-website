@@ -29,31 +29,31 @@ function WebsiteVisual() {
 }
 
 const CONTENT_ROWS = [
-  { day: 'Mon', title: 'Reel edit, three cuts', icon: Clapperboard, state: 'Published' },
-  { day: 'Wed', title: 'Service page story', icon: FileText, state: 'In review' },
-  { day: 'Fri', title: 'Team photo carousel', icon: Images, state: 'Planned' },
+  { day: 'Mon', title: 'Reel edit', icon: Clapperboard, state: 'Live' },
+  { day: 'Wed', title: 'Service story', icon: FileText, state: 'Review' },
+  { day: 'Fri', title: 'Team photos', icon: Images, state: 'Queued' },
 ] as const
 
 function ContentVisual() {
   return (
-    <div className="flex h-56 flex-col justify-center gap-2 px-6">
+    <div className="flex h-56 flex-col justify-center gap-2 px-4 sm:px-5">
       {CONTENT_ROWS.map((row, index) => {
         const Icon = row.icon
         return (
           <div
             key={row.title}
-            className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-popover px-3.5 py-2.5"
+            className="flex items-center gap-2.5 rounded-xl border border-white/[0.07] bg-popover px-3 py-2.5"
           >
-            <span className="w-8 font-mono text-[11px] text-subtle">{row.day}</span>
-            <Icon className="size-4 shrink-0 text-muted-foreground" />
-            <span className="min-w-0 flex-1 truncate text-[13px] text-foreground/90">
+            <span className="w-7 shrink-0 font-mono text-[11px] text-subtle">{row.day}</span>
+            <Icon className="size-3.5 shrink-0 text-muted-foreground" />
+            <span className="min-w-0 flex-1 truncate text-[12.5px] text-foreground/90">
               {row.title}
             </span>
             <span
               className={
                 index === 0
-                  ? 'inline-flex items-center gap-1 text-[11px] text-foreground'
-                  : 'text-[11px] text-subtle'
+                  ? 'inline-flex shrink-0 items-center gap-1 text-[11px] text-foreground'
+                  : 'shrink-0 text-[11px] text-subtle'
               }
             >
               {index === 0 ? <Check className="size-3" /> : null}
@@ -103,20 +103,20 @@ const AEO_SOURCES = [
 
 function AeoVisual() {
   return (
-    <div className="flex h-56 flex-col justify-center gap-3 px-6">
-      <p className="ml-auto w-fit max-w-[24ch] rounded-2xl rounded-br-md border border-white/[0.08] bg-white/[0.05] px-3.5 py-2 text-[13px] leading-snug text-foreground/90">
-        Who&apos;s the best family dentist near me?
+    <div className="flex h-56 flex-col justify-center gap-2 px-4 sm:px-5">
+      <p className="ml-auto w-fit max-w-[22ch] rounded-2xl rounded-br-md border border-white/[0.08] bg-white/[0.05] px-3 py-1.5 text-[12px] leading-snug text-foreground/90">
+        Best family dentist near me?
       </p>
-      <div className="rounded-xl border border-white/[0.08] bg-popover p-4">
+      <div className="rounded-xl border border-white/[0.08] bg-popover p-3.5">
         <p className="flex items-center gap-1.5 text-[11px] text-subtle">
           <MessageSquareQuote className="size-3" />
           Answer
         </p>
-        <p className="mt-1.5 text-[13px] leading-5 text-muted-foreground">
+        <p className="mt-1 text-[12px] leading-5 text-muted-foreground">
           <span className="font-medium text-foreground">Your business</span>{' '}
           is a strong fit for nervous kids.
         </p>
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-2.5 flex flex-wrap gap-1">
           {AEO_SOURCES.map((source, index) => (
             <span
               key={source.label}

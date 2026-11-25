@@ -326,7 +326,7 @@ export function DentalFaq({
             titleClassName="max-w-[13ch]"
           />
         </div>
-        <FaqList items={items} name={`${idPrefix}-faq`} defaultOpen={0} />
+        <FaqList items={items} name={`${idPrefix}-faq`} />
       </div>
     </Section>
   )

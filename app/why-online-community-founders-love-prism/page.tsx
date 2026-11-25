@@ -168,7 +168,7 @@ export default function CommunityFoundersPage() {
           eyebrow="Community growth playbook"
           title="build a thriving community without drowning in tech."
           titleClassName="max-w-[16ch]"
-          description="Prism helps community founders grow faster by handling the systems, design, and data so you can stay focused on your people."
+          description="Websites, join flows, and analytics for online community founders."
           location={`${LOCATION} hero`}
           ctaHref={WAITLIST_CTA.href}
           secondary={{ label: "See case studies", href: "/case-studies", trackingLabel: "see case studies" }}
@@ -183,11 +183,18 @@ export default function CommunityFoundersPage() {
           />
         </LandingHero>
 
+        <WhyCaseStudies
+          id="community-case-studies"
+          title="community-driven brands growing with Prism."
+          description="Live community platforms built for signups and retention."
+          studies={[{ slug: "rebellious-aging" }, { slug: "we-are-saplings" }, { slug: "leadership-retreat" }]}
+          location={LOCATION}
+        />
+
         <WhyOutcomeBand
           id="community-outcomes"
           eyebrow="What changes"
           title="online communities that grow faster and smarter."
-          description="Every improvement Prism makes, from your site and funnels to analytics and automation, ladders up to these three outcomes."
           items={coreOutcomes}
         />
 
@@ -199,7 +206,7 @@ export default function CommunityFoundersPage() {
             <WhyJourneyPanel
               eyebrow="Member journey"
               stages={["Free", "Paying Member", "Advocate"]}
-              caption="Automation, incentives, and messaging guide every step from curious visitor to vocal advocate."
+              caption="Clear onboarding turns visitors into vocal advocates."
             />
           }
         >
@@ -219,7 +226,6 @@ export default function CommunityFoundersPage() {
           id="community-difference"
           eyebrow="What makes Prism different"
           title="we think like founders and act like your in-house growth team."
-          description="Online community founders have a lot on their plate. Prism keeps you focused on what matters most."
           reverse
           panel={
             <WhyPanel eyebrow="Prism takes care of">
@@ -234,19 +240,10 @@ export default function CommunityFoundersPage() {
           </div>
         </WhySplit>
 
-        <WhyCaseStudies
-          id="community-case-studies"
-          title="community-driven brands growing with Prism."
-          description="From wellness movements to parenting collectives, Prism powers communities built on connection and impact."
-          studies={[{ slug: "rebellious-aging" }, { slug: "we-are-saplings" }, { slug: "leadership-retreat" }]}
-          location={LOCATION}
-        />
-
         <WhySplit
           id="community-staying"
           eyebrow="Why founders stay"
           title="flexible. reliable. 100% yours."
-          description="Prism keeps your community’s site, funnels, and data improving while everything stays in your name."
           panel={
             <WhyPanel>
               <WhyIconList items={retentionBenefits} />

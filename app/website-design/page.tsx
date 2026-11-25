@@ -72,36 +72,32 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Palette,
     title: 'design that feels like your business',
-    body: 'Typography, color, spacing, and motion built as one custom system. Never a template.',
+    body: 'Custom type, color, spacing, and motion. Zero templates.',
     className: 'md:col-span-4',
     visual: <DesignSpecimen />,
   },
   {
     icon: Smartphone,
     title: 'designed for the phone first',
-    body: 'Layouts, tap targets, and calls to action start on mobile, then scale cleanly to every screen.',
-    points: [
-      'Mobile-first, responsive layouts',
-      'Accessible, semantic page structure',
-      'Page speed checks before launch',
-    ],
+    body: 'Fast, thumb-friendly layouts built for mobile first.',
+    points: ['Mobile-first layouts', 'Semantic HTML', 'Speed checked'],
   },
   {
     icon: BarChart3,
     title: 'know what brings people in',
-    body: 'GA4 and conversion tracking ship at launch so you see every source, form, and call.',
+    body: 'GA4 and conversion tracking live on day one.',
     visual: <TrackingList />,
   },
   {
     icon: PenLine,
     title: 'copy designed in, not pasted in',
-    body: 'We write around what buyers ask before they call, and shape every layout around the words.',
+    body: 'Clear answers built into every layout.',
     visual: <QuestionList />,
   },
   {
     icon: KeyRound,
     title: 'yours, completely',
-    body: 'Design, code, content, and analytics belong to you on launch day. Keep Prism running it, or take it in-house.',
+    body: 'Domain, code, content, and data belong to you.',
     visual: <OwnershipList />,
   },
 ]
@@ -111,19 +107,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: FileText,
     title: 'join the waitlist',
     detail: 'First',
-    body: 'Share your links and goals. We review applications each monthly intake and reach out with a clear plan and price.',
+    body: 'Share your site and goal. We confirm scope and price up front.',
   },
   {
     icon: Palette,
     title: 'design, then build',
     detail: 'Design',
-    body: 'We set the visual direction, write and design every page, build the site, and share a live preview before launch.',
+    body: 'Custom visual direction, build, and live preview before launch.',
   },
   {
     icon: Rocket,
     title: 'launch and measure',
     detail: 'Launch',
-    body: 'We verify analytics, search structure, speed, and every inquiry path, then launch and plan what comes next.',
+    body: 'Tracking, speed, and search verified on launch day.',
   },
 ]
 
@@ -331,8 +327,7 @@ export default function WebsiteDesignPage() {
           description={
             <>
               <span className="text-foreground">Designed and built by Prism</span>
-              : a custom look for your brand, sharp copy, and a fast mobile
-              build with analytics and search ready on day one.
+              : a custom look for your brand, fast mobile build, and tracking live on day one.
             </>
           }
           ctaHref={WEBSITE_WAITLIST_CTA.href}
@@ -350,7 +345,6 @@ export default function WebsiteDesignPage() {
         <ServiceBento
           idPrefix="website-design"
           title="designed to win the visit."
-          description="Brand, copy, design, and engineering from one team. Built to look unmistakable, load fast, and prove what works."
           items={WHAT_YOU_GET}
         />
 
@@ -384,14 +378,11 @@ export default function WebsiteDesignPage() {
                   }
                   titleClassName="max-w-[16ch]"
                 />
-                <p className="text-lead max-w-[48ch] text-pretty text-foreground">
+                <p className="text-lead max-w-[44ch] text-pretty text-foreground">
                   Support discovery on Google and in AI.
                 </p>
-                <p className="max-w-[52ch] text-pretty text-[15px] leading-7 text-muted-foreground">
-                  We structure your services, locations, and credentials so
-                  Google and AI assistants read your business accurately. Clear
-                  facts support discovery; rankings and recommendations are
-                  never guaranteed.
+                <p className="max-w-[46ch] text-pretty text-sm leading-6 text-muted-foreground">
+                  Structured services, locations, and schema. Rankings are never guaranteed.
                 </p>
                 <TrackedLink
                   href="/aeo"
@@ -436,7 +427,6 @@ export default function WebsiteDesignPage() {
         <ServiceSteps
           idPrefix="website-design"
           title="it starts on the waitlist."
-          description="Prism is fully booked. When your intake opens, we align on scope, timeline, and price before a single pixel is drawn."
           steps={STEPS}
         />
 
@@ -446,7 +436,6 @@ export default function WebsiteDesignPage() {
               id="website-design-results-title"
               eyebrow="Results"
               title="measured at the source."
-              description="Craft is proven after launch. Sourced Google Search Console results and verbatim client notes."
             />
           </Reveal>
           <div className="mt-12 grid gap-4 sm:mt-16 lg:grid-cols-12">
@@ -511,11 +500,10 @@ export default function WebsiteDesignPage() {
 
         <OwnerDecision
           eyebrow="Design in use"
-          title="what happens after the first tap?"
-          body="In Tahoe, a rider compares bikes and requests a test ride. In Belize, a guest checks whether a private estate fits a trip and reaches the concierge. Each site gives its visitor a different next step."
+          title="see real customer flows."
           links={[
-            { label: "Follow the test-ride journey", href: "/case-studies/olympic-bootworks#walkthrough" },
-            { label: "Explore Canary Cove", href: "/case-studies/canary-cove" },
+            { label: "Olympic Bootworks walkthrough", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Canary Cove estate", href: "/case-studies/canary-cove" },
           ]}
         />
         <ServiceSiblings current="website" />

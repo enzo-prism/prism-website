@@ -27,6 +27,7 @@ import {
 import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
 import { BrowserFrame } from '@/components/prism/browser-frame'
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import DentalAdsWorksheet from '@/components/services/DentalAdsWorksheet'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Reveal } from '@/components/prism/reveal'
@@ -198,7 +199,7 @@ export default function GoogleDentalAdsPage() {
         <LandingHero
           eyebrow="Prism × Google Ads for dentists"
           title="prism + google ads: growing dental practices with precision."
-          description="we help dental practices attract more high-value patients with google ads structured around current policy, clear landing paths, and measurable search intent."
+          description="Policy-aware Google Ads, dedicated landing pages, and call tracking for dental practices."
           location="google dental ads hero"
           ctaHref={GET_FREE_AUDIT_HREF}
           ctaLabel={FREE_AUDIT_CTA_TEXT}
@@ -206,248 +207,19 @@ export default function GoogleDentalAdsPage() {
           glow="blue"
           titleClassName="max-w-[18ch]"
         >
-          <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center text-[15px] text-muted-foreground">
-            <p>
-              want to add paid social too? see{' '}
-              <TextLink href="/tiktok-ads-for-dentists">tiktok ads for dentists</TextLink>.
-            </p>
-            <p>
-              need a HIPAA-aware intake workflow? see our{' '}
-              <TextLink href="/google/dental-patient-forms">google workspace patient forms guide</TextLink>.
-            </p>
-          </div>
+          <p className="mx-auto text-center text-sm text-muted-foreground">
+            Also:{' '}
+            <TextLink href="/tiktok-ads-for-dentists">TikTok ads for dentists</TextLink>
+            {' · '}
+            <TextLink href="/google/dental-patient-forms">HIPAA-aware patient forms</TextLink>
+            {' · '}
+            <TextLink href="/dental-practice-seo-expert">dental SEO</TextLink>
+            {' · '}
+            <TextLink href="/facebook-ads-for-dentists">Facebook ads</TextLink>.
+          </p>
         </LandingHero>
 
         <DentalAdsWorksheet />
-        <Section aria-labelledby="gda-why-title">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-            <Reveal>
-              <SectionHeader
-                id="gda-why-title"
-                eyebrow="Why Google Ads matter for dentists"
-                title="meet patients while they are actively searching on google."
-                titleClassName="max-w-[16ch]"
-              />
-            </Reveal>
-            <Reveal delay={100} className="space-y-5 text-lead text-muted-foreground lg:pt-12">
-              <p>
-                When someone searches “dentist near me” or “dental implants San
-                Jose,” Google decides which practices appear first. That top
-                spot is where the new patient calls happen.
-              </p>
-              <p>
-                Google Ads puts your practice in front of those patients at the
-                exact moment they’re ready to book, driving measurable results,
-                not empty clicks.
-              </p>
-              <p>
-                At Prism, we specialize in helping dental teams use Google Ads
-                with policy-aware structure, useful measurement, and ongoing
-                optimization. results vary by market, budget, and practice.
-              </p>
-            </Reveal>
-          </div>
-          <Reveal delay={150} className="mt-12">
-            <Card className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <p className="max-w-[64ch] text-[15px] leading-7 text-muted-foreground">
-                want compounding organic visibility too? work with our{' '}
-                <TextLink href="/dental-practice-seo-expert">dental seo</TextLink> playbook to improve maps + organic
-                rankings. for facebook &amp; instagram campaigns, see{' '}
-                <TextLink href="/facebook-ads-for-dentists">facebook ads for dentists</TextLink>.
-              </p>
-              <ArrowLink href="/dental-practice-seo-expert" className="shrink-0">
-                see dental seo
-              </ArrowLink>
-            </Card>
-          </Reveal>
-        </Section>
-
-        <Section aria-labelledby="gda-landscape-title">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-40" />
-            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
-              <div className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
-                <SectionHeader
-                  id="gda-landscape-title"
-                  eyebrow="The current landscape"
-                  title="what’s changed, and how to stay ahead."
-                  description="Google has tightened its Health in Personalized Advertising policies, affecting how dental practices, especially those advertising implants, oral surgery, and gum disease treatment, can target patients."
-                />
-              </div>
-              <div className="flex flex-col gap-6">
-                <figure className="overflow-hidden rounded-2xl border border-white/10 bg-background/60 p-3">
-                  <Image
-                    src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761753033/Google_Ads_notification_qzgj35.png"
-                    alt="Google Ads health policy notification"
-                    width={1200}
-                    height={716}
-                    className="h-auto w-full rounded-xl object-contain"
-                    sizes="(min-width: 1024px) 560px, (min-width: 768px) 70vw, 100vw"
-                  />
-                </figure>
-                <div>
-                  <p className="text-[15px] font-semibold text-foreground">Here’s the short version:</p>
-                  <ul className="mt-4 space-y-3 text-[15px] leading-7 text-muted-foreground">
-                    <li className="flex items-start gap-3">
-                      <CircleCheck className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
-                      <span>
-                        You can advertise dental services, including implants,
-                        Invisalign, and whitening.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CircleAlert className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
-                      <span>
-                        You can’t target people based on health conditions (like
-                        “missing teeth” or “gum problems”).
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CircleX className="mt-1 size-4 shrink-0 text-foreground" aria-hidden />
-                      <span>
-                        Some targeting features, like remarketing or custom
-                        audiences, are restricted for health-related campaigns.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-                <p className="text-[15px] leading-7 text-muted-foreground">
-                  We build your campaigns with these rules in mind, so you stay
-                  compliant while reaching the right patients through search
-                  intent, location targeting, and high-performing landing pages.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="gda-services-title">
-          <Reveal>
-            <SectionHeader
-              id="gda-services-title"
-              eyebrow="What we do"
-              title="google ads built for real dental growth."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {servicesHighlights.map((service, index) => {
-              const Icon = service.icon
-              return (
-                <Reveal key={service.title} delay={index * 80}>
-                  <Card className="flex h-full flex-col p-6 sm:p-7">
-                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                      <Icon className="size-5 text-foreground" aria-hidden />
-                    </span>
-                    <h3 className="mt-6 text-[19px] font-semibold tracking-[-0.02em] text-foreground">{service.title}</h3>
-                    <p className="mt-2 flex-1 text-[15px] leading-7 text-muted-foreground">{service.description}</p>
-                    <ArrowLink href={service.href} className="mt-6 self-start">
-                      {service.ctaLabel}
-                    </ArrowLink>
-                  </Card>
-                </Reveal>
-              )
-            })}
-          </div>
-        </Section>
-
-        <Section id={STRUCTURE_SECTION_ID} aria-labelledby="gda-structure-title" className="scroll-mt-20">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-            <Reveal className="lg:sticky lg:top-28 lg:self-start">
-              <SectionHeader
-                id="gda-structure-title"
-                eyebrow="How we structure dental ads"
-                title="a policy-aware structure built for useful measurement."
-                titleClassName="max-w-[15ch]"
-              />
-            </Reveal>
-            <Reveal delay={100}>
-              <ol className="divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
-                {structurePillars.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <li key={item.title} className="flex items-start gap-5 p-5 sm:p-7">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                        <Icon className="size-[18px] text-foreground" aria-hidden />
-                      </span>
-                      <div>
-                        <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
-                        <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ol>
-            </Reveal>
-          </div>
-        </Section>
-
-        <Section id={POLICY_SECTION_ID} aria-labelledby="gda-policy-title" className="scroll-mt-20">
-          <Reveal>
-            <SectionHeader
-              id="gda-policy-title"
-              eyebrow="What’s allowed vs. restricted"
-              title="simple guide: what’s okay, what’s not."
-              description="We translate Google’s Health in Personalized Advertising policies into practical guardrails. Google controls approvals, eligibility, and enforcement."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 md:grid-cols-2">
-            <Reveal>
-              <Callout tone="good" title="Allowed" icon={<CircleCheck className="size-4" aria-hidden />} className="h-full">
-                <CheckList className="mt-1" items={allowedItems} />
-              </Callout>
-            </Reveal>
-            <Reveal delay={100}>
-              <Callout
-                tone="warn"
-                title="Restricted / Not Allowed"
-                icon={<CircleX className="size-4" aria-hidden />}
-                className="h-full"
-              >
-                <CheckList marker="dot" className="mt-1" items={restrictedItems} />
-              </Callout>
-            </Reveal>
-          </div>
-        </Section>
-
-        <Section id={LSA_SECTION_ID} aria-labelledby="gda-lsa-title" className="scroll-mt-20">
-          <SpotlightCard className="grid gap-10 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14">
-            <div className="flex flex-col gap-6">
-              <Eyebrow>Local Services Ads (LSA)</Eyebrow>
-              <h2 id="gda-lsa-title" className="text-title text-gradient max-w-[14ch] text-balance pb-1">
-                show up first with google’s new “verified” badge.
-              </h2>
-            </div>
-            <div className="space-y-5 text-[15px] leading-7 text-muted-foreground">
-              <p>
-                Google Verified is now the single verification badge for
-                eligible Local Services Ads advertisers. Existing eligible
-                advertisers were transitioned to the badge, while new
-                advertisers must complete Google&apos;s screening and
-                verification process. The former Google Guarantee program and
-                its money-back guarantee are discontinued.
-              </p>
-              <p>
-                Local Services Ads can appear above traditional search results
-                and use a pay-per-lead model. Eligibility, screening
-                requirements, and lead pricing vary by category and market.
-              </p>
-              <p>
-                We can support LSA setup, verification steps, and lead tracking;
-                Google makes the final eligibility and badge decisions.
-              </p>
-              <Button asChild size="lg" variant="outline">
-                <Link
-                  href="https://support.google.com/localservices/answer/16498018?hl=en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Read Google&apos;s badge guide
-                  <ArrowUpRight aria-hidden />
-                </Link>
-              </Button>
-            </div>
-          </SpotlightCard>
-        </Section>
 
         <Section aria-labelledby="gda-cases-title">
           <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -461,7 +233,7 @@ export default function GoogleDentalAdsPage() {
               See full case studies
             </ArrowLink>
           </Reveal>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
             {caseStudies.map((study, index) => (
               <Reveal key={study.name} delay={index * 80}>
                 <Link
@@ -490,73 +262,174 @@ export default function GoogleDentalAdsPage() {
           </div>
         </Section>
 
-        <Section id={REPORTS_SECTION_ID} aria-labelledby="gda-scopes-title" className="scroll-mt-20">
-          <Reveal>
-            <SectionHeader
-              id="gda-scopes-title"
-              eyebrow="Management scopes"
-              title="example google ads management scopes."
-            >
-              <p className="max-w-[58ch] text-[15px] leading-7 text-muted-foreground">
-                Final scope and pricing depend on budget, locations, services,
-                tracking, and account condition. For core offers, see{' '}
-                <TextLink href="/pricing">Prism pricing</TextLink>.
-              </p>
-            </SectionHeader>
-          </Reveal>
-          <div className="mt-12 grid overflow-hidden rounded-2xl border border-white/[0.08] bg-card md:grid-cols-3">
-            {pricingPlans.map((plan) => (
-              <div
-                key={plan.plan}
-                className="-mb-px -mr-px flex flex-col gap-4 border-b border-r border-white/[0.07] p-6 sm:p-8"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-heading text-foreground">{plan.plan}</h3>
-                  <Badge variant="outline">{plan.fee}</Badge>
-                </div>
-                <p className="text-[14px] text-subtle">{plan.idealFor}</p>
-                <ul className="space-y-2 text-[15px] text-muted-foreground">
-                  {plan.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <Layers className="mt-1 size-3.5 shrink-0 text-subtle" aria-hidden />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+        <Section aria-labelledby="gda-landscape-title">
+          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-10 sm:px-10 sm:py-12">
+            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-40" />
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-14">
+              <div className="flex flex-col gap-5">
+                <SectionHeader
+                  id="gda-landscape-title"
+                  eyebrow="The current landscape"
+                  title="what’s changed, and how to stay ahead."
+                  description="Google’s Health in Personalized Advertising policy restricts condition-based targeting."
+                />
+                <ul className="space-y-3 text-sm leading-6 text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <CircleCheck className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden />
+                    <span>Advertise implants, Invisalign, and whitening via search intent.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CircleAlert className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden />
+                    <span>No health-condition targeting or sensitive remarketing lists.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CircleX className="mt-0.5 size-4 shrink-0 text-foreground" aria-hidden />
+                    <span>Google makes all final eligibility and enforcement decisions.</span>
+                  </li>
                 </ul>
               </div>
-            ))}
+              <figure className="overflow-hidden rounded-2xl border border-white/10 bg-background/60 p-3">
+                <Image
+                  src="https://res.cloudinary.com/dhqpqfw6w/image/upload/v1761753033/Google_Ads_notification_qzgj35.png"
+                  alt="Google Ads health policy notification"
+                  width={1200}
+                  height={716}
+                  className="h-auto w-full rounded-xl object-contain"
+                  sizes="(min-width: 1024px) 560px, (min-width: 768px) 70vw, 100vw"
+                />
+              </figure>
+            </div>
           </div>
         </Section>
 
-        <Section aria-labelledby="gda-partner-title">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+        <Section id={POLICY_SECTION_ID} aria-labelledby="gda-policy-title" className="scroll-mt-20 py-10 sm:py-12">
+          <div className="grid gap-4 md:grid-cols-2">
             <Reveal>
-              <SectionHeader
-                id="gda-partner-title"
-                eyebrow="Why partner with Prism"
-                title="google ads expertise shaped around dental workflows."
-                titleClassName="max-w-[15ch]"
-              />
+              <Callout tone="good" title="Allowed" icon={<CircleCheck className="size-4" aria-hidden />} className="h-full">
+                <CheckList className="mt-1" items={allowedItems} />
+              </Callout>
             </Reveal>
-            <Reveal delay={100} className="flex flex-col gap-6 lg:pt-12">
-              <p className="text-lead text-muted-foreground">
-                Our team works inside the Google ecosystem every day, building
-                campaigns, landing paths, and measurement for dental teams.
-              </p>
-              <p className="text-[15px] text-muted-foreground">When you partner with Prism, you’re getting:</p>
-              <CheckList items={partnershipPoints} />
-              <div>
-                <WaitlistButton location="google dental ads partner" href={GET_FREE_AUDIT_HREF} label={WAITLIST_CTA.label} />
-              </div>
+            <Reveal delay={100}>
+              <Callout
+                tone="warn"
+                title="Restricted / Not Allowed"
+                icon={<CircleX className="size-4" aria-hidden />}
+                className="h-full"
+              >
+                <CheckList marker="dot" className="mt-1" items={restrictedItems} />
+              </Callout>
             </Reveal>
           </div>
+        </Section>
+
+        <Section id={STRUCTURE_SECTION_ID} aria-labelledby="gda-structure-title" className="scroll-mt-20 py-10 sm:py-12">
+          <DisclosurePanel
+            id="gda-deep-dive"
+            eyebrow="Campaign architecture & scopes"
+            title="structure, Local Services Ads (LSA), and example scopes."
+            summary="5-pillar campaign setup, Google Verified badge notes, and management tiers."
+            openLabel="Read details"
+            closeLabel="Hide details"
+          >
+            <div className="space-y-12">
+              <div className="grid gap-4 md:grid-cols-3">
+                {servicesHighlights.map((service) => {
+                  const Icon = service.icon
+                  return (
+                    <Card key={service.title} className="flex h-full flex-col p-5">
+                      <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <Icon className="size-4 text-foreground" aria-hidden />
+                      </span>
+                      <h3 className="mt-4 text-base font-semibold text-foreground">{service.title}</h3>
+                      <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">{service.description}</p>
+                    </Card>
+                  )
+                })}
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <h3 id="gda-structure-title" className="text-heading text-foreground">
+                  how we structure dental ads.
+                </h3>
+                <ol className="mt-6 divide-y divide-white/[0.07] overflow-hidden rounded-2xl border border-white/[0.08] bg-background/60">
+                  {structurePillars.map((item) => {
+                    const Icon = item.icon
+                    return (
+                      <li key={item.title} className="flex items-start gap-4 p-5">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                          <Icon className="size-4 text-foreground" aria-hidden />
+                        </span>
+                        <div>
+                          <h4 className="text-base font-semibold text-foreground">{item.title}</h4>
+                          <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ol>
+              </div>
+
+              <div id={LSA_SECTION_ID} className="border-t border-white/[0.08] pt-10">
+                <Eyebrow>Local Services Ads (LSA)</Eyebrow>
+                <h3 id="gda-lsa-title" className="text-heading mt-3 text-foreground">
+                  show up first with google’s “verified” badge.
+                </h3>
+                <p className="mt-3 max-w-[64ch] text-sm leading-6 text-muted-foreground">
+                  Google Verified is now the single badge for eligible Local Services Ads (replacing the retired Google Guarantee program). We support LSA setup, verification, and lead tracking; Google makes final eligibility decisions.
+                </p>
+                <Button asChild size="sm" variant="outline" className="mt-4">
+                  <Link
+                    href="https://support.google.com/localservices/answer/16498018?hl=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Read Google&apos;s badge guide
+                    <ArrowUpRight aria-hidden />
+                  </Link>
+                </Button>
+              </div>
+
+              <div id={REPORTS_SECTION_ID} className="border-t border-white/[0.08] pt-10">
+                <h3 id="gda-scopes-title" className="text-heading text-foreground">
+                  example google ads management scopes.
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Final scope depends on budget, locations, and tracking. See{' '}
+                  <TextLink href="/pricing">Prism pricing</TextLink>.
+                </p>
+                <div className="mt-6 grid overflow-hidden rounded-2xl border border-white/[0.08] bg-background/60 md:grid-cols-3">
+                  {pricingPlans.map((plan) => (
+                    <div
+                      key={plan.plan}
+                      className="-mb-px -mr-px flex flex-col gap-3 border-b border-r border-white/[0.07] p-5"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="text-base font-semibold text-foreground">{plan.plan}</h4>
+                        <Badge variant="outline">{plan.fee}</Badge>
+                      </div>
+                      <p className="text-xs text-subtle">{plan.idealFor}</p>
+                      <ul className="space-y-1.5 text-sm text-muted-foreground">
+                        {plan.includes.map((item) => (
+                          <li key={item} className="flex items-start gap-2">
+                            <Layers className="mt-1 size-3.5 shrink-0 text-subtle" aria-hidden />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <CheckList className="mt-6" items={partnershipPoints} />
+              </div>
+            </div>
+          </DisclosurePanel>
         </Section>
 
         <FinalCta
           location="google dental ads final cta"
           href={GET_FREE_AUDIT_HREF}
           title="let’s grow your dental practice with google ads."
-          description="If you want a clearer path from search intent to calls and appointment requests, join the waitlist. When we can take on your practice, we’ll audit your existing setup, identify measurement and spend gaps, and recommend the next campaign changes. Results vary by market and budget."
+          description="Join the waitlist for a campaign and tracking review. Results vary by market and budget."
           secondary={{ label: 'See case studies', href: '/case-studies' }}
         />
       </main>

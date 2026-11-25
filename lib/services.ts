@@ -38,11 +38,11 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     label: 'website design',
     name: 'Website Design',
     href: '/website-design',
-    navDescription: 'Custom design that makes choosing you easy.',
+    navDescription: 'Custom sites built to convert.',
     homeTitle: 'Custom design that makes choosing you easy.',
     homeCta: 'Explore website design',
     description:
-      'Custom design, sharp copy, and a fast mobile build, launched with search foundations and analytics in place.',
+      'Custom design, mobile engineering, search foundations, and tracking ready on day one.',
     primaryCta: WEBSITE_WAITLIST_CTA,
   },
   {
@@ -50,11 +50,11 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     label: 'content',
     name: 'Content',
     href: '/content',
-    navDescription: 'Give people a reason to choose you.',
+    navDescription: 'Video, photo, and editorial done for you.',
     homeTitle: 'Give people a reason to choose you.',
     homeCta: 'Explore content',
     description:
-      'Video, photo, and editorial content for your site and social channels. Planned, produced, and published end to end.',
+      'Video, photo, and editorial planned, produced, and published end to end.',
     primaryCta: CONTENT_WAITLIST_CTA,
   },
   {
@@ -62,11 +62,11 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     label: 'ads',
     name: 'Ads',
     href: '/ads',
-    navDescription: 'Ads built around better leads.',
+    navDescription: 'Paid campaigns built for leads.',
     homeTitle: 'Ads built around better leads.',
     homeCta: 'Explore ads',
     description:
-      'Targeted campaigns across Google, Meta, TikTok, and Yelp, with landing pages and call and inquiry tracking built in.',
+      'Google, Meta, TikTok, and Yelp ads paired with focused landing pages and tracking.',
     primaryCta: ADS_WAITLIST_CTA,
   },
   {
@@ -78,7 +78,7 @@ export const PRISM_SERVICES: readonly PrismService[] = [
     homeTitle: 'Be the answer when they ask AI.',
     homeCta: 'Explore AEO',
     description:
-      'Make your business clear to ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity, and track where you appear each month.',
+      'Visibility across ChatGPT, Google AI Overviews, Gemini, Claude, and Perplexity.',
     primaryCta: AEO_WAITLIST_CTA,
   },
 ] as const

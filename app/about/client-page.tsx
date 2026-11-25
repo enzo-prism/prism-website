@@ -19,18 +19,13 @@ export default function AboutClientPage() {
         <AboutHero />
         <OwnerDecision
           eyebrow="Working with Enzo"
-          title="one conversation from idea to delivery."
-          body="Bring the goal and the way your team works. Enzo and the people designing, building and marketing the site choose a first priority with you. In a project update you can see what shipped, what happened and what decision needs your input."
+          title="one conversation from idea to launch."
+          body="Weekly shipped updates, real lead tracking, and your call on every trade-off."
           links={[
-            { label: "See a client reporting example", href: "/app" },
-            { label: "See how a project is scoped", href: "/pricing" },
+            { label: "Prism Grow app", href: "/app" },
+            { label: "Pricing & scope", href: "/pricing" },
+            { label: "Olympic Bootworks walkthrough", href: "/case-studies/olympic-bootworks#walkthrough" },
           ]}
-        />
-        <OwnerDecision
-          eyebrow="Example weekly update"
-          title="one decision for the owner."
-          body="Shipped this week: the shop’s model guide now links to test rides. Next we would check received requests against model views. If riders still drop off before contacting the shop, we would bring the location selector forward and ask you to move the next content piece back a week. You approve the trade-off."
-          links={[{ label: 'Walk through the real shop site', href: '/case-studies/olympic-bootworks#walkthrough' }]}
         />
         <AboutManifesto />
         <OlympicJourney />

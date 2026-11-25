@@ -51,10 +51,8 @@ export function AboutManifesto() {
             </h2>
           </Reveal>
           <Reveal delay={120}>
-            <p className="text-lead mx-auto mt-7 max-w-[40ch] text-pretty text-muted-foreground">
-              At his first pole vault meet in March 2015, Enzo did not clear a
-              single bar. Eight years later, he went pro. Prism is built on the
-              same standard.
+            <p className="text-lead mx-auto mt-6 max-w-[36ch] text-pretty text-muted-foreground">
+              Zero bars cleared in 2015. Pro in 2023. Same standard at Prism.
             </p>
           </Reveal>
         </div>

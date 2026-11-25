@@ -205,13 +205,13 @@ describe('SocialLinkHub', () => {
     render(<SocialLinkHub platform="tiktok" />)
 
     expect(
-      screen.getByText('Custom design that makes choosing you easy.'),
+      screen.getByText(getService('website').navDescription),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('Give people a reason to choose you.'),
+      screen.getByText(getService('content').navDescription),
     ).toBeInTheDocument()
     expect(
-      screen.getByText('Ads built around better leads.'),
+      screen.getByText(getService('ads').navDescription),
     ).toBeInTheDocument()
     expect(
       screen.getByText(getService('aeo').navDescription),

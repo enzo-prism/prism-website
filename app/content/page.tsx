@@ -154,30 +154,30 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Sparkles,
     title: 'posts, scripts, and video ideas',
-    body: 'Raw footage and buyer questions turned into sharp edits, scripts, and posts ready for quick approval.',
+    body: 'Raw footage turned into edits and posts ready to approve.',
     className: 'md:col-span-4',
     visual: <DraftQueue />,
   },
   {
     icon: Share2,
     title: 'adapted for each channel',
-    body: 'Every piece is cut, captioned, and formatted for the platform where it runs, then published on schedule.',
+    body: 'Cut, captioned, and scheduled for every platform.',
     visual: <ChannelRow />,
   },
   {
     icon: Globe,
     title: 'content on your own site',
-    body: 'Landing pages and editorial articles that build lasting authority on the domain you own.',
+    body: 'Editorial pages that build authority on your domain.',
   },
   {
     icon: Megaphone,
     title: 'ready for ads',
-    body: 'Top organic winners translate directly into paid creative whenever you add Prism Ads.',
+    body: 'Top organic winners feed directly into paid creative.',
   },
   {
     icon: RefreshCw,
     title: 'a system, not a one-off',
-    body: 'Built over three months, then refined every month so high-caliber publishing runs like clockwork.',
+    body: 'Three-month setup, then refined every month.',
   },
 ]
 
@@ -186,19 +186,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: CalendarRange,
     title: 'implement',
     detail: '3 months',
-    body: 'We audit your source material, lock in voice and topics, connect channels, and set up a clean approval flow.',
+    body: 'Lock voice, connect channels, and build the approval flow.',
   },
   {
     icon: Rocket,
     title: 'publish approved work',
     detail: 'Go live',
-    body: 'First edits and articles go through your review and launch into a steady weekly cadence.',
+    body: 'Approve drafts and launch a steady weekly cadence.',
   },
   {
     icon: RefreshCw,
     title: 'review and improve',
     detail: 'Ongoing',
-    body: 'Every month we review retention and inquiries, doubling down on what performs for the next slate.',
+    body: 'Double down on what drives retention and inquiries.',
   },
 ]
 
@@ -264,9 +264,7 @@ export default function ContentOsPage() {
           description={
             <>
               <span className="text-foreground">Content OS</span> turns your
-              expertise into finished video, social posts, and website
-              editorial. Strategy, production, and publishing handled end to
-              end.
+              expertise into finished video, social posts, and site editorial.
             </>
           }
           ctaHref={CONTENT_WAITLIST_CTA.href}
@@ -283,14 +281,12 @@ export default function ContentOsPage() {
         <ServiceBento
           idPrefix="content"
           title="from the first idea to the published post."
-          description="You bring the expertise and raw footage. We handle scripting, editing, review, and publishing."
           items={WHAT_YOU_GET}
         />
 
         <ServiceSteps
           idPrefix="content"
           title="set it up. keep showing up."
-          description="Three months to build the production engine, then monthly cycles sharpened by what performs."
           steps={STEPS}
         />
 
@@ -307,11 +303,16 @@ export default function ContentOsPage() {
                   id="content-proof-title"
                   eyebrow="Proof"
                   title="we run it on ourselves first."
-                  description={`Built on our own channels first: ${SOCIAL_PROOF.combinedAudience} followers and subscribers across YouTube, Instagram, and TikTok.`}
+                  description={`${SOCIAL_PROOF.combinedAudience} followers across YouTube, Instagram, and TikTok.`}
                 />
-                <p className="mt-4 max-w-[52ch] text-xs leading-5 text-subtle">
-                  {SOCIAL_PROOF.combinedAudienceMethodology}
-                </p>
+                <details className="mt-4 max-w-[52ch]">
+                  <summary className="cursor-pointer list-none font-mono text-[11px] uppercase tracking-[0.14em] text-subtle hover:text-muted-foreground [&::-webkit-details-marker]:hidden">
+                    Sources &amp; methodology
+                  </summary>
+                  <p className="mt-2 text-xs leading-5 text-subtle">
+                    {SOCIAL_PROOF.combinedAudienceMethodology}
+                  </p>
+                </details>
               </Reveal>
               <Reveal delay={80}>
                 <ul className="divide-y divide-white/[0.08] overflow-hidden rounded-2xl border border-white/[0.08] bg-card">
@@ -386,8 +387,7 @@ export default function ContentOsPage() {
 
         <OwnerDecision
           eyebrow="Customer stories"
-          title="give the next buyer a customer’s answer."
-          body="For Mach 1, the raw material was hours of interviews. Prism built five published launch stories around the customers’ own words, with captioned films and a place for buyers to find them."
+          title="five launch films for Mach 1."
           links={[
             { label: "See the Mach 1 launch", href: "/case-studies/mach-1" },
             { label: "Discuss your content", href: "/waitlist?focus=content" },

@@ -340,7 +340,7 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Radar,
     title: 'know where you stand',
-    body: 'We run your real buyer questions across every major engine and map where you are cited, mentioned, or absent.',
+    body: 'Buyer questions tested across every major AI engine.',
     className: 'md:col-span-4',
     visual: <QuestionStages />,
     beam: true,
@@ -348,25 +348,25 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: TextQuote,
     title: 'pages that answer first',
-    body: 'Direct, verifiable pages structured so assistants can extract and quote your expertise cleanly.',
+    body: 'Direct answers structured for clean citation.',
     visual: <AnswerFirstPage />,
   },
   {
     icon: FileCode,
     title: 'open to every crawler',
-    body: 'Server-rendered HTML, schema, sitemaps, and clean crawler rules so no firewall hides your site from AI.',
+    body: 'SSR HTML, schema, and clean AI crawler rules.',
     visual: <CrawlerRules />,
   },
   {
     icon: BadgeCheck,
     title: 'one story everywhere',
-    body: 'Your name, services, hours, and proof aligned across every directory and profile models verify.',
+    body: 'Consistent facts across listings and profiles.',
     visual: <ListingsMatch />,
   },
   {
     icon: BarChart3,
     title: 'reports in plain English',
-    body: 'Monthly tracking of citations, shifts, and AI referrals reported by GA4, Search Console, and Bing.',
+    body: 'Monthly citation checks and AI referral tracking.',
     visual: <AiReferrals />,
   },
 ]
@@ -388,50 +388,50 @@ const ENGINES: readonly Engine[] = [
     brand: 'openai',
     theme: 'dark',
     reads: 'OAI-SearchBot',
-    body: 'Searches the web with its own crawler and search partners, then links the pages it used.',
+    body: 'Searches the web and cites source pages.',
   },
   {
     name: 'AI Overviews and AI Mode',
     brand: 'google',
     reads: 'Googlebot',
-    body: 'Built on Google Search. A page has to be indexed and eligible for a snippet to appear as a source.',
+    body: 'Grounded directly in Google Search.',
   },
   {
     name: 'Gemini',
     brand: 'gemini',
     reads: 'Google-Extended',
-    body: 'Draws on the Google Search index. The Google-Extended rule controls whether your pages can ground its answers.',
+    body: 'Draws on indexed Google Search facts.',
   },
   {
     name: 'Claude',
     brand: 'claude',
     reads: 'Claude-SearchBot',
-    body: 'Searches the web when a question needs current facts, and cites what it read.',
+    body: 'Searches current web pages and cites them.',
   },
   {
     name: 'Perplexity',
     brand: 'perplexity',
     reads: 'PerplexityBot',
-    body: 'Answers every question with numbered sources from its own index of the web.',
+    body: 'Answers with numbered web citations.',
   },
   {
     name: 'Copilot',
     brand: 'bing',
     reads: 'Bingbot',
-    body: 'Microsoft’s assistant draws on Bing, and Bing Webmaster Tools now counts its citations.',
+    body: 'Draws on Bing and reports citations.',
   },
   {
     name: 'Siri and Spotlight',
     brand: 'apple',
     theme: 'dark',
     reads: 'Applebot',
-    body: 'Apple’s crawler feeds Siri and Spotlight, and Apple Business holds your place card.',
+    body: 'Feeds Siri, Spotlight, and Apple Business.',
   },
   {
     name: 'What others say',
     icon: Newspaper,
     reads: 'Off-site',
-    body: 'Reviews, directories, local press, and forums. Assistants weigh what others say about you.',
+    body: 'Reviews, directories, press, and forums.',
   },
 ]
 
@@ -442,19 +442,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: Radar,
     title: 'map the questions',
     detail: 'First',
-    body: 'We define the exact questions buyers ask before hiring you, test them across engines, and baseline your visibility.',
+    body: 'Baseline your real buyer questions across engines.',
   },
   {
     icon: Wrench,
     title: 'fix what they read',
     detail: 'Build',
-    body: 'Crawler access, structured data, answer-first pages, and listing consistency shipped in priority order.',
+    body: 'Ship crawler access, schema, pages, and listings.',
   },
   {
     icon: RefreshCw,
     title: 'ask again',
     detail: 'Monthly',
-    body: 'Every month we re-test the same questions, report what moved, and ship the next set of improvements.',
+    body: 'Re-test monthly and ship the next fix.',
   },
 ]
 
@@ -466,25 +466,25 @@ const OWN_SITE = [
     path: '/robots.txt',
     href: '/robots.txt',
     title: 'AI crawlers welcome',
-    body: 'Search and assistant crawlers from OpenAI, Anthropic, Perplexity, Google, and Apple can read every public page.',
+    body: 'OpenAI, Anthropic, Perplexity, Google, and Apple allowed.',
   },
   {
     path: '/llms.txt',
     href: '/llms.txt',
     title: 'a reading guide for models',
-    body: 'A plain-text map of the pages that best answer “what is Prism?”',
+    body: 'Plain-text map of canonical Prism pages.',
   },
   {
     path: '/ai-data.json',
     href: '/ai-data.json',
     title: 'company facts as data',
-    body: 'Services, availability, and dated proof in one machine-readable file.',
+    body: 'Services, availability, and dated proof as JSON.',
   },
   {
     path: '/api/blog/<slug>/markdown',
     href: '/api/blog/how-to-rank-1-chatgpt/markdown',
     title: 'every article in plain text',
-    body: 'Each blog post has a markdown version, so a model can read it without running scripts.',
+    body: 'Clean markdown endpoint for every blog post.',
   },
 ] as const
 
@@ -609,10 +609,9 @@ export default function AeoPage() {
           }
           description={
             <>
-              <span className="text-foreground">Prism AEO</span> (answer engine
-              optimization) makes your business easy for ChatGPT, Google AI
-              Overviews, Gemini, Claude, and Perplexity to read, verify, and
-              cite.
+              <span className="text-foreground">Prism AEO</span>: make your
+              business easy for ChatGPT, AI Overviews, Gemini, Claude, and
+              Perplexity to cite.
             </>
           }
           ctaHref={AEO_WAITLIST_CTA.href}
@@ -633,7 +632,6 @@ export default function AeoPage() {
                 id="aeo-shift-title"
                 eyebrow="The shift"
                 title="search is turning into answers."
-                description="Buyers increasingly ask an assistant and get one reply with a handful of sources. AEO is the work of earning a place on that shortlist."
                 titleClassName="max-w-[13ch]"
               />
             </Reveal>
@@ -668,7 +666,6 @@ export default function AeoPage() {
         <ServiceBento
           idPrefix="aeo"
           title="what it takes to be the answer."
-          description="Audits, technical access, answer-first pages, and consistent facts, executed together so models can trust and cite you."
           items={WHAT_YOU_GET}
         />
 
@@ -682,7 +679,6 @@ export default function AeoPage() {
               id="aeo-engines-title"
               eyebrow="Engines"
               title="where the answers come from."
-              description="Every assistant indexes the web differently. We open access to each one and monitor what it says."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -732,7 +728,6 @@ export default function AeoPage() {
         <ServiceSteps
           idPrefix="aeo"
           title="ask, fix, ask again."
-          description="A repeatable monthly cadence. Same buyer questions, clear changes, next priorities."
           steps={STEPS}
         />
 
@@ -751,7 +746,7 @@ export default function AeoPage() {
                 id="aeo-own-site-title"
                 eyebrow="Proof"
                 title="our own site goes first."
-                description="We test everything on design-prism.com first. Every live file below is open for inspection."
+                description="Live files on design-prism.com, open to inspect."
                 titleClassName="max-w-[12ch]"
               />
               <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-background/70 backdrop-blur-sm">
@@ -803,7 +798,6 @@ export default function AeoPage() {
                 id="aeo-honesty-title"
                 eyebrow="How we work"
                 title="no one owns the answer."
-                description="Assistants control their own outputs, and answers shift over time. That shapes every standard we hold."
                 titleClassName="max-w-[11ch]"
               />
             </Reveal>
@@ -906,12 +900,11 @@ export default function AeoPage() {
         <ServiceFaq idPrefix="aeo" items={FAQ_ITEMS} title="ask us first." />
 
         <OwnerDecision
-          eyebrow="Testing an answer"
-          title="can a buyer check the answer?"
-          body="Try a specific question, such as whether a rider can test a bike in Tahoe. Check the answer against the shop’s published locations and request instructions. Record the source, date and engine, then repeat the question after a correction."
+          eyebrow="Explore next"
+          title="see real search and AI work."
           links={[
-            { label: "Inspect the Tahoe buying journey", href: "/case-studies/olympic-bootworks#walkthrough" },
-            { label: "Explore organic search services", href: "/seo" },
+            { label: "Olympic Bootworks walkthrough", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Organic SEO services", href: "/seo" },
           ]}
         />
         <ServiceSiblings current="aeo" />

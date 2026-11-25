@@ -6,6 +6,7 @@ import { BulletList } from "@/components/landing/seo/bullet-list"
 import { LinkPills } from "@/components/landing/seo/link-pills"
 import { TextLink } from "@/components/landing/seo/text-link"
 import { BrowserFrame } from "@/components/prism/browser-frame"
+import { DisclosurePanel } from "@/components/prism/disclosure-panel"
 import { FaqList } from "@/components/prism/faq-list"
 import { FinalCta } from "@/components/prism/final-cta"
 import { Reveal } from "@/components/prism/reveal"
@@ -180,7 +181,7 @@ export default async function SeoPage() {
       <SeoHero
         eyebrow="SEO"
         title="help the right customers find you."
-        subtitle={hero.subtitle}
+        subtitle="Technical cleanup, clear pages, local listings, and measurable Search Console growth."
         location="seo hero"
         secondaryCta={{ label: "See on-page SEO", href: "/seo/on-page" }}
       >
@@ -332,160 +333,140 @@ export default async function SeoPage() {
         />
       </SeoSection>
 
-      <Section aria-labelledby="seo-levers-title">
-        <Reveal>
-          <SectionHeader
-            id="seo-levers-title"
-            eyebrow="on-page + off-page"
-            title="two levers, one system."
-            description="Your own pages answer the search. Everything beyond your domain proves you are real."
-          />
-        </Reveal>
-        <div className="mt-12 grid gap-4 md:grid-cols-2 sm:mt-14">
-          {[
-            {
-              preview: onPagePreview,
-              label: "on-page seo",
-              copy: "On-page SEO is everything you control on your own site: the structure, the content, the performance. We build each page to be a clear answer.",
-            },
-            {
-              preview: offPagePreview,
-              label: "off-page seo",
-              copy: "Off-page SEO is everything beyond your domain: listings, links, reviews, proof. When those agree, Google and Apple get a clear signal that you’re legit.",
-            },
-          ].map(({ preview, label, copy }, index) => (
-            <Reveal key={preview.linkHref} delay={index * 80}>
-              <SpotlightCard beam={index === 0} className="flex h-full flex-col p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">{label}</p>
-                <h3 className="text-heading mt-4 text-foreground">{preview.title.toLowerCase()}.</h3>
-                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{copy}</p>
-                <BulletList items={preview.bullets} marker="dot" className="mt-6 flex-1" />
-                <TextLink href={preview.linkHref} className="mt-6">
-                  {preview.linkText}
-                </TextLink>
-              </SpotlightCard>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section aria-labelledby="seo-build-title">
-        <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-          <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
-          <Reveal>
-            <SectionHeader
-              id="seo-build-title"
-              eyebrow="how prism builds"
-              title="seo is baked into every build."
-              description="We don’t bolt SEO on later. The work runs in three stages, and we scope how far to take each one with you."
-            />
-          </Reveal>
-          <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-3">
-            {buildStages.map((stage, index) => (
-              <li key={stage.title} className="flex flex-col gap-3 bg-card p-6 sm:p-7">
-                <span className="font-mono text-xs tabular-nums text-subtle">stage 0{index + 1}</span>
-                <h3 className="text-heading text-foreground">{stage.title}</h3>
-                <p className="text-[15px] leading-7 text-muted-foreground">{stage.description}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </Section>
-
-      <SeoSection
-        eyebrow="what you get"
-        title="working with Prism."
-        description="When Prism handles your SEO you get a website that reads like a clear answer, listings that reinforce trust, and a foundation you can build paid, content, and brand work on."
-      >
-        <BulletList items={benefits} itemClassName="text-base sm:text-[17px]" />
-        <p className="border-l-2 border-white/20 pl-5 text-lg leading-8 tracking-[-0.015em] text-foreground">
-          No gimmicks, no hacks. A strong, modern SEO foundation that you own.
-        </p>
-      </SeoSection>
-
-      <Section aria-labelledby="seo-deeper-title">
-        <Reveal>
-          <SectionHeader
-            id="seo-deeper-title"
-            eyebrow="go deeper"
-            title="pick the search problem you have."
-            description="Audits, local visibility, dental search, and AI answers each have their own playbook."
-          />
-        </Reveal>
-        <div className="mt-12 grid gap-4 sm:mt-14 lg:grid-cols-6">
-          {deeperTopics.map((topic, index) => {
-            const Icon = topic.icon
-            return (
-              <Reveal
-                key={topic.title}
-                delay={index * 60}
-                className={index === 0 ? "lg:col-span-6" : "lg:col-span-3"}
-              >
-                <Card className="h-full p-6 sm:p-8">
-                  <div
-                    className={
-                      index === 0
-                        ? "grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12"
-                        : "flex h-full flex-col"
-                    }
-                  >
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                          <Icon aria-hidden="true" className="size-4 text-foreground" />
-                        </span>
-                        <span className="text-eyebrow text-subtle">{topic.eyebrow}</span>
-                      </div>
-                      <h3 className="text-heading mt-5 text-foreground">{topic.title}</h3>
-                      <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{topic.description}</p>
-                      {topic.body ? (
-                        <p className="mt-3 text-[15px] leading-7 text-muted-foreground">{topic.body}</p>
-                      ) : null}
-                    </div>
-                    <div className={index === 0 ? "" : "mt-6 flex flex-1 flex-col"}>
-                      <BulletList items={topic.bullets} marker="dot" className="flex-1" />
-                      <LinkPills links={topic.links} label={`${topic.title} links`} className="mt-6" />
-                    </div>
-                  </div>
-                </Card>
-              </Reveal>
-            )
-          })}
-          <Reveal delay={200} className="lg:col-span-6">
-            <Card className="flex flex-col gap-6 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-2xl">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                    <Stethoscope aria-hidden="true" className="size-4 text-foreground" />
-                  </span>
-                  <span className="text-eyebrow text-subtle">dental</span>
-                </div>
-                <h3 className="text-heading mt-5 text-foreground">seo for dental practices</h3>
-                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-                  Dental search is high-trust and hyperlocal. Patients pick the practices that are easiest to
-                  understand, easiest to trust, and easiest to book.
-                </p>
-                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-                  Need{" "}
-                  <Link href="/dental-practice-seo-expert" className="font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70">
-                    dentist SEO
-                  </Link>{" "}
-                  (Maps and organic)? See how Prism maps treatments to search intent, tightens listings and reviews,
-                  and ships steady improvements.
-                </p>
-              </div>
-              <LinkPills
-                label="Dental SEO guides"
-                className="lg:max-w-sm lg:justify-end"
-                links={[
-                  { label: "Dental SEO guide", href: "/blog/dental-seo-guide" },
-                  { label: "How dental practices rank higher in Google", href: "/blog/dental-practice-rank-higher-google-search" },
-                  { label: "AI search for dental practices", href: "/blog/ai-search-for-dental-practice" },
-                ]}
+      <Section aria-labelledby="seo-levers-title" className="py-10 sm:py-12">
+        <DisclosurePanel
+          id="seo-system-breakdown"
+          eyebrow="Full SEO breakdown"
+          title="on-page, off-page, build stages, and specialty playbooks."
+          summary="Includes technical audit, local SEO, AI search, dental SEO, and 3-stage process."
+          openLabel="View breakdown"
+          closeLabel="Hide breakdown"
+        >
+          <div className="space-y-12">
+            <div>
+              <SectionHeader
+                id="seo-levers-title"
+                eyebrow="on-page + off-page"
+                title="two levers, one system."
+                description="Your pages answer the search. Everything off-site proves you are real."
               />
-            </Card>
-          </Reveal>
-        </div>
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {[
+                  {
+                    preview: onPagePreview,
+                    label: "on-page seo",
+                    copy: "Structure, content, and speed on your own domain.",
+                  },
+                  {
+                    preview: offPagePreview,
+                    label: "off-page seo",
+                    copy: "Listings, links, reviews, and proof across the web.",
+                  },
+                ].map(({ preview, label, copy }, index) => (
+                  <SpotlightCard key={preview.linkHref} beam={index === 0} className="flex h-full flex-col p-6">
+                    <p className="text-eyebrow text-subtle">{label}</p>
+                    <h3 className="text-heading mt-3 text-foreground">{preview.title.toLowerCase()}.</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+                    <BulletList items={preview.bullets} marker="dot" className="mt-5 flex-1" />
+                    <TextLink href={preview.linkHref} className="mt-5">
+                      {preview.linkText}
+                    </TextLink>
+                  </SpotlightCard>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-white/[0.08] pt-10">
+              <SectionHeader
+                id="seo-build-title"
+                eyebrow="how prism builds"
+                title="seo is baked into every build."
+              />
+              <ol className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-3">
+                {buildStages.map((stage, index) => (
+                  <li key={stage.title} className="flex flex-col gap-3 bg-card p-6">
+                    <span className="font-mono text-xs tabular-nums text-subtle">stage 0{index + 1}</span>
+                    <h3 className="text-heading text-foreground">{stage.title}</h3>
+                    <p className="text-sm leading-6 text-muted-foreground">{stage.description}</p>
+                  </li>
+                ))}
+              </ol>
+              <BulletList items={benefits} className="mt-8" />
+            </div>
+
+            <div className="border-t border-white/[0.08] pt-10">
+              <SectionHeader
+                id="seo-deeper-title"
+                eyebrow="go deeper"
+                title="pick the search problem you have."
+              />
+              <div className="mt-8 grid gap-4 lg:grid-cols-6">
+                {deeperTopics.map((topic, index) => {
+                  const Icon = topic.icon
+                  return (
+                    <Card
+                      key={topic.title}
+                      className={index === 0 ? "p-6 lg:col-span-6" : "flex flex-col p-6 lg:col-span-3"}
+                    >
+                      <div
+                        className={
+                          index === 0
+                            ? "grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10"
+                            : "flex h-full flex-col"
+                        }
+                      >
+                        <div>
+                          <div className="flex items-center gap-3">
+                            <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                              <Icon aria-hidden="true" className="size-4 text-foreground" />
+                            </span>
+                            <span className="text-eyebrow text-subtle">{topic.eyebrow}</span>
+                          </div>
+                          <h3 className="text-heading mt-4 text-foreground">{topic.title}</h3>
+                          <p className="mt-2 text-sm leading-6 text-muted-foreground">{topic.description}</p>
+                          {topic.body ? (
+                            <p className="mt-2 text-sm leading-6 text-muted-foreground">{topic.body}</p>
+                          ) : null}
+                        </div>
+                        <div className={index === 0 ? "" : "mt-5 flex flex-1 flex-col"}>
+                          <BulletList items={topic.bullets} marker="dot" className="flex-1" />
+                          <LinkPills links={topic.links} label={`${topic.title} links`} className="mt-5" />
+                        </div>
+                      </div>
+                    </Card>
+                  )
+                })}
+                <Card className="flex flex-col gap-6 p-6 lg:col-span-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-2xl">
+                    <div className="flex items-center gap-3">
+                      <span className="grid size-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                        <Stethoscope aria-hidden="true" className="size-4 text-foreground" />
+                      </span>
+                      <span className="text-eyebrow text-subtle">dental</span>
+                    </div>
+                    <h3 className="text-heading mt-4 text-foreground">seo for dental practices</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      Need{" "}
+                      <Link href="/dental-practice-seo-expert" className="font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70">
+                        dentist SEO
+                      </Link>{" "}
+                      (Maps and organic)? Treatment pages, listings, and reviews built for local patient intent.
+                    </p>
+                  </div>
+                  <LinkPills
+                    label="Dental SEO guides"
+                    className="lg:max-w-sm lg:justify-end"
+                    links={[
+                      { label: "Dental SEO guide", href: "/blog/dental-seo-guide" },
+                      { label: "How dental practices rank higher in Google", href: "/blog/dental-practice-rank-higher-google-search" },
+                      { label: "AI search for dental practices", href: "/blog/ai-search-for-dental-practice" },
+                    ]}
+                  />
+                </Card>
+              </div>
+            </div>
+          </div>
+        </DisclosurePanel>
       </Section>
 
       {seoBlogPosts.length > 0 ? (

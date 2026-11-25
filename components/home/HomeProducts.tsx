@@ -60,11 +60,8 @@ export default function HomeProducts() {
                       {product.name}
                     </TrackedLink>
                   </h3>
-                  <p className="mt-1 text-[15px] font-medium text-foreground/80">
+                  <p className="mt-2 text-pretty text-[15px] leading-relaxed text-muted-foreground">
                     {product.navDescription}
-                  </p>
-                  <p className="mt-3 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-                    {product.description}
                   </p>
                   <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-foreground/90">
                     Explore {product.name}

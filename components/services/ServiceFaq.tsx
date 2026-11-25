@@ -13,18 +13,21 @@ type ServiceFaqProps = {
   idPrefix: string
   title?: string
   description?: string
+  /** Optional index to start open; omitted by default so the page stays visual. */
+  defaultOpen?: number
 }
 
 /**
  * Split FAQ for the service pages: a sticky header on the left and the
  * native-details FaqList on the right, so every answer is in the HTML for
- * crawlers. The first answer starts open; FAQSchema mirrors the items.
+ * crawlers while starting collapsed for human scannability.
  */
 export function ServiceFaq({
   items,
   idPrefix,
   title = 'questions, answered.',
   description,
+  defaultOpen,
 }: ServiceFaqProps) {
   const headingId = `${idPrefix}-faq-title`
 
@@ -41,7 +44,11 @@ export function ServiceFaq({
           />
         </Reveal>
         <Reveal delay={80}>
-          <FaqList items={items} name={`${idPrefix}-faq`} defaultOpen={0} />
+          <FaqList
+            items={items}
+            name={`${idPrefix}-faq`}
+            defaultOpen={defaultOpen}
+          />
         </Reveal>
       </div>
     </Section>

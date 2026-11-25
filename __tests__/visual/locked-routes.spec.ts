@@ -126,7 +126,7 @@ const lockedRoutes = [
     path: '/',
     readyHeading: /^your growth team\.$/i,
     mustContain: [
-      /designers, engineers and marketers working directly with small business owners/i,
+      /designers, engineers, and marketers for small businesses/i,
       /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,

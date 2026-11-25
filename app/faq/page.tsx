@@ -173,11 +173,10 @@ export default function FAQPage() {
               questions, answered.
             </h1>
             <p
-              className="text-lead prism-rise mt-5 max-w-[52ch] text-pretty text-muted-foreground"
+              className="text-lead prism-rise mt-4 max-w-[40ch] text-pretty text-muted-foreground"
               style={rise(160)}
             >
-              What to expect from your project, from the waitlist through
-              launch and ongoing support.
+              Scope, pricing, and how the waitlist works.
             </p>
           </div>
         </section>
@@ -187,9 +186,8 @@ export default function FAQPage() {
         </Section>
 
         <OwnerDecision
-          eyebrow="Your next decision"
-          title="find the answer for your business."
-          body="Review a sample scope, see how a customer moves through a real site or tell us what you want to improve. The next intake is shown on the application."
+          eyebrow="Next step"
+          title="see the work or tell us your goal."
           links={[
             { label: "Scope and pricing", href: "/pricing" },
             { label: "See a working example", href: "/case-studies/olympic-bootworks#walkthrough" },

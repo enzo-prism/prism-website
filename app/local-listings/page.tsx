@@ -4,6 +4,7 @@ import Footer from '@/components/footer'
 import { LandingHero } from '@/components/landing/landing-hero'
 import { BulletList } from '@/components/landing/seo/bullet-list'
 import Navbar from '@/components/navbar'
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
@@ -270,7 +271,7 @@ export default async function LocalListingsPage() {
         <LandingHero
           eyebrow="local listing optimization"
           title="be the obvious choice in your neighborhood."
-          description="We optimize and maintain your listings across Google, Apple, Yelp, Bing, Facebook, Instagram, Nextdoor, Waze, and more so nearby customers find accurate hours, photos, and details wherever they look."
+          description="Accurate hours, photos, and reviews across Google, Apple, Yelp, Bing, and Maps."
           location="local listings hero"
           ctaHref={WAITLIST_CTA.href}
           ctaLabel={FREE_AUDIT_CTA_TEXT}
@@ -347,41 +348,18 @@ export default async function LocalListingsPage() {
           />
         </SeoSection>
 
-        <Section aria-labelledby="listings-what-you-get-title">
-          <Reveal>
-            <SectionHeader
-              id="listings-what-you-get-title"
-              eyebrow="what you get"
-              title="accurate everywhere. built to convert."
-              description="Everything you need to stay accurate everywhere and convert views into action."
-            />
-          </Reveal>
-          <Reveal delay={80}>
-            <ul className="mt-12 grid gap-px overflow-hidden rounded-[1.5rem] border border-white/[0.08] bg-white/[0.08] sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
-              {whatYouGet.map((item, index) => (
-                <li key={item.title} className="flex flex-col gap-3 bg-card p-6 sm:p-8">
-                  <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</h3>
-                  <p className="text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </Section>
-
         <Section aria-labelledby="listings-platforms-title">
           <Reveal>
             <SectionHeader
               id="listings-platforms-title"
               eyebrow="coverage"
-              title="platforms we manage (and why)."
-              description="Coverage across the agreed profiles where customers search, compare, and contact you."
+              title="platforms we manage."
             />
           </Reveal>
-          <div className="mt-12 grid gap-4 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {platforms.map((platform, index) => (
               <Reveal key={platform.name} delay={(index % 3) * 70}>
-                <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-7">
+                <SpotlightCard beam={index === 0} className="h-full p-6">
                   <div className="flex items-center gap-2">
                     {platform.logoBrands?.length ? (
                       platform.logoBrands.map((brand) => (
@@ -398,129 +376,25 @@ export default async function LocalListingsPage() {
                       </span>
                     )}
                   </div>
-                  <p className="mt-6 text-eyebrow text-subtle">platform</p>
-                  <h3 className="text-heading mt-2 text-foreground">{platform.name}</h3>
-                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{platform.why}</p>
+                  <h3 className="text-heading mt-5 text-foreground">{platform.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{platform.why}</p>
                 </SpotlightCard>
               </Reveal>
             ))}
           </div>
         </Section>
 
-        <SeoSection
-          eyebrow="who we help"
-          title="who we lift in the map pack."
-          description="Local teams that depend on accurate listings, real reviews, and consistent visibility in every neighborhood."
-        >
-          <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-            {audienceSegments.map((segment) => (
-              <li key={segment.name}>
-                <Link
-                  href={segment.href}
-                  className="group/segment flex items-start justify-between gap-6 rounded-sm py-6 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                >
-                  <span>
-                    <span className="block text-lg font-semibold tracking-[-0.02em] text-foreground">
-                      {segment.name}
-                    </span>
-                    <span className="mt-1.5 block text-[15px] leading-7 text-muted-foreground">
-                      {segment.description}
-                    </span>
-                    <span className="sr-only">Learn how we support them</span>
-                  </span>
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="mt-1 size-5 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/segment:-translate-y-0.5 group-hover/segment:translate-x-0.5 group-hover/segment:text-foreground"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Card className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-            <div>
-              <Badge variant="outline">referral program</Badge>
-              <h3 className="text-heading mt-4 text-foreground">know someone struggling with listings?</h3>
-              <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
-                Send them to our referral program. We take it from there, and you get $100 when they become a
-                Prism client.
-              </p>
-            </div>
-            <Button asChild variant="outline" size="lg" className="shrink-0">
-              <Link href="/refer">
-                refer a business
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-          </Card>
-        </SeoSection>
-
-        <Section aria-labelledby="listings-improve-title">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
-              <Reveal>
-                <SectionHeader
-                  id="listings-improve-title"
-                  eyebrow="profile signals"
-                  title="what we improve on your profiles."
-                  description="Accurate details and useful content that help people understand your business and take the next step."
-                  titleClassName="max-w-[14ch]"
-                />
-              </Reveal>
-              <Reveal delay={80}>
-                <dl className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
-                  {rankingLevers.map((item) => (
-                    <div key={item.title} className="bg-background/60 p-6">
-                      <dt className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</dt>
-                      <dd className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
-                  running a dental practice and trying to rank higher in google? read{' '}
-                  <Link href="/blog/dental-practice-rank-higher-google-search" className={inlineLink}>
-                    dental practice rank higher in google search
-                  </Link>
-                  .
-                </p>
-              </Reveal>
-            </div>
-          </div>
-        </Section>
-
-        <SeoSection
-          id="process"
-          eyebrow="process"
-          title="our simple process."
-          description="Built to clean up fast, then keep improving month to month."
-        >
-          <ol className="relative space-y-3 before:absolute before:bottom-6 before:left-5 before:top-6 before:w-px before:bg-white/10">
-            {processSteps.map((stage, index) => (
-              <li key={stage.step} className="relative flex gap-5">
-                <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full border border-white/15 bg-card font-mono text-xs tabular-nums text-foreground">
-                  {index + 1}
-                </span>
-                <Card className="flex-1 px-5 py-4">
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{stage.step}</h3>
-                  <p className="mt-1 text-[15px] leading-7 text-muted-foreground">{stage.description}</p>
-                </Card>
-              </li>
-            ))}
-          </ol>
-        </SeoSection>
-
-        <Section aria-labelledby="listings-handled-title">
+        <Section aria-labelledby="listings-handled-title" className="py-10 sm:py-12">
           <Reveal>
             <SectionHeader
               id="listings-handled-title"
               eyebrow="full service"
               title="what we handle for you."
-              description="Full-service listing management so your team can focus on running the business."
               align="center"
             />
           </Reveal>
           <Reveal delay={80}>
-            <ul className="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-2.5 sm:mt-14">
+            <ul className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-2.5">
               {handledForYou.map((item) => (
                 <li
                   key={item}
@@ -533,19 +407,113 @@ export default async function LocalListingsPage() {
           </Reveal>
         </Section>
 
-        <SeoSection
-          eyebrow="outcomes"
-          title="outcomes you can expect."
-          description="See what changed on your profiles and how customers use them."
-        >
-          <Card className="p-6 sm:p-8">
-            <BulletList items={outcomes} itemClassName="text-base" />
-          </Card>
-          <p className="flex items-start gap-3 text-sm leading-6 text-subtle">
-            <Store aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-            You keep ownership and admin access to every profile.
-          </p>
-        </SeoSection>
+        <Section id="process" aria-labelledby="listings-what-you-get-title" className="scroll-mt-20 py-10 sm:py-12">
+          <DisclosurePanel
+            id="listings-details"
+            eyebrow="Full breakdown"
+            title="process, ranking signals, industries, and outcomes."
+            summary="5-step cleanup, 6 deliverables, ranking levers, and who we help."
+            openLabel="View breakdown"
+            closeLabel="Hide breakdown"
+          >
+            <div className="space-y-12">
+              <div>
+                <h3 id="listings-what-you-get-title" className="text-heading text-foreground">
+                  what you get.
+                </h3>
+                <ul className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-3">
+                  {whatYouGet.map((item, index) => (
+                    <li key={item.title} className="flex flex-col gap-2 bg-card p-5">
+                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                      <h4 className="text-base font-semibold tracking-[-0.02em] text-foreground">{item.title}</h4>
+                      <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <h3 id="listings-improve-title" className="text-heading text-foreground">
+                  what we improve on your profiles.
+                </h3>
+                <dl className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2">
+                  {rankingLevers.map((item) => (
+                    <div key={item.title} className="bg-background/60 p-5">
+                      <dt className="text-base font-semibold tracking-[-0.02em] text-foreground">{item.title}</dt>
+                      <dd className="mt-1.5 text-sm leading-6 text-muted-foreground">{item.description}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-5 text-sm text-muted-foreground">
+                  Dental practice? Read{' '}
+                  <Link href="/blog/dental-practice-rank-higher-google-search" className={inlineLink}>
+                    dental practice rank higher in google search
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <h3 className="text-heading text-foreground">our 5-step process.</h3>
+                <ol className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                  {processSteps.map((stage, index) => (
+                    <li key={stage.step} className="rounded-xl border border-white/[0.08] bg-background/60 p-4">
+                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                      <h4 className="mt-2 text-base font-semibold text-foreground">{stage.step}</h4>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{stage.description}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="grid gap-6 border-t border-white/[0.08] pt-10 lg:grid-cols-2">
+                <div>
+                  <h3 className="text-heading text-foreground">who we lift in the map pack.</h3>
+                  <ul className="mt-5 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                    {audienceSegments.map((segment) => (
+                      <li key={segment.name}>
+                        <Link
+                          href={segment.href}
+                          className="group/segment flex items-start justify-between gap-4 py-4"
+                        >
+                          <span>
+                            <span className="block text-base font-semibold text-foreground">{segment.name}</span>
+                            <span className="mt-1 block text-sm text-muted-foreground">{segment.description}</span>
+                          </span>
+                          <ArrowUpRight aria-hidden="true" className="mt-1 size-4 shrink-0 text-subtle" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="space-y-5">
+                  <Card className="p-6">
+                    <h3 className="text-heading text-foreground">outcomes you can expect.</h3>
+                    <BulletList items={outcomes} className="mt-4" />
+                    <p className="mt-5 flex items-start gap-2.5 text-sm text-subtle">
+                      <Store aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+                      You keep ownership and admin access to every profile.
+                    </p>
+                  </Card>
+                  <Card className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <Badge variant="outline">referral program</Badge>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Refer a business struggling with listings and earn $100 when they join.
+                      </p>
+                    </div>
+                    <Button asChild variant="outline" size="sm" className="shrink-0">
+                      <Link href="/refer">
+                        refer a business
+                        <ArrowRight aria-hidden="true" />
+                      </Link>
+                    </Button>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </DisclosurePanel>
+        </Section>
 
         {localListingsPosts.length > 0 ? (
           <Section aria-labelledby="listings-blog-title">

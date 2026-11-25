@@ -75,14 +75,16 @@ describe('ClientPage homepage flow', () => {
     expect(headings).toEqual([
       'from bike research to a test ride.',
       'every business has an impossible.',
-      'a direct line to the people doing the work.',
+      '16 more. every one is live.',
       'numbers, not adjectives.',
       'shine. convert. get seen.',
+      'we built our own audience from zero.',
       'in their words.',
+      'a direct line to the people doing the work.',
       'built by a founder chasing LA 2028.',
       'fully booked. here’s how to get in.',
-      'questions, answered.',
       'built for our team. free for yours.',
+      'questions, answered.',
       'tell us your impossible.',
     ])
   })
@@ -125,7 +127,7 @@ describe('ClientPage homepage flow', () => {
     expect(seeWork).toHaveAttribute('href', '#featured-work')
 
     expect(hero).toHaveTextContent(
-      /designers, engineers and marketers working directly with small business owners/i,
+      /designers, engineers, and marketers for small businesses/i,
     )
   })
 
@@ -166,8 +168,6 @@ describe('ClientPage homepage flow', () => {
     expect(work).toHaveTextContent('Sells to businesses')
     expect(work).toHaveTextContent('Sells to consumers')
 
-    const archive = document.querySelector('details#more-work-and-reach') as HTMLDetailsElement
-    archive.open = true
     const moreWork = document.getElementById('more-work') as HTMLElement
     const moreHrefs = within(moreWork)
       .getAllByRole('link')

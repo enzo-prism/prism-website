@@ -2,7 +2,6 @@ import type { ComponentType } from 'react'
 import {
   ArrowRight,
   Camera,
-  Check,
   LayoutTemplate,
   Megaphone,
   MessageSquareQuote,
@@ -89,16 +88,16 @@ export default function HomePillars() {
               as="li"
               key={pillar.key}
               delay={index * 90}
-              className="lg:row-span-5 lg:grid lg:grid-rows-subgrid"
+              className="lg:row-span-4 lg:grid lg:grid-rows-subgrid"
             >
               <SpotlightCard
                 data-home-service-card=""
                 className={cn(
                   styles.card,
-                  'flex h-full flex-col md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:grid-rows-[auto_auto_auto_1fr] lg:row-span-5 lg:grid lg:grid-rows-subgrid',
+                  'flex h-full flex-col md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:grid-rows-[auto_auto_1fr] lg:row-span-4 lg:grid lg:grid-rows-subgrid',
                 )}
               >
-                <Visual className="m-2 md:max-lg:row-span-4" />
+                <Visual className="m-2 md:max-lg:row-span-3" />
 
                 <div className={cn(GUTTER, TEXT_COL, 'pt-5 md:max-lg:pt-7')}>
                   <span
@@ -107,44 +106,26 @@ export default function HomePillars() {
                   >
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="text-gradient mt-3 pb-1 text-[clamp(2.5rem,1.9rem+1.3vw,3.15rem)] font-semibold leading-[0.95] tracking-[-0.055em]">
+                  <h3 className="text-gradient mt-2.5 pb-1 text-[clamp(2.5rem,1.9rem+1.3vw,3.15rem)] font-semibold leading-[0.95] tracking-[-0.055em]">
                     {pillar.title}
                   </h3>
-                  <p className="mt-4 text-pretty text-[17px] font-medium leading-snug tracking-[-0.015em] text-foreground">
+                  <p className="mt-3 text-pretty text-[16px] font-medium leading-snug tracking-[-0.015em] text-muted-foreground">
                     {pillar.lead}
                   </p>
                 </div>
 
-                <p
+                <ul
                   className={cn(
                     GUTTER,
                     TEXT_COL,
-                    'max-w-[46ch] pt-2.5 text-pretty text-[15px] leading-relaxed text-muted-foreground',
-                  )}
-                >
-                  {pillar.body}
-                </p>
-
-                <ul
-                  className={cn(
-                    TEXT_COL,
-                    'mx-6 mt-6 flex flex-col gap-2.5 border-t border-white/[0.06] pt-5 sm:mx-7',
+                    'mt-5 flex flex-wrap content-start gap-1.5',
                   )}
                 >
                   {pillar.items.map((item) => (
                     <li
                       key={item}
-                      className="flex items-center gap-3 text-[14px] leading-snug text-foreground/85"
+                      className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.025] px-2.5 text-[12px] text-muted-foreground"
                     >
-                      <span
-                        aria-hidden="true"
-                        className="grid size-5 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04]"
-                      >
-                        <Check
-                          className="size-3 text-foreground/80"
-                          strokeWidth={2}
-                        />
-                      </span>
                       {item}
                     </li>
                   ))}
@@ -154,7 +135,7 @@ export default function HomePillars() {
                   className={cn(
                     GUTTER,
                     TEXT_COL,
-                    'mt-auto flex flex-wrap items-end gap-x-5 gap-y-1 pb-5 pt-6 sm:pb-6',
+                    'mt-auto flex flex-wrap items-end gap-x-5 gap-y-1 pb-5 pt-5 sm:pb-6',
                   )}
                 >
                   {pillar.links.map((link) => (

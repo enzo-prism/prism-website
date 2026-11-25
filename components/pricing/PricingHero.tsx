@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button'
 import { PRICING_PRIMARY_CTA, PRICING_SECONDARY_CTA } from '@/lib/pricing-model'
 
 const HERO_PROMISES = [
-  'Clear scope and price before work starts',
-  'One senior team across all four disciplines',
-  'New client spots open monthly',
+  'Scope & price up front',
+  'One senior team',
+  'Monthly intakes',
 ] as const
 
 const rise = (delay: number) =>
@@ -49,10 +49,10 @@ export default function PricingHero() {
         </h1>
 
         <p
-          className="text-lead prism-rise mt-5 max-w-[58ch] text-pretty text-muted-foreground"
+          className="text-lead prism-rise mt-4 max-w-[40ch] text-pretty text-muted-foreground"
           style={rise(160)}
         >
-          Tell us the outcome you want. We agree on the work, who owns it and what it costs before we start. If priorities shift, you see the trade-off first.
+          Custom scope and price confirmed before work starts.
         </p>
 
         <div

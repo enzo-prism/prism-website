@@ -1,3 +1,4 @@
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import type { CSSProperties } from 'react'
@@ -52,28 +53,12 @@ const SERVICE_SCHEMA_TYPES: Record<PrismServiceId, string> = {
   aeo: 'Answer engine optimization',
 }
 
-// What each core service includes, in plain terms.
+// What each core service includes, as scannable tags.
 const SERVICE_INCLUDES: Record<PrismServiceId, readonly string[]> = {
-  website: [
-    'Custom brand-led design, zero templates',
-    'Sharp copy and a fast mobile build',
-    'Clear paths to call, book, or inquire',
-  ],
-  content: [
-    'Strategy, topics, and scripts',
-    'Video, photo, and editorial production',
-    'Scheduled publishing across your channels',
-  ],
-  ads: [
-    'Campaigns on the channels buyers use',
-    'Dedicated landing pages and conversion tracking',
-    'Weekly tuning based on lead quality',
-  ],
-  aeo: [
-    'Visibility audit across major AI engines',
-    'Crawler access, schema, and answer-first pages',
-    'Monthly citation checks in plain English',
-  ],
+  website: ['Custom design', 'Mobile-first build', 'Tracking & SEO'],
+  content: ['Strategy & scripts', 'Video & photo', 'Channel publishing'],
+  ads: ['Google, Meta & TikTok', 'Landing pages', 'Weekly tuning'],
+  aeo: ['AI visibility audit', 'Crawler & schema setup', 'Monthly checks'],
 }
 
 type CoreService = {
@@ -212,23 +197,19 @@ const coreServices: CoreService[] = [
 const workflow = [
   {
     title: 'join the waitlist',
-    description:
-      'Share your goals and links. We review applications each monthly intake and reach out as spots open.',
+    description: 'Share your site and goal.',
   },
   {
     title: 'map the system',
-    description:
-      'We audit your site, listings, campaigns, and tracking to pinpoint the highest-leverage work first.',
+    description: 'Find the highest-leverage fix first.',
   },
   {
     title: 'build the core',
-    description:
-      'Website, attribution, and local presence launch first so every channel compounds.',
+    description: 'Ship the site, proof, and tracking.',
   },
   {
     title: 'improve and report',
-    description:
-      'Content, ads, and AEO layer in cleanly. We review the numbers together and ship the next gain.',
+    description: 'Layer channels and measure what moves.',
   },
 ] as const
 
@@ -339,10 +320,10 @@ export default function ServicesPage() {
                 one team for your growth.
               </h1>
               <p
-                className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
+                className="text-lead prism-rise mt-5 max-w-[38ch] text-pretty text-muted-foreground"
                 style={rise(160)}
               >
-                Work directly with the people who design, build and market your business. We choose the first job together: help the right people find you, earn their trust or make it easier to inquire.
+                Design, engineering, and marketing for small businesses. One senior team, built to convert.
               </p>
               <div
                 className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
@@ -446,16 +427,15 @@ export default function ServicesPage() {
                           </OfferIconTile>
                           <p className="text-eyebrow text-subtle">{service.name}</p>
                         </div>
-                        <h3 className="text-heading mt-5 text-foreground">
+                        <h3 className="text-heading mt-4 text-foreground">
                           {toServiceCardTitle(service.homeTitle)}
                         </h3>
-                        <p className="mt-3 text-pretty text-[15px] leading-7 text-muted-foreground">
-                          {service.description}
-                        </p>
-                        <ul className="mt-5 space-y-2.5">
+                        <ul className="mt-4 flex flex-wrap gap-1.5">
                           {SERVICE_INCLUDES[service.id].map((item) => (
-                            <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
-                              <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-foreground" />
+                            <li
+                              key={item}
+                              className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.025] px-2.5 text-[12px] text-muted-foreground"
+                            >
                               {item}
                             </li>
                           ))}
@@ -490,136 +470,14 @@ export default function ServicesPage() {
           </ul>
         </Section>
 
-        {/* How the pieces fit */}
-        <Section aria-labelledby="services-capabilities-heading" className="pt-0 sm:pt-0">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
-            <Reveal className="lg:sticky lg:top-28 lg:self-start">
-              <SectionHeader
-                id="services-capabilities-heading"
-                eyebrow="Capabilities"
-                title="everything else supports those four."
-                description="We build the core first, then layer channels as the foundation holds."
-                titleClassName="max-w-[15ch]"
-              />
-            </Reveal>
-            <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-              {coreServices.map((service, index) => (
-                <li key={service.name}>
-                  <Reveal delay={index * 60} className="grid gap-5 py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8">
-                    <div>
-                      <h3 className="text-[1.2rem] font-semibold tracking-[-0.025em] text-foreground">
-                        {service.title}
-                      </h3>
-                      <p className="mt-2 text-pretty text-[15px] leading-7 text-muted-foreground">
-                        {service.summary}
-                      </p>
-                      <ul className="mt-4 space-y-2">
-                        {service.outcomes.map((item) => (
-                          <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
-                            <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-foreground" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex flex-col gap-5">
-                      {service.learnMoreLinks?.length ? (
-                        <div>
-                          <p className="text-eyebrow text-subtle">Learn more</p>
-                          <ul className="mt-2 flex flex-wrap gap-2">
-                            {service.learnMoreLinks.map((link) => (
-                              <li key={link.href}>
-                                <TrackedLink
-                                  href={link.href}
-                                  label={link.label.toLowerCase()}
-                                  location="services capabilities"
-                                  className="inline-flex min-h-9 items-center rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[13px] text-foreground/90 transition-colors hover:border-white/20 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                                >
-                                  {link.label}
-                                </TrackedLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ) : null}
-                      <div>
-                        <p className="text-eyebrow text-subtle">Case studies</p>
-                        <ul className="mt-2 flex flex-col">
-                          {service.caseStudies.map((caseStudy) => (
-                            <li key={caseStudy.href}>
-                              <TrackedLink
-                                href={caseStudy.href}
-                                label={caseStudy.label.toLowerCase()}
-                                location="services capabilities case study"
-                                className="group/case inline-flex min-h-9 items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                              >
-                                {caseStudy.label}
-                                <ArrowUpRight
-                                  aria-hidden="true"
-                                  className="size-3.5 transition-transform duration-200 group-hover/case:-translate-y-0.5 group-hover/case:translate-x-0.5"
-                                />
-                              </TrackedLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Section>
-
-        {/* How it works */}
-        <Section aria-labelledby="services-process-heading" className="pt-0 sm:pt-0">
-          <div className="spectrum-rule relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-12 sm:px-10 sm:py-16 lg:px-14">
-            <div aria-hidden="true" className="bg-dots mask-fade-b absolute inset-0 -z-10 opacity-[0.16]" />
-            <SectionHeader
-              id="services-process-heading"
-              eyebrow="How it works"
-              title="foundation first, then growth."
-              description="Get the core right, then scale demand channel by channel."
-              titleClassName="max-w-[16ch]"
-            />
-            <TrackedLink
-              href="/blog/prism-approach-small-business-growth"
-              label="Read the small business growth approach"
-              location="services growth approach"
-              className="mt-6 inline-flex items-center gap-1.5 text-foreground underline underline-offset-4"
-            >
-              Read how the website, ads, and local presence work together
-              <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
-            </TrackedLink>
-            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
-              {workflow.map((step, index) => (
-                <li key={step.title} className="min-w-0 bg-card">
-                  <Reveal delay={index * 80} className="flex h-full flex-col p-6">
-                    <span className="font-mono text-xs text-subtle">
-                      Step {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className="mt-8 text-[1.2rem] font-semibold tracking-[-0.025em] text-foreground">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2.5 text-pretty text-[15px] leading-7 text-muted-foreground">
-                      {step.description}
-                    </p>
-                  </Reveal>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </Section>
-
-        {/* Proof rail */}
-        <section aria-labelledby="services-proof-heading" className="pb-20 sm:pb-24">
+        {/* Proof rail — live client sites right after the 4 visual service cards */}
+        <section aria-labelledby="services-proof-heading" className="pb-16 pt-4 sm:pb-20">
           <div className="prism-container flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
               <SectionHeader
                 id="services-proof-heading"
                 eyebrow="Proof"
                 title="proof in the wild."
-                description="Live client launches where design, engineering, and acquisition work as one system."
                 titleClassName="max-w-[12ch]"
               />
             </Reveal>
@@ -639,7 +497,7 @@ export default function ServicesPage() {
           <Marquee
             duration={60}
             gap="1.25rem"
-            className="mt-12 py-2"
+            className="mt-10 py-2"
             label="Client websites built by Prism"
           >
             {WORK_RAIL.map((site) => (
@@ -673,26 +531,142 @@ export default function ServicesPage() {
           </div>
         </section>
 
+        {/* How it works */}
+        <Section aria-labelledby="services-process-heading" className="pt-0 sm:pt-0">
+          <div className="spectrum-rule relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-6 py-10 sm:px-10 sm:py-14 lg:px-14">
+            <div aria-hidden="true" className="bg-dots mask-fade-b absolute inset-0 -z-10 opacity-[0.16]" />
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeader
+                id="services-process-heading"
+                eyebrow="How it works"
+                title="foundation first, then growth."
+                titleClassName="max-w-[16ch]"
+              />
+              <TrackedLink
+                href="/blog/prism-approach-small-business-growth"
+                label="Read the small business growth approach"
+                location="services growth approach"
+                className="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-foreground underline decoration-white/25 underline-offset-4 hover:decoration-white/70"
+              >
+                Read the full approach
+                <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
+              </TrackedLink>
+            </div>
+            <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+              {workflow.map((step, index) => (
+                <li key={step.title} className="min-w-0 bg-card">
+                  <Reveal delay={index * 80} className="flex h-full flex-col p-6">
+                    <span className="font-mono text-xs text-subtle">
+                      0{index + 1}
+                    </span>
+                    <h3 className="mt-6 text-[1.15rem] font-semibold tracking-[-0.025em] text-foreground">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2 text-pretty text-sm leading-6 text-muted-foreground">
+                      {step.description}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Section>
+
+        {/* Supporting capabilities (crawlable disclosure so the visual canvas stays clean) */}
+        <Section aria-labelledby="services-capabilities-heading" className="py-10 sm:py-12">
+          <h2 id="services-capabilities-heading" className="sr-only">
+            everything else supports those four.
+          </h2>
+          <DisclosurePanel
+            eyebrow="Capabilities"
+            summary="Explore all five supporting capability areas and specialist links"
+            meta={`${coreServices.length} areas`}
+          >
+            <ul className="divide-y divide-white/[0.08]">
+              {coreServices.map((service) => (
+                <li key={service.name} className="grid gap-5 py-6 first:pt-0 last:pb-0 md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8">
+                  <div>
+                    <h3 className="text-[1.1rem] font-semibold tracking-[-0.025em] text-foreground">
+                      {service.title}
+                    </h3>
+                    <p className="mt-1.5 text-pretty text-sm leading-6 text-muted-foreground">
+                      {service.summary}
+                    </p>
+                    <ul className="mt-3 space-y-1.5">
+                      {service.outcomes.map((item) => (
+                        <li key={item} className="flex gap-2.5 text-sm leading-6 text-muted-foreground">
+                          <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-foreground" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    {service.learnMoreLinks?.length ? (
+                      <div>
+                        <p className="text-eyebrow text-subtle">Learn more</p>
+                        <ul className="mt-2 flex flex-wrap gap-2">
+                          {service.learnMoreLinks.map((link) => (
+                            <li key={link.href}>
+                              <TrackedLink
+                                href={link.href}
+                                label={link.label.toLowerCase()}
+                                location="services capabilities"
+                                className="inline-flex min-h-9 items-center rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[13px] text-foreground/90 transition-colors hover:border-white/20 hover:bg-white/[0.07] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                              >
+                                {link.label}
+                              </TrackedLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                    <div>
+                      <p className="text-eyebrow text-subtle">Case studies</p>
+                      <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                        {service.caseStudies.map((caseStudy) => (
+                          <li key={caseStudy.href}>
+                            <TrackedLink
+                              href={caseStudy.href}
+                              label={caseStudy.label.toLowerCase()}
+                              location="services capabilities case study"
+                              className="group/case inline-flex min-h-9 items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                            >
+                              {caseStudy.label}
+                              <ArrowUpRight
+                                aria-hidden="true"
+                                className="size-3.5 transition-transform duration-200 group-hover/case:-translate-y-0.5 group-hover/case:translate-x-0.5"
+                              />
+                            </TrackedLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </DisclosurePanel>
+        </Section>
+
         {/* FAQ */}
-        <Section aria-labelledby="services-faq-heading" className="pt-0 sm:pt-0">
+        <Section aria-labelledby="services-faq-heading" className="pt-4 sm:pt-6">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
             <div className="lg:sticky lg:top-28 lg:self-start">
               <SectionHeader
                 id="services-faq-heading"
                 eyebrow="FAQ"
                 title="before you pick a service."
-                description="Answers about scope, timing, and how to start."
                 titleClassName="max-w-[13ch]"
               />
             </div>
-            <FaqList items={faqItems} name="services-faq" defaultOpen={0} />
+            <FaqList items={faqItems} name="services-faq" />
           </div>
         </Section>
 
         <OwnerDecision
           eyebrow="Choosing a partner"
-          title="the right first job."
-          body="If people already find your business but never finish the inquiry, a better form can matter more than another campaign. We agree on the customer action, the person responsible and what will count as success."
+          title="start with the highest-leverage fix."
           links={[
             { label: "In-house or outsourced?", href: "/blog/who-prism-is-for" },
             { label: "How we scope the work", href: "/pricing" },

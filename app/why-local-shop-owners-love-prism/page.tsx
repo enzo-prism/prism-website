@@ -196,7 +196,7 @@ export default function LocalShopOwnersPage() {
           eyebrow="Local growth playbook"
           title="more customers. less tech stress."
           titleClassName="max-w-[13ch]"
-          description="Prism helps local shops stand out online, bring more people through the door, and run smoother than ever, without you having to deal with complicated tech or marketing systems."
+          description="Websites, local SEO, listings, and ads that bring nearby customers through the door."
           location={`${LOCATION} hero`}
           ctaHref={WAITLIST_CTA.href}
           secondary={{ label: "See case studies", href: "/case-studies", trackingLabel: "see case studies" }}
@@ -211,11 +211,25 @@ export default function LocalShopOwnersPage() {
           />
         </LandingHero>
 
+        <WhyCaseStudies
+          id="local-case-studies"
+          title="trusted by local businesses across California and beyond."
+          description="Live local sites built for foot traffic and booked visits."
+          studies={[
+            { slug: "olympic-bootworks" },
+            { slug: "canary-cove" },
+            { slug: "dr-christopher-wong" },
+            { slug: "exquisite-dentistry" },
+            { slug: "family-first-smile-care" },
+            { slug: "coast-periodontics-and-laser-surgery" },
+          ]}
+          location={LOCATION}
+        />
+
         <WhyOutcomeBand
           id="local-outcomes"
           eyebrow="What changes"
           title="we help local businesses grow, online and offline."
-          description="Prism brings design, technology, and data together, so you can focus on running your shop, not managing your website."
           items={coreOutcomes}
         />
 
@@ -227,8 +241,7 @@ export default function LocalShopOwnersPage() {
           featuredIndex={0}
           footer={
             <p className="max-w-3xl text-pretty text-[15px] leading-relaxed text-muted-foreground">
-              Explore our <InlineLink href="/local-seo-agency">local seo services</InlineLink> and see how Prism
-              works as your local seo agency.
+              Explore our <InlineLink href="/local-seo-agency">local seo services</InlineLink>.
             </p>
           }
         />
@@ -237,7 +250,7 @@ export default function LocalShopOwnersPage() {
           id="local-transition"
           eyebrow="Switching providers"
           title="switching from your old provider? we make it effortless."
-          description="Most local business owners dread changing website or marketing vendors. It feels risky and confusing. Prism makes the transition smooth, secure, and stress-free."
+          description="We coordinate directly with your old vendor so nothing breaks."
           panel={
             <WhyPanel eyebrow="Transition checklist">
               <CheckList items={transitionChecklist} />
@@ -253,10 +266,7 @@ export default function LocalShopOwnersPage() {
           title="you’ll always know what’s happening, and who to call."
         >
           <p>
-            You get direct access to Prism’s founder, Enzo, by call, text, or email anytime. We pride ourselves on communication, transparency, and trust: three things local business owners say are missing from most agencies.
-          </p>
-          <p className="mt-4 text-base text-subtle">
-            We don’t hide behind tickets or dashboards. We show up, explain things clearly, and move fast when you need help.
+            Direct access to founder Enzo Sison by call, text, or email. No ticket queues or mystery dashboards.
           </p>
         </WhyStatement>
 
@@ -264,7 +274,6 @@ export default function LocalShopOwnersPage() {
           id="local-innovation"
           eyebrow="Always improving"
           title="the world changes fast, and your marketing should too."
-          description="Most agencies use cookie-cutter systems that haven’t evolved in years. Prism is built differently."
           reverse
           panel={
             <WhyPanel eyebrow="Always-on improvements">
@@ -275,26 +284,10 @@ export default function LocalShopOwnersPage() {
           <CheckList items={innovationHighlights} />
         </WhySplit>
 
-        <WhyCaseStudies
-          id="local-case-studies"
-          title="trusted by local businesses across California and beyond."
-          description="From custom ski boot shops to dental practices, Prism helps local business owners grow with confidence and ease."
-          studies={[
-            { slug: "olympic-bootworks" },
-            { slug: "canary-cove" },
-            { slug: "dr-christopher-wong" },
-            { slug: "exquisite-dentistry" },
-            { slug: "family-first-smile-care" },
-            { slug: "coast-periodontics-and-laser-surgery" },
-          ]}
-          location={LOCATION}
-        />
-
         <WhySplit
           id="local-staying"
           eyebrow="Why businesses stay"
           title="simple, reliable, and built for the long haul."
-          description="Prism stays by your side as you grow, keeping your marketing, technology, and customer experience tight and up-to-date."
           panel={
             <WhyPanel>
               <WhyIconList items={stayingReasons} />
@@ -314,14 +307,13 @@ export default function LocalShopOwnersPage() {
 
         <FAQSection
           title="local business faq."
-          subtitle="Questions owners ask before they hand off growth."
+          subtitle="Scope, local visibility, and ownership."
           items={segmentFaqItems}
         />
 
         <OwnerDecision
           eyebrow="Inside a Tahoe shop"
           title="let the shopper take the next step."
-          body="Olympic Bootworks gives shoppers a model comparison, current pricing and a direct path to the location that can arrange a ride."
           links={[
             { label: "See the shop walkthrough", href: "/case-studies/olympic-bootworks#walkthrough" },
             { label: "See the website design service", href: "/website-design" },

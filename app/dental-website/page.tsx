@@ -17,6 +17,7 @@ import {
 import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
 import { BrowserFrame } from '@/components/prism/browser-frame'
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Reveal } from '@/components/prism/reveal'
 import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
@@ -239,7 +240,7 @@ export default function DentalWebsitePage() {
         <LandingHero
           eyebrow="Dental practice websites"
           title="dental practice websites that get found, trusted, and chosen."
-          description="Prism builds dental practice websites that answer patient questions, are structured for local search, and make booking the obvious next step. Every launch includes a managed handoff from your previous provider."
+          description="Fast dental sites built for local search, clear booking, and a managed handoff."
           location="dental website hero"
           ctaHref={WEBSITE_WAITLIST_CTA.href}
           secondary={{
@@ -270,105 +271,6 @@ export default function DentalWebsitePage() {
           </div>
         </LandingHero>
 
-        <Section aria-labelledby="dw-expect-title">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16">
-            <Reveal className="flex flex-col gap-8">
-              <SectionHeader
-                id="dw-expect-title"
-                eyebrow="Built for dental practices"
-                title="what patients expect from a dental practice website."
-                description="Before patients choose a dentist, they want clarity, proof, and an easy next step. A great website removes friction and answers questions the way people actually search."
-              />
-              <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06]">
-                {lovePoints.map((item) => (
-                  <li key={item.title} className="bg-card p-5 sm:p-6">
-                    <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-[14px] leading-6 text-subtle">
-                Who wrote this: the Prism design and engineering team. How we
-                build: patient-first structure, fast performance, and
-                measurement tied to calls and website leads. Why: so your website earns
-                patient trust from the first visit.
-              </p>
-            </Reveal>
-            <Reveal delay={120} className="flex flex-col gap-5 lg:pt-24">
-              <SpotlightCard className="p-6 sm:p-8">
-                <h3 className="text-heading text-foreground">
-                  what we set up for patients.
-                </h3>
-                <CheckList className="mt-6" items={patientSetup} />
-                <ArrowLink
-                  href="/why-dental-practices-love-prism"
-                  className="mt-6"
-                >
-                  See why dentists pick Prism
-                </ArrowLink>
-              </SpotlightCard>
-              <Card className="p-6">
-                <p className="text-eyebrow text-subtle">Further reading</p>
-                <ul className="mt-4 space-y-3 text-[15px] leading-6 text-muted-foreground">
-                  <li>
-                    Want the dentist-specific AI Overviews checklist? Read{' '}
-                    <TextLink href="/blog/ai-search-for-dental-practice">
-                      AI search for dental practices
-                    </TextLink>
-                    .
-                  </li>
-                  <li>
-                    Want the step-by-step Google checklist? Read{' '}
-                    <TextLink href="/blog/dental-practice-rank-higher-google-search">
-                      how a dental practice can rank higher in Google Search
-                    </TextLink>
-                    .
-                  </li>
-                  <li>
-                    Want the website checklist? Read{' '}
-                    <TextLink href="/blog/dentist-website-design-checklist">
-                      the dentist website design checklist
-                    </TextLink>
-                    .
-                  </li>
-                </ul>
-              </Card>
-            </Reveal>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="dw-build-title" className="pt-0 sm:pt-0">
-          <Reveal>
-            <SectionHeader
-              id="dw-build-title"
-              eyebrow="What we build"
-              title="what we build, and why it works."
-              description="The goal isn’t “a prettier site.” It’s a calmer, clearer experience patients trust, and a structure Google can understand."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {designEssentials.map((item, index) => (
-              <Reveal key={item.title} delay={index * 60}>
-                <Card className="h-full p-6 transition-colors hover:border-white/[0.16]">
-                  <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="mt-4 text-[17px] font-semibold tracking-[-0.02em] text-foreground">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
-                    {item.description}
-                  </p>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Section>
-
         <Section
           aria-labelledby="dw-proof-title"
           bleed
@@ -380,17 +282,17 @@ export default function DentalWebsitePage() {
                 id="dw-proof-title"
                 eyebrow="Proof"
                 title="dental website examples and case studies."
-                description="Explore real dental launches: how we structure pages, clarify services, and simplify booking paths."
+                description="Live dental launches across California."
               />
               <ArrowLink href="/case-studies" className="shrink-0">
                 See every case study
               </ArrowLink>
             </Reveal>
           </div>
-          <div className="mt-12">
+          <div className="mt-10">
             <DentalWorkMarquee />
           </div>
-          <div className="prism-container mt-12">
+          <div className="prism-container mt-10">
             <div className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4">
               {designExamples.map((example) => (
                 <Link
@@ -408,74 +310,11 @@ export default function DentalWebsitePage() {
                 </Link>
               ))}
             </div>
-            <p className="mt-6 text-[15px] text-muted-foreground">
-              Want the full transformation story? Read{' '}
-              <TextLink href="/blog/from-broken-to-beautiful-dental-website-transformation">
-                From broken to beautiful: a dental website transformation
-              </TextLink>
-              .
-            </p>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="dw-process-title">
-          <Reveal>
-            <SectionHeader
-              id="dw-process-title"
-              eyebrow="Our process"
-              title="our build process."
-              description="A clear plan, a careful build, and a launch that protects what already works."
-            />
-          </Reveal>
-          <Reveal delay={100} className="mt-12">
-            <StepRail steps={buildSteps} columns={5} />
-          </Reveal>
-        </Section>
-
-        <Section aria-labelledby="dw-treatments-title">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-            <div
-              aria-hidden="true"
-              className="bg-grid absolute inset-0 -z-10 opacity-40"
-            />
-            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-              <Reveal>
-                <SectionHeader
-                  id="dw-treatments-title"
-                  eyebrow="Treatments and search"
-                  title="pages built around the care you provide."
-                  description="From emergency dentistry to full-smile makeovers, every page walks patients from first impression to a scheduled visit. Here’s what we add on top of the core site."
-                >
-                  <ArrowLink href="/dental-practice-seo-expert">
-                    See our dentist SEO playbook
-                  </ArrowLink>
-                </SectionHeader>
-              </Reveal>
-              <ul className="grid gap-4">
-                {treatmentHighlights.map((item, index) => (
-                  <Reveal key={item.title} as="li" delay={index * 80}>
-                    <div className="flex gap-5 rounded-2xl border border-white/[0.08] bg-background/60 p-5 sm:p-6">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
-                        {item.icon}
-                      </span>
-                      <div>
-                        <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
-              </ul>
-            </div>
           </div>
         </Section>
 
         <Section aria-labelledby="dw-scheduling-title">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-16">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center lg:gap-16">
             <Reveal>
               <div className="overflow-hidden rounded-2xl border border-white/10 bg-popover shadow-[0_30px_80px_-30px_oklch(0_0_0/90%)]">
                 <HeroLoopingVideo
@@ -489,20 +328,19 @@ export default function DentalWebsitePage() {
                 />
               </div>
             </Reveal>
-            <Reveal delay={100} className="flex flex-col gap-7">
+            <Reveal delay={100} className="flex flex-col gap-6">
               <SectionHeader
                 id="dw-scheduling-title"
                 eyebrow="Simple scheduling"
                 title="booking that feels easy for every patient."
-                description="We design the booking path around how your practice schedules today: online booking where you have it, short request forms where you don’t, and tap-to-call everywhere."
+                description="Online booking, short request forms, and tap-to-call on every treatment page."
               />
-              <CheckList
-                items={[
-                  'The booking step sits on every treatment page, not just the contact page.',
-                  'Form requests go to the right inbox, with call and form tracking.',
-                  'The same path carries through to specialty landing pages and ad landing pages.',
-                ]}
-              />
+              <SpotlightCard className="p-5 sm:p-6">
+                <h3 className="text-heading text-foreground">
+                  what we set up for patients.
+                </h3>
+                <CheckList className="mt-4" items={patientSetup} />
+              </SpotlightCard>
               <div>
                 <WaitlistButton
                   location="dental website scheduling"
@@ -519,7 +357,7 @@ export default function DentalWebsitePage() {
               id="dw-interviews-title"
               eyebrow="In their own words"
               title="conversations with dentists and their teams."
-              description="Dentists and front office teams sit down with Enzo to talk about patients, operations, and the work of running a practice."
+              description="Real dentists and office managers on what changed."
             />
             <ArrowLink
               href="/why-dental-practices-love-prism"
@@ -528,7 +366,7 @@ export default function DentalWebsitePage() {
               Why dentists pick Prism
             </ArrowLink>
           </Reveal>
-          <Reveal delay={100} className="mt-12">
+          <Reveal delay={100} className="mt-10">
             <InterviewGrid
               interviews={DENTAL_INTERVIEWS}
               location="dental website interviews"
@@ -536,111 +374,154 @@ export default function DentalWebsitePage() {
           </Reveal>
         </Section>
 
-        <Section aria-labelledby="dw-beyond-title">
-          <div className="grid gap-8 rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center lg:gap-14 lg:p-14">
-            <div className="flex flex-col gap-6">
-              <Eyebrow>Beyond the website</Eyebrow>
-              <h2
-                id="dw-beyond-title"
-                className="text-title text-gradient max-w-[16ch] text-balance pb-1"
-              >
-                one team for every channel your practice uses.
-              </h2>
-              <p className="max-w-[56ch] text-[15px] leading-7 text-muted-foreground">
-                Prism does more than dental websites. We also run the ads, local
-                listings, and review workflows that sit on top of the site.
-                Curious how the full system fits together?
-              </p>
-              <CheckList
-                items={[
-                  <>
-                    Local Google Ads and Meta campaigns, measured against calls
-                    and booked appointments. See{' '}
-                    <TextLink href="/facebook-ads-for-dentists">
-                      Facebook ads for dentists
-                    </TextLink>
-                    .
-                  </>,
-                  'Google, Apple, Yelp, and other listings kept accurate for hours, services, and reviews.',
-                  'Monthly reporting and updates as search and AI results change.',
-                ]}
-              />
-            </div>
-            <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.08] bg-background/60 p-6">
-              <p className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
-                see the whole system.
-              </p>
-              <p className="text-[15px] leading-7 text-muted-foreground">
-                Explore how Prism supports dentists with ads, listings, and
-                follow-up built on top of the website.
-              </p>
-              <ArrowLink href="/why-dental-practices-love-prism">
-                See why dental practices love Prism
-              </ArrowLink>
-            </div>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="dw-migration-title">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-start lg:gap-16">
-            <Reveal>
-              <SectionHeader
-                id="dw-migration-title"
-                eyebrow="Stress-free migration"
-                title="we do the heavy lifting when you leave your old provider."
-                description="Dentists often feel trapped by agencies that own their domain or hosting. Prism handles the details so the switch is smooth for your patients and your team."
-              >
-                <ArrowLink href="/custom-email-for-dental-practices">
-                  Set up custom email for your practice
-                </ArrowLink>
-              </SectionHeader>
-            </Reveal>
-            <Reveal delay={100}>
-              <ol className="relative flex flex-col gap-4 before:absolute before:bottom-6 before:left-[19px] before:top-6 before:w-px before:bg-white/10">
-                {transferSteps.map((item) => (
-                  <li key={item.step} className="relative flex gap-5">
-                    <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full border border-white/10 bg-card font-mono text-[12px] text-foreground">
-                      {item.step}
-                    </span>
-                    <div className="flex-1 rounded-2xl border border-white/[0.08] bg-card p-5">
-                      <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-foreground">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1.5 text-[15px] leading-7 text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </Reveal>
-          </div>
-        </Section>
-
         <DentalClientsSection />
 
-        <Section aria-labelledby="dw-systems-title">
-          <Card className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-12">
-            <span className="grid size-14 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] text-foreground">
-              <ShieldCheck className="size-6" aria-hidden />
-            </span>
-            <div className="flex flex-col gap-6">
-              <Eyebrow>Connected systems</Eyebrow>
-              <h2
-                id="dw-systems-title"
-                className="text-heading max-w-[24ch] text-foreground sm:text-[2rem]"
-              >
-                every patient touchpoint, connected.
-              </h2>
-              <CheckList
-                className="grid gap-x-10 gap-y-3 space-y-0 sm:grid-cols-2"
-                items={integrationPoints}
-              />
-              <ArrowLink href="/custom-email-for-dental-practices">
-                Learn about custom email for dental teams
-              </ArrowLink>
+        <Section aria-labelledby="dw-build-title" className="py-10 sm:py-12">
+          <DisclosurePanel
+            id="dw-full-blueprint"
+            eyebrow="Full dental blueprint"
+            title="what we build, 5-step process, migration, and connected systems."
+            summary="6 site essentials, treatment SEO, provider migration, HIPAA-aware forms, and checklists."
+            openLabel="View blueprint"
+            closeLabel="Hide blueprint"
+          >
+            <div className="space-y-12">
+              <div className="grid gap-6 lg:grid-cols-2">
+                <div>
+                  <h3 id="dw-expect-title" className="text-heading text-foreground">
+                    what patients expect.
+                  </h3>
+                  <ul className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06]">
+                    {lovePoints.map((item) => (
+                      <li key={item.title} className="bg-card p-5">
+                        <h4 className="text-base font-semibold text-foreground">{item.title}</h4>
+                        <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Card className="p-6">
+                  <p className="text-eyebrow text-subtle">Further reading</p>
+                  <ul className="mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
+                    <li>
+                      <TextLink href="/blog/ai-search-for-dental-practice">
+                        AI search for dental practices
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/blog/dental-practice-rank-higher-google-search">
+                        How a dental practice can rank higher in Google Search
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/blog/dentist-website-design-checklist">
+                        The dentist website design checklist
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/blog/from-broken-to-beautiful-dental-website-transformation">
+                        From broken to beautiful: a dental website transformation
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/dental-practice-seo-expert">
+                        Dentist SEO playbook
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/facebook-ads-for-dentists">
+                        Facebook ads for dentists
+                      </TextLink>
+                    </li>
+                    <li>
+                      <TextLink href="/custom-email-for-dental-practices">
+                        Custom email for dental teams
+                      </TextLink>
+                    </li>
+                  </ul>
+                  <p className="mt-6 text-xs leading-5 text-subtle">
+                    Built by the Prism design and engineering team with patient-first structure, fast performance, and call/form measurement.
+                  </p>
+                </Card>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <h3 id="dw-build-title" className="text-heading text-foreground">
+                  what we build, and why it works.
+                </h3>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {designEssentials.map((item, index) => (
+                    <Card key={item.title} className="h-full p-5">
+                      <span className="font-mono text-[11px] tracking-[0.18em] text-subtle">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h4 className="mt-3 text-base font-semibold text-foreground">{item.title}</h4>
+                      <p className="mt-1.5 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <h3 id="dw-process-title" className="text-heading text-foreground">
+                  our build process.
+                </h3>
+                <div className="mt-6">
+                  <StepRail steps={buildSteps} columns={5} />
+                </div>
+              </div>
+
+              <div className="grid gap-6 border-t border-white/[0.08] pt-10 lg:grid-cols-2">
+                <div>
+                  <h3 id="dw-treatments-title" className="text-heading text-foreground">
+                    treatments, search, and migration.
+                  </h3>
+                  <ul className="mt-5 grid gap-3">
+                    {treatmentHighlights.map((item) => (
+                      <li key={item.title} className="flex gap-4 rounded-xl border border-white/[0.08] bg-background/60 p-4">
+                        <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-foreground">
+                          {item.icon}
+                        </span>
+                        <div>
+                          <h4 className="text-base font-semibold text-foreground">{item.title}</h4>
+                          <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 id="dw-migration-title" className="text-heading text-foreground">
+                    stress-free provider handoff.
+                  </h3>
+                  <ol className="mt-5 flex flex-col gap-3">
+                    {transferSteps.map((item) => (
+                      <li key={item.step} className="flex gap-4 rounded-xl border border-white/[0.08] bg-background/60 p-4">
+                        <span className="font-mono text-xs text-subtle">{item.step}</span>
+                        <div>
+                          <h4 className="text-base font-semibold text-foreground">{item.title}</h4>
+                          <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <div className="flex items-center gap-3">
+                  <ShieldCheck className="size-5 text-foreground" aria-hidden />
+                  <h3 id="dw-systems-title" className="text-heading text-foreground">
+                    every patient touchpoint, connected.
+                  </h3>
+                </div>
+                <CheckList
+                  className="mt-5 grid gap-x-10 gap-y-3 space-y-0 sm:grid-cols-2"
+                  items={integrationPoints}
+                />
+              </div>
             </div>
-          </Card>
+          </DisclosurePanel>
         </Section>
 
         <DentalFaq

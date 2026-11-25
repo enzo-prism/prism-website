@@ -15,19 +15,19 @@ import styles from './website-design-anatomy.module.css'
 export const WEBSITE_DESIGN_PRINCIPLES = [
   {
     title: 'say it on the first screen.',
-    body: 'What you do, who you serve, and how to reach you, clear before anyone scrolls.',
+    body: 'What you do and how to reach you, above the fold.',
   },
   {
     title: 'put proof where people decide.',
-    body: 'Real reviews, photography, and credentials placed right beside every decision point.',
+    body: 'Real reviews and photos right beside the CTA.',
   },
   {
     title: 'keep it light enough to load fast.',
-    body: 'Media, fonts, and motion engineered to load smoothly on any mobile connection.',
+    body: 'Fast media and motion on any mobile connection.',
   },
   {
     title: 'make the next step obvious.',
-    body: 'Every page guides visitors to call, book, or inquire, always within thumb reach.',
+    body: 'Call, book, or inquire always within thumb reach.',
   },
 ] as const
 
@@ -244,7 +244,6 @@ export function WebsiteDesignAnatomy() {
               id="website-design-principles-title"
               eyebrow="Design principles"
               title="every design choice has a job."
-              description="Nothing decorative. Every element earns trust and moves the right visitor to reach out."
               titleClassName="max-w-[15ch]"
             />
             <ol className="flex flex-col gap-5">

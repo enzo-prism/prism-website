@@ -163,9 +163,8 @@ export default async function Blog({
                 >
                   notes from the work.
                 </h1>
-                <p className="prism-rise text-lead mt-5 max-w-[52ch] text-pretty text-muted-foreground">
-                  Practical lessons on websites, search, AI, ads, and local growth, written from
-                  real Prism projects and experiments.
+                <p className="prism-rise text-lead mt-4 max-w-[44ch] text-pretty text-muted-foreground">
+                  Field notes on websites, search, AI, and ads from live Prism projects.
                 </p>
               </div>
               <div className="prism-rise flex items-center gap-3">
@@ -256,13 +255,12 @@ export default async function Blog({
 
         {currentPage === 1 && selectedCategory === 'all' && (
           <OwnerDecision
-            eyebrow="For business owners"
-            title="what are you deciding?"
-            body="Decide when to bring in a growth team, trace a visit that never becomes an inquiry, or check whether nearby customers can find your shop."
+            eyebrow="Start reading"
+            title="popular owner guides."
             links={[
-              { label: 'Compare hiring with a growth partner', href: '/blog/who-prism-is-for' },
-              { label: 'Find the gap between traffic and inquiries', href: '/blog/website-traffic-no-inquiries' },
-              { label: 'Check your visibility on Maps', href: '/blog/google-maps-visibility-playbook-2025' },
+              { label: 'Hiring vs. growth partner', href: '/blog/who-prism-is-for' },
+              { label: 'Traffic without inquiries', href: '/blog/website-traffic-no-inquiries' },
+              { label: 'Google Maps playbook', href: '/blog/google-maps-visibility-playbook-2025' },
             ]}
           />
         )}

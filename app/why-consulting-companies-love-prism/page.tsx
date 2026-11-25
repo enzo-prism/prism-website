@@ -178,7 +178,7 @@ export default function ConsultingCompaniesPage() {
           eyebrow="Consulting growth playbook"
           title="build trust, attract clients, and scale your impact."
           titleClassName="max-w-[16ch]"
-          description="Prism helps consulting firms stand out online, capture more qualified leads, and turn insights into measurable growth, while you focus on serving clients."
+          description="Authority websites, proof systems, and automated lead capture for consulting firms."
           location={`${LOCATION} hero`}
           ctaHref={WAITLIST_CTA.href}
           secondary={{ label: "See case studies", href: "/case-studies", trackingLabel: "see case studies" }}
@@ -197,11 +197,18 @@ export default function ConsultingCompaniesPage() {
           />
         </LandingHero>
 
+        <WhyCaseStudies
+          id="consulting-case-studies"
+          title="consulting and professional services firms growing with Prism."
+          description="Live advisory sites with clear proof and inquiry paths."
+          studies={[{ slug: "practice-transitions-institute" }, { slug: "infobell-it" }]}
+          location={LOCATION}
+        />
+
         <WhyOutcomeBand
           id="consulting-outcomes"
           eyebrow="What changes"
           title="grow through clarity, credibility, and connection."
-          description="Prism combines design, automation, and data so your consulting business attracts better-fit clients and runs smoother than ever."
           items={coreOutcomes}
         />
 
@@ -213,7 +220,7 @@ export default function ConsultingCompaniesPage() {
             <WhyJourneyPanel
               eyebrow="Trust pipeline"
               stages={["Visitor", "Trust", "Inquiry", "Client"]}
-              caption="Automations nurture visitors, qualify leads, and keep your calendar full of right-fit clients."
+              caption="Automations qualify leads and fill your calendar."
             />
           }
         >
@@ -233,7 +240,7 @@ export default function ConsultingCompaniesPage() {
           id="consulting-difference"
           eyebrow="What makes Prism different"
           title="your growth partner, not just your web team."
-          description="Boutique consulting firms move fast. You need a partner who can keep up. Your team’s focus should stay on clients, strategy, and delivery, not debugging integrations or redesigning slides. Prism gives you a single, unified system that works across:"
+          description="One system covering your site, CRM, automations, and proof."
           reverse
           panel={
             <WhyPanel eyebrow="What you keep">
@@ -242,24 +249,13 @@ export default function ConsultingCompaniesPage() {
           }
         >
           <CheckList items={prismCoverage} />
-          <p className="mt-6 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-            You get speed, reliability, and insight, all without needing to manage another vendor.
-          </p>
         </WhySplit>
-
-        <WhyCaseStudies
-          id="consulting-case-studies"
-          title="consulting and professional services firms growing with Prism."
-          description="We partner with forward-thinking firms who combine strategy, relationships, and real impact."
-          studies={[{ slug: "practice-transitions-institute" }, { slug: "infobell-it" }]}
-          location={LOCATION}
-        />
 
         <WhySplit
           id="consulting-staying"
           eyebrow="Why firms stay"
           title="built for growth, not maintenance."
-          description="Prism keeps your site, content, and lead flow improving every month, with no long contracts and nothing locked away from you."
+          description="Continuous updates. Zero lock-in."
           panel={
             <WhyPanel>
               <WhyIconList items={retentionBenefits} />
@@ -279,14 +275,13 @@ export default function ConsultingCompaniesPage() {
 
         <FAQSection
           title="consulting marketing faq."
-          subtitle="Answers about positioning, proof, and collaboration."
+          subtitle="Positioning, proof, and collaboration."
           items={segmentFaqItems}
         />
 
         <OwnerDecision
           eyebrow="Advisory firms"
           title="give a prospect a reason to start a conversation."
-          body="For Saorsa Growth Partners, a past engagement, Prism clarified the offers and built direct inquiry paths. For Practice Transitions Institute, buyers can explore the process and hear from clients before contacting the team."
           links={[
             { label: "Read the Saorsa project", href: "/case-studies/saorsa-growth-partners" },
             { label: "Explore the PTI case", href: "/case-studies/practice-transitions-institute" },

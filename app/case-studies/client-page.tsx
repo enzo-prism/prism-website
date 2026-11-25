@@ -211,10 +211,8 @@ export default function CaseStudiesPage() {
                     live sites.
                   </span>
                 </h1>
-                <p className="prism-rise text-lead mt-6 max-w-[48ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-                  Practices, software companies, hospitality estates, and local
-                  leaders. Open any project to inspect the live site and what we
-                  built.
+                <p className="prism-rise text-lead mt-5 max-w-[40ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
+                  Open any project to inspect the live site and what we shipped.
                 </p>
                 <div className="prism-rise mt-9 flex flex-col gap-3 sm:flex-row [--rise-delay:240ms]">
                   <WaitlistButton location="case studies hero" size="xl" />
@@ -299,7 +297,6 @@ export default function CaseStudiesPage() {
               id="work-gallery-title"
               eyebrow={`${ledger.stories} client stories`}
               title="proof you can click."
-              description="Filter by industry. Every card opens the full story: the live site, the challenge, the approach, and what we delivered."
             />
           </Reveal>
 
@@ -316,9 +313,8 @@ export default function CaseStudiesPage() {
         <CaseStudyIndex />
 
         <OwnerDecision
-          eyebrow="Choose a customer journey"
-          title="what do you want customers to do?"
-          body="Explore three ways an owner can turn interest into action, from trying a product to planning a stay to evaluating a business purchase."
+          eyebrow="Featured flows"
+          title="explore three live customer journeys."
           links={[
             { label: "Request a test ride", href: "/case-studies/olympic-bootworks#walkthrough" },
             { label: "Inquire about a stay", href: "/case-studies/canary-cove" },

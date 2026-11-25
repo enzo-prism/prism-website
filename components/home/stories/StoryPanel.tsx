@@ -114,7 +114,7 @@ export function StoryPanel({ story, index, total }: StoryPanelProps) {
         )}
         style={{ '--band': band } as CSSProperties}
       >
-        <div className="grid h-full lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className="grid h-full lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]">
           {/* Story */}
           <div className="order-2 flex min-w-0 flex-col px-5 pb-6 pt-7 sm:px-8 sm:pb-8 sm:pt-9 lg:order-1 lg:py-10 lg:pl-10 lg:pr-2">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">

@@ -1,6 +1,7 @@
 import { ArrowDown } from 'lucide-react'
 
-import { HomeAppPill } from '@/components/home/HomeAppCallout'
+import { HomeAppCard, HomeAppPill } from '@/components/home/HomeAppCallout'
+import HomeRefraction from '@/components/home/HomeRefraction'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
@@ -12,11 +13,11 @@ export default function HomeHero() {
     <section
       id="homepage-hero"
       aria-labelledby="home-hero-title"
-      className="relative isolate overflow-hidden pt-[calc(var(--prism-header-height,64px)+3rem)] sm:pt-[calc(var(--prism-header-height,64px)+4.5rem)]"
+      className="relative isolate overflow-hidden pt-[calc(var(--prism-header-height,64px)+1.25rem)] sm:pt-[calc(var(--prism-header-height,64px)+1.75rem)]"
     >
       <div
         aria-hidden="true"
-        className="bg-grid absolute inset-x-0 top-0 -z-10 h-[820px] opacity-80"
+        className="bg-grid absolute inset-x-0 top-0 -z-10 h-[860px] opacity-80"
       />
       <div
         aria-hidden="true"
@@ -28,7 +29,7 @@ export default function HomeHero() {
 
         <h1
           id="home-hero-title"
-          className="text-hero prism-rise mt-8 pb-3 [--rise-delay:140ms] sm:mt-10"
+          className="text-hero prism-rise mt-5 pb-2 [--rise-delay:140ms] sm:mt-5"
         >
           <span className="text-gradient block whitespace-nowrap">
             {HOMEPAGE_HERO.titleLead}
@@ -38,11 +39,11 @@ export default function HomeHero() {
           </span>
         </h1>
 
-        <p className="text-lead prism-rise mt-6 max-w-[43rem] text-pretty text-muted-foreground [--rise-delay:240ms] sm:mt-8">
+        <p className="text-lead prism-rise mt-3 max-w-[38rem] text-pretty text-muted-foreground [--rise-delay:240ms] sm:mt-4">
           {HOMEPAGE_HERO.subheading}
         </p>
 
-        <div className="prism-rise mt-9 flex w-full flex-col items-center justify-center gap-3 [--rise-delay:320ms] sm:w-auto sm:flex-row">
+        <div className="prism-rise mt-6 flex w-full flex-col items-center justify-center gap-3 [--rise-delay:320ms] sm:w-auto sm:flex-row">
           <Button
             asChild
             variant="default"
@@ -68,6 +69,11 @@ export default function HomeHero() {
         </div>
 
         <HomeAppPill />
+      </div>
+
+      <div className="relative -mt-6 sm:-mt-12 lg:-mt-16">
+        <HomeRefraction labels={HOMEPAGE_HERO.spectrumLabels} />
+        <HomeAppCard />
       </div>
     </section>
   )

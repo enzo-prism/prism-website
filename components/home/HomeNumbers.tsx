@@ -60,9 +60,14 @@ export default function HomeNumbers() {
             </li>
           ))}
         </ul>
-        <p className="mx-auto mt-5 max-w-3xl text-pretty text-center text-[12px] leading-relaxed text-subtle">
-          {HOMEPAGE_NUMBERS.note}
-        </p>
+        <details className="mx-auto mt-5 max-w-2xl text-center">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle transition-colors hover:text-muted-foreground [&::-webkit-details-marker]:hidden">
+            Sources &amp; methodology
+          </summary>
+          <p className="mt-2 text-pretty text-[12px] leading-relaxed text-subtle">
+            {HOMEPAGE_NUMBERS.note}
+          </p>
+        </details>
       </Reveal>
     </Section>
   )

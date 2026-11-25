@@ -192,7 +192,7 @@ export default function NonprofitsPage() {
           eyebrow="Nonprofit growth playbook"
           title="share your mission. reach more people. simplify your tech."
           titleClassName="max-w-[17ch]"
-          description="Prism helps nonprofits tell their story beautifully, attract donors and supporters, and manage technology easily, so their teams can stay focused on the work that matters most."
+          description="Story-first websites, donation flows, and search visibility for mission-driven teams."
           location={`${LOCATION} hero`}
           ctaHref={WAITLIST_CTA.href}
           secondary={{ label: "See case studies", href: "/case-studies", trackingLabel: "see case studies" }}
@@ -207,11 +207,18 @@ export default function NonprofitsPage() {
           />
         </LandingHero>
 
+        <WhyCaseStudies
+          id="nonprofit-case-studies"
+          title="trusted by organizations making a global difference."
+          description="Live nonprofit builds driving awareness and donations."
+          studies={[{ slug: "belize-kids-foundation" }, { slug: "canary-foundation" }]}
+          location={LOCATION}
+        />
+
         <WhyOutcomeBand
           id="nonprofit-outcomes"
           eyebrow="What changes"
           title="amplify impact through clarity, credibility, and connection."
-          description="Prism gives mission-driven teams modern tools, simple systems, and considered design, built for scale, not stress."
           items={coreOutcomes}
         />
 
@@ -227,7 +234,7 @@ export default function NonprofitsPage() {
           id="nonprofit-transition"
           eyebrow="Switching to Prism"
           title="switching to Prism is effortless and worry-free."
-          description="Many nonprofits inherit outdated websites or systems built by volunteers or legacy vendors. Prism makes it easy to modernize without losing content or history."
+          description="Modernize legacy sites without losing content or history."
           panel={
             <WhyPanel eyebrow="Transition support includes">
               <CheckList items={transitionSupport} />
@@ -242,14 +249,13 @@ export default function NonprofitsPage() {
           eyebrow="Communication"
           title="you’ll always know what’s happening, and who’s handling it."
         >
-          You’ll have direct access to Prism’s founder, Enzo, by call, text, or email anytime. We value communication, transparency, and trust above all else, because mission-driven work deserves partners who care just as much as you do.
+          Direct access to founder Enzo Sison by call, text, or email. Clear priorities, zero agency layers.
         </WhyStatement>
 
         <WhySplit
           id="nonprofit-improvement"
           eyebrow="After launch"
           title="we don’t just build your website. we help it grow with you."
-          description="The world of search, AI, and digital storytelling changes fast, and Prism keeps you ahead of it."
           reverse
           panel={
             <WhyPanel eyebrow="Momentum you can count on">
@@ -260,19 +266,10 @@ export default function NonprofitsPage() {
           <CheckList items={improvementHighlights} />
         </WhySplit>
 
-        <WhyCaseStudies
-          id="nonprofit-case-studies"
-          title="trusted by organizations making a global difference."
-          description="From cancer research to child empowerment, Prism supports nonprofits turning purpose into measurable impact. Their missions are too important to be slowed down by tech or communication challenges."
-          studies={[{ slug: "belize-kids-foundation" }, { slug: "canary-foundation" }]}
-          location={LOCATION}
-        />
-
         <WhySplit
           id="nonprofit-staying"
           eyebrow="Why nonprofits stay"
           title="transparent. reliable. mission-aligned."
-          description="Prism stays aligned with your mission, keeping your website, campaigns, and donor systems responsive to what your community needs."
           panel={
             <WhyPanel>
               <WhyIconList items={stayingReasons} />

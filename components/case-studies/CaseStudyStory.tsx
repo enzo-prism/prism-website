@@ -29,8 +29,7 @@ export default function CaseStudyStory({ clientName, story }: CaseStudyStoryProp
         <SectionHeader
           id="case-study-story-title"
           eyebrow="The story"
-          title="how the work came together."
-          description={`Where ${clientName} started, what Prism changed, and where it landed.`}
+          title="how it came together."
         />
       </Reveal>
 

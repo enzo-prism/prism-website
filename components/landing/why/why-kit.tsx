@@ -4,6 +4,7 @@ import type { LucideIcon } from 'lucide-react'
 import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
 
 import { BrowserFrame } from '@/components/prism/browser-frame'
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { Reveal } from '@/components/prism/reveal'
 import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
 import { SpotlightCard } from '@/components/prism/spotlight-card'
@@ -322,7 +323,7 @@ export function WhyStatement({
 
 export type WhyProcessStep = { step: string; detail: string }
 
-/** Bento: who it's for, problems, deliverables, and the four-step process. */
+/** Bento: who it's for, problems, deliverables, and process inside a crawlable disclosure. */
 export function WhyPlaybook({
   id,
   eyebrow,
@@ -341,58 +342,58 @@ export function WhyPlaybook({
   process: readonly WhyProcessStep[]
 }) {
   return (
-    <Section aria-labelledby={id}>
+    <Section aria-labelledby={id} className="py-12 sm:py-16">
       <Reveal>
         <SectionHeader id={id} eyebrow={eyebrow} title={title} titleClassName="max-w-[20ch]" />
       </Reveal>
-      <div className="mt-12 grid gap-4 sm:mt-14 lg:grid-cols-2">
-        <Reveal className="h-full">
-          <Card className="h-full p-6 sm:p-8">
-            <p className="text-eyebrow text-subtle">Who it&apos;s for</p>
-            <CheckList items={whoItsFor} className="mt-6" />
-          </Card>
-        </Reveal>
-        <Reveal delay={70} className="h-full">
-          <Card className="h-full p-6 sm:p-8">
-            <p className="text-eyebrow text-subtle">Problems we solve</p>
-            <CheckList items={problems} className="mt-6" />
-          </Card>
-        </Reveal>
-        <Reveal delay={140} className="lg:col-span-2">
-          <Card className="p-6 sm:p-8">
-            <p className="text-eyebrow text-subtle">What you get</p>
-            <CheckList items={deliverables} columns={2} className="mt-6" />
-          </Card>
-        </Reveal>
-        <Reveal delay={210} className="lg:col-span-2">
-          <Card className="overflow-hidden">
-            <p className="text-eyebrow px-6 pt-6 text-subtle sm:px-8 sm:pt-8">How it works</p>
-            <ol className="mt-6 grid border-t border-white/[0.07] sm:grid-cols-2 lg:grid-cols-4">
-              {process.map((item, index) => (
-                <li
-                  key={item.step}
-                  className={cn(
-                    'flex flex-col gap-3 border-white/[0.07] p-6 sm:p-8',
-                    index > 0 && 'border-t sm:border-t-0',
-                    index % 2 === 1 && 'sm:border-l',
-                    index >= 2 && 'sm:border-t lg:border-t-0',
-                    index === 2 && 'lg:border-l',
-                  )}
-                >
-                  <span className="font-mono text-xs tabular-nums text-subtle">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <p className="text-base font-semibold leading-snug tracking-[-0.015em] text-foreground first-letter:uppercase">
-                    {item.step}
-                  </p>
-                  <p className="text-pretty text-sm leading-relaxed text-muted-foreground first-letter:uppercase">
-                    {item.detail}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </Card>
-        </Reveal>
+      <div className="mt-8 sm:mt-10">
+        <DisclosurePanel
+          eyebrow="Playbook"
+          summary="See who it's for, deliverables, and the four-step process"
+          meta={`${deliverables.length} deliverables`}
+        >
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Card className="h-full p-6 sm:p-7">
+              <p className="text-eyebrow text-subtle">Who it&apos;s for</p>
+              <CheckList items={whoItsFor} className="mt-5" />
+            </Card>
+            <Card className="h-full p-6 sm:p-7">
+              <p className="text-eyebrow text-subtle">Problems we solve</p>
+              <CheckList items={problems} className="mt-5" />
+            </Card>
+            <Card className="p-6 sm:p-7 lg:col-span-2">
+              <p className="text-eyebrow text-subtle">What you get</p>
+              <CheckList items={deliverables} columns={2} className="mt-5" />
+            </Card>
+            <Card className="overflow-hidden lg:col-span-2">
+              <p className="text-eyebrow px-6 pt-6 text-subtle sm:px-7 sm:pt-7">How it works</p>
+              <ol className="mt-5 grid border-t border-white/[0.07] sm:grid-cols-2 lg:grid-cols-4">
+                {process.map((item, index) => (
+                  <li
+                    key={item.step}
+                    className={cn(
+                      'flex flex-col gap-2.5 border-white/[0.07] p-6',
+                      index > 0 && 'border-t sm:border-t-0',
+                      index % 2 === 1 && 'sm:border-l',
+                      index >= 2 && 'sm:border-t lg:border-t-0',
+                      index === 2 && 'lg:border-l',
+                    )}
+                  >
+                    <span className="font-mono text-xs tabular-nums text-subtle">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-base font-semibold leading-snug tracking-[-0.015em] text-foreground first-letter:uppercase">
+                      {item.step}
+                    </p>
+                    <p className="text-pretty text-sm leading-relaxed text-muted-foreground first-letter:uppercase">
+                      {item.detail}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </Card>
+          </div>
+        </DisclosurePanel>
       </div>
     </Section>
   )

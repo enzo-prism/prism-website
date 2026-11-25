@@ -210,9 +210,14 @@ export default function HomeAudience() {
         </Reveal>
       </div>
 
-      <p className="mt-12 max-w-3xl text-pretty text-[12px] leading-relaxed text-subtle sm:mt-14">
-        {note}
-      </p>
+      <details className="mt-10 max-w-2xl">
+        <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-subtle transition-colors hover:text-muted-foreground [&::-webkit-details-marker]:hidden">
+          Sources &amp; methodology
+        </summary>
+        <p className="mt-2 text-pretty text-[12px] leading-relaxed text-subtle">
+          {note}
+        </p>
+      </details>
     </Section>
   )
 }

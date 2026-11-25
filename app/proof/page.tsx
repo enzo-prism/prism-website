@@ -3,6 +3,7 @@ import { LandingHero } from '@/components/landing/landing-hero'
 import { BulletList } from '@/components/landing/seo/bullet-list'
 import { TextLink } from '@/components/landing/seo/text-link'
 import Navbar from '@/components/navbar'
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
@@ -190,7 +191,7 @@ export default function ProofPage() {
         <LandingHero
           eyebrow="Prism Proof"
           title="more trust. more patients. less friction."
-          description="Real patient stories are the strongest growth lever you’re not pulling. Prism Proof turns quick, authentic testimonials into a compounding engine of social proof across your site, search, and social, without adding work to your day."
+          description="Turn one short patient story into case studies, clips, schema, and search proof."
           location="proof hero"
           ctaHref={WAITLIST_CTA.href}
           secondary={{ label: 'See sample assets', href: '/case-studies', trackingLabel: 'see sample assets' }}
@@ -254,158 +255,17 @@ export default function ProofPage() {
           </div>
         </Section>
 
-        <Section aria-labelledby="proof-included-title">
-          <Reveal>
-            <SectionHeader
-              id="proof-included-title"
-              eyebrow="what you get (standard)"
-              title="everything from invite to publish."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:mt-14 lg:grid-cols-6">
-            <Reveal className="lg:col-span-3">
-              <Card className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">capture</p>
-                <h3 className="text-heading mt-4 text-foreground">Done-for-you Patient Story Flow</h3>
-                <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
-                  Post-visit text/email with a link to your private testimonial page. No apps to download, no
-                  logins.
-                </p>
-                <p className="mt-6 text-sm font-medium text-foreground">
-                  Two capture paths (your page, not Google/Yelp)
-                </p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="font-medium text-foreground">Quick Video (60s)</p>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">guided prompts, retakes allowed.</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="font-medium text-foreground">Quick Form (90s)</p>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                      punchy Q&amp;A for quotes and highlights.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </Reveal>
-            <Reveal delay={80} className="lg:col-span-3">
-              <Card className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">distribution kit</p>
-                <h3 className="text-heading mt-4 text-foreground">Editing &amp; Packaging</h3>
-                <p className="mt-2 text-[15px] leading-7 text-muted-foreground">
-                  We clean the clip, add captions and branding, pull the transcript, and extract 3-5 quotable
-                  lines.
-                </p>
-                <BulletList
-                  className="mt-6"
-                  marker="dot"
-                  items={[
-                    'On-site Case Study block or page (with CTA)',
-                    'Review/Video schema markup for SEO',
-                    'Google Business Profile post draft',
-                    'Instagram reel + caption draft',
-                    'Email snippet for campaigns or autoresponders',
-                  ]}
-                />
-              </Card>
-            </Reveal>
-            <Reveal delay={140} className="lg:col-span-6">
-              <Card className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                  <BarChart3 aria-hidden="true" className="size-[18px] text-foreground" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">Reporting</h3>
-                  <p className="mt-1 text-[15px] leading-7 text-muted-foreground">
-                    Dashboard tiles for capture rates, assets produced, pages upgraded, and measured engagement
-                    where tracking is available.
-                  </p>
-                </div>
-              </Card>
-            </Reveal>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="proof-how-title">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
-            <Reveal>
-              <SectionHeader id="proof-how-title" eyebrow="end to end" title="how it works." />
-            </Reveal>
-            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
-              {HOW_IT_WORKS.map((item, index) => (
-                <li key={item.step} className="flex flex-col gap-3 bg-card p-6">
-                  <span className="font-mono text-xs tabular-nums text-subtle">step 0{index + 1}</span>
-                  <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.step}</h3>
-                  <p className="text-sm leading-6 text-muted-foreground">{item.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </Section>
-
-        <SeoSection eyebrow="the difference" title="what makes it different.">
-          <dl className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-            {DIFFERENT.map((item) => (
-              <div key={item.title} className="py-6">
-                <dt className="text-lg font-semibold tracking-[-0.02em] text-foreground">{item.title}</dt>
-                <dd className="mt-1.5 text-[15px] leading-7 text-muted-foreground">{item.body}</dd>
-              </div>
-            ))}
-          </dl>
-        </SeoSection>
-
-        <Section aria-labelledby="proof-measure-title">
-          <div className="grid gap-4 lg:grid-cols-2">
-            <Reveal>
-              <Card className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">measurement</p>
-                <h2 id="proof-measure-title" className="text-heading mt-4 text-foreground">
-                  what Prism measures.
-                </h2>
-                <BulletList
-                  className="mt-6"
-                  items={[
-                    'Capture completion from invitation through approved submission.',
-                    'Asset delivery across case studies, clips, quotes, and approved distribution drafts.',
-                    'Page engagement where testimonial assets are placed and a reliable baseline exists.',
-                  ]}
-                />
-                <blockquote className="mt-6 border-l-2 border-white/20 pl-5 text-[15px] leading-7 text-foreground">
-                  Prism reports the outcomes the installed tracking can support. We do not publish a universal
-                  conversion promise.
-                </blockquote>
-              </Card>
-            </Reveal>
-            <Reveal delay={80}>
-              <Card className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">placement</p>
-                <h2 className="text-heading mt-4 text-foreground">where we deploy Proof first.</h2>
-                <ul className="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
-                  {DEPLOY_FIRST.map((item) => (
-                    <li key={item.title} className="py-4">
-                      <p className="font-medium text-foreground">{item.title}</p>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.body}</p>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            </Reveal>
-          </div>
-        </Section>
-
-        <Section aria-labelledby="proof-prompts-title">
+        <Section aria-labelledby="proof-prompts-title" className="py-10 sm:py-12">
           <Reveal>
             <SectionHeader
               id="proof-prompts-title"
               eyebrow="prompts"
               title="patient prompts that pull real stories."
-              description="(Short, natural, zero scripts, so it sounds like a human, not a commercial.)"
               align="center"
             />
           </Reveal>
           <Reveal delay={80}>
-            <ul className="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-3 sm:mt-14">
+            <ul className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
               {PROMPTS.map((prompt) => (
                 <li
                   key={prompt}
@@ -418,77 +278,121 @@ export default function ProofPage() {
           </Reveal>
         </Section>
 
-        <SeoSection
-          eyebrow="compliance"
-          title="the boring, important part."
-          description="We configure the workflow once, then keep the approval and disclosure steps visible to your team."
-        >
-          <Card className="p-6 sm:p-8">
-            <h3 className="flex items-center gap-2.5 text-lg font-semibold tracking-[-0.02em] text-foreground">
-              <ShieldCheck aria-hidden="true" className="size-5 text-foreground" />
-              Compliance notes
-            </h3>
-            <dl className="mt-5 space-y-5">
-              <div>
-                <dt className="font-medium text-foreground">We do not incentivize Google/Yelp reviews.</dt>
-                <dd className="mt-1 text-[15px] leading-7 text-muted-foreground">
-                  Rewards, if used, apply only to your private submission page.
-                </dd>
+        <Section aria-labelledby="proof-included-title" className="py-10 sm:py-12">
+          <DisclosurePanel
+            id="proof-system-details"
+            eyebrow="System details"
+            title="capture flow, distribution kit, compliance, and scope."
+            summary="Video/form capture, schema markup, consent guardrails, and flywheel placement."
+            openLabel="Read details"
+            closeLabel="Hide details"
+          >
+            <div className="space-y-12">
+              <div className="grid gap-4 lg:grid-cols-6">
+                <Card className="p-6 lg:col-span-3">
+                  <p className="text-eyebrow text-subtle">capture</p>
+                  <h3 id="proof-included-title" className="text-heading mt-3 text-foreground">
+                    Done-for-you Patient Story Flow
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    Post-visit text/email to your private testimonial page. No apps or logins.
+                  </p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                      <p className="font-medium text-foreground">Quick Video (60s)</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Guided prompts, retakes allowed.</p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                      <p className="font-medium text-foreground">Quick Form (90s)</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Punchy Q&amp;A for quotes.</p>
+                    </div>
+                  </div>
+                </Card>
+                <Card className="p-6 lg:col-span-3">
+                  <p className="text-eyebrow text-subtle">distribution kit</p>
+                  <h3 className="text-heading mt-3 text-foreground">Editing &amp; Packaging</h3>
+                  <BulletList
+                    className="mt-4"
+                    marker="dot"
+                    items={[
+                      'On-site Case Study block or page (with CTA)',
+                      'Review/Video schema markup for SEO',
+                      'Google Business Profile post draft',
+                      'Instagram reel + caption draft',
+                      'Email snippet for campaigns or autoresponders',
+                    ]}
+                  />
+                </Card>
               </div>
-              <div>
-                <dt className="font-medium text-foreground">Clear consent.</dt>
-                <dd className="mt-1 text-[15px] leading-7 text-muted-foreground">
-                  Every testimonial includes written authorization before publishing.
-                </dd>
-              </div>
-              <div>
-                <dt className="font-medium text-foreground">Transparent disclosure.</dt>
-                <dd className="mt-1 text-[15px] leading-7 text-muted-foreground">
-                  If a thank-you is provided, we disclose it wherever the story appears.
-                </dd>
-              </div>
-            </dl>
-          </Card>
-        </SeoSection>
 
-        <Section aria-labelledby="proof-scope-title">
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-            <Reveal>
-              <SpotlightCard beam className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">scope</p>
-                <h2 id="proof-scope-title" className="text-heading mt-4 text-foreground">
-                  how Prism Proof is scoped.
-                </h2>
-                <p className="mt-3 text-[15px] leading-7 text-muted-foreground">
-                  Prism scopes the capture flow, approval process, publishing cadence, and reporting around your
-                  locations and goals once we can take on your team. Join the waitlist to be considered for the
-                  next monthly intake. There are no public Proof tiers or one-size-fits-all promises.
-                </p>
-                <p className="mt-6 border-l-2 border-white/20 pl-5 text-[15px] leading-7 text-foreground">
-                  <strong className="font-semibold">Proof</strong> can support any of Prism&apos;s four services:
-                  Website Design, Content, Ads, or AEO.
-                </p>
-              </SpotlightCard>
-            </Reveal>
-            <Reveal delay={80}>
-              <Card className="h-full p-6 sm:p-8">
-                <p className="text-eyebrow text-subtle">the flywheel</p>
-                <h2 className="text-heading mt-4 text-foreground">how Proof fits the Prism Flywheel.</h2>
-                <ol className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {FLYWHEEL.map((item, index) => (
-                    <li key={item.title} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
-                      <p className="mt-2 font-medium text-foreground">{item.title}</p>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.body}</p>
-                    </li>
-                  ))}
-                </ol>
-                <TextLink href="/prism-flywheel" className="mt-6">
-                  Explore the Prism Flywheel
-                </TextLink>
-              </Card>
-            </Reveal>
-          </div>
+              <div className="grid gap-4 border-t border-white/[0.08] pt-10 lg:grid-cols-2">
+                <Card className="p-6">
+                  <p className="text-eyebrow text-subtle">measurement</p>
+                  <h3 id="proof-measure-title" className="text-heading mt-3 text-foreground">
+                    what Prism measures.
+                  </h3>
+                  <BulletList
+                    className="mt-4"
+                    items={[
+                      'Capture completion from invitation through approved submission.',
+                      'Asset delivery across case studies, clips, quotes, and approved distribution drafts.',
+                      'Page engagement where testimonial assets are placed and a reliable baseline exists.',
+                    ]}
+                  />
+                  <blockquote className="mt-5 border-l-2 border-white/20 pl-4 text-sm text-foreground">
+                    Prism reports the outcomes installed tracking supports. We do not publish a universal conversion promise.
+                  </blockquote>
+                </Card>
+                <Card className="p-6">
+                  <p className="text-eyebrow text-subtle">placement &amp; compliance</p>
+                  <h3 className="text-heading mt-3 text-foreground">where we deploy Proof first.</h3>
+                  <ul className="mt-4 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+                    {DEPLOY_FIRST.map((item) => (
+                      <li key={item.title} className="py-3">
+                        <p className="text-sm font-medium text-foreground">{item.title}</p>
+                        <p className="text-sm text-muted-foreground">{item.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 flex items-start gap-2 text-xs text-subtle">
+                    <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-foreground" />
+                    Written authorization before publishing, zero incentivized Google/Yelp reviews, and transparent disclosures.
+                  </p>
+                </Card>
+              </div>
+
+              <div className="grid gap-4 border-t border-white/[0.08] pt-10 lg:grid-cols-2">
+                <Card className="p-6">
+                  <p className="text-eyebrow text-subtle">the difference</p>
+                  <dl className="mt-3 divide-y divide-white/[0.08]">
+                    {DIFFERENT.map((item) => (
+                      <div key={item.title} className="py-3 first:pt-0 last:pb-0">
+                        <dt className="text-sm font-semibold text-foreground">{item.title}</dt>
+                        <dd className="mt-1 text-sm text-muted-foreground">{item.body}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </Card>
+                <Card className="p-6">
+                  <p className="text-eyebrow text-subtle">scope &amp; flywheel</p>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    Prism scopes Proof around your locations and goals during monthly intake. Proof supports Website Design, Content, Ads, or AEO.
+                  </p>
+                  <ol className="mt-4 grid gap-2 sm:grid-cols-2">
+                    {FLYWHEEL.map((item, index) => (
+                      <li key={item.title} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                        <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                        <p className="mt-1 text-sm font-medium text-foreground">{item.title}</p>
+                      </li>
+                    ))}
+                  </ol>
+                  <TextLink href="/prism-flywheel" className="mt-4">
+                    Explore the Prism Flywheel
+                  </TextLink>
+                </Card>
+              </div>
+            </div>
+          </DisclosurePanel>
         </Section>
 
         <SeoSection id="proof-faq" eyebrow="FAQ" title="questions, answered.">

@@ -8,6 +8,7 @@ import { BulletList } from "@/components/landing/seo/bullet-list"
 import { TextLink } from "@/components/landing/seo/text-link"
 import Navbar from "@/components/navbar"
 import { BrowserFrame } from "@/components/prism/browser-frame"
+import { DisclosurePanel } from "@/components/prism/disclosure-panel"
 import { FinalCta } from "@/components/prism/final-cta"
 import { Reveal } from "@/components/prism/reveal"
 import { Section, SectionHeader } from "@/components/prism/section"
@@ -236,7 +237,7 @@ export default function LocalSeoAgencyPage() {
           eyebrow="local seo agency"
           title="a local seo agency partner for small businesses."
           titleClassName="max-w-[17ch]"
-          description="Prism helps local businesses show up in Google Maps and local search with a system that’s simple: clean listings, steady reviews, helpful local pages, and reporting tied to real customer actions."
+          description="Google Maps, clean listings, steady reviews, and local pages tied to calls."
           location="local seo agency hero"
           ctaHref={WAITLIST_CTA.href}
           ctaLabel={FREE_AUDIT_CTA_TEXT}
@@ -267,186 +268,6 @@ export default function LocalSeoAgencyPage() {
             })}
           </ul>
         </LandingHero>
-
-        <Section id="included" aria-labelledby="agency-included-title" className="scroll-mt-20">
-          <Reveal>
-            <SectionHeader
-              id="agency-included-title"
-              eyebrow="local seo services"
-              title="what you get."
-              description="Everything required to be understood, trusted, and chosen across maps, search, and AI answers."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
-            {whatYouGet.map((item, index) => {
-              const Icon = WHAT_YOU_GET_ICONS[index % WHAT_YOU_GET_ICONS.length]
-              return (
-                <Reveal key={item.title} delay={(index % 3) * 70}>
-                  <SpotlightCard className="h-full p-6 sm:p-7">
-                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
-                    </span>
-                    <h3 className="text-heading mt-6 text-foreground">{item.title}</h3>
-                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-                  </SpotlightCard>
-                </Reveal>
-              )
-            })}
-          </div>
-        </Section>
-
-        <Section aria-labelledby="agency-partner-title">
-          <Reveal>
-            <SectionHeader
-              id="agency-partner-title"
-              eyebrow="working together"
-              title="what it’s like to work with prism."
-              description="the difference between a vendor and an agency partner is consistency, clarity, and execution."
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2">
-            {agencyPillars.map((item, index) => (
-              <Reveal key={item.title} delay={(index % 2) * 80}>
-                <SpotlightCard beam={index === 0} className="h-full p-6 sm:p-8">
-                  <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
-                  <h3 className="text-heading mt-5 text-foreground">{item.title}</h3>
-                  <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
-          <p className="mt-8 text-[15px] leading-7 text-muted-foreground">
-            Want the full SEO picture (on-page + off-page)? Start at{" "}
-            <Link href="/seo" className={inlineLink}>
-              seo
-            </Link>
-            .
-          </p>
-        </Section>
-
-        <Section aria-labelledby="agency-rankings-title">
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card px-5 py-12 sm:px-12 sm:py-16">
-            <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
-            <Reveal>
-              <SectionHeader
-                id="agency-rankings-title"
-                eyebrow="the model"
-                title="how local rankings work."
-                description="local visibility is a scoring system: match intent, be eligible locally, and prove you’re trusted."
-              />
-            </Reveal>
-            <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-3">
-              {rankingModel.map((item, index) => (
-                <li key={item.title} className="flex flex-col gap-3 bg-card p-6 sm:p-7">
-                  <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
-                  <h3 className="text-heading text-foreground">{item.title}</h3>
-                  <p className="text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-8 text-[15px] leading-7 text-muted-foreground">
-              For a maps-first checklist, read{" "}
-              <Link href="/blog/google-maps-visibility-playbook-2025" className={inlineLink}>
-                google maps visibility checklist
-              </Link>
-              .
-            </p>
-          </div>
-        </Section>
-
-        <Section id="process" aria-labelledby="agency-process-title">
-          <Reveal>
-            <SectionHeader
-              id="agency-process-title"
-              eyebrow="process"
-              title="our process."
-              description="a simple, repeatable system, so improvements keep compounding without chaos."
-            />
-          </Reveal>
-          <ol className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-4">
-            {processSteps.map((item, index) => (
-              <Reveal as="li" key={item.step} delay={index * 70} className="relative">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 bg-card font-mono text-xs tabular-nums text-foreground">
-                    {index + 1}
-                  </span>
-                  <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-white/15 to-transparent" />
-                </div>
-                <h3 className="text-heading mt-5 text-foreground">{item.step}</h3>
-                <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
-              </Reveal>
-            ))}
-          </ol>
-          <div className="mt-14 grid gap-4 md:grid-cols-2">
-            <Card className="p-6 sm:p-8">
-              <h3 className="text-heading text-foreground">what we run</h3>
-              <BulletList
-                className="mt-5"
-                items={[
-                  "google business profile optimization",
-                  "local listings and citations (NAP consistency)",
-                  "review capture and response systems",
-                  "service and location pages with schema",
-                  "tracking and reporting tied to calls and leads",
-                ]}
-              />
-              <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
-                Need the subsystem for maps and directories? See{" "}
-                <Link href="/local-listings" className={inlineLink}>
-                  local listings
-                </Link>
-                .
-              </p>
-            </Card>
-            <Card className="flex flex-col p-6 sm:p-8">
-              <h3 className="text-heading text-foreground">proof you can verify</h3>
-              <ul className="mt-5 flex-1 divide-y divide-white/[0.08] border-y border-white/[0.08]">
-                {[
-                  { label: "case studies", href: "/case-studies" },
-                  { label: "wall of love", href: "/wall-of-love" },
-                  { label: "local shop playbook", href: "/why-local-shop-owners-love-prism" },
-                ].map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="group/proof flex min-h-12 items-center justify-between gap-4 rounded-sm text-[15px] font-medium text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-                    >
-                      {item.label}
-                      <ArrowUpRight
-                        aria-hidden="true"
-                        className="size-4 text-subtle transition-[color,transform] duration-200 group-hover/proof:-translate-y-0.5 group-hover/proof:translate-x-0.5 group-hover/proof:text-foreground"
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-[15px] leading-7 text-muted-foreground">
-                If you’re comparing agencies, use our checklist:{" "}
-                <Link href="/blog/how-to-choose-local-seo-agency" className={inlineLink}>
-                  how to choose a local seo agency
-                </Link>
-                .
-              </p>
-            </Card>
-          </div>
-        </Section>
-
-        <SeoSection
-          eyebrow="integrity"
-          title="what we won’t do."
-          description="local seo is not a trick. we avoid tactics that create short-term spikes and long-term risk."
-        >
-          <Card className="p-6 sm:p-8">
-            <ul className="space-y-4">
-              {whatWeWontDo.map((item) => (
-                <li key={item} className="flex gap-3 text-[15px] leading-7 text-muted-foreground">
-                  <Ban aria-hidden="true" className="mt-1 size-4 shrink-0 text-subtle" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
-        </SeoSection>
 
         <Section aria-labelledby="agency-results-title">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
@@ -501,6 +322,155 @@ export default function LocalSeoAgencyPage() {
               </TextLink>
             </Reveal>
           </div>
+        </Section>
+
+        <Section id="included" aria-labelledby="agency-included-title" className="scroll-mt-20">
+          <Reveal>
+            <SectionHeader
+              id="agency-included-title"
+              eyebrow="local seo services"
+              title="what you get."
+              description="Six pillars across maps, search, and AI answers."
+            />
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2 lg:grid-cols-3">
+            {whatYouGet.map((item, index) => {
+              const Icon = WHAT_YOU_GET_ICONS[index % WHAT_YOU_GET_ICONS.length]
+              return (
+                <Reveal key={item.title} delay={(index % 3) * 70}>
+                  <SpotlightCard className="h-full p-6 sm:p-7">
+                    <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
+                      <Icon aria-hidden="true" className="size-[18px] text-foreground" />
+                    </span>
+                    <h3 className="text-heading mt-6 text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-[15px] leading-7 text-muted-foreground">{item.description}</p>
+                  </SpotlightCard>
+                </Reveal>
+              )
+            })}
+          </div>
+        </Section>
+
+        <Section id="process" aria-labelledby="agency-process-title" className="scroll-mt-20 py-10 sm:py-12">
+          <DisclosurePanel
+            id="agency-deep-dive"
+            eyebrow="Process & standards"
+            title="how we work, local ranking model, and what we won’t do."
+            summary="4-step process, relevance/proximity/prominence model, and verification links."
+            openLabel="Read details"
+            closeLabel="Hide details"
+          >
+            <div className="space-y-12">
+              <div>
+                <SectionHeader
+                  id="agency-partner-title"
+                  eyebrow="working together"
+                  title="what it’s like to work with prism."
+                />
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  {agencyPillars.map((item, index) => (
+                    <SpotlightCard key={item.title} beam={index === 0} className="h-full p-6">
+                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                      <h3 className="text-heading mt-4 text-foreground">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </SpotlightCard>
+                  ))}
+                </div>
+                <p className="mt-6 text-sm text-muted-foreground">
+                  Want the full SEO picture? Start at{" "}
+                  <Link href="/seo" className={inlineLink}>
+                    seo
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <SectionHeader
+                  id="agency-rankings-title"
+                  eyebrow="the model"
+                  title="how local rankings work."
+                />
+                <ol className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-3">
+                  {rankingModel.map((item, index) => (
+                    <li key={item.title} className="flex flex-col gap-3 bg-card p-6">
+                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                      <h3 className="text-heading text-foreground">{item.title}</h3>
+                      <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-6 text-sm text-muted-foreground">
+                  Maps-first checklist:{" "}
+                  <Link href="/blog/google-maps-visibility-playbook-2025" className={inlineLink}>
+                    google maps visibility checklist
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <SectionHeader id="agency-process-title" eyebrow="process" title="our process." />
+                <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  {processSteps.map((item, index) => (
+                    <li key={item.step} className="rounded-2xl border border-white/[0.08] bg-background/60 p-5">
+                      <span className="font-mono text-xs tabular-nums text-subtle">0{index + 1}</span>
+                      <h3 className="mt-3 text-base font-semibold text-foreground">{item.step}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  <Card className="p-6">
+                    <h3 className="text-heading text-foreground">what we run</h3>
+                    <BulletList
+                      className="mt-4"
+                      items={[
+                        "google business profile optimization",
+                        "local listings and citations (NAP consistency)",
+                        "review capture and response systems",
+                        "service and location pages with schema",
+                        "tracking and reporting tied to calls and leads",
+                      ]}
+                    />
+                    <p className="mt-5 text-sm text-muted-foreground">
+                      Maps and directories subsystem:{" "}
+                      <Link href="/local-listings" className={inlineLink}>
+                        local listings
+                      </Link>
+                      .
+                    </p>
+                  </Card>
+                  <Card className="p-6">
+                    <h3 className="text-heading text-foreground">what we won’t do</h3>
+                    <ul className="mt-4 space-y-3">
+                      {whatWeWontDo.map((item) => (
+                        <li key={item} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                          <Ban aria-hidden="true" className="mt-1 size-4 shrink-0 text-subtle" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-5 text-sm text-muted-foreground">
+                      Proof:{" "}
+                      <Link href="/case-studies" className={inlineLink}>
+                        case studies
+                      </Link>
+                      {" · "}
+                      <Link href="/wall-of-love" className={inlineLink}>
+                        wall of love
+                      </Link>
+                      {" · "}
+                      <Link href="/why-local-shop-owners-love-prism" className={inlineLink}>
+                        local shop playbook
+                      </Link>
+                      .
+                    </p>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </DisclosurePanel>
         </Section>
 
         <FAQSection

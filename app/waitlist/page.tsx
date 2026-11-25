@@ -39,17 +39,17 @@ const NEXT_STEPS: readonly WaitlistNextStep[] = [
   {
     icon: Timer,
     title: 'Apply in about two minutes.',
-    body: 'Five quick steps covering your focus, links, and goals.',
+    body: 'Focus, links, and goal.',
   },
   {
     icon: CalendarCheck,
     title: 'We review every application each month.',
-    body: 'We evaluate every submission against upcoming intake capacity.',
+    body: 'Matched to upcoming intake capacity.',
   },
   {
     icon: Mail,
     title: 'We reach out when a spot opens.',
-    body: 'If we are the right partner for your goals, we email you to scope the engagement.',
+    body: 'Scope and price confirmed before work starts.',
   },
 ]
 
@@ -98,10 +98,8 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
               {review ? 'See how we review the path from a customer’s first visit to their next action.' : <>Prism is fully booked. {CAPACITY_MESSAGE.intakeLead}{' '}<WaitlistIntakeMonth />.</>}
             </p>
             {review ? (
-              <Link href="/case-studies/olympic-bootworks#walkthrough" className="mt-5 underline underline-offset-4">See a sample walkthrough</Link>
-            ) : (
-              <p className="mt-5 text-muted-foreground">Tell us what customers are trying to do and where they get stuck. We’ll use that to scope the right work.</p>
-            )}
+              <Link href="/case-studies/olympic-bootworks#walkthrough" className="mt-4 text-sm underline underline-offset-4">See a sample walkthrough</Link>
+            ) : null}
           </header>
 
           <div className="relative w-full min-w-0 max-w-2xl lg:max-w-none lg:[@media(min-height:50rem)]:sticky lg:[@media(min-height:50rem)]:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start">

@@ -1,3 +1,4 @@
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import {
@@ -323,7 +324,7 @@ export default function DentalPracticesPage() {
           eyebrow="For dentist owners"
           title="grow your practice. worry less about marketing + tech."
           titleClassName="max-w-[16ch]"
-          description="Prism helps dentists get more new-patient calls, modernize their online presence, and switch off outdated providers, without stress or downtime."
+          description="Websites, local SEO, reviews, and tracking for dental practices."
           location={`${LOCATION} hero`}
           ctaHref={WAITLIST_CTA.href}
           secondary={{
@@ -354,22 +355,46 @@ export default function DentalPracticesPage() {
           />
         </LandingHero>
 
+        <Section aria-labelledby="dental-voices">
+          <Reveal>
+            <SectionHeader
+              id="dental-voices"
+              eyebrow="Real results, real voices"
+              title="hear from real dental teams."
+              description="Dentists and office managers on what changed."
+            />
+          </Reveal>
+          <Reveal delay={80} className="mt-12 sm:mt-14">
+            <InterviewGrid
+              interviews={DENTAL_INTERVIEWS}
+              location="why dental interviews"
+            />
+          </Reveal>
+        </Section>
+
+        <WhyCaseStudies
+          id="dental-case-studies"
+          title="trusted by dental practices across California and beyond."
+          description="Five live dental builds with clear booking paths and tracking."
+          studies={featuredCaseStudyDetails}
+          location={LOCATION}
+        />
+
         <Section className="py-10 sm:py-12" aria-label="What you get">
           <Reveal>
             <Card className="spectrum-rule grid gap-8 overflow-hidden p-6 sm:p-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
               <div>
                 <p className="text-eyebrow text-subtle">What you get</p>
                 <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-                  Need a{' '}
+                  Explore our{' '}
                   <InlineLink href="/dental-practice-seo-expert">
                     seo for dentists playbook
-                  </InlineLink>
-                  ? See how Prism maps treatments to intent, tightens listings +
-                  reviews, and ships steady improvements. Need{' '}
+                  </InlineLink>{' '}
+                  or{' '}
                   <InlineLink href="/dental-website">
-                    a dental practice website
+                    dental practice website blueprint
                   </InlineLink>
-                  ? Start with the dental practice website blueprint.
+                  .
                 </p>
               </div>
               <CheckList items={heroWhatYouGet} />
@@ -377,134 +402,117 @@ export default function DentalPracticesPage() {
           </Reveal>
         </Section>
 
-        <Section aria-labelledby="dental-founder-note">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-            <Reveal className="lg:sticky lg:top-28 lg:self-start">
-              <Eyebrow>Founder note</Eyebrow>
-              <h2
-                id="dental-founder-note"
-                className="text-gradient mt-5 max-w-[14ch] text-balance pb-1 text-[clamp(2rem,1.45rem+2.2vw,3.25rem)] font-semibold leading-[1.02] tracking-[-0.045em]"
-              >
-                a note to one dentist owner.
-              </h2>
-              <p className="mt-6 text-sm text-subtle">
-                Enzo Sison, founder of Prism
-              </p>
-            </Reveal>
-            <Reveal delay={80}>
-              <div className="max-w-[62ch] space-y-5 text-pretty text-[17px] leading-[1.75] text-foreground/[0.82]">
-                <p>
-                  I built Prism for dentist owners who feel stuck with marketing
-                  that creates more work. When phones go quiet, your team
-                  scrambles. Missed calls pile up. Listings show the wrong
-                  hours.
-                </p>
-                <p>
-                  Service pages read like a brochure and don&apos;t answer
-                  patient questions. Reviews come in when someone remembers to
-                  ask. Staff jumps between tools and still can&apos;t see which
-                  channel brought the new patient. You don&apos;t have to chase
-                  vendors or decode reports.
-                </p>
-                <p>
-                  Prism exists to fix that. We run the dental practice website,
-                  dental practice SEO, Google Business Profile, local SEO, and
-                  AEO as one clean system. We set up tracking for calls, website leads,
-                  and booked consults so you can see what is working. We keep
-                  the foundation HIPAA-aware and ADA-aware. Your team stays
-                  focused on care while we handle the mess of dental marketing
-                  and your online presence.
-                </p>
-                <p className="font-medium text-foreground">
-                  If you want a calmer week and a clearer patient flow, start
-                  below.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </Section>
-
-        <WhySplit
-          id="dental-why-prism"
-          eyebrow="Why Prism"
-          title="why dentist owners choose Prism."
-          description="Most dentists aren't losing patients because they're bad at dentistry. They're losing visibility, consistency, and control online."
-          panel={
-            <WhyPanel
-              eyebrow="The Prism Method"
-              title="We run the website, local SEO, and dental marketing as one system so you can:"
-              beam
-            >
-              <WhyIconList items={modernPracticePromises} />
-              <div className="mt-8 flex flex-wrap gap-2">
-                {['Visibility', 'Trust', 'Automation', 'Leverage'].map(
-                  (value) => (
-                    <Badge
-                      key={value}
-                      variant="outline"
-                      className="px-3 py-1 text-[13px]"
-                    >
-                      {value}
-                    </Badge>
-                  ),
-                )}
-              </div>
-              <p className="mt-6 text-pretty text-sm leading-relaxed text-subtle">
-                That is the Prism Method: visibility, trust, automation, and
-                leverage. Leverage means the system keeps working even when you
-                are in the operatory.
-              </p>
-            </WhyPanel>
-          }
-        >
-          <div className="space-y-5">
-            <p className="border-l-2 border-white/20 pl-5 text-xl font-medium tracking-[-0.02em] text-foreground">
-              Prism was built to fix that.
-            </p>
-            <p className="text-pretty text-[15px] leading-relaxed text-muted-foreground">
-              We pair Silicon Valley engineering, brand design, and AI-driven
-              marketing to build systems your team can rely on every day.
-            </p>
-          </div>
-        </WhySplit>
-
-        <Section aria-labelledby="dental-method">
-          <Reveal>
-            <SectionHeader
-              id="dental-method"
-              eyebrow="The Prism Method"
-              title="visibility. trust. automation. leverage."
-              titleClassName="max-w-[16ch]"
-            />
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:mt-14 md:grid-cols-2">
-            {prismMethodPillars.map((pillar, index) => (
-              <Reveal
-                key={pillar.title}
-                delay={(index % 2) * 80}
-                className="h-full"
-              >
-                <SpotlightCard className="flex h-full flex-col p-6 sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-8 place-items-center rounded-full border border-white/15 font-mono text-xs tabular-nums text-muted-foreground">
-                      {index + 1}
-                    </span>
-                    <p className="text-eyebrow text-subtle">{pillar.title}</p>
-                  </div>
-                  <h3 className="mt-6 text-balance text-xl font-semibold leading-snug tracking-[-0.025em] text-foreground sm:text-2xl">
-                    {pillar.headline}
-                  </h3>
-                  <p className="mt-3 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-                    {pillar.description}
+        <Section aria-labelledby="dental-method" className="py-8 sm:py-10">
+          <DisclosurePanel
+            id="dental-deep-dive"
+            eyebrow="Deep dive"
+            title="the Prism dental method, photography, and founder note."
+            summary="Full breakdown: 4 pillars, custom email, on-site photography, and Enzo’s note."
+            openLabel="Read breakdown"
+            closeLabel="Hide breakdown"
+          >
+            <div className="space-y-12">
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
+                <div>
+                  <Eyebrow>Founder note</Eyebrow>
+                  <h2
+                    id="dental-founder-note"
+                    className="text-gradient mt-4 max-w-[14ch] text-balance pb-1 text-[clamp(1.75rem,1.35rem+1.6vw,2.5rem)] font-semibold leading-[1.05] tracking-[-0.04em]"
+                  >
+                    a note to one dentist owner.
+                  </h2>
+                  <p className="mt-4 text-sm text-subtle">
+                    Enzo Sison, founder of Prism
                   </p>
-                  <div className="mt-auto pt-8">
-                    <div className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-5">
-                      <p className="text-eyebrow text-subtle">Includes</p>
-                      <ul className="mt-4 grid gap-3">
+                </div>
+                <div className="max-w-[62ch] space-y-4 text-pretty text-[15px] leading-[1.7] text-foreground/[0.82]">
+                  <p>
+                    I built Prism for dentist owners who feel stuck with marketing
+                    that creates more work. When phones go quiet, your team
+                    scrambles. Missed calls pile up. Listings show the wrong
+                    hours.
+                  </p>
+                  <p>
+                    Service pages read like a brochure and don&apos;t answer
+                    patient questions. Reviews come in when someone remembers to
+                    ask. Staff jumps between tools and still can&apos;t see which
+                    channel brought the new patient. You don&apos;t have to chase
+                    vendors or decode reports.
+                  </p>
+                  <p>
+                    Prism exists to fix that. We run the dental practice website,
+                    dental practice SEO, Google Business Profile, local SEO, and
+                    AEO as one clean system. We set up tracking for calls, website leads,
+                    and booked consults so you can see what is working. We keep
+                    the foundation HIPAA-aware and ADA-aware. Your team stays
+                    focused on care while we handle the mess of dental marketing
+                    and your online presence.
+                  </p>
+                  <p className="font-medium text-foreground">
+                    If you want a calmer week and a clearer patient flow, start
+                    below.
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <SectionHeader
+                  id="dental-why-prism"
+                  eyebrow="Why Prism"
+                  title="why dentist owners choose Prism."
+                  description="Most dentists aren't losing patients because they're bad at dentistry. They're losing visibility, consistency, and control online."
+                />
+                <div className="mt-8">
+                  <WhyPanel
+                    eyebrow="The Prism Method"
+                    title="We run the website, local SEO, and dental marketing as one system so you can:"
+                    beam
+                  >
+                    <WhyIconList items={modernPracticePromises} />
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {['Visibility', 'Trust', 'Automation', 'Leverage'].map(
+                        (value) => (
+                          <Badge
+                            key={value}
+                            variant="outline"
+                            className="px-3 py-1 text-[13px]"
+                          >
+                            {value}
+                          </Badge>
+                        ),
+                      )}
+                    </div>
+                  </WhyPanel>
+                </div>
+              </div>
+
+              <div className="border-t border-white/[0.08] pt-10">
+                <SectionHeader
+                  id="dental-method"
+                  eyebrow="The Prism Method"
+                  title="visibility. trust. automation. leverage."
+                  titleClassName="max-w-[16ch]"
+                />
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  {prismMethodPillars.map((pillar, index) => (
+                    <SpotlightCard key={pillar.title} className="flex h-full flex-col p-6">
+                      <div className="flex items-center gap-3">
+                        <span className="grid size-8 place-items-center rounded-full border border-white/15 font-mono text-xs tabular-nums text-muted-foreground">
+                          {index + 1}
+                        </span>
+                        <p className="text-eyebrow text-subtle">{pillar.title}</p>
+                      </div>
+                      <h3 className="mt-4 text-balance text-lg font-semibold leading-snug tracking-[-0.02em] text-foreground">
+                        {pillar.headline}
+                      </h3>
+                      <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
+                        {pillar.description}
+                      </p>
+                      <ul className="mt-5 grid gap-2.5 border-t border-white/[0.07] pt-4">
                         {pillar.includes.map(({ icon: Icon, label }) => (
                           <li
                             key={label}
-                            className="flex items-start gap-3 text-sm leading-relaxed text-foreground/90"
+                            className="flex items-start gap-2.5 text-sm leading-relaxed text-foreground/90"
                           >
                             <Icon
                               aria-hidden="true"
@@ -515,178 +523,84 @@ export default function DentalPracticesPage() {
                           </li>
                         ))}
                       </ul>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </Reveal>
-            ))}
-          </div>
-          <p className="mt-10 max-w-3xl text-pretty text-[15px] leading-relaxed text-muted-foreground">
-            Want the dentist-specific AI overviews checklist? Read{' '}
-            <InlineLink href="/blog/ai-search-for-dental-practice">
-              ai search for dental practice
-            </InlineLink>
-            . Want the step-by-step checklist to rank higher in Google? Read{' '}
-            <InlineLink href="/blog/dental-practice-rank-higher-google-search">
-              dental practice rank higher in google search
-            </InlineLink>
-            .
-          </p>
+                    </SpotlightCard>
+                  ))}
+                </div>
+                <p className="mt-6 max-w-3xl text-pretty text-sm leading-relaxed text-muted-foreground">
+                  Guides:{' '}
+                  <InlineLink href="/blog/ai-search-for-dental-practice">
+                    ai search for dental practice
+                  </InlineLink>
+                  {' · '}
+                  <InlineLink href="/blog/dental-practice-rank-higher-google-search">
+                    dental practice rank higher in google search
+                  </InlineLink>
+                  {' · '}
+                  <InlineLink href="/tiktok-ads-for-dentists">
+                    tiktok ads for dentists
+                  </InlineLink>
+                  {' · '}
+                  <InlineLink href="/custom-email-for-dental-practices">
+                    custom email for dental practices
+                  </InlineLink>
+                  .
+                </p>
+              </div>
+
+              <div className="grid gap-6 border-t border-white/[0.08] pt-10 md:grid-cols-2">
+                <WhyPanel eyebrow="On-site storytelling" title="Office & team photography">
+                  <WhyHighlightList items={dentalPhotographyHighlights} />
+                  <WhyActions
+                    location={`${LOCATION} photography`}
+                    waitlistHref={WAITLIST_FOCUS_HREFS.content}
+                    links={[
+                      {
+                        label: 'Explore office & team photography',
+                        href: '/dental-photography/office-team',
+                        trackingLabel: 'explore office and team photography',
+                      },
+                    ]}
+                  />
+                </WhyPanel>
+                <WhyPanel eyebrow="Before & after mastery" title="Before-and-after photo guide">
+                  <WhyHighlightList items={beforeAfterGuideHighlights} />
+                  <WhyActions
+                    location={`${LOCATION} before after`}
+                    links={[
+                      {
+                        label: 'Explore the guide',
+                        href: '/dental-photography/before-after',
+                        trackingLabel: 'explore the guide',
+                      },
+                      {
+                        label: 'See on-site photography',
+                        href: '/dental-photography/office-team',
+                        trackingLabel: 'see on-site photography',
+                      },
+                    ]}
+                  />
+                </WhyPanel>
+              </div>
+
+              <div className="grid gap-4 border-t border-white/[0.08] pt-10 md:grid-cols-3">
+                {connectedPresenceHighlights.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <Card key={item.title} className="p-5">
+                      <Icon aria-hidden="true" className="size-4 text-foreground" />
+                      <h3 className="mt-3 text-base font-semibold text-foreground">{item.title}</h3>
+                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                        {item.bullets.map((bullet) => (
+                          <li key={bullet}>{bullet}</li>
+                        ))}
+                      </ul>
+                    </Card>
+                  )
+                })}
+              </div>
+            </div>
+          </DisclosurePanel>
         </Section>
-
-        <Section aria-labelledby="dental-voices">
-          <Reveal>
-            <SectionHeader
-              id="dental-voices"
-              eyebrow="Real results, real voices"
-              title="hear from real dental teams."
-              description="These interviews exist so you can hear what changed inside a real practice. You will learn what they fixed first, how they track new patients, and what made the biggest difference."
-            />
-          </Reveal>
-          <Reveal delay={80} className="mt-12 sm:mt-14">
-            <InterviewGrid
-              interviews={DENTAL_INTERVIEWS}
-              location="why dental interviews"
-            />
-            <p className="mt-6 max-w-2xl text-pretty text-sm leading-relaxed text-subtle">
-              Each conversation shows the real wins and real bottlenecks, from
-              listings and reviews to front-desk follow-up and tracking.
-            </p>
-          </Reveal>
-        </Section>
-
-        <WhyFeatureGrid
-          id="dental-one-system"
-          eyebrow="Connected presence"
-          title="your online presence should feel like one system."
-          description="When every channel shares the same standard, patients feel trust and your team feels calm."
-          items={connectedPresenceHighlights}
-          footer={
-            <p className="text-pretty text-[15px] leading-relaxed text-muted-foreground">
-              Running paid social for your practice? Start with{' '}
-              <InlineLink href="/tiktok-ads-for-dentists">
-                tiktok ads for dentists
-              </InlineLink>
-              .
-            </p>
-          }
-        />
-
-        <WhyStatement
-          id="dental-inbox"
-          eyebrow="Custom email"
-          title="own the inbox, not just the website."
-        >
-          <p>
-            Prism sets up{' '}
-            <InlineLink href="/custom-email-for-dental-practices">
-              custom email
-            </InlineLink>{' '}
-            so patients, hiring platforms, and partners trust every message. We
-            keep it HIPAA-aware and easy for your team to manage.
-          </p>
-          <p className="mt-4 text-base text-subtle">
-            If you want email that builds trust and doesn&apos;t break, start
-            here.
-          </p>
-          <WhyActions
-            location={`${LOCATION} inbox`}
-            waitlistHref={WAITLIST_CTA.href}
-            links={[{ label: 'See case studies', href: '/case-studies' }]}
-            className="justify-center"
-          />
-        </WhyStatement>
-
-        <WhySplit
-          id="dental-photography"
-          eyebrow="On-site storytelling"
-          title="show the photos patients want to see."
-          panel={
-            <WhyPanel eyebrow="What you get">
-              <WhyHighlightList items={dentalPhotographyHighlights} />
-            </WhyPanel>
-          }
-        >
-          <div className="space-y-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-            <p>
-              Our office and team photography day captures real operatories,
-              care moments, and lobby details so your funnel feels consistent.
-              The full breakdown lives on our{' '}
-              <InlineLink href="/dental-photography/office-team">
-                office &amp; team photography page
-              </InlineLink>
-              , where you can tour recent shoots and see how the Apple Maps
-              proof works.
-            </p>
-            <p>
-              Use those assets across your website, ads, local listings, and
-              hiring without juggling vendors. Prism plans the shot list,
-              handles scheduling, and delivers files sized for each channel.
-            </p>
-            <p className="text-foreground">
-              If you want photos that match the care you give, start here.
-            </p>
-          </div>
-          <WhyActions
-            location={`${LOCATION} photography`}
-            waitlistHref={WAITLIST_FOCUS_HREFS.content}
-            links={[
-              {
-                label: 'Explore office & team photography',
-                href: '/dental-photography/office-team',
-                trackingLabel: 'explore office and team photography',
-              },
-            ]}
-          />
-        </WhySplit>
-
-        <WhySplit
-          id="dental-before-after"
-          eyebrow="Before & after mastery"
-          title="a simple before-and-after system your team can follow."
-          reverse
-          panel={
-            <WhyPanel eyebrow="What the guide covers">
-              <WhyHighlightList items={beforeAfterGuideHighlights} />
-            </WhyPanel>
-          }
-        >
-          <div className="space-y-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">
-            <p>
-              If you are not ready for an on-site production day, Prism still
-              gives you a repeatable system. The{' '}
-              <InlineLink href="/dental-photography/before-after">
-                before + after photography guide
-              </InlineLink>{' '}
-              shows your team how to stage, light, and document cases without
-              slowing the schedule.
-            </p>
-            <p>
-              Follow the tabs for gear, lighting, and workflow tips, then drop
-              the assets into your website, social, and consult decks. If you
-              need Prism on-site later, you can move into the office and team
-              service without learning a new system.
-            </p>
-            <p className="text-foreground">
-              If you want a clear way to capture cases, start with the guide.
-            </p>
-          </div>
-          <WhyActions
-            location={`${LOCATION} before after`}
-            links={[
-              {
-                label: 'Explore the guide',
-                href: '/dental-photography/before-after',
-                trackingLabel: 'explore the guide',
-              },
-              {
-                label: 'See on-site photography',
-                href: '/dental-photography/office-team',
-                trackingLabel: 'see on-site photography',
-              },
-            ]}
-          />
-        </WhySplit>
 
         <WhyPlaybook
           id="dental-playbook"
@@ -698,24 +612,15 @@ export default function DentalPracticesPage() {
           process={segmentProcess}
         />
 
-        <WhyCaseStudies
-          id="dental-case-studies"
-          title="trusted by dental practices across California and beyond."
-          description="Each practice is different, but they all wanted the same thing: steady new patient flow and clear tracking."
-          studies={featuredCaseStudyDetails}
-          location={LOCATION}
-        />
-
         <FAQSection
           title="dental marketing faq."
-          subtitle="Straight answers about scope, timeline, and results."
+          subtitle="Scope, timeline, and results."
           items={segmentFaqItems}
         />
 
         <OwnerDecision
           eyebrow="Practice marketing"
           title="start with the patient action."
-          body="A practice rebuilding its site and a practice evaluating paid search have different first questions. See the patient journey and the campaign scope before choosing a starting point."
           links={[
             { label: "Dental Google Ads", href: "/google/dental-ads" },
             { label: "Dr. Wong’s practice transition", href: "/case-studies/dr-christopher-wong" },

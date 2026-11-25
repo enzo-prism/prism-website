@@ -272,8 +272,9 @@ describe('WebsiteDesignPage sections', () => {
 
     const first = screen
       .getByText('What is included in Prism website design?')
-      .closest('details')
-    expect(first).toHaveAttribute('open')
+      .closest('details') as HTMLElement
+    expect(first).not.toHaveAttribute('open')
+    expect(within(first).getByText(/custom design/i)).toBeInTheDocument()
 
     const ownership = screen
       .getByText('Do I own the website?')

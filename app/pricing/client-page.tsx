@@ -1,3 +1,4 @@
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { OwnerDecision } from '@/components/prism/owner-decision'
 import {
   ArrowRight,
@@ -44,24 +45,21 @@ const growthPathSteps = [
     title: 'Join the waitlist',
     meta: 'Two minutes',
     icon: ListPlus,
-    description:
-      'Share your links, goals, and timeline. Every Prism engagement starts here.',
+    description: 'Share your site, goals, and timing.',
   },
   {
     stage: '02',
     title: 'We review and reach out',
-    meta: 'Clear scope and price',
+    meta: 'Scope & price',
     icon: MessagesSquare,
-    description:
-      'Each monthly intake, we select the teams we can move farthest and confirm exact scope and price before you commit.',
+    description: 'Confirm exact scope and price up front.',
   },
   {
     stage: '03',
     title: 'We build',
     meta: 'Prism standard',
     icon: Hammer,
-    description:
-      'We design, build, and refine the work with clear check-ins all the way to launch.',
+    description: 'Design, build, and launch together.',
   },
 ] as const
 
@@ -75,50 +73,42 @@ const PLAN_DETAILS: Record<
   website: {
     badge: 'Custom design',
     featured: true,
-    audience: 'For businesses ready for a flagship website that earns trust immediately.',
+    audience: 'Flagship site built to earn trust and convert.',
     includes: [
-      'Custom design system, zero templates',
-      'Sharp copy built around buyer questions',
-      'Fast, mobile-first engineering',
-      'Search and AI foundations at launch',
-      'Conversion tracking and GA4 setup',
-      'Full ownership from launch day',
+      'Custom design, zero templates',
+      'Mobile-first engineering',
+      'SEO, AI & GA4 foundations',
+      '100% ownership on launch',
     ],
   },
   content: {
     badge: 'Ongoing',
-    audience:
-      'For leaders who want steady, high-caliber publishing without running production.',
+    audience: 'Steady video, social, and site publishing.',
     includes: [
-      'Strategy, scripts, and video edits',
+      'Scripts & video edits',
       'Channel-native social posts',
-      'Editorial website content',
-      'End-to-end review and publishing',
-      'Three-month setup, then monthly production',
+      'Editorial website pages',
+      'Monthly reach & lead reporting',
     ],
   },
   ads: {
     badge: 'Paid campaigns',
-    audience:
-      'For teams investing in paid demand built around qualified calls and bookings.',
+    audience: 'Paid demand tied to calls and bookings.',
     includes: [
-      'Google, Meta, TikTok, and Yelp campaigns',
-      'Dedicated creative: visuals, video, and copy',
-      'Focused landing pages built to convert',
-      'Call, form, and booking attribution',
-      'Weekly tuning and plain-English reports',
+      'Google, Meta, TikTok & Yelp',
+      'Ad creative & landing pages',
+      'Call & inquiry tracking',
+      'Weekly tuning & reports',
     ],
   },
   aeo: {
     badge: 'AI search',
-    audience:
-      'For brands building clear visibility across ChatGPT, Google AI Overviews, and Perplexity.',
+    audience: 'Visibility in ChatGPT, AI Overviews & Perplexity.',
     includes: [
-      'Visibility audit across major AI engines',
-      'Crawler access and structured data',
-      'Answer-first pages and verifiable FAQs',
-      'Aligned listings and business facts',
-      'Monthly citation checks and reports',
+      'AI visibility audit',
+      'Crawler & schema fixes',
+      'Answer-first pages',
+      'Monthly citation checks',
     ],
   },
 }
@@ -451,73 +441,68 @@ export default function PricingPageClient() {
         </div>
       </Section>
 
-      {/* Support after launch */}
-      <Section aria-labelledby="pricing-support-heading" className="pt-0 sm:pt-0">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
-          <Reveal>
-            <SectionHeader
-              id="pricing-support-heading"
-              eyebrow="Ongoing systems"
-              title="support after launch."
-              description="Ongoing care to keep your site sharp, content moving, campaigns tuned, and AI visibility measured."
-              titleClassName="max-w-[12ch]"
-            />
-          </Reveal>
-          <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
-            {partnerLevels.map((level, index) => {
+      {/* Support after launch (collapsed disclosure so pricing stays visual) */}
+      <Section aria-labelledby="pricing-support-heading" className="py-8 sm:py-10">
+        <h2 id="pricing-support-heading" className="sr-only">
+          support after launch.
+        </h2>
+        <DisclosurePanel
+          eyebrow="Ongoing systems"
+          summary="See ongoing care and monthly systems after launch"
+          meta="4 options"
+        >
+          <ul className="divide-y divide-white/[0.08]">
+            {partnerLevels.map((level) => {
               const Icon = level.icon
               return (
                 <li key={level.title}>
-                  <Reveal delay={index * 80}>
-                    <TrackedLink
-                      href={level.href}
-                      label={level.title.toLowerCase()}
-                      location="pricing support after launch"
-                      className="group/level grid gap-4 py-7 transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-start sm:gap-6"
-                    >
-                      <OfferIconTile>
-                        <Icon aria-hidden="true" className="size-[18px]" />
-                      </OfferIconTile>
-                      <span className="flex min-w-0 flex-col gap-2">
-                        <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                          <span className="text-[1.15rem] font-semibold tracking-[-0.02em] text-foreground">
-                            {level.title}
-                          </span>
-                          <Badge variant="outline">{level.price}</Badge>
+                  <TrackedLink
+                    href={level.href}
+                    label={level.title.toLowerCase()}
+                    location="pricing support after launch"
+                    className="group/level grid gap-4 py-5 first:pt-0 last:pb-0 transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center sm:gap-6"
+                  >
+                    <OfferIconTile>
+                      <Icon aria-hidden="true" className="size-[18px]" />
+                    </OfferIconTile>
+                    <span className="flex min-w-0 flex-col gap-1">
+                      <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                        <span className="text-base font-semibold tracking-[-0.02em] text-foreground">
+                          {level.title}
                         </span>
-                        <span className="max-w-[56ch] text-pretty text-[15px] leading-7 text-muted-foreground">
-                          {level.description}
-                        </span>
+                        <Badge variant="outline">{level.price}</Badge>
                       </span>
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="hidden size-5 text-subtle transition-[transform,color] duration-200 group-hover/level:translate-x-0.5 group-hover/level:text-foreground sm:mt-2.5 sm:block"
-                      />
-                    </TrackedLink>
-                  </Reveal>
+                      <span className="max-w-[56ch] text-pretty text-sm leading-6 text-muted-foreground">
+                        {level.description}
+                      </span>
+                    </span>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="hidden size-4 text-subtle transition-[transform,color] duration-200 group-hover/level:translate-x-0.5 group-hover/level:text-foreground sm:block"
+                    />
+                  </TrackedLink>
                 </li>
               )
             })}
           </ul>
-        </div>
+        </DisclosurePanel>
       </Section>
 
       {/* FAQ */}
-      <Section aria-labelledby="pricing-faq-heading" className="pt-0 sm:pt-0">
+      <Section aria-labelledby="pricing-faq-heading" className="pt-4 sm:pt-6">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeader
               id="pricing-faq-heading"
               eyebrow="FAQ"
               title="pricing questions."
-              description="What is included, how ongoing care works, and how we scope your plan."
               titleClassName="max-w-[15ch]"
             />
             <TrackedLink
               href="/faq"
               label="faq"
               location="pricing faq"
-              className="group/faq mt-8 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              className="group/faq mt-6 inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
               More answers on the FAQ page
               <ArrowRight
@@ -526,19 +511,18 @@ export default function PricingPageClient() {
               />
             </TrackedLink>
           </div>
-          <FaqList items={faqs} name="pricing-faq" defaultOpen={0} />
+          <FaqList items={faqs} name="pricing-faq" />
         </div>
       </Section>
 
       <OwnerDecision
-          eyebrow="Example scope"
-          title="one useful change, clearly scoped."
-          body="Suppose customers reach a product page but rarely contact the shop. A first project might cover the mobile inquiry, delivery checks and a report of received requests. We agree on deliverables, access and cost before work starts. If the priority changes, you choose the trade-off."
-          links={[
-            { label: "Meet the team behind the work", href: "/about" },
-            { label: "Compare hiring options", href: "/blog/who-prism-is-for" },
-          ]}
-        />
+        eyebrow="Next step"
+        title="one clear scope before work starts."
+        links={[
+          { label: "Meet the team", href: "/about" },
+          { label: "In-house vs agency guide", href: "/blog/who-prism-is-for" },
+        ]}
+      />
       <FinalCta
         location="pricing final cta"
         secondary={{ label: 'See the work', href: '/case-studies' }}

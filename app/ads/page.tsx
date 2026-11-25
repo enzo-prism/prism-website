@@ -1,3 +1,4 @@
+import { DisclosurePanel } from '@/components/prism/disclosure-panel'
 import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -243,32 +244,32 @@ const WHAT_YOU_GET: readonly ServiceBentoItem[] = [
   {
     icon: Target,
     title: 'strategy that fits the goal',
-    body: 'Target audience, target action, and disciplined test budget defined before launch.',
+    body: 'Audience, target action, and test budget set up front.',
     visual: <GoalBrief />,
   },
   {
     icon: Sparkles,
     title: 'creative that earns the click',
-    body: 'Clear offers, sharp visuals, and direct copy built for the buyer you actually want.',
+    body: 'Clear offers and sharp visuals built for your buyer.',
     className: 'md:col-span-4',
     visual: <AdAnatomy />,
   },
   {
     icon: LayoutTemplate,
     title: 'a clear page after the click',
-    body: 'Every click lands on a focused page with one obvious path to call, book, or inquire.',
+    body: 'One obvious path to call, book, or inquire.',
     visual: <LandingPageShot />,
   },
   {
     icon: Compass,
     title: 'setup and tracking',
-    body: 'Accounts, audiences, and conversion events wired cleanly so spend is judged on real inquiries.',
+    body: 'Every call, form, and booking tracked before launch.',
     visual: <ConversionEvents />,
   },
   {
     icon: BarChart3,
     title: 'weekly tuning, plain reports',
-    body: 'Budget moves to what converts, waste gets cut, and results arrive in plain English.',
+    body: 'Cut waste weekly. Report real inquiries.',
     visual: <ReportChips />,
   },
 ]
@@ -284,25 +285,25 @@ const PLATFORMS: readonly AdPlatform[] = [
   {
     name: 'Google Ads',
     role: 'Search intent',
-    why: 'Capture high-intent buyers actively searching for what you do.',
+    why: 'Capture buyers actively searching for what you do.',
     logoBrands: ['google'],
   },
   {
     name: 'Facebook & Instagram',
     role: 'Paid social',
-    why: 'Pair precise targeting with creative that builds demand and trust.',
+    why: 'Creative and targeting that build demand and trust.',
     logoBrands: ['facebook', 'instagram'],
   },
   {
     name: 'TikTok',
     role: 'Short-form video',
-    why: 'Native short-form video that introduces your offer where attention lives.',
+    why: 'Native short-form video where attention lives.',
     logoBrands: ['tiktok'],
   },
   {
     name: 'Yelp Ads',
     role: 'Local discovery',
-    why: 'Reach local buyers comparing options and reading reviews right before they call.',
+    why: 'Reach local buyers comparing reviews before calling.',
     logoBrands: ['yelp'],
   },
 ]
@@ -312,19 +313,19 @@ const STEPS: readonly ServiceStep[] = [
     icon: Compass,
     title: 'plan and build',
     detail: 'First',
-    body: 'Audience, market, and budget first. Then tracking, creative, and landing-page readiness.',
+    body: 'Set tracking, creative, and landing pages before launch.',
   },
   {
     icon: Rocket,
     title: 'launch focused',
     detail: 'Launch',
-    body: 'Start lean on the highest-intent channels and let real conversion data guide expansion.',
+    body: 'Start lean on highest-intent channels.',
   },
   {
     icon: BarChart3,
     title: 'optimize and report',
     detail: 'Weekly',
-    body: 'Weekly adjustments to bids, targeting, and creative, paired with clear plain-English reporting.',
+    body: 'Weekly bid and creative tuning tied to real leads.',
   },
 ]
 
@@ -336,22 +337,22 @@ const BUDGET_GUARDS: readonly {
   {
     icon: Filter,
     title: 'reduce irrelevant clicks',
-    body: 'Tight exclusions and audience filters block low-intent traffic while we audit lead quality.',
+    body: 'Tight exclusions block low-intent traffic.',
   },
   {
     icon: Clock,
     title: 'show up when buyers are ready',
-    body: 'Schedules and pacing match when inquiries convert and when your team can answer.',
+    body: 'Pacing matched to when your team answers.',
   },
   {
     icon: MapPin,
     title: 'right radius, right people',
-    body: 'Targeting stays locked to the exact markets you serve.',
+    body: 'Locked to the exact markets you serve.',
   },
   {
     icon: FlaskConical,
     title: 'keep testing the details',
-    body: 'Structured tests on offers, creative, and forms compound lead quality over time.',
+    body: 'Structured creative and offer tests.',
   },
 ]
 
@@ -442,9 +443,8 @@ export default function AdsPage() {
           }
           description={
             <>
-              <span className="text-foreground">Prism Ads</span> pairs creative,
-              landing pages, and clean tracking across Google, Meta, TikTok, and
-              Yelp to drive qualified calls and bookings.
+              <span className="text-foreground">Prism Ads</span>: creative,
+              landing pages, and tracked inquiries across five platforms.
             </>
           }
           ctaHref={ADS_WAITLIST_CTA.href}
@@ -461,7 +461,6 @@ export default function AdsPage() {
         <ServiceBento
           idPrefix="ads"
           title="from campaign strategy to the next call."
-          description="Strategy, creative, landing pages, and attribution built around one outcome: qualified inquiries."
           items={WHAT_YOU_GET}
         />
 
@@ -475,7 +474,6 @@ export default function AdsPage() {
               id="ads-platforms-title"
               eyebrow="Platforms"
               title="where we run, and why."
-              description="We match the channel mix to how your buyers search, compare, and decide."
             />
           </Reveal>
           <Reveal delay={80}>
@@ -554,7 +552,6 @@ export default function AdsPage() {
         <ServiceSteps
           idPrefix="ads"
           title="launch, learn, improve."
-          description="A disciplined loop from launch to weekly optimization, tied directly to tracked inquiries."
           steps={STEPS}
         />
 
@@ -565,7 +562,6 @@ export default function AdsPage() {
                 id="ads-budget-title"
                 eyebrow="Budget"
                 title="keep your budget focused."
-                description="Built-in discipline that protects your spend and raises lead quality."
                 titleClassName="max-w-[13ch]"
               />
             </Reveal>
@@ -613,7 +609,7 @@ export default function AdsPage() {
                   id="ads-founder-title"
                   eyebrow="Hear from our founder"
                   title="how Prism runs ads."
-                  description="Enzo walks through how Prism selects channels, crafts creative, and measures every campaign on real inquiries."
+                  description="Enzo on channel selection, creative, and real lead tracking."
                   titleClassName="max-w-[12ch]"
                 />
               </div>
@@ -636,60 +632,56 @@ export default function AdsPage() {
           </Reveal>
         </Section>
 
-        <Section aria-labelledby="ads-fit-title">
-          <Reveal>
-            <SectionHeader
-              id="ads-fit-title"
-              eyebrow="Fit"
-              title="who we build campaigns for."
-              description="Established businesses ready for higher-quality demand and transparent attribution."
-            />
-          </Reveal>
-          <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
-            {AUDIENCE_SEGMENTS.map((segment, index) => (
-              <Reveal
-                as="li"
-                key={segment.name}
-                delay={(index % 3) * 60}
-                className="flex bg-background"
-              >
-                <Link
-                  href={segment.href}
-                  className="group/segment flex w-full flex-col gap-2 p-6 transition-colors hover:bg-card focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50 sm:p-7"
-                >
-                  <span className="flex items-start justify-between gap-4">
-                    <span className="text-lg font-semibold tracking-[-0.02em] text-foreground">
-                      {segment.name}
+        <Section aria-labelledby="ads-fit-title" className="py-10 sm:py-12">
+          <h2 id="ads-fit-title" className="sr-only">
+            who we build campaigns for.
+          </h2>
+          <DisclosurePanel
+            eyebrow="Fit"
+            summary="See the industries we build ad campaigns for"
+            meta="5 sectors + dental"
+          >
+            <ul className="grid gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.08] md:grid-cols-2 lg:grid-cols-3">
+              {AUDIENCE_SEGMENTS.map((segment) => (
+                <li key={segment.name} className="flex bg-background">
+                  <Link
+                    href={segment.href}
+                    className="group/segment flex w-full flex-col gap-2 p-5 transition-colors hover:bg-card focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ring/50"
+                  >
+                    <span className="flex items-start justify-between gap-4">
+                      <span className="text-base font-semibold tracking-[-0.02em] text-foreground">
+                        {segment.name}
+                      </span>
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="mt-1 size-4 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/segment:-translate-y-0.5 group-hover/segment:translate-x-0.5 group-hover/segment:text-foreground"
+                      />
                     </span>
-                    <ArrowUpRight
-                      aria-hidden="true"
-                      className="mt-1 size-4 shrink-0 text-subtle transition-[color,transform] duration-200 group-hover/segment:-translate-y-0.5 group-hover/segment:translate-x-0.5 group-hover/segment:text-foreground"
-                    />
-                  </span>
-                  <span className="text-pretty text-[15px] leading-7 text-muted-foreground">
-                    {segment.description}
-                  </span>
+                    <span className="text-pretty text-sm leading-6 text-muted-foreground">
+                      {segment.description}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              <li className="flex flex-col justify-center gap-2 bg-background p-5 text-sm leading-6 text-muted-foreground">
+                <span className="text-eyebrow text-subtle">For dentists</span>
+                <Link
+                  href="/facebook-ads-for-dentists"
+                  className="inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline"
+                >
+                  Facebook ads for dentists
+                  <ArrowUpRight aria-hidden="true" className="size-4" />
                 </Link>
-              </Reveal>
-            ))}
-            <li className="flex flex-col justify-center gap-2 bg-background p-6 text-[15px] leading-7 text-muted-foreground sm:p-7">
-              <span className="text-eyebrow text-subtle">For dentists</span>
-              <Link
-                href="/facebook-ads-for-dentists"
-                className="group/dental inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
-              >
-                Facebook ads for dentists
-                <ArrowUpRight aria-hidden="true" className="size-4" />
-              </Link>
-              <Link
-                href="/tiktok-ads-for-dentists"
-                className="group/dental inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
-              >
-                TikTok ads for dentists
-                <ArrowUpRight aria-hidden="true" className="size-4" />
-              </Link>
-            </li>
-          </ul>
+                <Link
+                  href="/tiktok-ads-for-dentists"
+                  className="inline-flex w-fit items-center gap-1.5 rounded-sm text-foreground hover:underline"
+                >
+                  TikTok ads for dentists
+                  <ArrowUpRight aria-hidden="true" className="size-4" />
+                </Link>
+              </li>
+            </ul>
+          </DisclosurePanel>
         </Section>
 
         <ServiceFaq
@@ -699,25 +691,15 @@ export default function AdsPage() {
         />
 
         <OwnerDecision
-          eyebrow="Before you spend"
-          title="follow the inquiry to the person who receives it."
-          body="Pick a customer action, confirm someone receives it, and agree on what makes an inquiry useful. Media spend and management fees are separate. Use actual bookings or sales to judge the economics when those records are available."
+          eyebrow="Diagnostics & tools"
+          title="check the funnel before scaling spend."
           links={[
-            { label: "How to diagnose missing inquiries", href: "/blog/website-traffic-no-inquiries" },
-            { label: "Google Ads for dental practices", href: "/google/dental-ads" },
+            { label: "Missing inquiries guide", href: "/blog/website-traffic-no-inquiries" },
+            { label: "Dental Google Ads worksheet", href: "/google/dental-ads" },
+            { label: "Google Ads destination fix", href: "/blog/google-ads-destination-not-working" },
           ]}
         />
         <ServiceSiblings current="ads" />
-
-        <Section aria-label="Google Ads troubleshooting" className="pt-0 sm:pt-0">
-          <p className="max-w-3xl text-muted-foreground">
-            Google Ads paused because the destination will not load?{' '}
-            <Link href="/blog/google-ads-destination-not-working" className="inline-flex items-center gap-1.5 text-foreground underline underline-offset-4">
-              Check the destination troubleshooting guide
-              <ArrowRight aria-hidden="true" className="size-4 shrink-0" />
-            </Link>
-          </p>
-        </Section>
 
         <FinalCta
           location="ads final cta"

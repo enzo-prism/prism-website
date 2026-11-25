@@ -30,16 +30,9 @@ export function AboutHero() {
           >
             built by Enzo Sison.
           </h1>
-          <p className="prism-rise text-lead mt-7 max-w-[34rem] text-pretty text-foreground/90 [--rise-delay:160ms]">
-            At Apple, Enzo worked on CarPlay, GymKit, AirPlay, HomeKit, and Find
-            My. After earning his engineering degree and competing in D1 track
-            at Cal Poly, he left full-time tech in May 2023 to go pro and build
-            Prism.
-          </p>
-          <p className="prism-rise mt-4 max-w-[34rem] text-pretty text-[15px] leading-7 text-muted-foreground [--rise-delay:200ms]">
-            He built Prism to give ambitious businesses a digital presence
-            worthy of their craft. Today he leads the studio while pole vaulting
-            for the Philippines on the road to LA 2028.
+          <p className="prism-rise text-lead mt-6 max-w-[32rem] text-pretty text-muted-foreground [--rise-delay:160ms]">
+            Ex-Apple intern (CarPlay, Find My, AirPlay). Cal Poly engineer.
+            Leading Prism while pole vaulting toward LA 2028.
           </p>
           <div className="prism-rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center [--rise-delay:240ms]">
             <WaitlistButton location="about hero" size="xl" />

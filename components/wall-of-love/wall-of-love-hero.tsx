@@ -56,9 +56,8 @@ export function WallOfLoveHero() {
           <span className="text-spectrum prism-spectrum-pan">love.</span>
         </h1>
 
-        <p className="prism-rise text-lead mt-6 max-w-[44ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
-          Notes from the clients we build for, alongside reactions from the
-          audience that follows our work. Every word is verbatim.
+        <p className="prism-rise text-lead mt-5 max-w-[38ch] text-pretty text-muted-foreground [--rise-delay:160ms]">
+          Verbatim notes from clients and followers.
         </p>
 
         <div className="prism-rise mt-9 [--rise-delay:240ms]">

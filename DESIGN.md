@@ -179,6 +179,11 @@ feels out of reach; the site shows Prism making it temporary: the client's
   - `IntakePass` (the next intake as a perforated ticket)
   - `InlineWaitlistCta` (one line, the waitlist button, and the status pill
     where a long proof section ends)
+  - `DisclosurePanel` (`disclosure-panel.tsx`: native `<details>/<summary>`
+    server component, zero client JS, collapsed by default so deep SEO copy,
+    matrices, and playbooks stay in SSR HTML without cluttering the human canvas)
+  - `OwnerDecision` (`owner-decision.tsx`: compact visual-first action bar with
+    optional faux-UI visual slot and pill links)
 - `components/navbar.tsx`, `components/footer.tsx`: shared chrome.
 - `components/home/*`: homepage sections. Larger sections keep their parts
   and CSS modules in a folder (`stories/`, `audience/`, `pillars/`, `love/`).
@@ -261,12 +266,13 @@ left-aligned: when a link uses the stock `NavigationMenuLink`, override its
 ### Hero
 
 The homepage opens with current capacity and “your growth team.” in two lines of
-`text-hero`. Set “your growth” in `text-gradient` and “team.” in `prism-glint`.
-The first button leads to a real customer journey. The second opens project
-intake. Preserve the case image’s original colors and use the native player,
-captions and text sequence for the complete walkthrough. The refraction scene
-and its desktop Grow card sit farther down the page. Mobile visitors get a
-compact Grow link beneath the hero actions.
+`text-hero`, a single centered subhead line, and the refraction scene
+(`HomeRefraction`) + desktop `HomeAppCard` visible above the fold. Set “your
+growth” in `text-gradient` and “team.” in `prism-glint`. The first button leads
+to `#featured-work` (`HomeFeaturedWork`: Olympic Bootworks live Fantic catalog
+playing via `HeroLoopingVideo` inside `BrowserFrame` with a walkthrough link);
+the second opens project intake (`/waitlist`). Mobile visitors get a compact
+Grow pill beneath the hero actions.
 `/app` uses the same `prism-glint` on its one accent word ("leads.") and
 otherwise `text-gradient`, with the drawn Prism Grow phone as its hero
 surface and the demo alert as its single satellite.
@@ -279,6 +285,25 @@ call bar) matching a numbered list of design principles. It is marked
 "Illustrative page layout", uses no client data, and the drawing is
 decorative to assistive tech while the list carries the content (see Faux
 product UI).
+
+### Visual-first progressive disclosure
+
+Humans scan visuals first (real client sites, looping walkthroughs, videos,
+drawn faux UI, verified numbers); search engines and AI crawlers read full
+structured HTML. Never cloak or omit SEO text. Instead:
+
+- Keep visible hero subheads, section leads, and card captions to one short
+  line.
+- Put long reference tables, multi-card capability matrices, playbooks,
+  methodology footnotes, and long-form SEO explainers (`SeoTextSection`,
+  `WhyPlaybook`, `CaseStudyFacts`, deep breakdown bands) inside native
+  `<details>/<summary>` (`DisclosurePanel`), collapsed by default with zero
+  client JS and 100% SSR HTML preserved.
+- Start FAQs (`ServiceFaq`, `DentalFaq`, `FaqList`) collapsed by default while
+  keeping every answer in server-rendered HTML matching `FAQPage` JSON-LD.
+- Embed visual vignettes (`SERVICE_VISUALS`) directly inside `/pricing` plan
+  cards as well as `/services` cards so commercial grids lead with UI instead
+  of bullet walls.
 
 ### Prism logo
 

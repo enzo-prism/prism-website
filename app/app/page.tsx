@@ -112,7 +112,7 @@ export default function PrismAppPage() {
                 id="prism-app-inside-title"
                 eyebrow="Interactive demo"
                 title="follow a website lead."
-                description="Explore Bayview Dental’s fictional website. Start with the forms people used, then open Updates for the latest inquiry or Report for the monthly comparison."
+                description="Tap through Bayview Dental’s demo: forms, alerts, and monthly reports."
               />
             }
           />
@@ -127,7 +127,6 @@ export default function PrismAppPage() {
               id="prism-app-glance-title"
               eyebrow="At a glance"
               title="your month, in one place."
-              description="Website leads, visits and Google search side by side, with a report you can share and alerts when something happens."
               className="mb-10 sm:mb-12"
             />
           </Reveal>
@@ -321,7 +320,6 @@ export default function PrismAppPage() {
             <FaqList
               items={PRISM_APP_FAQ}
               name="prism-app-faq"
-              defaultOpen={0}
             />
           </div>
         </Section>
