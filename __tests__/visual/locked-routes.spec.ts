@@ -239,7 +239,12 @@ for (const route of lockedRoutes) {
   })
 }
 
-async function snapshotHomeSection(page: Page, heading: RegExp, name: string) {
+async function snapshotHomeSection(
+  page: Page,
+  heading: RegExp,
+  name: string,
+  desktopMinHeight?: number,
+) {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await seedDeterministicRandom(page)
   await freezeIntakeMonth(page)
@@ -251,6 +256,9 @@ async function snapshotHomeSection(page: Page, heading: RegExp, name: string) {
 
   const section = sectionHeading.locator('xpath=ancestor::section[1]')
   await expect(section).toBeVisible()
+  if (desktopMinHeight) {
+    await stabilizeDesktopSectionHeight(page, section, desktopMinHeight)
+  }
   await section.scrollIntoViewIfNeeded()
 
   await stabilizePage(page)
@@ -265,6 +273,7 @@ test('home numbers section snapshot stays stable', async ({ page }) => {
     page,
     /numbers, not adjectives\./i,
     'home-numbers-section.png',
+    680,
   )
 })
 
