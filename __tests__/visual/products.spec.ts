@@ -93,7 +93,7 @@ for (const width of [390, 768, 1280]) {
     page,
   }) => {
     await page.setViewportSize({ width, height: 900 })
-    await page.goto('/#products')
+    await page.goto('/about#products')
     const section = page.locator('#products')
     await section.scrollIntoViewIfNeeded()
     await expect(

@@ -1,12 +1,19 @@
 import { ArrowDown } from 'lucide-react'
 
-import { HomeAppCard, HomeAppPill } from '@/components/home/HomeAppCallout'
+import { HomeAppCard } from '@/components/home/HomeAppCallout'
 import HomeRefraction from '@/components/home/HomeRefraction'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import TrackedAnchor from '@/components/tracked-anchor'
-import { Button } from '@/components/ui/button'
+
+/** The four services, in the order (and band) the spectrum labels them. */
+const HERO_SERVICE_BANDS = [
+  { label: 'Website Design', href: '/website-design', band: 'var(--spectrum-red)' },
+  { label: 'Content', href: '/content', band: 'var(--spectrum-orange)' },
+  { label: 'Ads', href: '/ads', band: 'var(--spectrum-yellow)' },
+  { label: 'AEO', href: '/aeo', band: 'var(--spectrum-blue)' },
+] as const
 
 export default function HomeHero() {
   return (
@@ -43,38 +50,66 @@ export default function HomeHero() {
           {HOMEPAGE_HERO.subheading}
         </p>
 
-        <div className="prism-rise mt-6 flex w-full flex-col items-center justify-center gap-3 [--rise-delay:320ms] sm:w-auto sm:flex-row">
-          <Button
-            asChild
-            variant="default"
-            size="xl"
-            className="w-full sm:w-auto"
-          >
-            <TrackedAnchor
-              href={HOMEPAGE_HERO.secondaryCta.href}
-              label="see the work"
-              location="homepage hero"
-            >
-              {HOMEPAGE_HERO.secondaryCta.label}
-              <ArrowDown aria-hidden="true" />
-            </TrackedAnchor>
-          </Button>
+        {/* One primary action. "See the work" is a quiet text link, so the
+            eye never has to choose between two buttons. */}
+        <div className="prism-rise mt-7 flex w-full flex-col items-center justify-center gap-2 [--rise-delay:320ms] sm:w-auto sm:flex-row sm:gap-5">
           <WaitlistButton
             label={HOMEPAGE_HERO.primaryCta.label}
             location="homepage hero"
-            variant="outline"
             size="xl"
             className="w-full sm:w-auto"
           />
+          <TrackedAnchor
+            href={HOMEPAGE_HERO.secondaryCta.href}
+            label="see the work"
+            location="homepage hero"
+            className="group/work inline-flex min-h-12 items-center gap-1.5 rounded-full px-4 text-[15px] font-medium text-muted-foreground transition-colors duration-(--dur-ui) hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          >
+            {HOMEPAGE_HERO.secondaryCta.label}
+            <ArrowDown
+              aria-hidden="true"
+              className="size-4 transition-transform duration-(--dur-ui) ease-(--ease-out) group-hover/work:translate-y-0.5"
+            />
+          </TrackedAnchor>
         </div>
-
-        <HomeAppPill />
       </div>
 
       <div className="relative -mt-6 sm:-mt-12 lg:-mt-16">
         <HomeRefraction labels={HOMEPAGE_HERO.spectrumLabels} />
         <HomeAppCard />
       </div>
+
+      {/* Phones: the band labels ride off the right edge of the scene, so
+          the four services land under the prism instead, each in the band
+          it came out of (one beam in, a spectrum out). */}
+      <nav
+        aria-label="Services"
+        className="prism-container relative -mt-2 pb-12 md:hidden"
+      >
+        <ul className="grid grid-cols-2 gap-2">
+          {HERO_SERVICE_BANDS.map((service, index) => (
+            <li
+              key={service.href}
+              className="prism-rise"
+              style={{ ['--rise-delay' as string]: `${1500 + index * 90}ms` }}
+            >
+              <TrackedAnchor
+                href={service.href}
+                label={service.label}
+                location="homepage hero services"
+                className="flex min-h-11 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 text-[13px] font-medium text-foreground/90 transition-colors duration-(--dur-ui) hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-4 w-1 shrink-0 rounded-full"
+                  style={{ background: service.band }}
+                />
+                {service.label}
+              </TrackedAnchor>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </section>
   )
 }

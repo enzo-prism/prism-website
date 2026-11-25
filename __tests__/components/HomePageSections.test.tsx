@@ -6,7 +6,6 @@ import {
 } from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
-import { SOCIAL_PROOF } from '@/lib/proof-metrics'
 import { getWaitlistIntakeMonth } from '@/lib/waitlist'
 import { trackLinkInteraction } from '@/utils/analytics'
 
@@ -57,7 +56,7 @@ describe('ClientPage homepage flow', () => {
     jest.clearAllMocks()
   })
 
-  it('tells the story in order: promise, work, proof, reach, services, love, founder, how to get in', () => {
+  it('tells the story in order: promise, work, numbers, services, love, how we work, how to get in, close', () => {
     render(<ClientPage />)
 
     expect(
@@ -73,17 +72,12 @@ describe('ClientPage homepage flow', () => {
       .map((heading) => heading.textContent?.trim())
 
     expect(headings).toEqual([
-      'from bike research to a test ride.',
       'every business has an impossible.',
-      '16 more. every one is live.',
       'numbers, not adjectives.',
       'shine. convert. get seen.',
-      'we built our own audience from zero.',
       'in their words.',
       'a direct line to the people doing the work.',
-      'built by a founder chasing LA 2028.',
       'fully booked. here’s how to get in.',
-      'built for our team. free for yours.',
       'questions, answered.',
       'tell us your impossible.',
     ])
@@ -124,7 +118,9 @@ describe('ClientPage homepage flow', () => {
     )
 
     const seeWork = heroScope.getByRole('link', { name: /see the work/i })
-    expect(seeWork).toHaveAttribute('href', '#featured-work')
+    expect(seeWork).toHaveAttribute('href', '#work')
+    // One primary button in the hero; the work is a text link.
+    expect(heroScope.getAllByRole('link', { name: /tell us about your business/i })).toHaveLength(1)
 
     expect(hero).toHaveTextContent(
       /designers, engineers, and marketers for small businesses/i,
@@ -146,13 +142,11 @@ describe('ClientPage homepage flow', () => {
     expect(document.body).toHaveTextContent(
       belize?.structured?.results?.[0]?.value ?? 'missing',
     )
-    expect(document.body).toHaveTextContent(SOCIAL_PROOF.combinedAudience)
-    expect(document.body).toHaveTextContent(SOCIAL_PROOF.youtube.activity)
     expect(document.body).toHaveTextContent(/Google Search Console/)
     expect(document.body).toHaveTextContent(/Verified October 4, 2026/)
   })
 
-  it('features the six client stories, the client logos, and never former clients', () => {
+  it('features three client stories, links every live site, shows the logos, and never former clients', () => {
     render(<ClientPage />)
 
     const work = document.getElementById('work') as HTMLElement
@@ -168,14 +162,10 @@ describe('ClientPage homepage flow', () => {
     expect(work).toHaveTextContent('Sells to businesses')
     expect(work).toHaveTextContent('Sells to consumers')
 
-    const moreWork = document.getElementById('more-work') as HTMLElement
-    const moreHrefs = within(moreWork)
-      .getAllByRole('link')
-      .map((link) => link.getAttribute('href') ?? '')
+    expect(HOMEPAGE_CASE_STUDIES.slugs).toHaveLength(3)
     expect(
-      moreHrefs.filter((href) => href.startsWith('/case-studies/')).length,
-    ).toBeGreaterThanOrEqual(8)
-    expect(moreHrefs).toContain('/case-studies')
+      within(work).getByRole('link', { name: /see all \d+ live sites/i }),
+    ).toHaveAttribute('href', '/case-studies')
 
     const logos = within(
       document.getElementById('clients') as HTMLElement,
@@ -190,21 +180,21 @@ describe('ClientPage homepage flow', () => {
     }
   })
 
-  it('separates client quotes from community comments', () => {
+  it('quotes four attributed clients and leaves comments to the wall', () => {
     render(<ClientPage />)
 
-    expect(screen.getAllByText('Website Design client').length).toBeGreaterThanOrEqual(
-      4,
-    )
-    expect(screen.getAllByText(/on Instagram$/).length).toBeGreaterThanOrEqual(
-      3,
-    )
+    const love = document.getElementById('love') as HTMLElement
+    expect(within(love).getAllByRole('blockquote')).toHaveLength(4)
+    expect(
+      within(love).getAllByText('Website Design client').length,
+    ).toBeGreaterThanOrEqual(2)
+    expect(within(love).queryAllByText(/on Instagram$/)).toHaveLength(0)
     expect(
       screen.getByRole('link', { name: /see the wall of love/i }),
     ).toHaveAttribute('href', '/wall-of-love')
   })
 
-  it('links the three pillars, the four services, and products', () => {
+  it('links the three pillars and the four services', () => {
     render(<ClientPage />)
 
     const services = document.getElementById('services') as HTMLElement
@@ -238,13 +228,5 @@ describe('ClientPage homepage flow', () => {
         .getAllByRole('link')
         .map((link) => link.getAttribute('href')),
     ).toEqual(['/website-design', '/content', '/ads', '/aeo', '/services'])
-
-    const products = document.getElementById('products') as HTMLElement
-    expect(
-      within(products).getByRole('link', { name: 'Midas' }),
-    ).toHaveAttribute('href', 'https://midas-ai.dev')
-    expect(
-      within(products).getByRole('link', { name: 'zRead' }),
-    ).toHaveAttribute('target', '_blank')
   })
 })

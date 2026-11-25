@@ -4,9 +4,6 @@ import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import {
   CONNECTED_CLIENT_TRAFFIC,
   PROOF_METRICS_VERIFIED_AT,
-  SOCIAL_PROOF,
-  SOCIAL_PROOF_CHANNELS,
-  TOP_REELS,
 } from '@/lib/proof-metrics'
 
 /*
@@ -25,26 +22,6 @@ export type HomepageFAQItem = {
   answer: HomepageFAQBlock[]
 }
 
-export type HomepageClientWinSlide = {
-  /** Company / brand name shown as the prominent card label (never a person). */
-  company: string
-  location: string
-  href: string
-  contextLabel: string
-  /** Portrait screenshot of the client's live website. */
-  image: string
-  /**
-   * Optional headline result. ONLY populate from a metric that is verified
-   * against the named `source` (mirrors the client's `structured.results` in
-   * lib/case-study-data.ts). Never invent a value.
-   */
-  metric?: {
-    value: string
-    label: string
-    source: string
-  }
-}
-
 const BELIZE_SEARCH_METRIC = getCaseStudyMetric('belize-kids-foundation')
 const DR_WONG_SEARCH_METRIC = getCaseStudyMetric('dr-christopher-wong')
 
@@ -59,7 +36,7 @@ export const HOMEPAGE_HERO = {
   subheading:
     'Designers, engineers, and marketers for small businesses.',
   primaryCta: { label: 'Tell us about your business', href: '/waitlist' },
-  secondaryCta: { label: 'See the work', href: '#featured-work' },
+  secondaryCta: { label: 'See the work', href: '#work' },
   /** Labels for the refracted bands, top to bottom. */
   spectrumLabels: [
     'website design',
@@ -164,25 +141,24 @@ export type HomepageStory = {
 }
 
 /**
- * The six featured stories (2026-10 v2; Mach 1 joined 2026-10-18 as the
- * violet band, completing the spectrum). Every line paraphrases the
- * published case study in lib/case-study-data.ts; nothing here is a client
- * quote or a number. `slugs` mirrors the stories for the former-client guard.
+ * The three featured stories (2026-11 overhaul: one dental practice, one
+ * retailer, one B2B platform; the rest live on /case-studies). Every line
+ * paraphrases the published case study in lib/case-study-data.ts; nothing
+ * here is a client quote or a number. `slugs` mirrors the stories for the
+ * former-client guard.
  */
 export const HOMEPAGE_CASE_STUDIES = {
   eyebrow: 'the work',
   title: 'every business has an impossible.',
-  description: 'Six clients. Six live sites.',
+  description: `Three of our ${CURRENT_CASE_STUDIES.length} live client sites.`,
+  /** The link under the deck to every live site. */
+  allWork: {
+    label: `See all ${CURRENT_CASE_STUDIES.length} live sites`,
+    href: '/case-studies',
+  },
   /** The line above the mid-page waitlist invitation after the deck. */
   nextLine: 'your business could be the next story.',
-  slugs: [
-    'exquisite-dentistry',
-    'canary-cove',
-    'practice-transitions-institute',
-    'olympic-bootworks',
-    'roseville-dental-academy',
-    'mach-1',
-  ],
+  slugs: ['exquisite-dentistry', 'olympic-bootworks', 'mach-1'],
   stories: [
     {
       slug: 'exquisite-dentistry',
@@ -197,41 +173,6 @@ export const HOMEPAGE_CASE_STUDIES = {
       now: 'Editorial positioning, direct booking, and full attribution.',
       desktopImage: '/case-studies/scroll/exquisite-dentistry-desktop.webp',
       mobileImage: '/case-studies/scroll/exquisite-dentistry-mobile.webp',
-    },
-    {
-      slug: 'canary-cove',
-      company: 'Canary Cove',
-      sellsTo: 'consumers',
-      industry: 'Private beachfront estate',
-      location: 'San Pedro, Belize',
-      host: 'canarycove.com',
-      impossible:
-        'Make guests feel Ambergris Caye before they book a flight.',
-      built: ['Immersive visuals', 'Concierge inquiries', 'Analytics'],
-      now: 'Visual storytelling, concierge inquiries, and clean analytics.',
-      desktopImage: '/case-studies/scroll/canary-cove-desktop.webp',
-      mobileImage: '/case-studies/scroll/canary-cove-mobile.webp',
-    },
-    {
-      slug: 'practice-transitions-institute',
-      company: 'Practice Transitions Institute',
-      sellsTo: 'businesses',
-      industry: 'Dental transition advisory',
-      location: 'San Mateo, CA',
-      host: 'practicetransitionsinstitute.com',
-      impossible:
-        'Earning a dentist’s trust for the biggest decision of their career before the first call.',
-      built: [
-        'Six-stage process',
-        'Client testimonials',
-        'Search content',
-        'Funnel analytics',
-      ],
-      now: 'Clear authority from the first visit, guiding quiet research straight to consultation.',
-      desktopImage:
-        '/case-studies/scroll/practice-transitions-institute-desktop.webp',
-      mobileImage:
-        '/case-studies/scroll/practice-transitions-institute-mobile.webp',
     },
     {
       slug: 'olympic-bootworks',
@@ -251,26 +192,6 @@ export const HOMEPAGE_CASE_STUDIES = {
       now: 'Live Fantic catalog, test-ride requests, and owned infrastructure.',
       desktopImage: '/case-studies/scroll/olympic-bootworks-desktop.webp',
       mobileImage: '/case-studies/scroll/olympic-bootworks-mobile.webp',
-    },
-    {
-      slug: 'roseville-dental-academy',
-      company: 'Roseville Dental Academy',
-      sellsTo: 'consumers',
-      industry: 'Dental assisting school',
-      location: 'Roseville, CA',
-      host: 'rosevilledentalacademy.com',
-      impossible:
-        'Replace a stock template with a measurable admissions site.',
-      built: [
-        'Modern web platform',
-        'Analytics + search setup',
-        'Enrollment forms',
-        'AI assistant',
-      ],
-      now: 'Clear program paths, fast enrollment, and end-to-end analytics.',
-      desktopImage:
-        '/case-studies/scroll/roseville-dental-academy-desktop.webp',
-      mobileImage: '/case-studies/scroll/roseville-dental-academy-mobile.webp',
     },
     {
       slug: 'mach-1',
@@ -294,100 +215,13 @@ export const HOMEPAGE_CASE_STUDIES = {
   ] satisfies readonly HomepageStory[],
 } as const
 
-const FEATURED_STORY_HREFS = new Set<string>(
-  HOMEPAGE_CASE_STUDIES.slugs.map((slug) => `/case-studies/${slug}`),
-)
-
-export const HOMEPAGE_MORE_WORK = {
-  eyebrow: 'more work',
-  /** Current clients beyond the six featured stories. */
-  count: CURRENT_CASE_STUDIES.length - FEATURED_STORY_HREFS.size,
-  description: 'Every live client site. Click any frame.',
-} as const
-
-export const HOMEPAGE_AUDIENCE = {
-  eyebrow: 'reach',
-  title: 'we built our own audience from zero.',
-  description: 'Our own channels first. Same engine for clients.',
-  combined: {
-    value: SOCIAL_PROOF.combinedAudience,
-    label: 'followers and subscribers across YouTube, Instagram, and TikTok',
-  },
-  highlights: [
-    {
-      value: SOCIAL_PROOF.youtube.activity,
-      label: 'channel views on YouTube',
-    },
-    {
-      value: SOCIAL_PROOF.tiktok.activity,
-      label: 'likes on TikTok',
-    },
-  ],
-  channels: SOCIAL_PROOF_CHANNELS.map((channel) => ({
-    platform: channel.platform,
-    audience: channel.audience,
-    audienceLabel: channel.audienceLabel,
-    url: channel.url,
-  })),
-  /** Single-reel receipts from Prism's own Instagram insights. */
-  receipts: {
-    eyebrow: 'the receipts',
-    title: 'one reel reached 1.6 million accounts.',
-    items: TOP_REELS.map((reel) => ({
-      id: reel.id,
-      views: reel.views,
-      accountsReached: reel.accountsReached,
-      posted: reel.posted,
-      image: reel.image,
-      width: reel.width,
-      height: reel.height,
-      label: `views on one Instagram Reel, posted ${reel.posted}`,
-    })),
-  },
-  note: `Audience as of ${SOCIAL_PROOF.youtube.verifiedAt}. Channel totals, not deduplicated people. Channel totals come from Ayrshare. YouTube subscribers are API-rounded; channel views include earlier content. Reel numbers come from Instagram Reel insights on Prism’s own account, as of each screenshot.`,
-} as const
-
-const COMMUNITY_HANDLES = [
-  'relevique',
-  'helder_movement',
-  'aaronwbateman',
-  '_dev_khant',
-  'notpharaoh_',
-  'andriiikoo',
-  'mr.mazamio',
-] as const
-
 export const HOMEPAGE_TESTIMONIALS = {
   eyebrow: 'wall of love',
   title: 'in their words.',
-  /** The line above the mid-page waitlist invitation under the wall. */
-  nextLine: 'be the next note on this wall.',
-  description: 'Verbatim notes from clients and followers.',
+  description: 'Verbatim notes from the people we build for.',
   clientQuotes: quotesData.filter(
     (quote) => isClientQuote(quote) && !quote.requiresConsent,
   ),
-  communityQuotes: COMMUNITY_HANDLES.map((handle) =>
-    quotesData.find(
-      (quote) => quote.client === handle && !quote.requiresConsent,
-    ),
-  ).filter((quote): quote is (typeof quotesData)[number] => Boolean(quote)),
-} as const
-
-export const HOMEPAGE_FOUNDER = {
-  eyebrow: 'who builds it',
-  title: 'built by a founder chasing LA 2028.',
-  name: 'Enzo Sison',
-  role: 'Founder, Prism',
-  facts: [
-    'Two Apple internships',
-    'Cal Poly engineering',
-    'D1 track and field',
-    'Pole vaulter for the Philippines',
-  ],
-  body: 'Founded Prism in 2023. Leads the team while vaulting professionally for the Philippines toward LA 2028.',
-  image:
-    '/enzo-sison.webp',
-  motto: 'impossible is temporary.',
 } as const
 
 export const HOMEPAGE_HOW_IT_WORKS = {
@@ -422,173 +256,6 @@ export const HOMEPAGE_FINAL_CTA = {
 export const HOMEPAGE_FAQ = {
   eyebrow: 'faq',
   title: 'questions, answered.',
-} as const
-
-export const HOMEPAGE_CLIENT_WINS = {
-  eyebrow: 'the work',
-  title: 'proof you can click.',
-  description:
-    'Dentists in Palo Alto. A retail and e-bike shop in Tahoe. A kids’ foundation in Belize. Every site here is live, and every one has a case study.',
-  slides: [
-    {
-      company: 'Olympic Bootworks',
-      location: 'Tahoe, CA',
-      href: '/case-studies/olympic-bootworks',
-      contextLabel: 'Retail + e-bike catalog',
-      image: '/case-studies/olympic-bootworks-home-mobile.jpg',
-    },
-    {
-      company: 'Belize Kids',
-      location: 'San Pedro, Belize',
-      href: '/case-studies/belize-kids-foundation',
-      contextLabel: 'Nonprofit impact',
-      image: '/case-studies/belize-kids-foundation-home-mobile.jpg',
-      metric: {
-        value: BELIZE_SEARCH_METRIC.value,
-        label: BELIZE_SEARCH_METRIC.label,
-        source: BELIZE_SEARCH_METRIC.sourceName ?? 'Google Search Console',
-      },
-    },
-    {
-      company: 'Rebellious Aging',
-      location: 'Los Gatos, CA',
-      href: '/case-studies/rebellious-aging',
-      contextLabel: 'Community brand',
-      image: '/case-studies/rebellious-aging-home-mobile.jpg',
-    },
-    {
-      company: 'Infobell IT Solutions',
-      location: 'Bengaluru, India',
-      href: '/case-studies/infobell-it',
-      contextLabel: 'AI + product engineering',
-      image: '/case-studies/infobell-it-home-mobile.jpg',
-    },
-    {
-      company: 'Christopher B. Wong, DDS',
-      location: 'Palo Alto, CA',
-      href: '/case-studies/dr-christopher-wong',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/dr-christopher-wong-home-mobile.jpg',
-      metric: {
-        value: DR_WONG_SEARCH_METRIC.value,
-        label: DR_WONG_SEARCH_METRIC.label,
-        source: DR_WONG_SEARCH_METRIC.sourceName ?? 'Google Search Console',
-      },
-    },
-    {
-      company: 'Exquisite Dentistry',
-      location: 'Los Angeles, CA',
-      href: '/case-studies/exquisite-dentistry',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/exquisite-dentistry-home-mobile.jpg',
-    },
-    {
-      company: 'Roseville Dental Academy',
-      location: 'Roseville, CA',
-      href: '/case-studies/roseville-dental-academy',
-      contextLabel: 'Education + analytics',
-      image: '/case-studies/roseville-dental-academy-home-mobile.jpg',
-    },
-    {
-      company: 'Coast Periodontics',
-      location: 'San Luis Obispo, CA',
-      href: '/case-studies/coast-periodontics-and-laser-surgery',
-      contextLabel: 'Specialty healthcare',
-      image:
-        '/case-studies/coast-periodontics-and-laser-surgery-home-mobile.jpg',
-    },
-    {
-      company: 'Canary Cove',
-      location: 'San Pedro, Belize',
-      href: '/case-studies/canary-cove',
-      contextLabel: 'Hospitality',
-      image: '/case-studies/canary-cove-home-mobile.jpg',
-    },
-    {
-      company: 'Family First Smile Care',
-      location: 'Los Gatos, CA',
-      href: '/case-studies/family-first-smile-care',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/family-first-smile-care-home-mobile.jpg',
-    },
-    {
-      company: 'Grace Dental',
-      location: 'Santa Rosa, CA',
-      href: '/case-studies/grace-dental-santa-rosa',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/grace-dental-santa-rosa-home-mobile.jpg',
-    },
-    {
-      company: 'We Are Saplings',
-      location: 'Los Angeles, CA',
-      href: '/case-studies/we-are-saplings',
-      contextLabel: 'Children’s emotional learning',
-      image: '/case-studies/we-are-saplings-home-mobile.jpg',
-    },
-    {
-      company: 'Dental Strategies',
-      location: 'Bay Area, CA',
-      href: '/case-studies/michael-njo-dds',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/michael-njo-dds-home-mobile.jpg',
-    },
-    {
-      company: 'Canary Foundation',
-      location: 'Palo Alto, CA',
-      href: '/case-studies/canary-foundation',
-      contextLabel: 'Nonprofit impact',
-      image: '/case-studies/canary-foundation-home-mobile.jpg',
-    },
-    {
-      company: 'Town Centre Dental',
-      location: 'Brentwood, CA',
-      href: '/case-studies/town-centre-dental',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/town-centre-dental-home-mobile.jpg',
-    },
-    {
-      company: 'Practice Transitions Institute',
-      location: 'San Mateo, CA',
-      href: '/case-studies/practice-transitions-institute',
-      contextLabel: 'Dental transitions',
-      image: '/case-studies/practice-transitions-institute-home-mobile.jpg',
-    },
-    {
-      company: 'Wine Country Root Canal',
-      location: 'Santa Rosa, CA',
-      href: '/case-studies/wine-country-root-canal',
-      contextLabel: 'Specialty healthcare',
-      image: '/case-studies/wine-country-root-canal-home-mobile.jpg',
-    },
-    {
-      company: 'Leadership Retreat',
-      location: 'Savannah, GA',
-      href: '/case-studies/leadership-retreat',
-      contextLabel: 'Events + education',
-      image: '/case-studies/leadership-retreat-home-mobile.jpg',
-    },
-    {
-      company: 'Waikiki Dental',
-      location: 'Roseville, CA',
-      href: '/case-studies/waikiki-dental',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/waikiki-dental-home-mobile.jpg',
-    },
-    {
-      company: 'Sacramento Dental Medicine',
-      location: 'Antelope, CA',
-      href: '/case-studies/sacramento-dental-medicine',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/sacramento-dental-medicine-home-mobile.jpg',
-    },
-    {
-      company: 'Mataria Dental Group',
-      location: 'Torrance, CA',
-      href: '/case-studies/mataria-dental-group',
-      contextLabel: 'Dental growth',
-      image: '/case-studies/mataria-dental-group-home-mobile.jpg',
-    },
-  ] satisfies readonly HomepageClientWinSlide[],
 } as const
 
 export const HOMEPAGE_FAQ_ITEMS: HomepageFAQItem[] = [

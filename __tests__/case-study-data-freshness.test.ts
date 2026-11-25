@@ -1,6 +1,5 @@
 import * as HOMEPAGE_CONTENT from '@/components/home/homepage-content'
 import {
-  HOMEPAGE_CLIENT_WINS,
   HOMEPAGE_HERO,
   HOMEPAGE_NUMBERS,
 } from '@/components/home/homepage-content'
@@ -57,14 +56,9 @@ describe('case study data freshness', () => {
   })
 
   it('uses factual context when a case has no strong numerical proof', () => {
-    for (const slug of ['olympic-bootworks', 'roseville-dental-academy']) {
-      const slide = HOMEPAGE_CLIENT_WINS.slides.find(
-        (item) => item.href === `/case-studies/${slug}`,
-      )
-      expect(slide).toBeDefined()
-      expect(
-        slide && 'metric' in slide ? slide.metric : undefined,
-      ).toBeUndefined()
+    // No homepage number is attached to a client without a sourced metric.
+    for (const stat of HOMEPAGE_NUMBERS.stats) {
+      expect(stat.href).not.toMatch(/olympic-bootworks|roseville-dental-academy/)
     }
     for (const study of CASE_STUDIES) {
       for (const metric of study.structured?.results ?? []) {

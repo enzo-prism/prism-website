@@ -32,11 +32,10 @@ function AppIcon({ className }: { className?: string }) {
  *   dark left of the refraction scene, level with the prism's middle and
  *   above the incoming beam, well clear of the hero actions. It lands once the spectrum has formed, like a
  *   notification arriving.
- * - `HomeAppPill` (below xl): a quiet pill under the hero actions, mirroring
- *   the availability pill above the tagline, so the two bookend the column.
  *
- * Both render; CSS shows one (display: none keeps the other out of the
- * accessibility tree). The still frame is the finished frame.
+ * Below xl the card stays hidden so the hero keeps one action; phones meet
+ * Prism Grow on /app and in the footer. The still frame is the finished
+ * frame.
  */
 export function HomeAppCard() {
   return (
@@ -66,23 +65,5 @@ export function HomeAppCard() {
         </TrackedLink>
       </div>
     </div>
-  )
-}
-
-export function HomeAppPill() {
-  return (
-    <TrackedLink
-      href={HREF}
-      label={LABEL}
-      location={LOCATION}
-      data-testid="home-app-callout-compact"
-      aria-label={`New: ${PRISM_APP_NAME} for iPhone`}
-      className={cn('prism-rise [--rise-delay:420ms]', styles.pill)}
-    >
-      <AppIcon className="size-5 rounded-[0.3rem]" />
-      <span className={styles.badge}>New</span>
-      <span className="text-foreground">{PRISM_APP_NAME} for iPhone</span>
-      <ArrowRight aria-hidden="true" className={styles.arrow} />
-    </TrackedLink>
   )
 }

@@ -3,7 +3,6 @@ import path from 'node:path'
 
 import {
   HOMEPAGE_CASE_STUDIES,
-  HOMEPAGE_CLIENT_WINS,
   HOMEPAGE_TESTIMONIALS,
 } from '@/components/home/homepage-content'
 import { CLIENT_LOGOS } from '@/lib/client-logos'
@@ -15,7 +14,6 @@ import { websiteProjects } from '@/lib/website-projects'
 // archive pages but must not be featured on any of these.
 const FEATURED_FILES = [
   'components/home/homepage-content.ts',
-  'components/home/HomeWorkWall.tsx',
   'components/home/HomeStories.tsx',
   'components/home/HomeLove.tsx',
   'components/home/love/love-wall.ts',
@@ -43,13 +41,6 @@ const FORMER_CLIENT_MARKERS = [
 ] as const
 
 describe('former clients stay off current-client proof surfaces', () => {
-  it('keeps former clients out of the homepage work wall', () => {
-    const hrefs = HOMEPAGE_CLIENT_WINS.slides.map((slide) => slide.href)
-    for (const slug of FORMER_CLIENT_SLUGS) {
-      expect(hrefs).not.toContain(`/case-studies/${slug}`)
-    }
-  })
-
   it('keeps former clients out of the homepage stories and logo rails', () => {
     const logoSlugs = CLIENT_LOGOS.map((logo) => logo.slug)
     for (const slug of FORMER_CLIENT_SLUGS) {
@@ -59,10 +50,7 @@ describe('former clients stay off current-client proof surfaces', () => {
   })
 
   it('only quotes consented testimonials on the homepage', () => {
-    for (const quote of [
-      ...HOMEPAGE_TESTIMONIALS.clientQuotes,
-      ...HOMEPAGE_TESTIMONIALS.communityQuotes,
-    ]) {
+    for (const quote of HOMEPAGE_TESTIMONIALS.clientQuotes) {
       expect(quote.requiresConsent).toBeFalsy()
     }
   })

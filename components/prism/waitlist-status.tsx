@@ -30,7 +30,7 @@ export function WaitlistStatus({
       {asLink ? (
         <ArrowRight
           aria-hidden="true"
-          className="size-3.5 text-muted-foreground transition-transform duration-200 group-hover/status:translate-x-0.5 group-hover/status:text-foreground"
+          className="size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--dur-ui) ease-(--ease-out) group-hover/status:translate-x-0.5 group-hover/status:text-foreground"
         />
       ) : null}
     </>

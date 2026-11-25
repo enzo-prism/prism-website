@@ -1,23 +1,28 @@
+import { ArrowRight } from 'lucide-react'
+
 import { HOMEPAGE_CASE_STUDIES } from '@/components/home/homepage-content'
 import type { HomepageStory } from '@/components/home/homepage-content'
 import { SellsToChip } from '@/components/home/stories/SellsToChip'
 import { StoriesDeck } from '@/components/home/stories/StoriesDeck'
 import {
-  STORY_BANDS,
   StoryPanel,
   storyAnchorId,
+  storyBand,
 } from '@/components/home/stories/StoryPanel'
+
 import { InlineWaitlistCta } from '@/components/prism/inline-waitlist-cta'
 import { SectionHeader } from '@/components/prism/section'
+import TrackedLink from '@/components/tracked-link'
 
 const SELLS_TO_ORDER: HomepageStory['sellsTo'][] = ['consumers', 'businesses']
 
 /**
- * #work: six client stories, each told as the impossible, what we built,
+ * #work: three client stories, each told as the impossible, what we built,
  * and what is live now. On lg+ the panels stack like a deck as you scroll
- * (each one recedes as the next slides over it); below lg they are simple
- * cards. Each panel carries one band of the prism behind its live site, so
- * the six stories read as the six bands of the same light.
+ * (each one recedes as the next slides over it); below lg they stack as
+ * full-width cards, one per screen. Each panel carries one band of the prism
+ * behind its live site. Every other live site is one tap away on
+ * /case-studies.
  */
 export default function HomeStories() {
   const { eyebrow, title, description } = HOMEPAGE_CASE_STUDIES
@@ -69,7 +74,7 @@ export default function HomeStories() {
                         <span
                           aria-hidden="true"
                           className="h-[2px] w-3.5 rounded-full opacity-70 transition-opacity group-hover/legend:opacity-100"
-                          style={{ background: STORY_BANDS[index] }}
+                          style={{ background: storyBand(index, stories.length) }}
                         />
                       </a>
                     ))}
@@ -90,6 +95,21 @@ export default function HomeStories() {
             />
           ))}
         </StoriesDeck>
+
+        <div className="mt-10 flex justify-center sm:mt-12">
+          <TrackedLink
+            href={HOMEPAGE_CASE_STUDIES.allWork.href}
+            label="see all live sites"
+            location="homepage stories"
+            className="group/all inline-flex min-h-12 items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.03] px-5 text-[15px] font-medium text-foreground transition-[background-color,border-color] duration-(--dur-ui) ease-(--ease-out) hover:border-white/25 hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          >
+            {HOMEPAGE_CASE_STUDIES.allWork.label}
+            <ArrowRight
+              aria-hidden="true"
+              className="size-4 transition-transform duration-(--dur-ui) ease-(--ease-out) group-hover/all:translate-x-0.5"
+            />
+          </TrackedLink>
+        </div>
 
         <InlineWaitlistCta
           location="homepage stories"

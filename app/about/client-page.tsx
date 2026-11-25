@@ -3,6 +3,7 @@ import { AboutHero } from '@/components/about/about-hero'
 import { AboutManifesto } from '@/components/about/about-manifesto'
 import { OlympicJourney } from '@/components/about/olympic-journey'
 import { WhatPrismBuilds } from '@/components/about/what-prism-builds'
+import HomeProducts from '@/components/home/HomeProducts'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
@@ -44,6 +45,7 @@ export default function AboutClientPage() {
         </Section>
 
         <WhatPrismBuilds />
+        <HomeProducts />
         <FinalCta location="about final cta" title="build the next chapter with us." />
       </main>
 

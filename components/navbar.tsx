@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 
 import Breadcrumbs from '@/components/breadcrumbs'
+import { MobileActionBar } from '@/components/prism/mobile-action-bar'
 import { PrismLogo } from '@/components/prism/prism-logo'
 import WaitlistIntakeMonth from '@/components/waitlist/WaitlistIntakeMonth'
 import {
@@ -659,6 +660,15 @@ export default function Navbar() {
       {mobilePanel && typeof document !== 'undefined'
         ? createPortal(mobilePanel, document.body)
         : null}
+      <MobileActionBar
+        href={waitlistHref}
+        label={PROJECT_CTA_LABEL}
+        disabled={isWaitlistRoute}
+        suppressed={isMobileMenuOpen}
+        onNavigate={() =>
+          handleNavigate('Mobile action bar', waitlistHref)
+        }
+      />
     </>
   )
 }

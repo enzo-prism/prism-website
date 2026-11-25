@@ -65,6 +65,7 @@ export default function HeroLoopingVideo({
   useEffect(() => {
     const node = containerRef.current
     if (!node || typeof IntersectionObserver === 'undefined') {
+      // No observer (old browsers, tests): mount right away, as before.
       setIsNearViewport(true)
       return
     }

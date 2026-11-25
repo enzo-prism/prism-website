@@ -4,19 +4,14 @@ import { OwnerDecision } from '@/components/prism/owner-decision'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import HomeLogoRail from '@/components/home/HomeLogoRail'
-import HomeAudience from '@/components/home/HomeAudience'
-import HomeFeaturedWork from '@/components/home/HomeFeaturedWork'
 import HomeFaq from '@/components/home/HomeFaq'
-import HomeFounder from '@/components/home/HomeFounder'
 import HomeHashScrollStabilizer from '@/components/home/HomeHashScrollStabilizer'
 import HomeHero from '@/components/home/HomeHero'
 import HomeHowToGetIn from '@/components/home/HomeHowToGetIn'
 import HomeLove from '@/components/home/HomeLove'
 import HomeNumbers from '@/components/home/HomeNumbers'
 import HomePillars from '@/components/home/HomePillars'
-import HomeProducts from '@/components/home/HomeProducts'
 import HomeStories from '@/components/home/HomeStories'
-import HomeWorkWall from '@/components/home/HomeWorkWall'
 import { HOMEPAGE_FINAL_CTA } from '@/components/home/homepage-content'
 import { FinalCta } from '@/components/prism/final-cta'
 
@@ -62,14 +57,14 @@ export default function ClientPage() {
       <Navbar />
       <HomeHashScrollStabilizer />
       <main className="flex-1" id="main-content" tabIndex={-1}>
+        {/* One idea per screen: the promise, who trusts us, the work, the
+            numbers, what we do, what clients say, how we work, how to get
+            in, then the close. */}
         <HomeHero />
         <HomeLogoRail />
-        <HomeFeaturedWork />
         <HomeStories />
-        <HomeWorkWall />
         <HomeNumbers />
         <HomePillars />
-        <HomeAudience />
         <HomeLove />
         <OwnerDecision
           eyebrow="Working with Prism"
@@ -81,9 +76,7 @@ export default function ClientPage() {
             { label: 'Prism Grow for clients', href: '/app' },
           ]}
         />
-        <HomeFounder />
         <HomeHowToGetIn />
-        <HomeProducts />
         <HomeFaq />
         <FinalCta
           location="homepage final cta"

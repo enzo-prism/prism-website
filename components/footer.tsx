@@ -127,7 +127,10 @@ export default function Footer({
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-white/[0.07] bg-background">
+    <footer
+      // Phones: clear the bottom action bar (components/prism/mobile-action-bar.tsx).
+      className="relative isolate overflow-hidden border-t border-white/[0.07] bg-background [html[data-action-bar=on]_&]:pb-[calc(4.75rem+env(safe-area-inset-bottom))] md:[html[data-action-bar=on]_&]:pb-0"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[420px] bg-[radial-gradient(60%_70%_at_50%_100%,oklch(0.66_0.16_258/14%),transparent_70%)]"

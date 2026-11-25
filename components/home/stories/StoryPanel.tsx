@@ -21,6 +21,16 @@ export const STORY_BANDS = [
   'var(--spectrum-violet)',
 ] as const
 
+/**
+ * The band for a story: spread evenly across the spectrum, so three stories
+ * read as red, green and violet (the ends and the middle of the same light).
+ */
+export function storyBand(index: number, total: number) {
+  const last = STORY_BANDS.length - 1
+  const step = total > 1 ? last / (total - 1) : 0
+  return STORY_BANDS[Math.min(last, Math.round(index * step))]
+}
+
 export function storyAnchorId(slug: string) {
   return `story-${slug}`
 }
@@ -90,7 +100,7 @@ function PhoneStatusBar() {
 }
 
 export function StoryPanel({ story, index, total }: StoryPanelProps) {
-  const band = STORY_BANDS[index % STORY_BANDS.length]
+  const band = storyBand(index, total)
   const titleId = `${storyAnchorId(story.slug)}-title`
   const desktop = getCaptureSize(story.desktopImage, 'desktop')
   const mobile = getCaptureSize(story.mobileImage, 'mobile')

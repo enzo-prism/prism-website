@@ -441,7 +441,7 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="#featured-work"]',
+        'a[href="#work"]',
       )
       const secondaryCta =
         hero.querySelector<HTMLAnchorElement>('a[href="/waitlist"]:not([class*="group/status"])')

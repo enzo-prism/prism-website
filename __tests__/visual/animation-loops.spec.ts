@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 test.describe('Hero motion', () => {
-  test('homepage refraction scene, logo rail, and work wall are in motion', async ({
+  test('homepage refraction scene and logo rail are in motion', async ({
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' })
@@ -20,7 +20,7 @@ test.describe('Hero motion', () => {
       true,
     )
 
-    for (const id of ['clients', 'more-work']) {
+    for (const id of ['clients']) {
       await page.locator(`#${id}`).scrollIntoViewIfNeeded()
       const track = page.locator(`#${id} .prism-marquee-track`).first()
       const before = await track.evaluate(

@@ -1,29 +1,24 @@
 import { ArrowRight } from 'lucide-react'
 
 import { HOMEPAGE_TESTIMONIALS } from '@/components/home/homepage-content'
-import { LoveCard, LoveFeaturedNote } from '@/components/home/love/love-cards'
+import {
+  LoveClientCard,
+  LoveFeaturedNote,
+} from '@/components/home/love/love-cards'
 import {
   featuredClientNote,
-  loveColumns,
+  railClientNotes,
 } from '@/components/home/love/love-wall'
-import styles from '@/components/home/love/love.module.css'
-import { InlineWaitlistCta } from '@/components/prism/inline-waitlist-cta'
-import { Marquee } from '@/components/prism/marquee'
 import { Reveal } from '@/components/prism/reveal'
 import { Section, SectionHeader } from '@/components/prism/section'
 import TrackedLink from '@/components/tracked-link'
-import { cn } from '@/lib/utils'
-
-/** Column visibility: two columns on phones and tablets, three on desktop. */
-const COLUMN_VISIBILITY = ['', '', 'hidden lg:block'] as const
 
 /**
- * #love: the wall of love. A pinned client note, then a dense wall of client
- * notes and Instagram comments drifting in three columns (alternating
- * directions and speeds), then the waitlist invitation and the way to the
- * full wall.
- * Server component; the only motion is the CSS marquee, which is static under
- * reduced motion and pauses on hover.
+ * #love: in their words. One pinned client note, then three more from three
+ * different clients, each attributed. Phones swipe the three as a snap rail
+ * (one note per screen); desktop shows them side by side. Still on purpose:
+ * a quote you have to chase is a quote nobody reads. The full wall, with the
+ * Instagram comments, lives on /wall-of-love.
  */
 export default function HomeLove() {
   const { eyebrow, title, description } = HOMEPAGE_TESTIMONIALS
@@ -32,7 +27,7 @@ export default function HomeLove() {
     <Section
       id="love"
       aria-labelledby="home-love-title"
-      className="overflow-hidden py-24 sm:py-32"
+      className="overflow-x-clip py-24 sm:py-32"
     >
       <Reveal>
         <SectionHeader
@@ -50,56 +45,33 @@ export default function HomeLove() {
         </Reveal>
       ) : null}
 
-      <Reveal delay={120} className="mt-10 sm:mt-12">
-        <div
-          role="region"
-          aria-label="Client notes and comments on Prism’s Instagram posts"
-          className={cn(styles.window, 'mask-fade-y')}
+      <Reveal delay={120} className="mt-14 sm:mt-16">
+        <ul
+          aria-label="Client notes"
+          className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-5 pb-2 [scrollbar-width:none] sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-4 lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
         >
-          <div
-            className={cn(
-              styles.vignette,
-              'grid h-full grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3',
-            )}
-          >
-            {loveColumns.map((column, index) => (
-              <div
-                key={index}
-                className={cn(styles.column, COLUMN_VISIBILITY[index])}
-              >
-                <Marquee
-                  vertical
-                  fade={false}
-                  duration={column.duration}
-                  reverse={column.reverse}
-                  gap="1rem"
-                  className="h-full"
-                >
-                  {column.items.map((item) => (
-                    <LoveCard key={item.key} item={item} />
-                  ))}
-                </Marquee>
-              </div>
-            ))}
-          </div>
-        </div>
+          {railClientNotes.map((note) => (
+            <li
+              key={note.key}
+              className="w-[82%] shrink-0 snap-center sm:w-[46%] lg:w-auto"
+            >
+              <LoveClientCard note={note} />
+            </li>
+          ))}
+        </ul>
       </Reveal>
 
-      <div className="mt-12 flex flex-col items-center gap-4 sm:mt-14">
-        <InlineWaitlistCta
-          location="homepage wall of love"
-          title={HOMEPAGE_TESTIMONIALS.nextLine}
-        />
+      <div className="mt-10 flex justify-center sm:mt-12">
         <TrackedLink
           href="/wall-of-love"
           label="see the wall of love"
           location="homepage wall of love"
-          className="group/love inline-flex min-h-10 items-center gap-1.5 rounded-full px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          className="group/love inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-medium text-muted-foreground transition-colors duration-(--dur-ui) hover:text-foreground focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
           See the Wall of Love
           <ArrowRight
             aria-hidden="true"
-            className="size-4 transition-transform duration-200 group-hover/love:translate-x-0.5"
+            className="size-4 transition-transform duration-(--dur-ui) ease-(--ease-out) group-hover/love:translate-x-0.5"
           />
         </TrackedLink>
       </div>
