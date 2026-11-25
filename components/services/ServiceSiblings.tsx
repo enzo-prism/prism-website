@@ -56,6 +56,15 @@ const SERVICE_MARKS: Record<
   ],
 }
 
+const SIBLING_DESCRIPTIONS: Record<PrismServiceId, string> = {
+  website:
+    'A sharp website is the base. Pair it with content, ads, or AEO to bring the right buyers to it.',
+  aeo: 'AI engines cite clear sites and consistent stories. Pair AEO with websites, content, or ads.',
+  content:
+    'Turn attention into booked inquiries. Pair Content with a sharp site, tracked ads, or AEO.',
+  ads: 'Clearer landing pages and real proof lower ad costs. Pair Ads with websites, content, or AEO.',
+}
+
 /**
  * Cross-links at the end of each service page: the three other Prism
  * services as large "also from Prism" cards. The current service is left out.
@@ -70,7 +79,7 @@ export function ServiceSiblings({ current }: { current: PrismServiceId }) {
           id="service-siblings-title"
           eyebrow="Prism services"
           title="also from Prism."
-          description="Four disciplines, one senior team. Built to compound together."
+          description={SIBLING_DESCRIPTIONS[current]}
         />
       </Reveal>
       {/* Three siblings: a row of three on desktop; on tablets the last card

@@ -51,11 +51,43 @@ const metricSources = Array.from(
   ),
 )
 
+const WORK_GROUP_CONTEXT: Record<
+  (typeof WORK_GROUPS)[number]['key'],
+  { note: string; linkLabel: string; href: string }
+> = {
+  dental: {
+    note: 'Dental practices built for patient clarity, local search, and easy mobile booking.',
+    linkLabel: 'Why dental practices love Prism',
+    href: '/why-dental-practices-love-prism',
+  },
+  software: {
+    note: 'Product-led sites and crisp positioning built for software and AI teams.',
+    linkLabel: 'Explore Prism AEO',
+    href: '/aeo',
+  },
+  founders: {
+    note: 'Authority sites and clear inquiry paths for founders, events, and advisory firms.',
+    linkLabel: 'Why consulting firms love Prism',
+    href: '/why-consulting-companies-love-prism',
+  },
+  community: {
+    note: 'Mission-driven sites built for donor clarity, community trust, and easy participation.',
+    linkLabel: 'Explore Website Design',
+    href: '/website-design',
+  },
+  retail: {
+    note: 'Local shops, specialty retail, and destination sites built for mobile visitors.',
+    linkLabel: 'Why local shop owners love Prism',
+    href: '/why-local-shop-owners-love-prism',
+  },
+}
+
 const filters = WORK_GROUPS.map((group) => ({
   key: group.key,
   label: group.label,
   count: galleryStudies.filter((study) => getWorkGroup(study) === group.key)
     .length,
+  context: WORK_GROUP_CONTEXT[group.key],
 }))
 
 const railStudies = CURRENT_CASE_STUDIES.flatMap((study) => {

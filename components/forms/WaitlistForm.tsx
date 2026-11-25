@@ -53,14 +53,22 @@ import {
   WAITLIST_FORM_SUBJECT,
   WAITLIST_NO_WEBSITE_FIELD,
   WAITLIST_NO_WEBSITE_VALUE,
+  WAITLIST_RECEIPT_STORAGE_KEY,
   WAITLIST_STEPS,
   WAITLIST_THANK_YOU_PATH,
+  WAITLIST_TIMING_NOTES,
   WAITLIST_TIMING_OPTIONS,
+  getWaitlistAboutHint,
+  getWaitlistFocusHint,
+  getWaitlistGoalStarters,
+  getWaitlistGoalsPlaceholder,
+  getWaitlistLinksHint,
   isWaitlistFocus,
   isWaitlistFocusChoice,
   type WaitlistFocus,
   type WaitlistFocusChoice,
   type WaitlistStepId,
+  type WaitlistSubmissionReceipt,
   type WaitlistTiming,
 } from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
@@ -225,6 +233,18 @@ function clearDraft() {
   }
 }
 
+function writeReceipt(receipt: Omit<WaitlistSubmissionReceipt, 'savedAt'>) {
+  if (typeof window === 'undefined') return
+  try {
+    window.sessionStorage.setItem(
+      WAITLIST_RECEIPT_STORAGE_KEY,
+      JSON.stringify({ ...receipt, savedAt: Date.now() }),
+    )
+  } catch {
+    // Storage may be unavailable (private mode); /waitlist/thank-you falls back cleanly.
+  }
+}
+
 function FieldError({ error, id }: { error: string; id: string }) {
   if (!error) return null
   return (
@@ -288,6 +308,7 @@ export default function WaitlistForm({
   }))
   const [stepError, setStepError] = useState<string | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [focusTouched, setFocusTouched] = useState(false)
 
   const step = WAITLIST_STEPS[stepIndex]
   const stepId: WaitlistStepId = step.id
@@ -404,6 +425,7 @@ export default function WaitlistForm({
   )
 
   const toggleFocus = (value: WaitlistFocusChoice) => {
+    setFocusTouched(true)
     if (answers.focus.includes(value)) {
       update('focus', answers.focus.filter((item) => item !== value))
       return
@@ -497,6 +519,11 @@ export default function WaitlistForm({
           lead_type: WAITLIST_FORM_NAME,
           transaction_id: submissionId,
           conversionMode: 'immediate',
+        })
+        writeReceipt({
+          firstName: answers.first_name.trim(),
+          focus: answers.focus,
+          timing: answers.start_timing || undefined,
         })
         clearDraft()
         router.push(WAITLIST_THANK_YOU_PATH)
@@ -663,6 +690,31 @@ export default function WaitlistForm({
     resyncWebsiteRule(event)
   }
 
+  const applyGoalStarter = (starter: string) => {
+    const current = answers.goals.trim()
+    let nextValue: string
+    if (!current) {
+      nextValue = starter
+    } else if (current.includes(starter)) {
+      nextValue = current
+        .replace(starter, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim()
+    } else {
+      nextValue = `${current} ${starter}`
+    }
+    update('goals', nextValue)
+    const goalsField = formRef.current?.elements.namedItem('goals')
+    if (goalsField instanceof HTMLTextAreaElement) {
+      goalsField.value = nextValue
+      syncFieldValidity(goalsField)
+      handleInput({
+        currentTarget: goalsField,
+        target: goalsField,
+      } as unknown as FormEvent<HTMLTextAreaElement>)
+    }
+  }
+
   // A blur error grows the step above the footer. If that happened between
   // mousedown and mouseup on Continue/Back or the no-website label, the target
   // would move out from under the pointer and the click would be lost. Keeping focus
@@ -797,6 +849,14 @@ export default function WaitlistForm({
             )
           })}
           <FieldError id="waitlist-start_timing-error" error={stepError ?? ''} />
+          {answers.start_timing ? (
+            <p
+              aria-live="polite"
+              className="mt-1 rounded-xl border border-white/[0.06] bg-white/[0.025] px-4 py-2.5 text-[13px] leading-5 text-muted-foreground"
+            >
+              {WAITLIST_TIMING_NOTES[answers.start_timing]}
+            </p>
+          ) : null}
         </fieldset>
       )
       break
@@ -814,6 +874,8 @@ export default function WaitlistForm({
                 name="first_name"
                 required
                 autoComplete="given-name"
+                autoCapitalize="words"
+                enterKeyHint="next"
                 value={answers.first_name}
                 onChange={(event) => update('first_name', event.target.value)}
                 onBlur={handleValidatedBlur}
@@ -837,6 +899,8 @@ export default function WaitlistForm({
                 name="last_name"
                 required
                 autoComplete="family-name"
+                autoCapitalize="words"
+                enterKeyHint="next"
                 value={answers.last_name}
                 onChange={(event) => update('last_name', event.target.value)}
                 onBlur={handleValidatedBlur}
@@ -862,6 +926,10 @@ export default function WaitlistForm({
               inputMode="email"
               required
               autoComplete="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="next"
               value={answers.email}
               onChange={(event) => update('email', event.target.value)}
               onBlur={handleValidatedBlur}
@@ -883,6 +951,7 @@ export default function WaitlistForm({
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              enterKeyHint="done"
               value={answers.phone}
               onChange={(event) => update('phone', event.target.value)}
               className={fieldClassName}
@@ -905,6 +974,10 @@ export default function WaitlistForm({
               type="url"
               inputMode="url"
               autoComplete="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="next"
               value={answers.link_website}
               onChange={(event) => update('link_website', event.target.value)}
               onBlur={handleValidatedBlur}
@@ -953,6 +1026,10 @@ export default function WaitlistForm({
               type="url"
               inputMode="url"
               autoComplete="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="next"
               value={answers.link_social}
               onChange={(event) => update('link_social', event.target.value)}
               onBlur={handleValidatedBlur}
@@ -971,6 +1048,10 @@ export default function WaitlistForm({
               type="url"
               inputMode="url"
               autoComplete="url"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="done"
               value={answers.link_other}
               onChange={(event) => update('link_other', event.target.value)}
               onBlur={handleValidatedBlur}
@@ -982,7 +1063,8 @@ export default function WaitlistForm({
         </fieldset>
       )
       break
-    case 'goals':
+    case 'goals': {
+      const goalStarters = getWaitlistGoalStarters(answers.focus)
       stepBody = (
         <fieldset className="grid min-w-0 gap-5">
           <legend className="sr-only">{step.title}</legend>
@@ -1001,11 +1083,39 @@ export default function WaitlistForm({
               onInput={handleValidatedInput}
               aria-invalid={Boolean(getError('goals'))}
               aria-describedby={describedBy('goals')}
-              placeholder="A sentence or two is plenty."
+              placeholder={getWaitlistGoalsPlaceholder(answers.focus)}
               className="min-h-[8.5rem] rounded-xl bg-white/[0.02] px-4 py-3 leading-7 sm:text-[15px]"
               data-step-focus=""
             />
             <FieldError id="waitlist-goals-error" error={getError('goals')} />
+            <div className="pt-1">
+              <p className="text-[12px] text-subtle">Quick starters</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {goalStarters.map((starter) => {
+                  const selected = answers.goals.includes(starter)
+                  return (
+                    <button
+                      key={starter}
+                      type="button"
+                      aria-pressed={selected}
+                      onMouseDown={keepFieldFocus}
+                      onClick={() => applyGoalStarter(starter)}
+                      className={cn(
+                        'inline-flex min-h-9 items-center gap-1.5 rounded-xl border px-3 py-1.5 text-left text-[13px] leading-5 transition-colors focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50',
+                        selected
+                          ? 'border-foreground/40 bg-white/[0.08] text-foreground'
+                          : 'border-white/[0.1] bg-white/[0.02] text-muted-foreground hover:border-white/20 hover:bg-white/[0.05] hover:text-foreground',
+                      )}
+                    >
+                      {selected ? (
+                        <Check aria-hidden="true" className="size-3 shrink-0" />
+                      ) : null}
+                      <span>{starter}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           </div>
           {summary.length > 0 ? (
             <div className="flex min-w-0 items-start justify-between gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] py-3 pl-4 pr-2">
@@ -1028,25 +1138,38 @@ export default function WaitlistForm({
         </fieldset>
       )
       break
+    }
     default: {
       const exhaustive: never = stepId
       stepBody = exhaustive
     }
   }
 
+  const firstName = answers.first_name.trim()
   const stepHint: ReactNode =
     stepId === 'focus' ? (
-      'Pick any that apply.'
+      getWaitlistFocusHint({
+        focus: answers.focus,
+        isPrefilledUntouched: initialFocus.length > 0 && !focusTouched,
+      })
     ) : stepId === 'timing' ? (
       <>
         {CAPACITY_MESSAGE.nextIntakeLead} <WaitlistIntakeMonth />.
       </>
+    ) : stepId === 'about' ? (
+      getWaitlistAboutHint(answers.focus)
     ) : stepId === 'links' ? (
       <span id="waitlist-links-hint">
-        {answers.no_website
-          ? 'No problem, that’s what we build. Add a social profile if you have one.'
-          : 'One link is enough.'}
+        {getWaitlistLinksHint({
+          firstName,
+          focus: answers.focus,
+          noWebsite: answers.no_website,
+        })}
       </span>
+    ) : stepId === 'goals' ? (
+      firstName
+        ? `Last step, ${firstName}. A sentence or two is plenty.`
+        : 'Last step. A sentence or two is plenty.'
     ) : null
 
   return (

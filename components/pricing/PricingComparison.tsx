@@ -51,6 +51,10 @@ function ComparisonCell({ value }: { value: ComparisonValue }) {
 export function PricingComparison({ columns, rows }: PricingComparisonProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-8 bg-gradient-to-l from-card via-card/70 to-transparent lg:hidden"
+      />
       <Table className="min-w-[46rem] table-fixed">
         <caption className="sr-only">
           What each Prism offer includes. No public prices; every plan is scoped from

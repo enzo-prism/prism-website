@@ -473,6 +473,7 @@ Use the prism-writing skill, `prism-brand` pack.
 - No guarantees of growth, rankings, or results. Verified numbers only, with
   their source and date nearby.
 - One CTA per page: "Join the waitlist".
+- Dynamic flow copy adapts to user context without adding clutter: the waitlist reflects URL prefills, chosen timing, first name, and one-tap goal starters; `/waitlist/thank-you` greets recent same-tab applicants via `sessionStorage` without putting PII in URLs; `/case-studies` surfaces an industry context strip on filter selection; `/faq` offers quick-search chips and a mobile topic-jump strip; service pages carry `?focus=` through the navbar CTA and tailor `ServiceSiblings` descriptions.
 
 ## Do
 

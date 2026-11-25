@@ -32,7 +32,11 @@ import {
   NAV_SERVICE_ITEMS,
 } from '@/lib/constants'
 import type { NavItem, NavServiceItem } from '@/lib/constants'
-import { WAITLIST_CTA } from '@/lib/waitlist'
+import {
+  getWaitlistHref,
+  WAITLIST_CTA,
+  type WaitlistFocus,
+} from '@/lib/waitlist'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 
@@ -50,6 +54,27 @@ const SERVICE_ICONS: Record<NavServiceItem['icon'], typeof LayoutTemplate> = {
   content: Camera,
   ads: Megaphone,
   aeo: MessageSquareQuote,
+}
+
+const SERVICE_WAITLIST_CONTEXT: ReadonlyArray<{
+  path: string
+  focus: WaitlistFocus
+  label: string
+}> = [
+  { path: '/aeo', focus: 'aeo', label: 'AEO' },
+  { path: '/website-design', focus: 'website', label: 'Website Design' },
+  { path: '/content', focus: 'content', label: 'Content' },
+  { path: '/ads', focus: 'ads', label: 'Ads' },
+]
+
+function getActiveServiceContext(pathname: string | null) {
+  if (!pathname) return null
+  return (
+    SERVICE_WAITLIST_CONTEXT.find(
+      (entry) =>
+        pathname === entry.path || pathname.startsWith(`${entry.path}/`),
+    ) ?? null
+  )
 }
 
 function getCaseStudyBreadcrumbs(
@@ -111,9 +136,11 @@ function DesktopLink({
 
 function ServicesMenu({
   pathname,
+  waitlistHref,
   onNavigate,
 }: {
   pathname: string | null
+  waitlistHref: string
   onNavigate: (label: string, href: string) => void
 }) {
   const active = isServicesActive(pathname)
@@ -175,9 +202,9 @@ function ServicesMenu({
           </ul>
           <NavigationMenuLink asChild>
             <Link
-              href={WAITLIST_CTA.href}
+              href={waitlistHref}
               onClick={() =>
-                onNavigate('Services menu waitlist', WAITLIST_CTA.href)
+                onNavigate('Services menu waitlist', waitlistHref)
               }
               // items-stretch and gap-0 undo the link primitive's
               // items-center and gap-1.5: the card reads left-aligned, spaced
@@ -242,6 +269,10 @@ export default function Navbar() {
   const isHome = pathname === '/'
   // The waitlist routes are the destination; no header CTA back to them.
   const isWaitlistRoute = pathname?.startsWith('/waitlist') ?? false
+  const activeService = getActiveServiceContext(pathname)
+  const waitlistHref = activeService
+    ? getWaitlistHref(activeService.focus)
+    : WAITLIST_CTA.href
   const caseStudyBreadcrumbs = getCaseStudyBreadcrumbs(pathname)
 
   useEffect(() => {
@@ -423,16 +454,26 @@ export default function Navbar() {
         <ul className="mt-3 grid grid-cols-2 gap-2">
           {NAV_MENU_SERVICE_ITEMS.map((item) => {
             const Icon = SERVICE_ICONS[item.icon]
+            const active = isNavItemActive(pathname, item.href)
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  aria-current={active ? 'page' : undefined}
                   onClick={() => handleNavigate(item.label, item.href)}
-                  className="flex min-h-12 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-white/[0.06]"
+                  className={cn(
+                    'flex min-h-12 items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium text-foreground transition-colors',
+                    active
+                      ? 'border-white/25 bg-white/[0.08]'
+                      : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06]',
+                  )}
                 >
                   <Icon
                     aria-hidden="true"
-                    className="size-4 text-muted-foreground"
+                    className={cn(
+                      'size-4',
+                      active ? 'text-foreground' : 'text-muted-foreground',
+                    )}
                   />
                   {item.label}
                 </Link>
@@ -461,13 +502,22 @@ export default function Navbar() {
             <p className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="prism-live-dot" aria-hidden="true" />
               <span>
-                Fully booked. Waitlist open for <WaitlistIntakeMonth />.
+                {activeService ? (
+                  <>
+                    Interested in {activeService.label}? Waitlist open for{' '}
+                    <WaitlistIntakeMonth />.
+                  </>
+                ) : (
+                  <>
+                    Fully booked. Waitlist open for <WaitlistIntakeMonth />.
+                  </>
+                )}
               </span>
             </p>
             <Link
-              href={WAITLIST_CTA.href}
+              href={waitlistHref}
               onClick={() =>
-                handleNavigate(PROJECT_CTA_LABEL, WAITLIST_CTA.href)
+                handleNavigate(PROJECT_CTA_LABEL, waitlistHref)
               }
               className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-[15px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
@@ -519,7 +569,11 @@ export default function Navbar() {
                   pathname={pathname}
                   onNavigate={handleNavigate}
                 />
-                <ServicesMenu pathname={pathname} onNavigate={handleNavigate} />
+                <ServicesMenu
+                  pathname={pathname}
+                  waitlistHref={waitlistHref}
+                  onNavigate={handleNavigate}
+                />
                 {NAV_ITEMS.slice(1).map((item) => (
                   <DesktopLink
                     key={item.href}
@@ -544,9 +598,9 @@ export default function Navbar() {
                 </span>
               ) : (
                 <Link
-                  href={WAITLIST_CTA.href}
+                  href={waitlistHref}
                   onClick={() =>
-                    handleNavigate('Header waitlist', WAITLIST_CTA.href)
+                    handleNavigate('Header waitlist', waitlistHref)
                   }
                   data-testid="navbar-cta"
                   className="group/cta inline-flex h-9 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-medium text-primary-foreground shadow-[0_1px_0_0_oklch(1_0_0/40%)_inset,0_8px_24px_-12px_oklch(1_0_0/50%)] transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"

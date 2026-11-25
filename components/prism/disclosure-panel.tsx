@@ -75,14 +75,19 @@ export function DisclosurePanel({
             </span>
           </span>
         )}
-        <span className="flex shrink-0 items-center gap-3">
+        <span className="flex shrink-0 items-center gap-2.5 sm:gap-3">
           {pillMeta ? (
-            <span className="hidden rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-subtle sm:inline-flex">
+            <span
+              className={cn(
+                'rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-subtle',
+                openLabel ? 'hidden sm:inline-flex' : 'inline-flex',
+              )}
+            >
               {pillMeta}
             </span>
           ) : null}
           {openLabel ? (
-            <span className="hidden rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-muted-foreground sm:inline-flex">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground sm:px-3 sm:py-1">
               <span className="group-open/disclosure:hidden">{openLabel}</span>
               <span className="hidden group-open/disclosure:inline">
                 {closeLabel ?? 'Close'}

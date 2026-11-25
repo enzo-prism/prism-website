@@ -401,4 +401,22 @@ describe('Navbar', () => {
 
     expect(screen.getByTestId('breadcrumbs-mock')).toBeInTheDocument()
   })
+
+  it('carries service focus into the waitlist CTA on service routes', () => {
+    mockUsePathname.mockReturnValue('/aeo')
+    render(<Navbar />)
+
+    const cta = screen.getByTestId('navbar-cta')
+    expect(cta).toHaveAttribute('href', '/waitlist?focus=aeo')
+
+    fireEvent.click(screen.getByRole('button', { name: /open menu/i }))
+    const mobileNav = screen.getByRole('navigation', { name: 'Mobile' })
+    expect(
+      within(mobileNav).getByRole('link', { name: /^aeo$/i }),
+    ).toHaveAttribute('aria-current', 'page')
+    expect(within(mobileNav).getByText(/Interested in AEO\?/i)).toBeInTheDocument()
+    expect(
+      within(mobileNav).getByRole('link', { name: /tell us about your business/i }),
+    ).toHaveAttribute('href', '/waitlist?focus=aeo')
+  })
 })

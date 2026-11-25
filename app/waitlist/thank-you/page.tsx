@@ -20,6 +20,7 @@ import WaitlistIntakeStrip from '@/components/waitlist/WaitlistIntakeStrip'
 import WaitlistNextSteps, {
   type WaitlistNextStep,
 } from '@/components/waitlist/WaitlistNextSteps'
+import WaitlistThankYouPersonalization from '@/components/waitlist/WaitlistThankYouPersonalization'
 import {
   getWaitlistProofImage,
   WAITLIST_PROOF_SITES,
@@ -115,9 +116,7 @@ export default function WaitlistThankYouPage() {
             <h1 className="text-display text-gradient prism-rise mt-8 max-w-[12ch] text-balance pb-2 [--rise-delay:120ms]">
               you&rsquo;re on the list.
             </h1>
-            <p className="text-lead prism-rise mt-5 max-w-[34rem] text-pretty text-muted-foreground [--rise-delay:200ms]">
-              Thanks for applying. Here is what happens next.
-            </p>
+            <WaitlistThankYouPersonalization />
             <div className="prism-rise mt-10 w-full max-w-xl [--rise-delay:280ms]">
               <WaitlistIntakeStrip />
               <p className="mt-3 text-pretty text-[13px] leading-5 text-subtle">

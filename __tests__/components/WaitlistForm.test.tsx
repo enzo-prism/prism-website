@@ -5,6 +5,7 @@ import { PRISM_SERVICES } from '@/lib/services'
 import {
   getWaitlistIntakeMonth,
   WAITLIST_DRAFT_STORAGE_KEY,
+  WAITLIST_RECEIPT_STORAGE_KEY,
 } from '@/lib/waitlist'
 
 const pushMock = jest.fn()
@@ -623,5 +624,69 @@ describe('WaitlistForm (stepped flow)', () => {
     await advance()
     expectStep(4)
     expect(screen.getByLabelText(/^website$/i)).toHaveValue('example.com')
+  })
+
+  it('adapts microcopy across steps, supports one-tap goal starters, and writes a session receipt', async () => {
+    fetchSpy.mockResolvedValue(createMockResponse(true))
+    render(<WaitlistForm initialFocus={['aeo']} />)
+
+    // Step 1 acknowledges the URL prefill warmly.
+    expect(
+      screen.getByText(/AEO is selected\. Add anything else, or tap Continue\./i),
+    ).toBeInTheDocument()
+
+    // Step 2 responds to the chosen start window without duplicating the intake lead.
+    await advance()
+    fireEvent.click(screen.getByRole('radio', { name: /as soon as possible/i }))
+    expect(
+      screen.getByText(/prioritize urgent launches/i),
+    ).toBeInTheDocument()
+
+    // Step 3 connects contact details to the chosen service.
+    await advance()
+    expect(screen.getByText(/reply about your AEO inquiry/i)).toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText(/first name/i), {
+      target: { value: 'Jordan' },
+    })
+    fireEvent.change(screen.getByLabelText(/last name/i), {
+      target: { value: 'Ramirez' },
+    })
+    fireEvent.change(screen.getByLabelText(/^email$/i), {
+      target: { value: 'jordan@example.com' },
+    })
+
+    // Step 4 greets by first name and explains what Prism checks for AEO.
+    await advance()
+    expect(
+      screen.getByText(/Nice to meet you, Jordan\. One link lets us check how AI engines/i),
+    ).toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText(/^website$/i), {
+      target: { value: 'https://example.com' },
+    })
+
+    // Step 5 greets by name and lets mobile visitors tap a starter chip to populate goals.
+    await advance()
+    expect(
+      screen.getByText(/Last step, Jordan\. A sentence or two is plenty\./i),
+    ).toBeInTheDocument()
+    const starter = screen.getByRole('button', {
+      name: /Show up in ChatGPT & Perplexity\./i,
+    })
+    fireEvent.click(starter)
+    expect(starter).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByLabelText(/your goals/i)).toHaveValue(
+      'Show up in ChatGPT & Perplexity.',
+    )
+
+    fireEvent.click(submitButton())
+    await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/waitlist/thank-you'))
+
+    const receiptRaw = window.sessionStorage.getItem(WAITLIST_RECEIPT_STORAGE_KEY)
+    expect(receiptRaw).not.toBeNull()
+    expect(JSON.parse(receiptRaw as string)).toMatchObject({
+      firstName: 'Jordan',
+      focus: ['aeo'],
+      timing: 'asap',
+    })
   })
 })

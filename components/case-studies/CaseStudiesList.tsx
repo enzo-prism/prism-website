@@ -1,15 +1,24 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 
+export type WorkFilterContext = {
+  note: string
+  linkLabel: string
+  href: string
+}
+
 export type WorkFilter = {
   key: string
   label: string
   count: number
+  context?: WorkFilterContext
 }
 
 export type WorkGalleryItem = {
@@ -86,6 +95,22 @@ export default function CaseStudiesList({
   const tabs = [{ key: ALL, label: 'All', count: items.length }, ...filters].filter(
     (tab) => tab.count > 0,
   )
+  const activeFilter = filters.find((filter) => filter.key === active)
+
+  const scrollChipIntoView = (key: string) => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    const chip = scroller.querySelector<HTMLElement>(`[data-work-tab="${key}"]`)
+    if (!chip || typeof chip.scrollIntoView !== 'function') return
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    chip.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      inline: 'center',
+      block: 'nearest',
+    })
+  }
 
   return (
     <Tabs
@@ -93,33 +118,64 @@ export default function CaseStudiesList({
       onValueChange={(value) => {
         setActive(value)
         setInteracted(true)
+        scrollChipIntoView(value)
         trackNavigation('case_study_filter', value)
       }}
-      className="gap-8 sm:gap-10"
+      className="gap-6 sm:gap-8"
     >
-      <div
-        ref={scrollerRef}
-        onScroll={measure}
-        style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}
-        className="-mx-5 overflow-x-auto overscroll-x-contain px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-      >
-        <TabsList
-          aria-label="Filter work by industry"
-          className="w-max rounded-full border-white/[0.08] bg-white/[0.03] p-1"
+      <div className="flex flex-col gap-4">
+        <div
+          ref={scrollerRef}
+          onScroll={measure}
+          style={mask ? { maskImage: mask, WebkitMaskImage: mask } : undefined}
+          className="-mx-5 overflow-x-auto overscroll-x-contain px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
         >
-          {tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.key}
-              value={tab.key}
-              className="h-10 gap-2 px-4 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0"
+          <TabsList
+            aria-label="Filter work by industry"
+            className="w-max rounded-full border-white/[0.08] bg-white/[0.03] p-1"
+          >
+            {tabs.map((tab) => (
+              <TabsTrigger
+                key={tab.key}
+                value={tab.key}
+                data-work-tab={tab.key}
+                className="h-10 gap-2 px-4 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-offset-0"
+              >
+                {tab.label}
+                <span className="font-mono text-[11px] tabular-nums text-subtle">
+                  {tab.count}
+                </span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+
+        {activeFilter?.context ? (
+          <div
+            aria-live="polite"
+            className="flex flex-col gap-2 rounded-2xl border border-white/[0.08] bg-white/[0.025] px-4 py-3.5 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5"
+          >
+            <p className="text-pretty text-muted-foreground">
+              {activeFilter.context.note}
+            </p>
+            <Link
+              href={activeFilter.context.href}
+              onClick={() =>
+                trackNavigation(
+                  `case_study_filter_guide_${activeFilter.key}`,
+                  activeFilter.context!.href,
+                )
+              }
+              className="group/guide inline-flex min-h-9 shrink-0 items-center gap-1.5 font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
-              {tab.label}
-              <span className="font-mono text-[11px] tabular-nums text-subtle">
-                {tab.count}
-              </span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
+              <span>{activeFilter.context.linkLabel}</span>
+              <ArrowRight
+                aria-hidden="true"
+                className="size-3.5 transition-transform duration-200 group-hover/guide:translate-x-0.5 motion-reduce:transition-none"
+              />
+            </Link>
+          </div>
+        ) : null}
       </div>
 
       {tabs.map((tab) => {

@@ -7,6 +7,7 @@ import {
   getWaitlistIntakeDate,
   getWaitlistIntakeMonth,
   toWaitlistIntakeMonth,
+  WAITLIST_RECEIPT_STORAGE_KEY,
 } from '@/lib/waitlist'
 
 jest.mock('next/navigation', () => ({
@@ -291,5 +292,30 @@ describe('/waitlist/thank-you', () => {
       'href',
       '/',
     )
+  })
+
+  it('personalizes the thank-you greeting from a recent same-tab receipt without leaking prices', () => {
+    window.sessionStorage.setItem(
+      WAITLIST_RECEIPT_STORAGE_KEY,
+      JSON.stringify({
+        firstName: 'Jordan',
+        focus: ['aeo', 'website'],
+        timing: 'asap',
+        savedAt: Date.now(),
+      }),
+    )
+
+    const { container } = render(<WaitlistThankYouPage />)
+
+    expect(
+      screen.getByText(
+        /Thanks, Jordan\. Your AEO and Website Design note is with Enzo and the team\./i,
+      ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /see how Prism AEO works/i }),
+    ).toHaveAttribute('href', '/aeo')
+    expect(container.textContent).not.toMatch(/join the waitlist/i)
+    window.sessionStorage.clear()
   })
 })

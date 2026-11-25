@@ -283,3 +283,188 @@ export const WAITLIST_NO_WEBSITE_VALUE = 'yes'
 
 export const WAITLIST_DRAFT_STORAGE_KEY = 'prism_waitlist_draft_v1'
 export const WAITLIST_DRAFT_TTL_MS = 24 * 60 * 60 * 1000
+
+/**
+ * Ephemeral confirmation receipt (2026-11-25): stored in same-tab
+ * sessionStorage right before redirecting to /waitlist/thank-you so the
+ * confirmation page can greet the visitor personally without putting personal
+ * details in the URL, logs, or analytics.
+ */
+export const WAITLIST_RECEIPT_STORAGE_KEY = 'prism_waitlist_receipt_v1'
+export const WAITLIST_RECEIPT_TTL_MS = 60 * 60 * 1000
+
+export type WaitlistSubmissionReceipt = {
+  firstName: string
+  focus: WaitlistFocusChoice[]
+  timing?: WaitlistTiming
+  savedAt: number
+}
+
+const FOCUS_LABELS: Record<WaitlistFocusChoice, string> = {
+  aeo: 'AEO',
+  website: 'Website Design',
+  content: 'Content',
+  ads: 'Ads',
+  [WAITLIST_FOCUS_NOT_SURE]: 'Not sure yet',
+}
+
+/** Join selected service focus labels in natural English ("AEO and Website Design"). */
+export function formatWaitlistFocusLabels(
+  focus: readonly WaitlistFocusChoice[],
+): string {
+  const labels = focus
+    .filter(isWaitlistFocus)
+    .map((value) => FOCUS_LABELS[value])
+  if (labels.length === 0) return ''
+  if (labels.length === 1) return labels[0]
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`
+  return `${labels.slice(0, -1).join(', ')}, and ${labels[labels.length - 1]}`
+}
+
+/** Short reassurance shown right after the visitor picks a start window. */
+export const WAITLIST_TIMING_NOTES: Record<WaitlistTiming, string> = {
+  asap: 'Got it. We prioritize urgent launches as soon as the next spot opens.',
+  '1_3_months': 'Great window. Gives us time to scope cleanly ahead of launch.',
+  '3_6_months':
+    'Smart to plan ahead. You will be early in line when your window opens.',
+  '6_plus_months':
+    'No rush at all. We will keep your note warm for when you are ready.',
+  exploring:
+    'Zero pressure. Share your links and we will send back honest next steps.',
+}
+
+/** Focus-matched one-tap starter chips for Step 5 (especially helpful on mobile). */
+export function getWaitlistGoalStarters(
+  focus: readonly WaitlistFocusChoice[],
+): readonly string[] {
+  const services = focus.filter(isWaitlistFocus)
+  if (services.length === 1) {
+    switch (services[0]) {
+      case 'aeo':
+        return [
+          'Show up in ChatGPT & Perplexity.',
+          'Fix how AI describes our business.',
+          'Audit our AI search visibility.',
+        ]
+      case 'website':
+        return [
+          'Refresh an outdated website.',
+          'Get more inquiries on mobile.',
+          'Launch a flagship brand site.',
+        ]
+      case 'content':
+        return [
+          'Build steady short-form video.',
+          'Show real client proof online.',
+          'Grow founder visibility.',
+        ]
+      case 'ads':
+        return [
+          'Bring in more qualified calls.',
+          'Cut wasted ad spend.',
+          'Launch tracked Google & Meta ads.',
+        ]
+    }
+  }
+  return [
+    'Bring in more qualified inquiries.',
+    'Modernize how we look on mobile.',
+    'Help us pick where to focus first.',
+  ]
+}
+
+/** Dynamic textarea placeholder tailored to the visitor's chosen focus. */
+export function getWaitlistGoalsPlaceholder(
+  focus: readonly WaitlistFocusChoice[],
+): string {
+  const services = focus.filter(isWaitlistFocus)
+  if (services.length === 1) {
+    switch (services[0]) {
+      case 'aeo':
+        return 'e.g. Show up when local buyers ask ChatGPT or Perplexity who to hire.'
+      case 'website':
+        return 'e.g. Modernize our look and make it effortless for mobile visitors to inquire.'
+      case 'content':
+        return 'e.g. Consistent short-form video and client stories without losing our week.'
+      case 'ads':
+        return 'e.g. Steadier qualified calls from Google and Meta without wasted budget.'
+    }
+  }
+  return 'e.g. Tell us what feels stuck right now: traffic, leads, or how the business looks online.'
+}
+
+/** Dynamic links-step hint reflecting the visitor's name and chosen focus. */
+export function getWaitlistLinksHint({
+  firstName,
+  focus,
+  noWebsite,
+}: {
+  firstName: string
+  focus: readonly WaitlistFocusChoice[]
+  noWebsite: boolean
+}): string {
+  const name = firstName.trim()
+  if (noWebsite) {
+    return name
+      ? `No problem, ${name}. That’s what we build. Add a social profile if you have one.`
+      : 'No problem, that’s what we build. Add a social profile if you have one.'
+  }
+
+  const greeting = name ? `Nice to meet you, ${name}. ` : ''
+  const services = focus.filter(isWaitlistFocus)
+  if (services.includes('aeo') && services.length === 1) {
+    return `${greeting}One link lets us check how AI engines currently describe your business.`
+  }
+  if (services.includes('ads') && services.length === 1) {
+    return `${greeting}One link lets us see where your ad clicks land today.`
+  }
+  if (services.includes('content') && services.length === 1) {
+    return `${greeting}Share your site or main social profile so we can see your current voice.`
+  }
+  if (services.includes('website') && services.length === 1) {
+    return `${greeting}One link lets us look through your current site before we reply.`
+  }
+  return `${greeting}One link is enough so we can review your business before replying.`
+}
+
+/** Dynamic focus-step hint acknowledging URL prefills or active selections. */
+export function getWaitlistFocusHint({
+  focus,
+  isPrefilledUntouched,
+}: {
+  focus: readonly WaitlistFocusChoice[]
+  isPrefilledUntouched: boolean
+}): string {
+  if (focus.length === 0) return 'Pick any that apply.'
+  if (focus.includes(WAITLIST_FOCUS_NOT_SURE)) {
+    return 'Good call. Share a few details and we will suggest where to start.'
+  }
+  const services = focus.filter(isWaitlistFocus)
+  const formatted = formatWaitlistFocusLabels(services)
+  if (isPrefilledUntouched) {
+    return services.length === 1
+      ? `${formatted} is selected. Add anything else, or tap Continue.`
+      : `${formatted} are selected. Adjust anytime, or tap Continue.`
+  }
+  if (services.length === 1) {
+    return `${formatted} selected. Add another discipline, or tap Continue.`
+  }
+  if (services.length === 2) {
+    return `Great mix. ${formatted} compound well under one team.`
+  }
+  return 'Full stack selected. One senior team handles every piece together.'
+}
+
+/** Dynamic about-step hint linking contact details directly to what they asked for. */
+export function getWaitlistAboutHint(
+  focus: readonly WaitlistFocusChoice[],
+): string {
+  const services = focus.filter(isWaitlistFocus)
+  if (services.length === 1) {
+    return `Used only by Enzo and the Prism team to reply about your ${FOCUS_LABELS[services[0]]} inquiry.`
+  }
+  if (services.length > 1) {
+    return 'Used only by Enzo and the Prism team to reply about your project.'
+  }
+  return 'Used only by Enzo and the Prism team to reply personally. No spam, ever.'
+}

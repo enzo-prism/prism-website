@@ -247,5 +247,21 @@ describe('/faq', () => {
     expect(
       screen.queryByRole('heading', { level: 2, name: /^the waitlist\.$/i }),
     ).not.toBeInTheDocument()
+
+    // Quick-search chips filter in one tap and empty search offers a waitlist escape hatch.
+    fireEvent.click(screen.getByRole('button', { name: 'AI search' }))
+    expect(screen.getByRole('button', { name: 'AI search' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByText(/Can Prism help my business show up in ChatGPT/i)).toBeInTheDocument()
+
+    fireEvent.change(screen.getByRole('searchbox', { name: /search questions/i }), {
+      target: { value: 'zzzz-no-match' },
+    })
+    expect(screen.getByText(/No answers match that search\./i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /Ask us on the waitlist/i }),
+    ).toHaveAttribute('href', '/waitlist')
   })
 })
