@@ -28,6 +28,7 @@ import { SpotlightCard } from '@/components/prism/spotlight-card'
 import { CaseStudySchema } from '@/components/schema-markup'
 import { Card } from '@/components/ui/card'
 import { CASE_STUDIES } from '@/lib/case-study-data'
+import { getCaseStudyHeadline } from '@/lib/case-study-headlines'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
 
 const SLUG = 'roseville-dental-academy'
@@ -157,10 +158,14 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
       <main className="flex-1">
         <CaseStudyVisualHero
           title="Roseville Dental Academy"
+          headline={getCaseStudyHeadline(SLUG)}
           description="Prism moved the academy from a stock GoDaddy presence to a measurable admissions system: a Vercel-hosted website, deeper analytics, cleaner forms, Search Console, Hotjar, Meta attribution, and an ElevenLabs AI assistant for prospective students."
           eyebrow="Dental education case study"
           badges={[
-            { label: 'Dental Education', icon: <Briefcase aria-hidden="true" /> },
+            {
+              label: 'Dental Education',
+              icon: <Briefcase aria-hidden="true" />,
+            },
             { label: 'Roseville, CA', icon: <MapPin aria-hidden="true" /> },
           ]}
           websiteUrl="https://www.rosevilledentalacademy.com/"
@@ -174,7 +179,10 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
 
         <CaseStudySnapshotStats facts={facts} />
 
-        <Section aria-labelledby="roseville-shift-title" className="pt-16 sm:pt-20">
+        <Section
+          aria-labelledby="roseville-shift-title"
+          className="pt-16 sm:pt-20"
+        >
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-14">
             <Reveal className="lg:col-span-5">
               <SectionHeader
@@ -211,7 +219,10 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
           </div>
         </Section>
 
-        <Section aria-labelledby="roseville-rebuilt-title" className="py-12 sm:py-16">
+        <Section
+          aria-labelledby="roseville-rebuilt-title"
+          className="py-12 sm:py-16"
+        >
           <Reveal>
             <SectionHeader
               id="roseville-rebuilt-title"
@@ -223,7 +234,12 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
             {rebuildCards.map((card, index) => {
               const Icon = card.icon
               return (
-                <Reveal as="li" key={card.title} delay={(index % 3) * 90} className="min-w-0">
+                <Reveal
+                  as="li"
+                  key={card.title}
+                  delay={(index % 3) * 90}
+                  className="min-w-0"
+                >
                   <SpotlightCard className="flex h-full flex-col gap-5 p-6 sm:p-7">
                     <span className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-foreground">
                       <Icon aria-hidden="true" className="size-[18px]" />
@@ -243,10 +259,16 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
           </ul>
         </Section>
 
-        <Section aria-labelledby="roseville-live-title" className="py-12 sm:py-16">
+        <Section
+          aria-labelledby="roseville-live-title"
+          className="py-12 sm:py-16"
+        >
           <Reveal>
             <div className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.08] bg-card p-6 sm:p-10 lg:p-14">
-              <div aria-hidden="true" className="bg-grid absolute inset-0 -z-10 opacity-50" />
+              <div
+                aria-hidden="true"
+                className="bg-grid absolute inset-0 -z-10 opacity-50"
+              />
               <div
                 aria-hidden="true"
                 className="absolute -right-24 bottom-0 -z-10 h-80 w-[36rem] rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/18%),transparent)] blur-2xl"
@@ -259,13 +281,19 @@ export default function RosevilleDentalAcademyCaseStudyPage() {
                     title="clear enrollment paths."
                     description="The live site presents the academy as an accredited hands-on training institution and routes students to the right next step: a quick sign-up form, contact details, course pages, and the AI assistant."
                   />
-                  <ul className="mt-8 flex flex-wrap gap-2" aria-label="Programs on the site">
+                  <ul
+                    className="mt-8 flex flex-wrap gap-2"
+                    aria-label="Programs on the site"
+                  >
                     {programSignals.map((program) => (
                       <li
                         key={program}
                         className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 text-[13px] font-medium text-foreground"
                       >
-                        <Check aria-hidden="true" className="size-3.5 text-muted-foreground" />
+                        <Check
+                          aria-hidden="true"
+                          className="size-3.5 text-muted-foreground"
+                        />
                         {program}
                       </li>
                     ))}

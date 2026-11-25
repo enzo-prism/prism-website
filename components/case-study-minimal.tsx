@@ -33,6 +33,7 @@ import { FinalCta } from '@/components/prism/final-cta'
 import { CaseStudySchema } from '@/components/schema-markup'
 import { CASE_STUDIES, datedMetricSummary } from '@/lib/case-study-data'
 import { getCaseStudyFacts } from '@/lib/case-study-facts'
+import { getCaseStudyHeadline } from '@/lib/case-study-headlines'
 import {
   getCaseStudyWorkProfile,
   normalizeCaseStudyWorkProfile,
@@ -74,7 +75,9 @@ export default function MinimalCaseStudyPage({
   const story = caseStudy.structured?.story
   const outcomes = caseStudy.structured?.outcomes ?? []
   const archived = isFormerClient(caseStudy.slug)
-  const workProfile = normalizeCaseStudyWorkProfile(getCaseStudyWorkProfile(slug))
+  const workProfile = normalizeCaseStudyWorkProfile(
+    getCaseStudyWorkProfile(slug),
+  )
   const video = getCaseStudyVideo(caseStudy)
   const quotes = getCaseStudyQuotes(caseStudy.slug)
 
@@ -103,7 +106,8 @@ export default function MinimalCaseStudyPage({
     ...(video
       ? [
           {
-            label: video.kind === 'Interview' ? 'Client interview' : 'Client video',
+            label:
+              video.kind === 'Interview' ? 'Client interview' : 'Client video',
             icon: <Play aria-hidden="true" />,
           },
         ]
@@ -135,8 +139,10 @@ export default function MinimalCaseStudyPage({
   if (caseStudy.structured?.scope) {
     facts.push({ label: 'Scope', value: caseStudy.structured.scope })
   }
-  if (facts.length < 4) facts.push({ label: 'Industry', value: caseStudy.industry })
-  if (facts.length < 4) facts.push({ label: 'Location', value: caseStudy.location })
+  if (facts.length < 4)
+    facts.push({ label: 'Industry', value: caseStudy.industry })
+  if (facts.length < 4)
+    facts.push({ label: 'Location', value: caseStudy.location })
 
   return (
     <div className="flex min-h-svh flex-col bg-background">
@@ -145,6 +151,7 @@ export default function MinimalCaseStudyPage({
       <main className="flex-1">
         <CaseStudyVisualHero
           title={caseStudy.client}
+          headline={getCaseStudyHeadline(caseStudy.slug)}
           description={caseStudy.description}
           eyebrow={archived ? 'Case study archive' : 'Case study'}
           badges={badges}
@@ -167,7 +174,9 @@ export default function MinimalCaseStudyPage({
           quotes={quotes}
         />
 
-        {story ? <CaseStudyStory clientName={caseStudy.client} story={story} /> : null}
+        {story ? (
+          <CaseStudyStory clientName={caseStudy.client} story={story} />
+        ) : null}
 
         {afterStory}
 
@@ -191,7 +200,10 @@ export default function MinimalCaseStudyPage({
 
         <CaseStudyWorkHighlights caseStudySlug={caseStudy.slug} />
 
-        <CaseStudyMoreWork slug={caseStudy.slug} trackedLocation={`${trackedLocation} more work`} />
+        <CaseStudyMoreWork
+          slug={caseStudy.slug}
+          trackedLocation={`${trackedLocation} more work`}
+        />
 
         <FinalCta
           location={`${trackedLocation} final cta`}

@@ -58,15 +58,20 @@ function moreWorkHrefs() {
   return within(region)
     .getAllByRole('link')
     .map((link) => link.getAttribute('href'))
-    .filter((href): href is string => Boolean(href?.startsWith('/case-studies/')))
+    .filter((href): href is string =>
+      Boolean(href?.startsWith('/case-studies/')),
+    )
 }
 
 describe('case study template', () => {
-  it('leads with the client name, the live site, and the waitlist CTA', () => {
+  it('leads with the outcome, the client name, the live site, and the waitlist CTA', () => {
     render(<MinimalCaseStudyPage slug="dr-christopher-wong" />)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Dr. Christopher B. Wong' }),
+      screen.getByRole('heading', {
+        level: 1,
+        name: 'Dr. Christopher B. Wong: a practice handoff patients could follow.',
+      }),
     ).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
 
@@ -81,21 +86,29 @@ describe('case study template', () => {
     expect(new Set(waitlistLinks)).toEqual(new Set(['/waitlist']))
 
     expect(
-      screen.getByRole('img', { name: 'Dr. Christopher B. Wong homepage built by Prism' }),
-    ).toHaveAttribute('src', expect.stringContaining('dr-christopher-wong-home-desktop.jpg'))
+      screen.getByRole('img', {
+        name: 'Dr. Christopher B. Wong homepage built by Prism',
+      }),
+    ).toHaveAttribute(
+      'src',
+      expect.stringContaining('dr-christopher-wong-home-desktop.jpg'),
+    )
   })
 
   it('shows the verified metric with its source and window, from the data only', () => {
     render(<MinimalCaseStudyPage slug="dr-christopher-wong" />)
 
-    const metric = CASE_STUDIES.find((study) => study.slug === 'dr-christopher-wong')!
-      .structured!.results![0]
+    const metric = CASE_STUDIES.find(
+      (study) => study.slug === 'dr-christopher-wong',
+    )!.structured!.results![0]
     const band = screen.getByRole('region', { name: 'Project snapshot' })
 
     expect(within(band).getByText('Verified result')).toBeInTheDocument()
     expect(band.textContent).toContain(metric.value)
     expect(band.textContent).toContain(metric.label)
-    expect(band.textContent).toContain(`${metric.sourceName}, ${metric.dateRange}`)
+    expect(band.textContent).toContain(
+      `${metric.sourceName}, ${metric.dateRange}`,
+    )
   })
 
   it('falls back to delivered-work facts when no verified metric exists', () => {
@@ -114,21 +127,29 @@ describe('case study template', () => {
 
       const band = screen.getByRole('region', { name: 'Project snapshot' })
       expect(within(band).queryByText('Tools')).not.toBeInTheDocument()
-      expect(band.textContent).not.toMatch(/Codex|Claude Code|SEO\/AEO|Enterprise analytics/)
+      expect(band.textContent).not.toMatch(
+        /Codex|Claude Code|SEO\/AEO|Enterprise analytics/,
+      )
     },
   )
 
   it('shows the verified client interview after the stats band and loads YouTube only on click', () => {
-    const { container } = render(<MinimalCaseStudyPage slug="dr-christopher-wong" />)
+    const { container } = render(
+      <MinimalCaseStudyPage slug="dr-christopher-wong" />,
+    )
 
-    const section = screen.getByRole('region', { name: 'hear it from Dr. Wong.' })
+    const section = screen.getByRole('region', {
+      name: 'hear it from Dr. Wong.',
+    })
     const band = screen.getByRole('region', { name: 'Project snapshot' })
     expect(
       band.compareDocumentPosition(section) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy()
 
     // The caption is the video's real YouTube title.
-    const play = within(section).getByRole('button', { name: /Play video: Meet Dr\. Wong/ })
+    const play = within(section).getByRole('button', {
+      name: /Play video: Meet Dr\. Wong/,
+    })
     expect(container.querySelector('iframe')).toBeNull()
     expect(section.querySelector('img')).toHaveAttribute(
       'src',
@@ -152,14 +173,18 @@ describe('case study template', () => {
     render(<MinimalCaseStudyPage slug="olympic-bootworks" />)
 
     expect(
-      screen.getByRole('button', { name: /Play video: Heel-Loc Olympic Bootworks/ }),
+      screen.getByRole('button', {
+        name: /Play video: Heel-Loc Olympic Bootworks/,
+      }),
     ).toBeInTheDocument()
   })
 
   it('quotes Dr. Tingjen Ji on Grace Dental from the named client quotes only', () => {
     render(<MinimalCaseStudyPage slug="grace-dental-santa-rosa" />)
 
-    const section = screen.getByRole('region', { name: 'Dr. Tingjen Ji on the work' })
+    const section = screen.getByRole('region', {
+      name: 'Dr. Tingjen Ji on the work',
+    })
     const published = quotesData.filter(
       (quote) =>
         quote.client === 'Dr. Tingjen Ji' &&
@@ -167,14 +192,16 @@ describe('case study template', () => {
         !quote.requiresConsent,
     )
     expect(published.length).toBeGreaterThan(0)
-    const rendered = Array.from(section.querySelectorAll('blockquote')).map((node) =>
-      node.textContent?.replace(/[\u201C\u201D]/g, '').trim(),
+    const rendered = Array.from(section.querySelectorAll('blockquote')).map(
+      (node) => node.textContent?.replace(/[\u201C\u201D]/g, '').trim(),
     )
     expect(rendered.length).toBeGreaterThan(0)
     for (const text of rendered) {
       expect(published.map((quote) => quote.text)).toContain(text)
     }
-    expect(within(section).getByText('Grace Dental Santa Rosa')).toBeInTheDocument()
+    expect(
+      within(section).getByText('Grace Dental Santa Rosa'),
+    ).toBeInTheDocument()
   })
 
   it.each(['exquisite-dentistry', 'saorsa-growth-partners', 'waikiki-dental'])(
@@ -182,7 +209,9 @@ describe('case study template', () => {
     (slug) => {
       const { container } = render(<MinimalCaseStudyPage slug={slug} />)
 
-      expect(screen.queryByRole('button', { name: /^Play video: / })).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole('button', { name: /^Play video: / }),
+      ).not.toBeInTheDocument()
       expect(container.querySelector('blockquote')).toBeNull()
     },
   )
@@ -191,7 +220,9 @@ describe('case study template', () => {
     render(<MinimalCaseStudyPage slug="belize-kids-foundation" />)
 
     for (const name of ['the challenge.', 'the approach.', 'the result.']) {
-      expect(screen.getByRole('heading', { level: 3, name })).toBeInTheDocument()
+      expect(
+        screen.getByRole('heading', { level: 3, name }),
+      ).toBeInTheDocument()
     }
   })
 
@@ -222,9 +253,8 @@ describe('case study template', () => {
     expect(
       screen.getByRole('heading', { level: 2, name: 'your business, next.' }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Read what clients say/ })).toHaveAttribute(
-      'href',
-      '/wall-of-love',
-    )
+    expect(
+      screen.getByRole('link', { name: /Read what clients say/ }),
+    ).toHaveAttribute('href', '/wall-of-love')
   })
 })

@@ -17,7 +17,10 @@ export type CaseStudyHeroBadge = {
 }
 
 type CaseStudyVisualHeroProps = {
+  /** The client's name. With a headline it becomes the H1's eyebrow line. */
   title: string
+  /** What changed for the client, lowercase (lib/case-study-headlines.ts). */
+  headline?: string
   description: ReactNode
   eyebrow?: string
   badges?: CaseStudyHeroBadge[]
@@ -82,6 +85,7 @@ function BoundName({ name }: { name: string }) {
  */
 export default function CaseStudyVisualHero({
   title,
+  headline,
   description,
   eyebrow = 'Case study',
   badges = [],
@@ -109,7 +113,10 @@ export default function CaseStudyVisualHero({
         aria-hidden="true"
         className="absolute left-1/2 top-[-12rem] -z-10 h-[32rem] w-[66rem] max-w-[170vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.66_0.16_258/18%),transparent)] blur-2xl"
       />
-      <div aria-hidden="true" className="bg-noise absolute inset-0 -z-10 opacity-[0.05]" />
+      <div
+        aria-hidden="true"
+        className="bg-noise absolute inset-0 -z-10 opacity-[0.05]"
+      />
 
       <div className="prism-container">
         <div className="prism-rise flex flex-col items-start gap-5">
@@ -131,15 +138,32 @@ export default function CaseStudyVisualHero({
           ) : null}
         </div>
 
-        <h1
-          id="case-study-title"
-          className={cn(
-            'prism-rise text-display text-gradient mt-8 max-w-[22ch] text-balance pb-2 [--rise-delay:80ms]',
-            longTitle && 'lg:text-[clamp(3rem,1.6rem+4.2vw,5.25rem)]',
-          )}
-        >
-          <BoundName name={title} />
-        </h1>
+        {headline ? (
+          // The outcome leads; the client name sits above it inside the same
+          // H1, so the heading still names the client for search and readers.
+          <h1
+            id="case-study-title"
+            aria-label={`${title}: ${headline}`}
+            className="prism-rise mt-8 [--rise-delay:80ms]"
+          >
+            <span className="block text-[15px] font-medium leading-6 tracking-[-0.01em] text-muted-foreground sm:text-[17px]">
+              <BoundName name={title} />
+            </span>{' '}
+            <span className="text-gradient mt-3 block max-w-[19ch] text-balance pb-2 text-[clamp(2.5rem,1.45rem+4.4vw,5.25rem)] font-semibold leading-[0.98] tracking-[-0.05em]">
+              {headline}
+            </span>
+          </h1>
+        ) : (
+          <h1
+            id="case-study-title"
+            className={cn(
+              'prism-rise text-display text-gradient mt-8 max-w-[22ch] text-balance pb-2 [--rise-delay:80ms]',
+              longTitle && 'lg:text-[clamp(3rem,1.6rem+4.2vw,5.25rem)]',
+            )}
+          >
+            <BoundName name={title} />
+          </h1>
+        )}
 
         <div className="prism-rise mt-7 flex flex-col gap-7 [--rise-delay:160ms] lg:mt-9 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <p className="text-lead min-w-0 max-w-[52ch] text-pretty text-muted-foreground lg:flex-1">
@@ -148,7 +172,12 @@ export default function CaseStudyVisualHero({
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:shrink-0 lg:flex-nowrap">
             <WaitlistButton location={trackedLocation} size="lg" />
             {websiteUrl ? (
-              <Button asChild variant="outline" size="lg" className="group/site">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="group/site"
+              >
                 <TrackedLink
                   href={websiteUrl}
                   target="_blank"

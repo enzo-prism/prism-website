@@ -10,7 +10,9 @@ for (const { client, slug } of CASE_STUDIES) {
 
     const banner = page.getByRole('banner')
     const mainNav = banner.getByRole('navigation', { name: 'Main' })
-    const breadcrumbNav = banner.getByRole('navigation', { name: 'Breadcrumb' })
+    // Desktop keeps the trail in the sticky header; phones render it in the
+    // page flow under the header so it scrolls away (only one is displayed).
+    const breadcrumbNav = page.getByRole('navigation', { name: 'Breadcrumb' })
 
     await expect(banner).toBeVisible()
     await expect(banner.getByRole('link', { name: 'Prism home' })).toBeVisible()

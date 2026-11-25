@@ -204,9 +204,7 @@ function ServicesMenu({
           <NavigationMenuLink asChild>
             <Link
               href={waitlistHref}
-              onClick={() =>
-                onNavigate('Services menu waitlist', waitlistHref)
-              }
+              onClick={() => onNavigate('Services menu waitlist', waitlistHref)}
               // items-stretch and gap-0 undo the link primitive's
               // items-center and gap-1.5: the card reads left-aligned, spaced
               // only by its own margins.
@@ -517,9 +515,7 @@ export default function Navbar() {
             </p>
             <Link
               href={waitlistHref}
-              onClick={() =>
-                handleNavigate(PROJECT_CTA_LABEL, waitlistHref)
-              }
+              onClick={() => handleNavigate(PROJECT_CTA_LABEL, waitlistHref)}
               className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-[15px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
               {PROJECT_CTA_LABEL}
@@ -643,7 +639,7 @@ export default function Navbar() {
           </div>
 
           {caseStudyBreadcrumbs ? (
-            <div className="border-t border-white/[0.06]">
+            <div className="hidden border-t border-white/[0.06] md:block">
               <div className="prism-container">
                 {/* Visual trail only: each case study page emits its own
                     BreadcrumbList via CaseStudySchema. */}
@@ -657,6 +653,19 @@ export default function Navbar() {
           ) : null}
         </div>
       </header>
+      {caseStudyBreadcrumbs ? (
+        // Phones: the trail scrolls away with the page instead of sitting
+        // under the sticky bar, so the case study keeps its whole screen.
+        <div className="border-b border-white/[0.06] md:hidden">
+          <div className="prism-container">
+            <Breadcrumbs
+              items={caseStudyBreadcrumbs}
+              className="mb-0 py-2 text-muted-foreground"
+              includeSchema={false}
+            />
+          </div>
+        </div>
+      ) : null}
       {mobilePanel && typeof document !== 'undefined'
         ? createPortal(mobilePanel, document.body)
         : null}
@@ -665,9 +674,7 @@ export default function Navbar() {
         label={PROJECT_CTA_LABEL}
         disabled={isWaitlistRoute}
         suppressed={isMobileMenuOpen}
-        onNavigate={() =>
-          handleNavigate('Mobile action bar', waitlistHref)
-        }
+        onNavigate={() => handleNavigate('Mobile action bar', waitlistHref)}
       />
     </>
   )

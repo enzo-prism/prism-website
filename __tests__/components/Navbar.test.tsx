@@ -399,7 +399,7 @@ describe('Navbar', () => {
 
     render(<Navbar />)
 
-    expect(screen.getByTestId('breadcrumbs-mock')).toBeInTheDocument()
+    expect(screen.getAllByTestId('breadcrumbs-mock')).toHaveLength(2)
   })
 
   it('carries service focus into the waitlist CTA on service routes', () => {
