@@ -46,7 +46,7 @@ export default function HomeNumbers() {
                   value={stat.value}
                   className="text-[clamp(2.5rem,1.4rem+3.6vw,5rem)] font-semibold leading-none tracking-[-0.06em] text-foreground tabular-nums"
                 />
-                <span className="max-w-[24ch] text-pretty text-[13px] leading-snug text-muted-foreground sm:text-[15px]">
+                <span className="text-pretty text-[13px] leading-snug text-muted-foreground sm:text-[14px]">
                   {stat.label}
                 </span>
                 <span className="mt-auto pt-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-subtle">
