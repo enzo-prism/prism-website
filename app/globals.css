@@ -1107,6 +1107,26 @@ select {
   }
 }
 
+/* The one reward moment (thank-you intake strip): the spectrum draws across
+   the slot the visitor is now in line for, once. Reduced motion shows the
+   finished line. */
+@keyframes prism-refract-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .prism-refract-line {
+    transform-origin: left center;
+    animation: prism-refract-line var(--dur-refract) var(--ease-in-out)
+      var(--refract-delay, 600ms) both;
+  }
+}
+
 /* ---- Intake pass (components/prism/intake-pass.tsx) -----------------------
    A ticket: perforated stub with punched notches, plus a faint holographic
    foil (a transformed layer) that drifts while the pass is hovered. The

@@ -68,7 +68,7 @@ export default function WaitlistIntakeStrip({
               className={cn(
                 'absolute inset-x-0 top-0 h-0.5',
                 isNext
-                  ? 'bg-spectrum'
+                  ? 'prism-refract-line bg-spectrum'
                   : isBooked
                     ? 'bg-white/20'
                     : 'bg-white/[0.06]',
