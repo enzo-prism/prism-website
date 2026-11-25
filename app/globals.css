@@ -1150,7 +1150,9 @@ select {
   }
 }
 
-@media (min-width: 640px) {
+/* The perforation notches only exist when the stub sits beside the fields
+   (IntakePass is a container; @3xl = 48rem). */
+@container (min-width: 48rem) {
   .prism-pass-stub::before,
   .prism-pass-stub::after {
     content: '';

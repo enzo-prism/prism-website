@@ -137,7 +137,7 @@ export default async function SeoPage() {
       ],
       links: [
         { label: "SEO audit service", href: "/seo/audit" },
-        { label: "Join the waitlist", href: "/waitlist" },
+        { label: "Tell us about your business", href: "/waitlist" },
       ],
     },
     {

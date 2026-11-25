@@ -10,7 +10,7 @@ import HomeHero from '@/components/home/HomeHero'
 import HomeHowToGetIn from '@/components/home/HomeHowToGetIn'
 import HomeLove from '@/components/home/HomeLove'
 import HomeNumbers from '@/components/home/HomeNumbers'
-import HomePillars from '@/components/home/HomePillars'
+import HomeServices from '@/components/home/HomeServices'
 import HomeStories from '@/components/home/HomeStories'
 import { HOMEPAGE_FINAL_CTA } from '@/components/home/homepage-content'
 import { FinalCta } from '@/components/prism/final-cta'
@@ -18,7 +18,11 @@ import { FinalCta } from '@/components/prism/final-cta'
 function WeeklyUpdatePreview() {
   const rows = [
     { icon: CheckCircle2, tag: 'Shipped', text: 'Mobile test-ride flow live' },
-    { icon: Radio, tag: 'Tracked', text: 'Form requests visible in Prism Grow' },
+    {
+      icon: Radio,
+      tag: 'Tracked',
+      text: 'Form requests visible in Prism Grow',
+    },
     { icon: Sparkles, tag: 'Next', text: 'You approve the next move' },
   ] as const
 
@@ -28,7 +32,9 @@ function WeeklyUpdatePreview() {
       className="rounded-xl border border-white/[0.08] bg-background/70 p-4"
     >
       <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-3">
-        <span className="text-xs font-medium text-foreground">Weekly update</span>
+        <span className="text-xs font-medium text-foreground">
+          Weekly update
+        </span>
         <span className="rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] text-subtle">
           Example
         </span>
@@ -64,7 +70,7 @@ export default function ClientPage() {
         <HomeLogoRail />
         <HomeStories />
         <HomeNumbers />
-        <HomePillars />
+        <HomeServices />
         <HomeLove />
         <OwnerDecision
           eyebrow="Working with Prism"

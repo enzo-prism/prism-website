@@ -33,8 +33,7 @@ const CURRENT_CASE_STUDIES = CASE_STUDIES.filter(
 export const HOMEPAGE_HERO = {
   titleLead: 'your growth',
   titleAccent: 'team.',
-  subheading:
-    'Designers, engineers, and marketers for small businesses.',
+  subheading: 'Designers, engineers, and marketers for small businesses.',
   primaryCta: { label: 'Tell us about your business', href: '/waitlist' },
   secondaryCta: { label: 'See the work', href: '#work' },
   /** Labels for the refracted bands, top to bottom. */
@@ -83,40 +82,12 @@ export const HOMEPAGE_NUMBERS = {
   ],
 } as const
 
+/** "what we do": the four services, one row each (HomeServices). */
 export const HOMEPAGE_SERVICES = {
   eyebrow: 'what we do',
-  title: 'shine. convert. get seen.',
-  description: 'One senior team. Built to compound.',
-  pillars: [
-    {
-      key: 'shine',
-      title: 'shine.',
-      lead: 'A site people remember.',
-      body: 'Custom design, identity, photo, and film.',
-      items: ['Website design', 'Identity', 'Photo & film'],
-      links: [{ label: 'Website Design', href: '/website-design' }],
-    },
-    {
-      key: 'convert',
-      title: 'convert.',
-      lead: 'Built for the tap to book.',
-      body: 'Fast pages, clear proof, clean tracking.',
-      items: ['Conversion pages', 'Booking flows', 'Proof', 'Tracking'],
-      links: [{ label: 'See the results', href: '/case-studies' }],
-    },
-    {
-      key: 'reach',
-      title: 'get seen.',
-      lead: 'Demand on every channel.',
-      body: 'Short-form content, paid ads, and AI search.',
-      items: ['Short-form', 'Google & Meta ads', 'Search & AI', 'Maps'],
-      links: [
-        { label: 'Content', href: '/content' },
-        { label: 'Ads', href: '/ads' },
-        { label: 'AEO', href: '/aeo' },
-      ],
-    },
-  ],
+  title: 'four services. one team.',
+  description: 'Start with the one you need. Add the rest as you grow.',
+  allServices: 'All services',
 } as const
 
 export type HomepageStory = {
@@ -181,8 +152,7 @@ export const HOMEPAGE_CASE_STUDIES = {
       industry: 'Boot fitting and Fantic e-bikes',
       location: 'Tahoe, CA',
       host: 'olympicbootworks.com',
-      impossible:
-        'Bring a Tahoe fitting room online for riders hours away.',
+      impossible: 'Bring a Tahoe fitting room online for riders hours away.',
       built: [
         'Site rebuild',
         'Fantic e-bike catalog',

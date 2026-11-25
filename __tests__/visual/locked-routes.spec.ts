@@ -280,7 +280,7 @@ test('home numbers section snapshot stays stable', async ({ page }) => {
 test('home services section snapshot stays stable', async ({ page }) => {
   await snapshotHomeSection(
     page,
-    /shine\. convert\. get seen\./i,
+    /four services\. one team\./i,
     'home-services-section.png',
   )
 })
@@ -313,9 +313,9 @@ test('home cards stay contained across responsive breakpoints', async ({
 
   const sections = [
     {
-      heading: /shine\. convert\. get seen\./i,
+      heading: /four services\. one team\./i,
       cardSelector: '[data-home-service-card]',
-      expectedCount: 3,
+      expectedCount: 4,
     },
     {
       heading: /fully booked\. here’s how to get in\./i,

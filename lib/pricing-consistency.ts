@@ -140,7 +140,7 @@ export const REQUIRED_CANONICAL_SNIPPETS: Record<string, string[]> = {
     'Prism is at capacity',
   ],
   'lib/waitlist.ts': [
-    "label: 'Join the waitlist'",
+    "label: 'Tell us about your business'",
     'Prism is fully booked right now.',
   ],
   'app/website-design/page.tsx': [

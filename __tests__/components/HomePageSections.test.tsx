@@ -1,9 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 
 import ClientPage from '@/app/client-page'
-import {
-  HOMEPAGE_CASE_STUDIES,
-} from '@/components/home/homepage-content'
+import { HOMEPAGE_CASE_STUDIES } from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
 import { getWaitlistIntakeMonth } from '@/lib/waitlist'
@@ -74,7 +72,7 @@ describe('ClientPage homepage flow', () => {
     expect(headings).toEqual([
       'every business has an impossible.',
       'numbers, not adjectives.',
-      'shine. convert. get seen.',
+      'four services. one team.',
       'in their words.',
       'a direct line to the people doing the work.',
       'fully booked. here’s how to get in.',
@@ -110,7 +108,9 @@ describe('ClientPage homepage flow', () => {
     expect(hero).not.toBeNull()
     const heroScope = within(hero as HTMLElement)
 
-    heroScope.getByRole('link', { name: /tell us about your business/i }).click()
+    heroScope
+      .getByRole('link', { name: /tell us about your business/i })
+      .click()
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist',
       'Tell us about your business',
@@ -120,7 +120,9 @@ describe('ClientPage homepage flow', () => {
     const seeWork = heroScope.getByRole('link', { name: /see the work/i })
     expect(seeWork).toHaveAttribute('href', '#work')
     // One primary button in the hero; the work is a text link.
-    expect(heroScope.getAllByRole('link', { name: /tell us about your business/i })).toHaveLength(1)
+    expect(
+      heroScope.getAllByRole('link', { name: /tell us about your business/i }),
+    ).toHaveLength(1)
 
     expect(hero).toHaveTextContent(
       /designers, engineers, and marketers for small businesses/i,
@@ -194,39 +196,40 @@ describe('ClientPage homepage flow', () => {
     ).toHaveAttribute('href', '/wall-of-love')
   })
 
-  it('links the three pillars and the four services', () => {
+  it('lists the four services as band rows, then all services', () => {
     render(<ClientPage />)
 
     const services = document.getElementById('services') as HTMLElement
-    const cards = services.querySelectorAll<HTMLElement>(
-      '[data-home-service-card]',
+    const rows = Array.from(
+      services.querySelectorAll<HTMLElement>('[data-home-service-card]'),
     )
-    expect(cards).toHaveLength(3)
-    for (const href of ['/website-design', '/content', '/ads', '/aeo']) {
-      expect(services.querySelector(`a[href="${href}"]`)).not.toBeNull()
+    // One taxonomy: the same four services, in the same order, as the menu.
+    expect(rows.map((row) => row.dataset.serviceBand)).toEqual([
+      'website',
+      'content',
+      'ads',
+      'aeo',
+    ])
+    expect(
+      rows.map(
+        (row) => within(row).getByRole('heading', { level: 3 }).textContent,
+      ),
+    ).toEqual(['Website Design', 'Content', 'Ads', 'AEO'])
+    // Each row is one link named for its service.
+    expect(
+      rows.map((row) => {
+        const links = within(row).getAllByRole('link')
+        expect(links).toHaveLength(1)
+        return links[0].getAttribute('href')
+      }),
+    ).toEqual(['/website-design', '/content', '/ads', '/aeo'])
+    // Each row carries its band colour.
+    for (const row of rows) {
+      expect(row.style.getPropertyValue('--band')).toMatch(/^var\(--spectrum-/)
     }
 
-    // "get seen." carries the reach services: Content, Ads, and AEO.
-    const reach = Array.from(cards).find((card) =>
-      within(card).queryByRole('heading', { name: 'get seen.' }),
-    ) as HTMLElement
-    expect(reach).toBeDefined()
     expect(
-      within(reach)
-        .getAllByRole('link')
-        .map((link) => link.getAttribute('href')),
-    ).toEqual(['/content', '/ads', '/aeo'])
-
-    // The pill row under the pillars lists every service, then All services.
-    const allServices = within(services).getByRole('link', {
-      name: /all services/i,
-    })
-    expect(allServices).toHaveAttribute('href', '/services')
-    const pillRow = allServices.parentElement as HTMLElement
-    expect(
-      within(pillRow)
-        .getAllByRole('link')
-        .map((link) => link.getAttribute('href')),
-    ).toEqual(['/website-design', '/content', '/ads', '/aeo', '/services'])
+      within(services).getByRole('link', { name: /all services/i }),
+    ).toHaveAttribute('href', '/services')
   })
 })

@@ -17,7 +17,7 @@ type WaitlistButtonProps = {
   arrow?: boolean
 }
 
-/** The one primary CTA on every redesigned route: "Join the waitlist". */
+/** The one primary CTA on every redesigned route: "Tell us about your business". */
 export function WaitlistButton({
   location,
   href = WAITLIST_CTA.href,
