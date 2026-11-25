@@ -109,7 +109,7 @@ describe('/waitlist', () => {
 
     const headings = screen.getAllByRole('heading', { level: 1 })
     expect(headings).toHaveLength(1)
-    expect(headings[0].textContent).toMatch(/^join the waitlist$/i)
+    expect(headings[0].textContent).toMatch(/^tell us about your business\.$/i)
 
     expect(
       screen.getByText(/^Prism is fully booked\. Join the waitlist to work with us in/),
@@ -126,11 +126,11 @@ describe('/waitlist', () => {
 
     const card = container.querySelector('[data-waitlist-form-card]')
     expect(card).toHaveClass('prism-beam')
-    expect(within(card as HTMLElement).getAllByText(/step 1 of 5/i).length).toBeGreaterThan(0)
+    expect(within(card as HTMLElement).getAllByText(/step 1 of 3/i).length).toBeGreaterThan(0)
     expect(
       within(card as HTMLElement).getByRole('heading', {
         level: 2,
-        name: /what should prism focus on\?/i,
+        name: /what should prism help with\?/i,
       }),
     ).toBeInTheDocument()
 

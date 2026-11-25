@@ -261,17 +261,51 @@ export function getWaitlistPrefillHref(prefill: Partial<WaitlistPrefill>): strin
 }
 
 /**
- * Stepped flow (2026-09-15). One question group per screen, validated before
- * advancing, single Formspree submit on the last step. Order is intentional:
- * the two tap-only steps come first so the visitor commits before typing.
+ * Question groups. Each renders as one block of the form; a step shows one
+ * or more of them. Titles double as the block headings inside a step.
+ */
+export const WAITLIST_SECTIONS = {
+  focus: { title: 'What should Prism help with?' },
+  timing: { title: 'When do you want to start?' },
+  links: { title: 'Where can we see your business?' },
+  goals: { title: 'What do you want to achieve?' },
+  about: { title: 'How do we reach you?' },
+} as const
+
+export type WaitlistSectionId = keyof typeof WAITLIST_SECTIONS
+
+/**
+ * Stepped flow (2026-09-15; three steps since 2026-11-25). Validated before
+ * advancing, single Formspree submit on the last step. The order is
+ * intentional: taps first (focus, timing) so the visitor commits before
+ * typing, then the business, then personal details last, once the visitor
+ * has already invested. `label` names the step in the progress bar.
  */
 export const WAITLIST_STEPS = [
-  { id: 'focus', title: 'What should Prism focus on?' },
-  { id: 'timing', title: 'When do you want to start?' },
-  { id: 'about', title: 'How do we reach you?' },
-  { id: 'links', title: 'Where can we see your work?' },
-  { id: 'goals', title: 'What do you want to achieve?' },
-] as const
+  {
+    id: 'focus',
+    label: 'Focus',
+    title: 'What should Prism help with?',
+    sections: ['focus', 'timing'],
+  },
+  {
+    id: 'business',
+    label: 'Business',
+    title: 'Tell us about your business.',
+    sections: ['links', 'goals'],
+  },
+  {
+    id: 'contact',
+    label: 'Contact',
+    title: 'How do we reach you?',
+    sections: ['about'],
+  },
+] as const satisfies ReadonlyArray<{
+  id: string
+  label: string
+  title: string
+  sections: readonly WaitlistSectionId[]
+}>
 
 export type WaitlistStepId = (typeof WAITLIST_STEPS)[number]['id']
 

@@ -434,11 +434,11 @@ describe('Vercel analytics URL normalization', () => {
         buildVercelCustomEvent('waitlist_step_view', {
           form_name: 'waitlist',
           step: 2,
-          step_name: 'timing',
+          step_name: 'business',
         }),
       ).toEqual({
         name: 'Waitlist Step Viewed',
-        properties: { form_name: 'waitlist', step: 2, step_name: 'timing' },
+        properties: { form_name: 'waitlist', step: 2, step_name: 'business' },
       })
       expect(
         buildVercelCustomEvent('waitlist_step_complete', {

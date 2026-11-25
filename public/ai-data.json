@@ -156,7 +156,7 @@
     "steps": [
       {
         "id": "focus",
-        "title": "What should Prism focus on?",
+        "title": "What should Prism help with?",
         "fields": [
           {
             "name": "focus[]",
@@ -170,13 +170,7 @@
               "not-sure"
             ],
             "note": "Pick one or more services, or not-sure on its own."
-          }
-        ]
-      },
-      {
-        "id": "timing",
-        "title": "When do you want to start?",
-        "fields": [
+          },
           {
             "name": "start_timing",
             "type": "radio",
@@ -192,7 +186,40 @@
         ]
       },
       {
-        "id": "about",
+        "id": "business",
+        "title": "Tell us about your business.",
+        "fields": [
+          {
+            "name": "link_website",
+            "type": "text",
+            "required": false
+          },
+          {
+            "name": "link_social",
+            "type": "text",
+            "required": false
+          },
+          {
+            "name": "link_other",
+            "type": "text",
+            "required": false
+          },
+          {
+            "name": "no_website",
+            "type": "checkbox",
+            "required": false,
+            "value": "yes"
+          },
+          {
+            "name": "goals",
+            "type": "textarea",
+            "required": true
+          }
+        ],
+        "rule": "At least one link, or check no_website."
+      },
+      {
+        "id": "contact",
         "title": "How do we reach you?",
         "fields": [
           {
@@ -214,45 +241,6 @@
             "name": "phone",
             "type": "tel",
             "required": false
-          }
-        ]
-      },
-      {
-        "id": "links",
-        "title": "Where can we see your work?",
-        "fields": [
-          {
-            "name": "link_website",
-            "type": "url",
-            "required": false
-          },
-          {
-            "name": "link_social",
-            "type": "url",
-            "required": false
-          },
-          {
-            "name": "link_other",
-            "type": "url",
-            "required": false
-          },
-          {
-            "name": "no_website",
-            "type": "checkbox",
-            "required": false,
-            "value": "yes"
-          }
-        ],
-        "rule": "At least one link, or check no_website."
-      },
-      {
-        "id": "goals",
-        "title": "What do you want to achieve?",
-        "fields": [
-          {
-            "name": "goals",
-            "type": "textarea",
-            "required": true
           }
         ]
       }

@@ -58,16 +58,13 @@ test('accepted waitlist receipt and conversion survive tracking/storage constrai
     }
   })
   await page.goto('/waitlist?focus=ads')
-  await page.getByRole('button', { name: /^continue/i }).click()
+  // Step 1: focus (prefilled) + timing.
   const timing = page.getByRole('radio', { name: /in 1–3 months/i })
   if (isMobile) await timing.locator('..').tap()
   else await timing.locator('..').click()
   await expect(timing).toBeChecked()
   await page.getByRole('button', { name: /^continue/i }).click()
-  await page.getByLabel(/first name/i).fill('QA')
-  await page.getByLabel(/last name/i).fill('Fixture')
-  await page.getByLabel(/^email$/i).fill('qa@example.com')
-  await page.getByRole('button', { name: /^continue/i }).click()
+  // Step 2: business links + goals.
   const noWebsite = page
     .getByRole('checkbox', { name: /i don.t have a website yet/i })
     .locator('..')
@@ -76,10 +73,14 @@ test('accepted waitlist receipt and conversion survive tracking/storage constrai
   await expect(
     page.getByRole('checkbox', { name: /i don.t have a website yet/i }),
   ).toBeChecked()
-  await page.getByRole('button', { name: /^continue/i }).click()
   await page
     .getByLabel(/your goals/i)
     .fill('Local QA only; the endpoint is intercepted.')
+  await page.getByRole('button', { name: /^continue/i }).click()
+  // Step 3: contact.
+  await page.getByLabel(/first name/i).fill('QA')
+  await page.getByLabel(/last name/i).fill('Fixture')
+  await page.getByLabel(/^email$/i).fill('qa@example.com')
   await page.getByRole('button', { name: /join the waitlist/i }).click()
   await expect(page).toHaveURL(/\/waitlist\/thank-you$/)
   expect(receipts).toHaveLength(1)

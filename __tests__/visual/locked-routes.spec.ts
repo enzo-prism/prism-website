@@ -148,12 +148,12 @@ const lockedRoutes = [
   {
     name: 'waitlist',
     path: '/waitlist',
-    readyHeading: /^join the waitlist$/i,
+    readyHeading: /^tell us about your business\.$/i,
     mustContain: [
       /prism is fully booked\. join the waitlist to work with us in [a-z]+\./i,
       /see why clients love prism/i,
-      /step 1 of 5/i,
-      /what should prism focus on\?/i,
+      /step 1 of 3/i,
+      /what should prism help with\?/i,
     ],
   },
 ] as const

@@ -91,8 +91,9 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
         <div className="prism-container grid flex-1 grid-cols-1 gap-y-12 pb-24 pt-10 sm:pb-32 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,33rem)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-14 lg:pt-20 xl:grid-cols-[minmax(0,1fr)_minmax(0,35rem)] xl:gap-x-24">
           <header className="flex flex-col items-start lg:col-start-1 lg:row-start-1">
             <WaitlistStatus asLink={false} className="prism-rise [--rise-delay:40ms]" />
-            <h1 className="text-display text-gradient prism-rise mt-7 max-w-[10ch] text-balance pb-2 [--rise-delay:120ms] lg:text-[clamp(3.5rem,1.6rem+3.6vw,5.75rem)]">
-              {review ? 'what would we fix first?' : 'join the waitlist'}
+            {/* No entrance on the h1: it is the page's largest paint. */}
+            <h1 className="text-display text-gradient mt-7 max-w-[12ch] text-balance pb-2 lg:text-[clamp(3.5rem,1.6rem+3.6vw,5.75rem)]">
+              {review ? 'what would we fix first?' : 'tell us about your business.'}
             </h1>
             <p className="text-lead prism-rise mt-5 max-w-[30rem] text-pretty text-muted-foreground [--rise-delay:200ms]">
               {review ? 'See how we review the path from a customer’s first visit to their next action.' : <>Prism is fully booked. {CAPACITY_MESSAGE.intakeLead}{' '}<WaitlistIntakeMonth />.</>}
