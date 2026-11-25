@@ -263,6 +263,12 @@ async function snapshotHomeSection(
 
   await stabilizePage(page)
   await expectLockedRouteSnapshotSurface(page)
+  // The phone action bar is fixed chrome, not part of the section, and its
+  // blurred text renders differently on macOS and Linux. The full-page home
+  // snapshot still covers it.
+  await page.addStyleTag({
+    content: '[data-testid="mobile-action-bar"]{visibility:hidden !important}',
+  })
   await page.waitForTimeout(300)
 
   await expect(section).toHaveScreenshot(name, { timeout: 15_000 })
