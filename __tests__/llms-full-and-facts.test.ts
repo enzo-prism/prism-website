@@ -46,7 +46,7 @@ describe("mdxToPlainMarkdown", () => {
       "  videoId=\"abc\"",
       "/>",
       "<CTAButton href=\"/waitlist\" block>",
-      "  Join the waitlist",
+      "  Tell us about your business",
       "</CTAButton>",
       "Keep{\" \"}going.",
     ].join("\n")
@@ -54,7 +54,7 @@ describe("mdxToPlainMarkdown", () => {
     expect(text).not.toMatch(/import|YouTubeVideoEmbed|videoId|CTAButton|<|\{/)
     expect(text).toContain("[Prism AEO](https://www.design-prism.com/aeo)")
     expect(text).toContain("[the guide](https://www.design-prism.com/blog/x)")
-    expect(text).toContain("Join the waitlist")
+    expect(text).toContain("Tell us about your business")
   })
 
   it("leaves code fences alone when demoting headings", () => {

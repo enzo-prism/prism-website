@@ -139,7 +139,7 @@ export default function MinimalCaseStudyPage({
   if (facts.length < 4) facts.push({ label: 'Location', value: caseStudy.location })
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-svh flex-col bg-background">
       <Navbar />
 
       <main className="flex-1">

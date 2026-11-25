@@ -118,7 +118,7 @@ describe('/pricing', () => {
       const title = within(plans).getByRole('heading', { level: 3, name: offer.name })
       const card = title.closest('[data-slot="card"]') as HTMLElement
       expect(within(card).getByText(offer.priceLabel)).toBeInTheDocument()
-      const cta = within(card).getByRole('link', { name: /join the waitlist/i })
+      const cta = within(card).getByRole('link', { name: /tell us about your business/i })
       expect(cta).toHaveAttribute('href', offer.primaryCta.href)
 
       fireEvent.click(cta)
@@ -158,10 +158,10 @@ describe('/pricing', () => {
 
     const finalCta = screen.getByRole('heading', { level: 2, name: /get on the list for/i })
     const finalSection = finalCta.closest('section') as HTMLElement
-    fireEvent.click(within(finalSection).getByRole('link', { name: /join the waitlist/i }))
+    fireEvent.click(within(finalSection).getByRole('link', { name: /tell us about your business/i }))
     expect(trackLinkInteraction).toHaveBeenLastCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'pricing final cta',
     )
   })
@@ -192,7 +192,7 @@ describe('/services', () => {
     ).toBeInTheDocument()
     expect(screen.getByText('Four services')).toBeInTheDocument()
     const hrefs = screen
-      .getAllByRole('link', { name: /join the waitlist/i })
+      .getAllByRole('link', { name: /tell us about your business/i })
       .map((link) => link.getAttribute('href'))
     for (const service of PRISM_SERVICES) {
       expect(hrefs).toContain(service.primaryCta.href)

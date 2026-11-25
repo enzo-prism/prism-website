@@ -71,7 +71,7 @@ describe('Work index (/case-studies)', () => {
       hero.getByRole('heading', { level: 1, name: 'real businesses. live sites.' }),
     ).toBeInTheDocument()
 
-    const cta = hero.getByRole('link', { name: /Join the waitlist/ })
+    const cta = hero.getByRole('link', { name: /Tell us about your business/ })
     expect(cta).toHaveAttribute('href', '/waitlist')
   })
 

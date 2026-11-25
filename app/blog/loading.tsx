@@ -4,7 +4,7 @@ import { BlogPostCardSkeleton, Skeleton } from "@/components/blog-skeleton"
 
 export default function BlogLoading() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" aria-busy="true">
         <section className="pb-10 pt-14 sm:pb-14 sm:pt-20">

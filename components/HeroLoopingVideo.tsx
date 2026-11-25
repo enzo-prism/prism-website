@@ -59,7 +59,30 @@ export default function HeroLoopingVideo({
     onPlaybackStateChange,
   })
 
-  const shouldRenderVideo = playbackIntent.mode === 'video-autoplay'
+  // Mount the <video> only once the frame is about a screen away, so phones
+  // never download a loop the visitor does not scroll to.
+  const [isNearViewport, setIsNearViewport] = useState(false)
+  useEffect(() => {
+    const node = containerRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setIsNearViewport(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsNearViewport(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '400px 0px' },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  const shouldRenderVideo =
+    playbackIntent.mode === 'video-autoplay' && isNearViewport
 
   useEffect(() => {
     if (!shouldRenderVideo) {
@@ -168,7 +191,7 @@ export default function HeroLoopingVideo({
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950/5 shadow-lg',
+        'relative w-full overflow-hidden rounded-3xl border border-white/[0.08] bg-card shadow-lg',
         className,
       )}
     >

@@ -14,7 +14,7 @@
  */
 
 .rig {
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease: var(--ease-out);
   --mx: 0;
   --my: 0;
   position: relative;
@@ -397,7 +397,7 @@
   }
 
   .mark::after {
-    animation: ping 2.8s cubic-bezier(0, 0, 0.2, 1) 1.2s infinite;
+    animation: ping 2.8s var(--ease-out) 1.2s infinite;
   }
 
   :global([data-reveal='shown']) .left .fan {

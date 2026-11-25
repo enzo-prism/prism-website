@@ -413,7 +413,7 @@ export default function Navbar() {
     <div
       ref={mobilePanelRef}
       id={MOBILE_NAV_ID}
-      className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-[60] overflow-y-auto overscroll-contain border-t border-white/[0.06] bg-background [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_220ms_cubic-bezier(0.22,1,0.36,1)_both] lg:hidden"
+      className="fixed inset-x-0 bottom-0 top-[var(--prism-header-height)] z-[60] overflow-y-auto overscroll-contain border-t border-white/[0.06] bg-background [-webkit-overflow-scrolling:touch] motion-safe:animate-[nav-panel-in_var(--dur-sheet)_var(--ease-drawer)_both] lg:hidden"
     >
       <div
         aria-hidden="true"
@@ -603,14 +603,12 @@ export default function Navbar() {
                     handleNavigate('Header waitlist', waitlistHref)
                   }
                   data-testid="navbar-cta"
-                  className="group/cta inline-flex h-9 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-medium text-primary-foreground shadow-[0_1px_0_0_oklch(1_0_0/40%)_inset,0_8px_24px_-12px_oklch(1_0_0/50%)] transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                  // Phones get the bottom action bar instead: the header stays
+                  // logo + menu so one idea fits each screen.
+                  className="group/cta hidden h-10 items-center gap-2 rounded-full bg-primary pl-3.5 pr-4 text-sm font-medium text-primary-foreground shadow-[0_1px_0_0_oklch(1_0_0/40%)_inset,0_8px_24px_-12px_oklch(1_0_0/50%)] transition-[background-color,scale] duration-(--dur-ui) ease-(--ease-out) hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 active:scale-[0.97] md:inline-flex"
                 >
-                  <span
-                    className="prism-live-dot hidden sm:inline-flex"
-                    aria-hidden="true"
-                  />
-                  <span className="sm:hidden">Apply</span>
-                  <span className="hidden sm:inline">{PROJECT_CTA_LABEL}</span>
+                  <span className="prism-live-dot" aria-hidden="true" />
+                  <span>{PROJECT_CTA_LABEL}</span>
                 </Link>
               )}
               <button
@@ -623,7 +621,7 @@ export default function Navbar() {
                   restoreFocusAfterCloseRef.current = true
                   setIsMobileMenuOpen((open) => !open)
                 }}
-                className="inline-flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-foreground transition-colors hover:bg-white/[0.08] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 lg:hidden"
+                className="inline-flex size-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-foreground transition-[background-color,scale] duration-(--dur-ui) ease-(--ease-out) hover:bg-white/[0.08] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 active:scale-[0.94] lg:hidden"
               >
                 <span aria-hidden="true" className="relative block h-3 w-4">
                   <span

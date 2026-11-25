@@ -74,12 +74,12 @@ describe('AdsPage launch-manifest hero', () => {
     ).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
 
-    const primary = hero.getByRole('link', { name: 'Join the waitlist' })
+    const primary = hero.getByRole('link', { name: 'Tell us about your business' })
     expect(primary).toHaveAttribute('href', '/waitlist?focus=ads')
     fireEvent.click(primary)
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=ads',
-      'Join the waitlist',
+      'Tell us about your business',
       'ads hero',
     )
 
@@ -183,13 +183,13 @@ describe('AdsPage sections', () => {
       .getByRole('heading', { level: 2, name: 'your next campaign starts here.' })
       .closest('section') as HTMLElement
     const cta = within(finalCta).getByRole('link', {
-      name: 'Join the waitlist',
+      name: 'Tell us about your business',
     })
     expect(cta).toHaveAttribute('href', '/waitlist?focus=ads')
     fireEvent.click(cta)
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=ads',
-      'Join the waitlist',
+      'Tell us about your business',
       'ads final cta',
     )
   })

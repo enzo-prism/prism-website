@@ -91,12 +91,12 @@ describe('WebsiteDesignPage launch hero', () => {
     ).toBeInTheDocument()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
 
-    const primary = hero.getByRole('link', { name: 'Join the waitlist' })
+    const primary = hero.getByRole('link', { name: 'Tell us about your business' })
     expect(primary).toHaveAttribute('href', '/waitlist?focus=website')
     fireEvent.click(primary)
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=website',
-      'Join the waitlist',
+      'Tell us about your business',
       'website design hero',
     )
 
@@ -259,7 +259,7 @@ describe('WebsiteDesignPage sections', () => {
       within(work).getByText('your business could be next on this wall.'),
     ).toBeInTheDocument()
     expect(
-      within(work).getByRole('link', { name: 'Join the waitlist' }),
+      within(work).getByRole('link', { name: 'Tell us about your business' }),
     ).toHaveAttribute('href', '/waitlist?focus=website')
   })
 
@@ -313,13 +313,13 @@ describe('WebsiteDesignPage sections', () => {
       .getByRole('heading', { level: 2, name: "let's design your site." })
       .closest('section') as HTMLElement
     const cta = within(finalCta).getByRole('link', {
-      name: 'Join the waitlist',
+      name: 'Tell us about your business',
     })
     expect(cta).toHaveAttribute('href', '/waitlist?focus=website')
     fireEvent.click(cta)
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist?focus=website',
-      'Join the waitlist',
+      'Tell us about your business',
       'website design final cta',
     )
   })

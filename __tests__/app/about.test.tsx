@@ -90,7 +90,7 @@ describe('AboutClientPage', () => {
 
   it('tracks the hero and closing waitlist CTAs', () => {
     render(<AboutClientPage />)
-    const ctas = screen.getAllByRole('link', { name: /join the waitlist/i })
+    const ctas = screen.getAllByRole('link', { name: /tell us about your business/i })
 
     expect(ctas.length).toBeGreaterThanOrEqual(2)
     for (const cta of ctas) expect(cta).toHaveAttribute('href', '/waitlist')
@@ -98,13 +98,13 @@ describe('AboutClientPage', () => {
     fireEvent.click(ctas[0])
     expect(trackLinkInteraction).toHaveBeenLastCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'about hero',
     )
     fireEvent.click(ctas[ctas.length - 1])
     expect(trackLinkInteraction).toHaveBeenLastCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'about final cta',
     )
   })

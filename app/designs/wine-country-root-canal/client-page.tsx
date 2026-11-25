@@ -830,7 +830,7 @@ export default function WineCountryRootCanalDesignReview() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main id="main-content" tabIndex={-1} className="flex-1">
         <section className="relative isolate overflow-x-clip pb-16 pt-14 sm:pb-20 sm:pt-20">

@@ -15,7 +15,7 @@ const read = (relativePath: string) =>
 describe('waitlist CTA map', () => {
   it('keeps one canonical waitlist CTA with service focus variants', () => {
     expect(WAITLIST_CTA).toEqual({
-      label: 'Join the waitlist',
+      label: 'Tell us about your business',
       href: '/waitlist',
     })
     expect(WAITLIST_FOCUS_HREFS).toEqual({

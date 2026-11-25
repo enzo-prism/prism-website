@@ -84,12 +84,12 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .beamCore {
-    animation: refraction-beam-draw 1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+    animation: refraction-beam-draw 1s var(--ease-out) 0.35s both;
   }
 
   .beamGlow {
     animation:
-      refraction-beam-draw 1s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both,
+      refraction-beam-draw 1s var(--ease-out) 0.35s both,
       refraction-beam-breathe 5.2s ease-in-out 3.2s infinite;
   }
 
@@ -109,7 +109,7 @@
   }
 
   .spectrum {
-    animation: refraction-spectrum-extend 1.1s cubic-bezier(0.22, 1, 0.36, 1) 1.35s both;
+    animation: refraction-spectrum-extend 1.1s var(--ease-out) 1.35s both;
   }
 
   .band {

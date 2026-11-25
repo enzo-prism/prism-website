@@ -252,7 +252,7 @@ export default function ModelsPageClient() {
     getError(name) ? `models-${name}-error` : undefined
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <HeroSection />

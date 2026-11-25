@@ -12,7 +12,7 @@ import ScrollingTimeline from '@/components/scrolling-timeline'
 
 export default function AboutClientPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent font-sans text-foreground">
+    <div className="flex min-h-svh flex-col bg-transparent font-sans text-foreground">
       <Navbar />
 
       <main className="flex-1 overflow-x-clip outline-none" id="main-content" tabIndex={-1}>

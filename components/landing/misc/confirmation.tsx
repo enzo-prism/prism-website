@@ -22,7 +22,7 @@ export function ConfirmationShell({
   className,
 }: ConfirmationShellProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
+    <div className="flex min-h-svh flex-col bg-background font-sans text-foreground">
       <Navbar />
       <main
         id="main-content"

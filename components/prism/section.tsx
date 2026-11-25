@@ -44,7 +44,7 @@ type EyebrowProps = {
   className?: string
 }
 
-/** Mono metadata label with a short spectrum tick. */
+/** Mono metadata label with a short neutral hairline (colour means change; eyebrows are structure). */
 export function Eyebrow({ children, className }: EyebrowProps) {
   return (
     <p
@@ -53,7 +53,7 @@ export function Eyebrow({ children, className }: EyebrowProps) {
         className,
       )}
     >
-      <span aria-hidden="true" className="h-px w-5 bg-spectrum" />
+      <span aria-hidden="true" className="h-px w-5 bg-white/25" />
       {children}
     </p>
   )

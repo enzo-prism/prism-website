@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 
 /** Hover lift of 2px (the column pauses on hover, so the card can be read). */
 const CARD_LIFT =
-  'transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0'
+  'transition-[border-color,transform] duration-300 ease-(--ease-out) hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0'
 
 export function LoveClientCard({ note }: { note: LoveClientNote }) {
   return (

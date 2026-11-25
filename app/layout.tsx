@@ -10,6 +10,7 @@ import { GlobalSchemaGraph } from "@/components/schema-markup"
 import { BLOG_FEED_ALTERNATE } from "@/lib/seo/rules"
 import RuntimeClientShell from "@/components/runtime-client-shell"
 import SkipToContent from "@/components/skip-to-content"
+import { LoopVisibility } from "@/components/prism/loop-visibility"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import {
   GA_MEASUREMENT_ID,
@@ -262,11 +263,12 @@ export default function RootLayout({
       {/* Fonts are wired via Geist CSS variables on <html>; Tailwind's `font-sans` / `font-mono`
         resolve via `--font-sans` / `--font-mono` in `app/globals.css`.
       */}
-      <body className="m-0 p-0 w-full min-h-screen font-sans antialiased">
+      <body className="m-0 p-0 w-full min-h-svh font-sans antialiased">
         <SkipToContent />
         <GlobalSchemaGraph />
         <RuntimeClientShell />
         {children}
+        <LoopVisibility />
         <SpeedInsights />
       </body>
     </html>

@@ -296,7 +296,7 @@ export default function WaitlistThankYouPage() {
                       <span
                         key={site.slug}
                         className={cn(
-                          'absolute block w-[56%] overflow-hidden rounded-lg border border-white/10 bg-popover shadow-[0_24px_48px_-16px_oklch(0_0_0/95%)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none',
+                          'absolute block w-[56%] overflow-hidden rounded-lg border border-white/10 bg-popover shadow-[0_24px_48px_-16px_oklch(0_0_0/95%)] transition-transform duration-500 ease-(--ease-out) motion-reduce:transition-none',
                           isFront
                             ? 'left-1/2 top-0 z-20 -translate-x-1/2 group-hover/card:-translate-y-1.5'
                             : index === 0

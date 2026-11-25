@@ -20,7 +20,7 @@ export const metadata: Metadata = buildRouteMetadata({
 
 export default function PricingThankYouPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <LeadSuccessTracker />
       <Navbar />
       <main

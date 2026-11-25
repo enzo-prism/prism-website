@@ -76,7 +76,7 @@ export const metadata: Metadata = {
 
 export default function PrismAppPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <SoftwareApplicationSchema
         appId="prism-ios"

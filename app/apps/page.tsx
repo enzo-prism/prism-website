@@ -100,7 +100,7 @@ const PLATFORMS = [
 
 export default function AppsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <ScrollProgressBar />
       <Navbar />
 

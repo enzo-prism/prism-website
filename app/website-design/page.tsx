@@ -301,7 +301,7 @@ function HeroProof() {
 
 export default function WebsiteDesignPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <ServiceHero
@@ -370,7 +370,7 @@ export default function WebsiteDesignPage() {
                   title={
                     <>
                       built to be understood by Google and{' '}
-                      <span className="text-spectrum prism-spectrum-pan">
+                      <span className="text-spectrum">
                         AI
                       </span>
                       .

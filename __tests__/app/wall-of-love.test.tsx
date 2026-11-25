@@ -79,13 +79,13 @@ describe('WallOfLoveClientPage hero', () => {
 
     const links = hero.getAllByRole('link')
     expect(links).toHaveLength(1)
-    expect(links[0]).toHaveAccessibleName(/join the waitlist/i)
+    expect(links[0]).toHaveAccessibleName(/tell us about your business/i)
     expect(links[0]).toHaveAttribute('href', '/waitlist')
 
     fireEvent.click(links[0])
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'wall of love hero',
     )
   })
@@ -273,13 +273,13 @@ describe('WallOfLoveClientPage sources', () => {
     expect(
       getByRole('heading', { level: 2, name: 'be the next note on this wall.' }),
     ).toBeInTheDocument()
-    const finalLink = getAllByRole('link', { name: /join the waitlist/i }).at(-1)
+    const finalLink = getAllByRole('link', { name: /tell us about your business/i }).at(-1)
 
     expect(finalLink).toHaveAttribute('href', '/waitlist')
     fireEvent.click(finalLink as HTMLElement)
     expect(trackLinkInteraction).toHaveBeenLastCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'wall of love final cta',
     )
   })

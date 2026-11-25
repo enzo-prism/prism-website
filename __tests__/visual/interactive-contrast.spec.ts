@@ -310,7 +310,7 @@ test.describe('interactive contrast', () => {
         : ['default', 'hover', 'focus']
 
     await expectReadableStates(
-      page.getByRole('link', { name: /join the waitlist/i }).first(),
+      page.getByRole('link', { name: /tell us about your business/i }).first(),
       4.5,
       interactiveStates,
     )

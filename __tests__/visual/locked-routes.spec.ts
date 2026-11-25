@@ -131,7 +131,7 @@ const lockedRoutes = [
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
       /join the waitlist to work with us in [a-z]+\./i,
-      /join the waitlist/i,
+      /tell us about your business/i,
     ],
   },
   { name: 'about', path: '/about', readyHeading: /built by enzo sison\./i },

@@ -35,7 +35,7 @@ export function AppPolicyPage({
   sections,
 }: AppPolicyPageProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main
         id="main-content"

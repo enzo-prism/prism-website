@@ -29,7 +29,7 @@ export default function HomeHero() {
 
         <h1
           id="home-hero-title"
-          className="text-hero prism-rise mt-5 pb-2 [--rise-delay:140ms] sm:mt-5"
+          className="text-hero mt-5 pb-2 sm:mt-5"
         >
           <span className="text-gradient block whitespace-nowrap">
             {HOMEPAGE_HERO.titleLead}

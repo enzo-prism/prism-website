@@ -110,7 +110,7 @@ export function Mach1Launch({ trackedLocation }: { trackedLocation: string }) {
                   width={2880}
                   height={1800}
                   sizes="(min-width: 1024px) 380px, (min-width: 768px) 46vw, calc(100vw - 2.5rem)"
-                  className="block aspect-[16/9] h-auto w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/page:scale-[1.025] motion-reduce:transition-none"
+                  className="block aspect-[16/9] h-auto w-full object-cover object-top transition-transform duration-700 ease-(--ease-out) group-hover/page:scale-[1.025] motion-reduce:transition-none"
                 />
               </span>
               <span className="flex flex-1 flex-col p-5 sm:p-6">

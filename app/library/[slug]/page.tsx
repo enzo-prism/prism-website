@@ -81,7 +81,7 @@ export default async function LibraryDetailPage({ params }: PageProps) {
   const tikTokVideoId =
     post.platform === 'tiktok' ? getTikTokVideoId(post.permalink) : null
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-svh flex-col bg-background">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <div className="prism-container pt-6">

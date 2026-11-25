@@ -134,7 +134,7 @@ export default function BlogPostLayout({
   const hasToc = toc.length >= 3
 
   return (
-    <div className="blog-reading-surface flex min-h-screen flex-col bg-background text-foreground">
+    <div className="blog-reading-surface flex min-h-svh flex-col bg-background text-foreground">
       <BlogScrollProgress />
       <Navbar />
 

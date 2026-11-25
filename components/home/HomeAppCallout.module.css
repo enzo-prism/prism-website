@@ -26,7 +26,7 @@
   transition:
     border-color 250ms ease,
     background-color 250ms ease,
-    transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform 450ms var(--ease-out);
 }
 
 .card:hover {
@@ -141,7 +141,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .card {
-    animation: home-app-land 900ms cubic-bezier(0.2, 1.25, 0.35, 1) 2.5s both;
+    animation: home-app-land 900ms var(--ease-out) 2.5s both;
   }
 
   /* Once landed, hover takes over the transform. */

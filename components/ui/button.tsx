@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex min-w-0 max-w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium tracking-[-0.01em] transition-[color,background-color,border-color,box-shadow,transform] duration-200 outline-none select-none focus-visible:ring-[3px] focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex min-w-0 max-w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium tracking-[-0.01em] transition-[color,background-color,border-color,box-shadow,transform] duration-(--dur-ui) ease-(--ease-out) outline-none select-none focus-visible:ring-[3px] focus-visible:ring-ring/50 active:scale-[0.97] active:duration-(--dur-press) motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -26,14 +26,16 @@ const buttonVariants = cva(
           "border border-white/20 bg-transparent text-white hover:bg-white/10",
       },
       size: {
-        default: "h-10 px-5 has-[>svg]:px-4",
-        xs: "h-7 gap-1 px-3 text-xs has-[>svg]:px-2.5",
-        sm: "h-9 gap-1.5 px-4 has-[>svg]:px-3",
-        lg: "h-11 px-6 text-[15px] has-[>svg]:px-5",
+        // Touch floor (DESIGN.md): every size that people tap on a phone is at
+        // least 44px tall on coarse pointers. CTA sizes are 44 / 48 / 52.
+        default: "h-11 px-5 has-[>svg]:px-4",
+        xs: "h-7 gap-1 px-3 text-xs pointer-coarse:h-10 has-[>svg]:px-2.5",
+        sm: "h-9 gap-1.5 px-4 pointer-coarse:h-11 has-[>svg]:px-3",
+        lg: "h-12 px-6 text-[15px] has-[>svg]:px-5",
         xl: "h-13 px-7 text-base has-[>svg]:px-6",
-        icon: "size-10",
-        "icon-sm": "size-9",
-        "icon-xs": "size-8",
+        icon: "size-11",
+        "icon-sm": "size-9 pointer-coarse:size-11",
+        "icon-xs": "size-8 pointer-coarse:size-10",
       },
     },
     defaultVariants: {

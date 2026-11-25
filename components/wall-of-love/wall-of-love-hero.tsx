@@ -53,7 +53,7 @@ export function WallOfLoveHero() {
           className="prism-rise text-display mt-8 max-w-[12ch] text-balance pb-2 [--rise-delay:80ms] max-sm:text-[3.25rem]"
         >
           <span className="text-gradient">wall of </span>
-          <span className="text-spectrum prism-spectrum-pan">love.</span>
+          <span className="text-spectrum">love.</span>
         </h1>
 
         <p className="prism-rise text-lead mt-5 max-w-[38ch] text-pretty text-muted-foreground [--rise-delay:160ms]">

@@ -103,7 +103,7 @@ function ActionCard({
       data-cta-platform={platform}
       data-cta-service={service}
       className={cn(
-        'group/action relative flex min-h-[4.75rem] w-full items-center gap-4 rounded-2xl border border-white/[0.08] bg-card px-4 py-4 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] transition-[transform,border-color,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-white/[0.16] hover:bg-white/[0.035] active:translate-y-0 motion-reduce:transition-none sm:px-5',
+        'group/action relative flex min-h-[4.75rem] w-full items-center gap-4 rounded-2xl border border-white/[0.08] bg-card px-4 py-4 shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] transition-[transform,border-color,background-color] duration-300 ease-(--ease-out) hover:-translate-y-0.5 hover:border-white/[0.16] hover:bg-white/[0.035] active:translate-y-0 motion-reduce:transition-none sm:px-5',
         featured && 'prism-beam',
         focusRing,
       )}

@@ -66,12 +66,12 @@ describe("pricing model", () => {
   })
 
   it("points every primary CTA at the service's waitlist focus, never an external booking link", () => {
-    expect(WAITLIST_CTA).toEqual({ label: "Join the waitlist", href: "/waitlist" })
+    expect(WAITLIST_CTA).toEqual({ label: "Tell us about your business", href: "/waitlist" })
     expect(PRICING_PRIMARY_CTA).toEqual(WAITLIST_CTA)
 
     for (const offerId of ALL_OFFER_IDS) {
       const { primaryCta } = CANONICAL_PRICING_OFFERS[offerId]
-      expect(primaryCta.label).toBe("Join the waitlist")
+      expect(primaryCta.label).toBe("Tell us about your business")
       expect(primaryCta.href).toMatch(/^\/waitlist\?focus=(website|content|ads|aeo)$/)
     }
 

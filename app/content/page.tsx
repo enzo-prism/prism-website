@@ -247,7 +247,7 @@ const FAQ_ITEMS = [
 
 export default function ContentOsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <ServiceHero
@@ -257,7 +257,7 @@ export default function ContentOsPage() {
               <span className="block">your expertise. </span>
               <span className="block">
                 catching{' '}
-                <span className="text-spectrum prism-spectrum-pan">fire.</span>
+                <span className="text-spectrum">fire.</span>
               </span>
             </>
           }

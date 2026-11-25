@@ -7,8 +7,14 @@
 export const WAITLIST_PATH = '/waitlist'
 export const WAITLIST_THANK_YOU_PATH = '/waitlist/thank-you'
 
+/**
+ * The one primary action label (2026-11-25 design overhaul). The button names
+ * what the owner does ("tell us about your business"); the capacity line next
+ * to it keeps the honest scarcity ("fully booked, next intake January"), so
+ * the button never reads as a queue.
+ */
 export const WAITLIST_CTA = {
-  label: 'Join the waitlist',
+  label: 'Tell us about your business',
   href: WAITLIST_PATH,
 } as const
 

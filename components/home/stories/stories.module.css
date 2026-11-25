@@ -195,7 +195,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .capture {
-    animation: browse var(--browse-duration, 22s) cubic-bezier(0.65, 0, 0.35, 1)
+    animation: browse var(--browse-duration, 22s) var(--ease-in-out)
       var(--browse-delay, 0s) infinite both;
     animation-play-state: paused;
   }

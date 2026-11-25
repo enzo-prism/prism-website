@@ -88,7 +88,7 @@ export function Mach1Stack() {
             className="absolute bottom-[12vh] left-0 top-[12vh] hidden w-px bg-white/[0.08] lg:block"
           >
             <span
-              className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-spectrum-violet/0 via-spectrum-violet to-spectrum-violet/0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+              className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-spectrum-violet/0 via-spectrum-violet to-spectrum-violet/0 transition-transform duration-700 ease-(--ease-out) motion-reduce:transition-none"
               style={{ transform: `translateY(${active * 100}%)` }}
             />
           </span>
@@ -172,7 +172,7 @@ export function Mach1Stack() {
                   <div
                     key={tool.key}
                     aria-hidden={!isActive}
-                    className="self-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [grid-area:1/1] motion-reduce:transition-none"
+                    className="self-center transition-[opacity,transform] duration-700 ease-(--ease-out) [grid-area:1/1] motion-reduce:transition-none"
                     style={{
                       opacity: isActive ? 1 : 0,
                       transform: isActive

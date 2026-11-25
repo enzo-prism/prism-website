@@ -91,7 +91,7 @@ describe('/dental-website', () => {
       .getByRole('heading', { level: 2, name: 'your practice, next.' })
       .closest('section') as HTMLElement
     const waitlistLinks = within(finalCta).getAllByRole('link', {
-      name: /join the waitlist/i,
+      name: /tell us about your business/i,
     })
     expect(waitlistLinks[0]).toHaveAttribute('href', WEBSITE_WAITLIST_CTA.href)
   })

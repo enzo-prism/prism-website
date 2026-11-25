@@ -119,7 +119,7 @@ const heroShots = [0, 1, 9, 10, 15].map((index) => recentShoots[0].shots[index])
 
 export default function OfficeTeamPhotographyPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main id="main-content" tabIndex={-1} className="flex-1">
         <LandingHero

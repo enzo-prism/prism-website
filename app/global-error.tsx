@@ -41,8 +41,8 @@ export default function GlobalError({
 
   return (
     <html lang="en" className={`dark ${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="m-0 min-h-screen bg-background font-sans text-foreground antialiased">
-        <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-5 py-16">
+      <body className="m-0 min-h-svh bg-background font-sans text-foreground antialiased">
+        <main className="relative isolate flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 py-16">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
             <div className="bg-grid absolute inset-0 opacity-50" />
             <div className="absolute inset-0 bg-[radial-gradient(40%_40%_at_50%_45%,oklch(0.66_0.16_258/14%),transparent_70%)] blur-2xl" />

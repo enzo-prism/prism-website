@@ -17,8 +17,8 @@
  */
 
 .scene {
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-travel: cubic-bezier(0.45, 0, 0.1, 1);
+  --ease-out: var(--ease-out);
+  --ease-travel: var(--ease-in-out);
   position: relative;
   isolation: isolate;
 }

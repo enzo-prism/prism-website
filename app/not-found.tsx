@@ -45,7 +45,7 @@ function rise(delay: number): CSSProperties {
 /** The 404: a beam of light enters the prism and scatters off the page. */
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-svh flex-col bg-background text-foreground">
       <Navbar />
       <main id="main-content" tabIndex={-1} className="relative isolate flex-1 overflow-x-clip">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">

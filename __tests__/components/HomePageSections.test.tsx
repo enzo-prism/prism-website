@@ -93,7 +93,7 @@ describe('ClientPage homepage flow', () => {
     render(<ClientPage />)
 
     const waitlistLinks = screen
-      .getAllByRole('link', { name: /join the waitlist/i })
+      .getAllByRole('link', { name: /tell us about your business/i })
       .map((link) => link.getAttribute('href'))
     expect(waitlistLinks.length).toBeGreaterThanOrEqual(3)
     expect(new Set(waitlistLinks)).toEqual(new Set(['/waitlist']))

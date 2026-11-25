@@ -152,7 +152,7 @@ export default function HomePillars() {
                       {link.label}
                       <ArrowRight
                         aria-hidden="true"
-                        className="size-4 text-muted-foreground transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:translate-x-0.5 group-hover/link:text-foreground"
+                        className="size-4 text-muted-foreground transition-transform duration-300 ease-(--ease-out) group-hover/link:translate-x-0.5 group-hover/link:text-foreground"
                       />
                     </TrackedLink>
                   ))}
@@ -208,7 +208,7 @@ export default function HomePillars() {
             <span className="pl-2.5 sm:pl-2.5 lg:pl-0">All services</span>
             <ArrowRight
               aria-hidden="true"
-              className="size-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/pill:translate-x-0.5"
+              className="size-4 transition-transform duration-300 ease-(--ease-out) group-hover/pill:translate-x-0.5"
             />
           </TrackedLink>
         </div>

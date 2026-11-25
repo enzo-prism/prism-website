@@ -388,6 +388,20 @@ select {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.72 0 0);
     --prism-header-height: 64px;
+
+    /* Motion tokens (DESIGN.md "Motion"). Every transition and keyframe uses
+       one of these curves; raw cubic-bezier values outside this block are
+       rejected by __tests__/design/motion-tokens.test.ts. No overshoot. */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+    --dur-press: 120ms;
+    --dur-ui: 220ms;
+    --dur-sheet: 320ms;
+    --dur-enter: 560ms;
+    --dur-count: 700ms;
+    --dur-refract: 1200ms;
   }
   .dark {
     color-scheme: dark;
@@ -759,9 +773,12 @@ select {
   width: 100%;
   max-width: 76rem;
   margin-inline: auto;
-  padding-inline: max(1.25rem, env(safe-area-inset-left));
+  /* Each side clears its own notch in landscape. */
+  padding-left: max(1.25rem, env(safe-area-inset-left));
+  padding-right: max(1.25rem, env(safe-area-inset-right));
   @media (min-width: 640px) {
-    padding-inline: 2rem;
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
   }
 }
 
@@ -844,7 +861,7 @@ select {
 
 @media (prefers-reduced-motion: no-preference) {
   .prism-live-dot::after {
-    animation: prism-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation: prism-ping 2.2s var(--ease-out) infinite;
   }
 }
 
@@ -939,45 +956,58 @@ select {
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal='hidden'] {
     opacity: 0;
-    transform: translate3d(0, 22px, 0);
+    transform: translate3d(0, 14px, 0);
   }
 
   [data-reveal='shown'] {
     opacity: 1;
     transform: translate3d(0, 0, 0);
     transition:
-      opacity 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
-      transform 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+      opacity var(--dur-enter) var(--ease-out) var(--reveal-delay, 0ms),
+      transform var(--dur-enter) var(--ease-out) var(--reveal-delay, 0ms);
   }
 }
 
-/* ---- Hero entrance -------------------------------------------------------
-   Server-rendered rise used by the hero copy. LCP-safe: starts visible. */
+/* ---- Rise (motion verb: new information arrives) ---------------------------
+   Server-rendered entrance for hero support copy. Transform and opacity only
+   (no blur: it repaints large type on every frame on phones). Never put it on
+   an h1: the headline paints in the first frame. */
 @keyframes prism-rise {
   from {
     opacity: 0.001;
-    transform: translate3d(0, 18px, 0);
-    filter: blur(6px);
+    transform: translate3d(0, 14px, 0);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
-    filter: blur(0);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .prism-rise {
-    animation: prism-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: prism-rise var(--dur-enter) var(--ease-out) both;
     animation-delay: var(--rise-delay, 0ms);
   }
 }
 
-/* ---- Hero glint -----------------------------------------------------------
-   A band of white light crosses the hero accent word just as the spectrum
-   leaves the prism, then twice more. Two clipped background
-   layers: the glint (parked off the right edge in the still frame) over the
-   refraction gradient. */
+/* ---- Off-screen loop pause --------------------------------------------------
+   components/prism/loop-visibility.tsx marks every [data-loop] container
+   (and every .prism-marquee) data-offscreen="true" while it is outside the
+   viewport, so infinite loops never spend GPU time where nobody can see them. */
+[data-offscreen='true'],
+[data-offscreen='true'] *,
+[data-offscreen='true'] *::before,
+[data-offscreen='true'] *::after {
+  animation-play-state: paused !important;
+}
+
+/* ---- Refract (motion verb: a goal becomes an outcome) -----------------------
+   The accent word arrives as white light and refracts into the spectrum once,
+   left to right, as the hero beam reaches the prism; then one glint crosses
+   it and the word rests. Three clipped layers: the glint (parked off the right
+   edge), a white veil (parked transparent in the still frame), and the
+   refraction gradient. The still frame is the finished, coloured word, so
+   reduced-motion visitors and screenshots see the outcome. */
 .prism-glint {
   background-image:
     linear-gradient(
@@ -986,6 +1016,7 @@ select {
       oklch(1 0 0 / 85%) 50%,
       transparent 56% 100%
     ),
+    linear-gradient(100deg, transparent 0 42%, oklch(1 0 0) 58% 100%),
     linear-gradient(
       100deg,
       oklch(1 0 0) 0%,
@@ -999,8 +1030,10 @@ select {
     );
   background-size:
     250% 100%,
+    320% 100%,
     100% 100%;
   background-position:
+    0% 0,
     0% 0,
     0 0;
   background-repeat: no-repeat;
@@ -1011,15 +1044,31 @@ select {
   box-decoration-break: clone;
 }
 
+@keyframes prism-refract {
+  0% {
+    background-position:
+      100% 0,
+      100% 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      100% 0,
+      0% 0,
+      0 0;
+  }
+}
+
 @keyframes prism-glint-pass {
   0% {
     background-position:
       100% 0,
+      0% 0,
       0 0;
   }
-  22%,
   100% {
     background-position:
+      0% 0,
       0% 0,
       0 0;
   }
@@ -1027,10 +1076,12 @@ select {
 
 @media (prefers-reduced-motion: no-preference) {
   .prism-glint {
-    /* Three passes, then the word rests (the glint repaints the clipped
-       text, so it is the one background-position loop on the page besides
-       prism-spectrum-pan). */
-    animation: prism-glint-pass 9s cubic-bezier(0.45, 0, 0.2, 1) 2.1s 3 both;
+    /* Refract once when the beam reaches the prism, then one glint. Never
+       looped: the word is an outcome, and outcomes stay put. */
+    animation:
+      prism-refract var(--dur-refract) var(--ease-in-out) var(--refract-delay, 700ms) both,
+      prism-glint-pass 1600ms var(--ease-in-out)
+        calc(var(--refract-delay, 700ms) + var(--dur-refract) + 200ms) forwards;
   }
 }
 
@@ -1099,7 +1150,9 @@ select {
   }
 }
 
-/* ---- Spectrum shimmer for .text-spectrum ------------------------------- */
+/* ---- Spectrum shimmer for .text-spectrum -------------------------------
+   One slow pass when the phrase first paints, then it rests. Never looped:
+   colour means change, and a change happens once. */
 @keyframes prism-spectrum-pan {
   0%,
   100% {
@@ -1112,7 +1165,7 @@ select {
 
 @media (prefers-reduced-motion: no-preference) {
   .prism-spectrum-pan {
-    animation: prism-spectrum-pan 8s ease-in-out infinite;
+    animation: prism-spectrum-pan 2400ms var(--ease-in-out) 400ms 1 both;
   }
 }
 
@@ -1128,8 +1181,8 @@ select {
     block-size: 0;
     overflow: hidden;
     transition:
-      block-size 320ms cubic-bezier(0.22, 1, 0.36, 1),
-      content-visibility 320ms allow-discrete;
+      block-size var(--dur-sheet) var(--ease-out),
+      content-visibility var(--dur-sheet) allow-discrete;
   }
 
   .prism-faq[open]::details-content {

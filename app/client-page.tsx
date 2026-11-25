@@ -58,7 +58,7 @@ function WeeklyUpdatePreview() {
 
 export default function ClientPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-transparent font-sans text-foreground">
+    <div className="flex min-h-svh flex-col bg-transparent font-sans text-foreground">
       <Navbar />
       <HomeHashScrollStabilizer />
       <main className="flex-1" id="main-content" tabIndex={-1}>

@@ -75,7 +75,7 @@ describe('case study template', () => {
     expect(visit).toHaveAttribute('target', '_blank')
 
     const waitlistLinks = screen
-      .getAllByRole('link', { name: /Join the waitlist/ })
+      .getAllByRole('link', { name: /Tell us about your business/ })
       .map((link) => link.getAttribute('href'))
     expect(waitlistLinks.length).toBeGreaterThanOrEqual(2)
     expect(new Set(waitlistLinks)).toEqual(new Set(['/waitlist']))

@@ -21,7 +21,7 @@ typescript: {
     // Next already tree-shakes lucide-react / date-fns by default. List the
     // heavy barrels explicitly so per-route bundles only pull the pieces
     // they use.
-    optimizePackageImports: ['framer-motion', 'recharts'],
+    optimizePackageImports: ['recharts'],
   },
 outputFileTracingIncludes: {
   "/api/latest-posts": ["content/blog/**/*"],

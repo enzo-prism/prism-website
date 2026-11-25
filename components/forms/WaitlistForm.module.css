@@ -1,5 +1,5 @@
 .stepEnter {
-  animation: waitlist-step-enter 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: waitlist-step-enter 260ms var(--ease-out) both;
 }
 
 @keyframes waitlist-step-enter {

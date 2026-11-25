@@ -119,12 +119,12 @@ describe('AeoPage hero', () => {
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
 
     expect(AEO_WAITLIST_CTA.href).toBe(AEO_WAITLIST_HREF)
-    const primary = hero.getByRole('link', { name: 'Join the waitlist' })
+    const primary = hero.getByRole('link', { name: 'Tell us about your business' })
     expect(primary).toHaveAttribute('href', AEO_WAITLIST_HREF)
     fireEvent.click(primary)
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       AEO_WAITLIST_HREF,
-      'Join the waitlist',
+      'Tell us about your business',
       'aeo hero',
     )
 
@@ -326,18 +326,18 @@ describe('AeoPage sections', () => {
 
     const finalCta = sectionByHeadingId('aeo-final-cta-title')
     const cta = within(finalCta).getByRole('link', {
-      name: 'Join the waitlist',
+      name: 'Tell us about your business',
     })
     expect(cta).toHaveAttribute('href', AEO_WAITLIST_HREF)
     fireEvent.click(cta)
     expect(trackLinkInteraction).toHaveBeenLastCalledWith(
       AEO_WAITLIST_HREF,
-      'Join the waitlist',
+      'Tell us about your business',
       'aeo final cta',
     )
 
     const waitlistLinks = screen.getAllByRole('link', {
-      name: /join the waitlist/i,
+      name: /tell us about your business/i,
     })
     expect(waitlistLinks.length).toBeGreaterThanOrEqual(3)
     for (const link of waitlistLinks) {

@@ -25,6 +25,12 @@ export default function OlympicWalkthrough() {
         aria-label="Olympic Bootworks catalog and test-ride walkthrough"
         className="mt-8 w-full rounded-3xl border border-border bg-card"
       >
+        {/* Phones get a 720px encode (about a quarter of the bytes). */}
+        <source
+          src="/case-studies/olympic-walkthrough-720.mp4"
+          type="video/mp4"
+          media="(max-width: 767px)"
+        />
         <source src="/case-studies/olympic-walkthrough.mp4" type="video/mp4" />
         <track
           kind="captions"
