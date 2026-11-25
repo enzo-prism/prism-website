@@ -217,6 +217,7 @@ export type WaitlistPrefill = {
 }
 
 export type WaitlistPrefillParams = {
+  intent?: string | string[]
   focus?: string | string[]
   timing?: string | string[]
   website?: string | string[]

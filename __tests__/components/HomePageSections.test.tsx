@@ -3,7 +3,6 @@ import { render, screen, within } from '@testing-library/react'
 import ClientPage from '@/app/client-page'
 import {
   HOMEPAGE_CASE_STUDIES,
-  HOMEPAGE_MORE_WORK,
 } from '@/components/home/homepage-content'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { FORMER_CLIENT_SLUGS } from '@/lib/former-clients'
@@ -64,19 +63,20 @@ describe('ClientPage homepage flow', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^impossible is temporary\.$/i,
+        name: /^your growth team\.$/i,
       }),
     ).toBeInTheDocument()
 
     const headings = screen
       .getAllByRole('heading', { level: 2 })
+      .filter((heading) => !heading.closest('details:not([open])'))
       .map((heading) => heading.textContent?.trim())
 
     expect(headings).toEqual([
+      'from bike research to a test ride.',
       'every business has an impossible.',
-      `${HOMEPAGE_MORE_WORK.count} more. every one is live.`,
+      'a direct line to the people doing the work.',
       'numbers, not adjectives.',
-      'we built our own audience from zero.',
       'shine. convert. get seen.',
       'in their words.',
       'built by a founder chasing LA 2028.',
@@ -114,18 +114,18 @@ describe('ClientPage homepage flow', () => {
     expect(hero).not.toBeNull()
     const heroScope = within(hero as HTMLElement)
 
-    heroScope.getByRole('link', { name: /join the waitlist/i }).click()
+    heroScope.getByRole('link', { name: /tell us about your business/i }).click()
     expect(trackLinkInteraction).toHaveBeenCalledWith(
       '/waitlist',
-      'Join the waitlist',
+      'Tell us about your business',
       'homepage hero',
     )
 
     const seeWork = heroScope.getByRole('link', { name: /see the work/i })
-    expect(seeWork).toHaveAttribute('href', '#work')
+    expect(seeWork).toHaveAttribute('href', '#featured-work')
 
     expect(hero).toHaveTextContent(
-      /website design, content, ads, and AEO that turn strangers into customers/i,
+      /designers, engineers and marketers working directly with small business owners/i,
     )
   })
 
@@ -166,6 +166,8 @@ describe('ClientPage homepage flow', () => {
     expect(work).toHaveTextContent('Sells to businesses')
     expect(work).toHaveTextContent('Sells to consumers')
 
+    const archive = document.querySelector('details#more-work-and-reach') as HTMLDetailsElement
+    archive.open = true
     const moreWork = document.getElementById('more-work') as HTMLElement
     const moreHrefs = within(moreWork)
       .getAllByRole('link')

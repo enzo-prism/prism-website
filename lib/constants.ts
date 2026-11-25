@@ -109,7 +109,7 @@ export type NavItem = { label: string; href: string }
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Work', href: '/case-studies' },
   { label: 'Wall of Love', href: '/wall-of-love' },
-  { label: 'About', href: '/about' },
+  { label: 'How we work', href: '/about' },
   { label: 'Pricing', href: '/pricing' },
 ]
 

@@ -31,6 +31,7 @@ export function reconcileWaitlist(submissions: unknown, events: unknown) {
   let unidentifiedReceipts = 0
   let unidentifiedLeadEvents = 0
   for (const row of rows(submissions)) {
+    if (row.intake_type === 'site_review') continue
     const classification = row.classification ?? 'accepted'
     if (
       !['accepted', 'spam', 'test', 'rejected'].includes(String(classification))

@@ -10,7 +10,7 @@ export const BRAND_SUFFIX = " | Prism"
  * because "Prism" alone is shared by many unrelated companies.
  */
 export const PRISM_ENTITY_DESCRIPTION =
-  "Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). One team plans, builds, and improves the work so customers can find, trust, and choose the business on Google and in AI answers."
+  "Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). Owners work directly with a small team of designers, engineers and marketers to improve the path from discovery to inquiry and see what changed."
 
 /** `<link rel="alternate" type="application/rss+xml">` for the blog feed. */
 export const BLOG_FEED_ALTERNATE = {

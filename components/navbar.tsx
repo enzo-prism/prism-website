@@ -41,6 +41,7 @@ type BreadcrumbItem = {
   url: string
 }
 
+const PROJECT_CTA_LABEL = 'Tell us about your business'
 const MOBILE_NAV_ID = 'mobile-site-nav'
 const DESKTOP_NAV_BREAKPOINT = 1024
 
@@ -216,7 +217,7 @@ function ServicesMenu({
                 We open new spots every month. Waitlist members get first pick.
               </span>
               <span className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-                {WAITLIST_CTA.label}
+                {PROJECT_CTA_LABEL}
                 <ArrowRight
                   aria-hidden="true"
                   className="size-4 transition-transform duration-200 group-hover/feature:translate-x-0.5"
@@ -466,11 +467,11 @@ export default function Navbar() {
             <Link
               href={WAITLIST_CTA.href}
               onClick={() =>
-                handleNavigate(WAITLIST_CTA.label, WAITLIST_CTA.href)
+                handleNavigate(PROJECT_CTA_LABEL, WAITLIST_CTA.href)
               }
               className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-[15px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              {WAITLIST_CTA.label}
+              {PROJECT_CTA_LABEL}
               <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
           </div>
@@ -554,8 +555,8 @@ export default function Navbar() {
                     className="prism-live-dot hidden sm:inline-flex"
                     aria-hidden="true"
                   />
-                  <span className="sm:hidden">Join</span>
-                  <span className="hidden sm:inline">{WAITLIST_CTA.label}</span>
+                  <span className="sm:hidden">Apply</span>
+                  <span className="hidden sm:inline">{PROJECT_CTA_LABEL}</span>
                 </Link>
               )}
               <button

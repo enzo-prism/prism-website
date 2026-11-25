@@ -134,7 +134,7 @@ describe('Navbar', () => {
     ).toEqual([
       ['Work', '/case-studies'],
       ['Wall of Love', '/wall-of-love'],
-      ['About', '/about'],
+      ['How we work', '/about'],
       ['Pricing', '/pricing'],
     ])
     expect(
@@ -178,7 +178,7 @@ describe('Navbar', () => {
 
     const cta = screen.getByTestId('navbar-cta')
     expect(cta).toHaveAttribute('href', '/waitlist')
-    expect(cta).toHaveTextContent(/join the waitlist/i)
+    expect(cta).toHaveTextContent(/tell us about your business/i)
     expect(screen.getByRole('navigation', { name: 'Main' }).contains(cta)).toBe(
       false,
     )
@@ -200,7 +200,7 @@ describe('Navbar', () => {
       expect(work).toHaveAttribute('href', '/case-studies')
       expect(work).toHaveAttribute('aria-current', 'page')
       expect(
-        within(nav).getByRole('link', { name: 'About' }),
+        within(nav).getByRole('link', { name: 'How we work' }),
       ).not.toHaveAttribute('aria-current')
     },
   )

@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import Link from 'next/link'
 import { ArrowDown, ArrowRight, ArrowUpRight, BadgeCheck } from 'lucide-react'
 
@@ -314,6 +315,16 @@ export default function CaseStudiesPage() {
 
         <CaseStudyIndex />
 
+        <OwnerDecision
+          eyebrow="Choose a customer journey"
+          title="what do you want customers to do?"
+          body="Explore three ways an owner can turn interest into action, from trying a product to planning a stay to evaluating a business purchase."
+          links={[
+            { label: "Request a test ride", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Inquire about a stay", href: "/case-studies/canary-cove" },
+            { label: "Evaluate a B2B product", href: "/case-studies/mach-1" },
+          ]}
+        />
         <FinalCta
           location="case studies final cta"
           title="your business could be the next case study."

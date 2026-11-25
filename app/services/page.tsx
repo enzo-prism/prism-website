@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import type { CSSProperties } from 'react'
 import {
@@ -140,6 +141,7 @@ const coreServices: CoreService[] = [
       'Focused search and social campaigns paired with high-converting creative and landing pages.',
     learnMoreLinks: [
       { label: 'Ads', href: '/ads' },
+      { label: 'Google Ads for dental practices', href: '/google/dental-ads' },
       { label: 'TikTok ads for dentists', href: '/tiktok-ads-for-dentists' },
     ],
     outcomes: [
@@ -188,7 +190,7 @@ const coreServices: CoreService[] = [
     title: 'analytics, automation, and support',
     summary:
       'Clear attribution across calls, forms, and bookings, paired with practical workflow automation.',
-    learnMoreLinks: [{ label: 'App development', href: '/apps' }],
+    learnMoreLinks: [{ label: 'Reporting with Prism Grow', href: '/app' }],
     outcomes: [
       'Unified tracking for leads, calls, and bookings',
       'Automations for follow-up, reminders, and hand-offs',
@@ -300,9 +302,9 @@ const inlineLinkClassName =
   'group/link inline-flex min-h-10 items-center gap-1.5 rounded-sm text-sm font-medium text-foreground transition-colors hover:text-foreground/80 focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50'
 
 export const metadata: Metadata = buildRouteMetadata({
-  titleStem: 'Marketing services for small businesses',
+  titleStem: 'Outsourced marketing team for small business',
   description:
-    'Website design, content, ads, and AEO: four disciplines from one senior team built to get your business found, trusted, and chosen.',
+    'See how a small team scopes website design, content, advertising and search around the customers your business wants to reach.',
   path: '/services',
   ogImage: '/prism-opengraph.png',
 })
@@ -334,15 +336,13 @@ export default function ServicesPage() {
                 className="text-display text-gradient prism-rise mt-6 max-w-[11ch] pb-2"
                 style={rise(80)}
               >
-                website design. content. ads. AEO.
+                one team for your growth.
               </h1>
               <p
                 className="text-lead prism-rise mt-5 max-w-[50ch] text-pretty text-muted-foreground"
                 style={rise(160)}
               >
-                Four disciplines, one senior team. Website design earns trust.
-                Content builds demand. Ads capture intent. AEO builds visibility
-                in AI answers.
+                Work directly with the people who design, build and market your business. We choose the first job together: help the right people find you, earn their trust or make it easier to inquire.
               </p>
               <div
                 className="prism-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row"
@@ -689,6 +689,15 @@ export default function ServicesPage() {
           </div>
         </Section>
 
+        <OwnerDecision
+          eyebrow="Choosing a partner"
+          title="the right first job."
+          body="If people already find your business but never finish the inquiry, a better form can matter more than another campaign. We agree on the customer action, the person responsible and what will count as success."
+          links={[
+            { label: "In-house or outsourced?", href: "/blog/who-prism-is-for" },
+            { label: "How we scope the work", href: "/pricing" },
+          ]}
+        />
         <FinalCta
           location="services final cta"
           title="one team for all of it."

@@ -59,10 +59,10 @@ test('accepted waitlist receipt and conversion survive tracking/storage constrai
   })
   await page.goto('/waitlist?focus=ads')
   await page.getByRole('button', { name: /^continue/i }).click()
-  await page
-    .getByRole('radio', { name: /in 1–3 months/i })
-    .locator('..')
-    .click()
+  const timing = page.getByRole('radio', { name: /in 1–3 months/i })
+  if (isMobile) await timing.locator('..').tap()
+  else await timing.locator('..').click()
+  await expect(timing).toBeChecked()
   await page.getByRole('button', { name: /^continue/i }).click()
   await page.getByLabel(/first name/i).fill('QA')
   await page.getByLabel(/last name/i).fill('Fixture')
@@ -86,6 +86,7 @@ test('accepted waitlist receipt and conversion survive tracking/storage constrai
   const id = receipts[0].match(/waitlist-[a-f0-9-]{36}/)?.[0]
   expect(id).toBeTruthy()
   expect(receipts[0]).toContain('chatgpt.com')
+  expect(receipts[0]).toContain('project_application')
   const leads = await page.evaluate(() =>
     (window.dataLayer ?? [])
       .map((entry) => Array.from(entry as ArrayLike<unknown>))

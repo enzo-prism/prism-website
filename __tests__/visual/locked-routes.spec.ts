@@ -124,9 +124,9 @@ const lockedRoutes = [
   {
     name: 'home',
     path: '/',
-    readyHeading: /^impossible is temporary\.$/i,
+    readyHeading: /^your growth team\.$/i,
     mustContain: [
-      /website design, content, ads, and AEO that turn strangers into customers/i,
+      /designers, engineers and marketers working directly with small business owners/i,
       /loved by b2b and consumer brands/i,
       /waitlist open for [a-z]+/i,
       /prism is fully booked right now\./i,
@@ -224,6 +224,11 @@ for (const route of lockedRoutes) {
       timeout: 20_000,
     })
 
+    if (route.name === 'about') {
+      await page.getByRole('img', { name: 'Enzo Sison, founder of Prism' }).evaluate(
+        (image: HTMLImageElement) => image.decode(),
+      )
+    }
     await stabilizePage(page)
     await expectLockedRouteSnapshotSurface(page)
     await page.waitForTimeout(750)
@@ -406,14 +411,14 @@ test('home hero layout stays readable across responsive breakpoints', async ({
     await expect(
       page.getByRole('heading', {
         level: 1,
-        name: /^impossible is temporary\.$/i,
+        name: /^your growth team\.$/i,
       }),
     ).toBeVisible({ timeout: 20_000 })
 
     const hero = page.locator('#homepage-hero')
     await expect(hero).toBeVisible({ timeout: 20_000 })
     await expect(
-      hero.getByRole('link', { name: /join the waitlist/i }),
+      hero.getByRole('link', { name: /tell us about your business/i }),
     ).toBeVisible({ timeout: 20_000 })
     await expect(hero.getByRole('link', { name: /see the work/i })).toBeVisible(
       { timeout: 20_000 },
@@ -427,10 +432,10 @@ test('home hero layout stays readable across responsive breakpoints', async ({
 
       const heroRect = hero.getBoundingClientRect()
       const primaryCta = hero.querySelector<HTMLAnchorElement>(
-        'a[href="/waitlist"]:not([class*="group/status"])',
+        'a[href="#featured-work"]',
       )
       const secondaryCta =
-        hero.querySelector<HTMLAnchorElement>('a[href="#work"]')
+        hero.querySelector<HTMLAnchorElement>('a[href="/waitlist"]:not([class*="group/status"])')
       const primaryCtaRect = primaryCta?.getBoundingClientRect()
       const secondaryCtaRect = secondaryCta?.getBoundingClientRect()
 

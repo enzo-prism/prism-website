@@ -144,6 +144,7 @@ export const INDEXABLE_BLOG_SLUGS = [
   'prism-flywheel-skyrocket-brick-and-mortar-growth',
   'seo-mystery-beverly-hills-dentist-traffic-from-china',
   'turning-your-website-into-an-ai-powered-seo-flywheel',
+  'website-traffic-no-inquiries',
   'who-prism-is-for',
 ] as const
 

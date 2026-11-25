@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { CalendarCheck, Mail, Timer } from 'lucide-react'
 
+import Link from 'next/link'
+import SiteReviewForm from '@/components/forms/SiteReviewForm'
 import WaitlistForm from '@/components/forms/WaitlistForm'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
@@ -66,6 +68,8 @@ type WaitlistPageProps = {
 export default async function WaitlistPage({ searchParams }: WaitlistPageProps) {
   const params = searchParams ? await searchParams : {}
   const prefill = parseWaitlistPrefill(params)
+  const review = params.intent === 'review'
+  const reviewIntakeOpen = process.env.PRISM_SITE_REVIEWS_OPEN === 'true'
 
   return (
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
@@ -88,12 +92,16 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
           <header className="flex flex-col items-start lg:col-start-1 lg:row-start-1">
             <WaitlistStatus asLink={false} className="prism-rise [--rise-delay:40ms]" />
             <h1 className="text-display text-gradient prism-rise mt-7 max-w-[10ch] text-balance pb-2 [--rise-delay:120ms] lg:text-[clamp(3.5rem,1.6rem+3.6vw,5.75rem)]">
-              join the waitlist
+              {review ? 'what would we fix first?' : 'join the waitlist'}
             </h1>
             <p className="text-lead prism-rise mt-5 max-w-[30rem] text-pretty text-muted-foreground [--rise-delay:200ms]">
-              Prism is fully booked. {CAPACITY_MESSAGE.intakeLead}{' '}
-              <WaitlistIntakeMonth />.
+              {review ? 'See how we review the path from a customer’s first visit to their next action.' : <>Prism is fully booked. {CAPACITY_MESSAGE.intakeLead}{' '}<WaitlistIntakeMonth />.</>}
             </p>
+            {review ? (
+              <Link href="/case-studies/olympic-bootworks#walkthrough" className="mt-5 underline underline-offset-4">See a sample walkthrough</Link>
+            ) : (
+              <p className="mt-5 text-muted-foreground">Tell us what customers are trying to do and where they get stuck. We’ll use that to scope the right work.</p>
+            )}
           </header>
 
           <div className="relative w-full min-w-0 max-w-2xl lg:max-w-none lg:[@media(min-height:50rem)]:sticky lg:[@media(min-height:50rem)]:top-20 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start">
@@ -105,12 +113,21 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
               data-waitlist-form-card=""
               className="prism-beam prism-rise rounded-[1.75rem] border border-white/[0.08] bg-card p-5 shadow-[0_1px_0_0_oklch(1_0_0/6%)_inset,0_40px_120px_-40px_oklch(0_0_0/90%)] [--rise-delay:160ms] sm:p-8"
             >
-              <WaitlistForm
+              {review ? (
+                <div className="grid gap-6">
+                  <h2 className="text-heading">a sample site review.</h2>
+                  <p><strong>Goal.</strong> A rider wants to try a bike before buying.</p>
+                  <p><strong>What we would check.</strong> Can they compare two models, see prices and choose the nearer shop on their phone?</p>
+                  <p><strong>First change.</strong> Put the test-ride action beside the model details and carry the selected bike into the request.</p>
+                  <p><strong>What to measure.</strong> Compare model views with requests the shop actually receives. Confirm completed rides with the shop.</p>
+                  {reviewIntakeOpen ? <SiteReviewForm /> : <p className="border-t border-border pt-5 text-muted-foreground">Individual reviews are currently closed. If you have a project in mind, <Link href="/waitlist" className="underline">tell us about your business</Link>.</p>}
+                </div>
+              ) : <WaitlistForm
                 key={[prefill.focus.join(','), prefill.timing, prefill.website].join('|')}
                 initialFocus={prefill.focus}
                 initialTiming={prefill.timing}
                 initialWebsite={prefill.website}
-              />
+              />}
             </div>
           </div>
 
@@ -123,7 +140,7 @@ export default async function WaitlistPage({ searchParams }: WaitlistPageProps) 
                 <span aria-hidden="true" className="h-px w-5 bg-spectrum" />
                 What happens next
               </h2>
-              <WaitlistNextSteps steps={NEXT_STEPS} className="mt-6 max-w-[30rem]" />
+              {review ? <p className="mt-6 max-w-prose text-muted-foreground">We look at the customer journey you describe. When we can take on a review, we’ll share the first change we would make, why it matters and how to measure it. You can separately <Link className="underline" href="/waitlist">apply to work with Prism</Link>.</p> : <WaitlistNextSteps steps={NEXT_STEPS} className="mt-6 max-w-[30rem]" />}
             </section>
 
             <WaitlistProofStrip className="max-w-[34rem]" />

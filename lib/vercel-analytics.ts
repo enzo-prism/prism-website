@@ -197,6 +197,10 @@ export function buildVercelCustomEvent(
   const eventParams = params ?? {}
 
   switch (eventName) {
+    case 'site_review_start':
+    case 'site_review_received':
+    case 'site_review_error':
+      return { name: eventName, properties: { form_name: 'site_review' } }
     case 'cta_click':
       return {
         name: 'CTA Clicked',

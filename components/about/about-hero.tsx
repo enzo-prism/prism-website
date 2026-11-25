@@ -7,7 +7,7 @@ import { Eyebrow } from '@/components/prism/section'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 
 export const ENZO_HEADSHOT_SRC =
-  'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp'
+  '/enzo-sison.webp'
 
 export function AboutHero() {
   return (

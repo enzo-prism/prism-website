@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
@@ -508,6 +509,15 @@ export default function WebsiteDesignPage() {
           title="before you join."
         />
 
+        <OwnerDecision
+          eyebrow="Design in use"
+          title="what happens after the first tap?"
+          body="In Tahoe, a rider compares bikes and requests a test ride. In Belize, a guest checks whether a private estate fits a trip and reaches the concierge. Each site gives its visitor a different next step."
+          links={[
+            { label: "Follow the test-ride journey", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Explore Canary Cove", href: "/case-studies/canary-cove" },
+          ]}
+        />
         <ServiceSiblings current="website" />
 
         <FinalCta

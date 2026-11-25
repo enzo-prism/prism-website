@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import {
   BarChart3,
@@ -711,6 +712,15 @@ export default function DentalPracticesPage() {
           items={segmentFaqItems}
         />
 
+        <OwnerDecision
+          eyebrow="Practice marketing"
+          title="start with the patient action."
+          body="A practice rebuilding its site and a practice evaluating paid search have different first questions. See the patient journey and the campaign scope before choosing a starting point."
+          links={[
+            { label: "Dental Google Ads", href: "/google/dental-ads" },
+            { label: "Dr. Wong’s practice transition", href: "/case-studies/dr-christopher-wong" },
+          ]}
+        />
         <FinalCta
           location={`${LOCATION} final cta`}
           secondary={{ label: 'See case studies', href: '/case-studies' }}

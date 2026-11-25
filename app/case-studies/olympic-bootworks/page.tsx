@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import OlympicWalkthrough from '@/components/case-studies/OlympicWalkthrough'
 import MinimalCaseStudyPage from '@/components/case-study-minimal'
 import { CASE_STUDIES } from '@/lib/case-study-data'
 import { buildRouteMetadata } from '@/lib/seo/metadata'
@@ -14,5 +15,5 @@ export const metadata: Metadata = buildRouteMetadata({
 })
 
 export default function OlympicBootworksCaseStudyPage() {
-  return <MinimalCaseStudyPage slug="olympic-bootworks" />
+  return <MinimalCaseStudyPage slug="olympic-bootworks" afterStory={<OlympicWalkthrough />} />
 }

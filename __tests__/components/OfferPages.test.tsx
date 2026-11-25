@@ -187,7 +187,7 @@ describe('/services', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /^website design\. content\. ads\. AEO\.$/i,
+        name: /^one team for your growth\.$/i,
       }),
     ).toBeInTheDocument()
     expect(screen.getByText('Four services')).toBeInTheDocument()

@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Rss } from 'lucide-react'
 
 import BlogFilterNavigationServer from '@/components/blog-filter-navigation-server'
 import { BlogFeaturedCard, BlogGridCard, type BlogCardPost } from '@/components/blog/blog-post-cards'
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { FinalCta } from '@/components/prism/final-cta'
@@ -253,6 +254,18 @@ export default async function Blog({
           </div>
         </section>
 
+        {currentPage === 1 && selectedCategory === 'all' && (
+          <OwnerDecision
+            eyebrow="For business owners"
+            title="what are you deciding?"
+            body="Decide when to bring in a growth team, trace a visit that never becomes an inquiry, or check whether nearby customers can find your shop."
+            links={[
+              { label: 'Compare hiring with a growth partner', href: '/blog/who-prism-is-for' },
+              { label: 'Find the gap between traffic and inquiries', href: '/blog/website-traffic-no-inquiries' },
+              { label: 'Check your visibility on Maps', href: '/blog/google-maps-visibility-playbook-2025' },
+            ]}
+          />
+        )}
         <FinalCta
           location="blog final cta"
           secondary={{ label: 'See the work', href: '/case-studies' }}

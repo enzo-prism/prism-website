@@ -1061,6 +1061,7 @@ export default function WaitlistForm({
       className="flex scroll-mt-24 flex-col"
       data-step={step.id}
     >
+      <input type="hidden" name="intake_type" value="project_application" />
       <input type="hidden" name="_subject" value={WAITLIST_FORM_SUBJECT} />
       <input type="hidden" name="form_name" value={WAITLIST_FORM_NAME} />
       <FormspreeOpsFields formKey={WAITLIST_FORM_NAME} />

@@ -52,8 +52,7 @@ export default function PricingHero() {
           className="text-lead prism-rise mt-5 max-w-[58ch] text-pretty text-muted-foreground"
           style={rise(160)}
         >
-          Custom website design, ongoing content, targeted ads, and AEO. Scoped
-          around your business and started on the waitlist.
+          Tell us the outcome you want. We agree on the work, who owns it and what it costs before we start. If priorities shift, you see the trade-off first.
         </p>
 
         <div

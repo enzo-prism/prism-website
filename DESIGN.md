@@ -141,8 +141,7 @@ Prism should feel:
 The mental model is **near-black canvas + stock shadcn components + Geist
 type + real client work + one rationed spectrum**.
 
-The brand tagline is **"impossible is temporary."** It is the homepage h1
-(v2, 2026-10-12) and the footer eyebrow. Every business has something that
+The brand tagline is **"impossible is temporary."** It is the founder’s motto and the footer eyebrow. The homepage H1 is **"your growth team."** Every business has something that
 feels out of reach; the site shows Prism making it temporary: the client's
 "impossible" in each featured story, the founder's motto, and the closing
 "tell us your impossible." Use the tagline as written, never paraphrased.
@@ -261,19 +260,13 @@ left-aligned: when a link uses the stock `NavigationMenuLink`, override its
 
 ### Hero
 
-One dominant idea: status pill, lowercase display headline, one sentence of
-subhead, primary CTA plus one secondary, compact proof row. The homepage hero
-sets the tagline in `text-hero` on two lines ("impossible is" in
-`text-gradient`, "temporary." in `prism-glint`), carries the refraction scene
-(`components/home/HomeRefraction.tsx`), the only place the full spectrum fan
-appears, and closes with the client logo rail. With a fine pointer the beam
-and fan turn a few degrees toward the cursor (`RefractionPointer`).
-Its pointer to Prism Grow (`components/home/HomeAppCallout.tsx`) never joins
-the tagline column's stack: from `xl` it is a frosted notification card in
-the scene's dark left, level with the prism and clear of the beam, landing
-after the spectrum forms; below `xl` it is a quiet pill under the actions,
-mirroring the status pill above the headline. It never outranks the waitlist
-button.
+The homepage opens with current capacity and “your growth team.” in two lines of
+`text-hero`. Set “your growth” in `text-gradient` and “team.” in `prism-glint`.
+The first button leads to a real customer journey. The second opens project
+intake. Preserve the case image’s original colors and use the native player,
+captions and text sequence for the complete walkthrough. The refraction scene
+and its desktop Grow card sit farther down the page. Mobile visitors get a
+compact Grow link beneath the hero actions.
 `/app` uses the same `prism-glint` on its one accent word ("leads.") and
 otherwise `text-gradient`, with the drawn Prism Grow phone as its hero
 surface and the demo alert as its single satellite.

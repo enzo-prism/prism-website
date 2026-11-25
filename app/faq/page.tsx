@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import type { CSSProperties } from 'react'
 
@@ -185,6 +186,16 @@ export default function FAQPage() {
           <FaqExplorer topics={FAQ_TOPICS} />
         </Section>
 
+        <OwnerDecision
+          eyebrow="Your next decision"
+          title="find the answer for your business."
+          body="Review a sample scope, see how a customer moves through a real site or tell us what you want to improve. The next intake is shown on the application."
+          links={[
+            { label: "Scope and pricing", href: "/pricing" },
+            { label: "See a working example", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Tell us about your business", href: "/waitlist" },
+          ]}
+        />
         <FinalCta
           location="faq final cta"
           title="still curious? get on the list."

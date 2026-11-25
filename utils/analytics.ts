@@ -441,6 +441,9 @@ export type EventType =
   | 'waitlist_step_complete'
   | 'waitlist_validation_error'
   | 'waitlist_submit_attempt'
+  | 'site_review_start'
+  | 'site_review_received'
+  | 'site_review_error'
   | 'waitlist_submit_success'
   | 'waitlist_submit_error'
   // Retired Website/Content/Ads intake funnel; routes now 308 to /waitlist.

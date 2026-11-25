@@ -10,6 +10,7 @@ it('separates receipt retries, tracking duplicates, missing coverage, and legacy
       { submission_id: first, email: 'private@example.com' },
       { submission_id: first },
       { submission_id: second },
+      { intake_type: 'site_review', submission_id: 'review-00000000-0000-4000-8000-000000000004' },
       {},
       { submission_id: other, classification: 'test' },
     ],

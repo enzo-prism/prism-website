@@ -17,7 +17,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 - **pnpm** 10.x via `corepack enable`
 - **macOS/Linux shell** – scripts rely on POSIX utilities and may fail on Windows CMD
 
-`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The current security baseline (2026-10-23) aligns Next.js packages (`next`, `eslint-config-next`, `@next/*`) on 16.4.2 (CVE-2026-96889 / GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr, GHSA-p3m5-59mp-jv5r) and Sentry packages on 10.68.0, and pins patched transitive versions (sharp >= 0.35.5, js-yaml, postcss, fast-uri, brace-expansion, nanoid, source-map-js, and others) through `pnpm.overrides`. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
+`package.json` and `pnpm-lock.yaml` are the dependency source of truth. The November 24, 2026 release aligns Next.js, its analyzer and lint packages on 16.4.6, Sentry packages on 10.75.2 and the direct Zod dependency on the patched 4.6 line. Transitive versions are managed through `pnpm.overrides`. A production dependency audit at release preparation reported zero high or critical findings, four moderate and two low. Do not remove an override without checking the resolved lockfile and rerunning `pnpm audit --prod`.
 
 ## Local build flow
 

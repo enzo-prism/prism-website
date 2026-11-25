@@ -4,6 +4,12 @@ Prism handles every marketing form through Formspree plus client-side redirects.
 
 > **Waitlist funnel (2026-09-14).** Prism is fully booked. The only live sales form is `/waitlist` (see [Waitlist](#waitlist)). The intake, Growth Dashboard, contact, free-analysis, AEO, book-a-shoot, and AI brief flows are **retired**: their routes 308-redirect to `/waitlist` and their form components are deleted. The [retired flows](#retired-flows-308--waitlist) table keeps their Formspree ids for archive lookups; full historical contracts live in git history.
 
+## Site review sample and capacity
+
+`/waitlist?intent=review` displays a worked sample before asking for contact details. Individual requests are closed by default. When the owner has confirmed review capacity, the server setting `PRISM_SITE_REVIEWS_OPEN=true` enables the three-field form. The standard project application remains available on `/waitlist`.
+
+Review requests use the existing waitlist Formspree endpoint, a distinct `form_key` and `intake_type` of `site_review`, and an opaque `review-<uuid>` receipt identifier reused on retry. An accepted response renders an inline confirmation. The five-step form sends `intake_type=project_application`. Route sales and diagnostic records by intent when reviewing exports. For local QA, intercept every Formspree POST. Test the closed default and the open setting independently.
+
 ## Waitlist
 
 `components/forms/WaitlistForm.tsx` renders on `app/waitlist/page.tsx` (indexable, in the sitemap and `llms.txt`). Service pages, homepage offer cards, and the `/ig` `/tiktok` `/youtube` hubs link with `?focus=website|content|ads|aeo`, which pre-checks the matching focus card (`parseWaitlistFocus` in `lib/waitlist.ts`).

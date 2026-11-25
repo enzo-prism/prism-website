@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import {
   ArrowUpRight,
@@ -383,6 +384,15 @@ export default function ContentOsPage() {
           title="before you start."
         />
 
+        <OwnerDecision
+          eyebrow="Customer stories"
+          title="give the next buyer a customer’s answer."
+          body="For Mach 1, the raw material was hours of interviews. Prism built five published launch stories around the customers’ own words, with captioned films and a place for buyers to find them."
+          links={[
+            { label: "See the Mach 1 launch", href: "/case-studies/mach-1" },
+            { label: "Discuss your content", href: "/waitlist?focus=content" },
+          ]}
+        />
         <ServiceSiblings current="content" />
 
         <FinalCta

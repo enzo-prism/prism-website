@@ -3,6 +3,12 @@
 How measurement works on design-prism.com, and the operational steps that live
 outside this repo.
 
+## Project applications and site reviews
+
+The project application retains the existing accepted-receipt and `generate_lead` join on the opaque waitlist submission ID. Filter to the production marketing hostname for reporting. Existing project receipts may predate the `intake_type` field. Keep those eligible. Exclude records marked `site_review` from the sales reconciliation.
+
+When diagnostic intake is open, `site_review_start` records first interaction, `site_review_error` records a rejected request or network failure, and `site_review_received` follows endpoint acceptance. The receipt ID also accompanies the GA4 received event. Vercel receives only the fixed form name. No diagnostic event calls the sales conversion helper. Human qualification, held conversations and wins belong in the prospects record. A site interaction or analytics event alone cannot establish those outcomes.
+
 ## Stack
 
 | Surface               | What it is                                                          | Where it is wired                        |

@@ -45,13 +45,13 @@ const footerColumns: FooterColumn[] = [
     links: [
       { label: 'Work', href: '/case-studies' },
       { label: 'Wall of Love', href: '/wall-of-love' },
-      { label: 'Prism Proof', href: '/proof' },
+      { label: 'Patient testimonial program', href: '/proof' },
     ],
   },
   {
     heading: 'Company',
     links: [
-      { label: 'About', href: '/about' },
+      { label: 'How we work', href: '/about' },
       { label: 'Pricing', href: '/pricing' },
       { label: 'Blog', href: '/blog' },
       { label: 'FAQ', href: '/faq' },

@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
@@ -904,6 +905,15 @@ export default function AeoPage() {
 
         <ServiceFaq idPrefix="aeo" items={FAQ_ITEMS} title="ask us first." />
 
+        <OwnerDecision
+          eyebrow="Testing an answer"
+          title="can a buyer check the answer?"
+          body="Try a specific question, such as whether a rider can test a bike in Tahoe. Check the answer against the shop’s published locations and request instructions. Record the source, date and engine, then repeat the question after a correction."
+          links={[
+            { label: "Inspect the Tahoe buying journey", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "Explore organic search services", href: "/seo" },
+          ]}
+        />
         <ServiceSiblings current="aeo" />
 
         <FinalCta

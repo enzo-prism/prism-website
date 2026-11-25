@@ -59,26 +59,26 @@ async function expectOpenMenuGeometry(page: Page) {
   await expect(links).toHaveText([
     'Work',
     'Wall of Love',
-    'About',
+    'How we work',
     'Pricing',
     'AEO',
     'Website Design',
     'Content',
     'Ads',
     'All services',
-    'Join the waitlist',
+    'Tell us about your business',
   ])
   for (const [name, href] of [
     ['Work', '/case-studies'],
     ['Wall of Love', '/wall-of-love'],
-    ['About', '/about'],
+    ['How we work', '/about'],
     ['Pricing', '/pricing'],
     ['AEO', '/aeo'],
     ['Website Design', '/website-design'],
     ['Content', '/content'],
     ['Ads', '/ads'],
     ['All services', '/services'],
-    ['Join the waitlist', '/waitlist'],
+    ['Tell us about your business', '/waitlist'],
   ]) {
     await expect(
       page.locator('#mobile-site-nav').getByRole('link', { name, exact: true }),

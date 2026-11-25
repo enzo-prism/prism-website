@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from "next"
 import {
   BarChart3,
@@ -282,6 +283,15 @@ export default function ConsultingCompaniesPage() {
           items={segmentFaqItems}
         />
 
+        <OwnerDecision
+          eyebrow="Advisory firms"
+          title="give a prospect a reason to start a conversation."
+          body="For Saorsa Growth Partners, a past engagement, Prism clarified the offers and built direct inquiry paths. For Practice Transitions Institute, buyers can explore the process and hear from clients before contacting the team."
+          links={[
+            { label: "Read the Saorsa project", href: "/case-studies/saorsa-growth-partners" },
+            { label: "Explore the PTI case", href: "/case-studies/practice-transitions-institute" },
+          ]}
+        />
         <FinalCta
           location={`${LOCATION} final cta`}
           secondary={{ label: "See case studies", href: "/case-studies" }}

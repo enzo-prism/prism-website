@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import {
   ArrowRight,
   ArrowUpRight,
@@ -529,6 +530,15 @@ export default function PricingPageClient() {
         </div>
       </Section>
 
+      <OwnerDecision
+          eyebrow="Example scope"
+          title="one useful change, clearly scoped."
+          body="Suppose customers reach a product page but rarely contact the shop. A first project might cover the mobile inquiry, delivery checks and a report of received requests. We agree on deliverables, access and cost before work starts. If the priority changes, you choose the trade-off."
+          links={[
+            { label: "Meet the team behind the work", href: "/about" },
+            { label: "Compare hiring options", href: "/blog/who-prism-is-for" },
+          ]}
+        />
       <FinalCta
         location="pricing final cta"
         secondary={{ label: 'See the work', href: '/case-studies' }}

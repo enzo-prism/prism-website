@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
@@ -697,6 +698,15 @@ export default function AdsPage() {
           title="before you spend."
         />
 
+        <OwnerDecision
+          eyebrow="Before you spend"
+          title="follow the inquiry to the person who receives it."
+          body="Pick a customer action, confirm someone receives it, and agree on what makes an inquiry useful. Media spend and management fees are separate. Use actual bookings or sales to judge the economics when those records are available."
+          links={[
+            { label: "How to diagnose missing inquiries", href: "/blog/website-traffic-no-inquiries" },
+            { label: "Google Ads for dental practices", href: "/google/dental-ads" },
+          ]}
+        />
         <ServiceSiblings current="ads" />
 
         <Section aria-label="Google Ads troubleshooting" className="pt-0 sm:pt-0">

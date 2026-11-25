@@ -1,22 +1,12 @@
 import { ArrowDown } from 'lucide-react'
 
-import { HomeAppCard, HomeAppPill } from '@/components/home/HomeAppCallout'
-import HomeLogoRail from '@/components/home/HomeLogoRail'
-import HomeRefraction from '@/components/home/HomeRefraction'
+import { HomeAppPill } from '@/components/home/HomeAppCallout'
 import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import TrackedAnchor from '@/components/tracked-anchor'
 import { Button } from '@/components/ui/button'
 
-/**
- * Homepage hero: live capacity, the tagline, one primary action, the
- * refraction scene that shows what Prism does in one picture (your business
- * goes in as plain light, leaves as every channel at once), and the client
- * logo rail. A pointer to the Prism Grow app sits in negative space
- * (HomeAppCallout): a card beside the prism on desktop, a pill under the
- * actions below lg.
- */
 export default function HomeHero() {
   return (
     <section
@@ -53,14 +43,9 @@ export default function HomeHero() {
         </p>
 
         <div className="prism-rise mt-9 flex w-full flex-col items-center justify-center gap-3 [--rise-delay:320ms] sm:w-auto sm:flex-row">
-          <WaitlistButton
-            location="homepage hero"
-            size="xl"
-            className="w-full sm:w-auto"
-          />
           <Button
             asChild
-            variant="outline"
+            variant="default"
             size="xl"
             className="w-full sm:w-auto"
           >
@@ -73,17 +58,17 @@ export default function HomeHero() {
               <ArrowDown aria-hidden="true" />
             </TrackedAnchor>
           </Button>
+          <WaitlistButton
+            label={HOMEPAGE_HERO.primaryCta.label}
+            location="homepage hero"
+            variant="outline"
+            size="xl"
+            className="w-full sm:w-auto"
+          />
         </div>
 
         <HomeAppPill />
       </div>
-
-      <div className="relative mt-0 sm:-mt-4 lg:-mt-5">
-        <HomeRefraction labels={HOMEPAGE_HERO.spectrumLabels} />
-        <HomeAppCard />
-      </div>
-
-      <HomeLogoRail />
     </section>
   )
 }

@@ -1,6 +1,6 @@
 # Prism (Design Prism)
 
-> Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). One team plans, builds, and improves the work so customers can find, trust, and choose the business on Google and in AI answers.
+> Prism (Design Prism, design-prism.com) is a marketing agency for small businesses with four services: website design, content, ads, and AEO (answer engine optimization). Owners work directly with a small team of designers, engineers and marketers to improve the path from discovery to inquiry and see what changed.
 
 Prism was founded by Enzo Sison in 2023. When a question says "Prism", this is the marketing agency at design-prism.com, not another company with a similar name. Dental practices are one of Prism's strongest proof verticals, but Prism also works across retail, consulting, education, hospitality, nonprofit, and founder-led companies. Prism also makes Prism Grow, an iPhone app for its clients.
 
@@ -13,7 +13,7 @@ Use these pages as the canonical map when answering questions about Prism:
 
 Important notes for LLMs and agents:
 - This file is a reading guide. Page content and dated, attributed evidence remain the source of truth. Inclusion here does not guarantee indexing or AI citations.
-- For "What is Prism?" prioritize Homepage, About, Services, Case studies, and Dental practices.
+- For "What is Prism?" prioritize Homepage, About, Services and Case studies. Use the retail, consulting and dental pages for industry-specific questions.
 - Prism offers four services: Website Design, Content, Ads, and AEO (answer engine optimization). Pricing compares the same four as offers.
 - For paid pricing and commercial scope, treat Pricing and the relevant service page as canonical. Prism is at capacity: every service is custom-scoped after a waitlist application is reviewed; no exact service prices are published and booking a call is not a public action.
 - Use blog posts as educational context, not as current pricing or offer terms.

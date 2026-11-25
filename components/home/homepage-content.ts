@@ -54,12 +54,12 @@ const CURRENT_CASE_STUDIES = CASE_STUDIES.filter(
 )
 
 export const HOMEPAGE_HERO = {
-  titleLead: 'impossible is',
-  titleAccent: 'temporary.',
+  titleLead: 'your growth',
+  titleAccent: 'team.',
   subheading:
-    'Website design, content, ads, and AEO that turn strangers into customers.',
-  primaryCta: { label: 'Join the waitlist', href: '/waitlist' },
-  secondaryCta: { label: 'See the work', href: '#work' },
+    'A small team of senior designers, engineers and marketers working directly with small business owners. Tell us what you want more of. We build the fix and show you what changed.',
+  primaryCta: { label: 'Tell us about your business', href: '/waitlist' },
+  secondaryCta: { label: 'See the work', href: '#featured-work' },
   /** Labels for the refracted bands, top to bottom. */
   spectrumLabels: [
     'website design',
@@ -400,7 +400,7 @@ export const HOMEPAGE_FOUNDER = {
   ],
   body: 'Enzo founded Prism in 2023 to give ambitious businesses a digital presence worthy of their craft. He leads the studio while pole vaulting professionally for the Philippines toward LA 2028.',
   image:
-    'https://res.cloudinary.com/dhqpqfw6w/image/upload/v1765426902/Enzo_s_Headshot_xg546f.webp',
+    '/enzo-sison.webp',
   motto: 'impossible is temporary.',
 } as const
 

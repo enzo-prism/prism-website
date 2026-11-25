@@ -8,6 +8,7 @@ test.describe('Hero motion', () => {
     await page.goto('/', { waitUntil: 'domcontentloaded' })
 
     const scene = page.locator('[data-testid="home-refraction"] svg')
+    await scene.scrollIntoViewIfNeeded()
     await expect(scene).toBeVisible()
     // The spectrum extends from the glass on load (CSS keyframes).
     const spectrumAnimations = await page.evaluate(() =>
@@ -20,6 +21,7 @@ test.describe('Hero motion', () => {
     )
 
     for (const id of ['clients', 'more-work']) {
+      if (id === 'more-work') await page.locator('#more-work-and-reach summary').click()
       await page.locator(`#${id}`).scrollIntoViewIfNeeded()
       const track = page.locator(`#${id} .prism-marquee-track`).first()
       const before = await track.evaluate(

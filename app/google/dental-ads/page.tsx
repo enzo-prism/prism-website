@@ -27,6 +27,7 @@ import {
 import { LandingHero } from '@/components/landing/landing-hero'
 import Navbar from '@/components/navbar'
 import { BrowserFrame } from '@/components/prism/browser-frame'
+import DentalAdsWorksheet from '@/components/services/DentalAdsWorksheet'
 import { FinalCta } from '@/components/prism/final-cta'
 import { Reveal } from '@/components/prism/reveal'
 import { Eyebrow, Section, SectionHeader } from '@/components/prism/section'
@@ -217,6 +218,7 @@ export default function GoogleDentalAdsPage() {
           </div>
         </LandingHero>
 
+        <DentalAdsWorksheet />
         <Section aria-labelledby="gda-why-title">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
             <Reveal>

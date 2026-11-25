@@ -1,3 +1,4 @@
+import { OwnerDecision } from '@/components/prism/owner-decision'
 import type { Metadata } from "next"
 import {
   BarChart3,
@@ -317,6 +318,15 @@ export default function LocalShopOwnersPage() {
           items={segmentFaqItems}
         />
 
+        <OwnerDecision
+          eyebrow="Inside a Tahoe shop"
+          title="let the shopper take the next step."
+          body="Olympic Bootworks gives shoppers a model comparison, current pricing and a direct path to the location that can arrange a ride."
+          links={[
+            { label: "See the shop walkthrough", href: "/case-studies/olympic-bootworks#walkthrough" },
+            { label: "See the website design service", href: "/website-design" },
+          ]}
+        />
         <FinalCta
           location={`${LOCATION} final cta`}
           secondary={{ label: "See case studies", href: "/case-studies" }}
