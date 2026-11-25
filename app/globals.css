@@ -1001,6 +1001,28 @@ select {
   animation-play-state: paused !important;
 }
 
+/* ---- Band transition (route morph) ----------------------------------------
+   components/prism/band-transition.tsx names a service's band on its homepage
+   tile and on its service hero; React's <ViewTransition> morphs one into the
+   other on navigation (share="band"). The page itself crossfades quickly.
+   Browsers without the API navigate normally. */
+::view-transition-group(.band) {
+  animation-duration: var(--dur-sheet);
+  animation-timing-function: var(--ease-drawer);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-ui);
+  animation-timing-function: var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* ---- Refract (motion verb: a goal becomes an outcome) -----------------------
    The accent word arrives as white light and refracts into the spectrum once,
    left to right, as the hero beam reaches the prism; then one glint crosses

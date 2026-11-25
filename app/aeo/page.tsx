@@ -623,6 +623,7 @@ export default function AeoPage() {
           }}
           visual={<AeoHeroVisual />}
           glow="violet"
+          band="aeo"
         />
 
         <Section aria-labelledby="aeo-shift-title">

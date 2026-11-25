@@ -456,6 +456,7 @@ export default function AdsPage() {
           }}
           visual={<AdsHeroVisual />}
           glow="green"
+          band="ads"
         />
 
         <ServiceBento

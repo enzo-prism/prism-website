@@ -6,14 +6,26 @@ import { HOMEPAGE_HERO } from '@/components/home/homepage-content'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import TrackedAnchor from '@/components/tracked-anchor'
+import TrackedLink from '@/components/tracked-link'
+import { BandTransition } from '@/components/prism/band-transition'
+import {
+  PRISM_SERVICE_BANDS,
+  PRISM_SERVICES,
+  serviceBandTransitionName,
+} from '@/lib/services'
 
-/** The four services, in the order (and band) the spectrum labels them. */
-const HERO_SERVICE_BANDS = [
-  { label: 'Website Design', href: '/website-design', band: 'var(--spectrum-red)' },
-  { label: 'Content', href: '/content', band: 'var(--spectrum-orange)' },
-  { label: 'Ads', href: '/ads', band: 'var(--spectrum-yellow)' },
-  { label: 'AEO', href: '/aeo', band: 'var(--spectrum-blue)' },
-] as const
+/** The four services, each with its own band (lib/services.ts). */
+const HERO_SERVICE_BANDS = (['website', 'content', 'ads', 'aeo'] as const).map(
+  (id) => {
+    const service = PRISM_SERVICES.find((item) => item.id === id)!
+    return {
+      id,
+      label: service.name,
+      href: service.href,
+      band: PRISM_SERVICE_BANDS[id],
+    }
+  },
+)
 
 export default function HomeHero() {
   return (
@@ -34,10 +46,7 @@ export default function HomeHero() {
       <div className="prism-container flex flex-col items-center text-center">
         <WaitlistStatus className="prism-rise [--rise-delay:60ms]" />
 
-        <h1
-          id="home-hero-title"
-          className="text-hero mt-5 pb-2 sm:mt-5"
-        >
+        <h1 id="home-hero-title" className="text-hero mt-5 pb-2 sm:mt-5">
           <span className="text-gradient block whitespace-nowrap">
             {HOMEPAGE_HERO.titleLead}
           </span>{' '}
@@ -93,19 +102,22 @@ export default function HomeHero() {
               className="prism-rise"
               style={{ ['--rise-delay' as string]: `${1500 + index * 90}ms` }}
             >
-              <TrackedAnchor
+              <TrackedLink
                 href={service.href}
                 label={service.label}
                 location="homepage hero services"
-                className="flex min-h-11 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 text-[13px] font-medium text-foreground/90 transition-colors duration-(--dur-ui) hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex min-h-11 items-center gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.025] px-3 text-[13px] font-medium text-foreground/90 transition-[background-color,scale] duration-(--dur-press) ease-(--ease-out) hover:bg-white/[0.06] focus-visible:outline-hidden focus-visible:ring-[3px] focus-visible:ring-ring/50 active:scale-[0.97]"
               >
-                <span
-                  aria-hidden="true"
-                  className="h-4 w-1 shrink-0 rounded-full"
-                  style={{ background: service.band }}
-                />
+                {/* The band grows into the service page's hero. */}
+                <BandTransition name={serviceBandTransitionName(service.id)}>
+                  <span
+                    aria-hidden="true"
+                    className="h-4 w-1 shrink-0 rounded-full"
+                    style={{ background: service.band }}
+                  />
+                </BandTransition>
                 {service.label}
-              </TrackedAnchor>
+              </TrackedLink>
             </li>
           ))}
         </ul>

@@ -1,5 +1,7 @@
 import { Check, Minus } from 'lucide-react'
 
+import { PricingComparisonCards } from '@/components/pricing/PricingComparisonCards'
+
 import {
   Table,
   TableBody,
@@ -19,7 +21,11 @@ export type ComparisonRow = {
 }
 
 type PricingComparisonProps = {
-  columns: readonly { offerId: PricingOfferId; name: string; featured?: boolean }[]
+  columns: readonly {
+    offerId: PricingOfferId
+    name: string
+    featured?: boolean
+  }[]
   rows: readonly ComparisonRow[]
 }
 
@@ -40,73 +46,85 @@ function ComparisonCell({ value }: { value: ComparisonValue }) {
       </>
     )
   }
-  return <span className="text-[13px] leading-5 text-muted-foreground">{value}</span>
+  return (
+    <span className="text-[13px] leading-5 text-muted-foreground">{value}</span>
+  )
 }
 
 /**
  * shadcn Table comparing what each of the four offers (Website Design, Content,
- * Ads, AEO) includes. The first column stays pinned while the table scrolls
- * sideways on small screens.
+ * Ads, AEO) includes, from md up (the first column stays pinned if it ever
+ * scrolls sideways). Phones get one plan at a time as a stacked card with a
+ * sticky switcher (PricingComparisonCards), never a sideways table.
  */
 export function PricingComparison({ columns, rows }: PricingComparisonProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-20 w-8 bg-gradient-to-l from-card via-card/70 to-transparent lg:hidden"
+    <>
+      <PricingComparisonCards
+        columns={columns}
+        rows={rows}
+        className="md:hidden"
       />
-      <Table className="min-w-[46rem] table-fixed">
-        <caption className="sr-only">
-          What each Prism offer includes. No public prices; every plan is scoped from
-          the waitlist.
-        </caption>
-        <TableHeader>
-          <TableRow className="border-white/[0.08] hover:bg-transparent">
-            <TableHead className="sticky left-0 z-10 h-14 w-[10.5rem] bg-card pl-5 sm:w-[34%] sm:pl-6">
-              <span className="text-eyebrow text-subtle">What&apos;s included</span>
-            </TableHead>
-            {columns.map((column) => (
-              <TableHead
-                key={column.offerId}
-                scope="col"
-                className={cn(
-                  'h-14 px-4 text-[14px] font-semibold tracking-[-0.01em] text-foreground',
-                  column.featured && 'bg-white/[0.025]',
-                )}
-              >
-                {column.name}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.label}
-              className="border-white/[0.06] hover:bg-white/[0.015]"
-            >
-              <TableHead
-                scope="row"
-                className="sticky left-0 z-10 h-auto bg-card py-4 pl-5 text-[14px] font-normal text-foreground/90 sm:pl-6"
-              >
-                {row.label}
+      <div className="relative hidden overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset] md:block">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 z-20 w-8 bg-gradient-to-l from-card via-card/70 to-transparent lg:hidden"
+        />
+        <Table className="min-w-[46rem] table-fixed">
+          <caption className="sr-only">
+            What each Prism offer includes. No public prices; every plan is
+            scoped from the waitlist.
+          </caption>
+          <TableHeader>
+            <TableRow className="border-white/[0.08] hover:bg-transparent">
+              <TableHead className="sticky left-0 z-10 h-14 w-[10.5rem] bg-card pl-5 sm:w-[34%] sm:pl-6">
+                <span className="text-eyebrow text-subtle">
+                  What&apos;s included
+                </span>
               </TableHead>
               {columns.map((column) => (
-                <TableCell
+                <TableHead
                   key={column.offerId}
+                  scope="col"
                   className={cn(
-                    'px-4 py-4 align-middle',
+                    'h-14 px-4 text-[14px] font-semibold tracking-[-0.01em] text-foreground',
                     column.featured && 'bg-white/[0.025]',
                   )}
                 >
-                  <ComparisonCell value={row.values[column.offerId]} />
-                </TableCell>
+                  {column.name}
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.label}
+                className="border-white/[0.06] hover:bg-white/[0.015]"
+              >
+                <TableHead
+                  scope="row"
+                  className="sticky left-0 z-10 h-auto bg-card py-4 pl-5 text-[14px] font-normal text-foreground/90 sm:pl-6"
+                >
+                  {row.label}
+                </TableHead>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.offerId}
+                    className={cn(
+                      'px-4 py-4 align-middle',
+                      column.featured && 'bg-white/[0.025]',
+                    )}
+                  >
+                    <ComparisonCell value={row.values[column.offerId]} />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </>
   )
 }
 

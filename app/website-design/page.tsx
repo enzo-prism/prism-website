@@ -340,6 +340,7 @@ export default function WebsiteDesignPage() {
           visual={<WebsiteDesignHeroVisual />}
           footer={<HeroProof />}
           glow="blue"
+          band="website"
         />
 
         <ServiceBento

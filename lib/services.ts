@@ -109,3 +109,20 @@ export function isServicePath(pathname: string | null): boolean {
     (href) => pathname === href || pathname.startsWith(`${href}/`),
   )
 }
+
+/**
+ * Each service's band of the spectrum (DESIGN.md "Colour means change"):
+ * blue for Website Design, warm for Content, green for Ads, violet for AEO.
+ * The homepage hero tiles, the phone menu tiles, and each service hero use
+ * these, and the band morphs from tile to hero on navigation.
+ */
+export const PRISM_SERVICE_BANDS: Readonly<Record<PrismServiceId, string>> = {
+  website: 'var(--spectrum-blue)',
+  content: 'var(--spectrum-orange)',
+  ads: 'var(--spectrum-green)',
+  aeo: 'var(--spectrum-violet)',
+}
+
+/** The shared view-transition name for a service's band. */
+export const serviceBandTransitionName = (id: PrismServiceId) =>
+  `service-band-${id}`

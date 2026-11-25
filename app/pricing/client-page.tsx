@@ -387,9 +387,6 @@ export default function PricingPageClient() {
             rows={comparisonRows}
           />
         </Reveal>
-        <p className="mt-4 text-center text-[13px] text-subtle sm:hidden">
-          Swipe the table to see every plan.
-        </p>
       </Section>
 
       {/* How an engagement starts */}

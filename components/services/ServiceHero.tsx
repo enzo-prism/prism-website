@@ -1,9 +1,15 @@
 import type { CSSProperties, ReactNode } from 'react'
 
+import { BandTransition } from '@/components/prism/band-transition'
 import { WaitlistButton } from '@/components/prism/waitlist-button'
 import { WaitlistStatus } from '@/components/prism/waitlist-status'
 import TrackedLink from '@/components/tracked-link'
 import { Button } from '@/components/ui/button'
+import {
+  PRISM_SERVICE_BANDS,
+  serviceBandTransitionName,
+  type PrismServiceId,
+} from '@/lib/services'
 import { cn } from '@/lib/utils'
 
 export type ServiceHeroGlow = 'blue' | 'warm' | 'green' | 'violet'
@@ -23,6 +29,11 @@ type ServiceHeroProps = {
   /** Optional proof row under the visual. */
   footer?: ReactNode
   glow?: ServiceHeroGlow
+  /**
+   * The service whose band opens the page: a line of its colour across the
+   * top of the hero, morphed from the band the visitor tapped.
+   */
+  band?: PrismServiceId
   /**
    * `center`: stacked and centered. `split`: headline on the left, subhead
    * and CTAs on the right, so the visual rises higher on wide screens.
@@ -61,6 +72,7 @@ export function ServiceHero({
   visual,
   footer,
   glow = 'blue',
+  band,
   layout = 'center',
   titleClassName,
   className,
@@ -121,6 +133,20 @@ export function ServiceHero({
         />
         <div className="bg-noise absolute inset-0 opacity-[0.05]" />
       </div>
+
+      {band ? (
+        <BandTransition name={serviceBandTransitionName(band)}>
+          <span
+            aria-hidden="true"
+            data-service-band={band}
+            className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
+            style={{
+              background: PRISM_SERVICE_BANDS[band],
+              boxShadow: `0 0 36px 1px color-mix(in oklch, ${PRISM_SERVICE_BANDS[band]} 60%, transparent)`,
+            }}
+          />
+        </BandTransition>
+      ) : null}
 
       <div className="prism-container">
         {split ? (

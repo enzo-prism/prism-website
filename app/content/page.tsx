@@ -276,6 +276,7 @@ export default function ContentOsPage() {
           }}
           visual={<ContentHeroVisual />}
           glow="warm"
+          band="content"
         />
 
         <ServiceBento

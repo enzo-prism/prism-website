@@ -38,6 +38,7 @@ import {
   WAITLIST_CTA,
   type WaitlistFocus,
 } from '@/lib/waitlist'
+import { PRISM_SERVICE_BANDS } from '@/lib/services'
 import { cn } from '@/lib/utils'
 import { trackNavigation } from '@/utils/analytics'
 
@@ -452,7 +453,6 @@ export default function Navbar() {
         <p className="mt-8 text-eyebrow text-subtle">Services</p>
         <ul className="mt-3 grid grid-cols-2 gap-2">
           {NAV_MENU_SERVICE_ITEMS.map((item) => {
-            const Icon = SERVICE_ICONS[item.icon]
             const active = isNavItemActive(pathname, item.href)
             return (
               <li key={item.href}>
@@ -461,18 +461,17 @@ export default function Navbar() {
                   aria-current={active ? 'page' : undefined}
                   onClick={() => handleNavigate(item.label, item.href)}
                   className={cn(
-                    'flex min-h-12 items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium text-foreground transition-colors',
+                    'flex min-h-12 items-center gap-2.5 rounded-xl border px-3 py-2.5 text-sm font-medium text-foreground transition-[background-color,border-color,scale] duration-(--dur-press) ease-(--ease-out) active:scale-[0.97]',
                     active
                       ? 'border-white/25 bg-white/[0.08]'
                       : 'border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06]',
                   )}
                 >
-                  <Icon
+                  {/* Each service carries its own band (lib/services.ts). */}
+                  <span
                     aria-hidden="true"
-                    className={cn(
-                      'size-4',
-                      active ? 'text-foreground' : 'text-muted-foreground',
-                    )}
+                    className="h-4 w-1 shrink-0 rounded-full"
+                    style={{ background: PRISM_SERVICE_BANDS[item.icon] }}
                   />
                   {item.label}
                 </Link>
