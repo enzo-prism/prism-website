@@ -70,7 +70,7 @@ Production is intentionally single-path: GitHub Actions publishes with `vercel d
 ## Deployment checklist
 
 - Pricing sign-off:
-  - The header Services menu links exactly the four services (Website Design, Content, Ads, AEO) plus "All services"; Products stay in the footer and homepage. `/pricing` compares the same four as offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
+  - The header Services menu links exactly the four services (Website Design, Content, Ads, AEO) plus "All services"; Products stay in the footer and `/about`. `/pricing` compares the same four as offers from `lib/pricing-model.ts` with no public price on any offer; every primary CTA is a waitlist CTA
   - `/website-design` publishes the Website Design service (no form, no price, waitlist CTAs; `/websites` 308s there); `/waitlist` is the only live sales form
   - prices spell `/month` (never `/mo`); the retired public prices `$300`, `$100/month`, `$5,000`, `$1,000/month`, and `$2,000/month` are forbidden on pricing-sensitive surfaces, as are retired fixed-plan language such as `Website Overhaul` and the retired `BOOK_A_CALL_CTA` / `WEBSITE_START_CTA` constants — `pnpm verify:pricing-consistency` enforces this
   - `/founder-os` redirects to `/content`; the retired `/dental-os` redirects to `/dental-website` and `/prism-infinity` to `/content`; other legacy pricing routes resolve to `/pricing`
@@ -104,7 +104,7 @@ curl -sS -L https://www.design-prism.com/llms.txt
 curl -sSI https://www.design-prism.com/content-os
 ```
 
-Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/website-design`, `/content`, `/ads`, and `/aeo`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Join the waitlist" pill on desktop; the same links plus the four services and "All services" in the mobile panel), that a retired route such as `/get-started` 308s to `/waitlist`, and that `/ai` and `/ai-seo-services` 308 to `/aeo`. `curl -sSI https://www.design-prism.com/` should show the security headers.
+Confirm `/content-os` 301s to `/content`. Spot-check `/waitlist`, the public service pages `/website-design`, `/content`, `/ads`, and `/aeo`, header chrome (Work → `/case-studies`, the Services menu, Wall of Love, About, Pricing, and the "Tell us about your business" pill from `md`; the same links plus the four services and "All services" in the mobile panel, and the bottom action bar on phones once the hero scrolls away), that a retired route such as `/get-started` 308s to `/waitlist`, and that `/ai` and `/ai-seo-services` 308 to `/aeo`. `curl -sSI https://www.design-prism.com/` should show the security headers.
 
 Spot-check robots tags on both sides of the search policy:
 
@@ -119,7 +119,7 @@ Spot-check robots tags on both sides of the search policy:
 - **Dynamic imports and `"use client"` boundaries** – shared hook-using components still need client boundaries.
 - **Third-party build scripts** – Vercel ignores install scripts unless you approve them with `pnpm approve-builds`.
 - **Environment variables** – keep the canonical env list in `docs/environment-setup.md` and `.env.example` small and current.
-- **Framer Motion drift** – `framer-motion@12` is still installed but the redesigned marketing surfaces use CSS motion and `components/prism/reveal.tsx`; older snippet APIs may fail typecheck.
+- **No animation library** – `framer-motion` and `lib/animations.ts` were removed on 2026-11-25; motion is CSS with the `--ease-*` / `--dur-*` tokens in `app/globals.css` plus `components/prism/reveal.tsx`. Snippets that import `framer-motion` will fail to build, and a raw `cubic-bezier(` fails `__tests__/design/motion-tokens.test.ts`.
 
 ## Final pre-merge checklist
 

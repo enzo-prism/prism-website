@@ -129,7 +129,7 @@ system that ships in this repo so every route speaks one visual language.
 The site has one job: make a business owner think **"these people are
 excellent, and I want them on my business."** Prism is fully booked, so the
 waitlist is the only sales action. Every page should build desire and end at
-"Join the waitlist".
+the waitlist, whose one button label is "Tell us about your business".
 
 Prism should feel:
 
@@ -152,10 +152,14 @@ feels out of reach; the site shows Prism making it temporary: the client's
   Spectrum utilities (`text-hero`, `text-display`, `text-title`, `text-heading`,
   `text-lead`, `text-eyebrow`, `text-gradient`, `text-spectrum`,
   `bg-spectrum`, `spectrum-rule`, `bg-grid`, `bg-dots`, `bg-noise`,
-  `mask-fade-x|y|b`, `prism-container`) and motion classes
-  (`prism-marquee`, `prism-live-dot`, `prism-beam`, `prism-spotlight`,
-  `prism-rise`, `data-reveal`, `prism-glint`, and the intake pass's
-  `prism-pass-sheen` / `prism-pass-stub`).
+  `mask-fade-x|y|b`, `prism-container`), the motion tokens (`--ease-*`,
+  `--dur-*`, see Motion), motion classes (`prism-marquee`, `prism-live-dot`,
+  `prism-beam`, `prism-spotlight`, `prism-rise`, `data-reveal`, `prism-glint`,
+  and the intake pass's `prism-pass-sheen` / `prism-pass-stub`), the
+  off-screen loop pause (`[data-offscreen='true']`), and the band
+  view-transition rules.
+- `lib/services.ts`: `PRISM_SERVICE_BANDS` and `serviceBandTransitionName`
+  (see Service bands).
 - `tailwind.config.cjs`: semantic colors (`background`, `card`, `muted`,
   `subtle-foreground`, `live`, `spectrum-*`), radius scale.
 - `components/ui/*`: stock shadcn primitives restyled for the dark canvas.
@@ -184,9 +188,16 @@ feels out of reach; the site shows Prism making it temporary: the client's
     matrices, and playbooks stay in SSR HTML without cluttering the human canvas)
   - `OwnerDecision` (`owner-decision.tsx`: compact visual-first action bar with
     optional faux-UI visual slot and pill links)
+  - `MobileActionBar` (`mobile-action-bar.tsx`: the phone's bottom waitlist
+    bar, see Mobile)
+  - `BandTransition` (`band-transition.tsx`: names a service band for the
+    React `<ViewTransition>` morph, see Service bands)
+  - `LoopVisibility` (`loop-visibility.tsx`: mounted once in the root layout;
+    marks marquees, `[data-loop]` containers and page sections
+    `data-offscreen` so their animations pause off screen)
 - `components/navbar.tsx`, `components/footer.tsx`: shared chrome.
 - `components/home/*`: homepage sections. Larger sections keep their parts
-  and CSS modules in a folder (`stories/`, `audience/`, `pillars/`, `love/`).
+  and CSS modules in a folder (`stories/`, `love/`).
 
 ## Color
 
@@ -203,6 +214,12 @@ feels out of reach; the site shows Prism making it temporary: the client's
     surface per section
   - soft blurred glows behind a hero or final CTA
   - charts (`--chart-*` map to the spectrum)
+  - the four service bands (see Service bands) and one band per featured
+    story
+- **Colour means change.** Spectrum colour marks something that changes or
+  arrives (light refracting, a progress segment filling, a band morphing into
+  a hero). Structure stays neutral: `Eyebrow` ticks are a `bg-white/25`
+  hairline, and feature lists (the `/app` feature rail) use neutral icons.
 - `live` green is only for status (the waitlist dot).
 - Never use the spectrum as a flat fill for buttons, body text, or large
   backgrounds. Buttons are white (`primary`) or outline.
@@ -231,7 +248,8 @@ feels out of reach; the site shows Prism making it temporary: the client's
 
 ## Layout
 
-- `prism-container`: max width 76rem with safe-area gutters.
+- `prism-container`: max width 76rem with safe-area gutters (each side clears
+  its own `env(safe-area-inset-*)`, so landscape notches never cover text).
 - Section rhythm: `py-20 sm:py-24` (`Section`). Hairline dividers between
   sections are optional; spacing usually does the work.
 - Mix section shapes so pages feel paced: open header + grid, full-bleed
@@ -239,7 +257,11 @@ feels out of reach; the site shows Prism making it temporary: the client's
   identical card grids.
 - Cards: `rounded-2xl`, 1px border, `bg-card`. Panels: `rounded-3xl`.
 - Mobile first: 16px side gutters minimum, no horizontal scroll, tap targets
-  at least 40px.
+  at least 44px (the `Button` sizes grow to 44px on coarse pointers; CTA
+  sizes are 44, 48 and 52px). Full-height layouts use `svh` (`min-h-svh`,
+  `100svh`), never `100vh`, so the phone's browser bars never push content
+  off screen. Wide tables become stacked cards below `md` instead of
+  scrolling sideways (the case study index, the pricing comparison).
 
 ## Components and patterns
 
@@ -247,12 +269,17 @@ feels out of reach; the site shows Prism making it temporary: the client's
 
 Sticky (fixed and transparent at the top of `/`, solid after 8px of scroll):
 logo, then a shadcn `NavigationMenu` (Work, Services menu, Wall of Love,
-About, Pricing), then the white "Join the waitlist" pill with the live dot.
-The Services menu lists exactly four services, AEO first (AEO, Website Design,
-Content, Ads), with icon tiles, an "All services" link, and the featured
-waitlist card. Mobile keeps the portaled full-height panel with focus,
-Escape, scroll-lock and inert handling; its four services sit in a 2x2 grid
-in the same order, with "All services" spanning a full row beneath.
+How we work, Pricing), then the white "Tell us about your business" pill with
+the live dot (from `md`). The Services menu lists exactly four services, AEO
+first (AEO, Website Design, Content, Ads), with icon tiles, an "All services"
+link, and the featured waitlist card. Below `md` the header is the logo and
+the 44px menu button only; the waitlist moves to the bottom action bar (see
+Mobile). Mobile keeps the portaled full-height panel with focus, Escape,
+scroll-lock and inert handling; its four services sit in a 2x2 grid in the
+same order, each tile marked with its service band instead of an icon, with
+"All services" spanning a full row beneath. On case study pages the
+breadcrumb row sits under the header from `md`; on phones a copy renders
+after the header and scrolls away with the page.
 
 Never put an overflow clip (`overflow-x-clip`, `overflow-hidden`) on the
 header or any ancestor of the Services menu. Safari applies a one-axis
@@ -267,17 +294,21 @@ left-aligned: when a link uses the stock `NavigationMenuLink`, override its
 
 The homepage opens with current capacity and “your growth team.” in two lines of
 `text-hero`, a single centered subhead line, and the refraction scene
-(`HomeRefraction`) + desktop `HomeAppCard` visible above the fold. Set “your
-growth” in `text-gradient` and “team.” in `prism-glint`. The first button leads
-to `#featured-work` (`HomeFeaturedWork`: Olympic Bootworks live Fantic catalog
-playing via `HeroLoopingVideo` inside `BrowserFrame` with a walkthrough link);
-the second opens project intake (`/waitlist`). Mobile visitors get a compact
-Grow pill beneath the hero actions.
+(`HomeRefraction`) visible above the fold, with the `HomeAppCard` pointer to
+Prism Grow from `xl` only. Set “your growth” in `text-gradient` and “team.” in
+`prism-glint`; the h1 has no entrance, so it paints in the first frame. One
+action: the white `WaitlistButton` ("Tell us about your business") with "See
+the work" as a quiet text link to `#work`, so the eye never chooses between
+two buttons. Below `md` the four services sit under the prism as tiles, each
+marked with its service band (see Service bands); tapping one morphs the band
+into the top of that service's hero.
 `/app` uses the same `prism-glint` on its one accent word ("leads.") and
 otherwise `text-gradient`, with the drawn Prism Grow phone as its hero
 surface and the demo alert as its single satellite.
 The service pages share `ServiceHero`, each with one soft spectrum glow:
 blue for Website Design, warm for Content, green for Ads, and violet for AEO.
+Its `band` prop draws a 2px line of the service's band across the top of the
+hero, the landing point of the band morph.
 `/website-design` also carries a drawn page anatomy: a made-up family
 dental practice's site, light, in a browser window with its phone version
 straddling the window's edge, and four numbered pins (headline, proof, photos,
@@ -285,6 +316,33 @@ call bar) matching a numbered list of design principles. It is marked
 "Illustrative page layout", uses no client data, and the drawing is
 decorative to assistive tech while the list carries the content (see Faux
 product UI).
+
+### Service bands
+
+Each service owns one band of the spectrum, everywhere it appears
+(`PRISM_SERVICE_BANDS` in `lib/services.ts`): Website Design blue, Content
+orange (warm), Ads green, AEO violet. The bands mark the phone hero tiles,
+the phone menu tiles, the homepage "what we do" rows (`HomeServices`, a tint
+strongest at the left edge plus a 3px band), and the `ServiceHero` `band`
+line on `/website-design`, `/content`, `/ads` and `/aeo`, so a colour always
+means the same service. The hero tile and the service hero share a
+view-transition name (`serviceBandTransitionName`, wrapped in
+`BandTransition`), and React's `<ViewTransition>` morphs one into the other on
+navigation (`--dur-sheet`, `--ease-drawer`). Browsers without the API, and
+reduced-motion visitors (an `animation: none` override in `globals.css`),
+navigate normally.
+
+### Mobile
+
+Below `md` the header is logo and menu only, and the page's one action sits
+under the thumb in `MobileActionBar`: a bottom bar carrying the waitlist
+button and the live intake month, clear of the home indicator through the
+safe-area inset (the footer pads itself to clear it). It appears once the
+hero has scrolled away, and steps aside whenever another waitlist link is on
+screen (the hero, an inline invitation, the closing band, the footer), on
+`/waitlist*`, and while the menu is open, so a screen never shows the same
+action twice. Buttons and tiles press with a short scale (`active:scale-[0.97]`
+over `--dur-press`), off under reduced motion.
 
 ### Visual-first progressive disclosure
 
@@ -330,15 +388,30 @@ them; a client without a logo shows its name. Former clients never appear.
 
 ### Featured stories
 
-The homepage `#work` deck: six large panels (`rounded-[2rem]`, hairline,
-`bg-card`) that stack as a sticky deck on tall desktop screens, with covered
-panels receding (scale and dim, transform and opacity only). Each panel pairs
+The homepage `#work` deck: three large panels (`rounded-[2rem]`, hairline,
+`bg-card`; Exquisite Dentistry, Olympic Bootworks, Mach 1) that stack as a
+sticky deck on tall `lg` screens, with covered panels receding (scale and
+dim, transform and opacity only), and stack as full-width cards, one per
+screen, below `lg`. A link under the deck opens every live site on
+`/case-studies`. Each panel pairs
 a browser frame and a phone showing tall real captures that browse slowly
 while on screen, a "Sells to consumers" or "Sells to businesses" chip, "The
 impossible" (Prism's framing, never quote marks), the chips of what was
 built, and "Now live". Each panel owns one spectrum band as a soft glow behind
-its media, in spectrum order (red to violet), so the six read as one beam
-of light split six ways.
+its media, spread evenly across the spectrum (`storyBand`), so the three read
+red, green and violet: the ends and the middle of the same light.
+
+### Case studies
+
+A case study H1 states the outcome, not the client: one lowercase line from
+`CASE_STUDY_HEADLINES` (`lib/case-study-headlines.ts`; ends with a period, no
+digits, no em dash, at most 64 characters, guarded by
+`__tests__/case-study-headlines.test.ts`). The client name sits above it as
+its eyebrow line inside the same H1 (`CaseStudyVisualHero` `headline` prop),
+and the H1's accessible name reads "Client: headline". Numbers stay in the
+verified stats band with their source, never in the H1. Below `md` the
+breadcrumb scrolls with the page and the `/case-studies` index is stacked
+cards.
 
 ### Flagship case studies
 
@@ -355,8 +428,9 @@ their base style is the finished frame.
 
 ### Faux product UI
 
-Drawn interfaces (the homepage pillar scenes, the service hero windows, the
-`/website-design` page anatomy, the Mach 1 tool scenes) follow the stageshow
+Drawn interfaces (the homepage weekly update preview, the service hero
+windows, the `/website-design` page anatomy, the Mach 1 tool scenes) follow
+the stageshow
 skill's rules for faux product UI, so they read as a real product simplified,
 never as a wireframe or a template:
 
@@ -402,8 +476,11 @@ never appear on proof surfaces.
 
 Two grammars only: the white pill (`Button` default, or `WaitlistButton`)
 and the outline pill (`Button variant="outline"`). The white pill is for the
-waitlist; secondary actions such as "Read the case study" use the outline
-pill. Long pages never go more than a section or two without a way onto the
+waitlist and always reads "Tell us about your business" (`WAITLIST_CTA` in
+`lib/waitlist.ts`, `FREE_AUDIT_CTA_TEXT` in `lib/constants.ts`, the header
+pill, the bottom action bar); only the waitlist form's own submit button says
+"Join the waitlist". Secondary actions such as "Read the case study" use the
+outline pill, and a hero's secondary action is a quiet text link. Long pages never go more than a section or two without a way onto the
 waitlist (`InlineWaitlistCta`). Internal links use `ArrowRight`;
 `ArrowUpRight` means the link leaves the site. Inline text links use an
 arrow icon. Every core route ends with `FinalCta`. One page-scoped exception:
@@ -432,14 +509,34 @@ appears.
 Motion should feel like light moving through glass: smooth, purposeful, and
 quiet enough that text stays readable.
 
-- Allowed: the hero refraction choreography and pointer swing, the tagline
-  glint, marquees (logo rail, work wall, the vertical wall of love), scroll
-  reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights and
-  parallax, the slow spectrum beam, the live dot ping, the story deck recede
-  and capture browsing, the service pillar micro scenes, the intake pass foil,
+- **Tokens.** Every transition and keyframe uses one of four easing curves
+  and six durations, defined once on `:root` in `app/globals.css`:
+  `--ease-out` (the default), `--ease-in-out`, `--ease-drawer` (sheets, bars,
+  the band morph), `--ease-in`; `--dur-press` 120ms, `--dur-ui` 220ms,
+  `--dur-sheet` 320ms, `--dur-enter` 560ms, `--dur-count` 700ms,
+  `--dur-refract` 1200ms. In Tailwind write `duration-(--dur-ui)
+  ease-(--ease-out)`. No curve overshoots. `__tests__/design/motion-tokens.test.ts`
+  rejects any raw `cubic-bezier(` outside the token block.
+- **Verbs.** Rise (`prism-rise`, `data-reveal`): new information arrives,
+  14px and opacity over `--dur-enter`, never on an h1 (the headline paints in
+  the first frame). Refract: the hero accent word arrives white and refracts
+  into the spectrum once, then one glint crosses it and it rests; never
+  looped, because an outcome stays put. `text-spectrum` pans once and rests.
+  Press: a 0.97 scale over `--dur-press`.
+- Allowed: the hero refraction choreography and pointer swing, the accent
+  word's single refraction, marquees (`Marquee` rails such as the logo rail),
+  scroll reveals (`Reveal`), count-ups (`HomeCountUp`), pointer spotlights
+  and parallax, the slow spectrum beam, the live dot ping, the story deck
+  recede and capture browsing, the service band morph, the intake pass foil,
   the flagship case-study tool scenes and their sticky crossfade, the `/app`
   tabbed phone tour (`components/prism-app/`), the `/app` hero stage and its
-  play-once tiles (see below), hover lifts of 1 to 2px.
+  play-once tiles (see below), hover lifts of 1 to 2px, press states.
+- Loops pause off screen: `LoopVisibility` marks marquees, `[data-loop]`
+  containers and page sections `data-offscreen="true"` outside the viewport
+  and `globals.css` pauses every animation inside them. `HeroLoopingVideo`
+  mounts its `<video>` only once the frame is about a screen away.
+- No animation library: CSS, the tokens, and small client islands only
+  (`framer-motion` and `lib/animations.ts` were removed on 2026-11-25).
 - `/app` (Prism Grow) is the one product page with a 3D phone. Its hero
   lines rise out of clipped slots; the phone rises from a backward tilt and
   settles flat, then floats a few pixels; a blurred spectrum halo (a soft
@@ -472,7 +569,10 @@ Use the prism-writing skill, `prism-brand` pack.
   "cutting-edge", "revolutionary", "game-changing", "supercharge".
 - No guarantees of growth, rankings, or results. Verified numbers only, with
   their source and date nearby.
-- One CTA per page: "Join the waitlist".
+- One CTA label everywhere: "Tell us about your business" (the button names
+  what the owner does; the capacity line beside it keeps the honest
+  scarcity). "Join the waitlist" stays fine as prose and as the waitlist
+  form's submit button.
 - Dynamic flow copy adapts to user context without adding clutter: the waitlist reflects URL prefills, chosen timing, first name, and one-tap goal starters; `/waitlist/thank-you` greets recent same-tab applicants via `sessionStorage` without putting PII in URLs; `/case-studies` surfaces an industry context strip on filter selection; `/faq` offers quick-search chips and a mobile topic-jump strip; service pages carry `?focus=` through the navbar CTA and tailor `ServiceSiblings` descriptions.
 
 ## Do
