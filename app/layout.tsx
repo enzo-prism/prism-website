@@ -16,7 +16,6 @@ import {
   GA_MEASUREMENT_ID,
   GOOGLE_ADS_ID,
   IS_ANALYTICS_ENABLED,
-  IS_PRODUCTION_ENV,
 } from "@/lib/constants"
 import {
   DEFAULT_OG_IMAGE,
@@ -156,15 +155,15 @@ export default function RootLayout({
                     // Internal traffic opt-out: ?internal=1 marks this browser,
                     // ?internal=0 clears it. Keep in sync with
                     // lib/internal-traffic.ts. Plain string checks, as above.
+                    var internal = new URLSearchParams(location.search).get('internal');
                     try {
-                      var q = location.search || '';
-                      if (q.indexOf('internal=1') !== -1) {
+                      if (internal === '1') {
                         localStorage.setItem('prism_internal', '1');
-                      } else if (q.indexOf('internal=0') !== -1) {
+                      } else if (internal === '0') {
                         localStorage.removeItem('prism_internal');
                       }
                       if (localStorage.getItem('prism_internal') === '1') return;
-                    } catch (e) {}
+                    } catch (e) { if (internal === '1') return; }
                   window.dataLayer = window.dataLayer || [];
                   // Assign onto window explicitly: this now runs inside the
                   // host-gate IIFE, so a bare function declaration would no
@@ -192,56 +191,6 @@ export default function RootLayout({
               }}
             />
           </>
-        )}
-        {IS_PRODUCTION_ENV && (
-          // Hotjar instruments DOM mutation/scroll/input observers, one of
-          // the heaviest third parties for input latency on low-end phones.
-          // Queue it after the first interaction has settled (or after 12s),
-          // never synchronously inside Safari's first tap/scroll handler.
-          <Script id="hotjar-loader" strategy="afterInteractive">
-            {`
-              (function(){
-                // No session replays of the team's own browsing. See
-                // lib/internal-traffic.ts.
-                try {
-                  if ((location.search || '').indexOf('internal=1') !== -1
-                    || localStorage.getItem('prism_internal') === '1') return;
-                } catch (e) {}
-                var loaded = false;
-                var queued = false;
-                function loadHotjar(){
-                  if (loaded) return;
-                  loaded = true;
-                  (function(h,o,t,j,a,r){
-                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                    h._hjSettings={hjid:3698826,hjsv:6};
-                    a=o.getElementsByTagName('head')[0];
-                    r=o.createElement('script');r.async=1;
-                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                    a.appendChild(r);
-                  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-                }
-                function queueHotjar(){
-                  if (queued) return;
-                  queued = true;
-                  ['pointerdown','scroll','keydown'].forEach(function(evt){
-                    window.removeEventListener(evt, queueHotjar);
-                  });
-                  setTimeout(function(){
-                    if ('requestIdleCallback' in window) {
-                      window.requestIdleCallback(loadHotjar, { timeout: 2500 });
-                    } else {
-                      setTimeout(loadHotjar, 0);
-                    }
-                  }, 800);
-                }
-                ['pointerdown','scroll','keydown'].forEach(function(evt){
-                  window.addEventListener(evt, queueHotjar, { passive: true, once: false });
-                });
-                setTimeout(queueHotjar, 12000);
-              })();
-            `}
-          </Script>
         )}
         {/* viewport is defined via metadata.viewport to avoid duplicates */}
         {/* Add mobile-specific meta tags for better scrolling */}

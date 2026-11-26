@@ -17,7 +17,7 @@ When diagnostic intake is open, `site_review_start` records first interaction, `
 | Google Ads            | Account `AW-11373090310`, lead conversion action (purchase is legacy/inert) | `lib/constants.ts`, `utils/analytics.ts` |
 | Vercel Web Analytics  | Pageviews + custom events                                           | `components/vercel-analytics.tsx`        |
 | Vercel Speed Insights | Core Web Vitals                                                     | `app/layout.tsx`                         |
-| Hotjar                | Session replay, loaded on first interaction                         | `app/layout.tsx`                         |
+| Hotjar                | Session replay and waitlist milestones, deferred until interaction or timeout | `lib/hotjar.ts`                         |
 
 `IS_ANALYTICS_ENABLED` (in `lib/constants.ts`) gates all GA/Ads sending to the
 real production environment. Preview deployments build with
@@ -26,12 +26,27 @@ without that, preview traffic and QA lead conversions would land in the live
 property. Vercel Web Analytics needs no such gate: its reporting is
 production-only by design, and preview events are segmented out.
 
+## Waitlist recordings and search reporting
+
+Hotjar site `3698826` only loads on the production Prism domain. Filter recordings
+by `waitlist_step_focus`, `waitlist_step_business`, `waitlist_step_contact`,
+`waitlist_form_start`, `waitlist_validation_error`, `waitlist_submit_attempt`,
+`waitlist_submit_error`, or `waitlist_submit_success`. Success follows Formspree
+acceptance. Events send only their fixed names. The form and personalized
+confirmation text are masked in replay. The saved **Waitlist · Mobile taps**
+heatmap shows the last 30 days; check its sample size and screenshot date.
+
+In Search Console use the domain property `sc-domain:design-prism.com`. Filter
+performance to HTTPS pages on `www.design-prism.com` to isolate the marketing
+site. Its submitted sitemap is `https://www.design-prism.com/sitemap.xml`.
+The GA4 Search Console link uses the Prism Website stream `12280177779`.
+
 ## Internal traffic opt-out (2026-11-09)
 
 Open any page once with `?internal=1` and that browser stops reporting to GA4,
 Google Ads, Vercel Web Analytics, and Hotjar. `?internal=0` turns reporting
 back on. The flag is `localStorage.prism_internal` (`lib/internal-traffic.ts`,
-mirrored in the two inline scripts in `app/layout.tsx`). Nothing is sent, so it
+used by Hotjar and mirrored in the inline Google tag setup in `app/layout.tsx`). Nothing is sent, so it
 does not depend on the GA4 internal-traffic filter being Active, and it follows
 laptops, phones, and agent browsers in a way IP rules cannot. Do this on every
 browser the team or an agent uses on production. To debug real hits in GA4
@@ -367,7 +382,7 @@ The shared hub (`components/social-link-hub.tsx`) is a noindex converter. Each o
 - `service`: `website` | `content` | `ads` | `aeo` (the `SOCIAL_HUB_SERVICES` allowlist in `lib/vercel-analytics.ts`)
 - `destination`: `/waitlist` (the link is `/waitlist?focus=<service>`; the PII sanitizer strips query strings from `destination`, so `service` carries the focus)
 
-The header profile link stays on `trackExternalLinkClick` with location `{platform} landing header`. Opening a CTA is a same-origin navigation to `/waitlist` with the focus pre-checked. `WaitlistForm` then emits `waitlist_form_view`, `_form_start`, `_submit_success`, and `form_submit_success` / `generate_lead` (on `/waitlist/thank-you`). First-touch UTMs and `landing_path` (for example `/ig`) persist through `lib/marketing-attribution.ts` and are attached to later events and Formspree payloads; hub links should not append `utm_*` themselves.
+The header profile link stays on `trackExternalLinkClick` with location `{platform} landing header`. Opening a CTA is a same-origin navigation to `/waitlist` with the focus pre-checked. `WaitlistForm` then emits `waitlist_form_view`, `_form_start`, `_submit_success`, and `form_submit_success` / `generate_lead` (after Formspree accepts, before navigation). First-touch UTMs and `landing_path` (for example `/ig`) persist through `lib/marketing-attribution.ts` and are attached to later events and Formspree payloads; hub links should not append `utm_*` themselves.
 
 
 
@@ -417,11 +432,11 @@ Verified authenticated property: **Prism Website**, `508295014`, account
 - Key events on the tag: `generate_lead`, `qualify_lead`, `close_convert_lead`,
   `purchase`. Nothing in this repo fires `qualify_lead` or
   `close_convert_lead`; they need the CRM follow-up below.
-- Still to do in GA4 Admin: register the live waitlist parameters
+- Registered November 25, 2026 in GA4 Admin: the live waitlist parameters
   (`step_name`, `prefilled_focus`, `focus_count`) and the `/app` ones
-  (`demo_screen`, `select_method`), and mark `waitlist_form_start` and
-  `app_store_click` as key events. `node scripts/ga4-admin-setup.mjs` does all
-  of it idempotently given Admin API credentials; the registered `step_id` and
+  (`demo_screen`, `select_method`). Form starts and App Store clicks remain diagnostic
+  events. The older Admin setup script also marks them as key events if run.
+  The registered `step_id` and
   `funnel_step_id` belong to the retired intake forms.
 - Not re-checked on 2026-11-09: event retention, the internal-traffic filter
   state, BigQuery.
