@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
+import { scheduleHotjar } from '@/lib/hotjar'
 import AnalyticsProvider from '@/components/analytics-provider'
 import RouteSurfaceController from '@/components/route-surface-controller'
 import VercelAnalytics from '@/components/vercel-analytics'
@@ -55,6 +56,8 @@ function scheduleNonCriticalHydration(callback: () => void, timeout = 1200) {
 export default function RuntimeClientShell() {
   const [shouldLoadDeferredFeatures, setShouldLoadDeferredFeatures] =
     useState(false)
+
+  useEffect(scheduleHotjar, [])
 
   useEffect(() => {
     return scheduleNonCriticalHydration(() => {

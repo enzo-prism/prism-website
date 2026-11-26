@@ -107,7 +107,7 @@ export default function WaitlistThankYouPersonalization() {
 
   return (
     <>
-      <p className="text-lead prism-rise mt-5 max-w-[36rem] text-pretty text-muted-foreground [--rise-delay:200ms]">
+      <p data-hj-suppress="" className="text-lead prism-rise mt-5 max-w-[36rem] text-pretty text-muted-foreground [--rise-delay:200ms]">
         {leadCopy}
       </p>
       {primaryGuide ? (

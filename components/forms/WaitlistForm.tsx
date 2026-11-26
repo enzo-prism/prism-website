@@ -1299,6 +1299,7 @@ export default function WaitlistForm({
       noValidate
       onSubmit={handleStepSubmit}
       className="flex scroll-mt-24 flex-col"
+      data-hj-suppress=""
       data-step={step.id}
     >
       <input type="hidden" name="intake_type" value="project_application" />

@@ -8,6 +8,7 @@ import {
   IS_ANALYTICS_ENABLED,
   isAnalyticsReportingHost,
 } from '@/lib/constants'
+import { trackHotjarMilestone } from '@/lib/hotjar'
 import { isInternalTraffic } from '@/lib/internal-traffic'
 import { resolveLeadValue } from '@/lib/lead-values'
 import { getAttributionContext } from '@/lib/marketing-attribution'
@@ -1009,6 +1010,12 @@ export function trackEvent(
 
   if (isInternalTraffic()) {
     return
+  }
+
+  try {
+    trackHotjarMilestone(eventName, params?.step_name)
+  } catch {
+    // A replay vendor must never interrupt the GA event or the application.
   }
 
   const vercelEvent = buildVercelCustomEvent(eventName, enhancedParams)
