@@ -47,7 +47,7 @@ export default function WaitlistProofStrip({ className }: { className?: string }
     <section
       data-waitlist-proof="strip"
       aria-labelledby="waitlist-proof-heading"
-      className={cn('flex min-w-0 flex-col', className)}
+      className={cn('@container flex min-w-0 flex-col', className)}
     >
       <h2
         id="waitlist-proof-heading"
@@ -112,18 +112,20 @@ export default function WaitlistProofStrip({ className }: { className?: string }
 
       <ul
         aria-label="Prism clients"
-        className="mt-4 grid grid-cols-4 overflow-hidden rounded-2xl border border-white/[0.08] bg-card shadow-[0_1px_0_0_oklch(1_0_0/5%)_inset]"
+        className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.06] @lg:grid-cols-4"
       >
-        {GRID_LOGOS.map((logo, index) => (
+        {GRID_LOGOS.map((logo) => (
           <li
             key={logo.slug}
-            className={cn(
-              'flex h-[4.5rem] items-center justify-center border-white/[0.06] px-2 text-white/55',
-              index % 4 !== 3 && 'border-r',
-              index < 4 && 'border-b',
-            )}
+            className="flex h-[4.5rem] min-w-0 items-center justify-center bg-card px-2 text-white/55"
           >
-            <ClientLogo logo={logo} area={2100} maxWidth={104} maxHeight={40} />
+            <ClientLogo
+              logo={logo}
+              area={2100}
+              maxWidth={104}
+              maxHeight={40}
+              className="max-w-full"
+            />
           </li>
         ))}
       </ul>

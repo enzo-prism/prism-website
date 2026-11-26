@@ -178,6 +178,23 @@ const retiredPricingTokens = [
   /\bprism infinity\b/i,
 ] as const
 
+test('waitlist client logos fit inside their padded cells', async ({ page }) => {
+  await page.goto('/waitlist')
+  const logos = page.getByRole('list', { name: 'Prism clients', exact: true }).getByRole('img')
+  await expect(logos).toHaveCount(8)
+  for (const logo of await logos.all()) {
+    const fits = await logo.evaluate((element) => {
+      const cell = element.closest('li')!
+      const bounds = cell.getBoundingClientRect()
+      const mark = element.getBoundingClientRect()
+      const padding = getComputedStyle(cell)
+      return mark.left >= bounds.left + parseFloat(padding.paddingLeft) - 1
+        && mark.right <= bounds.right - parseFloat(padding.paddingRight) + 1
+    })
+    expect(fits, await logo.getAttribute('aria-label') ?? 'Client logo').toBe(true)
+  }
+})
+
 for (const route of lockedRoutes) {
   test(`${route.name} copy stays waitlist-first (no retired pricing)`, async ({
     page,
